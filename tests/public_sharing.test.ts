@@ -39,46 +39,34 @@ describe('SovereignS3nc Public Sharing', () => {
 
     const sharedId = await db.share(id, true);
 
-    // Verify shared doc was PUT with re-encryption (we can't easily verify encryption content, but we can verify flow)
+    // Verify shared doc was PUT
     expect(mockSharedRemote.put).toHaveBeenCalled();
     
-    // Find call for public.json
+    // Find call for public index file
+    // It should now be put to 'public/{sharedId}'
     const putCalls = mockSharedRemote.put.mock.calls;
-    const publicIndexCall = putCalls.find((call: any) => call[0]._id === 'public');
+    const publicIndexCall = putCalls.find((call: any) => call[0]._id === `public/${sharedId}`);
     
     expect(publicIndexCall).toBeDefined();
     const indexData = publicIndexCall[0].data;
-    expect(indexData).toHaveLength(1);
-    expect(indexData[0].id).toBe(sharedId);
-    expect(indexData[0].key).toBeDefined();
+    // indexData is now just the object { id, key, ... }
+    expect(indexData.id).toBe(sharedId);
+    expect(indexData.key).toBeDefined();
   });
 
   test('should unshare and remove from public index', async () => {
     const id = await db.save({ title: 'to unshare' });
     const sharedId = await db.share(id, true);
     
-    mockSharedRemote.put.mockClear(); // Clear previous puts
+    mockSharedRemote.put.mockClear(); 
     
-    // Mock existing public index
-    mockSharedRemote.get.mockImplementation((key: string) => {
-      if (key.includes('public')) {
-        return Promise.resolve({
-          _id: 'public',
-          data: [{ id: sharedId, key: 'somekey' }]
-        });
-      }
-      return Promise.resolve(null);
-    });
-
+    // Update delete expectation
     await db.unshare(id);
 
-    // Verify delete
+    // Verify delete of shared doc
     expect(mockSharedRemote.delete).toHaveBeenCalledWith(sharedId);
-
-    // Verify public index update
-    const publicIndexCall = mockSharedRemote.put.mock.calls.find((call: any) => call[0]._id === 'public');
-    expect(publicIndexCall).toBeDefined();
-    expect(publicIndexCall[0].data).toHaveLength(0);
+    // Verify delete of public index file
+    expect(mockSharedRemote.delete).toHaveBeenCalledWith(`public/${sharedId}`);
   });
   
   test('should consume a public share', async () => {

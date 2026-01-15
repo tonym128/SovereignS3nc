@@ -28,6 +28,16 @@ export class SovereignS3nc extends EventEmitter {
   constructor(config: SovereignConfig, customLocalStorage?: ILocalStorage) {
     super();
     this.config = config;
+    
+    // Security Warning
+    if (config.s3.endpoint && config.s3.endpoint.startsWith('http://')) {
+      console.warn(
+        'SECURITY WARNING: You are using an insecure HTTP endpoint. ' + 
+        'Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. ' +
+        'Please use HTTPS to ensure the "Security via Obscurity" model holds.'
+      );
+    }
+
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
     this.remote = new S3RemoteAdapter(config.s3, config.paths);
     this.sharedRemote = new S3RemoteAdapter(config.s3, {
@@ -193,26 +203,26 @@ export class SovereignS3nc extends EventEmitter {
   private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
     if (!metadata.encryptionKey) return;
     try {
-      const indexDoc = await this.sharedRemote.get('public');
-      let index: any[] = [];
-      if (indexDoc) {
-        index = indexDoc.data;
-      }
-      
-      // Remove existing entry if any
-      index = index.filter((i: any) => i.id !== metadata.sharedId);
-      
-      index.push({
+      // Create a small metadata object
+      const publicMeta = {
         id: metadata.sharedId,
         key: metadata.encryptionKey,
         updatedAt: Date.now()
-      });
+      };
 
-      await this.sharedRemote.put({
-        _id: 'public',
+      // Save as an individual object: public/{sharedId}
+      // We use sharedRemote but we need to bypass the 'shared' storeId if we want a clean 'public/' root?
+      // Currently sharedRemote prefix is `{appId}/shared/shared/`
+      // So this will be `{appId}/shared/shared/public/{sharedId}.json`
+      // This is acceptable and avoids race conditions.
+      
+      const indexDoc: SyncDocument = {
+        _id: `public/${metadata.sharedId}`, // Suffix for the key
         _updatedAt: Date.now(),
-        data: index
-      });
+        data: publicMeta // Store raw metadata
+      };
+
+      await this.sharedRemote.put(indexDoc);
     } catch (e) {
       console.error('Failed to update public index', e);
     }
@@ -220,16 +230,7 @@ export class SovereignS3nc extends EventEmitter {
 
   private async removeFromPublicIndex(sharedId: string): Promise<void> {
     try {
-      const indexDoc = await this.sharedRemote.get('public');
-      if (!indexDoc) return;
-      
-      const index = indexDoc.data.filter((i: any) => i.id !== sharedId);
-      
-      await this.sharedRemote.put({
-        ...indexDoc,
-        _updatedAt: Date.now(),
-        data: index
-      });
+      await this.sharedRemote.delete(`public/${sharedId}`);
     } catch (e) {
       console.error('Failed to update public index', e);
     }
@@ -238,8 +239,25 @@ export class SovereignS3nc extends EventEmitter {
   // --- Public Consumption ---
 
   async getPublicShares(): Promise<any[]> {
-    const indexDoc = await this.sharedRemote.get('public');
-    return indexDoc ? indexDoc.data : [];
+    // 1. List all changes/objects in the bucket that start with 'public/'
+    // Since listChanges takes a date, we can use a very old date to get everything, 
+    // or we need a new list method on the adapter. 
+    // Using listChanges(new Date(0)) effectively lists everything.
+    
+    // However, listChanges returns 'RemoteChange' items.
+    // Ideally, we'd add a specialized list method to the adapter, but listChanges works.
+    // The keys will be like: .../public/{sharedId}.json
+    
+    const changes = await this.sharedRemote.listChanges(new Date(0));
+    const publicItems = changes.filter(c => c.id.startsWith('public/'));
+    
+    // 2. Fetch all metadata files in parallel
+    const results = await Promise.all(publicItems.map(async item => {
+       const doc = await this.sharedRemote.get(item.id);
+       return doc ? doc.data : null;
+    }));
+
+    return results.filter(r => r !== null);
   }
 
   async getSharedDoc(sharedId: string, key: string): Promise<any> {

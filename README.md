@@ -145,7 +145,9 @@ await db.unshare('original-doc-id');
 ```
 
 #### Public Sharing
-Public sharing generates a unique encryption key for the document and adds it to a `public.json` index in the shared storage location. This allows anyone with access to that bucket (and the specific key) to discover and decrypt the content.
+Public sharing generates a unique encryption key for the document and publishes a metadata file to the `shared/public/` directory. This allows anyone with access to that bucket path (and the specific key) to discover and decrypt the content.
+
+*Note: The public index uses a directory-based approach (`shared/public/{sharedId}.json`) to ensure atomic, conflict-free updates.*
 
 ```typescript
 // Share publicly
@@ -156,7 +158,7 @@ const sharedId = await db.share('original-doc-id', true);
 You can list publicly available documents and save them to your local store. The system handles decrypting the public content and re-encrypting it with your personal master key.
 
 ```typescript
-// List public shares
+// List public shares (fetches metadata from shared/public/)
 const publicShares = await db.getPublicShares();
 
 // Import a shared document
@@ -188,6 +190,59 @@ The `SovereignS3nc` class provides a generic interface that abstracts away the u
 - `unshare(id: string): Promise<void>`: Stop sharing a document and delete the remote copy.
 - `getPublicShares(): Promise<any[]>`: List all publicly shared documents available in the shared store.
 - `saveSharedDocToLocal(sharedId: string, key: string): Promise<string>`: Fetch, decrypt, and save a shared document to your local store.
+
+## S3 Bucket Setup
+
+For SovereignS3nc to function correctly with sharing enabled, your S3 bucket (or IAM user) needs permissions to access both the private user paths and the global shared path.
+
+### Path Structure
+- **Private User Data:** `${appId}/${userId}/${storeId}/...`
+- **Shared/Public Data:** `${appId}/shared/shared/...`
+
+### Security Model: Isolation via GUIDs (Single Credential)
+
+In many deployments, a single S3 IAM user is shared across all application instances. In this model, isolation is achieved through **Security via Obscurity**:
+- **GUIDs:** The `userId` and `storeId` are high-entropy GUIDs. The probability of one user guessing another user's 128-bit ID is effectively zero.
+- **Restricted Listing:** By disabling the ability to list the root of the bucket and only allowing listing on specific prefixes, malicious discovery of other users' IDs is prevented.
+- **MANDATORY HTTPS:** Since the GUIDs are part of the file path (URL), you **MUST** use HTTPS. If you use plain HTTP, the GUIDs will be visible in network traffic, completely defeating this security model.
+
+**Note:** The `sync()` function **requires** `s3:ListBucket` permissions on the user's specific prefix to identify remote changes.
+
+### Minimal IAM Policy (Single Credential Model)
+
+Use this policy if all your users share the same S3 Access Key. It allows sync for the active user and discovery for the public share, while preventing "walking" the bucket to find other users.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ObjectAccess",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::your-bucket-name/*"
+        },
+        {
+            "Sid": "AllowSyncAndPublicDiscovery",
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::your-bucket-name",
+            "Condition": {
+                "StringLike": {
+                    "s3:prefix": [
+                        "${appId}/${userId}/${storeId}/*",
+                        "${appId}/shared/shared/public/*"
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
 
 ## Configuration Examples
 
