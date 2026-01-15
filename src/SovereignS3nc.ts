@@ -8,6 +8,12 @@ import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
 import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
 
+interface ShareMetadata {
+  sharedId: string;
+  isPublic: boolean;
+  encryptionKey?: string;
+}
+
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
   private remote: S3RemoteAdapter;
@@ -17,7 +23,7 @@ export class SovereignS3nc extends EventEmitter {
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
-  private sharedDocs: Map<string, string> = new Map();
+  private sharedDocs: Map<string, ShareMetadata> = new Map();
 
   constructor(config: SovereignConfig, customLocalStorage?: ILocalStorage) {
     super();
@@ -45,7 +51,14 @@ export class SovereignS3nc extends EventEmitter {
 
     const shares = await this.localStore.get('_sovereign_shares');
     if (shares && shares.data) {
-      this.sharedDocs = new Map(Object.entries(shares.data));
+      // Migrate legacy string values to ShareMetadata
+      const entries = Object.entries(shares.data).map(([key, value]): [string, ShareMetadata] => {
+        if (typeof value === 'string') {
+          return [key, { sharedId: value, isPublic: false }];
+        }
+        return [key, value as ShareMetadata];
+      });
+      this.sharedDocs = new Map(entries);
     }
 
     if (this.config.syncIntervalMs && this.config.syncIntervalMs > 0) {
@@ -63,21 +76,49 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- Sharing ---
 
-  async share(docId: string): Promise<string> {
+  async share(docId: string, isPublic: boolean = false): Promise<string> {
     const doc = await this.localStore.get(docId);
     if (!doc || doc._deleted) {
       throw new Error('Document not found');
     }
 
     if (this.sharedDocs.has(docId)) {
-      return this.sharedDocs.get(docId)!;
+      const existing = this.sharedDocs.get(docId)!;
+      // If requested status matches existing, return existing ID
+      if (existing.isPublic === isPublic) {
+        return existing.sharedId;
+      }
+      // Status change not fully supported in this simple version without full re-share logic
+      // But we can update metadata
+      existing.isPublic = isPublic;
+      if (isPublic && !existing.encryptionKey) {
+        existing.encryptionKey = uuidv4().replace(/-/g, ''); // Simple key gen
+      }
+      this.sharedDocs.set(docId, existing);
+      await this.persistShares();
+      await this.updateSharedDoc(doc, existing);
+      if (isPublic) await this.addToPublicIndex(existing);
+      return existing.sharedId;
     }
 
     const sharedId = uuidv4();
-    this.sharedDocs.set(docId, sharedId);
+    const metadata: ShareMetadata = {
+      sharedId,
+      isPublic
+    };
+    
+    if (isPublic) {
+      metadata.encryptionKey = uuidv4().replace(/-/g, '');
+    }
+
+    this.sharedDocs.set(docId, metadata);
     
     await this.persistShares();
-    await this.updateSharedDoc(doc, sharedId);
+    await this.updateSharedDoc(doc, metadata);
+
+    if (isPublic) {
+      await this.addToPublicIndex(metadata);
+    }
 
     return sharedId;
   }
@@ -85,15 +126,18 @@ export class SovereignS3nc extends EventEmitter {
   async unshare(docId: string): Promise<void> {
     if (!this.sharedDocs.has(docId)) return;
     
-    const sharedId = this.sharedDocs.get(docId)!;
+    const metadata = this.sharedDocs.get(docId)!;
     this.sharedDocs.delete(docId);
     await this.persistShares();
     
     // Attempt to delete the shared copy
     try {
-      await this.sharedRemote.delete(sharedId);
+      await this.sharedRemote.delete(metadata.sharedId);
+      if (metadata.isPublic) {
+        await this.removeFromPublicIndex(metadata.sharedId);
+      }
     } catch (e) {
-      console.warn(`Failed to delete shared doc ${sharedId}`, e);
+      console.warn(`Failed to delete shared doc ${metadata.sharedId}`, e);
     }
   }
 
@@ -106,13 +150,27 @@ export class SovereignS3nc extends EventEmitter {
     });
   }
 
-  private async updateSharedDoc(doc: SyncDocument, sharedId: string): Promise<void> {
+  private async updateSharedDoc(doc: SyncDocument, metadata: ShareMetadata): Promise<void> {
+    let payload = doc.data;
+
+    // If public, we need to decrypt the local data and re-encrypt with the shared key
+    if (metadata.isPublic && metadata.encryptionKey) {
+       try {
+         const plain = await this.decryptData(doc.data);
+         const tempCrypto = new AESCryptoAdapter(metadata.encryptionKey);
+         payload = await tempCrypto.encrypt(plain);
+       } catch (e) {
+         console.error('Failed to re-encrypt for sharing', e);
+         return; // Abort share update if encryption fails
+       }
+    }
+
     const sharedDoc: SyncDocument = {
-      _id: sharedId,
-      _rev: uuidv4(), // New revision for the shared copy
+      _id: metadata.sharedId,
+      _rev: uuidv4(),
       _updatedAt: Date.now(),
       _deleted: doc._deleted,
-      data: doc.data // Copy encrypted data as-is
+      data: payload
     };
     await this.sharedRemote.put(sharedDoc);
   }
@@ -129,6 +187,96 @@ export class SovereignS3nc extends EventEmitter {
       }
     }
   }
+
+  // --- Public Index Management ---
+
+  private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
+    if (!metadata.encryptionKey) return;
+    try {
+      const indexDoc = await this.sharedRemote.get('public');
+      let index: any[] = [];
+      if (indexDoc) {
+        index = indexDoc.data;
+      }
+      
+      // Remove existing entry if any
+      index = index.filter((i: any) => i.id !== metadata.sharedId);
+      
+      index.push({
+        id: metadata.sharedId,
+        key: metadata.encryptionKey,
+        updatedAt: Date.now()
+      });
+
+      await this.sharedRemote.put({
+        _id: 'public',
+        _updatedAt: Date.now(),
+        data: index
+      });
+    } catch (e) {
+      console.error('Failed to update public index', e);
+    }
+  }
+
+  private async removeFromPublicIndex(sharedId: string): Promise<void> {
+    try {
+      const indexDoc = await this.sharedRemote.get('public');
+      if (!indexDoc) return;
+      
+      const index = indexDoc.data.filter((i: any) => i.id !== sharedId);
+      
+      await this.sharedRemote.put({
+        ...indexDoc,
+        _updatedAt: Date.now(),
+        data: index
+      });
+    } catch (e) {
+      console.error('Failed to update public index', e);
+    }
+  }
+
+  // --- Public Consumption ---
+
+  async getPublicShares(): Promise<any[]> {
+    const indexDoc = await this.sharedRemote.get('public');
+    return indexDoc ? indexDoc.data : [];
+  }
+
+  async getSharedDoc(sharedId: string, key: string): Promise<any> {
+    const doc = await this.sharedRemote.get(sharedId);
+    if (!doc) return null;
+    
+    const tempCrypto = new AESCryptoAdapter(key);
+    return await tempCrypto.decrypt(doc.data);
+  }
+
+  async saveSharedDocToLocal(sharedId: string, key: string): Promise<string> {
+    const plainData = await this.getSharedDoc(sharedId, key);
+    if (!plainData) throw new Error('Shared document not found or decrypt failed');
+    
+    // Check if we already have this doc (by matching content or ID logic?)
+    // If the plainData contains the original _id, we can reuse it.
+    // If not, we might create a duplicate. 
+    // Assuming plainData matches the { _id, ... } structure of source if it was full doc sync.
+    // But usually `data` is the payload. The _id is separate in SyncDocument.
+    // However, when we encrypt, we encrypt `data`. 
+    // If the original `data` had an ID, good. If not, we generate new one.
+    
+    const newId = plainData._id || uuidv4();
+    
+    // To save locally, we must encrypt with OUR master key
+    const encryptedData = await this.encryptData(plainData);
+    
+    const newDoc: SyncDocument = {
+      _id: newId,
+      _updatedAt: Date.now(),
+      data: encryptedData
+    };
+
+    await this.putLocal(newDoc);
+    return newId;
+  }
+
 
   // --- Encryption Helpers ---
 

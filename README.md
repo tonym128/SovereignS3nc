@@ -128,6 +128,45 @@ const singleDocJson = await db.export('my-doc-id');
 await db.import(jsonBackup);
 ```
 
+### 5. Sharing
+
+SovereignS3nc allows you to share documents. Shared documents are replicated to a separate "shared" path in your S3 bucket, allowing for read-only access by others or yourself across different application contexts.
+
+#### Private Sharing
+Creates a read-only copy of the document in a shared location. Updates to the original document are automatically propagated.
+
+```typescript
+// Share a document
+const sharedId = await db.share('original-doc-id');
+console.log(`Shared at: ${sharedId}`);
+
+// Unshare (removes the shared copy)
+await db.unshare('original-doc-id');
+```
+
+#### Public Sharing
+Public sharing generates a unique encryption key for the document and adds it to a `public.json` index in the shared storage location. This allows anyone with access to that bucket (and the specific key) to discover and decrypt the content.
+
+```typescript
+// Share publicly
+const sharedId = await db.share('original-doc-id', true);
+```
+
+#### Consuming Shared Documents
+You can list publicly available documents and save them to your local store. The system handles decrypting the public content and re-encrypting it with your personal master key.
+
+```typescript
+// List public shares
+const publicShares = await db.getPublicShares();
+
+// Import a shared document
+if (publicShares.length > 0) {
+  const { id, key } = publicShares[0];
+  const localId = await db.saveSharedDocToLocal(id, key);
+  console.log(`Imported shared doc as: ${localId}`);
+}
+```
+
 ## API Reference
 
 The `SovereignS3nc` class provides a generic interface that abstracts away the underlying storage details.
@@ -145,6 +184,10 @@ The `SovereignS3nc` class provides a generic interface that abstracts away the u
 - `sync(): Promise<SyncStats>`: Force a synchronization cycle.
 - `export(id?: string): Promise<string>`: Export all or a specific document to a JSON string.
 - `import(json: string): Promise<void>`: Bulk load/merge documents from a JSON string.
+- `share(id: string, isPublic?: boolean): Promise<string>`: Share a document (privately or publicly). Returns the shared ID.
+- `unshare(id: string): Promise<void>`: Stop sharing a document and delete the remote copy.
+- `getPublicShares(): Promise<any[]>`: List all publicly shared documents available in the shared store.
+- `saveSharedDocToLocal(sharedId: string, key: string): Promise<string>`: Fetch, decrypt, and save a shared document to your local store.
 
 ## Configuration Examples
 
