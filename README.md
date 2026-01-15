@@ -40,11 +40,19 @@ const db = new SovereignS3nc({
     storeId: 'notes-store'
   },
   syncIntervalMs: 5000,
-  conflictResolutionStrategy: 'Merge' // 'Merge' (default) or 'LastWriteWins'
+  conflictResolutionStrategy: 'Merge', // 'Merge' (default) or 'LastWriteWins'
+  encryptionKey: 'your-32-byte-secret-key-here' // Optional: Transparent encryption
 });
 
 await db.init();
 ```
+
+### Encryption
+
+If `encryptionKey` is provided, all document data is transparently encrypted (AES-256-GCM) before being saved to local storage or synced to S3.
+- **Export**: Returns decrypted JSON (plain text) for backup/portability.
+- **Import**: Accepts decrypted JSON and re-encrypts it upon storage.
+- **Metadata**: Document IDs and timestamps remain unencrypted for sync coordination.
 
 ### Using IndexedDB (Browser)
 

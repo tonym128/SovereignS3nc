@@ -21,7 +21,9 @@ export class AESCryptoAdapter implements ICryptoAdapter {
     const str = JSON.stringify(data);
     let encrypted = cipher.update(str, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-    const authTag = cipher.getAuthTag().toString('hex');
+    
+    // Cast to any because TS definition might be missing specific GCM methods on generic Cipher return
+    const authTag = (cipher as any).getAuthTag().toString('hex');
 
     // Format: iv:authTag:encrypted
     return `${iv.toString('hex')}:${authTag}:${encrypted}`;
@@ -38,7 +40,7 @@ export class AESCryptoAdapter implements ICryptoAdapter {
     const authTag = Buffer.from(authTagHex, 'hex');
     const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
     
-    decipher.setAuthTag(authTag);
+    (decipher as any).setAuthTag(authTag);
     
     let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
     decrypted += decipher.final('utf8');

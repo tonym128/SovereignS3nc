@@ -5,11 +5,14 @@ import { SovereignConfig, SyncDocument, SyncStats } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
+import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
+import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
 
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
   private remote: S3RemoteAdapter;
   private config: SovereignConfig;
+  private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
@@ -18,14 +21,16 @@ export class SovereignS3nc extends EventEmitter {
     super();
     this.config = config;
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
-    // Pass paths to adapter
     this.remote = new S3RemoteAdapter(config.s3, config.paths);
+    
+    if (config.encryptionKey) {
+      this.crypto = new AESCryptoAdapter(config.encryptionKey);
+    }
   }
 
   async init(): Promise<void> {
     await this.localStore.init();
     
-    // Try to load last sync time
     const meta = await this.localStore.get('_sovereign_meta');
     if (meta) {
       this.lastSyncTime = meta.data.lastSyncTime || 0;
@@ -36,32 +41,47 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  /**
-   * Returns true if a sync operation is currently in progress.
-   */
   public get syncing(): boolean {
     return this.isSyncing;
   }
 
-  /**
-   * Returns the timestamp of the last successful sync.
-   */
   public get lastSyncedAt(): number {
     return this.lastSyncTime;
   }
 
-  /**
-   * Save a document. If it doesn't have an _id, one will be generated.
-   */
+  // --- Encryption Helpers ---
+
+  private async encryptData(data: any): Promise<any> {
+    if (!this.crypto) return data;
+    return await this.crypto.encrypt(data);
+  }
+
+  private async decryptData(data: any): Promise<any> {
+    if (!this.crypto) return data;
+    // If data is not a string, it might not be encrypted or is legacy data
+    if (typeof data !== 'string') return data;
+    try {
+      return await this.crypto.decrypt(data);
+    } catch (e) {
+      console.warn('Failed to decrypt data, returning raw:', e);
+      return data;
+    }
+  }
+
+  // --- CRUD ---
+
   async save<T>(data: T & { _id?: string }): Promise<string> {
     const id = data._id || uuidv4();
-    const doc: SyncDocument<T> = {
+    
+    // Encrypt payload
+    const storedData = await this.encryptData(data);
+
+    const doc: SyncDocument<any> = {
       _id: id,
       _updatedAt: Date.now(),
-      data: data
+      data: storedData
     };
     
-    // Optimistic local save
     await this.localStore.put(doc);
     this.emit('change', { type: 'save', id, doc });
     return id;
@@ -70,12 +90,20 @@ export class SovereignS3nc extends EventEmitter {
   async get<T>(id: string): Promise<T | null> {
     const doc = await this.localStore.get(id);
     if (!doc || doc._deleted) return null;
-    return doc.data as T;
+    
+    const plainData = await this.decryptData(doc.data);
+    return plainData as T;
   }
 
   async getAll<T>(): Promise<T[]> {
     const docs = await this.localStore.list(false);
-    return docs.map(d => d.data as T);
+    const results: T[] = [];
+    for (const doc of docs) {
+      if (doc._id.startsWith('_sovereign_')) continue;
+      const plain = await this.decryptData(doc.data);
+      results.push(plain as T);
+    }
+    return results;
   }
 
   async delete(id: string): Promise<void> {
@@ -87,6 +115,8 @@ export class SovereignS3nc extends EventEmitter {
       this.emit('change', { type: 'delete', id });
     }
   }
+
+  // --- Sync ---
 
   startAutoSync() {
     if (this.syncInterval) clearInterval(this.syncInterval);
@@ -112,7 +142,6 @@ export class SovereignS3nc extends EventEmitter {
       const startSyncTime = Date.now();
 
       // --- STEP 1: PULL & MERGE ---
-      // We process remote changes first.
       const lastSyncDate = new Date(this.lastSyncTime);
       const changes = await this.remote.listChanges(lastSyncDate);
 
@@ -121,32 +150,25 @@ export class SovereignS3nc extends EventEmitter {
           const id = change.id;
           const localDoc = await this.localStore.get(id);
 
-          // ETag Optimization: If local exists and ETag matches, skip download
           if (localDoc && change.etag && localDoc._etag === change.etag) {
-             // Already up to date
              continue;
           }
 
-          // Otherwise, we must download to compare timestamps/content
           const remoteDoc = await this.remote.get(id);
           
           if (remoteDoc) {
             if (!localDoc) {
-              // New from remote
               await this.localStore.put(remoteDoc);
               stats.pulled++;
               this.emit('change', { type: 'pull', id, doc: remoteDoc });
             } else {
-              // Local exists. Check for changes.
               const isLocalDirty = localDoc._updatedAt > this.lastSyncTime;
               
               if (!isLocalDirty) {
-                 // Local matches our last known state (or is older), so Remote is newer.
                  await this.localStore.put(remoteDoc);
                  stats.pulled++;
                  this.emit('change', { type: 'pull', id, doc: remoteDoc });
               } else {
-                // Conflict: Both changed since last sync
                 if (this.config.conflictResolutionStrategy === 'LastWriteWins') {
                   if (remoteDoc._updatedAt > localDoc._updatedAt) {
                     await this.localStore.put(remoteDoc);
@@ -154,8 +176,9 @@ export class SovereignS3nc extends EventEmitter {
                     this.emit('change', { type: 'pull', id, doc: remoteDoc });
                   }
                 } else {
-                  // Merge Strategy (Newer Wins Base)
-                  const merged = this.mergeDocs(localDoc, remoteDoc);
+                  // Merge Strategy
+                  // Note: mergeDocs is now async
+                  const merged = await this.mergeDocs(localDoc, remoteDoc);
                   await this.localStore.put(merged);
                   stats.pulled++; 
                   this.emit('change', { type: 'merge', id, doc: merged });
@@ -170,7 +193,6 @@ export class SovereignS3nc extends EventEmitter {
       }
 
       // --- STEP 2: PUSH ---
-      // Upload anything updated locally since last sync
       const localChanges = await this.localStore.getChanges(this.lastSyncTime);
       
       for (const doc of localChanges) {
@@ -180,9 +202,7 @@ export class SovereignS3nc extends EventEmitter {
           stats.pushed++;
           
           if (etag) {
-            // Update local ETag to match what we just pushed, so next pull sees it as clean
             doc._etag = etag;
-            // Save silently (preserves _updatedAt)
             await this.localStore.put(doc);
           }
         } catch (e) {
@@ -191,7 +211,6 @@ export class SovereignS3nc extends EventEmitter {
         }
       }
 
-      // Update last sync time
       this.lastSyncTime = startSyncTime;
       await this.localStore.put({
         _id: '_sovereign_meta',
@@ -209,10 +228,8 @@ export class SovereignS3nc extends EventEmitter {
     return stats;
   }
 
-  /**
-   * Export documents to a JSON string.
-   * @param id Optional. If provided, exports only that document. If omitted, exports all.
-   */
+  // --- Import / Export ---
+
   async export(id?: string): Promise<string> {
     let docs: SyncDocument[] = [];
     if (id) {
@@ -221,15 +238,17 @@ export class SovereignS3nc extends EventEmitter {
     } else {
       docs = await this.localStore.list(false);
     }
-    // Filter out internal metadata
     docs = docs.filter(d => !d._id.startsWith('_sovereign_'));
-    return JSON.stringify(docs, null, 2);
+
+    // Decrypt all data for export
+    const decryptedDocs = await Promise.all(docs.map(async d => {
+      const plain = await this.decryptData(d.data);
+      return { ...d, data: plain };
+    }));
+
+    return JSON.stringify(decryptedDocs, null, 2);
   }
 
-  /**
-   * Bulk import documents from a JSON string.
-   * Merges with existing documents to avoid duplication.
-   */
   async import(json: string): Promise<void> {
     let docs: any;
     try {
@@ -239,51 +258,90 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     if (!Array.isArray(docs)) {
-      // Handle single object case if user manually constructed it
       if (typeof docs === 'object' && docs !== null) {
         docs = [docs];
       } else {
-        throw new Error('Import data must be an array of documents or a single document object');
+        throw new Error('Import data must be an array of documents');
       }
     }
 
     for (const doc of docs as SyncDocument[]) {
-      if (!doc._id || !doc.data) continue; // Skip invalid
+      if (!doc._id || !doc.data) continue;
 
+      // Import logic assumes 'doc.data' is PLAIN JSON (decrypted)
+      // We need to re-encrypt it to store it.
+      
       const local = await this.localStore.get(doc._id);
+      
+      // But wait, to merge, we need to compare PLAIN data.
+      // So let's encrypt AFTER merge.
+
       if (local) {
-        // Merge: using the same logic as sync
-        // We treat the imported doc as "Remote" in the sense of merging logic
-        const merged = this.mergeDocs(local, doc);
-        // Ensure the merged doc is treated as updated NOW so it syncs up
-        merged._updatedAt = Date.now();
-        await this.localStore.put(merged);
-        this.emit('change', { type: 'import', id: doc._id, doc: merged });
+        // Need to pass a "Plain" version of local to merge? 
+        // Or decrypt local first.
+        // And the 'doc' from import is already plain.
+        // My mergeDocs expects two SyncDocuments which might contain encrypted data.
+        // I should probably overload or adapt mergeDocs.
+        
+        // Let's manually do it here to be safe and explicit
+        const localPlainData = await this.decryptData(local.data);
+        const importedPlainData = doc.data; // Assumed plain
+
+        // Logic: Older < Newer
+        const mergedPlainData = local._updatedAt > doc._updatedAt 
+            ? merge(importedPlainData, localPlainData) 
+            : merge(localPlainData, importedPlainData);
+
+        const mergedEncrypted = await this.encryptData(mergedPlainData);
+
+        const mergedDoc: SyncDocument = {
+            ...local,
+            _updatedAt: Date.now(),
+            data: mergedEncrypted
+        };
+        
+        await this.localStore.put(mergedDoc);
+        this.emit('change', { type: 'import', id: doc._id, doc: mergedDoc });
+
       } else {
         // New insert
-        doc._updatedAt = Date.now(); // Mark as new
-        await this.localStore.put(doc);
-        this.emit('change', { type: 'import', id: doc._id, doc });
+        const encryptedData = await this.encryptData(doc.data);
+        const newDoc: SyncDocument = {
+            ...doc,
+            _updatedAt: Date.now(),
+            data: encryptedData
+        };
+        await this.localStore.put(newDoc);
+        this.emit('change', { type: 'import', id: doc._id, doc: newDoc });
       }
     }
   }
 
-  private mergeDocs(local: SyncDocument, remote: SyncDocument): SyncDocument {
+  // --- Merge Logic ---
+
+  private async mergeDocs(local: SyncDocument, remote: SyncDocument): Promise<SyncDocument> {
     if (local._deleted && remote._deleted) return remote;
     if (local._deleted) return remote._updatedAt > local._updatedAt ? remote : local;
     if (remote._deleted) return local._updatedAt > remote._updatedAt ? local : remote;
 
+    // Decrypt both
+    const localPlain = await this.decryptData(local.data);
+    const remotePlain = await this.decryptData(remote.data);
+
     // Deep merge data: Older < Newer (Newer overwrites Older)
-    const mergedData = local._updatedAt > remote._updatedAt 
-      ? merge(remote.data, local.data) 
-      : merge(local.data, remote.data);
+    const mergedPlain = local._updatedAt > remote._updatedAt 
+      ? merge(remotePlain, localPlain) 
+      : merge(localPlain, remotePlain);
     
+    // Encrypt result
+    const mergedEncrypted = await this.encryptData(mergedPlain);
+
     return {
       _id: local._id,
-      _updatedAt: Date.now(), // Merged version is new
+      _updatedAt: Date.now(), 
       _rev: uuidv4(),
-      _etag: remote._etag, 
-      data: mergedData
+      _etag: remote._etag, // Invalidate/Reuse? Usually new push gets new etag.
+      data: mergedEncrypted
     };
   }
 }
