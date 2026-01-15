@@ -11,17 +11,24 @@ import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
   private remote: S3RemoteAdapter;
+  private sharedRemote: S3RemoteAdapter;
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
+  private sharedDocs: Map<string, string> = new Map();
 
   constructor(config: SovereignConfig, customLocalStorage?: ILocalStorage) {
     super();
     this.config = config;
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
     this.remote = new S3RemoteAdapter(config.s3, config.paths);
+    this.sharedRemote = new S3RemoteAdapter(config.s3, {
+      appId: config.paths.appId,
+      userId: 'shared',
+      storeId: 'shared'
+    });
     
     if (config.encryptionKey) {
       this.crypto = new AESCryptoAdapter(config.encryptionKey);
@@ -36,6 +43,11 @@ export class SovereignS3nc extends EventEmitter {
       this.lastSyncTime = meta.data.lastSyncTime || 0;
     }
 
+    const shares = await this.localStore.get('_sovereign_shares');
+    if (shares && shares.data) {
+      this.sharedDocs = new Map(Object.entries(shares.data));
+    }
+
     if (this.config.syncIntervalMs && this.config.syncIntervalMs > 0) {
       this.startAutoSync();
     }
@@ -47,6 +59,75 @@ export class SovereignS3nc extends EventEmitter {
 
   public get lastSyncedAt(): number {
     return this.lastSyncTime;
+  }
+
+  // --- Sharing ---
+
+  async share(docId: string): Promise<string> {
+    const doc = await this.localStore.get(docId);
+    if (!doc || doc._deleted) {
+      throw new Error('Document not found');
+    }
+
+    if (this.sharedDocs.has(docId)) {
+      return this.sharedDocs.get(docId)!;
+    }
+
+    const sharedId = uuidv4();
+    this.sharedDocs.set(docId, sharedId);
+    
+    await this.persistShares();
+    await this.updateSharedDoc(doc, sharedId);
+
+    return sharedId;
+  }
+
+  async unshare(docId: string): Promise<void> {
+    if (!this.sharedDocs.has(docId)) return;
+    
+    const sharedId = this.sharedDocs.get(docId)!;
+    this.sharedDocs.delete(docId);
+    await this.persistShares();
+    
+    // Attempt to delete the shared copy
+    try {
+      await this.sharedRemote.delete(sharedId);
+    } catch (e) {
+      console.warn(`Failed to delete shared doc ${sharedId}`, e);
+    }
+  }
+
+  private async persistShares(): Promise<void> {
+    const data = Object.fromEntries(this.sharedDocs);
+    await this.localStore.put({
+      _id: '_sovereign_shares',
+      _updatedAt: Date.now(),
+      data
+    });
+  }
+
+  private async updateSharedDoc(doc: SyncDocument, sharedId: string): Promise<void> {
+    const sharedDoc: SyncDocument = {
+      _id: sharedId,
+      _rev: uuidv4(), // New revision for the shared copy
+      _updatedAt: Date.now(),
+      _deleted: doc._deleted,
+      data: doc.data // Copy encrypted data as-is
+    };
+    await this.sharedRemote.put(sharedDoc);
+  }
+
+  private async putLocal(doc: SyncDocument): Promise<void> {
+    await this.localStore.put(doc);
+    
+    // If this is a regular document and it is shared, update the share
+    if (!doc._id.startsWith('_sovereign_') && this.sharedDocs.has(doc._id)) {
+      try {
+        await this.updateSharedDoc(doc, this.sharedDocs.get(doc._id)!);
+      } catch (e) {
+        console.error(`Failed to update shared doc copy for ${doc._id}`, e);
+      }
+    }
   }
 
   // --- Encryption Helpers ---
@@ -82,7 +163,7 @@ export class SovereignS3nc extends EventEmitter {
       data: storedData
     };
     
-    await this.localStore.put(doc);
+    await this.putLocal(doc);
     this.emit('change', { type: 'save', id, doc });
     return id;
   }
@@ -111,7 +192,7 @@ export class SovereignS3nc extends EventEmitter {
     if (doc) {
       doc._deleted = true;
       doc._updatedAt = Date.now();
-      await this.localStore.put(doc);
+      await this.putLocal(doc);
       this.emit('change', { type: 'delete', id });
     }
   }
@@ -158,20 +239,20 @@ export class SovereignS3nc extends EventEmitter {
           
           if (remoteDoc) {
             if (!localDoc) {
-              await this.localStore.put(remoteDoc);
+              await this.putLocal(remoteDoc);
               stats.pulled++;
               this.emit('change', { type: 'pull', id, doc: remoteDoc });
             } else {
               const isLocalDirty = localDoc._updatedAt > this.lastSyncTime;
               
               if (!isLocalDirty) {
-                 await this.localStore.put(remoteDoc);
+                 await this.putLocal(remoteDoc);
                  stats.pulled++;
                  this.emit('change', { type: 'pull', id, doc: remoteDoc });
               } else {
                 if (this.config.conflictResolutionStrategy === 'LastWriteWins') {
                   if (remoteDoc._updatedAt > localDoc._updatedAt) {
-                    await this.localStore.put(remoteDoc);
+                    await this.putLocal(remoteDoc);
                     stats.pulled++;
                     this.emit('change', { type: 'pull', id, doc: remoteDoc });
                   }
@@ -179,7 +260,7 @@ export class SovereignS3nc extends EventEmitter {
                   // Merge Strategy
                   // Note: mergeDocs is now async
                   const merged = await this.mergeDocs(localDoc, remoteDoc);
-                  await this.localStore.put(merged);
+                  await this.putLocal(merged);
                   stats.pulled++; 
                   this.emit('change', { type: 'merge', id, doc: merged });
                 }
@@ -203,7 +284,7 @@ export class SovereignS3nc extends EventEmitter {
           
           if (etag) {
             doc._etag = etag;
-            await this.localStore.put(doc);
+            await this.putLocal(doc);
           }
         } catch (e) {
           console.error(`Failed to push doc ${doc._id}`, e);
@@ -300,7 +381,7 @@ export class SovereignS3nc extends EventEmitter {
             data: mergedEncrypted
         };
         
-        await this.localStore.put(mergedDoc);
+        await this.putLocal(mergedDoc);
         this.emit('change', { type: 'import', id: doc._id, doc: mergedDoc });
 
       } else {
@@ -311,7 +392,7 @@ export class SovereignS3nc extends EventEmitter {
             _updatedAt: Date.now(),
             data: encryptedData
         };
-        await this.localStore.put(newDoc);
+        await this.putLocal(newDoc);
         this.emit('change', { type: 'import', id: doc._id, doc: newDoc });
       }
     }
