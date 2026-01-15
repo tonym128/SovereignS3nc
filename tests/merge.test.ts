@@ -11,10 +11,10 @@ describe('SovereignS3nc Merging', () => {
     (S3RemoteAdapter as any).mockClear();
     
     // Default mocks
-    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
-    S3RemoteAdapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
-    S3RemoteAdapter.prototype.delete = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
+    (S3RemoteAdapter.prototype as any).listChanges = jest.fn().mockResolvedValue([]);
+    (S3RemoteAdapter.prototype as any).delete = jest.fn().mockResolvedValue(undefined);
 
     db = new SovereignS3nc({
       s3: {
@@ -22,6 +22,7 @@ describe('SovereignS3nc Merging', () => {
         credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
         bucketName: 'test-bucket'
       },
+      paths: { appId: 'app', userId: 'user', storeId: 'store' },
       syncIntervalMs: 0
     });
   });
@@ -40,10 +41,10 @@ describe('SovereignS3nc Merging', () => {
       data: { tags: ['remote'] }
     };
 
-    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
-      { key: `docs/${docId}.json`, etag: 'remote', lastModified: new Date() }
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([
+      { id: docId, key: `app/user/store/${docId}.json`, etag: 'remote', lastModified: new Date() }
     ]);
-    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteDoc);
+    ((S3RemoteAdapter.prototype as any).get as jest.Mock).mockResolvedValue(remoteDoc);
 
     const stats = await db.sync();
     
@@ -70,10 +71,10 @@ describe('SovereignS3nc Merging', () => {
       data: { status: 'Published' }
     };
 
-    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
-       { key: `docs/${docId}.json`, etag: 'remote', lastModified: new Date() }
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([
+       { id: docId, key: `app/user/store/${docId}.json`, etag: 'remote', lastModified: new Date() }
     ]);
-    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteDoc);
+    ((S3RemoteAdapter.prototype as any).get as jest.Mock).mockResolvedValue(remoteDoc);
 
     await db.sync();
     
@@ -83,8 +84,8 @@ describe('SovereignS3nc Merging', () => {
     // 2. Local is NEWER
     // Reset DB for clarity
     (S3RemoteAdapter as any).mockClear();
-    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
+    (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
 
     // Save local with VERY future timestamp
     const futureTime = Date.now() + 100000;
@@ -103,10 +104,10 @@ describe('SovereignS3nc Merging', () => {
         data: { status: 'RemoteLoss' }
     };
 
-    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
-       { key: 'docs/doc-local-wins.json', etag: 'remote-older', lastModified: new Date() }
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([
+       { id: 'doc-local-wins', key: 'app/user/store/doc-local-wins.json', etag: 'remote-older', lastModified: new Date() }
     ]);
-    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteOlder);
+    ((S3RemoteAdapter.prototype as any).get as jest.Mock).mockResolvedValue(remoteOlder);
 
     await db.sync();
 

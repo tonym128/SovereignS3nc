@@ -7,17 +7,16 @@ jest.mock('../src/adapters/S3RemoteAdapter');
 
 describe('SovereignS3nc', () => {
   let db: SovereignS3nc;
-  const mockS3Adapter = S3RemoteAdapter as unknown as jest.Mocked<S3RemoteAdapter>;
 
   beforeEach(() => {
     // Clear all mocks
     (S3RemoteAdapter as any).mockClear();
 
     // Setup default mock implementation
-    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
-    S3RemoteAdapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
-    S3RemoteAdapter.prototype.delete = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
+    (S3RemoteAdapter.prototype as any).listChanges = jest.fn().mockResolvedValue([]);
+    (S3RemoteAdapter.prototype as any).delete = jest.fn().mockResolvedValue(undefined);
 
     db = new SovereignS3nc({
       s3: {
@@ -25,6 +24,7 @@ describe('SovereignS3nc', () => {
         credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
         bucketName: 'test-bucket'
       },
+      paths: { appId: 'app', userId: 'user', storeId: 'store' },
       syncIntervalMs: 0 // manual sync for tests
     });
   });
@@ -46,7 +46,7 @@ describe('SovereignS3nc', () => {
     const stats = await db.sync();
     
     expect(stats.pushed).toBe(1);
-    expect(S3RemoteAdapter.prototype.put).toHaveBeenCalledTimes(1);
+    expect((S3RemoteAdapter.prototype as any).put).toHaveBeenCalledTimes(1);
   });
 
   test('should pull remote changes', async () => {
@@ -59,10 +59,10 @@ describe('SovereignS3nc', () => {
       data: { name: 'from cloud' }
     };
 
-    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
-      { key: 'docs/remote-id.json', etag: 'abc', lastModified: new Date() }
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([
+      { id: 'remote-id', key: 'app/user/store/remote-id.json', etag: 'abc', lastModified: new Date() }
     ]);
-    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteDoc);
+    ((S3RemoteAdapter.prototype as any).get as jest.Mock).mockResolvedValue(remoteDoc);
 
     const stats = await db.sync();
     

@@ -18,7 +18,8 @@ export class SovereignS3nc extends EventEmitter {
     super();
     this.config = config;
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
-    this.remote = new S3RemoteAdapter(config.s3);
+    // Pass paths to adapter
+    this.remote = new S3RemoteAdapter(config.s3, config.paths);
   }
 
   async init(): Promise<void> {
@@ -117,7 +118,7 @@ export class SovereignS3nc extends EventEmitter {
 
       for (const change of changes) {
         try {
-          const id = change.key.replace('docs/', '').replace('.json', '');
+          const id = change.id;
           const localDoc = await this.localStore.get(id);
 
           // ETag Optimization: If local exists and ETag matches, skip download
@@ -208,6 +209,65 @@ export class SovereignS3nc extends EventEmitter {
     return stats;
   }
 
+  /**
+   * Export documents to a JSON string.
+   * @param id Optional. If provided, exports only that document. If omitted, exports all.
+   */
+  async export(id?: string): Promise<string> {
+    let docs: SyncDocument[] = [];
+    if (id) {
+      const doc = await this.localStore.get(id);
+      if (doc) docs.push(doc);
+    } else {
+      docs = await this.localStore.list(false);
+    }
+    // Filter out internal metadata
+    docs = docs.filter(d => !d._id.startsWith('_sovereign_'));
+    return JSON.stringify(docs, null, 2);
+  }
+
+  /**
+   * Bulk import documents from a JSON string.
+   * Merges with existing documents to avoid duplication.
+   */
+  async import(json: string): Promise<void> {
+    let docs: any;
+    try {
+      docs = JSON.parse(json);
+    } catch (e) {
+      throw new Error('Invalid JSON format');
+    }
+
+    if (!Array.isArray(docs)) {
+      // Handle single object case if user manually constructed it
+      if (typeof docs === 'object' && docs !== null) {
+        docs = [docs];
+      } else {
+        throw new Error('Import data must be an array of documents or a single document object');
+      }
+    }
+
+    for (const doc of docs as SyncDocument[]) {
+      if (!doc._id || !doc.data) continue; // Skip invalid
+
+      const local = await this.localStore.get(doc._id);
+      if (local) {
+        // Merge: using the same logic as sync
+        // We treat the imported doc as "Remote" in the sense of merging logic
+        const merged = this.mergeDocs(local, doc);
+        // Ensure the merged doc is treated as updated NOW so it syncs up
+        merged._updatedAt = Date.now();
+        await this.localStore.put(merged);
+        this.emit('change', { type: 'import', id: doc._id, doc: merged });
+      } else {
+        // New insert
+        doc._updatedAt = Date.now(); // Mark as new
+        await this.localStore.put(doc);
+        this.emit('change', { type: 'import', id: doc._id, doc });
+      }
+    }
+  }
+
   private mergeDocs(local: SyncDocument, remote: SyncDocument): SyncDocument {
     if (local._deleted && remote._deleted) return remote;
     if (local._deleted) return remote._updatedAt > local._updatedAt ? remote : local;
@@ -222,9 +282,7 @@ export class SovereignS3nc extends EventEmitter {
       _id: local._id,
       _updatedAt: Date.now(), // Merged version is new
       _rev: uuidv4(),
-      _etag: remote._etag, // Is this correct? No, the merged doc is new, so ETag is invalid.
-      // Actually, we shouldn't copy ETag if we merged, because the content is different.
-      // S3 will give us a new ETag when we push this merged doc.
+      _etag: remote._etag, 
       data: mergedData
     };
   }

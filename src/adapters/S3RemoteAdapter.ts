@@ -5,8 +5,9 @@ import { Readable } from 'stream';
 export class S3RemoteAdapter {
   private client: S3Client;
   private bucket: string;
+  private prefix: string;
 
-  constructor(config: S3Config) {
+  constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     this.client = new S3Client({
       region: config.region,
       endpoint: config.endpoint,
@@ -14,14 +15,16 @@ export class S3RemoteAdapter {
       forcePathStyle: config.forcePathStyle
     });
     this.bucket = config.bucketName;
+    // Ensure trailing slash
+    this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+  }
+
+  private getKey(id: string): string {
+    return `${this.prefix}${id}.json`;
   }
 
   async put(doc: SyncDocument): Promise<string | undefined> {
-    const key = `docs/${doc._id}.json`;
-    // Clean doc before upload? We might want to NOT send _etag back to S3 inside the JSON 
-    // to keep it clean, but for simplicity we send it. 
-    // S3 calculates its own ETag on the content.
-    
+    const key = this.getKey(doc._id);
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
@@ -32,5 +35,83 @@ export class S3RemoteAdapter {
       }
     });
     const response = await this.client.send(command);
-    // Remove quotes from ETag if present (S3 often returns "\"hash\"")
-    return response.ETag ? response.ETag.replace(/
+    return response.ETag ? response.ETag.replace(/"/g, '') : undefined;
+  }
+
+  async get(id: string): Promise<SyncDocument | null> {
+    const key = this.getKey(id);
+    try {
+      const command = new GetObjectCommand({
+        Bucket: this.bucket,
+        Key: key
+      });
+      const response = await this.client.send(command);
+      if (!response.Body) return null;
+      
+      const str = await this.streamToString(response.Body as Readable);
+      const doc = JSON.parse(str);
+      
+      if (response.ETag) {
+        doc._etag = response.ETag.replace(/"/g, '');
+      }
+      return doc;
+    } catch (error: any) {
+      if (error.name === 'NoSuchKey' || error.$metadata?.httpStatusCode === 404) {
+        return null;
+      }
+      throw error;
+    }
+  }
+
+  async listChanges(since: Date): Promise<RemoteChange[]> {
+    const changes: RemoteChange[] = [];
+    let continuationToken: string | undefined;
+
+    do {
+      const command: ListObjectsV2Command = new ListObjectsV2Command({
+        Bucket: this.bucket,
+        Prefix: this.prefix,
+        ContinuationToken: continuationToken
+      });
+      
+      const response = await this.client.send(command);
+      
+      if (response.Contents) {
+        for (const item of response.Contents) {
+          if (item.Key && item.LastModified && item.LastModified > since) {
+            // Extract ID: prefix/{id}.json
+            const id = item.Key.substring(this.prefix.length).replace('.json', '');
+            
+            changes.push({
+              id: id,
+              key: item.Key,
+              etag: item.ETag ? item.ETag.replace(/"/g, '') : undefined,
+              lastModified: item.LastModified
+            });
+          }
+        }
+      }
+      continuationToken = response.NextContinuationToken;
+    } while (continuationToken);
+
+    return changes;
+  }
+
+  async delete(id: string): Promise<void> {
+    const key = this.getKey(id);
+    const command = new DeleteObjectCommand({
+      Bucket: this.bucket,
+      Key: key
+    });
+    await this.client.send(command);
+  }
+
+  private streamToString(stream: Readable): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const chunks: any[] = [];
+      stream.on('data', (chunk) => chunks.push(chunk));
+      stream.on('error', reject);
+      stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
+    });
+  }
+}

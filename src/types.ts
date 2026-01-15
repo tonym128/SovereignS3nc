@@ -11,6 +11,11 @@ export interface S3Config {
 
 export interface SovereignConfig {
   s3: S3Config;
+  paths: {
+    appId: string;   // Unique GUID for the application
+    userId: string;  // Unique GUID for the user
+    storeId: string; // Unique GUID for the specific data store
+  };
   syncIntervalMs?: number; // Auto-sync interval, 0 to disable
   localPersistencePath?: string; // Optional path for file-based persistence (if using a file adapter)
   conflictResolutionStrategy?: 'LastWriteWins' | 'Merge'; // Default: Merge
@@ -26,7 +31,8 @@ export interface SyncDocument<T = any> {
 }
 
 export interface RemoteChange {
-  key: string;
+  id: string; // The extracted document ID
+  key: string; // The full S3 key
   etag?: string;
   lastModified?: Date;
 }

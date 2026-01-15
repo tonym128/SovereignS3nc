@@ -6,6 +6,7 @@ A generic, offline-first data storage library that syncs with any S3-compatible 
 
 - **Offline-First**: Reads and writes to local storage (in-memory or file-based).
 - **S3 Sync**: Automatically syncs changes to an S3 bucket.
+- **Optimized Sync**: Uses S3 ETags to avoid unnecessary downloads.
 - **Generic**: Store any JSON-serializable data.
 - **Conflict Resolution**: Last-Write-Wins (LWW) strategy.
 - **Pluggable**: Use the built-in file storage or provide your own local storage adapter (e.g., wrapping IndexedDB, SQLite, etc.).
@@ -32,6 +33,11 @@ const db = new SovereignS3nc({
       secretAccessKey: 'YOUR_SECRET_KEY'
     },
     bucketName: 'my-app-data'
+  },
+  paths: {
+    appId: 'my-app-guid',
+    userId: 'user-guid-123',
+    storeId: 'notes-store'
   },
   syncIntervalMs: 5000,
   conflictResolutionStrategy: 'Merge' // 'Merge' (default) or 'LastWriteWins'
@@ -99,6 +105,21 @@ db.on('syncComplete', (stats) => {
 await db.sync();
 ```
 
+### 4. Import / Export
+
+You can export data to a JSON string (e.g., for backup) and import it back (e.g., for restore or seeding). Importing merges changes with existing data.
+
+```typescript
+// Export all data
+const jsonBackup = await db.export();
+
+// Export specific document
+const singleDocJson = await db.export('my-doc-id');
+
+// Import
+await db.import(jsonBackup);
+```
+
 ## API Reference
 
 The `SovereignS3nc` class provides a generic interface that abstracts away the underlying storage details.
@@ -114,6 +135,8 @@ The `SovereignS3nc` class provides a generic interface that abstracts away the u
 - `getAll<T>(): Promise<T[]>`: Retrieve all non-deleted documents.
 - `delete(id: string): Promise<void>`: Soft-delete a document.
 - `sync(): Promise<SyncStats>`: Force a synchronization cycle.
+- `export(id?: string): Promise<string>`: Export all or a specific document to a JSON string.
+- `import(json: string): Promise<void>`: Bulk load/merge documents from a JSON string.
 
 ## Configuration Examples
 

@@ -6,16 +6,16 @@ jest.mock('../src/adapters/S3RemoteAdapter');
 
 describe('SovereignS3nc ETag Optimization', () => {
   let db: SovereignS3nc;
-  const mockS3Adapter = S3RemoteAdapter as jest.MockedClass<typeof S3RemoteAdapter>;
 
   beforeEach(() => {
-    mockS3Adapter.mockClear();
-    mockS3Adapter.prototype.put = jest.fn().mockResolvedValue('new-etag');
-    mockS3Adapter.prototype.get = jest.fn().mockResolvedValue(null);
-    mockS3Adapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
+    (S3RemoteAdapter as any).mockClear();
+    (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue('new-etag');
+    (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
+    (S3RemoteAdapter.prototype as any).listChanges = jest.fn().mockResolvedValue([]);
     
     db = new SovereignS3nc({
       s3: { region: 'test', credentials: { accessKeyId: 'a', secretAccessKey: 'b' }, bucketName: 'bucket' },
+      paths: { appId: 'app', userId: 'user', storeId: 'store' },
       syncIntervalMs: 0
     });
   });
@@ -34,8 +34,9 @@ describe('SovereignS3nc ETag Optimization', () => {
     await (db as any).localStore.put(localDoc);
 
     // 2. Mock remote listing returning SAME ETag
-    mockS3Adapter.prototype.listChanges.mockResolvedValue([{
-      key: `docs/${docId}.json`,
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([{
+      id: docId,
+      key: `app/user/store/${docId}.json`,
       etag: 'hash-123',
       lastModified: new Date(2000)
     }]);
@@ -43,7 +44,7 @@ describe('SovereignS3nc ETag Optimization', () => {
     await db.sync();
 
     // Verify: get() should NOT be called
-    expect(mockS3Adapter.prototype.get).not.toHaveBeenCalled();
+    expect((S3RemoteAdapter.prototype as any).get).not.toHaveBeenCalled();
   });
 
   test('should download if local ETag differs', async () => {
@@ -59,13 +60,14 @@ describe('SovereignS3nc ETag Optimization', () => {
     await (db as any).localStore.put(localDoc);
 
     // Remote has DIFFERENT ETag
-    mockS3Adapter.prototype.listChanges.mockResolvedValue([{
-      key: `docs/${docId}.json`,
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockResolvedValue([{
+      id: docId,
+      key: `app/user/store/${docId}.json`,
       etag: 'new-hash',
       lastModified: new Date(2000)
     }]);
 
-    mockS3Adapter.prototype.get.mockResolvedValue({
+    ((S3RemoteAdapter.prototype as any).get as jest.Mock).mockResolvedValue({
       _id: docId,
       _updatedAt: 2000,
       _etag: 'new-hash',
@@ -75,7 +77,7 @@ describe('SovereignS3nc ETag Optimization', () => {
     await db.sync();
 
     // Verify: get() WAS called
-    expect(mockS3Adapter.prototype.get).toHaveBeenCalledWith(docId);
+    expect((S3RemoteAdapter.prototype as any).get).toHaveBeenCalledWith(docId);
     
     // Verify local updated
     const updated = await db.get<any>(docId);
@@ -89,7 +91,7 @@ describe('SovereignS3nc ETag Optimization', () => {
     const id = await db.save({ val: 'fresh' });
     
     // Mock S3 put returning an ETag
-    mockS3Adapter.prototype.put.mockResolvedValue('s3-etag-xyz');
+    ((S3RemoteAdapter.prototype as any).put as jest.Mock).mockResolvedValue('s3-etag-xyz');
 
     await db.sync();
 

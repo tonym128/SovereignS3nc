@@ -8,9 +8,9 @@ describe('SovereignS3nc Public API', () => {
 
   beforeEach(() => {
     (S3RemoteAdapter as any).mockClear();
-    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
-    S3RemoteAdapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
+    (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue(undefined);
+    (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
+    (S3RemoteAdapter.prototype as any).listChanges = jest.fn().mockResolvedValue([]);
     
     db = new SovereignS3nc({
       s3: {
@@ -18,6 +18,7 @@ describe('SovereignS3nc Public API', () => {
         credentials: { accessKeyId: 'test', secretAccessKey: 'test' },
         bucketName: 'test-bucket'
       },
+      paths: { appId: 'app', userId: 'user', storeId: 'store' },
       syncIntervalMs: 0
     });
   });
@@ -30,7 +31,7 @@ describe('SovereignS3nc Public API', () => {
     expect(db.lastSyncedAt).toBe(0);
 
     // Mock a slow sync
-    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockImplementation(async () => {
+    ((S3RemoteAdapter.prototype as any).listChanges as jest.Mock).mockImplementation(async () => {
       await new Promise(resolve => setTimeout(resolve, 50));
       return [];
     });
