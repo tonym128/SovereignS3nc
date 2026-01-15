@@ -16,8 +16,8 @@ interface ShareMetadata {
 
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
-  private remote: S3RemoteAdapter;
-  private sharedRemote: S3RemoteAdapter;
+  private remote?: S3RemoteAdapter;
+  private sharedRemote?: S3RemoteAdapter;
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
@@ -25,12 +25,16 @@ export class SovereignS3nc extends EventEmitter {
   private lastSyncTime: number = 0;
   private sharedDocs: Map<string, ShareMetadata> = new Map();
 
-  constructor(config: SovereignConfig, customLocalStorage?: ILocalStorage) {
+  constructor(
+    config: SovereignConfig, 
+    customLocalStorage?: ILocalStorage, 
+    customCryptoAdapter?: ICryptoAdapter
+  ) {
     super();
     this.config = config;
     
     // Security Warning
-    if (config.s3.endpoint && config.s3.endpoint.startsWith('http://')) {
+    if (config.s3?.endpoint && config.s3.endpoint.startsWith('http://')) {
       console.warn(
         'SECURITY WARNING: You are using an insecure HTTP endpoint. ' + 
         'Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. ' +
@@ -39,14 +43,19 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
-    this.remote = new S3RemoteAdapter(config.s3, config.paths);
-    this.sharedRemote = new S3RemoteAdapter(config.s3, {
-      appId: config.paths.appId,
-      userId: 'shared',
-      storeId: 'shared'
-    });
     
-    if (config.encryptionKey) {
+    if (config.s3) {
+      this.remote = new S3RemoteAdapter(config.s3, config.paths);
+      this.sharedRemote = new S3RemoteAdapter(config.s3, {
+        appId: config.paths.appId,
+        userId: 'shared',
+        storeId: 'shared'
+      });
+    }
+    
+    if (customCryptoAdapter) {
+      this.crypto = customCryptoAdapter;
+    } else if (config.encryptionKey) {
       this.crypto = new AESCryptoAdapter(config.encryptionKey);
     }
   }
@@ -124,10 +133,17 @@ export class SovereignS3nc extends EventEmitter {
     this.sharedDocs.set(docId, metadata);
     
     await this.persistShares();
-    await this.updateSharedDoc(doc, metadata);
-
-    if (isPublic) {
-      await this.addToPublicIndex(metadata);
+    try {
+      if (this.sharedRemote) {
+        await this.updateSharedDoc(doc, metadata);
+        if (isPublic) {
+          await this.addToPublicIndex(metadata);
+        }
+      } else {
+        console.warn('Document marked as shared locally, but not synced (offline mode).');
+      }
+    } catch (e) {
+      console.error('Failed to sync share to remote', e);
     }
 
     return sharedId;
@@ -141,13 +157,15 @@ export class SovereignS3nc extends EventEmitter {
     await this.persistShares();
     
     // Attempt to delete the shared copy
-    try {
-      await this.sharedRemote.delete(metadata.sharedId);
-      if (metadata.isPublic) {
-        await this.removeFromPublicIndex(metadata.sharedId);
+    if (this.sharedRemote) {
+      try {
+        await this.sharedRemote.delete(metadata.sharedId);
+        if (metadata.isPublic) {
+          await this.removeFromPublicIndex(metadata.sharedId);
+        }
+      } catch (e) {
+        console.warn(`Failed to delete shared doc ${metadata.sharedId}`, e);
       }
-    } catch (e) {
-      console.warn(`Failed to delete shared doc ${metadata.sharedId}`, e);
     }
   }
 
@@ -160,14 +178,30 @@ export class SovereignS3nc extends EventEmitter {
     });
   }
 
+  // Helper to get a crypto adapter for a specific key (handles Browser vs Node)
+  private getCryptoAdapter(key: string): ICryptoAdapter {
+    if (this.crypto && this.crypto.constructor.name === 'WebCryptoAdapter') {
+      // We are likely in a browser environment or user explicitly wants WebCrypto
+      // We need to import it dynamically or assume it's available?
+      // Since we can't easily import WebCryptoAdapter here without circular deps if not careful.
+      // But we can check constructor.
+      // Actually, we can just use the constructor of the existing instance!
+      const AdapterClass = this.crypto.constructor as any;
+      return new AdapterClass(key);
+    }
+    // Default to AESCryptoAdapter (Node)
+    return new AESCryptoAdapter(key);
+  }
+
   private async updateSharedDoc(doc: SyncDocument, metadata: ShareMetadata): Promise<void> {
+    if (!this.sharedRemote) return;
     let payload = doc.data;
 
     // If public, we need to decrypt the local data and re-encrypt with the shared key
     if (metadata.isPublic && metadata.encryptionKey) {
        try {
          const plain = await this.decryptData(doc.data);
-         const tempCrypto = new AESCryptoAdapter(metadata.encryptionKey);
+         const tempCrypto = this.getCryptoAdapter(metadata.encryptionKey);
          payload = await tempCrypto.encrypt(plain);
        } catch (e) {
          console.error('Failed to re-encrypt for sharing', e);
@@ -201,7 +235,7 @@ export class SovereignS3nc extends EventEmitter {
   // --- Public Index Management ---
 
   private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
-    if (!metadata.encryptionKey) return;
+    if (!metadata.encryptionKey || !this.sharedRemote) return;
     try {
       // Create a small metadata object
       const publicMeta = {
@@ -229,6 +263,7 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   private async removeFromPublicIndex(sharedId: string): Promise<void> {
+    if (!this.sharedRemote) return;
     try {
       await this.sharedRemote.delete(`public/${sharedId}`);
     } catch (e) {
@@ -239,6 +274,7 @@ export class SovereignS3nc extends EventEmitter {
   // --- Public Consumption ---
 
   async getPublicShares(): Promise<any[]> {
+    if (!this.sharedRemote) return [];
     // 1. List all changes/objects in the bucket that start with 'public/'
     // Since listChanges takes a date, we can use a very old date to get everything, 
     // or we need a new list method on the adapter. 
@@ -253,6 +289,7 @@ export class SovereignS3nc extends EventEmitter {
     
     // 2. Fetch all metadata files in parallel
     const results = await Promise.all(publicItems.map(async item => {
+       if (!this.sharedRemote) return null;
        const doc = await this.sharedRemote.get(item.id);
        return doc ? doc.data : null;
     }));
@@ -261,10 +298,11 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   async getSharedDoc(sharedId: string, key: string): Promise<any> {
+    if (!this.sharedRemote) return null;
     const doc = await this.sharedRemote.get(sharedId);
     if (!doc) return null;
     
-    const tempCrypto = new AESCryptoAdapter(key);
+    const tempCrypto = this.getCryptoAdapter(key);
     return await tempCrypto.decrypt(doc.data);
   }
 
@@ -295,6 +333,52 @@ export class SovereignS3nc extends EventEmitter {
     return newId;
   }
 
+
+  // --- Connection Management ---
+
+  async connect(s3Config: SovereignConfig['s3']): Promise<void> {
+    if (!s3Config) throw new Error('S3 configuration required');
+    
+    this.config.s3 = s3Config;
+    
+    if (s3Config.endpoint && s3Config.endpoint.startsWith('http://')) {
+       console.warn('SECURITY WARNING: HTTP endpoint detected. Use HTTPS.');
+    }
+
+    this.remote = new S3RemoteAdapter(s3Config, this.config.paths);
+    this.sharedRemote = new S3RemoteAdapter(s3Config, {
+      appId: this.config.paths.appId,
+      userId: 'shared',
+      storeId: 'shared'
+    });
+
+    // Trigger immediate sync to catch up
+    // Also push any pending shares
+    await this.syncShares();
+    await this.sync();
+
+    if (this.config.syncIntervalMs && this.config.syncIntervalMs > 0) {
+      this.startAutoSync();
+    }
+  }
+
+  private async syncShares(): Promise<void> {
+     if (!this.sharedRemote) return;
+     for (const [docId, meta] of this.sharedDocs) {
+       try {
+         const doc = await this.localStore.get(docId);
+         if (doc && !doc._deleted) {
+           await this.updateSharedDoc(doc, meta);
+           if (meta.isPublic) await this.addToPublicIndex(meta);
+         } else if (doc && doc._deleted) {
+           await this.sharedRemote.delete(meta.sharedId);
+           if (meta.isPublic) await this.removeFromPublicIndex(meta.sharedId);
+         }
+       } catch (e) {
+         console.error(`Failed to sync share ${docId}`, e);
+       }
+     }
+  }
 
   // --- Encryption Helpers ---
 
@@ -380,6 +464,7 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   async sync(): Promise<SyncStats> {
+    if (!this.remote) return { pushed: 0, pulled: 0, errors: 0 };
     if (this.isSyncing) return { pushed: 0, pulled: 0, errors: 0 };
     this.isSyncing = true;
     const stats: SyncStats = { pushed: 0, pulled: 0, errors: 0 };

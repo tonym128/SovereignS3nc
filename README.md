@@ -45,6 +45,32 @@ const db = new SovereignS3nc({
 });
 
 await db.init();
+
+### Local-Only Mode (Offline First)
+
+You can initialize `SovereignS3nc` without S3 credentials to work in a strictly local mode. This is useful for onboarding users before they have an account or if you want to delay cloud sync.
+
+```typescript
+const db = new SovereignS3nc({
+  paths: { appId, userId, storeId },
+  encryptionKey: '...'
+});
+
+await db.init();
+// Works fully offline
+await db.save({ ... });
+```
+
+### Connect to Cloud
+
+Later, when credentials are available, you can connect and sync everything (including retroactive shares):
+
+```typescript
+await db.connect({
+  region: 'us-east-1',
+  bucketName: 'my-bucket',
+  credentials: { ... }
+});
 ```
 
 ### Encryption

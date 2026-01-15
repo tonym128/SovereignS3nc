@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "build:bundle": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.min.js --sourcemap --format=esm",
+    "build": "tsc && npm run build:bundle",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "esbuild": "^0.27.2",
     "fake-indexeddb": "^6.2.5",
     "jest": "^30.2.0",
     "rimraf": "^6.1.2",
