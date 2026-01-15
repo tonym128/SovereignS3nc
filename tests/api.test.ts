@@ -5,13 +5,12 @@ jest.mock('../src/adapters/S3RemoteAdapter');
 
 describe('SovereignS3nc Public API', () => {
   let db: SovereignS3nc;
-  const mockS3Adapter = S3RemoteAdapter as jest.MockedClass<typeof S3RemoteAdapter>;
 
   beforeEach(() => {
-    mockS3Adapter.mockClear();
-    mockS3Adapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    mockS3Adapter.prototype.get = jest.fn().mockResolvedValue(null);
-    mockS3Adapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
+    (S3RemoteAdapter as any).mockClear();
+    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
+    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
+    S3RemoteAdapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
     
     db = new SovereignS3nc({
       s3: {
@@ -31,7 +30,7 @@ describe('SovereignS3nc Public API', () => {
     expect(db.lastSyncedAt).toBe(0);
 
     // Mock a slow sync
-    mockS3Adapter.prototype.listChanges.mockImplementation(async () => {
+    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockImplementation(async () => {
       await new Promise(resolve => setTimeout(resolve, 50));
       return [];
     });

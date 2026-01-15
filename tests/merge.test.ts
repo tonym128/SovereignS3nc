@@ -6,16 +6,15 @@ jest.mock('../src/adapters/S3RemoteAdapter');
 
 describe('SovereignS3nc Merging', () => {
   let db: SovereignS3nc;
-  const mockS3Adapter = S3RemoteAdapter as jest.MockedClass<typeof S3RemoteAdapter>;
 
   beforeEach(() => {
-    mockS3Adapter.mockClear();
+    (S3RemoteAdapter as any).mockClear();
     
     // Default mocks
-    mockS3Adapter.prototype.put = jest.fn().mockResolvedValue(undefined);
-    mockS3Adapter.prototype.get = jest.fn().mockResolvedValue(null);
-    mockS3Adapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
-    mockS3Adapter.prototype.delete = jest.fn().mockResolvedValue(undefined);
+    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
+    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
+    S3RemoteAdapter.prototype.listChanges = jest.fn().mockResolvedValue([]);
+    S3RemoteAdapter.prototype.delete = jest.fn().mockResolvedValue(undefined);
 
     db = new SovereignS3nc({
       s3: {
@@ -41,8 +40,10 @@ describe('SovereignS3nc Merging', () => {
       data: { tags: ['remote'] }
     };
 
-    mockS3Adapter.prototype.listChanges.mockResolvedValue([`docs/${docId}.json`]);
-    mockS3Adapter.prototype.get.mockResolvedValue(remoteDoc);
+    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
+      { key: `docs/${docId}.json`, etag: 'remote', lastModified: new Date() }
+    ]);
+    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteDoc);
 
     const stats = await db.sync();
     
@@ -62,7 +63,6 @@ describe('SovereignS3nc Merging', () => {
     
     // 1. Local is OLDER
     await db.save({ _id: docId, status: 'Draft' });
-    // Manually set time back? No, just make remote future.
     
     const remoteDoc: SyncDocument = {
       _id: docId,
@@ -70,8 +70,10 @@ describe('SovereignS3nc Merging', () => {
       data: { status: 'Published' }
     };
 
-    mockS3Adapter.prototype.listChanges.mockResolvedValue([`docs/${docId}.json`]);
-    mockS3Adapter.prototype.get.mockResolvedValue(remoteDoc);
+    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
+       { key: `docs/${docId}.json`, etag: 'remote', lastModified: new Date() }
+    ]);
+    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteDoc);
 
     await db.sync();
     
@@ -79,13 +81,11 @@ describe('SovereignS3nc Merging', () => {
     expect(doc.status).toBe('Published'); // Remote (Newer) wins
 
     // 2. Local is NEWER
-    // Update local again (now it's > remote's previous +5000?) 
-    // Wait, syncing updates local time to Now().
-    // Let's create a new conflict.
-    
     // Reset DB for clarity
-    mockS3Adapter.mockClear();
-    
+    (S3RemoteAdapter as any).mockClear();
+    S3RemoteAdapter.prototype.put = jest.fn().mockResolvedValue(undefined);
+    S3RemoteAdapter.prototype.get = jest.fn().mockResolvedValue(null);
+
     // Save local with VERY future timestamp
     const futureTime = Date.now() + 100000;
     const localDoc: SyncDocument = {
@@ -103,8 +103,10 @@ describe('SovereignS3nc Merging', () => {
         data: { status: 'RemoteLoss' }
     };
 
-    mockS3Adapter.prototype.listChanges.mockResolvedValue(['docs/doc-local-wins.json']);
-    mockS3Adapter.prototype.get.mockResolvedValue(remoteOlder);
+    (S3RemoteAdapter.prototype.listChanges as jest.Mock).mockResolvedValue([
+       { key: 'docs/doc-local-wins.json', etag: 'remote-older', lastModified: new Date() }
+    ]);
+    (S3RemoteAdapter.prototype.get as jest.Mock).mockResolvedValue(remoteOlder);
 
     await db.sync();
 
