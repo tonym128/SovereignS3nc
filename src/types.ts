@@ -19,6 +19,7 @@ export interface SovereignConfig {
   syncIntervalMs?: number; // Auto-sync interval, 0 to disable
   localPersistencePath?: string; // Optional path for file-based persistence (if using a file adapter)
   conflictResolutionStrategy?: 'LastWriteWins' | 'Merge'; // Default: Merge
+  encryptionKey?: string; // Optional: Enable transparent encryption
 }
 
 export interface SyncDocument<T = any> {
