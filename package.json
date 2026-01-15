@@ -1,0 +1,33 @@
+{
+  "name": "sovereigns3nc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.969.0",
+    "@types/node": "^25.0.8",
+    "@types/uuid": "^9.0.0",
+    "idb": "^8.0.3",
+    "ts-deepmerge": "^7.0.3",
+    "typescript": "^5.9.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "fake-indexeddb": "^6.2.5",
+    "jest": "^30.2.0",
+    "rimraf": "^6.1.2",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2"
+  }
+}

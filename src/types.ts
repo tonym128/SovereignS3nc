@@ -1,0 +1,38 @@
+export interface S3Config {
+  region: string;
+  endpoint?: string; // For custom providers like Garage or OCI
+  credentials: {
+    accessKeyId: string;
+    secretAccessKey: string;
+  };
+  bucketName: string;
+  forcePathStyle?: boolean; // Often needed for custom S3 implementations
+}
+
+export interface SovereignConfig {
+  s3: S3Config;
+  syncIntervalMs?: number; // Auto-sync interval, 0 to disable
+  localPersistencePath?: string; // Optional path for file-based persistence (if using a file adapter)
+  conflictResolutionStrategy?: 'LastWriteWins' | 'Merge'; // Default: Merge
+}
+
+export interface SyncDocument<T = any> {
+  _id: string;
+  _rev?: string; // Revision ID for conflict resolution (simple implementation)
+  _updatedAt: number;
+  _deleted?: boolean;
+  _etag?: string; // S3 ETag for optimization
+  data: T;
+}
+
+export interface RemoteChange {
+  key: string;
+  etag?: string;
+  lastModified?: Date;
+}
+
+export interface SyncStats {
+  pushed: number;
+  pulled: number;
+  errors: number;
+}
