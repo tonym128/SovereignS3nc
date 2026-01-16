@@ -144,14 +144,14 @@ await db.sync();
 You can export data to a JSON string (e.g., for backup) and import it back (e.g., for restore or seeding). Importing merges changes with existing data.
 
 ```typescript
-// Export all data
-const jsonBackup = await db.export();
+// Export all documents (decrypted)
+const jsonBackup = await db.exportData();
 
 // Export specific document
-const singleDocJson = await db.export('my-doc-id');
+const singleDocJson = await db.exportData('my-doc-id');
 
-// Import
-await db.import(jsonBackup);
+// Import (merges with existing)
+await db.importData(jsonBackup);
 ```
 
 ### 5. Sharing

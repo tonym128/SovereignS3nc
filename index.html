@@ -216,7 +216,7 @@
             const tbody = document.querySelector('#docs-table tbody');
             
             try {
-                const json = await s3nc.export(); 
+                const json = await s3nc.exportData(); 
                 const docs = JSON.parse(json);
                 const lastSync = s3nc.lastSyncedAt || 0;
                 const sharedMap = s3nc.shares || new Map();

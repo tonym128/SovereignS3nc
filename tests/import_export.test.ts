@@ -25,7 +25,7 @@ describe('SovereignS3nc Import/Export', () => {
     await db.save({ _id: '1', title: 'One' });
     await db.save({ _id: '2', title: 'Two' });
 
-    const json = await db.export();
+    const json = await db.exportData();
     const parsed = JSON.parse(json);
 
     expect(Array.isArray(parsed)).toBe(true);
@@ -39,7 +39,7 @@ describe('SovereignS3nc Import/Export', () => {
     await db.save({ _id: '1', title: 'One' });
     await db.save({ _id: '2', title: 'Two' });
 
-    const json = await db.export('1');
+    const json = await db.exportData('1');
     const parsed = JSON.parse(json);
 
     expect(Array.isArray(parsed)).toBe(true);
@@ -55,7 +55,7 @@ describe('SovereignS3nc Import/Export', () => {
     ];
     const json = JSON.stringify(importData);
 
-    await db.import(json);
+    await db.importData(json);
 
     const doc = await db.get('3');
     expect(doc).toBeDefined();
@@ -77,7 +77,7 @@ describe('SovereignS3nc Import/Export', () => {
       { _id: 'merge-me', data: { description: 'Imported' }, _updatedAt: 0 }
     ];
     
-    await db.import(JSON.stringify(importData));
+    await db.importData(JSON.stringify(importData));
 
     const doc = await db.get<any>('merge-me');
     

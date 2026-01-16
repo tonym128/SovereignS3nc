@@ -57,8 +57,7 @@ describe('SovereignS3nc Encryption', () => {
     await db.init();
     await db.save({ secret: 'export me' });
     
-    const json = await db.export();
-    const parsed = JSON.parse(json);
+          const json = await db.exportData();    const parsed = JSON.parse(json);
     
     // Export should be plain text
     expect(parsed[0].data.secret).toBe('export me');

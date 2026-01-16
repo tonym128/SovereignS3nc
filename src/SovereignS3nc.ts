@@ -18,10 +18,17 @@ export interface ShareMetadata {
   encryptionKey?: string;
 }
 
+// Type for the public/index.json file
+type PublicIndex = Record<string, {
+  id: string;
+  key: string;
+  updatedAt: number;
+}>;
+
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
-  public remote?: IRemoteAdapter; // Changed to Interface
-  private sharedRemote?: IRemoteAdapter; // Changed to Interface
+  public remote?: IRemoteAdapter; 
+  private sharedRemote?: IRemoteAdapter; 
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
@@ -41,7 +48,6 @@ export class SovereignS3nc extends EventEmitter {
     super();
     this.config = config;
     
-    // Security Warning
     if (config.s3?.endpoint && config.s3.endpoint.startsWith('http://')) {
       console.warn(
         'SECURITY WARNING: You are using an insecure HTTP endpoint. ' + 
@@ -51,8 +57,6 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
-    
-    // Remote Initialization Logic
     this.initRemote(config);
     
     if (customCryptoAdapter) {
@@ -64,7 +68,6 @@ export class SovereignS3nc extends EventEmitter {
 
   private initRemote(config: SovereignConfig) {
     if (config.ociParUrl) {
-      // OCI PAR Strategy
       this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths);
       this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
         appId: config.paths.appId,
@@ -72,7 +75,6 @@ export class SovereignS3nc extends EventEmitter {
         storeId: 'shared'
       });
     } else if (config.s3) {
-      // Standard S3 Strategy
       this.remote = new S3RemoteAdapter(config.s3, config.paths);
       this.sharedRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
@@ -92,7 +94,6 @@ export class SovereignS3nc extends EventEmitter {
 
     const shares = await this.localStore.get('_sovereign_shares');
     if (shares && shares.data) {
-      // Migrate legacy string values to ShareMetadata
       const entries = Object.entries(shares.data).map(([key, value]): [string, ShareMetadata] => {
         if (typeof value === 'string') {
           return [key, { sharedId: value, isPublic: false }];
@@ -125,15 +126,12 @@ export class SovereignS3nc extends EventEmitter {
 
     if (this.sharedDocs.has(docId)) {
       const existing = this.sharedDocs.get(docId)!;
-      // If requested status matches existing, return existing ID
       if (existing.isPublic === isPublic) {
         return existing.sharedId;
       }
-      // Status change not fully supported in this simple version without full re-share logic
-      // But we can update metadata
       existing.isPublic = isPublic;
       if (isPublic && !existing.encryptionKey) {
-        existing.encryptionKey = uuidv4().replace(/-/g, ''); // Simple key gen
+        existing.encryptionKey = uuidv4().replace(/-/g, '');
       }
       this.sharedDocs.set(docId, existing);
       await this.persistShares();
@@ -178,7 +176,6 @@ export class SovereignS3nc extends EventEmitter {
     this.sharedDocs.delete(docId);
     await this.persistShares();
     
-    // Attempt to delete the shared copy
     if (this.sharedRemote) {
       try {
         await this.sharedRemote.delete(metadata.sharedId);
@@ -200,18 +197,11 @@ export class SovereignS3nc extends EventEmitter {
     });
   }
 
-  // Helper to get a crypto adapter for a specific key (handles Browser vs Node)
   private getCryptoAdapter(key: string): ICryptoAdapter {
     if (this.crypto && this.crypto.constructor.name === 'WebCryptoAdapter') {
-      // We are likely in a browser environment or user explicitly wants WebCrypto
-      // We need to import it dynamically or assume it's available?
-      // Since we can't easily import WebCryptoAdapter here without circular deps if not careful.
-      // But we can check constructor.
-      // Actually, we can just use the constructor of the existing instance!
       const AdapterClass = this.crypto.constructor as any;
       return new AdapterClass(key);
     }
-    // Default to AESCryptoAdapter (Node)
     return new AESCryptoAdapter(key);
   }
 
@@ -219,7 +209,6 @@ export class SovereignS3nc extends EventEmitter {
     if (!this.sharedRemote) return;
     let payload = doc.data;
 
-    // If public, we need to decrypt the local data and re-encrypt with the shared key
     if (metadata.isPublic && metadata.encryptionKey) {
        try {
          const plain = await this.decryptData(doc.data);
@@ -227,7 +216,7 @@ export class SovereignS3nc extends EventEmitter {
          payload = await tempCrypto.encrypt(plain);
        } catch (e) {
          console.error('Failed to re-encrypt for sharing', e);
-         return; // Abort share update if encryption fails
+         return; 
        }
     }
 
@@ -244,7 +233,6 @@ export class SovereignS3nc extends EventEmitter {
   private async putLocal(doc: SyncDocument): Promise<void> {
     await this.localStore.put(doc);
     
-    // If this is a regular document and it is shared, update the share
     if (!doc._id.startsWith('_sovereign_') && this.sharedDocs.has(doc._id)) {
       try {
         await this.updateSharedDoc(doc, this.sharedDocs.get(doc._id)!);
@@ -254,31 +242,39 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  // --- Public Index Management ---
+  // --- Public Index Management (index.json) ---
+
+  private async getPublicIndex(): Promise<PublicIndex> {
+    if (!this.sharedRemote) return {};
+    try {
+      const doc = await this.sharedRemote.get('public/index.json');
+      if (!doc) return {};
+      return doc.data as PublicIndex;
+    } catch (e) {
+      return {};
+    }
+  }
+
+  private async savePublicIndex(index: PublicIndex): Promise<void> {
+    if (!this.sharedRemote) return;
+    const doc: SyncDocument = {
+      _id: 'public/index.json',
+      _updatedAt: Date.now(),
+      data: index
+    };
+    await this.sharedRemote.put(doc);
+  }
 
   private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
     if (!metadata.encryptionKey || !this.sharedRemote) return;
     try {
-      // Create a small metadata object
-      const publicMeta = {
+      const index = await this.getPublicIndex();
+      index[metadata.sharedId] = {
         id: metadata.sharedId,
         key: metadata.encryptionKey,
         updatedAt: Date.now()
       };
-
-      // Save as an individual object: public/{sharedId}
-      // We use sharedRemote but we need to bypass the 'shared' storeId if we want a clean 'public/' root?
-      // Currently sharedRemote prefix is `{appId}/shared/shared/`
-      // So this will be `{appId}/shared/shared/public/{sharedId}.json`
-      // This is acceptable and avoids race conditions.
-      
-      const indexDoc: SyncDocument = {
-        _id: `public/${metadata.sharedId}`, // Suffix for the key
-        _updatedAt: Date.now(),
-        data: publicMeta // Store raw metadata
-      };
-
-      await this.sharedRemote.put(indexDoc);
+      await this.savePublicIndex(index);
     } catch (e) {
       console.error('Failed to update public index', e);
     }
@@ -287,7 +283,11 @@ export class SovereignS3nc extends EventEmitter {
   private async removeFromPublicIndex(sharedId: string): Promise<void> {
     if (!this.sharedRemote) return;
     try {
-      await this.sharedRemote.delete(`public/${sharedId}`);
+      const index = await this.getPublicIndex();
+      if (index[sharedId]) {
+        delete index[sharedId];
+        await this.savePublicIndex(index);
+      }
     } catch (e) {
       console.error('Failed to update public index', e);
     }
@@ -297,31 +297,9 @@ export class SovereignS3nc extends EventEmitter {
 
   async getPublicShares(): Promise<any[]> {
     if (!this.sharedRemote) return [];
-    // 1. List all changes/objects in the bucket that start with 'public/'
-    // Since listChanges takes a date, we can use a very old date to get everything, 
-    // or we need a new list method on the adapter. 
-    // Using listChanges(new Date(0)) effectively lists everything.
     
-    // However, listChanges returns 'RemoteChange' items.
-    // Ideally, we'd add a specialized list method to the adapter, but listChanges works.
-    // The keys will be like: .../public/{sharedId}.json
-    
-    const changes = await this.sharedRemote.listChanges(new Date(0));
-    const publicItems = changes.filter(c => c.id.startsWith('public/'));
-    
-    // 2. Fetch all metadata files in parallel
-    const results = await Promise.all(publicItems.map(async item => {
-       if (!this.sharedRemote) return null;
-       try {
-         const doc = await this.sharedRemote.get(item.id);
-         return doc ? doc.data : null;
-       } catch (e) {
-         console.warn('Failed to fetch public index item', item.id, e);
-         return null;
-       }
-    }));
-
-    return results.filter(r => r !== null);
+    const index = await this.getPublicIndex();
+    return Object.values(index);
   }
 
   async getSharedDoc(sharedId: string, key: string): Promise<any> {
@@ -337,17 +315,7 @@ export class SovereignS3nc extends EventEmitter {
     const plainData = await this.getSharedDoc(sharedId, key);
     if (!plainData) throw new Error('Shared document not found or decrypt failed');
     
-    // Check if we already have this doc (by matching content or ID logic?)
-    // If the plainData contains the original _id, we can reuse it.
-    // If not, we might create a duplicate. 
-    // Assuming plainData matches the { _id, ... } structure of source if it was full doc sync.
-    // But usually `data` is the payload. The _id is separate in SyncDocument.
-    // However, when we encrypt, we encrypt `data`. 
-    // If the original `data` had an ID, good. If not, we generate new one.
-    
     const newId = plainData._id || uuidv4();
-    
-    // To save locally, we must encrypt with OUR master key
     const encryptedData = await this.encryptData(plainData);
     
     const newDoc: SyncDocument = {
@@ -359,7 +327,6 @@ export class SovereignS3nc extends EventEmitter {
     await this.putLocal(newDoc);
     return newId;
   }
-
 
   // --- Connection Management ---
 
@@ -373,8 +340,6 @@ export class SovereignS3nc extends EventEmitter {
     
     this.initRemote(this.config);
 
-    // Trigger immediate sync to catch up
-    // Also push any pending shares
     await this.syncShares();
     await this.sync();
 
@@ -385,18 +350,55 @@ export class SovereignS3nc extends EventEmitter {
 
   private async syncShares(): Promise<void> {
      if (!this.sharedRemote) return;
+     let publicIndexDirty = false;
+     
+     // 1. Sync content first
      for (const [docId, meta] of this.sharedDocs) {
        try {
          const doc = await this.localStore.get(docId);
          if (doc && !doc._deleted) {
            await this.updateSharedDoc(doc, meta);
-           if (meta.isPublic) await this.addToPublicIndex(meta);
+           if (meta.isPublic) publicIndexDirty = true;
          } else if (doc && doc._deleted) {
            await this.sharedRemote.delete(meta.sharedId);
-           if (meta.isPublic) await this.removeFromPublicIndex(meta.sharedId);
+           if (meta.isPublic) {
+             await this.removeFromPublicIndex(meta.sharedId);
+             // removeFromPublicIndex does saving, so we might double save if we do batching later.
+             // Ideally we shouldn't call removeFromPublicIndex inside the loop if we want to batch.
+             // But removeFromPublicIndex is safe (R-M-W).
+             // Let's rely on the bulk update below for *adding/updating* active shares.
+           }
          }
        } catch (e) {
          console.error(`Failed to sync share ${docId}`, e);
+       }
+     }
+
+     // 2. Batch update public index
+     if (publicIndexDirty) {
+       try {
+         const index = await this.getPublicIndex();
+         let changed = false;
+         for (const [docId, meta] of this.sharedDocs) {
+           if (meta.isPublic && meta.encryptionKey) {
+             // Only update if missing or different?
+             // Simplest is to just overwrite to ensure correctness
+             if (!index[meta.sharedId] || index[meta.sharedId].updatedAt < Date.now()) { // Simple check
+                index[meta.sharedId] = {
+                  id: meta.sharedId,
+                  key: meta.encryptionKey,
+                  updatedAt: Date.now()
+                };
+                changed = true;
+             }
+           }
+         }
+         
+         if (changed) {
+           await this.savePublicIndex(index);
+         }
+       } catch (e) {
+         console.error('Failed to sync public index', e);
        }
      }
   }
@@ -410,7 +412,6 @@ export class SovereignS3nc extends EventEmitter {
 
   private async decryptData(data: any): Promise<any> {
     if (!this.crypto) return data;
-    // If data is not a string, it might not be encrypted or is legacy data
     if (typeof data !== 'string') return data;
     try {
       return await this.crypto.decrypt(data);
@@ -424,8 +425,6 @@ export class SovereignS3nc extends EventEmitter {
 
   async save<T>(data: T & { _id?: string }): Promise<string> {
     const id = data._id || uuidv4();
-    
-    // Encrypt payload
     const storedData = await this.encryptData(data);
 
     const doc: SyncDocument<any> = {
@@ -529,8 +528,6 @@ export class SovereignS3nc extends EventEmitter {
                     this.emit('change', { type: 'pull', id, doc: remoteDoc });
                   }
                 } else {
-                  // Merge Strategy
-                  // Note: mergeDocs is now async
                   const merged = await this.mergeDocs(localDoc, remoteDoc);
                   await this.putLocal(merged);
                   stats.pulled++; 
@@ -564,6 +561,16 @@ export class SovereignS3nc extends EventEmitter {
         }
       }
 
+      // --- STEP 3: SYNC PUBLIC INDEX ---
+      // We do this after pushing docs to ensure content is available
+      // Actually, we should probably do this periodically or on specific triggers, 
+      // but putting it in sync() ensures "Always compare".
+      // To avoid overhead, we could check if we pushed any shared docs?
+      // Or just do it. The index file is small.
+      if (this.sharedRemote) {
+        await this.syncShares(); // This now updates index.json
+      }
+
       this.lastSyncTime = startSyncTime;
       await this.localStore.put({
         _id: '_sovereign_meta',
@@ -583,7 +590,7 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- Import / Export ---
 
-  async export(id?: string): Promise<string> {
+  async exportData(id?: string): Promise<string> {
     let docs: SyncDocument[] = [];
     if (id) {
       const doc = await this.localStore.get(id);
@@ -602,7 +609,7 @@ export class SovereignS3nc extends EventEmitter {
     return JSON.stringify(decryptedDocs, null, 2);
   }
 
-  async import(json: string): Promise<void> {
+  async importData(json: string): Promise<void> {
     let docs: any;
     try {
       docs = JSON.parse(json);
@@ -621,26 +628,12 @@ export class SovereignS3nc extends EventEmitter {
     for (const doc of docs as SyncDocument[]) {
       if (!doc._id || !doc.data) continue;
 
-      // Import logic assumes 'doc.data' is PLAIN JSON (decrypted)
-      // We need to re-encrypt it to store it.
-      
       const local = await this.localStore.get(doc._id);
       
-      // But wait, to merge, we need to compare PLAIN data.
-      // So let's encrypt AFTER merge.
-
       if (local) {
-        // Need to pass a "Plain" version of local to merge? 
-        // Or decrypt local first.
-        // And the 'doc' from import is already plain.
-        // My mergeDocs expects two SyncDocuments which might contain encrypted data.
-        // I should probably overload or adapt mergeDocs.
-        
-        // Let's manually do it here to be safe and explicit
         const localPlainData = await this.decryptData(local.data);
-        const importedPlainData = doc.data; // Assumed plain
+        const importedPlainData = doc.data; 
 
-        // Logic: Older < Newer
         const mergedPlainData = local._updatedAt > doc._updatedAt 
             ? merge(importedPlainData, localPlainData) 
             : merge(localPlainData, importedPlainData);
@@ -657,7 +650,6 @@ export class SovereignS3nc extends EventEmitter {
         this.emit('change', { type: 'import', id: doc._id, doc: mergedDoc });
 
       } else {
-        // New insert
         const encryptedData = await this.encryptData(doc.data);
         const newDoc: SyncDocument = {
             ...doc,
@@ -670,30 +662,25 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  // --- Merge Logic ---
-
   private async mergeDocs(local: SyncDocument, remote: SyncDocument): Promise<SyncDocument> {
     if (local._deleted && remote._deleted) return remote;
     if (local._deleted) return remote._updatedAt > local._updatedAt ? remote : local;
     if (remote._deleted) return local._updatedAt > remote._updatedAt ? local : remote;
 
-    // Decrypt both
     const localPlain = await this.decryptData(local.data);
     const remotePlain = await this.decryptData(remote.data);
 
-    // Deep merge data: Older < Newer (Newer overwrites Older)
     const mergedPlain = local._updatedAt > remote._updatedAt 
       ? merge(remotePlain, localPlain) 
       : merge(localPlain, remotePlain);
     
-    // Encrypt result
     const mergedEncrypted = await this.encryptData(mergedPlain);
 
     return {
       _id: local._id,
       _updatedAt: Date.now(), 
       _rev: uuidv4(),
-      _etag: remote._etag, // Invalidate/Reuse? Usually new push gets new etag.
+      _etag: remote._etag, 
       data: mergedEncrypted
     };
   }
