@@ -4,11 +4,15 @@ import { merge } from 'ts-deepmerge';
 import { SovereignConfig, SyncDocument, SyncStats } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
-import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
 import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
 
-interface ShareMetadata {
+// Remote Adapters
+import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
+import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
+import { OCIPreAuthAdapter } from './adapters/OCIPreAuthAdapter';
+
+export interface ShareMetadata {
   sharedId: string;
   isPublic: boolean;
   encryptionKey?: string;
@@ -16,14 +20,18 @@ interface ShareMetadata {
 
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
-  private remote?: S3RemoteAdapter;
-  private sharedRemote?: S3RemoteAdapter;
+  public remote?: IRemoteAdapter; // Changed to Interface
+  private sharedRemote?: IRemoteAdapter; // Changed to Interface
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
   private sharedDocs: Map<string, ShareMetadata> = new Map();
+
+  public get shares(): Map<string, ShareMetadata> {
+    return this.sharedDocs;
+  }
 
   constructor(
     config: SovereignConfig, 
@@ -44,19 +52,33 @@ export class SovereignS3nc extends EventEmitter {
 
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
     
-    if (config.s3) {
+    // Remote Initialization Logic
+    this.initRemote(config);
+    
+    if (customCryptoAdapter) {
+      this.crypto = customCryptoAdapter;
+    } else if (config.encryptionKey) {
+      this.crypto = new AESCryptoAdapter(config.encryptionKey);
+    }
+  }
+
+  private initRemote(config: SovereignConfig) {
+    if (config.ociParUrl) {
+      // OCI PAR Strategy
+      this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths);
+      this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
+        appId: config.paths.appId,
+        userId: 'shared',
+        storeId: 'shared'
+      });
+    } else if (config.s3) {
+      // Standard S3 Strategy
       this.remote = new S3RemoteAdapter(config.s3, config.paths);
       this.sharedRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
         userId: 'shared',
         storeId: 'shared'
       });
-    }
-    
-    if (customCryptoAdapter) {
-      this.crypto = customCryptoAdapter;
-    } else if (config.encryptionKey) {
-      this.crypto = new AESCryptoAdapter(config.encryptionKey);
     }
   }
 
@@ -290,8 +312,13 @@ export class SovereignS3nc extends EventEmitter {
     // 2. Fetch all metadata files in parallel
     const results = await Promise.all(publicItems.map(async item => {
        if (!this.sharedRemote) return null;
-       const doc = await this.sharedRemote.get(item.id);
-       return doc ? doc.data : null;
+       try {
+         const doc = await this.sharedRemote.get(item.id);
+         return doc ? doc.data : null;
+       } catch (e) {
+         console.warn('Failed to fetch public index item', item.id, e);
+         return null;
+       }
     }));
 
     return results.filter(r => r !== null);
@@ -336,21 +363,15 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- Connection Management ---
 
-  async connect(s3Config: SovereignConfig['s3']): Promise<void> {
-    if (!s3Config) throw new Error('S3 configuration required');
-    
-    this.config.s3 = s3Config;
-    
-    if (s3Config.endpoint && s3Config.endpoint.startsWith('http://')) {
-       console.warn('SECURITY WARNING: HTTP endpoint detected. Use HTTPS.');
+  async connect(config: { s3?: SovereignConfig['s3'], ociParUrl?: string }): Promise<void> {
+    if (!config.s3 && !config.ociParUrl) {
+      throw new Error('S3 configuration or OCI PAR URL required');
     }
-
-    this.remote = new S3RemoteAdapter(s3Config, this.config.paths);
-    this.sharedRemote = new S3RemoteAdapter(s3Config, {
-      appId: this.config.paths.appId,
-      userId: 'shared',
-      storeId: 'shared'
-    });
+    
+    this.config.s3 = config.s3;
+    this.config.ociParUrl = config.ociParUrl;
+    
+    this.initRemote(this.config);
 
     // Trigger immediate sync to catch up
     // Also push any pending shares

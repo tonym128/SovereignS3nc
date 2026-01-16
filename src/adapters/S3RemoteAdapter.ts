@@ -1,7 +1,8 @@
 import { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { S3Config, SyncDocument, RemoteChange } from '../types';
+import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 
-export class S3RemoteAdapter {
+export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
   private bucket: string;
   private prefix: string;

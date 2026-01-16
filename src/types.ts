@@ -11,6 +11,7 @@ export interface S3Config {
 
 export interface SovereignConfig {
   s3?: S3Config;
+  ociParUrl?: string; // OCI Pre-Authenticated Request URL (alternative to S3 Config)
   paths: {
     appId: string;   // Unique GUID for the application
     userId: string;  // Unique GUID for the user

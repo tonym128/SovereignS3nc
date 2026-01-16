@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SovereignS3nc Demo</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+        .card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+        code { background: #f5f5f5; padding: 0.2rem 0.4rem; border-radius: 4px; }
+        button { cursor: pointer; padding: 0.4rem 0.8rem; background: #0070f3; color: white; border: none; border-radius: 4px; font-size: 0.9rem; margin-right: 0.2rem; }
+        button:hover { background: #0051a2; }
+        button.secondary { background: #666; }
+        button.danger { background: #e00; }
+        input, textarea { display: block; width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        label { font-weight: bold; margin-bottom: 0.2rem; display: block; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #eee; font-size: 0.9rem; vertical-align: top; }
+        th { background: #f9f9f9; }
+        .status-synced { color: green; font-weight: bold; }
+        .status-pending { color: orange; font-weight: bold; }
+        .status-local { color: #666; }
+
+        .tabs { margin-bottom: 1rem; border-bottom: 1px solid #ccc; }
+        .tab-btn { background: none; border: none; padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; color: #666; }
+        .tab-btn.active { color: #0070f3; border-bottom: 2px solid #0070f3; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Modal-ish overlay for editing */
+        #editor-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; }
+        #editor-modal { background: white; width: 500px; max-width: 90%; margin: 10vh auto; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+    <h1>SovereignS3nc Browser Demo</h1>
+    
+    <div class="card">
+        <h2>Connection Settings</h2>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="s3">S3 Standard</button>
+            <button class="tab-btn" data-tab="oci">OCI Pre-Authenticated Request</button>
+        </div>
+
+        <div id="tab-s3" class="tab-content active">
+            <div class="grid">
+                <div>
+                    <label>Endpoint</label>
+                    <input type="text" id="s3-endpoint" placeholder="https://s3.amazonaws.com">
+                    <label>Region</label>
+                    <input type="text" id="s3-region" placeholder="us-east-1" value="us-east-1">
+                    <label>Bucket Name</label>
+                    <input type="text" id="s3-bucket" placeholder="my-bucket">
+                </div>
+                <div>
+                    <label>Access Key ID</label>
+                    <input type="text" id="s3-access-key">
+                    <label>Secret Access Key</label>
+                    <input type="password" id="s3-secret-key">
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-oci" class="tab-content">
+            <label>OCI PAR URL</label>
+            <input type="text" id="oci-par-url" placeholder="https://objectstorage..." style="width: 100%;">
+        </div>
+        
+        <div style="margin-top: 1rem;">
+            <button id="btn-connect">Connect & Sync</button>
+            <span id="connection-status" style="margin-left: 1rem; font-weight: bold;"></span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>My Notes</h2>
+        
+        <div style="margin-bottom: 1rem;">
+            <button id="btn-create">Create New Note</button>
+            <button id="btn-refresh" class="secondary">Refresh List</button>
+        </div>
+
+        <table id="docs-table">
+            <thead>
+                <tr>
+                    <th style="width: 100px;">ID</th>
+                    <th>Content</th>
+                    <th style="width: 120px;">Updated</th>
+                    <th style="width: 100px;">Status</th>
+                    <th style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="5">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Shared Notes (Public Index)</h2>
+        <p style="font-size: 0.9rem; color: #666;">Lists notes shared publicly by this App ID. Click 'Import' to save a local copy.</p>
+        
+        <div style="margin-bottom: 1rem;">
+            <button id="btn-refresh-shared" class="secondary">Load Shared Notes</button>
+        </div>
+
+        <table id="shared-table">
+            <thead>
+                <tr>
+                    <th>Shared ID</th>
+                    <th>Content Preview</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="3">Click Load to fetch.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editor-overlay">
+        <div id="editor-modal">
+            <h3 id="editor-title">Edit Note</h3>
+            <input type="hidden" id="edit-id">
+            
+            <label>Title</label>
+            <input type="text" id="edit-title">
+            
+            <label>Content</label>
+            <textarea id="edit-content" rows="5"></textarea>
+            
+            <div style="margin-top: 1rem; text-align: right;">
+                <button id="btn-cancel-edit" class="secondary">Cancel</button>
+                <button id="btn-save-edit">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/sovereigns3nc.global.js"></script>
+
+    <script>
+        let s3nc;
+        let activeMode = 's3';
+
+        // --- Tabs ---
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                activeMode = btn.dataset.tab;
+                document.getElementById('tab-' + activeMode).classList.add('active');
+            });
+        });
+
+        // --- Editor ---
+        const editor = {
+            overlay: document.getElementById('editor-overlay'),
+            titleEl: document.getElementById('edit-title'),
+            contentEl: document.getElementById('edit-content'),
+            idEl: document.getElementById('edit-id'),
+            
+            open: (doc) => {
+                editor.idEl.value = doc ? doc._id : '';
+                editor.titleEl.value = doc ? (doc.data.title || '') : '';
+                editor.contentEl.value = doc ? (doc.data.content || '') : '';
+                document.getElementById('editor-title').textContent = doc ? 'Edit Note' : 'New Note';
+                editor.overlay.style.display = 'block';
+            },
+            close: () => {
+                editor.overlay.style.display = 'none';
+            }
+        };
+
+        document.getElementById('btn-create').onclick = () => editor.open(null);
+        document.getElementById('btn-cancel-edit').onclick = editor.close;
+        
+        document.getElementById('btn-save-edit').onclick = async () => {
+            if (!s3nc) return;
+            try {
+                const id = editor.idEl.value;
+                const data = {
+                    title: editor.titleEl.value,
+                    content: editor.contentEl.value,
+                    updatedAt: new Date().toISOString()
+                };
+                
+                if (id) data._id = id;
+                
+                await s3nc.save(data);
+                editor.close();
+                await renderLocalDocs();
+                
+                if (s3nc.remote) s3nc.sync().then(renderLocalDocs);
+            } catch (err) {
+                alert('Save failed: ' + err.message);
+            }
+        };
+
+        // --- Main Logic ---
+
+        function getStatus(doc, lastSyncedAt) {
+            if (doc._updatedAt > lastSyncedAt) {
+                return '<span class="status-pending">Wait</span>';
+            }
+            if (doc._etag) return '<span class="status-synced">Sync</span>';
+            return '<span class="status-local">Local</span>';
+        }
+
+        async function renderLocalDocs() {
+            if (!s3nc) return;
+            const tbody = document.querySelector('#docs-table tbody');
+            
+            try {
+                const json = await s3nc.export(); 
+                const docs = JSON.parse(json);
+                const lastSync = s3nc.lastSyncedAt || 0;
+                const sharedMap = s3nc.shares || new Map();
+
+                if (docs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">No notes found.</td></tr>';
+                    return;
+                }
+
+                docs.sort((a, b) => b._updatedAt - a._updatedAt);
+                tbody.innerHTML = '';
+                
+                docs.forEach(doc => {
+                    const isShared = sharedMap.has(doc._id);
+                    const shareMeta = isShared ? sharedMap.get(doc._id) : null;
+                    const isPublic = shareMeta?.isPublic;
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><code>${doc._id.substring(0, 6)}...</code></td>
+                        <td>
+                            <strong>${doc.data.title || '(No Title)'}</strong><br>
+                            <span style="color:#666; font-size:0.85rem;">${doc.data.content || ''}</span>
+                        </td>
+                        <td>${new Date(doc._updatedAt).toLocaleTimeString()}</td>
+                        <td>${getStatus(doc, lastSync)}</td>
+                        <td>
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-delete danger">Del</button>
+                            <button class="btn-share secondary" style="${isShared ? 'background:#28a745' : ''}">
+                                ${isShared ? (isPublic ? 'Public' : 'Shared') : 'Share'}
+                            </button>
+                        </td>
+                    `;
+                    
+                    tr.querySelector('.btn-edit').onclick = () => editor.open(doc);
+                    tr.querySelector('.btn-delete').onclick = async () => {
+                        if(confirm('Delete this note?')) {
+                            await s3nc.delete(doc._id);
+                            await renderLocalDocs();
+                            if(s3nc.remote) s3nc.sync();
+                        }
+                    };
+                    tr.querySelector('.btn-share').onclick = async () => {
+                        try {
+                            if (isShared) {
+                                if (confirm(`Unshare this note?\nID: ${shareMeta.sharedId}`)) {
+                                    await s3nc.unshare(doc._id);
+                                }
+                            } else {
+                                const mode = confirm('Share publicly? OK = Yes, Cancel = Private Share') ? true : false;
+                                const shareId = await s3nc.share(doc._id, mode);
+                                alert(`Note Shared!\nID: ${shareId}\nMode: ${mode ? 'Public' : 'Private'}`);
+                            }
+                            await renderLocalDocs();
+                        } catch(e) { alert(e.message); }
+                    };
+
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function renderSharedDocs() {
+            if (!s3nc || !s3nc.remote) {
+                alert('Connect to a remote first.');
+                return;
+            }
+            const tbody = document.querySelector('#shared-table tbody');
+            tbody.innerHTML = '<tr><td colspan="3">Loading public shares...</td></tr>';
+            
+            try {
+                const shares = await s3nc.getPublicShares();
+                
+                if (shares.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3">No public shares found.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                
+                for (const meta of shares) {
+                    const tr = document.createElement('tr');
+                    
+                    let preview = 'Loading...';
+                    
+                    (async () => {
+                        try {
+                            const content = await s3nc.getSharedDoc(meta.id, meta.key);
+                            if (content) {
+                                const title = content.title || '(No Title)';
+                                const text = content.content || '';
+                                tr.querySelector('.preview-cell').innerHTML = `
+                                    <strong>${title}</strong><br>${text.substring(0, 50)}...
+                                `;
+                            } else {
+                                tr.querySelector('.preview-cell').textContent = 'Content not found (404)';
+                            }
+                        } catch (e) {
+                            tr.querySelector('.preview-cell').textContent = 'Error decrypting: ' + e.message;
+                        }
+                    })();
+
+                    tr.innerHTML = `
+                        <td><code>${meta.id.substring(0, 8)}...</code></td>
+                        <td class="preview-cell">${preview}</td>
+                        <td>
+                            <button class="btn-import">Import</button>
+                        </td>
+                    `;
+                    
+                    tr.querySelector('.btn-import').onclick = async () => {
+                        try {
+                            const newId = await s3nc.saveSharedDocToLocal(meta.id, meta.key);
+                            alert('Imported! Local ID: ' + newId);
+                            renderLocalDocs();
+                        } catch (e) {
+                            alert('Import failed: ' + e.message);
+                        }
+                    };
+                    
+                    tbody.appendChild(tr);
+                }
+                
+            } catch (err) {
+                console.error(err);
+                tbody.innerHTML = `<tr><td colspan="3" style="color:red">Error: ${err.message}</td></tr>`;
+            }
+        }
+
+        document.getElementById('btn-refresh-shared').onclick = renderSharedDocs;
+
+        // --- Init ---
+        const statusEl = document.getElementById('connection-status');
+        
+        async function initApp() {
+            if (!window.Sovereign) return;
+            const { SovereignS3nc } = window.Sovereign;
+            
+            s3nc = new SovereignS3nc({
+                localPersistencePath: 'demo-db'
+            });
+            
+            await s3nc.init();
+            renderLocalDocs();
+        }
+
+        // --- Event Handlers ---
+        document.getElementById('btn-refresh').onclick = renderLocalDocs;
+
+        document.getElementById('btn-connect').onclick = async () => {
+            if (!s3nc) return;
+            const btn = document.getElementById('btn-connect');
+            btn.textContent = 'Connecting...';
+            btn.disabled = true;
+
+            try {
+                let config = {
+                    localPersistencePath: 'demo-db',
+                    paths: { appId: 'demo-app', userId: 'user-1', storeId: 'main' }
+                };
+
+                if (activeMode === 's3') {
+                    const endpoint = document.getElementById('s3-endpoint').value;
+                    const region = document.getElementById('s3-region').value;
+                    const bucket = document.getElementById('s3-bucket').value;
+                    const accessKeyId = document.getElementById('s3-access-key').value;
+                    const secretAccessKey = document.getElementById('s3-secret-key').value;
+                    
+                    if (!bucket || !accessKeyId) throw new Error('Missing S3 Credentials');
+                    
+                    config.s3 = {
+                        endpoint: endpoint || undefined,
+                        region,
+                        bucketName: bucket,
+                        credentials: { accessKeyId, secretAccessKey }
+                    };
+                } else {
+                    const parUrl = document.getElementById('oci-par-url').value;
+                    if (!parUrl) throw new Error('Missing OCI URL');
+                    config.ociParUrl = parUrl;
+                }
+
+                const { SovereignS3nc } = window.Sovereign;
+                s3nc = new SovereignS3nc(config);
+                await s3nc.init();
+                
+                statusEl.textContent = 'Syncing...';
+                statusEl.style.color = 'orange';
+                
+                const stats = await s3nc.sync();
+                console.log('Sync:', stats);
+                
+                statusEl.textContent = 'Connected & Synced';
+                statusEl.style.color = 'green';
+                
+                await renderLocalDocs();
+
+            } catch (err) {
+                alert('Connect Failed: ' + err.message);
+                statusEl.textContent = 'Error';
+                statusEl.style.color = 'red';
+            } finally {
+                btn.textContent = 'Connect & Sync';
+                btn.disabled = false;
+            }
+        };
+
+        if (window.Sovereign) {
+            initApp();
+        }
+    </script>
+</body>
+</html>
