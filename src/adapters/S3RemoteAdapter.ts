@@ -1,6 +1,5 @@
 import { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { S3Config, SyncDocument, RemoteChange } from '../types';
-import { Readable } from 'stream';
 
 export class S3RemoteAdapter {
   private client: S3Client;
@@ -48,7 +47,7 @@ export class S3RemoteAdapter {
       const response = await this.client.send(command);
       if (!response.Body) return null;
       
-      const str = await this.streamToString(response.Body as Readable);
+      const str = await response.Body.transformToString();
       const doc = JSON.parse(str);
       
       if (response.ETag) {
@@ -103,15 +102,7 @@ export class S3RemoteAdapter {
       Bucket: this.bucket,
       Key: key
     });
-    await this.client.send(command);
-  }
-
-  private streamToString(stream: Readable): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const chunks: any[] = [];
-      stream.on('data', (chunk) => chunks.push(chunk));
-      stream.on('error', reject);
-      stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
-    });
-  }
-}
+        await this.client.send(command);
+      }
+    }
+    

@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "browser": {
+    "./src/adapters/InMemoryStorage.ts": "./src/stubs/InMemoryStorage.ts",
+    "./src/adapters/AESCryptoAdapter.ts": "./src/stubs/AESCryptoAdapter.ts"
+  },
   "scripts": {
     "test": "jest",
     "build:bundle": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.min.js --sourcemap --format=esm",
