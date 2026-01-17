@@ -4,6 +4,7 @@ import { ILocalStorage } from '../interfaces/IStorage';
 import { SyncDocument } from '../types';
 
 export class InMemoryStorage implements ILocalStorage {
+  // Key format: "collection::id" or "id" (if no collection)
   private store: Map<string, SyncDocument> = new Map();
   private filePath?: string;
 
@@ -16,11 +17,18 @@ export class InMemoryStorage implements ILocalStorage {
       try {
         const data = fs.readFileSync(this.filePath, 'utf-8');
         const docs: SyncDocument[] = JSON.parse(data);
-        docs.forEach(doc => this.store.set(doc._id, doc));
+        docs.forEach(doc => {
+           const key = this.getMapKey(doc._id, doc.collection);
+           this.store.set(key, doc);
+        });
       } catch (err) {
         console.error('Failed to load local database:', err);
       }
     }
+  }
+
+  private getMapKey(id: string, collection?: string): string {
+    return collection ? `${collection}::${id}` : id;
   }
 
   private async persist(): Promise<void> {
@@ -34,27 +42,51 @@ export class InMemoryStorage implements ILocalStorage {
     }
   }
 
-  async put(doc: SyncDocument): Promise<void> {
-    this.store.set(doc._id, doc);
+  async put(doc: SyncDocument, collection?: string): Promise<void> {
+    // Ensure doc.collection is set if provided
+    if (collection) {
+        doc.collection = collection;
+    }
+    const key = this.getMapKey(doc._id, doc.collection);
+    this.store.set(key, doc);
     await this.persist();
   }
 
-  async get(id: string): Promise<SyncDocument | null> {
-    return this.store.get(id) || null;
+  async get(id: string, collection?: string): Promise<SyncDocument | null> {
+    const key = this.getMapKey(id, collection);
+    return this.store.get(key) || null;
   }
 
-  async list(includeDeleted: boolean = false): Promise<SyncDocument[]> {
-    const all = Array.from(this.store.values());
+  async list(includeDeleted: boolean = false, collection?: string): Promise<SyncDocument[]> {
+    let all = Array.from(this.store.values());
+    
+    if (collection) {
+        all = all.filter(doc => doc.collection === collection);
+    } else {
+        // If collection is NOT provided, do we list everything? 
+        // Or only things without collection?
+        // Usually list() implies everything unless scoped.
+        // But for backward compatibility, maybe list() returns everything?
+        // Let's return everything.
+    }
+
     if (includeDeleted) return all;
     return all.filter(doc => !doc._deleted);
   }
 
-  async getChanges(since: number): Promise<SyncDocument[]> {
-    return Array.from(this.store.values()).filter(doc => doc._updatedAt > since);
+  async getChanges(since: number, collection?: string): Promise<SyncDocument[]> {
+    return Array.from(this.store.values()).filter(doc => {
+        if (doc._updatedAt <= since) return false;
+        if (collection && doc.collection !== collection) return false;
+        return true;
+    });
   }
 
   async bulkPut(docs: SyncDocument[]): Promise<void> {
-    docs.forEach(doc => this.store.set(doc._id, doc));
+    docs.forEach(doc => {
+        const key = this.getMapKey(doc._id, doc.collection);
+        this.store.set(key, doc);
+    });
     await this.persist();
   }
 }

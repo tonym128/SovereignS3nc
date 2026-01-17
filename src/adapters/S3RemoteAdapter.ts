@@ -19,12 +19,15 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
   }
 
-  private getKey(id: string): string {
+  private getKey(id: string, collection?: string): string {
+    if (collection) {
+      return `${this.prefix}${collection}/${id}.json`;
+    }
     return `${this.prefix}${id}.json`;
   }
 
-  async put(doc: SyncDocument): Promise<string | undefined> {
-    const key = this.getKey(doc._id);
+  async put(doc: SyncDocument, collection?: string): Promise<string | undefined> {
+    const key = this.getKey(doc._id, collection);
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
@@ -38,8 +41,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     return response.ETag ? response.ETag.replace(/"/g, '') : undefined;
   }
 
-  async get(id: string): Promise<SyncDocument | null> {
-    const key = this.getKey(id);
+  async get(id: string, collection?: string): Promise<SyncDocument | null> {
+    const key = this.getKey(id, collection);
     try {
       const command = new GetObjectCommand({
         Bucket: this.bucket,
@@ -63,14 +66,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     }
   }
 
-  async listChanges(since: Date): Promise<RemoteChange[]> {
+  async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
     const changes: RemoteChange[] = [];
     let continuationToken: string | undefined;
+    
+    let searchPrefix = this.prefix;
+    if (collection) {
+      searchPrefix += collection + '/';
+    }
 
     do {
       const command: ListObjectsV2Command = new ListObjectsV2Command({
         Bucket: this.bucket,
-        Prefix: this.prefix,
+        Prefix: searchPrefix,
         ContinuationToken: continuationToken
       });
       
@@ -79,11 +87,35 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       if (response.Contents) {
         for (const item of response.Contents) {
           if (item.Key && item.LastModified && item.LastModified > since) {
-            // Extract ID: prefix/{id}.json
-            const id = item.Key.substring(this.prefix.length).replace('.json', '');
             
+            let id = '';
+            let col: string | undefined = collection;
+            
+            if (collection) {
+               // Key is prefix/collection/id.json
+               id = item.Key.substring(searchPrefix.length).replace('.json', '');
+            } else {
+               // Key is prefix/...
+               const relative = item.Key.substring(this.prefix.length);
+               const parts = relative.split('/');
+               
+               if (parts.length === 2) {
+                 // collection/id.json
+                 col = parts[0];
+                 id = parts[1].replace('.json', '');
+               } else if (parts.length === 1) {
+                 // id.json
+                 col = undefined;
+                 id = parts[0].replace('.json', '');
+               } else {
+                 // Skip deep nesting or other files
+                 continue; 
+               }
+            }
+
             changes.push({
               id: id,
+              collection: col,
               key: item.Key,
               etag: item.ETag ? item.ETag.replace(/"/g, '') : undefined,
               lastModified: item.LastModified
@@ -97,13 +129,12 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     return changes;
   }
 
-  async delete(id: string): Promise<void> {
-    const key = this.getKey(id);
+  async delete(id: string, collection?: string): Promise<void> {
+    const key = this.getKey(id, collection);
     const command = new DeleteObjectCommand({
       Bucket: this.bucket,
       Key: key
     });
-        await this.client.send(command);
-      }
-    }
-    
+    await this.client.send(command);
+  }
+}

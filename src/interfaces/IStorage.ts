@@ -9,26 +9,29 @@ export interface ILocalStorage {
   /**
    * Save or update a document.
    */
-  put(doc: SyncDocument): Promise<void>;
+  put(doc: SyncDocument, collection?: string): Promise<void>;
 
   /**
    * Retrieve a document by ID.
    */
-  get(id: string): Promise<SyncDocument | null>;
+  get(id: string, collection?: string): Promise<SyncDocument | null>;
 
   /**
    * List all documents. 
    * @param includeDeleted If true, return documents marked as _deleted.
+   * @param collection Optional: filter by collection
    */
-  list(includeDeleted?: boolean): Promise<SyncDocument[]>;
+  list(includeDeleted?: boolean, collection?: string): Promise<SyncDocument[]>;
 
   /**
    * Get documents updated since a specific timestamp.
+   * @param collection Optional: filter by collection
    */
-  getChanges(since: number): Promise<SyncDocument[]>;
+  getChanges(since: number, collection?: string): Promise<SyncDocument[]>;
 
   /**
    * Bulk put for sync efficiency.
+   * @param collection Optional: collection context for the docs
    */
-  bulkPut(docs: SyncDocument[]): Promise<void>;
+  bulkPut(docs: SyncDocument[], collection?: string): Promise<void>;
 }

@@ -11,12 +11,15 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
   }
 
-  private getUrl(id: string): string {
+  private getUrl(id: string, collection?: string): string {
+    if (collection) {
+      return `${this.baseUrl}/${this.prefix}${collection}/${id}.json`;
+    }
     return `${this.baseUrl}/${this.prefix}${id}.json`;
   }
 
-  async put(doc: SyncDocument): Promise<string | undefined> {
-    const url = this.getUrl(doc._id);
+  async put(doc: SyncDocument, collection?: string): Promise<string | undefined> {
+    const url = this.getUrl(doc._id, collection);
     const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify(doc),
@@ -33,8 +36,8 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     return etag ? etag.replace(/"/g, '') : undefined;
   }
 
-  async get(id: string): Promise<SyncDocument | null> {
-    const url = this.getUrl(id);
+  async get(id: string, collection?: string): Promise<SyncDocument | null> {
+    const url = this.getUrl(id, collection);
     const response = await fetch(url);
     
     if (response.status === 404) return null;
@@ -48,25 +51,24 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     return doc;
   }
 
-  async listChanges(since: Date): Promise<RemoteChange[]> {
-    // OCI List Objects: GET {parUrl}?prefix={prefix}&fields=name,etag,timeModified
-    // Note: The PAR URL itself points to /o/. We append query params.
-    
+  async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
+    let searchPrefix = this.prefix;
+    if (collection) {
+        searchPrefix += collection + '/';
+    }
+
     const params = new URLSearchParams({
-      prefix: this.prefix,
+      prefix: searchPrefix,
       fields: 'name,etag,timeModified'
     });
     
-    // OCI API paging not implemented for brevity, but needed for production
     const response = await fetch(`${this.baseUrl}?${params.toString()}`);
     
     if (!response.ok) {
-      // If 404, maybe bucket empty or wrong URL?
       return []; 
     }
 
     const data = await response.json();
-    // Expected format: { "objects": [ ... ] }
     if (!data.objects) return [];
 
     const changes: RemoteChange[] = [];
@@ -74,27 +76,50 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     for (const obj of data.objects) {
       const lastModified = new Date(obj.timeModified);
       if (lastModified > since) {
-        // name includes prefix? Yes.
         const key = obj.name;
-        // Extract ID: prefix/{id}.json
-        // Verify it starts with prefix
-        if (key.startsWith(this.prefix)) {
-             const id = key.substring(this.prefix.length).replace('.json', '');
-             changes.push({
-               id,
-               key,
-               etag: obj.etag ? obj.etag.replace(/"/g, '') : undefined,
-               lastModified
-             });
+        
+        let id = '';
+        let col: string | undefined = collection;
+        
+        if (collection) {
+           if (key.startsWith(searchPrefix)) {
+             id = key.substring(searchPrefix.length).replace('.json', '');
+           } else {
+               continue; 
+           }
+        } else {
+           if (key.startsWith(this.prefix)) {
+              const relative = key.substring(this.prefix.length);
+              const parts = relative.split('/');
+              if (parts.length === 2) {
+                  col = parts[0];
+                  id = parts[1].replace('.json', '');
+              } else if (parts.length === 1) {
+                  col = undefined;
+                  id = parts[0].replace('.json', '');
+              } else {
+                  continue;
+              }
+           } else {
+               continue;
+           }
         }
+        
+        changes.push({
+            id,
+            collection: col,
+            key,
+            etag: obj.etag ? obj.etag.replace(/"/g, '') : undefined,
+            lastModified
+        });
       }
     }
     
     return changes;
   }
 
-  async delete(id: string): Promise<void> {
-    const url = this.getUrl(id);
+  async delete(id: string, collection?: string): Promise<void> {
+    const url = this.getUrl(id, collection);
     const response = await fetch(url, { method: 'DELETE' });
     if (!response.ok && response.status !== 404) {
       throw new Error(`OCI PAR Delete Failed: ${response.statusText}`);

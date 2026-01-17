@@ -29,11 +29,13 @@ export interface SyncDocument<T = any> {
   _updatedAt: number;
   _deleted?: boolean;
   _etag?: string; // S3 ETag for optimization
+  collection?: string; // Optional: Namespace/Collection for the document
   data: T;
 }
 
 export interface RemoteChange {
   id: string; // The extracted document ID
+  collection?: string; // The extracted collection
   key: string; // The full S3 key
   etag?: string;
   lastModified?: Date;

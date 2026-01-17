@@ -77,7 +77,7 @@ describe('SovereignS3nc ETag Optimization', () => {
     await db.sync();
 
     // Verify: get() WAS called
-    expect((S3RemoteAdapter.prototype as any).get).toHaveBeenCalledWith(docId);
+    expect((S3RemoteAdapter.prototype as any).get).toHaveBeenCalledWith(docId, undefined);
     
     // Verify local updated
     const updated = await db.get<any>(docId);

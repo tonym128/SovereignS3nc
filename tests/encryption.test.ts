@@ -68,7 +68,7 @@ describe('SovereignS3nc Encryption', () => {
     
     // Import plain data
     const importData = [{ _id: 'imp-1', data: { secret: 'imported' }, _updatedAt: 100 }];
-    await db.import(JSON.stringify(importData));
+    await db.importData(JSON.stringify(importData));
 
     // Verify stored as encrypted
     const raw = await (db as any).localStore.get('imp-1');

@@ -18,12 +18,21 @@ export interface ShareMetadata {
   encryptionKey?: string;
 }
 
-// Type for the public/index.json file
+// Type for the public/index.json file (Legacy support, but we are moving to directory)
 type PublicIndex = Record<string, {
   id: string;
   key: string;
   updatedAt: number;
 }>;
+
+export class Collection {
+  constructor(private db: SovereignS3nc, private name: string) {}
+  
+  save<T>(data: T & { _id?: string }): Promise<string> { return this.db.save(data, this.name); }
+  get<T>(id: string): Promise<T | null> { return this.db.get(id, this.name); }
+  getAll<T>(): Promise<T[]> { return this.db.getAll(this.name); }
+  delete(id: string): Promise<void> { return this.db.delete(id, this.name); }
+}
 
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
@@ -114,6 +123,10 @@ export class SovereignS3nc extends EventEmitter {
 
   public get lastSyncedAt(): number {
     return this.lastSyncTime;
+  }
+
+  public collection(name: string): Collection {
+    return new Collection(this, name);
   }
 
   // --- Sharing ---
@@ -231,7 +244,7 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   private async putLocal(doc: SyncDocument): Promise<void> {
-    await this.localStore.put(doc);
+    await this.localStore.put(doc, doc.collection);
     
     if (!doc._id.startsWith('_sovereign_') && this.sharedDocs.has(doc._id)) {
       try {
@@ -242,54 +255,32 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  // --- Public Index Management (index.json) ---
-
-  private async getPublicIndex(): Promise<PublicIndex> {
-    if (!this.sharedRemote) return {};
-    try {
-      const doc = await this.sharedRemote.get('public/index.json');
-      if (!doc) return {};
-      return doc.data as PublicIndex;
-    } catch (e) {
-      return {};
-    }
-  }
-
-  private async savePublicIndex(index: PublicIndex): Promise<void> {
-    if (!this.sharedRemote) return;
-    const doc: SyncDocument = {
-      _id: 'public/index.json',
-      _updatedAt: Date.now(),
-      data: index
-    };
-    await this.sharedRemote.put(doc);
-  }
+  // --- Public Index Management (Directory-based: public/{sharedId}) ---
 
   private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
     if (!metadata.encryptionKey || !this.sharedRemote) return;
-    try {
-      const index = await this.getPublicIndex();
-      index[metadata.sharedId] = {
+    const doc: SyncDocument = {
+      _id: `public/${metadata.sharedId}`,
+      _updatedAt: Date.now(),
+      data: {
         id: metadata.sharedId,
         key: metadata.encryptionKey,
         updatedAt: Date.now()
-      };
-      await this.savePublicIndex(index);
+      }
+    };
+    try {
+        await this.sharedRemote.put(doc);
     } catch (e) {
-      console.error('Failed to update public index', e);
+        console.error('Failed to update public index', e);
     }
   }
 
   private async removeFromPublicIndex(sharedId: string): Promise<void> {
     if (!this.sharedRemote) return;
     try {
-      const index = await this.getPublicIndex();
-      if (index[sharedId]) {
-        delete index[sharedId];
-        await this.savePublicIndex(index);
-      }
+      await this.sharedRemote.delete(`public/${sharedId}`);
     } catch (e) {
-      console.error('Failed to update public index', e);
+      console.error('Failed to remove from public index', e);
     }
   }
 
@@ -298,8 +289,20 @@ export class SovereignS3nc extends EventEmitter {
   async getPublicShares(): Promise<any[]> {
     if (!this.sharedRemote) return [];
     
-    const index = await this.getPublicIndex();
-    return Object.values(index);
+    // List all files in 'public'
+    // Assuming 'public/' prefix in IDs
+    const changes = await this.sharedRemote.listChanges(new Date(0));
+    const publicFiles = changes.filter(c => c.id.startsWith('public/') && c.id !== 'public/index.json');
+
+    const results = await Promise.all(publicFiles.map(async c => {
+        try {
+            const doc = await this.sharedRemote!.get(c.id);
+            return doc ? doc.data : null;
+        } catch (e) {
+            return null;
+        }
+    }));
+    return results.filter(r => r !== null);
   }
 
   async getSharedDoc(sharedId: string, key: string): Promise<any> {
@@ -350,55 +353,24 @@ export class SovereignS3nc extends EventEmitter {
 
   private async syncShares(): Promise<void> {
      if (!this.sharedRemote) return;
-     let publicIndexDirty = false;
      
-     // 1. Sync content first
+     // Sync content and update individual public index files
      for (const [docId, meta] of this.sharedDocs) {
        try {
          const doc = await this.localStore.get(docId);
          if (doc && !doc._deleted) {
            await this.updateSharedDoc(doc, meta);
-           if (meta.isPublic) publicIndexDirty = true;
+           if (meta.isPublic) {
+               await this.addToPublicIndex(meta);
+           }
          } else if (doc && doc._deleted) {
            await this.sharedRemote.delete(meta.sharedId);
            if (meta.isPublic) {
              await this.removeFromPublicIndex(meta.sharedId);
-             // removeFromPublicIndex does saving, so we might double save if we do batching later.
-             // Ideally we shouldn't call removeFromPublicIndex inside the loop if we want to batch.
-             // But removeFromPublicIndex is safe (R-M-W).
-             // Let's rely on the bulk update below for *adding/updating* active shares.
            }
          }
        } catch (e) {
          console.error(`Failed to sync share ${docId}`, e);
-       }
-     }
-
-     // 2. Batch update public index
-     if (publicIndexDirty) {
-       try {
-         const index = await this.getPublicIndex();
-         let changed = false;
-         for (const [docId, meta] of this.sharedDocs) {
-           if (meta.isPublic && meta.encryptionKey) {
-             // Only update if missing or different?
-             // Simplest is to just overwrite to ensure correctness
-             if (!index[meta.sharedId] || index[meta.sharedId].updatedAt < Date.now()) { // Simple check
-                index[meta.sharedId] = {
-                  id: meta.sharedId,
-                  key: meta.encryptionKey,
-                  updatedAt: Date.now()
-                };
-                changed = true;
-             }
-           }
-         }
-         
-         if (changed) {
-           await this.savePublicIndex(index);
-         }
-       } catch (e) {
-         console.error('Failed to sync public index', e);
        }
      }
   }
@@ -423,13 +395,14 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- CRUD ---
 
-  async save<T>(data: T & { _id?: string }): Promise<string> {
+  async save<T>(data: T & { _id?: string }, collection?: string): Promise<string> {
     const id = data._id || uuidv4();
     const storedData = await this.encryptData(data);
 
     const doc: SyncDocument<any> = {
       _id: id,
       _updatedAt: Date.now(),
+      collection: collection,
       data: storedData
     };
     
@@ -438,16 +411,16 @@ export class SovereignS3nc extends EventEmitter {
     return id;
   }
 
-  async get<T>(id: string): Promise<T | null> {
-    const doc = await this.localStore.get(id);
+  async get<T>(id: string, collection?: string): Promise<T | null> {
+    const doc = await this.localStore.get(id, collection);
     if (!doc || doc._deleted) return null;
     
     const plainData = await this.decryptData(doc.data);
     return plainData as T;
   }
 
-  async getAll<T>(): Promise<T[]> {
-    const docs = await this.localStore.list(false);
+  async getAll<T>(collection?: string): Promise<T[]> {
+    const docs = await this.localStore.list(false, collection);
     const results: T[] = [];
     for (const doc of docs) {
       if (doc._id.startsWith('_sovereign_')) continue;
@@ -457,8 +430,8 @@ export class SovereignS3nc extends EventEmitter {
     return results;
   }
 
-  async delete(id: string): Promise<void> {
-    const doc = await this.localStore.get(id);
+  async delete(id: string, collection?: string): Promise<void> {
+    const doc = await this.localStore.get(id, collection);
     if (doc) {
       doc._deleted = true;
       doc._updatedAt = Date.now();
@@ -500,15 +473,19 @@ export class SovereignS3nc extends EventEmitter {
       for (const change of changes) {
         try {
           const id = change.id;
-          const localDoc = await this.localStore.get(id);
+          const collection = change.collection;
+          const localDoc = await this.localStore.get(id, collection);
 
           if (localDoc && change.etag && localDoc._etag === change.etag) {
              continue;
           }
 
-          const remoteDoc = await this.remote.get(id);
+          const remoteDoc = await this.remote.get(id, collection);
           
           if (remoteDoc) {
+            // Ensure remoteDoc has collection set if retrieved via collection path
+            if (collection && !remoteDoc.collection) remoteDoc.collection = collection;
+
             if (!localDoc) {
               await this.putLocal(remoteDoc);
               stats.pulled++;
@@ -548,7 +525,7 @@ export class SovereignS3nc extends EventEmitter {
       for (const doc of localChanges) {
         if (doc._id.startsWith('_sovereign_')) continue; 
         try {
-          const etag = await this.remote.put(doc);
+          const etag = await this.remote.put(doc, doc.collection);
           stats.pushed++;
           
           if (etag) {
@@ -561,14 +538,9 @@ export class SovereignS3nc extends EventEmitter {
         }
       }
 
-      // --- STEP 3: SYNC PUBLIC INDEX ---
-      // We do this after pushing docs to ensure content is available
-      // Actually, we should probably do this periodically or on specific triggers, 
-      // but putting it in sync() ensures "Always compare".
-      // To avoid overhead, we could check if we pushed any shared docs?
-      // Or just do it. The index file is small.
+      // --- STEP 3: SYNC SHARED ---
       if (this.sharedRemote) {
-        await this.syncShares(); // This now updates index.json
+        await this.syncShares(); 
       }
 
       this.lastSyncTime = startSyncTime;
@@ -593,7 +565,7 @@ export class SovereignS3nc extends EventEmitter {
   async exportData(id?: string): Promise<string> {
     let docs: SyncDocument[] = [];
     if (id) {
-      const doc = await this.localStore.get(id);
+      const doc = await this.localStore.get(id); 
       if (doc) docs.push(doc);
     } else {
       docs = await this.localStore.list(false);
@@ -628,7 +600,7 @@ export class SovereignS3nc extends EventEmitter {
     for (const doc of docs as SyncDocument[]) {
       if (!doc._id || !doc.data) continue;
 
-      const local = await this.localStore.get(doc._id);
+      const local = await this.localStore.get(doc._id, doc.collection);
       
       if (local) {
         const localPlainData = await this.decryptData(local.data);
@@ -643,6 +615,7 @@ export class SovereignS3nc extends EventEmitter {
         const mergedDoc: SyncDocument = {
             ...local,
             _updatedAt: Date.now(),
+            collection: doc.collection,
             data: mergedEncrypted
         };
         
@@ -654,6 +627,7 @@ export class SovereignS3nc extends EventEmitter {
         const newDoc: SyncDocument = {
             ...doc,
             _updatedAt: Date.now(),
+            collection: doc.collection,
             data: encryptedData
         };
         await this.putLocal(newDoc);
@@ -681,6 +655,7 @@ export class SovereignS3nc extends EventEmitter {
       _updatedAt: Date.now(), 
       _rev: uuidv4(),
       _etag: remote._etag, 
+      collection: remote.collection || local.collection,
       data: mergedEncrypted
     };
   }
