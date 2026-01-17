@@ -57,6 +57,33 @@ export interface Profile {
   address: SovereignAddress;
 }
 
+export interface Post {
+  _id: string;
+  text: string;
+  authorId: string;
+  createdAt: number;
+  attachments?: string[]; // Blob IDs
+}
+
+export interface Comment {
+  _id: string;
+  postId: string;
+  parentId?: string; // For threading
+  text: string;
+  authorId: string;
+  createdAt: number;
+}
+
+export interface Task {
+  _id: string;
+  title: string;
+  description?: string;
+  status: 'todo' | 'in-progress' | 'done' | string;
+  order: number;
+  assignedTo?: string;
+  dueDate?: number;
+}
+
 export interface SyncStats {
   pushed: number;
   pulled: number;

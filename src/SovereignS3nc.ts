@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { EventEmitter } from 'events';
 import { merge } from 'ts-deepmerge';
-import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress } from './types';
+import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress, Post, Comment, Task } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
@@ -42,10 +42,6 @@ export class ProfileManager {
 
     const updated = merge(current, data) as Profile;
     await this.db.save(updated, 'profiles', 'me');
-    
-    // Automatically share profile publicly
-    // Note: Profile should NOT be encrypted for public discovery
-    // We need a way to save unencrypted docs to public space.
     await this.db.share('me', true, 'profiles'); 
   }
 }
@@ -68,17 +64,58 @@ export class SocialManager {
   }
 
   private parseAddress(addrStr: string): SovereignAddress {
-    // Basic parser for s3://bucket/appId/userId
     if (addrStr.startsWith('s3://')) {
         const parts = addrStr.substring(5).split('/');
         return {
             bucket: parts[0],
             appId: parts[1],
             userId: parts[2],
-            region: 'us-east-1' // Default or extracted
+            region: 'us-east-1' 
         };
     }
     throw new Error('Invalid address format');
+  }
+
+  async getFeed(): Promise<Post[]> {
+    const myPosts = await this.db.collection('posts').getAll<Post>();
+    const followedPosts = await this.db.collection('followed_content').getAll<Post>();
+    
+    // Filter to only posts (followed_content might contain other shared things)
+    // We assume posts have a 'text' field or we could check a type field if added.
+    const allPosts = [...myPosts, ...followedPosts].filter(p => p.text !== undefined);
+    
+    return allPosts.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  async getComments(postId: string): Promise<Comment[]> {
+    const comments = await this.db.collection('comments').getAll<Comment>();
+    return comments
+        .filter(c => c.postId === postId)
+        .sort((a, b) => a.createdAt - b.createdAt);
+  }
+}
+
+export class BoardManager {
+  constructor(private db: SovereignS3nc) {}
+
+  async getTasks(boardId: string = 'default'): Promise<Task[]> {
+    const tasks = await this.db.collection(`tasks_${boardId}`).getAll<Task>();
+    return tasks.sort((a, b) => a.order - b.order);
+  }
+
+  async addTask(task: Omit<Task, '_id'>, boardId: string = 'default'): Promise<string> {
+    const id = uuidv4();
+    await this.db.collection(`tasks_${boardId}`).save({ ...task, _id: id });
+    return id;
+  }
+
+  async moveTask(taskId: string, newStatus: string, newOrder: number, boardId: string = 'default'): Promise<void> {
+    const task = await this.db.collection(`tasks_${boardId}`).get<Task>(taskId);
+    if (task) {
+        task.status = newStatus;
+        task.order = newOrder;
+        await this.db.collection(`tasks_${boardId}`).save(task);
+    }
   }
 }
 
@@ -95,6 +132,7 @@ export class SovereignS3nc extends EventEmitter {
 
   public readonly profile: ProfileManager;
   public readonly social: SocialManager;
+  public readonly boards: BoardManager;
 
   public get shares(): Map<string, ShareMetadata> {
     return this.sharedDocs;
@@ -127,6 +165,7 @@ export class SovereignS3nc extends EventEmitter {
 
     this.profile = new ProfileManager(this);
     this.social = new SocialManager(this);
+    this.boards = new BoardManager(this);
   }
 
   public getAddress(): SovereignAddress {
@@ -139,7 +178,6 @@ export class SovereignS3nc extends EventEmitter {
         userId: this.config.paths.userId
       };
     }
-    // OCI logic or other?
     return {
         region: 'unknown',
         bucket: 'unknown',
@@ -217,7 +255,6 @@ export class SovereignS3nc extends EventEmitter {
       }
       existing.isPublic = isPublic;
       if (isPublic && !existing.encryptionKey) {
-        // Only generate encryption key if it's public and NOT a profile
         if (doc.collection !== 'profiles') {
             existing.encryptionKey = uuidv4().replace(/-/g, '');
         }
@@ -298,7 +335,6 @@ export class SovereignS3nc extends EventEmitter {
     if (!this.sharedRemote) return;
     let payload = doc.data;
 
-    // Profiles are shared unencrypted
     if (metadata.isPublic && metadata.encryptionKey) {
        try {
          const plain = await this.decryptData(doc.data);
@@ -309,7 +345,6 @@ export class SovereignS3nc extends EventEmitter {
          return; 
        }
     } else if (metadata.isPublic && doc.collection === 'profiles') {
-        // Plaintext share
         payload = await this.decryptData(doc.data);
     }
 
@@ -343,7 +378,7 @@ export class SovereignS3nc extends EventEmitter {
       _updatedAt: Date.now(),
       data: {
         id: metadata.sharedId,
-        key: metadata.encryptionKey, // undefined for unencrypted shares like profiles
+        key: metadata.encryptionKey, 
         collection: collection,
         updatedAt: Date.now()
       }
@@ -617,12 +652,10 @@ export class SovereignS3nc extends EventEmitter {
         }
       }
 
-      // --- STEP 3: SYNC SHARED ---
       if (this.sharedRemote) {
         await this.syncShares(); 
       }
 
-      // --- STEP 4: PULL FOLLOWED CONTENT ---
       await this.pullFollowedContent(stats);
 
       this.lastSyncTime = startSyncTime;
@@ -646,11 +679,10 @@ export class SovereignS3nc extends EventEmitter {
     const following = await this.social.getFollowing();
     for (const addr of following) {
         try {
-            // Create a temporary remote adapter for the followed user's shared path
             const followRemote = new S3RemoteAdapter({
                 region: addr.region,
                 endpoint: addr.endpoint,
-                credentials: (this.config.s3!.credentials), // Re-use own creds (Single Credential Model)
+                credentials: (this.config.s3!.credentials), 
                 bucketName: addr.bucket
             }, {
                 appId: addr.appId,
@@ -658,7 +690,6 @@ export class SovereignS3nc extends EventEmitter {
                 storeId: 'shared'
             });
 
-            // 1. Get their public index
             const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
             const publicFiles = changes.filter(c => c.id.startsWith('public/'));
 
@@ -666,14 +697,12 @@ export class SovereignS3nc extends EventEmitter {
                 const indexDoc = await followRemote.get(file.id);
                 if (!indexDoc) continue;
                 
-                const meta = indexDoc.data; // { id, key, collection, updatedAt }
+                const meta = indexDoc.data; 
                 const localId = `follow_${addr.userId}_${meta.id}`;
                 
-                // Check if we already have it and it's up to date
                 const local = await this.localStore.get(localId, 'followed_content');
                 if (local && local._updatedAt >= meta.updatedAt) continue;
 
-                // Download the actual content
                 const contentDoc = await followRemote.get(meta.id);
                 if (contentDoc) {
                     let plainContent = contentDoc.data;
