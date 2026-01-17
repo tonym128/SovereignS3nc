@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { EventEmitter } from 'events';
 import { merge } from 'ts-deepmerge';
-import { SovereignConfig, SyncDocument, SyncStats } from './types';
+import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
@@ -18,13 +18,6 @@ export interface ShareMetadata {
   encryptionKey?: string;
 }
 
-// Type for the public/index.json file (Legacy support, but we are moving to directory)
-type PublicIndex = Record<string, {
-  id: string;
-  key: string;
-  updatedAt: number;
-}>;
-
 export class Collection {
   constructor(private db: SovereignS3nc, private name: string) {}
   
@@ -32,6 +25,61 @@ export class Collection {
   get<T>(id: string): Promise<T | null> { return this.db.get(id, this.name); }
   getAll<T>(): Promise<T[]> { return this.db.getAll(this.name); }
   delete(id: string): Promise<void> { return this.db.delete(id, this.name); }
+}
+
+export class ProfileManager {
+  constructor(private db: SovereignS3nc) {}
+
+  async get(): Promise<Profile | null> {
+    return this.db.get<Profile>('me', 'profiles');
+  }
+
+  async update(data: Partial<Profile>): Promise<void> {
+    const current = await this.get() || {
+      displayName: '',
+      address: this.db.getAddress()
+    } as Profile;
+
+    const updated = merge(current, data) as Profile;
+    await this.db.save(updated, 'profiles', 'me');
+    
+    // Automatically share profile publicly
+    // Note: Profile should NOT be encrypted for public discovery
+    // We need a way to save unencrypted docs to public space.
+    await this.db.share('me', true, 'profiles'); 
+  }
+}
+
+export class SocialManager {
+  constructor(private db: SovereignS3nc) {}
+
+  async follow(address: SovereignAddress | string): Promise<void> {
+    const addr = typeof address === 'string' ? this.parseAddress(address) : address;
+    const id = `${addr.appId}.${addr.userId}`;
+    await this.db.save(addr, '_social_following', id);
+  }
+
+  async unfollow(id: string): Promise<void> {
+    await this.db.delete(id, '_social_following');
+  }
+
+  async getFollowing(): Promise<SovereignAddress[]> {
+    return this.db.getAll<SovereignAddress>('_social_following');
+  }
+
+  private parseAddress(addrStr: string): SovereignAddress {
+    // Basic parser for s3://bucket/appId/userId
+    if (addrStr.startsWith('s3://')) {
+        const parts = addrStr.substring(5).split('/');
+        return {
+            bucket: parts[0],
+            appId: parts[1],
+            userId: parts[2],
+            region: 'us-east-1' // Default or extracted
+        };
+    }
+    throw new Error('Invalid address format');
+  }
 }
 
 export class SovereignS3nc extends EventEmitter {
@@ -44,6 +92,9 @@ export class SovereignS3nc extends EventEmitter {
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
   private sharedDocs: Map<string, ShareMetadata> = new Map();
+
+  public readonly profile: ProfileManager;
+  public readonly social: SocialManager;
 
   public get shares(): Map<string, ShareMetadata> {
     return this.sharedDocs;
@@ -73,6 +124,28 @@ export class SovereignS3nc extends EventEmitter {
     } else if (config.encryptionKey) {
       this.crypto = new AESCryptoAdapter(config.encryptionKey);
     }
+
+    this.profile = new ProfileManager(this);
+    this.social = new SocialManager(this);
+  }
+
+  public getAddress(): SovereignAddress {
+    if (this.config.s3) {
+      return {
+        endpoint: this.config.s3.endpoint,
+        region: this.config.s3.region,
+        bucket: this.config.s3.bucketName,
+        appId: this.config.paths.appId,
+        userId: this.config.paths.userId
+      };
+    }
+    // OCI logic or other?
+    return {
+        region: 'unknown',
+        bucket: 'unknown',
+        appId: this.config.paths.appId,
+        userId: this.config.paths.userId
+    };
   }
 
   private initRemote(config: SovereignConfig) {
@@ -131,8 +204,8 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- Sharing ---
 
-  async share(docId: string, isPublic: boolean = false): Promise<string> {
-    const doc = await this.localStore.get(docId);
+  async share(docId: string, isPublic: boolean = false, collection?: string): Promise<string> {
+    const doc = await this.localStore.get(docId, collection);
     if (!doc || doc._deleted) {
       throw new Error('Document not found');
     }
@@ -144,12 +217,15 @@ export class SovereignS3nc extends EventEmitter {
       }
       existing.isPublic = isPublic;
       if (isPublic && !existing.encryptionKey) {
-        existing.encryptionKey = uuidv4().replace(/-/g, '');
+        // Only generate encryption key if it's public and NOT a profile
+        if (doc.collection !== 'profiles') {
+            existing.encryptionKey = uuidv4().replace(/-/g, '');
+        }
       }
       this.sharedDocs.set(docId, existing);
       await this.persistShares();
       await this.updateSharedDoc(doc, existing);
-      if (isPublic) await this.addToPublicIndex(existing);
+      if (isPublic) await this.addToPublicIndex(existing, doc.collection);
       return existing.sharedId;
     }
 
@@ -159,7 +235,7 @@ export class SovereignS3nc extends EventEmitter {
       isPublic
     };
     
-    if (isPublic) {
+    if (isPublic && doc.collection !== 'profiles') {
       metadata.encryptionKey = uuidv4().replace(/-/g, '');
     }
 
@@ -170,7 +246,7 @@ export class SovereignS3nc extends EventEmitter {
       if (this.sharedRemote) {
         await this.updateSharedDoc(doc, metadata);
         if (isPublic) {
-          await this.addToPublicIndex(metadata);
+          await this.addToPublicIndex(metadata, doc.collection);
         }
       } else {
         console.warn('Document marked as shared locally, but not synced (offline mode).');
@@ -222,6 +298,7 @@ export class SovereignS3nc extends EventEmitter {
     if (!this.sharedRemote) return;
     let payload = doc.data;
 
+    // Profiles are shared unencrypted
     if (metadata.isPublic && metadata.encryptionKey) {
        try {
          const plain = await this.decryptData(doc.data);
@@ -231,6 +308,9 @@ export class SovereignS3nc extends EventEmitter {
          console.error('Failed to re-encrypt for sharing', e);
          return; 
        }
+    } else if (metadata.isPublic && doc.collection === 'profiles') {
+        // Plaintext share
+        payload = await this.decryptData(doc.data);
     }
 
     const sharedDoc: SyncDocument = {
@@ -257,19 +337,19 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- Public Index Management (Directory-based: public/{sharedId}) ---
 
-  private async addToPublicIndex(metadata: ShareMetadata): Promise<void> {
-    if (!metadata.encryptionKey || !this.sharedRemote) return;
+  private async addToPublicIndex(metadata: ShareMetadata, collection?: string): Promise<void> {
     const doc: SyncDocument = {
       _id: `public/${metadata.sharedId}`,
       _updatedAt: Date.now(),
       data: {
         id: metadata.sharedId,
-        key: metadata.encryptionKey,
+        key: metadata.encryptionKey, // undefined for unencrypted shares like profiles
+        collection: collection,
         updatedAt: Date.now()
       }
     };
     try {
-        await this.sharedRemote.put(doc);
+        await this.sharedRemote!.put(doc);
     } catch (e) {
         console.error('Failed to update public index', e);
     }
@@ -289,8 +369,6 @@ export class SovereignS3nc extends EventEmitter {
   async getPublicShares(): Promise<any[]> {
     if (!this.sharedRemote) return [];
     
-    // List all files in 'public'
-    // Assuming 'public/' prefix in IDs
     const changes = await this.sharedRemote.listChanges(new Date(0));
     const publicFiles = changes.filter(c => c.id.startsWith('public/') && c.id !== 'public/index.json');
 
@@ -305,16 +383,19 @@ export class SovereignS3nc extends EventEmitter {
     return results.filter(r => r !== null);
   }
 
-  async getSharedDoc(sharedId: string, key: string): Promise<any> {
+  async getSharedDoc(sharedId: string, key?: string): Promise<any> {
     if (!this.sharedRemote) return null;
     const doc = await this.sharedRemote.get(sharedId);
     if (!doc) return null;
     
-    const tempCrypto = this.getCryptoAdapter(key);
-    return await tempCrypto.decrypt(doc.data);
+    if (key) {
+        const tempCrypto = this.getCryptoAdapter(key);
+        return await tempCrypto.decrypt(doc.data);
+    }
+    return doc.data;
   }
 
-  async saveSharedDocToLocal(sharedId: string, key: string): Promise<string> {
+  async saveSharedDocToLocal(sharedId: string, key?: string): Promise<string> {
     const plainData = await this.getSharedDoc(sharedId, key);
     if (!plainData) throw new Error('Shared document not found or decrypt failed');
     
@@ -354,14 +435,13 @@ export class SovereignS3nc extends EventEmitter {
   private async syncShares(): Promise<void> {
      if (!this.sharedRemote) return;
      
-     // Sync content and update individual public index files
      for (const [docId, meta] of this.sharedDocs) {
        try {
          const doc = await this.localStore.get(docId);
          if (doc && !doc._deleted) {
            await this.updateSharedDoc(doc, meta);
            if (meta.isPublic) {
-               await this.addToPublicIndex(meta);
+               await this.addToPublicIndex(meta, doc.collection);
            }
          } else if (doc && doc._deleted) {
            await this.sharedRemote.delete(meta.sharedId);
@@ -395,8 +475,8 @@ export class SovereignS3nc extends EventEmitter {
 
   // --- CRUD ---
 
-  async save<T>(data: T & { _id?: string }, collection?: string): Promise<string> {
-    const id = data._id || uuidv4();
+  async save<T>(data: T & { _id?: string }, collection?: string, explicitId?: string): Promise<string> {
+    const id = explicitId || data._id || uuidv4();
     const storedData = await this.encryptData(data);
 
     const doc: SyncDocument<any> = {
@@ -483,7 +563,6 @@ export class SovereignS3nc extends EventEmitter {
           const remoteDoc = await this.remote.get(id, collection);
           
           if (remoteDoc) {
-            // Ensure remoteDoc has collection set if retrieved via collection path
             if (collection && !remoteDoc.collection) remoteDoc.collection = collection;
 
             if (!localDoc) {
@@ -543,6 +622,9 @@ export class SovereignS3nc extends EventEmitter {
         await this.syncShares(); 
       }
 
+      // --- STEP 4: PULL FOLLOWED CONTENT ---
+      await this.pullFollowedContent(stats);
+
       this.lastSyncTime = startSyncTime;
       await this.localStore.put({
         _id: '_sovereign_meta',
@@ -560,6 +642,64 @@ export class SovereignS3nc extends EventEmitter {
     return stats;
   }
 
+  private async pullFollowedContent(stats: SyncStats): Promise<void> {
+    const following = await this.social.getFollowing();
+    for (const addr of following) {
+        try {
+            // Create a temporary remote adapter for the followed user's shared path
+            const followRemote = new S3RemoteAdapter({
+                region: addr.region,
+                endpoint: addr.endpoint,
+                credentials: (this.config.s3!.credentials), // Re-use own creds (Single Credential Model)
+                bucketName: addr.bucket
+            }, {
+                appId: addr.appId,
+                userId: 'shared',
+                storeId: 'shared'
+            });
+
+            // 1. Get their public index
+            const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
+            const publicFiles = changes.filter(c => c.id.startsWith('public/'));
+
+            for (const file of publicFiles) {
+                const indexDoc = await followRemote.get(file.id);
+                if (!indexDoc) continue;
+                
+                const meta = indexDoc.data; // { id, key, collection, updatedAt }
+                const localId = `follow_${addr.userId}_${meta.id}`;
+                
+                // Check if we already have it and it's up to date
+                const local = await this.localStore.get(localId, 'followed_content');
+                if (local && local._updatedAt >= meta.updatedAt) continue;
+
+                // Download the actual content
+                const contentDoc = await followRemote.get(meta.id);
+                if (contentDoc) {
+                    let plainContent = contentDoc.data;
+                    if (meta.key) {
+                        const tempCrypto = this.getCryptoAdapter(meta.key);
+                        plainContent = await tempCrypto.decrypt(contentDoc.data);
+                    }
+
+                    const encryptedForMe = await this.encryptData(plainContent);
+                    await this.localStore.put({
+                        _id: localId,
+                        _updatedAt: meta.updatedAt,
+                        collection: 'followed_content',
+                        data: encryptedForMe,
+                        _rev: uuidv4()
+                    });
+                    stats.pulled++;
+                }
+            }
+        } catch (e) {
+            console.error(`Failed to pull content from ${addr.userId}`, e);
+            stats.errors++;
+        }
+    }
+  }
+
   // --- Import / Export ---
 
   async exportData(id?: string): Promise<string> {
@@ -572,7 +712,6 @@ export class SovereignS3nc extends EventEmitter {
     }
     docs = docs.filter(d => !d._id.startsWith('_sovereign_'));
 
-    // Decrypt all data for export
     const decryptedDocs = await Promise.all(docs.map(async d => {
       const plain = await this.decryptData(d.data);
       return { ...d, data: plain };

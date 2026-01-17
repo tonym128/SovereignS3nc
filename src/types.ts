@@ -41,6 +41,22 @@ export interface RemoteChange {
   lastModified?: Date;
 }
 
+export interface SovereignAddress {
+  endpoint?: string;
+  region: string;
+  bucket: string;
+  appId: string;
+  userId: string;
+}
+
+export interface Profile {
+  displayName: string;
+  avatarUrl?: string;
+  bio?: string;
+  publicKey?: string; // For future encrypted messaging
+  address: SovereignAddress;
+}
+
 export interface SyncStats {
   pushed: number;
   pulled: number;
