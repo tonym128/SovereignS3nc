@@ -79,14 +79,29 @@ export class SocialManager {
 
   async getFeed(): Promise<Post[]> {
     const myPosts = await this.db.collection('posts').getAll<Post>();
-    const followedPosts = await this.db.collection('followed_content').getAll<Post>();
-    const allPosts = [...myPosts, ...followedPosts].filter(p => p.text !== undefined);
-    return allPosts.sort((a, b) => b.createdAt - a.createdAt);
+    const followedDocs = await this.db.collection('followed_content').getAll<any>();
+    
+    // Filter followed docs to only be Posts (have text, no postId)
+    const followedPosts = followedDocs.filter(d => d.text !== undefined && d.postId === undefined);
+    
+    const allPosts = [...myPosts, ...followedPosts];
+    
+    // Deduplicate by ID
+    const uniquePosts = Array.from(new Map(allPosts.map(p => [p._id, p])).values());
+    
+    return uniquePosts.sort((a, b) => b.createdAt - a.createdAt);
   }
 
   async getComments(postId: string): Promise<Comment[]> {
-    const comments = await this.db.collection('comments').getAll<Comment>();
-    return comments
+    const myComments = await this.db.collection('comments').getAll<Comment>();
+    const followedDocs = await this.db.collection('followed_content').getAll<any>();
+    
+    // Filter followed docs to be Comments (have text AND postId)
+    const followedComments = followedDocs.filter(d => d.text !== undefined && d.postId !== undefined) as Comment[];
+
+    const allComments = [...myComments, ...followedComments];
+
+    return allComments
         .filter(c => c.postId === postId)
         .sort((a, b) => a.createdAt - b.createdAt);
   }

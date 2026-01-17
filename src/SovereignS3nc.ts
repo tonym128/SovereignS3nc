@@ -15,6 +15,7 @@ import { OCIPreAuthAdapter } from './adapters/OCIPreAuthAdapter';
 // Blob Adapters
 import { IBlobAdapter } from './interfaces/IBlobAdapter';
 import { S3BlobAdapter } from './adapters/S3BlobAdapter';
+import { OCIBlobAdapter } from './adapters/OCIBlobAdapter';
 
 // Modules
 import { ProfileManager, SocialManager } from './modules/Social';
@@ -64,17 +65,28 @@ export class StorageManager {
     return meta;
   }
 
-  async download(id: string): Promise<Uint8Array | null> {
+  async download(id: string, options?: { decrypt?: boolean }): Promise<Uint8Array | null> {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
     
     const meta = await this.db.collection('blobs').get<BlobMetadata>(id);
     const raw = await this.db.blobs.download(id);
     if (!raw) return null;
 
-    const isEncrypted = meta ? meta.isEncrypted : this.db.hasEncryption();
+    // Determine encryption status
+    // 1. Explicit option overrides everything
+    // 2. Metadata overrides global default
+    // 3. Global default
+    let shouldDecrypt = this.db.hasEncryption();
+    if (meta) shouldDecrypt = meta.isEncrypted;
+    if (options && options.decrypt !== undefined) shouldDecrypt = options.decrypt;
 
-    if (isEncrypted) {
-        return await this.db.decryptRaw(raw);
+    if (shouldDecrypt) {
+        try {
+            return await this.db.decryptRaw(raw);
+        } catch (e) {
+            console.warn(`Decryption failed for blob ${id}. Returning raw (might be plaintext).`);
+            return raw;
+        }
     }
     return raw;
   }
@@ -163,9 +175,10 @@ export class SovereignS3nc extends EventEmitter {
   private initRemote(config: SovereignConfig) {
     if (config.ociParUrl) {
       this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths, config.useManifest);
+      this.blobs = new OCIBlobAdapter(config.ociParUrl, config.paths);
       this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
         appId: config.paths.appId,
-        userId: 'shared',
+        userId: config.paths.userId,
         storeId: 'shared'
       }, config.useManifest);
     } else if (config.s3) {
@@ -173,7 +186,7 @@ export class SovereignS3nc extends EventEmitter {
       this.blobs = new S3BlobAdapter(config.s3, config.paths);
       this.sharedRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
-        userId: 'shared',
+        userId: config.paths.userId,
         storeId: 'shared'
       }, config.useManifest);
     }
@@ -661,7 +674,7 @@ export class SovereignS3nc extends EventEmitter {
                 bucketName: addr.bucket
             }, {
                 appId: addr.appId,
-                userId: 'shared',
+                userId: addr.userId, // <--- Correct: Follow the specific user
                 storeId: 'shared'
             });
 

@@ -83,11 +83,17 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     }
 
     // 3. Save
-    await fetch(manifestUrl, {
-        method: 'PUT',
-        body: JSON.stringify(entries),
-        headers: { 'Content-Type': 'application/json' }
-    });
+    try {
+        await fetch(manifestUrl, {
+            method: 'PUT',
+            body: JSON.stringify(entries),
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (e) {
+        console.error('Failed to update manifest', e);
+        // We do not throw here to avoid blocking the main save operation
+        // In a real app, we might want to queue this for retry
+    }
   }
 
   async get(id: string, collection?: string): Promise<SyncDocument | null> {
