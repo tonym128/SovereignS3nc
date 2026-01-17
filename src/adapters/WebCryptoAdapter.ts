@@ -79,7 +79,7 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     const ciphertextWithTag = await window.crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       key,
-      data
+      data as any
     );
 
     const combined = new Uint8Array(12 + ciphertextWithTag.byteLength);
