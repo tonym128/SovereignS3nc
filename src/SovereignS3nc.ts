@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { EventEmitter } from 'events';
 import { merge } from 'ts-deepmerge';
-import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress, Post, Comment, Task, BlobMetadata } from './types';
+import { SovereignConfig, SyncDocument, SyncStats, SovereignAddress, BlobMetadata } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
@@ -16,6 +16,10 @@ import { OCIPreAuthAdapter } from './adapters/OCIPreAuthAdapter';
 import { IBlobAdapter } from './interfaces/IBlobAdapter';
 import { S3BlobAdapter } from './adapters/S3BlobAdapter';
 
+// Modules
+import { ProfileManager, SocialManager } from './modules/Social';
+import { BoardManager } from './modules/Boards';
+
 export interface ShareMetadata {
   sharedId: string;
   isPublic: boolean;
@@ -29,94 +33,6 @@ export class Collection {
   get<T>(id: string): Promise<T | null> { return this.db.get(id, this.name); }
   getAll<T>(): Promise<T[]> { return this.db.getAll(this.name); }
   delete(id: string): Promise<void> { return this.db.delete(id, this.name); }
-}
-
-export class ProfileManager {
-  constructor(private db: SovereignS3nc) {}
-
-  async get(): Promise<Profile | null> {
-    return this.db.get<Profile>('me', 'profiles');
-  }
-
-  async update(data: Partial<Profile>): Promise<void> {
-    const current = await this.get() || {
-      displayName: '',
-      address: this.db.getAddress()
-    } as Profile;
-
-    const updated = merge(current, data) as Profile;
-    await this.db.save(updated, 'profiles', 'me');
-    await this.db.share('me', true, 'profiles'); 
-  }
-}
-
-export class SocialManager {
-  constructor(private db: SovereignS3nc) {}
-
-  async follow(address: SovereignAddress | string): Promise<void> {
-    const addr = typeof address === 'string' ? this.parseAddress(address) : address;
-    const id = `${addr.appId}.${addr.userId}`;
-    await this.db.save(addr, '_social_following', id);
-  }
-
-  async unfollow(id: string): Promise<void> {
-    await this.db.delete(id, '_social_following');
-  }
-
-  async getFollowing(): Promise<SovereignAddress[]> {
-    return this.db.getAll<SovereignAddress>('_social_following');
-  }
-
-  private parseAddress(addrStr: string): SovereignAddress {
-    if (addrStr.startsWith('s3://')) {
-        const parts = addrStr.substring(5).split('/');
-        return {
-            bucket: parts[0],
-            appId: parts[1],
-            userId: parts[2],
-            region: 'us-east-1' 
-        };
-    }
-    throw new Error('Invalid address format');
-  }
-
-  async getFeed(): Promise<Post[]> {
-    const myPosts = await this.db.collection('posts').getAll<Post>();
-    const followedPosts = await this.db.collection('followed_content').getAll<Post>();
-    const allPosts = [...myPosts, ...followedPosts].filter(p => p.text !== undefined);
-    return allPosts.sort((a, b) => b.createdAt - a.createdAt);
-  }
-
-  async getComments(postId: string): Promise<Comment[]> {
-    const comments = await this.db.collection('comments').getAll<Comment>();
-    return comments
-        .filter(c => c.postId === postId)
-        .sort((a, b) => a.createdAt - b.createdAt);
-  }
-}
-
-export class BoardManager {
-  constructor(private db: SovereignS3nc) {}
-
-  async getTasks(boardId: string = 'default'): Promise<Task[]> {
-    const tasks = await this.db.collection(`tasks_${boardId}`).getAll<Task>();
-    return tasks.sort((a, b) => a.order - b.order);
-  }
-
-  async addTask(task: Omit<Task, '_id'>, boardId: string = 'default'): Promise<string> {
-    const id = uuidv4();
-    await this.db.collection(`tasks_${boardId}`).save({ ...task, _id: id });
-    return id;
-  }
-
-  async moveTask(taskId: string, newStatus: string, newOrder: number, boardId: string = 'default'): Promise<void> {
-    const task = await this.db.collection(`tasks_${boardId}`).get<Task>(taskId);
-    if (task) {
-        task.status = newStatus;
-        task.order = newOrder;
-        await this.db.collection(`tasks_${boardId}`).save(task);
-    }
-  }
 }
 
 export class StorageManager {
@@ -144,9 +60,6 @@ export class StorageManager {
         isEncrypted: shouldEncrypt
     };
 
-    // Save metadata to 'blobs' collection. 
-    // If it's a public blob, we might want the metadata to be shareable?
-    // For now, we just save it locally. The user can 'share' the metadata doc if they want.
     await this.db.collection('blobs').save(meta);
     return meta;
   }
@@ -154,12 +67,10 @@ export class StorageManager {
   async download(id: string): Promise<Uint8Array | null> {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
     
-    // Check metadata to know if we need to decrypt
     const meta = await this.db.collection('blobs').get<BlobMetadata>(id);
     const raw = await this.db.blobs.download(id);
     if (!raw) return null;
 
-    // Use metadata if available, otherwise fallback to global setting (legacy behavior)
     const isEncrypted = meta ? meta.isEncrypted : this.db.hasEncryption();
 
     if (isEncrypted) {
