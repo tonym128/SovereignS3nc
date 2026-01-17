@@ -122,13 +122,14 @@ export class BoardManager {
 export class StorageManager {
   constructor(private db: SovereignS3nc) {}
 
-  async upload(name: string, data: Uint8Array, contentType: string = 'application/octet-stream'): Promise<BlobMetadata> {
+  async upload(name: string, data: Uint8Array, contentType: string = 'application/octet-stream', isPublic: boolean = false): Promise<BlobMetadata> {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
     
     const id = uuidv4();
     let payload = data;
+    const shouldEncrypt = this.db.hasEncryption() && !isPublic;
     
-    if (this.db.hasEncryption()) {
+    if (shouldEncrypt) {
         payload = await this.db.encryptRaw(data);
     }
 
@@ -139,9 +140,13 @@ export class StorageManager {
         name,
         size: data.length,
         contentType,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        isEncrypted: shouldEncrypt
     };
 
+    // Save metadata to 'blobs' collection. 
+    // If it's a public blob, we might want the metadata to be shareable?
+    // For now, we just save it locally. The user can 'share' the metadata doc if they want.
     await this.db.collection('blobs').save(meta);
     return meta;
   }
@@ -149,10 +154,15 @@ export class StorageManager {
   async download(id: string): Promise<Uint8Array | null> {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
     
+    // Check metadata to know if we need to decrypt
+    const meta = await this.db.collection('blobs').get<BlobMetadata>(id);
     const raw = await this.db.blobs.download(id);
     if (!raw) return null;
 
-    if (this.db.hasEncryption()) {
+    // Use metadata if available, otherwise fallback to global setting (legacy behavior)
+    const isEncrypted = meta ? meta.isEncrypted : this.db.hasEncryption();
+
+    if (isEncrypted) {
         return await this.db.decryptRaw(raw);
     }
     return raw;

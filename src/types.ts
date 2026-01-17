@@ -91,6 +91,7 @@ export interface BlobMetadata {
   contentType: string;
   hash?: string;
   createdAt: number;
+  isEncrypted: boolean;
 }
 
 export interface SyncStats {
