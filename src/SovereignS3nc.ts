@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { EventEmitter } from 'events';
 import { merge } from 'ts-deepmerge';
-import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress, Post, Comment, Task } from './types';
+import { SovereignConfig, SyncDocument, SyncStats, Profile, SovereignAddress, Post, Comment, Task, BlobMetadata } from './types';
 import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
@@ -11,6 +11,10 @@ import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { OCIPreAuthAdapter } from './adapters/OCIPreAuthAdapter';
+
+// Blob Adapters
+import { IBlobAdapter } from './interfaces/IBlobAdapter';
+import { S3BlobAdapter } from './adapters/S3BlobAdapter';
 
 export interface ShareMetadata {
   sharedId: string;
@@ -79,11 +83,7 @@ export class SocialManager {
   async getFeed(): Promise<Post[]> {
     const myPosts = await this.db.collection('posts').getAll<Post>();
     const followedPosts = await this.db.collection('followed_content').getAll<Post>();
-    
-    // Filter to only posts (followed_content might contain other shared things)
-    // We assume posts have a 'text' field or we could check a type field if added.
     const allPosts = [...myPosts, ...followedPosts].filter(p => p.text !== undefined);
-    
     return allPosts.sort((a, b) => b.createdAt - a.createdAt);
   }
 
@@ -119,9 +119,60 @@ export class BoardManager {
   }
 }
 
+export class StorageManager {
+  constructor(private db: SovereignS3nc) {}
+
+  async upload(name: string, data: Uint8Array, contentType: string = 'application/octet-stream'): Promise<BlobMetadata> {
+    if (!this.db.blobs) throw new Error('Blob storage not configured');
+    
+    const id = uuidv4();
+    let payload = data;
+    
+    if (this.db.hasEncryption()) {
+        payload = await this.db.encryptRaw(data);
+    }
+
+    await this.db.blobs.upload(id, payload, contentType);
+
+    const meta: BlobMetadata = {
+        _id: id,
+        name,
+        size: data.length,
+        contentType,
+        createdAt: Date.now()
+    };
+
+    await this.db.collection('blobs').save(meta);
+    return meta;
+  }
+
+  async download(id: string): Promise<Uint8Array | null> {
+    if (!this.db.blobs) throw new Error('Blob storage not configured');
+    
+    const raw = await this.db.blobs.download(id);
+    if (!raw) return null;
+
+    if (this.db.hasEncryption()) {
+        return await this.db.decryptRaw(raw);
+    }
+    return raw;
+  }
+
+  async list(): Promise<BlobMetadata[]> {
+    return this.db.collection('blobs').getAll<BlobMetadata>();
+  }
+
+  async delete(id: string): Promise<void> {
+    if (!this.db.blobs) throw new Error('Blob storage not configured');
+    await this.db.blobs.delete(id);
+    await this.db.collection('blobs').delete(id);
+  }
+}
+
 export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
   public remote?: IRemoteAdapter; 
+  public blobs?: IBlobAdapter;
   private sharedRemote?: IRemoteAdapter; 
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
@@ -133,6 +184,7 @@ export class SovereignS3nc extends EventEmitter {
   public readonly profile: ProfileManager;
   public readonly social: SocialManager;
   public readonly boards: BoardManager;
+  public readonly storage: StorageManager;
 
   public get shares(): Map<string, ShareMetadata> {
     return this.sharedDocs;
@@ -166,6 +218,7 @@ export class SovereignS3nc extends EventEmitter {
     this.profile = new ProfileManager(this);
     this.social = new SocialManager(this);
     this.boards = new BoardManager(this);
+    this.storage = new StorageManager(this);
   }
 
   public getAddress(): SovereignAddress {
@@ -196,6 +249,7 @@ export class SovereignS3nc extends EventEmitter {
       });
     } else if (config.s3) {
       this.remote = new S3RemoteAdapter(config.s3, config.paths);
+      this.blobs = new S3BlobAdapter(config.s3, config.paths);
       this.sharedRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
         userId: 'shared',
@@ -238,6 +292,20 @@ export class SovereignS3nc extends EventEmitter {
 
   public collection(name: string): Collection {
     return new Collection(this, name);
+  }
+
+  public hasEncryption(): boolean {
+    return !!this.crypto;
+  }
+
+  public async encryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    if (!this.crypto) return data;
+    return this.crypto.encryptRaw(data);
+  }
+
+  public async decryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    if (!this.crypto) return data;
+    return this.crypto.decryptRaw(data);
   }
 
   // --- Sharing ---
@@ -370,8 +438,6 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  // --- Public Index Management (Directory-based: public/{sharedId}) ---
-
   private async addToPublicIndex(metadata: ShareMetadata, collection?: string): Promise<void> {
     const doc: SyncDocument = {
       _id: `public/${metadata.sharedId}`,
@@ -398,8 +464,6 @@ export class SovereignS3nc extends EventEmitter {
       console.error('Failed to remove from public index', e);
     }
   }
-
-  // --- Public Consumption ---
 
   async getPublicShares(): Promise<any[]> {
     if (!this.sharedRemote) return [];
@@ -447,8 +511,6 @@ export class SovereignS3nc extends EventEmitter {
     return newId;
   }
 
-  // --- Connection Management ---
-
   async connect(config: { s3?: SovereignConfig['s3'], ociParUrl?: string }): Promise<void> {
     if (!config.s3 && !config.ociParUrl) {
       throw new Error('S3 configuration or OCI PAR URL required');
@@ -490,8 +552,6 @@ export class SovereignS3nc extends EventEmitter {
      }
   }
 
-  // --- Encryption Helpers ---
-
   private async encryptData(data: any): Promise<any> {
     if (!this.crypto) return data;
     return await this.crypto.encrypt(data);
@@ -507,8 +567,6 @@ export class SovereignS3nc extends EventEmitter {
       return data;
     }
   }
-
-  // --- CRUD ---
 
   async save<T>(data: T & { _id?: string }, collection?: string, explicitId?: string): Promise<string> {
     const id = explicitId || data._id || uuidv4();
@@ -555,8 +613,6 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
-  // --- Sync ---
-
   startAutoSync() {
     if (this.syncInterval) clearInterval(this.syncInterval);
     this.syncInterval = setInterval(() => {
@@ -581,7 +637,6 @@ export class SovereignS3nc extends EventEmitter {
       this.emit('syncStart');
       const startSyncTime = Date.now();
 
-      // --- STEP 1: PULL & MERGE ---
       const lastSyncDate = new Date(this.lastSyncTime);
       const changes = await this.remote.listChanges(lastSyncDate);
 
@@ -633,7 +688,6 @@ export class SovereignS3nc extends EventEmitter {
         }
       }
 
-      // --- STEP 2: PUSH ---
       const localChanges = await this.localStore.getChanges(this.lastSyncTime);
       
       for (const doc of localChanges) {
@@ -728,8 +782,6 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
   }
-
-  // --- Import / Export ---
 
   async exportData(id?: string): Promise<string> {
     let docs: SyncDocument[] = [];

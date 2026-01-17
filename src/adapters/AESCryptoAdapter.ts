@@ -6,7 +6,6 @@ export class AESCryptoAdapter implements ICryptoAdapter {
   private algorithm = 'aes-256-gcm';
 
   constructor(secretKey: string) {
-    // Ensure key is 32 bytes. If not, hash it to get 32 bytes.
     if (Buffer.from(secretKey, 'utf-8').length !== 32) {
       this.key = crypto.createHash('sha256').update(secretKey).digest();
     } else {
@@ -22,10 +21,8 @@ export class AESCryptoAdapter implements ICryptoAdapter {
     let encrypted = cipher.update(str, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     
-    // Cast to any because TS definition might be missing specific GCM methods on generic Cipher return
     const authTag = (cipher as any).getAuthTag().toString('hex');
 
-    // Format: iv:authTag:encrypted
     return `${iv.toString('hex')}:${authTag}:${encrypted}`;
   }
 
@@ -46,5 +43,29 @@ export class AESCryptoAdapter implements ICryptoAdapter {
     decrypted += decipher.final('utf8');
     
     return JSON.parse(decrypted);
+  }
+
+  async encryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
+    
+    const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
+    const authTag = (cipher as any).getAuthTag();
+
+    return Buffer.concat([iv, authTag, encrypted]);
+  }
+
+  async decryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    const buf = Buffer.from(data);
+    if (buf.length < 28) throw new Error('Invalid ciphertext length');
+    
+    const iv = buf.slice(0, 12);
+    const authTag = buf.slice(12, 28);
+    const encrypted = buf.slice(28);
+
+    const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
+    (decipher as any).setAuthTag(authTag);
+    
+    return Buffer.concat([decipher.update(encrypted), decipher.final()]);
   }
 }

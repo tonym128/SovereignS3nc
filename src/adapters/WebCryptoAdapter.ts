@@ -14,7 +14,6 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     const enc = new TextEncoder();
     const keyData = enc.encode(this.keyStr);
     
-    // Hash to 32 bytes (SHA-256)
     const hash = await window.crypto.subtle.digest('SHA-256', keyData);
     
     this.key = await window.crypto.subtle.importKey(
@@ -28,10 +27,10 @@ export class WebCryptoAdapter implements ICryptoAdapter {
   }
 
   async encrypt(data: any): Promise<string> {
-    const key = await this.initKey();
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const enc = new TextEncoder();
     const encodedData = enc.encode(JSON.stringify(data));
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const key = await this.initKey();
 
     const ciphertextWithTag = await window.crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
@@ -39,9 +38,8 @@ export class WebCryptoAdapter implements ICryptoAdapter {
       encodedData
     );
 
-    // WebCrypto returns Ciphertext + Tag appended
     const buf = new Uint8Array(ciphertextWithTag);
-    const tagLength = 16; // AES-GCM tag length is usually 128 bits (16 bytes)
+    const tagLength = 16;
     const ciphertext = buf.slice(0, buf.length - tagLength);
     const tag = buf.slice(buf.length - tagLength);
 
@@ -60,7 +58,6 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     const tag = this.fromHex(authTagHex);
     const encrypted = this.fromHex(encryptedHex);
 
-    // Combine encrypted + tag for WebCrypto
     const combined = new Uint8Array(encrypted.length + tag.length);
     combined.set(encrypted);
     combined.set(tag, encrypted.length);
@@ -73,6 +70,36 @@ export class WebCryptoAdapter implements ICryptoAdapter {
 
     const dec = new TextDecoder();
     return JSON.parse(dec.decode(decryptedBuf));
+  }
+
+  async encryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    const key = await this.initKey();
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    
+    const ciphertextWithTag = await window.crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv },
+      key,
+      data
+    );
+
+    const combined = new Uint8Array(12 + ciphertextWithTag.byteLength);
+    combined.set(iv);
+    combined.set(new Uint8Array(ciphertextWithTag), 12);
+    return combined;
+  }
+
+  async decryptRaw(data: Uint8Array): Promise<Uint8Array> {
+    const key = await this.initKey();
+    const iv = data.slice(0, 12);
+    const ciphertextWithTag = data.slice(12);
+
+    const decryptedBuf = await window.crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: iv as any },
+      key,
+      ciphertextWithTag
+    );
+
+    return new Uint8Array(decryptedBuf);
   }
 
   private toHex(arr: Uint8Array): string {

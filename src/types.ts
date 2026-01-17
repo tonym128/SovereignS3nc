@@ -84,6 +84,15 @@ export interface Task {
   dueDate?: number;
 }
 
+export interface BlobMetadata {
+  _id: string;
+  name: string;
+  size: number;
+  contentType: string;
+  hash?: string;
+  createdAt: number;
+}
+
 export interface SyncStats {
   pushed: number;
   pulled: number;
