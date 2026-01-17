@@ -251,20 +251,20 @@ export class SovereignS3nc extends EventEmitter {
 
   private initRemote(config: SovereignConfig) {
     if (config.ociParUrl) {
-      this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths);
+      this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths, config.useManifest);
       this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
         appId: config.paths.appId,
         userId: 'shared',
         storeId: 'shared'
-      });
+      }, config.useManifest);
     } else if (config.s3) {
-      this.remote = new S3RemoteAdapter(config.s3, config.paths);
+      this.remote = new S3RemoteAdapter(config.s3, config.paths, config.useManifest);
       this.blobs = new S3BlobAdapter(config.s3, config.paths);
       this.sharedRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
         userId: 'shared',
         storeId: 'shared'
-      });
+      }, config.useManifest);
     }
   }
 
