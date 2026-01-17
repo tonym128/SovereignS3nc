@@ -24509,14 +24509,18 @@ ${toHex(hashedRequest)}`;
         }
         async getFeed() {
           const myPosts = await this.db.collection("posts").getAll();
-          const followedPosts = await this.db.collection("followed_content").getAll();
-          const allPosts = [...myPosts, ...followedPosts].filter((p2) => p2.text !== void 0);
+          const followedDocs = await this.db.collection("followed_content").getAll();
+          const followedPosts = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId === void 0);
+          const allPosts = [...myPosts, ...followedPosts];
           const uniquePosts = Array.from(new Map(allPosts.map((p2) => [p2._id, p2])).values());
           return uniquePosts.sort((a2, b2) => b2.createdAt - a2.createdAt);
         }
         async getComments(postId) {
-          const comments = await this.db.collection("comments").getAll();
-          return comments.filter((c2) => c2.postId === postId).sort((a2, b2) => a2.createdAt - b2.createdAt);
+          const myComments = await this.db.collection("comments").getAll();
+          const followedDocs = await this.db.collection("followed_content").getAll();
+          const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
+          const allComments = [...myComments, ...followedComments];
+          return allComments.filter((c2) => c2.postId === postId).sort((a2, b2) => a2.createdAt - b2.createdAt);
         }
       };
     }
@@ -24960,7 +24964,7 @@ ${toHex(hashedRequest)}`;
           try {
             return await this.crypto.decrypt(data);
           } catch (e2) {
-            console.warn("Failed to decrypt data, returning raw:", e2);
+            console.warn("Failed to decrypt data:", e2);
             return data;
           }
         }
@@ -24981,6 +24985,9 @@ ${toHex(hashedRequest)}`;
           const doc = await this.localStore.get(id, collection);
           if (!doc || doc._deleted) return null;
           const plainData = await this.decryptData(doc.data);
+          if (typeof plainData === "object" && plainData !== null) {
+            return { ...plainData, _id: id };
+          }
           return plainData;
         }
         async getAll(collection) {
@@ -24989,7 +24996,11 @@ ${toHex(hashedRequest)}`;
           for (const doc of docs) {
             if (doc._id.startsWith("_sovereign_")) continue;
             const plain = await this.decryptData(doc.data);
-            results.push(plain);
+            if (typeof plain === "object" && plain !== null) {
+              results.push({ ...plain, _id: doc._id });
+            } else {
+              results.push(plain);
+            }
           }
           return results;
         }
@@ -25104,17 +25115,27 @@ ${toHex(hashedRequest)}`;
           const following = await this.social.getFollowing();
           for (const addr of following) {
             try {
-              const followRemote = new S3RemoteAdapter({
-                region: addr.region,
-                endpoint: addr.endpoint,
-                credentials: this.config.s3.credentials,
-                bucketName: addr.bucket
-              }, {
-                appId: addr.appId,
-                userId: addr.userId,
-                // <--- Correct: Follow the specific user
-                storeId: "shared"
-              });
+              let followRemote;
+              if (this.config.s3) {
+                followRemote = new S3RemoteAdapter({
+                  region: addr.region,
+                  endpoint: addr.endpoint,
+                  credentials: this.config.s3.credentials,
+                  bucketName: addr.bucket
+                }, {
+                  appId: addr.appId,
+                  userId: addr.userId,
+                  storeId: "shared"
+                });
+              } else if (this.config.ociParUrl) {
+                followRemote = new OCIPreAuthAdapter(this.config.ociParUrl, {
+                  appId: addr.appId,
+                  userId: addr.userId,
+                  storeId: "shared"
+                }, this.config.useManifest);
+              } else {
+                continue;
+              }
               const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
               const publicFiles = changes.filter((c2) => c2.id.startsWith("public/"));
               for (const file of publicFiles) {
@@ -25359,8 +25380,15 @@ ${toHex(hashedRequest)}`;
       });
       async function refreshFeed() {
         if (!db) return;
+        console.log("Refreshing feed...");
         const feed = await db.social.getFeed();
-        const allComments = await db.collection("comments").getAll();
+        console.log(`Feed loaded: ${feed.length} posts`);
+        const myComments = await db.collection("comments").getAll();
+        const followedDocs = await db.collection("followed_content").getAll();
+        const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
+        const allComments = [...myComments, ...followedComments];
+        console.log(`Comments loaded: ${allComments.length} total`);
+        if (allComments.length > 0) console.log("Sample comment:", allComments[0]);
         const commentsByPost = /* @__PURE__ */ new Map();
         for (const c2 of allComments) {
           if (!commentsByPost.has(c2.postId)) {
@@ -25368,6 +25396,7 @@ ${toHex(hashedRequest)}`;
           }
           commentsByPost.get(c2.postId).push(c2);
         }
+        console.log("Comments Map Keys:", Array.from(commentsByPost.keys()));
         const container = document.getElementById("feed-list");
         container.innerHTML = "";
         for (const post of feed) {
@@ -25401,7 +25430,18 @@ ${toHex(hashedRequest)}`;
             renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`));
           }
           loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`));
-          const postComments = commentsByPost.get(post._id) || [];
+          let postComments = commentsByPost.get(post._id) || [];
+          if (postComments.length === 0 && post._id.startsWith("follow_")) {
+            const parts = post._id.split("_");
+            if (parts.length >= 3) {
+              const originalId = parts.slice(2).join("_");
+              const fallback2 = commentsByPost.get(originalId);
+              if (fallback2) {
+                console.log(`Matched comments for ${post._id} using fallback ID ${originalId}`);
+                postComments = fallback2;
+              }
+            }
+          }
           postComments.sort((a2, b2) => a2.createdAt - b2.createdAt);
           renderComments(post._id, postComments);
         }
@@ -25510,6 +25550,24 @@ ${toHex(hashedRequest)}`;
         const list = await db.social.getFollowing();
         const container = document.getElementById("following-list");
         container.innerHTML = list.map((addr) => `<li>${addr.userId} (${addr.bucket}) <button onclick="window.unfollow('${addr.appId}.${addr.userId}')">Unfollow</button></li>`).join("");
+        populateMyAddress();
+        loadGlobalDirectory();
+      }
+      function populateMyAddress() {
+        if (!db) return;
+        const addr = db.getAddress();
+        const str = `s3://${addr.bucket}/${addr.appId}/${addr.userId}`;
+        document.getElementById("my-address").value = str;
+      }
+      async function loadGlobalDirectory() {
+        if (!db) return;
+        const container = document.getElementById("directory-list");
+        container.innerHTML = "<li><small>Scanning...</small></li>";
+        try {
+          container.innerHTML = "<li><small>Directory listing not available in this mode. Share your address manually.</small></li>";
+        } catch (e2) {
+          container.innerHTML = "<li><small>Failed to scan directory.</small></li>";
+        }
       }
       document.getElementById("btn-follow")?.addEventListener("click", async () => {
         if (!db) return;

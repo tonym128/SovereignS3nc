@@ -135,11 +135,25 @@
 
             <!-- Network View -->
             <div id="view-network" class="hidden">
+                <div class="card" style="background:#e0f2fe; border-color:#bae6fd;">
+                    <h3>My Sovereign Address</h3>
+                    <p style="font-size:0.9em; color:#0369a1;">Share this with friends so they can follow you.</p>
+                    <input type="text" id="my-address" class="input" readonly onclick="this.select()">
+                </div>
+
                 <div class="card">
                     <h3>Following</h3>
                     <input type="text" id="follow-address" class="input" placeholder="Address (OCI URL or s3://...)">
                     <button id="btn-follow" class="btn">Follow User</button>
                     <ul id="following-list" style="margin-top: 15px; padding-left: 20px;"></ul>
+                </div>
+
+                <div class="card">
+                    <h3>Global Directory (Same Bucket)</h3>
+                    <p style="font-size:0.8em; color:#64748b;">Users discovered in this bucket (requires list permissions).</p>
+                    <ul id="directory-list" style="margin-top: 15px; padding-left: 20px;">
+                        <li><small>Scanning...</small></li>
+                    </ul>
                 </div>
             </div>
         </div>

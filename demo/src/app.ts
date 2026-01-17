@@ -134,6 +134,7 @@ async function refreshFeed() {
     
     const allComments = [...myComments, ...followedComments];
     console.log(`Comments loaded: ${allComments.length} total`);
+    if (allComments.length > 0) console.log('Sample comment:', allComments[0]);
 
     const commentsByPost = new Map<string, any[]>();
     
@@ -143,6 +144,8 @@ async function refreshFeed() {
         }
         commentsByPost.get(c.postId)!.push(c);
     }
+    
+    console.log('Comments Map Keys:', Array.from(commentsByPost.keys()));
 
     const container = document.getElementById('feed-list')!;
     container.innerHTML = '';
@@ -187,7 +190,25 @@ async function refreshFeed() {
         loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`) as HTMLImageElement);
 
         // Render comments immediately from cache
-        const postComments = commentsByPost.get(post._id) || [];
+        let postComments = commentsByPost.get(post._id) || [];
+        
+        // Fallback for followed posts (where post._id = follow_user_origId, but comment.postId = origId)
+        if (postComments.length === 0 && post._id.startsWith('follow_')) {
+             const parts = post._id.split('_');
+             // Format: follow_userId_originalId
+             // Since userId might contain underscores? No, userId is usually a GUID or simple string.
+             // But originalId definitely is a GUID.
+             // Let's assume the first two underscores separate prefix and user.
+             if (parts.length >= 3) {
+                 const originalId = parts.slice(2).join('_');
+                 const fallback = commentsByPost.get(originalId);
+                 if (fallback) {
+                     console.log(`Matched comments for ${post._id} using fallback ID ${originalId}`);
+                     postComments = fallback;
+                 }
+             }
+        }
+
         postComments.sort((a, b) => a.createdAt - b.createdAt);
         renderComments(post._id, postComments);
     }
@@ -326,6 +347,55 @@ async function loadFollowing() {
     const list = await db.social.getFollowing();
     const container = document.getElementById('following-list')!;
     container.innerHTML = list.map(addr => `<li>${addr.userId} (${addr.bucket}) <button onclick="window.unfollow('${addr.appId}.${addr.userId}')">Unfollow</button></li>`).join('');
+    
+    populateMyAddress();
+    loadGlobalDirectory();
+}
+
+function populateMyAddress() {
+    if (!db) return;
+    const addr = db.getAddress();
+    // Format: s3://bucket/appId/userId
+    const str = `s3://${addr.bucket}/${addr.appId}/${addr.userId}`;
+    (document.getElementById('my-address') as HTMLInputElement).value = str;
+}
+
+async function loadGlobalDirectory() {
+    if (!db) return;
+    const container = document.getElementById('directory-list')!;
+    container.innerHTML = '<li><small>Scanning...</small></li>';
+
+    try {
+        // We try to list the app root to find other users
+        // This is a "hack" using the internal remote adapter if it supports listing
+        // Note: This only works if ListObjects is allowed on the bucket root/app root
+        
+        // We need to access the raw remote adapter which isn't fully exposed, 
+        // but we can try to use a new adapter pointed at the root
+        // OR rely on our known peers if list fails.
+        
+        // Since we are in "Manifest Mode" or PAR, listing might be impossible.
+        // We will try a best-effort approach if the adapter supports it.
+        
+        // For the purpose of this demo, if using OCI PAR, listing at root might not be possible 
+        // unless the PAR is for the bucket root. 
+        // If the user provided a PAR for the bucket, we might be able to list.
+        
+        // Let's assume we can't list for now (Safe Default) and show a message
+        // OR implement a "Directory Manifest" where everyone registers themselves?
+        
+        // Let's try to fetch a 'global/directory.json' if it exists?
+        // No, let's keep it simple: Show "Discovery requires known address" message
+        // UNLESS we can list.
+        
+        // Actually, let's try to list using the current remote adapter but changing the prefix?
+        // Not easily possible with current API surface.
+        
+        container.innerHTML = '<li><small>Directory listing not available in this mode. Share your address manually.</small></li>';
+    
+    } catch (e) {
+        container.innerHTML = '<li><small>Failed to scan directory.</small></li>';
+    }
 }
 
 document.getElementById('btn-follow')?.addEventListener('click', async () => {

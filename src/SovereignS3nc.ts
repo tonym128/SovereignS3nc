@@ -497,7 +497,7 @@ export class SovereignS3nc extends EventEmitter {
     try {
       return await this.crypto.decrypt(data);
     } catch (e) {
-      console.warn('Failed to decrypt data, returning raw:', e);
+      console.warn('Failed to decrypt data:', e);
       return data;
     }
   }
@@ -523,6 +523,9 @@ export class SovereignS3nc extends EventEmitter {
     if (!doc || doc._deleted) return null;
     
     const plainData = await this.decryptData(doc.data);
+    if (typeof plainData === 'object' && plainData !== null) {
+        return { ...plainData, _id: id } as T;
+    }
     return plainData as T;
   }
 
@@ -532,7 +535,11 @@ export class SovereignS3nc extends EventEmitter {
     for (const doc of docs) {
       if (doc._id.startsWith('_sovereign_')) continue;
       const plain = await this.decryptData(doc.data);
-      results.push(plain as T);
+      if (typeof plain === 'object' && plain !== null) {
+          results.push({ ...plain, _id: doc._id } as T);
+      } else {
+          results.push(plain as T);
+      }
     }
     return results;
   }
@@ -667,16 +674,40 @@ export class SovereignS3nc extends EventEmitter {
     const following = await this.social.getFollowing();
     for (const addr of following) {
         try {
-            const followRemote = new S3RemoteAdapter({
-                region: addr.region,
-                endpoint: addr.endpoint,
-                credentials: (this.config.s3!.credentials), 
-                bucketName: addr.bucket
-            }, {
-                appId: addr.appId,
-                userId: addr.userId, // <--- Correct: Follow the specific user
-                storeId: 'shared'
-            });
+            let followRemote: IRemoteAdapter;
+            
+            if (this.config.s3) {
+                // S3 Mode
+                followRemote = new S3RemoteAdapter({
+                    region: addr.region,
+                    endpoint: addr.endpoint,
+                    credentials: this.config.s3.credentials, 
+                    bucketName: addr.bucket
+                }, {
+                    appId: addr.appId,
+                    userId: addr.userId,
+                    storeId: 'shared'
+                });
+            } else if (this.config.ociParUrl) {
+                // OCI Mode
+                // Note: For OCI PAR, we typically don't have separate credentials for other users.
+                // We assume the PAR URL allows access OR the user provided a full PAR URL as the 'endpoint' in the address.
+                // If the user followed an address like s3://..., that won't work with OCI PAR unless we can derive the URL.
+                // OCI PAR URLs are unique per bucket/prefix. 
+                // IF we are in the SAME bucket (same PAR root), we can just change the path.
+                
+                // Heuristic: If we are using OCI, and the followed user is in the same bucket/app, we can construct the path.
+                // If they are external, we need their PAR URL.
+                
+                // For this demo (Single Bucket), we assume same base URL.
+                followRemote = new OCIPreAuthAdapter(this.config.ociParUrl, {
+                    appId: addr.appId,
+                    userId: addr.userId,
+                    storeId: 'shared'
+                }, this.config.useManifest);
+            } else {
+                continue;
+            }
 
             const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
             const publicFiles = changes.filter(c => c.id.startsWith('public/'));
