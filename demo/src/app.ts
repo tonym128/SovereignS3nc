@@ -224,11 +224,10 @@ async function loadAvatarForPost(authorId: string, imgEl: HTMLImageElement) {
     } else {
         // Try to find followed profile
         // Format: follow_{userId}_me
-        // Note: This relies on the convention that the remote profile ID is 'me'
         const id = `follow_${authorId}_me`;
-        const doc = await db.collection('followed_content').get(id);
-        if (doc && doc.data) {
-            avatarId = (doc.data as Profile).avatarUrl;
+        const doc = await db.collection('followed_content').get<Profile>(id);
+        if (doc) {
+            avatarId = doc.avatarUrl;
         }
     }
 
@@ -260,14 +259,14 @@ async function renderImage(blobId: string, imgEl: HTMLImageElement) {
     if (!db) return;
     try {
         // Fetch metadata to get Content-Type
-        const meta = await db.collection('blobs').get(blobId);
+        const meta = await db.collection('blobs').get<any>(blobId);
         // In this demo, all images are uploaded as public. 
         // We explicitly skip decryption to avoid issues if metadata is missing/delayed.
         const data = await db.storage.download(blobId, { decrypt: false });
         
         if (data) {
             const options = meta ? { type: meta.contentType } : undefined;
-            const blob = new Blob([data], options);
+            const blob = new Blob([data as any], options);
             imgEl.src = URL.createObjectURL(blob);
         }
     } catch (e) {
