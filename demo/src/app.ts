@@ -23,23 +23,71 @@ const loading = document.getElementById('loading')!;
 
 // --- Initialization ---
 
+// --- Initialization ---
+
+// Auth Mode Toggle
+const authRadios = document.querySelectorAll('input[name="auth-mode"]');
+const authOci = document.getElementById('auth-oci')!;
+const authS3 = document.getElementById('auth-s3')!;
+
+authRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const val = (e.target as HTMLInputElement).value;
+        if (val === 'oci') {
+            authOci.classList.remove('hidden');
+            authS3.classList.add('hidden');
+        } else {
+            authOci.classList.add('hidden');
+            authS3.classList.remove('hidden');
+        }
+    });
+});
+
 document.getElementById('btn-connect')?.addEventListener('click', async () => {
-    const url = (document.getElementById('oci-url') as HTMLInputElement).value;
+    const mode = (document.querySelector('input[name="auth-mode"]:checked') as HTMLInputElement).value;
     const appId = (document.getElementById('app-id') as HTMLInputElement).value;
     const userId = (document.getElementById('user-id') as HTMLInputElement).value;
 
-    if (!url || !userId) return alert('Please fill in all fields');
-
+    if (!appId || !userId) return alert('Please fill in App ID and User ID');
     currentUser = userId;
 
+    let config: any = {
+        paths: { appId, userId, storeId: 'social' },
+        encryptionKey: 'demo-secret-key-must-be-32-bytes-long!', // Demo key
+        syncIntervalMs: 0 // Manual sync only
+    };
+
+    if (mode === 'oci') {
+        const url = (document.getElementById('oci-url') as HTMLInputElement).value;
+        if (!url) return alert('Please enter OCI PAR URL');
+        
+        config.ociParUrl = url;
+        config.useManifest = true; // CRITICAL for OCI PAR
+    
+    } else {
+        const endpoint = (document.getElementById('s3-endpoint') as HTMLInputElement).value;
+        const bucket = (document.getElementById('s3-bucket') as HTMLInputElement).value;
+        const region = (document.getElementById('s3-region') as HTMLInputElement).value || 'us-east-1';
+        const accessKeyId = (document.getElementById('s3-access-key') as HTMLInputElement).value;
+        const secretAccessKey = (document.getElementById('s3-secret-key') as HTMLInputElement).value;
+
+        if (!endpoint || !bucket || !accessKeyId || !secretAccessKey) {
+            return alert('Please fill in all S3 fields');
+        }
+
+        config.s3 = {
+            endpoint,
+            region,
+            bucketName: bucket,
+            credentials: { accessKeyId, secretAccessKey },
+            forcePathStyle: true // Usually needed for Garage/MinIO
+        };
+        // We can use manifest or not. For Garage, standard listing works.
+        config.useManifest = false; 
+    }
+
     try {
-        db = new SovereignS3nc({
-            ociParUrl: url,
-            paths: { appId, userId, storeId: 'social' },
-            useManifest: true, // CRITICAL for OCI PAR
-            encryptionKey: 'demo-secret-key-must-be-32-bytes-long!', // Demo key
-            syncIntervalMs: 0 // Manual sync only
-        });
+        db = new SovereignS3nc(config);
 
         db.on('syncStart', () => loading.style.display = 'block');
         db.on('syncComplete', (stats) => {
@@ -50,8 +98,19 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         });
 
         await db.init();
-        await db.connect({ ociParUrl: url });
-
+        // Connect passes minimal config if needed, but we initialized with full config.
+        // The connect() method signature is: connect(config: { s3?: ..., ociParUrl?: ... })
+        // But since we passed config to constructor, we might not need to pass it again IF we used the constructor that takes everything.
+        // Wait, the constructor takes (config, localStore, crypto).
+        // Let's check if we need to call connect().
+        // If we provided s3/ociParUrl in constructor, init() prepares local, but does it prepare remote?
+        // Checking SovereignS3nc.ts: constructor calls initRemote(config).
+        // So we don't strictly need to call connect() unless we want to "re-connect" or if the constructor didn't have it.
+        // BUT, the existing code called db.connect().
+        // Let's call it just to be safe or skip it if initialized. 
+        // Actually, db.init() does NOT trigger a sync automatically unless interval is set.
+        // Let's just do an initial sync manually.
+        
         // Switch View
         views.auth.classList.add('hidden');
         appArea.classList.remove('hidden');

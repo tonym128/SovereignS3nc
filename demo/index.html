@@ -87,9 +87,29 @@
         
         <!-- Auth / Config View -->
         <div id="view-auth" class="card">
-            <h2>Connect to OCI</h2>
-            <p>Enter your OCI Pre-Authenticated Request (PAR) URL to start.</p>
-            <input type="text" id="oci-url" class="input" placeholder="https://objectstorage... (PAR URL)">
+            <h2>Connect</h2>
+            
+            <div style="margin-bottom: 15px;">
+                <label><input type="radio" name="auth-mode" value="oci" checked> OCI PAR</label>
+                <label><input type="radio" name="auth-mode" value="s3"> S3 Compatible (Garage, MinIO, AWS)</label>
+            </div>
+
+            <div id="auth-oci">
+                <p>Enter your OCI Pre-Authenticated Request (PAR) URL to start.</p>
+                <input type="text" id="oci-url" class="input" placeholder="https://objectstorage... (PAR URL)">
+            </div>
+
+            <div id="auth-s3" class="hidden">
+                <p>Enter your S3 compatible storage details.</p>
+                <input type="text" id="s3-endpoint" class="input" placeholder="Endpoint (e.g. http://localhost:3900)">
+                <input type="text" id="s3-bucket" class="input" placeholder="Bucket Name">
+                <input type="text" id="s3-region" class="input" placeholder="Region (default: us-east-1)" value="us-east-1">
+                <input type="text" id="s3-access-key" class="input" placeholder="Access Key ID">
+                <input type="password" id="s3-secret-key" class="input" placeholder="Secret Access Key">
+            </div>
+
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+            
             <input type="text" id="app-id" class="input" placeholder="App ID (e.g. social-app)" value="social-app">
             <input type="text" id="user-id" class="input" placeholder="User ID (e.g. tony)">
             <button id="btn-connect" class="btn">Connect</button>
