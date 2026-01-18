@@ -282,6 +282,16 @@ describe('SovereignS3nc Social & Profiles', () => {
       const avatarId = 'avatar-123';
       await db.profile.update({ avatarUrl: avatarId });
 
+      // Inject metadata so StorageManager knows it's unencrypted
+      await db.collection('blobs').save({
+          _id: avatarId,
+          name: 'avatar.png',
+          size: 3,
+          contentType: 'image/png',
+          createdAt: Date.now(),
+          isEncrypted: false
+      });
+
       // 2. Mock blob download
       mockBlobs.download.mockResolvedValue(new Uint8Array([1, 2, 3]));
       
