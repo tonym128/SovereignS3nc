@@ -133,11 +133,14 @@ export class SovereignS3nc extends EventEmitter {
     this.config = config;
     
     if (config.s3?.endpoint && config.s3.endpoint.startsWith('http://')) {
-      console.warn(
-        'SECURITY WARNING: You are using an insecure HTTP endpoint. ' + 
-        'Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. ' +
-        'Please use HTTPS to ensure the "Security via Obscurity" model holds.'
-      );
+      const isLocal = config.s3.endpoint.includes('localhost') || config.s3.endpoint.includes('127.0.0.1');
+      if (!isLocal) {
+        console.warn(
+          'SECURITY WARNING: You are using an insecure HTTP endpoint. ' + 
+          'Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. ' +
+          'Please use HTTPS to ensure the "Security via Obscurity" model holds.'
+        );
+      }
     }
 
     this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);

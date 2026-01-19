@@ -84,6 +84,8 @@ describe('Demo App Integration', () => {
         getFeed: jest.fn().mockResolvedValue([]),
         getComments: jest.fn().mockResolvedValue([]),
         getFollowing: jest.fn().mockResolvedValue([]),
+        getGlobalDirectory: jest.fn().mockResolvedValue([]),
+        joinGlobalDirectory: jest.fn().mockResolvedValue(undefined),
         follow: jest.fn(),
         unfollow: jest.fn()
       },

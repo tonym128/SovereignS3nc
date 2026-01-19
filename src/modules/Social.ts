@@ -124,45 +124,49 @@ export class SocialManager {
       if (!this.db.globalRemote) return;
 
       const myAddress = this.db.getAddress();
+      let directory: SovereignAddress[] = [];
+      let doc: SyncDocument | null = null;
       
       try {
-          const doc = await this.db.globalRemote.get('directory');
-          let directory: SovereignAddress[] = [];
-          let currentDoc = doc;
-
+          doc = await this.db.globalRemote.get('directory');
           if (doc && doc.data) {
               directory = doc.data as SovereignAddress[];
           }
-
-          // Check if I am already there with same details
-          const existingIndex = directory.findIndex(a => a.userId === myAddress.userId && a.appId === myAddress.appId);
-          
-          if (existingIndex >= 0) {
-              const existing = directory[existingIndex];
-              // If details match, no need to update
-              if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
-                  return;
-              }
-              // Update
-              directory[existingIndex] = myAddress;
-          } else {
-              // Add
-              directory.push(myAddress);
-          }
-
-          // Save back
-          const newDoc: SyncDocument = {
-              _id: 'directory',
-              _updatedAt: Date.now(),
-              _rev: uuidv4(),
-              data: directory
-          };
-          
-          // Optimistic locking? Simple LWW for now as per instructions "eventual consistency"
-          await this.db.globalRemote.put(newDoc);
-
       } catch (e) {
-          console.error('Failed to join global directory', e);
+          // If fetch fails, it might be 404 masked by CORS (common in some S3 impls)
+          // OR it really is the first run.
+          // We proceed to add ourselves. If this is a real network error, the subsequent PUT will fail too.
+          console.warn('Could not fetch global directory (likely first run or CORS 404). Bootstrapping...');
+      }
+
+      // Check if I am already there with same details
+      const existingIndex = directory.findIndex(a => a.userId === myAddress.userId && a.appId === myAddress.appId);
+      
+      if (existingIndex >= 0) {
+          const existing = directory[existingIndex];
+          // If details match, no need to update
+          if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
+              return;
+          }
+          // Update
+          directory[existingIndex] = myAddress;
+      } else {
+          // Add
+          directory.push(myAddress);
+      }
+
+      // Save back
+      const newDoc: SyncDocument = {
+          _id: 'directory',
+          _updatedAt: Date.now(),
+          _rev: uuidv4(),
+          data: directory
+      };
+      
+      try {
+          await this.db.globalRemote.put(newDoc);
+      } catch (e) {
+          console.error('Failed to update global directory', e);
       }
   }
 }
