@@ -29,7 +29,6 @@ secret = "$RPC_SECRET"
 s3_region = "us-east-1"
 api_bind_addr = "0.0.0.0:3900"
 root_domain = ".s3.local"
-cors_allow_origin = "*" # Allow all origins for demo purposes
 
 [admin]
 api_bind_addr = "0.0.0.0:3903"
@@ -111,10 +110,14 @@ SECRET_KEY=$(echo "$KEY_OUTPUT" | grep "Secret key" | awk '{print $3}')
 # 5. Create Bucket
 echo "Creating Bucket 'sovereign-demo'..."
 garage bucket create sovereign-demo || true
-garage bucket allow sovereign-demo --read --write --key demo-key || true
+garage bucket allow sovereign-demo --read --write --owner --key demo-key || true
 
 # Make it public for public sharing features
 # garage bucket allow sovereign-demo --read || true
+
+# 5b. Configure CORS
+echo "Applying CORS configuration..."
+ACCESS_KEY=$ACCESS_KEY SECRET_KEY=$SECRET_KEY node demo/configure_cors.js
 
 # 6. Output Access Info
 echo "================================================================"
