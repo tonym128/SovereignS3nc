@@ -1,0 +1,15 @@
+TODO
+- All references in the server should only point to the local instance
+- Friends should be followed by name alone, no s3 url, it's all on the local server
+- Nothing in the public share should reference anything in a users folder or their private guid, only the public one, any items required should be in the public folder (user images, post image, etc, duplication of files is fine)
+- The list function should never be used anywhere in SovereignS3nc as security relies on unknown locations in S3 or OCI. For instance the friends list should be fetched from a known location, any user who logs in should be able to add anyone on the server as a follow from the public index, removal is the same as well. Rely on eventual consistency, when downloading the user list for the server, make sure the current user is in there and add them if required.
+- Ability to delete posts and comments (leave a 'deleted' message if there are replies)
+- Allow a user to clear their local and remote data on the profile screen
+- Show the users public and private guid on the profile page
+- Allow a user to export a backup of their data and a backup of their profile details, should they wish to log in from other devices.
+- When a user logs in they should be assigned a public and private guid and allowed to input it when logging in, if it's known
+- If a user logs in using their private guid (optional) it has to already exist for them to log in.
+- Performance testing of Garage
+- Security tests of garage to make sure it's not allowing listing
+- Tests on OCI PAR to make sure that it's working correctly
+- Social network demo in docker build should be set to have the correct config details and the correct credentials.
