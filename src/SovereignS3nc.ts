@@ -403,11 +403,11 @@ export class SovereignS3nc extends EventEmitter {
     if (!this.sharedRemote) return [];
     
     const changes = await this.sharedRemote.listChanges(new Date(0));
-    const publicFiles = changes.filter(c => c.id.startsWith('public/') && c.id !== 'public/index.json');
+    const publicFiles = changes.filter(c => (c.collection === 'public' || c.id.startsWith('public/')) && c.id !== 'public/index.json');
 
     const results = await Promise.all(publicFiles.map(async c => {
         try {
-            const doc = await this.sharedRemote!.get(c.id);
+            const doc = await this.sharedRemote!.get(c.id, c.collection);
             return doc ? doc.data : null;
         } catch (e) {
             return null;
@@ -682,7 +682,8 @@ export class SovereignS3nc extends EventEmitter {
                     region: addr.region,
                     endpoint: addr.endpoint,
                     credentials: this.config.s3.credentials, 
-                    bucketName: addr.bucket
+                    bucketName: addr.bucket,
+                    forcePathStyle: this.config.s3.forcePathStyle
                 }, {
                     appId: addr.appId,
                     userId: addr.userId,
@@ -710,10 +711,10 @@ export class SovereignS3nc extends EventEmitter {
             }
 
             const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
-            const publicFiles = changes.filter(c => c.id.startsWith('public/'));
+            const publicFiles = changes.filter(c => c.collection === 'public' || c.id.startsWith('public/'));
 
             for (const file of publicFiles) {
-                const indexDoc = await followRemote.get(file.id);
+                const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
                 
                 const meta = indexDoc.data; 
