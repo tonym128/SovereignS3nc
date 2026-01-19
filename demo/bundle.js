@@ -24087,7 +24087,7 @@ ${toHex(hashedRequest)}`;
             if (response.Contents) {
               for (const item of response.Contents) {
                 if (item.Key && item.LastModified && item.LastModified > since) {
-                  if (item.Key.endsWith("manifest.json")) continue;
+                  if (item.Key.endsWith("manifest.json") || item.Key.includes("/blobs/")) continue;
                   let id = "";
                   let col = collection;
                   if (collection) {
@@ -24886,10 +24886,10 @@ ${toHex(hashedRequest)}`;
         async getPublicShares() {
           if (!this.sharedRemote) return [];
           const changes = await this.sharedRemote.listChanges(/* @__PURE__ */ new Date(0));
-          const publicFiles = changes.filter((c2) => c2.id.startsWith("public/") && c2.id !== "public/index.json");
+          const publicFiles = changes.filter((c2) => (c2.collection === "public" || c2.id.startsWith("public/")) && c2.id !== "public/index.json");
           const results = await Promise.all(publicFiles.map(async (c2) => {
             try {
-              const doc = await this.sharedRemote.get(c2.id);
+              const doc = await this.sharedRemote.get(c2.id, c2.collection);
               return doc ? doc.data : null;
             } catch (e2) {
               return null;
@@ -25118,10 +25118,11 @@ ${toHex(hashedRequest)}`;
               let followRemote;
               if (this.config.s3) {
                 followRemote = new S3RemoteAdapter({
-                  region: addr.region,
-                  endpoint: addr.endpoint,
+                  region: addr.region || this.config.s3.region,
+                  endpoint: addr.endpoint || this.config.s3.endpoint,
                   credentials: this.config.s3.credentials,
-                  bucketName: addr.bucket
+                  bucketName: addr.bucket,
+                  forcePathStyle: this.config.s3.forcePathStyle
                 }, {
                   appId: addr.appId,
                   userId: addr.userId,
@@ -25137,9 +25138,9 @@ ${toHex(hashedRequest)}`;
                 continue;
               }
               const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
-              const publicFiles = changes.filter((c2) => c2.id.startsWith("public/"));
+              const publicFiles = changes.filter((c2) => c2.collection === "public" || c2.id.startsWith("public/"));
               for (const file of publicFiles) {
-                const indexDoc = await followRemote.get(file.id);
+                const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
                 const meta = indexDoc.data;
                 const localId = `follow_${addr.userId}_${meta.id}`;
@@ -25297,23 +25298,60 @@ ${toHex(hashedRequest)}`;
         network: document.getElementById("nav-network")
       };
       var loading = document.getElementById("loading");
+      var authRadios = document.querySelectorAll('input[name="auth-mode"]');
+      var authOci = document.getElementById("auth-oci");
+      var authS3 = document.getElementById("auth-s3");
+      authRadios.forEach((radio) => {
+        radio.addEventListener("change", (e2) => {
+          const val = e2.target.value;
+          if (val === "oci") {
+            authOci.classList.remove("hidden");
+            authS3.classList.add("hidden");
+          } else {
+            authOci.classList.add("hidden");
+            authS3.classList.remove("hidden");
+          }
+        });
+      });
       document.getElementById("btn-connect")?.addEventListener("click", async () => {
-        const url = document.getElementById("oci-url").value;
+        const mode = document.querySelector('input[name="auth-mode"]:checked').value;
         const appId = document.getElementById("app-id").value;
         const userId = document.getElementById("user-id").value;
-        if (!url || !userId) return alert("Please fill in all fields");
+        if (!appId || !userId) return alert("Please fill in App ID and User ID");
         currentUser = userId;
+        let config = {
+          paths: { appId, userId, storeId: "social" },
+          encryptionKey: "demo-secret-key-must-be-32-bytes-long!",
+          // Demo key
+          syncIntervalMs: 0
+          // Manual sync only
+        };
+        if (mode === "oci") {
+          const url = document.getElementById("oci-url").value;
+          if (!url) return alert("Please enter OCI PAR URL");
+          config.ociParUrl = url;
+          config.useManifest = true;
+        } else {
+          const endpoint = document.getElementById("s3-endpoint").value;
+          const bucket = document.getElementById("s3-bucket").value;
+          const region = document.getElementById("s3-region").value || "us-east-1";
+          const accessKeyId = document.getElementById("s3-access-key").value;
+          const secretAccessKey = document.getElementById("s3-secret-key").value;
+          if (!endpoint || !bucket || !accessKeyId || !secretAccessKey) {
+            return alert("Please fill in all S3 fields");
+          }
+          config.s3 = {
+            endpoint,
+            region,
+            bucketName: bucket,
+            credentials: { accessKeyId, secretAccessKey },
+            forcePathStyle: true
+            // Usually needed for Garage/MinIO
+          };
+          config.useManifest = false;
+        }
         try {
-          db = new SovereignS3nc({
-            ociParUrl: url,
-            paths: { appId, userId, storeId: "social" },
-            useManifest: true,
-            // CRITICAL for OCI PAR
-            encryptionKey: "demo-secret-key-must-be-32-bytes-long!",
-            // Demo key
-            syncIntervalMs: 0
-            // Manual sync only
-          });
+          db = new SovereignS3nc(config);
           db.on("syncStart", () => loading.style.display = "block");
           db.on("syncComplete", (stats) => {
             loading.style.display = "none";
@@ -25322,7 +25360,6 @@ ${toHex(hashedRequest)}`;
             }
           });
           await db.init();
-          await db.connect({ ociParUrl: url });
           views.auth.classList.add("hidden");
           appArea.classList.remove("hidden");
           loadProfile();
@@ -25455,8 +25492,8 @@ ${toHex(hashedRequest)}`;
         } else {
           const id = `follow_${authorId}_me`;
           const doc = await db.collection("followed_content").get(id);
-          if (doc && doc.data) {
-            avatarId = doc.data.avatarUrl;
+          if (doc) {
+            avatarId = doc.avatarUrl;
           }
         }
         if (avatarId) {

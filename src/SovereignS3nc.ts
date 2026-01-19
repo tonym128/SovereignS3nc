@@ -679,8 +679,8 @@ export class SovereignS3nc extends EventEmitter {
             if (this.config.s3) {
                 // S3 Mode
                 followRemote = new S3RemoteAdapter({
-                    region: addr.region,
-                    endpoint: addr.endpoint,
+                    region: addr.region || this.config.s3.region,
+                    endpoint: addr.endpoint || this.config.s3.endpoint,
                     credentials: this.config.s3.credentials, 
                     bucketName: addr.bucket,
                     forcePathStyle: this.config.s3.forcePathStyle

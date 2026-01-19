@@ -31,7 +31,16 @@ const mockDocument = {
     querySelector: jest.fn().mockReturnValue({}),
     appendChild: jest.fn(),
     style: {}
-  }))
+  })),
+  querySelectorAll: jest.fn((selector) => {
+    return [
+      { value: 'oci', addEventListener: jest.fn() },
+      { value: 's3', addEventListener: jest.fn() }
+    ];
+  }),
+  querySelector: jest.fn((selector) => {
+    return { value: 'oci' };
+  })
 };
 
 global.document = mockDocument as any;
@@ -159,7 +168,7 @@ describe('Demo App Integration', () => {
           ociParUrl: 'https://oci.example.com',
           paths: { appId: 'my-app', userId: 'my-user', storeId: 'social' }
       }));
-      expect(mockDb.connect).toHaveBeenCalled();
+      expect(mockDb.init).toHaveBeenCalled();
       expect(mockDb.profile.get).toHaveBeenCalled();
       expect(mockDb.social.getFeed).toHaveBeenCalled();
       
@@ -176,6 +185,7 @@ describe('Demo App Integration', () => {
       // We need to "connect" first to set the db instance
       const connectHandler = listeners.get('btn-connect:click');
       mockDocument.getElementById('oci-url').value = 'url';
+      mockDocument.getElementById('app-id').value = 'my-app';
       mockDocument.getElementById('user-id').value = 'user';
       await connectHandler!();
 
@@ -203,6 +213,7 @@ describe('Demo App Integration', () => {
       // Connect
       const connectHandler = listeners.get('btn-connect:click');
       mockDocument.getElementById('oci-url').value = 'url';
+      mockDocument.getElementById('app-id').value = 'my-app';
       mockDocument.getElementById('user-id').value = 'user';
       await connectHandler!();
 

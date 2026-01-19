@@ -156,8 +156,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         for (const item of response.Contents) {
           if (item.Key && item.LastModified && item.LastModified > since) {
             
-            // Filter out manifests
-            if (item.Key.endsWith('manifest.json')) continue;
+            // Filter out manifests and blobs
+            if (item.Key.endsWith('manifest.json') || item.Key.includes('/blobs/')) continue;
 
             let id = '';
             let col: string | undefined = collection;
