@@ -106,7 +106,8 @@ export class SovereignS3nc extends EventEmitter {
   private localStore: ILocalStorage;
   public remote?: IRemoteAdapter; 
   public blobs?: IBlobAdapter;
-  private sharedRemote?: IRemoteAdapter; 
+  public sharedRemote?: IRemoteAdapter; 
+  public globalRemote?: IRemoteAdapter;
   private config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
@@ -181,6 +182,11 @@ export class SovereignS3nc extends EventEmitter {
         userId: config.paths.userId,
         storeId: 'shared'
       }, config.useManifest);
+      this.globalRemote = new OCIPreAuthAdapter(config.ociParUrl, {
+        appId: config.paths.appId,
+        userId: 'shared',
+        storeId: 'global'
+      });
     } else if (config.s3) {
       this.remote = new S3RemoteAdapter(config.s3, config.paths, config.useManifest);
       this.blobs = new S3BlobAdapter(config.s3, config.paths);
@@ -189,6 +195,11 @@ export class SovereignS3nc extends EventEmitter {
         userId: config.paths.userId,
         storeId: 'shared'
       }, config.useManifest);
+      this.globalRemote = new S3RemoteAdapter(config.s3, {
+        appId: config.paths.appId,
+        userId: 'shared',
+        storeId: 'global'
+      });
     }
   }
 

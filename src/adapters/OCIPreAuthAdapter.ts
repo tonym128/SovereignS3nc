@@ -11,12 +11,10 @@ interface ManifestEntry {
 export class OCIPreAuthAdapter implements IRemoteAdapter {
   private baseUrl: string;
   private prefix: string;
-  private useManifest: boolean = false; // Add support if needed, assuming user wants it
 
-  constructor(parUrl: string, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = false) {
+  constructor(parUrl: string, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
     this.baseUrl = parUrl.endsWith('/') ? parUrl.slice(0, -1) : parUrl;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-    this.useManifest = useManifest;
   }
 
   private getUrl(id: string, collection?: string): string {
@@ -49,7 +47,7 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
 
     const etag = response.headers.get('etag')?.replace(/"/g, '');
 
-    if (this.useManifest && !doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
+    if (!doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
       await this.updateManifest(doc, etag);
     }
 
@@ -112,75 +110,7 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
   }
 
   async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
-    if (this.useManifest) {
-        return this.listChangesFromManifest(since, collection);
-    }
-
-    let searchPrefix = this.prefix;
-    if (collection) {
-        searchPrefix += collection + '/';
-    }
-
-    const params = new URLSearchParams({
-      prefix: searchPrefix,
-      fields: 'name,etag,timeModified'
-    });
-    
-    const response = await fetch(`${this.baseUrl}?${params.toString()}`);
-    
-    if (!response.ok) {
-      return []; 
-    }
-
-    const data = await response.json();
-    if (!data.objects) return [];
-
-    const changes: RemoteChange[] = [];
-    
-    for (const obj of data.objects) {
-      const lastModified = new Date(obj.timeModified);
-      if (lastModified > since) {
-        const key = obj.name;
-        if (key.endsWith('manifest.json')) continue;
-
-        let id = '';
-        let col: string | undefined = collection;
-        
-        if (collection) {
-           if (key.startsWith(searchPrefix)) {
-             id = key.substring(searchPrefix.length).replace('.json', '');
-           } else {
-               continue; 
-           }
-        } else {
-           if (key.startsWith(this.prefix)) {
-              const relative = key.substring(this.prefix.length);
-              const parts = relative.split('/');
-              if (parts.length === 2) {
-                  col = parts[0];
-                  id = parts[1].replace('.json', '');
-              } else if (parts.length === 1) {
-                  col = undefined;
-                  id = parts[0].replace('.json', '');
-              } else {
-                  continue;
-              }
-           } else {
-               continue;
-           }
-        }
-        
-        changes.push({
-            id,
-            collection: col,
-            key,
-            etag: obj.etag ? obj.etag.replace(/"/g, '') : undefined,
-            lastModified
-        });
-      }
-    }
-    
-    return changes;
+    return this.listChangesFromManifest(since, collection);
   }
 
   private async listChangesFromManifest(since: Date, collection?: string): Promise<RemoteChange[]> {
@@ -222,8 +152,6 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
       throw new Error(`OCI PAR Delete Failed: ${response.statusText}`);
     }
 
-    if (this.useManifest) {
-        await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
-    }
+    await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
   }
 }

@@ -117,6 +117,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         
         loadProfile();
         await db.sync(); // Initial sync
+        await db.social.joinGlobalDirectory();
         refreshFeed();
         loadFollowing();
 
@@ -424,37 +425,34 @@ async function loadGlobalDirectory() {
     container.innerHTML = '<li><small>Scanning...</small></li>';
 
     try {
-        // We try to list the app root to find other users
-        // This is a "hack" using the internal remote adapter if it supports listing
-        // Note: This only works if ListObjects is allowed on the bucket root/app root
+        const users = await db.social.getGlobalDirectory();
         
-        // We need to access the raw remote adapter which isn't fully exposed, 
-        // but we can try to use a new adapter pointed at the root
-        // OR rely on our known peers if list fails.
-        
-        // Since we are in "Manifest Mode" or PAR, listing might be impossible.
-        // We will try a best-effort approach if the adapter supports it.
-        
-        // For the purpose of this demo, if using OCI PAR, listing at root might not be possible 
-        // unless the PAR is for the bucket root. 
-        // If the user provided a PAR for the bucket, we might be able to list.
-        
-        // Let's assume we can't list for now (Safe Default) and show a message
-        // OR implement a "Directory Manifest" where everyone registers themselves?
-        
-        // Let's try to fetch a 'global/directory.json' if it exists?
-        // No, let's keep it simple: Show "Discovery requires known address" message
-        // UNLESS we can list.
-        
-        // Actually, let's try to list using the current remote adapter but changing the prefix?
-        // Not easily possible with current API surface.
-        
-        container.innerHTML = '<li><small>Directory listing not available in this mode. Share your address manually.</small></li>';
+        if (users.length === 0) {
+            container.innerHTML = '<li><small>No users found in directory.</small></li>';
+            return;
+        }
+
+        container.innerHTML = users.map(u => {
+            // Check if already following
+            // This is a simple check, ideally we use the full address
+            return `<li>${u.userId} (${u.appId}) <button onclick="window.followUser('${u.bucket}', '${u.appId}', '${u.userId}')">Follow</button></li>`;
+        }).join('');
     
     } catch (e) {
         container.innerHTML = '<li><small>Failed to scan directory.</small></li>';
     }
 }
+
+(window as any).followUser = async (bucket: string, appId: string, userId: string) => {
+    if (!db) return;
+    // Assuming standard S3 address for now, or construct manually
+    const addr: SovereignAddress = {
+        bucket, appId, userId, region: 'us-east-1' // Defaulting region if unknown
+    };
+    await db.social.follow(addr);
+    alert(`Followed ${userId}`);
+    loadFollowing();
+};
 
 document.getElementById('btn-follow')?.addEventListener('click', async () => {
     if (!db) return;

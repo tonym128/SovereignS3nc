@@ -1,7 +1,7 @@
 import { merge } from 'ts-deepmerge';
 import { v4 as uuidv4 } from 'uuid';
 import { SovereignS3nc } from '../SovereignS3nc';
-import { SovereignAddress } from '../types';
+import { SovereignAddress, SyncDocument } from '../types';
 
 export interface Profile {
   displayName: string;
@@ -104,5 +104,65 @@ export class SocialManager {
     return allComments
         .filter(c => c.postId === postId)
         .sort((a, b) => a.createdAt - b.createdAt);
+  }
+
+  async getGlobalDirectory(): Promise<SovereignAddress[]> {
+    if (!this.db.globalRemote) return [];
+    
+    try {
+        const doc = await this.db.globalRemote.get('directory');
+        if (doc && doc.data) {
+            return doc.data as SovereignAddress[];
+        }
+    } catch (e) {
+        console.warn('Failed to fetch global directory', e);
+    }
+    return [];
+  }
+
+  async joinGlobalDirectory(): Promise<void> {
+      if (!this.db.globalRemote) return;
+
+      const myAddress = this.db.getAddress();
+      
+      try {
+          const doc = await this.db.globalRemote.get('directory');
+          let directory: SovereignAddress[] = [];
+          let currentDoc = doc;
+
+          if (doc && doc.data) {
+              directory = doc.data as SovereignAddress[];
+          }
+
+          // Check if I am already there with same details
+          const existingIndex = directory.findIndex(a => a.userId === myAddress.userId && a.appId === myAddress.appId);
+          
+          if (existingIndex >= 0) {
+              const existing = directory[existingIndex];
+              // If details match, no need to update
+              if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
+                  return;
+              }
+              // Update
+              directory[existingIndex] = myAddress;
+          } else {
+              // Add
+              directory.push(myAddress);
+          }
+
+          // Save back
+          const newDoc: SyncDocument = {
+              _id: 'directory',
+              _updatedAt: Date.now(),
+              _rev: uuidv4(),
+              data: directory
+          };
+          
+          // Optimistic locking? Simple LWW for now as per instructions "eventual consistency"
+          await this.db.globalRemote.put(newDoc);
+
+      } catch (e) {
+          console.error('Failed to join global directory', e);
+      }
   }
 }

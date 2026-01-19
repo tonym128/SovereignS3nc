@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { S3Config, SyncDocument, RemoteChange } from '../types';
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 
@@ -13,9 +13,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
   private bucket: string;
   private prefix: string;
-  private useManifest: boolean;
 
-  constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = false) {
+  constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
     this.client = new S3Client({
       region: config.region,
       endpoint: config.endpoint,
@@ -24,7 +23,6 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     });
     this.bucket = config.bucketName;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-    this.useManifest = useManifest;
   }
 
   private getKey(id: string, collection?: string): string {
@@ -57,7 +55,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     const response = await this.client.send(command);
     const etag = response.ETag ? response.ETag.replace(/"/g, '') : undefined;
 
-    if (this.useManifest && !doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
+    if (!doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
       await this.updateManifest(doc, etag);
     }
 
@@ -131,68 +129,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   }
 
   async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
-    if (this.useManifest) {
-        return this.listChangesFromManifest(since, collection);
-    }
-    
-    const changes: RemoteChange[] = [];
-    let continuationToken: string | undefined;
-    
-    let searchPrefix = this.prefix;
-    if (collection) {
-      searchPrefix += collection + '/';
-    }
-
-    do {
-      const command: ListObjectsV2Command = new ListObjectsV2Command({
-        Bucket: this.bucket,
-        Prefix: searchPrefix,
-        ContinuationToken: continuationToken
-      });
-      
-      const response = await this.client.send(command);
-      
-      if (response.Contents) {
-        for (const item of response.Contents) {
-          if (item.Key && item.LastModified && item.LastModified > since) {
-            
-            // Filter out manifests and blobs
-            if (item.Key.endsWith('manifest.json') || item.Key.includes('/blobs/')) continue;
-
-            let id = '';
-            let col: string | undefined = collection;
-            
-            if (collection) {
-               id = item.Key.substring(searchPrefix.length).replace('.json', '');
-            } else {
-               const relative = item.Key.substring(this.prefix.length);
-               const parts = relative.split('/');
-               
-               if (parts.length === 2) {
-                 col = parts[0];
-                 id = parts[1].replace('.json', '');
-               } else if (parts.length === 1) {
-                 col = undefined;
-                 id = parts[0].replace('.json', '');
-               } else {
-                 continue; 
-               }
-            }
-
-            changes.push({
-              id: id,
-              collection: col,
-              key: item.Key,
-              etag: item.ETag ? item.ETag.replace(/"/g, '') : undefined,
-              lastModified: item.LastModified
-            });
-          }
-        }
-      }
-      continuationToken = response.NextContinuationToken;
-    } while (continuationToken);
-
-    return changes;
+    return this.listChangesFromManifest(since, collection);
   }
 
   private async listChangesFromManifest(since: Date, collection?: string): Promise<RemoteChange[]> {
@@ -237,19 +174,17 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     });
     await this.client.send(command);
 
-    if (this.useManifest) {
-        // For delete, we might want to update manifest to remove entry OR mark as deleted
-        // Ideally we mark as deleted so others know to delete?
-        // But our Sync Logic uses LAST_WRITE_WINS on the doc itself.
-        // If we remove from manifest, others won't know it's gone unless they already have it.
-        // Let's remove for now to keep manifest clean, relying on 'delete' propagation via doc tombstone?
-        // Wait, if I delete the file, I can't sync the tombstone!
-        // SovereignS3nc typically keeps the tombstone file.
-        // So 'delete' here is usually called only if we REALLY want to remove it.
-        // But in sync(), we put() the tombstone.
-        // So this delete() method is likely used for 'unshare' or hard cleanup.
-        // Let's update manifest to remove it.
-        await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
-    }
+    // For delete, we might want to update manifest to remove entry OR mark as deleted
+    // Ideally we mark as deleted so others know to delete?
+    // But our Sync Logic uses LAST_WRITE_WINS on the doc itself.
+    // If we remove from manifest, others won't know it's gone unless they already have it.
+    // Let's remove for now to keep manifest clean, relying on 'delete' propagation via doc tombstone?
+    // Wait, if I delete the file, I can't sync the tombstone!
+    // SovereignS3nc typically keeps the tombstone file.
+    // So 'delete' here is usually called only if we REALLY want to remove it.
+    // But in sync(), we put() the tombstone.
+    // So this delete() method is likely used for 'unshare' or hard cleanup.
+    // Let's update manifest to remove it.
+    await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
   }
 }
