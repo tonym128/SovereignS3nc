@@ -23973,7 +23973,7 @@ ${toHex(hashedRequest)}`;
       "use strict";
       init_dist_es58();
       S3RemoteAdapter = class {
-        constructor(config, paths, useManifest = false) {
+        constructor(config, paths, useManifest = true) {
           this.client = new S3Client({
             region: config.region,
             endpoint: config.endpoint,
@@ -23982,7 +23982,6 @@ ${toHex(hashedRequest)}`;
           });
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-          this.useManifest = useManifest;
         }
         getKey(id, collection) {
           if (collection) {
@@ -24009,7 +24008,7 @@ ${toHex(hashedRequest)}`;
           });
           const response = await this.client.send(command);
           const etag = response.ETag ? response.ETag.replace(/"/g, "") : void 0;
-          if (this.useManifest && !doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
+          if (!doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
             await this.updateManifest(doc, etag);
           }
           return etag;
@@ -24068,56 +24067,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async listChanges(since, collection) {
-          if (this.useManifest) {
-            return this.listChangesFromManifest(since, collection);
-          }
-          const changes = [];
-          let continuationToken;
-          let searchPrefix = this.prefix;
-          if (collection) {
-            searchPrefix += collection + "/";
-          }
-          do {
-            const command = new ListObjectsV2Command({
-              Bucket: this.bucket,
-              Prefix: searchPrefix,
-              ContinuationToken: continuationToken
-            });
-            const response = await this.client.send(command);
-            if (response.Contents) {
-              for (const item of response.Contents) {
-                if (item.Key && item.LastModified && item.LastModified > since) {
-                  if (item.Key.endsWith("manifest.json") || item.Key.includes("/blobs/")) continue;
-                  let id = "";
-                  let col = collection;
-                  if (collection) {
-                    id = item.Key.substring(searchPrefix.length).replace(".json", "");
-                  } else {
-                    const relative = item.Key.substring(this.prefix.length);
-                    const parts = relative.split("/");
-                    if (parts.length === 2) {
-                      col = parts[0];
-                      id = parts[1].replace(".json", "");
-                    } else if (parts.length === 1) {
-                      col = void 0;
-                      id = parts[0].replace(".json", "");
-                    } else {
-                      continue;
-                    }
-                  }
-                  changes.push({
-                    id,
-                    collection: col,
-                    key: item.Key,
-                    etag: item.ETag ? item.ETag.replace(/"/g, "") : void 0,
-                    lastModified: item.LastModified
-                  });
-                }
-              }
-            }
-            continuationToken = response.NextContinuationToken;
-          } while (continuationToken);
-          return changes;
+          return this.listChangesFromManifest(since, collection);
         }
         async listChangesFromManifest(since, collection) {
           const manifestKey = this.getManifestKey(collection);
@@ -24155,9 +24105,7 @@ ${toHex(hashedRequest)}`;
             Key: key
           });
           await this.client.send(command);
-          if (this.useManifest) {
-            await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true });
-          }
+          await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true });
         }
       };
     }
@@ -24169,12 +24117,9 @@ ${toHex(hashedRequest)}`;
     "src/adapters/OCIPreAuthAdapter.ts"() {
       "use strict";
       OCIPreAuthAdapter = class {
-        // Add support if needed, assuming user wants it
-        constructor(parUrl, paths, useManifest = false) {
-          this.useManifest = false;
+        constructor(parUrl, paths, useManifest = true) {
           this.baseUrl = parUrl.endsWith("/") ? parUrl.slice(0, -1) : parUrl;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-          this.useManifest = useManifest;
         }
         getUrl(id, collection) {
           if (collection) {
@@ -24201,7 +24146,7 @@ ${toHex(hashedRequest)}`;
             throw new Error(`OCI PAR Put Failed: ${response.statusText}`);
           }
           const etag = response.headers.get("etag")?.replace(/"/g, "");
-          if (this.useManifest && !doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
+          if (!doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
             await this.updateManifest(doc, etag);
           }
           return etag;
@@ -24250,64 +24195,7 @@ ${toHex(hashedRequest)}`;
           return doc;
         }
         async listChanges(since, collection) {
-          if (this.useManifest) {
-            return this.listChangesFromManifest(since, collection);
-          }
-          let searchPrefix = this.prefix;
-          if (collection) {
-            searchPrefix += collection + "/";
-          }
-          const params = new URLSearchParams({
-            prefix: searchPrefix,
-            fields: "name,etag,timeModified"
-          });
-          const response = await fetch(`${this.baseUrl}?${params.toString()}`);
-          if (!response.ok) {
-            return [];
-          }
-          const data = await response.json();
-          if (!data.objects) return [];
-          const changes = [];
-          for (const obj of data.objects) {
-            const lastModified = new Date(obj.timeModified);
-            if (lastModified > since) {
-              const key = obj.name;
-              if (key.endsWith("manifest.json")) continue;
-              let id = "";
-              let col = collection;
-              if (collection) {
-                if (key.startsWith(searchPrefix)) {
-                  id = key.substring(searchPrefix.length).replace(".json", "");
-                } else {
-                  continue;
-                }
-              } else {
-                if (key.startsWith(this.prefix)) {
-                  const relative = key.substring(this.prefix.length);
-                  const parts = relative.split("/");
-                  if (parts.length === 2) {
-                    col = parts[0];
-                    id = parts[1].replace(".json", "");
-                  } else if (parts.length === 1) {
-                    col = void 0;
-                    id = parts[0].replace(".json", "");
-                  } else {
-                    continue;
-                  }
-                } else {
-                  continue;
-                }
-              }
-              changes.push({
-                id,
-                collection: col,
-                key,
-                etag: obj.etag ? obj.etag.replace(/"/g, "") : void 0,
-                lastModified
-              });
-            }
-          }
-          return changes;
+          return this.listChangesFromManifest(since, collection);
         }
         async listChangesFromManifest(since, collection) {
           const manifestUrl = this.getManifestUrl(collection);
@@ -24342,9 +24230,7 @@ ${toHex(hashedRequest)}`;
           if (!response.ok && response.status !== 404) {
             throw new Error(`OCI PAR Delete Failed: ${response.statusText}`);
           }
-          if (this.useManifest) {
-            await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true });
-          }
+          await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true });
         }
       };
     }
@@ -24463,6 +24349,7 @@ ${toHex(hashedRequest)}`;
     "src/modules/Social.ts"() {
       "use strict";
       init_esm();
+      init_esm_browser();
       ProfileManager = class {
         constructor(db) {
           this.db = db;
@@ -24521,6 +24408,53 @@ ${toHex(hashedRequest)}`;
           const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
           const allComments = [...myComments, ...followedComments];
           return allComments.filter((c2) => c2.postId === postId).sort((a2, b2) => a2.createdAt - b2.createdAt);
+        }
+        async getGlobalDirectory() {
+          if (!this.db.globalRemote) return [];
+          try {
+            const doc = await this.db.globalRemote.get("directory");
+            if (doc && doc.data) {
+              return doc.data;
+            }
+          } catch (e2) {
+            console.warn("Failed to fetch global directory", e2);
+          }
+          return [];
+        }
+        async joinGlobalDirectory() {
+          if (!this.db.globalRemote) return;
+          const myAddress = this.db.getAddress();
+          let directory = [];
+          let doc = null;
+          try {
+            doc = await this.db.globalRemote.get("directory");
+            if (doc && doc.data) {
+              directory = doc.data;
+            }
+          } catch (e2) {
+            console.warn("Could not fetch global directory (likely first run or CORS 404). Bootstrapping...");
+          }
+          const existingIndex = directory.findIndex((a2) => a2.userId === myAddress.userId && a2.appId === myAddress.appId);
+          if (existingIndex >= 0) {
+            const existing = directory[existingIndex];
+            if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
+              return;
+            }
+            directory[existingIndex] = myAddress;
+          } else {
+            directory.push(myAddress);
+          }
+          const newDoc = {
+            _id: "directory",
+            _updatedAt: Date.now(),
+            _rev: v4_default(),
+            data: directory
+          };
+          try {
+            await this.db.globalRemote.put(newDoc);
+          } catch (e2) {
+            console.error("Failed to update global directory", e2);
+          }
         }
       };
     }
@@ -24651,9 +24585,12 @@ ${toHex(hashedRequest)}`;
           this.sharedDocs = /* @__PURE__ */ new Map();
           this.config = config;
           if (config.s3?.endpoint && config.s3.endpoint.startsWith("http://")) {
-            console.warn(
-              'SECURITY WARNING: You are using an insecure HTTP endpoint. Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. Please use HTTPS to ensure the "Security via Obscurity" model holds.'
-            );
+            const isLocal = config.s3.endpoint.includes("localhost") || config.s3.endpoint.includes("127.0.0.1");
+            if (!isLocal) {
+              console.warn(
+                'SECURITY WARNING: You are using an insecure HTTP endpoint. Your User IDs and Store IDs (GUIDs) are visible in cleartext network traffic. Please use HTTPS to ensure the "Security via Obscurity" model holds.'
+              );
+            }
           }
           this.localStore = customLocalStorage || new IndexedDBStorage(config.localPersistencePath);
           this.initRemote(config);
@@ -24696,6 +24633,11 @@ ${toHex(hashedRequest)}`;
               userId: config.paths.userId,
               storeId: "shared"
             }, config.useManifest);
+            this.globalRemote = new OCIPreAuthAdapter(config.ociParUrl, {
+              appId: config.paths.appId,
+              userId: "shared",
+              storeId: "global"
+            });
           } else if (config.s3) {
             this.remote = new S3RemoteAdapter(config.s3, config.paths, config.useManifest);
             this.blobs = new S3BlobAdapter(config.s3, config.paths);
@@ -24704,6 +24646,11 @@ ${toHex(hashedRequest)}`;
               userId: config.paths.userId,
               storeId: "shared"
             }, config.useManifest);
+            this.globalRemote = new S3RemoteAdapter(config.s3, {
+              appId: config.paths.appId,
+              userId: "shared",
+              storeId: "global"
+            });
           }
         }
         async init() {
@@ -25364,6 +25311,7 @@ ${toHex(hashedRequest)}`;
           appArea.classList.remove("hidden");
           loadProfile();
           await db.sync();
+          await db.social.joinGlobalDirectory();
           refreshFeed();
           loadFollowing();
         } catch (e2) {
@@ -25601,11 +25549,31 @@ ${toHex(hashedRequest)}`;
         const container = document.getElementById("directory-list");
         container.innerHTML = "<li><small>Scanning...</small></li>";
         try {
-          container.innerHTML = "<li><small>Directory listing not available in this mode. Share your address manually.</small></li>";
+          const users = await db.social.getGlobalDirectory();
+          if (users.length === 0) {
+            container.innerHTML = "<li><small>No users found in directory.</small></li>";
+            return;
+          }
+          container.innerHTML = users.map((u2) => {
+            return `<li>${u2.userId} (${u2.appId}) <button onclick="window.followUser('${u2.bucket}', '${u2.appId}', '${u2.userId}')">Follow</button></li>`;
+          }).join("");
         } catch (e2) {
           container.innerHTML = "<li><small>Failed to scan directory.</small></li>";
         }
       }
+      window.followUser = async (bucket, appId, userId) => {
+        if (!db) return;
+        const addr = {
+          bucket,
+          appId,
+          userId,
+          region: "us-east-1"
+          // Defaulting region if unknown
+        };
+        await db.social.follow(addr);
+        alert(`Followed ${userId}`);
+        loadFollowing();
+      };
       document.getElementById("btn-follow")?.addEventListener("click", async () => {
         if (!db) return;
         const addr = document.getElementById("follow-address").value;
