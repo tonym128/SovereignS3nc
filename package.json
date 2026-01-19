@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:docker": "jest -c jest.integration.config.js",
     "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm",
     "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign",
     "build": "tsc && npm run build:esm && npm run build:global",

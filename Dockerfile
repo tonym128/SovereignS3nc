@@ -4,8 +4,8 @@ FROM node:20-slim
 RUN apt-get update && apt-get install -y curl wget unzip && rm -rf /var/lib/apt/lists/*
 
 # Install Garage (S3 Compatible Storage)
-# Using v0.9.4 static binary
-RUN wget -O /usr/local/bin/garage https://garagehq.deuxfleurs.fr/releases/v0.9.4/x86_64-unknown-linux-musl/garage && \
+# Using v1.0.0 static binary
+RUN wget -O /usr/local/bin/garage https://garagehq.deuxfleurs.fr/_releases/v1.0.0/x86_64-unknown-linux-musl/garage && \
     chmod +x /usr/local/bin/garage
 
 # Set working directory
