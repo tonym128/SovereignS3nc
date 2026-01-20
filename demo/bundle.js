@@ -25260,6 +25260,20 @@ ${toHex(hashedRequest)}`;
       init_src();
       var db = null;
       var currentUser = "";
+      function showToast(message, type = "info") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const el = document.createElement("div");
+        el.className = `toast ${type}`;
+        el.innerHTML = `<span>${message}</span>`;
+        container.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = "0";
+          el.style.transform = "translateX(100%)";
+          el.style.transition = "all 0.3s ease-out";
+          setTimeout(() => el.remove(), 300);
+        }, 3e3);
+      }
       var views = {
         auth: document.getElementById("view-auth"),
         feed: document.getElementById("view-feed"),
@@ -25292,7 +25306,7 @@ ${toHex(hashedRequest)}`;
         const mode = document.querySelector('input[name="auth-mode"]:checked').value;
         const appId = document.getElementById("app-id").value;
         const userId = document.getElementById("user-id").value;
-        if (!appId || !userId) return alert("Please fill in App ID and User ID");
+        if (!appId || !userId) return showToast("Please fill in App ID and User ID", "error");
         currentUser = userId;
         let config = {
           paths: { appId, userId, storeId: "social" },
@@ -25313,7 +25327,7 @@ ${toHex(hashedRequest)}`;
           const accessKeyId = document.getElementById("s3-access-key").value;
           const secretAccessKey = document.getElementById("s3-secret-key").value;
           if (!endpoint || !bucket || !accessKeyId || !secretAccessKey) {
-            return alert("Please fill in all S3 fields");
+            return showToast("Please fill in all S3 fields", "error");
           }
           config.s3 = {
             endpoint,
@@ -25394,7 +25408,7 @@ ${toHex(hashedRequest)}`;
         }
         await db.profile.update({ displayName: name, bio, avatarUrl });
         await db.sync();
-        alert("Profile updated!");
+        showToast("Profile updated!", "success");
         loadProfile();
       });
       async function refreshFeed() {
@@ -25608,6 +25622,77 @@ ${toHex(hashedRequest)}`;
         await db.collection("comments").delete(id);
         await db.sync();
         refreshFeed();
+      };
+      async function loadFollowing() {
+        if (!db) return;
+        const myAddr = db.getAddress();
+        document.getElementById("my-address").value = JSON.stringify(myAddr);
+        const following = await db.social.getFollowing();
+        const followList = document.getElementById("following-list");
+        followList.innerHTML = "";
+        following.forEach((addr) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${addr.userId}</strong> (${addr.appId})
+            <button onclick="window.unfollowUser('${addr.appId}.${addr.userId}')" class="btn" style="padding:2px 5px; font-size:0.7em; background:#ef4444; margin-left:10px;">Unfollow</button>
+        `;
+          followList.appendChild(li);
+        });
+        const directory = await db.social.getGlobalDirectory();
+        const dirList = document.getElementById("directory-list");
+        dirList.innerHTML = "";
+        directory.forEach((addr) => {
+          if (addr.userId === currentUser) return;
+          const isFollowing = following.some((f2) => f2.userId === addr.userId && f2.appId === addr.appId);
+          const action = isFollowing ? '<span style="color:green; font-size:0.8em;">Following</span>' : `<button onclick='window.followUser(${JSON.stringify(addr)})' class="btn" style="padding:2px 5px; font-size:0.7em;">Follow</button>`;
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${addr.userId}</strong>
+            ${action}
+        `;
+          dirList.appendChild(li);
+        });
+      }
+      document.getElementById("btn-follow")?.addEventListener("click", async () => {
+        if (!db) return;
+        const input = document.getElementById("follow-address");
+        const val = input.value.trim();
+        if (!val) return;
+        try {
+          let addr;
+          if (val.startsWith("{")) {
+            addr = JSON.parse(val);
+          } else if (val.startsWith("s3://")) {
+            const parts = val.substring(5).split("/");
+            addr = {
+              bucket: parts[0],
+              appId: parts[1],
+              userId: parts[2],
+              region: "us-east-1"
+            };
+          } else {
+            showToast("Invalid address format. Please paste the JSON object from another user.", "error");
+            return;
+          }
+          await db.social.follow(addr);
+          input.value = "";
+          loadFollowing();
+          alert(`Followed ${addr.userId}!`);
+        } catch (e2) {
+          alert("Failed to follow: " + e2);
+        }
+      });
+      window.followUser = async (addr) => {
+        if (!db) return;
+        await db.social.follow(addr);
+        loadFollowing();
+        showToast(`Followed ${addr.userId}!`, "success");
+      };
+      window.unfollowUser = async (id) => {
+        if (!db) return;
+        if (!confirm("Unfollow this user?")) return;
+        await db.social.unfollow(id);
+        loadFollowing();
       };
     }
   });

@@ -4,6 +4,31 @@ import { SovereignS3nc, Post, Profile, SovereignAddress } from '../../src/index'
 let db: SovereignS3nc | null = null;
 let currentUser: string = '';
 
+// --- Toast ---
+function showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    el.innerHTML = `<span>${message}</span>`;
+    
+    // Add close button (optional but good UX)
+    // For now, auto-close is fine as per CSS animation logic implies fadeOut?
+    // The CSS had `slideIn` but `fadeOut` keyframes were defined but not used.
+    // Let's add JS removal.
+    
+    container.appendChild(el);
+
+    // Auto remove
+    setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateX(100%)';
+        el.style.transition = 'all 0.3s ease-out';
+        setTimeout(() => el.remove(), 300);
+    }, 3000);
+}
+
 // --- DOM Elements ---
 const views = {
     auth: document.getElementById('view-auth')!,
@@ -48,7 +73,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     const appId = (document.getElementById('app-id') as HTMLInputElement).value;
     const userId = (document.getElementById('user-id') as HTMLInputElement).value;
 
-    if (!appId || !userId) return alert('Please fill in App ID and User ID');
+    if (!appId || !userId) return showToast('Please fill in App ID and User ID', 'error');
     currentUser = userId;
 
     let config: any = {
@@ -72,7 +97,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         const secretAccessKey = (document.getElementById('s3-secret-key') as HTMLInputElement).value;
 
         if (!endpoint || !bucket || !accessKeyId || !secretAccessKey) {
-            return alert('Please fill in all S3 fields');
+            return showToast('Please fill in all S3 fields', 'error');
         }
 
         config.s3 = {
@@ -183,7 +208,7 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
 
     await db.profile.update({ displayName: name, bio, avatarUrl });
     await db.sync();
-    alert('Profile updated!');
+    showToast('Profile updated!', 'success');
     loadProfile();
 });
 
@@ -458,5 +483,96 @@ async function loadComments(postId: string) {
     // For simplicity, refresh feed or finding parent is hard without the doc
     await db.sync();
     refreshFeed();
+};
+
+// --- Network Logic ---
+async function loadFollowing() {
+    if (!db) return;
+
+    // 1. My Address
+    const myAddr = db.getAddress();
+    (document.getElementById('my-address') as HTMLInputElement).value = JSON.stringify(myAddr);
+
+    // 2. Following List
+    const following = await db.social.getFollowing();
+    const followList = document.getElementById('following-list')!;
+    followList.innerHTML = '';
+    
+    following.forEach(addr => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${addr.userId}</strong> (${addr.appId})
+            <button onclick="window.unfollowUser('${addr.appId}.${addr.userId}')" class="btn" style="padding:2px 5px; font-size:0.7em; background:#ef4444; margin-left:10px;">Unfollow</button>
+        `;
+        followList.appendChild(li);
+    });
+
+    // 3. Global Directory
+    const directory = await db.social.getGlobalDirectory();
+    const dirList = document.getElementById('directory-list')!;
+    dirList.innerHTML = '';
+
+    directory.forEach(addr => {
+        // Don't show myself
+        if (addr.userId === currentUser) return;
+        
+        const isFollowing = following.some(f => f.userId === addr.userId && f.appId === addr.appId);
+        const action = isFollowing 
+            ? '<span style="color:green; font-size:0.8em;">Following</span>'
+            : `<button onclick='window.followUser(${JSON.stringify(addr)})' class="btn" style="padding:2px 5px; font-size:0.7em;">Follow</button>`;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>${addr.userId}</strong>
+            ${action}
+        `;
+        dirList.appendChild(li);
+    });
+}
+
+document.getElementById('btn-follow')?.addEventListener('click', async () => {
+    if (!db) return;
+    const input = document.getElementById('follow-address') as HTMLInputElement;
+    const val = input.value.trim();
+    if (!val) return;
+
+    try {
+        let addr: SovereignAddress;
+        if (val.startsWith('{')) {
+            addr = JSON.parse(val);
+        } else if (val.startsWith('s3://')) {
+             const parts = val.substring(5).split('/');
+             addr = {
+                bucket: parts[0],
+                appId: parts[1],
+                userId: parts[2],
+                region: 'us-east-1'
+            };
+        } else {
+            showToast('Invalid address format. Please paste the JSON object from another user.', 'error');
+            return;
+        }
+
+        await db.social.follow(addr);
+        input.value = '';
+        loadFollowing();
+        alert(`Followed ${addr.userId}!`);
+    } catch (e) {
+        alert('Failed to follow: ' + e);
+    }
+});
+
+(window as any).followUser = async (addr: SovereignAddress) => {
+    if (!db) return;
+    await db.social.follow(addr);
+    loadFollowing();
+    showToast(`Followed ${addr.userId}!`, 'success');
+};
+
+(window as any).unfollowUser = async (id: string) => {
+    if (!db) return;
+    if (!confirm('Unfollow this user?')) return;
+    await db.social.unfollow(id);
+    loadFollowing();
 };
 
