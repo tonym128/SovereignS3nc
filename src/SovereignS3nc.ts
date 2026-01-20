@@ -724,7 +724,7 @@ export class SovereignS3nc extends EventEmitter {
                 continue;
             }
 
-            const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
+            const changes = await followRemote.listChanges(new Date(0));
             // We pull all content from followed users. 
             // The 'listChanges' ensures we only see what is in their manifest.
             const contentToPull = changes.filter(c => c.id !== 'public/index.json' && !c.id.startsWith('_sovereign_'));

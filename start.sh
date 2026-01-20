@@ -119,6 +119,21 @@ garage bucket allow sovereign-demo --read --write --owner --key demo-key || true
 echo "Applying CORS configuration..."
 ACCESS_KEY=$ACCESS_KEY SECRET_KEY=$SECRET_KEY node demo/configure_cors.js
 
+# 5c. Generate demo config for auto-fill
+echo "Generating demo config.json..."
+cat <<EOF > demo/config.json
+{
+  "s3": {
+    "endpoint": "http://localhost:3900",
+    "bucketName": "sovereign-demo",
+    "region": "us-east-1",
+    "accessKeyId": "$ACCESS_KEY",
+    "secretAccessKey": "$SECRET_KEY"
+  },
+  "appId": "social-app"
+}
+EOF
+
 # 6. Output Access Info
 echo "================================================================"
 echo "          SOVEREIGN S3NC DEMO ENV SETUP COMPLETE"

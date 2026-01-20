@@ -46,6 +46,34 @@ const navLinks = {
 
 const loading = document.getElementById('loading')!;
 
+// --- Auto-fill Config ---
+window.addEventListener('load', async () => {
+    try {
+        const res = await fetch('config.json');
+        if (res.ok) {
+            const config = await res.json();
+            if (config.s3) {
+                (document.getElementById('s3-endpoint') as HTMLInputElement).value = config.s3.endpoint;
+                (document.getElementById('s3-bucket') as HTMLInputElement).value = config.s3.bucketName;
+                (document.getElementById('s3-region') as HTMLInputElement).value = config.s3.region;
+                (document.getElementById('s3-access-key') as HTMLInputElement).value = config.s3.accessKeyId;
+                (document.getElementById('s3-secret-key') as HTMLInputElement).value = config.s3.secretAccessKey;
+                
+                // Select S3 mode
+                (document.querySelector('input[name="auth-mode"][value="s3"]') as HTMLInputElement).checked = true;
+                document.getElementById('auth-oci')!.classList.add('hidden');
+                document.getElementById('auth-s3')!.classList.remove('hidden');
+            }
+            if (config.appId) {
+                (document.getElementById('app-id') as HTMLInputElement).value = config.appId;
+            }
+            showToast('Auto-filled connection details from server', 'info');
+        }
+    } catch (e) {
+        console.log('No local config.json found or failed to parse');
+    }
+});
+
 // --- Initialization ---
 
 // --- Initialization ---
@@ -84,7 +112,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
 
     if (mode === 'oci') {
         const url = (document.getElementById('oci-url') as HTMLInputElement).value;
-        if (!url) return alert('Please enter OCI PAR URL');
+        if (!url) return showToast('Please enter OCI PAR URL', 'error');
         
         config.ociParUrl = url;
         config.useManifest = true; // CRITICAL for OCI PAR
@@ -148,7 +176,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
 
     } catch (e) {
         console.error(e);
-        alert('Failed to connect: ' + e);
+        showToast('Failed to connect: ' + e, 'error');
     }
 });
 
@@ -414,7 +442,7 @@ document.getElementById('btn-post')?.addEventListener('click', async () => {
         await refreshFeed();
     } catch (e) {
         console.error(e);
-        alert('Failed to post: ' + (e instanceof Error ? e.message : String(e)));
+        showToast('Failed to post: ' + (e instanceof Error ? e.message : String(e)), 'error');
     } finally {
         btn.disabled = false;
         btn.textContent = 'Post';
@@ -556,9 +584,9 @@ document.getElementById('btn-follow')?.addEventListener('click', async () => {
         await db.social.follow(addr);
         input.value = '';
         loadFollowing();
-        alert(`Followed ${addr.userId}!`);
+        showToast(`Followed ${addr.userId}!`, 'success');
     } catch (e) {
-        alert('Failed to follow: ' + e);
+        showToast('Failed to follow: ' + e, 'error');
     }
 });
 

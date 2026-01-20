@@ -25084,7 +25084,7 @@ ${toHex(hashedRequest)}`;
               } else {
                 continue;
               }
-              const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
+              const changes = await followRemote.listChanges(/* @__PURE__ */ new Date(0));
               const contentToPull = changes.filter((c2) => c2.id !== "public/index.json" && !c2.id.startsWith("_sovereign_"));
               for (const file of contentToPull) {
                 const indexDoc = await followRemote.get(file.id, file.collection);
@@ -25287,6 +25287,30 @@ ${toHex(hashedRequest)}`;
         network: document.getElementById("nav-network")
       };
       var loading = document.getElementById("loading");
+      window.addEventListener("load", async () => {
+        try {
+          const res = await fetch("config.json");
+          if (res.ok) {
+            const config = await res.json();
+            if (config.s3) {
+              document.getElementById("s3-endpoint").value = config.s3.endpoint;
+              document.getElementById("s3-bucket").value = config.s3.bucketName;
+              document.getElementById("s3-region").value = config.s3.region;
+              document.getElementById("s3-access-key").value = config.s3.accessKeyId;
+              document.getElementById("s3-secret-key").value = config.s3.secretAccessKey;
+              document.querySelector('input[name="auth-mode"][value="s3"]').checked = true;
+              document.getElementById("auth-oci").classList.add("hidden");
+              document.getElementById("auth-s3").classList.remove("hidden");
+            }
+            if (config.appId) {
+              document.getElementById("app-id").value = config.appId;
+            }
+            showToast("Auto-filled connection details from server", "info");
+          }
+        } catch (e2) {
+          console.log("No local config.json found or failed to parse");
+        }
+      });
       var authRadios = document.querySelectorAll('input[name="auth-mode"]');
       var authOci = document.getElementById("auth-oci");
       var authS3 = document.getElementById("auth-s3");
@@ -25317,7 +25341,7 @@ ${toHex(hashedRequest)}`;
         };
         if (mode === "oci") {
           const url = document.getElementById("oci-url").value;
-          if (!url) return alert("Please enter OCI PAR URL");
+          if (!url) return showToast("Please enter OCI PAR URL", "error");
           config.ociParUrl = url;
           config.useManifest = true;
         } else {
@@ -25358,7 +25382,7 @@ ${toHex(hashedRequest)}`;
           loadFollowing();
         } catch (e2) {
           console.error(e2);
-          alert("Failed to connect: " + e2);
+          showToast("Failed to connect: " + e2, "error");
         }
       });
       async function switchView(viewName) {
@@ -25568,7 +25592,7 @@ ${toHex(hashedRequest)}`;
           await refreshFeed();
         } catch (e2) {
           console.error(e2);
-          alert("Failed to post: " + (e2 instanceof Error ? e2.message : String(e2)));
+          showToast("Failed to post: " + (e2 instanceof Error ? e2.message : String(e2)), "error");
         } finally {
           btn.disabled = false;
           btn.textContent = "Post";
@@ -25677,9 +25701,9 @@ ${toHex(hashedRequest)}`;
           await db.social.follow(addr);
           input.value = "";
           loadFollowing();
-          alert(`Followed ${addr.userId}!`);
+          showToast(`Followed ${addr.userId}!`, "success");
         } catch (e2) {
-          alert("Failed to follow: " + e2);
+          showToast("Failed to follow: " + e2, "error");
         }
       });
       window.followUser = async (addr) => {
