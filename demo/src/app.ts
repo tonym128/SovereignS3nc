@@ -128,12 +128,18 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
 });
 
 // --- Navigation ---
-function switchView(viewName: 'feed' | 'profile' | 'network') {
+async function switchView(viewName: 'feed' | 'profile' | 'network') {
     Object.values(views).forEach(el => el.classList.add('hidden'));
     Object.values(navLinks).forEach(el => el.classList.remove('active'));
 
     views[viewName].classList.remove('hidden');
     navLinks[viewName].classList.add('active');
+    
+    if (db) {
+        console.log('Syncing on tab change...');
+        await db.sync();
+        if (viewName === 'feed') refreshFeed();
+    }
 }
 
 navLinks.feed.onclick = () => switchView('feed');
@@ -176,6 +182,7 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
     }
 
     await db.profile.update({ displayName: name, bio, avatarUrl });
+    await db.sync();
     alert('Profile updated!');
     loadProfile();
 });
@@ -194,7 +201,6 @@ async function refreshFeed() {
     
     const allComments = [...myComments, ...followedComments];
     console.log(`Comments loaded: ${allComments.length} total`);
-    if (allComments.length > 0) console.log('Sample comment:', allComments[0]);
 
     const commentsByPost = new Map<string, any[]>();
     
@@ -205,8 +211,6 @@ async function refreshFeed() {
         commentsByPost.get(c.postId)!.push(c);
     }
     
-    console.log('Comments Map Keys:', Array.from(commentsByPost.keys()));
-
     const container = document.getElementById('feed-list')!;
     container.innerHTML = '';
 
@@ -215,21 +219,33 @@ async function refreshFeed() {
         el.className = 'card';
         
         const authorName = post.authorId === 'me' ? 'Me' : post.authorId;
+        const isMine = post.authorId === 'me';
         
         let imgHtml = '';
         if (post.attachments && post.attachments.length > 0) {
             imgHtml = `<img id="img-${post.attachments[0]}" class="post-img" src="">`;
         }
 
+        let actionsHtml = '';
+        if (isMine) {
+            actionsHtml = `
+                <div style="float:right; font-size:0.8em;">
+                    <a href="#" onclick="window.editPost('${post._id}'); return false;">Edit</a> | 
+                    <a href="#" onclick="window.deletePost('${post._id}'); return false;">Delete</a>
+                </div>
+            `;
+        }
+
         el.innerHTML = `
             <div class="post-header">
                 <img id="avatar-post-${post._id}" class="avatar">
-                <div>
+                <div style="flex-grow:1;">
+                    ${actionsHtml}
                     <strong>${authorName}</strong><br>
                     <span class="timestamp">${new Date(post.createdAt).toLocaleString()}</span>
                 </div>
             </div>
-            <p>${post.text}</p>
+            <p id="post-text-${post._id}">${post.text}</p>
             ${imgHtml}
             <div class="comments-section" id="comments-${post._id}">
                 <small>Loading comments...</small>
@@ -252,18 +268,13 @@ async function refreshFeed() {
         // Render comments immediately from cache
         let postComments = commentsByPost.get(post._id) || [];
         
-        // Fallback for followed posts (where post._id = follow_user_origId, but comment.postId = origId)
+        // Fallback for followed posts
         if (postComments.length === 0 && post._id.startsWith('follow_')) {
              const parts = post._id.split('_');
-             // Format: follow_userId_originalId
-             // Since userId might contain underscores? No, userId is usually a GUID or simple string.
-             // But originalId definitely is a GUID.
-             // Let's assume the first two underscores separate prefix and user.
              if (parts.length >= 3) {
                  const originalId = parts.slice(2).join('_');
                  const fallback = commentsByPost.get(originalId);
                  if (fallback) {
-                     console.log(`Matched comments for ${post._id} using fallback ID ${originalId}`);
                      postComments = fallback;
                  }
              }
@@ -308,11 +319,14 @@ function renderComments(postId: string, comments: any[]) {
         return;
     }
 
-    container.innerHTML = comments.map(c => `
+    container.innerHTML = comments.map(c => {
+        const isMine = c.authorId === 'me';
+        const actions = isMine ? ` <span style="font-size:0.7em; color:#888;">(<a href="#" onclick="window.deleteComment('${c._id}'); return false;">x</a>)</span>` : '';
+        return `
         <div class="comment">
-            <strong>${c.authorId}</strong>: ${c.text}
+            <strong>${c.authorId}</strong>: ${c.text} ${actions}
         </div>
-    `).join('');
+    `}).join('');
 }
 
 async function renderImage(blobId: string, imgEl: HTMLImageElement) {
@@ -357,15 +371,21 @@ document.getElementById('btn-post')?.addEventListener('click', async () => {
             attachments.push(meta._id);
         }
 
-        await db.collection('posts').save({
+        const id = await db.collection('posts').save({
             text,
             authorId: 'me',
             createdAt: Date.now(),
             attachments
         });
+        
+        // Share publicly!
+        await db.share(id, true, 'posts');
 
         textInput.value = '';
         fileInput.value = '';
+        
+        console.log('Syncing after post...');
+        await db.sync();
         await refreshFeed();
     } catch (e) {
         console.error(e);
@@ -389,93 +409,54 @@ async function loadComments(postId: string) {
     const text = input.value;
     if (!text) return;
 
-    await db.collection('comments').save({
+    const id = await db.collection('comments').save({
         postId,
         text,
         authorId: 'me',
         createdAt: Date.now()
     });
+    
+    await db.share(id, true, 'comments');
 
     input.value = '';
+    
+    console.log('Syncing after comment...');
+    await db.sync();
     loadComments(postId);
 };
 
-// --- Network ---
-async function loadFollowing() {
-    if (!db) return;
-    const list = await db.social.getFollowing();
-    const container = document.getElementById('following-list')!;
-    container.innerHTML = list.map(addr => `<li>${addr.userId} (${addr.bucket}) <button onclick="window.unfollow('${addr.appId}.${addr.userId}')">Unfollow</button></li>`).join('');
-    
-    populateMyAddress();
-    loadGlobalDirectory();
-}
-
-function populateMyAddress() {
-    if (!db) return;
-    const addr = db.getAddress();
-    // Format: s3://bucket/appId/userId
-    const str = `s3://${addr.bucket}/${addr.appId}/${addr.userId}`;
-    (document.getElementById('my-address') as HTMLInputElement).value = str;
-}
-
-async function loadGlobalDirectory() {
-    if (!db) return;
-    const container = document.getElementById('directory-list')!;
-    container.innerHTML = '<li><small>Scanning...</small></li>';
-
-    try {
-        const users = await db.social.getGlobalDirectory();
-        
-        if (users.length === 0) {
-            container.innerHTML = '<li><small>No users found in directory.</small></li>';
-            return;
-        }
-
-        container.innerHTML = users.map(u => {
-            // Check if already following
-            // This is a simple check, ideally we use the full address
-            return `<li>${u.userId} (${u.appId}) <button onclick="window.followUser('${u.bucket}', '${u.appId}', '${u.userId}')">Follow</button></li>`;
-        }).join('');
-    
-    } catch (e) {
-        container.innerHTML = '<li><small>Failed to scan directory.</small></li>';
-    }
-}
-
-(window as any).followUser = async (bucket: string, appId: string, userId: string) => {
-    if (!db) return;
-    // Assuming standard S3 address for now, or construct manually
-    const addr: SovereignAddress = {
-        bucket, appId, userId, region: 'us-east-1' // Defaulting region if unknown
-    };
-    await db.social.follow(addr);
-    alert(`Followed ${userId}`);
-    loadFollowing();
+(window as any).deletePost = async (id: string) => {
+    if (!db || !confirm('Delete this post?')) return;
+    await db.unshare(id);
+    await db.collection('posts').delete(id);
+    await db.sync();
+    refreshFeed();
 };
 
-document.getElementById('btn-follow')?.addEventListener('click', async () => {
+(window as any).editPost = async (id: string) => {
     if (!db) return;
-    const addr = (document.getElementById('follow-address') as HTMLInputElement).value;
+    const post = await db.collection('posts').get<Post>(id);
+    if (!post) return;
     
-    // Quick hack to support OCI URLs as addresses if they match the pattern
-    // Otherwise expect s3://
-    if (addr.startsWith('http')) {
-        // Construct a pseudo address object for OCI
-        // URL format: https://.../p/.../n/{namespace}/b/{bucket}/o/
-        // User must provide standard parts. 
-        // For this demo, let's assume they paste the base URL and we prompt for details or they use JSON
-        alert('Please use s3://bucket/appId/userId format for now, or edit code to parse OCI URLs.');
-        return;
+    const newText = prompt('Edit post:', post.text);
+    if (newText !== null && newText !== post.text) {
+        post.text = newText;
+        await db.collection('posts').save(post);
+        // Reshare to update public metadata/content
+        await db.share(id, true, 'posts'); 
+        await db.sync();
+        refreshFeed();
     }
-
-    await db.social.follow(addr);
-    alert('Followed!');
-    loadFollowing();
-});
-
-(window as any).unfollow = async (id: string) => {
-    if (!db) return;
-    await db.social.unfollow(id);
-    loadFollowing();
 };
+
+(window as any).deleteComment = async (id: string) => {
+    if (!db || !confirm('Delete comment?')) return;
+    await db.unshare(id);
+    await db.collection('comments').delete(id);
+    // Find post id to refresh
+    // We might need to refresh whole feed or just find parent
+    // For simplicity, refresh feed or finding parent is hard without the doc
+    await db.sync();
+    refreshFeed();
+};
+

@@ -25085,20 +25085,45 @@ ${toHex(hashedRequest)}`;
                 continue;
               }
               const changes = await followRemote.listChanges(new Date(this.lastSyncTime));
-              const publicFiles = changes.filter((c2) => c2.collection === "public" || c2.id.startsWith("public/"));
-              for (const file of publicFiles) {
+              const contentToPull = changes.filter((c2) => c2.id !== "public/index.json" && !c2.id.startsWith("_sovereign_"));
+              for (const file of contentToPull) {
                 const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
+                let docToSave = indexDoc;
+                let dataToSave = indexDoc.data;
+                if (file.collection === "public" || file.id.startsWith("public/")) {
+                  const meta2 = indexDoc.data;
+                  if (meta2.id) {
+                    const contentDoc2 = await followRemote.get(meta2.id);
+                    if (contentDoc2) {
+                      if (meta2.key) {
+                        const tempCrypto = this.getCryptoAdapter(meta2.key);
+                        dataToSave = await tempCrypto.decrypt(contentDoc2.data);
+                      } else {
+                        dataToSave = contentDoc2.data;
+                      }
+                      docToSave = { ...contentDoc2, _updatedAt: meta2.updatedAt };
+                    } else {
+                      continue;
+                    }
+                  }
+                } else {
+                }
                 const meta = indexDoc.data;
+                if (!meta || !meta.id || !meta.updatedAt) {
+                  continue;
+                }
                 const localId = `follow_${addr.userId}_${meta.id}`;
                 const local = await this.localStore.get(localId, "followed_content");
                 if (local && local._updatedAt >= meta.updatedAt) continue;
-                const contentDoc = await followRemote.get(meta.id);
+                const contentDoc = await followRemote.get(meta.id, meta.collection);
                 if (contentDoc) {
                   let plainContent = contentDoc.data;
                   if (meta.key) {
                     const tempCrypto = this.getCryptoAdapter(meta.key);
                     plainContent = await tempCrypto.decrypt(contentDoc.data);
+                  } else if (docToSave.collection === "profiles") {
+                    plainContent = contentDoc.data;
                   }
                   const encryptedForMe = await this.encryptData(plainContent);
                   await this.localStore.put({
@@ -25107,6 +25132,9 @@ ${toHex(hashedRequest)}`;
                     collection: "followed_content",
                     data: encryptedForMe,
                     _rev: v4_default()
+                    // Store extra metadata to help with UI
+                    // e.g. original author
+                    // But `plainContent` (the Post) has `authorId`.
                   });
                   stats.pulled++;
                 }
@@ -25319,11 +25347,16 @@ ${toHex(hashedRequest)}`;
           alert("Failed to connect: " + e2);
         }
       });
-      function switchView(viewName) {
+      async function switchView(viewName) {
         Object.values(views).forEach((el) => el.classList.add("hidden"));
         Object.values(navLinks).forEach((el) => el.classList.remove("active"));
         views[viewName].classList.remove("hidden");
         navLinks[viewName].classList.add("active");
+        if (db) {
+          console.log("Syncing on tab change...");
+          await db.sync();
+          if (viewName === "feed") refreshFeed();
+        }
       }
       navLinks.feed.onclick = () => switchView("feed");
       navLinks.profile.onclick = () => switchView("profile");
@@ -25360,6 +25393,7 @@ ${toHex(hashedRequest)}`;
           avatarUrl = meta._id;
         }
         await db.profile.update({ displayName: name, bio, avatarUrl });
+        await db.sync();
         alert("Profile updated!");
         loadProfile();
       });
@@ -25373,7 +25407,6 @@ ${toHex(hashedRequest)}`;
         const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
         const allComments = [...myComments, ...followedComments];
         console.log(`Comments loaded: ${allComments.length} total`);
-        if (allComments.length > 0) console.log("Sample comment:", allComments[0]);
         const commentsByPost = /* @__PURE__ */ new Map();
         for (const c2 of allComments) {
           if (!commentsByPost.has(c2.postId)) {
@@ -25381,26 +25414,36 @@ ${toHex(hashedRequest)}`;
           }
           commentsByPost.get(c2.postId).push(c2);
         }
-        console.log("Comments Map Keys:", Array.from(commentsByPost.keys()));
         const container = document.getElementById("feed-list");
         container.innerHTML = "";
         for (const post of feed) {
           const el = document.createElement("div");
           el.className = "card";
           const authorName = post.authorId === "me" ? "Me" : post.authorId;
+          const isMine = post.authorId === "me";
           let imgHtml = "";
           if (post.attachments && post.attachments.length > 0) {
             imgHtml = `<img id="img-${post.attachments[0]}" class="post-img" src="">`;
           }
+          let actionsHtml = "";
+          if (isMine) {
+            actionsHtml = `
+                <div style="float:right; font-size:0.8em;">
+                    <a href="#" onclick="window.editPost('${post._id}'); return false;">Edit</a> | 
+                    <a href="#" onclick="window.deletePost('${post._id}'); return false;">Delete</a>
+                </div>
+            `;
+          }
           el.innerHTML = `
             <div class="post-header">
                 <img id="avatar-post-${post._id}" class="avatar">
-                <div>
+                <div style="flex-grow:1;">
+                    ${actionsHtml}
                     <strong>${authorName}</strong><br>
                     <span class="timestamp">${new Date(post.createdAt).toLocaleString()}</span>
                 </div>
             </div>
-            <p>${post.text}</p>
+            <p id="post-text-${post._id}">${post.text}</p>
             ${imgHtml}
             <div class="comments-section" id="comments-${post._id}">
                 <small>Loading comments...</small>
@@ -25422,7 +25465,6 @@ ${toHex(hashedRequest)}`;
               const originalId = parts.slice(2).join("_");
               const fallback2 = commentsByPost.get(originalId);
               if (fallback2) {
-                console.log(`Matched comments for ${post._id} using fallback ID ${originalId}`);
                 postComments = fallback2;
               }
             }
@@ -25457,11 +25499,15 @@ ${toHex(hashedRequest)}`;
           container.innerHTML = "<small>No comments yet.</small>";
           return;
         }
-        container.innerHTML = comments.map((c2) => `
+        container.innerHTML = comments.map((c2) => {
+          const isMine = c2.authorId === "me";
+          const actions = isMine ? ` <span style="font-size:0.7em; color:#888;">(<a href="#" onclick="window.deleteComment('${c2._id}'); return false;">x</a>)</span>` : "";
+          return `
         <div class="comment">
-            <strong>${c2.authorId}</strong>: ${c2.text}
+            <strong>${c2.authorId}</strong>: ${c2.text} ${actions}
         </div>
-    `).join("");
+    `;
+        }).join("");
       }
       async function renderImage(blobId, imgEl) {
         if (!db) return;
@@ -25494,14 +25540,17 @@ ${toHex(hashedRequest)}`;
             const meta = await db.storage.upload(file.name, new Uint8Array(buffer), file.type, true);
             attachments.push(meta._id);
           }
-          await db.collection("posts").save({
+          const id = await db.collection("posts").save({
             text,
             authorId: "me",
             createdAt: Date.now(),
             attachments
           });
+          await db.share(id, true, "posts");
           textInput.value = "";
           fileInput.value = "";
+          console.log("Syncing after post...");
+          await db.sync();
           await refreshFeed();
         } catch (e2) {
           console.error(e2);
@@ -25521,74 +25570,44 @@ ${toHex(hashedRequest)}`;
         const input = document.getElementById(`input-comment-${postId}`);
         const text = input.value;
         if (!text) return;
-        await db.collection("comments").save({
+        const id = await db.collection("comments").save({
           postId,
           text,
           authorId: "me",
           createdAt: Date.now()
         });
+        await db.share(id, true, "comments");
         input.value = "";
+        console.log("Syncing after comment...");
+        await db.sync();
         loadComments(postId);
       };
-      async function loadFollowing() {
-        if (!db) return;
-        const list = await db.social.getFollowing();
-        const container = document.getElementById("following-list");
-        container.innerHTML = list.map((addr) => `<li>${addr.userId} (${addr.bucket}) <button onclick="window.unfollow('${addr.appId}.${addr.userId}')">Unfollow</button></li>`).join("");
-        populateMyAddress();
-        loadGlobalDirectory();
-      }
-      function populateMyAddress() {
-        if (!db) return;
-        const addr = db.getAddress();
-        const str = `s3://${addr.bucket}/${addr.appId}/${addr.userId}`;
-        document.getElementById("my-address").value = str;
-      }
-      async function loadGlobalDirectory() {
-        if (!db) return;
-        const container = document.getElementById("directory-list");
-        container.innerHTML = "<li><small>Scanning...</small></li>";
-        try {
-          const users = await db.social.getGlobalDirectory();
-          if (users.length === 0) {
-            container.innerHTML = "<li><small>No users found in directory.</small></li>";
-            return;
-          }
-          container.innerHTML = users.map((u2) => {
-            return `<li>${u2.userId} (${u2.appId}) <button onclick="window.followUser('${u2.bucket}', '${u2.appId}', '${u2.userId}')">Follow</button></li>`;
-          }).join("");
-        } catch (e2) {
-          container.innerHTML = "<li><small>Failed to scan directory.</small></li>";
-        }
-      }
-      window.followUser = async (bucket, appId, userId) => {
-        if (!db) return;
-        const addr = {
-          bucket,
-          appId,
-          userId,
-          region: "us-east-1"
-          // Defaulting region if unknown
-        };
-        await db.social.follow(addr);
-        alert(`Followed ${userId}`);
-        loadFollowing();
+      window.deletePost = async (id) => {
+        if (!db || !confirm("Delete this post?")) return;
+        await db.unshare(id);
+        await db.collection("posts").delete(id);
+        await db.sync();
+        refreshFeed();
       };
-      document.getElementById("btn-follow")?.addEventListener("click", async () => {
+      window.editPost = async (id) => {
         if (!db) return;
-        const addr = document.getElementById("follow-address").value;
-        if (addr.startsWith("http")) {
-          alert("Please use s3://bucket/appId/userId format for now, or edit code to parse OCI URLs.");
-          return;
+        const post = await db.collection("posts").get(id);
+        if (!post) return;
+        const newText = prompt("Edit post:", post.text);
+        if (newText !== null && newText !== post.text) {
+          post.text = newText;
+          await db.collection("posts").save(post);
+          await db.share(id, true, "posts");
+          await db.sync();
+          refreshFeed();
         }
-        await db.social.follow(addr);
-        alert("Followed!");
-        loadFollowing();
-      });
-      window.unfollow = async (id) => {
-        if (!db) return;
-        await db.social.unfollow(id);
-        loadFollowing();
+      };
+      window.deleteComment = async (id) => {
+        if (!db || !confirm("Delete comment?")) return;
+        await db.unshare(id);
+        await db.collection("comments").delete(id);
+        await db.sync();
+        refreshFeed();
       };
     }
   });
