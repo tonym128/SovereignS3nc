@@ -24350,6 +24350,8 @@ ${toHex(hashedRequest)}`;
       "use strict";
       init_esm();
       init_esm_browser();
+      init_S3BlobAdapter();
+      init_OCIBlobAdapter();
       ProfileManager = class {
         constructor(db) {
           this.db = db;
@@ -24382,6 +24384,31 @@ ${toHex(hashedRequest)}`;
         async getFollowing() {
           return this.db.getAll("_social_following");
         }
+        async getBlob(blobId, address) {
+          let adapter;
+          if (this.db.config.s3) {
+            adapter = new S3BlobAdapter({
+              ...this.db.config.s3,
+              bucketName: address.bucket || this.db.config.s3.bucketName,
+              endpoint: address.endpoint || this.db.config.s3.endpoint,
+              region: address.region || this.db.config.s3.region
+            }, {
+              appId: address.appId,
+              userId: address.userId,
+              storeId: "public_blobs"
+            });
+          } else if (this.db.config.ociParUrl) {
+            adapter = new OCIBlobAdapter(this.db.config.ociParUrl, {
+              appId: address.appId,
+              userId: address.userId,
+              storeId: "public_blobs"
+            });
+          }
+          if (adapter) {
+            return adapter.download(blobId);
+          }
+          return null;
+        }
         parseAddress(addrStr) {
           if (addrStr.startsWith("s3://")) {
             const parts = addrStr.substring(5).split("/");
@@ -24394,19 +24421,48 @@ ${toHex(hashedRequest)}`;
           }
           throw new Error("Invalid address format");
         }
+        normalizeFollowedContent(doc) {
+          if (doc._id.startsWith("follow_")) {
+            const parts = doc._id.split("_");
+            if (parts.length >= 3) {
+              const userId = parts[1];
+              const originalId = parts.slice(2).join("_");
+              return {
+                ...doc,
+                _id: originalId,
+                authorId: userId
+              };
+            }
+          }
+          return doc;
+        }
         async getFeed() {
           const myPosts = await this.db.collection("posts").getAll();
           const followedDocs = await this.db.collection("followed_content").getAll();
-          const followedPosts = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId === void 0);
+          const followedPostsRaw = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId === void 0);
+          const followedPosts = followedPostsRaw.map((p2) => this.normalizeFollowedContent(p2));
           const allPosts = [...myPosts, ...followedPosts];
-          const uniquePosts = Array.from(new Map(allPosts.map((p2) => [p2._id, p2])).values());
+          const uniquePostsMap = /* @__PURE__ */ new Map();
+          for (const p2 of allPosts) {
+            uniquePostsMap.set(p2._id, p2);
+          }
+          const uniquePosts = Array.from(uniquePostsMap.values());
           return uniquePosts.sort((a2, b2) => b2.createdAt - a2.createdAt);
         }
-        async getComments(postId) {
+        async getAllComments() {
           const myComments = await this.db.collection("comments").getAll();
           const followedDocs = await this.db.collection("followed_content").getAll();
-          const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
+          const followedCommentsRaw = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
+          const followedComments = followedCommentsRaw.map((c2) => this.normalizeFollowedContent(c2));
           const allComments = [...myComments, ...followedComments];
+          const uniqueCommentsMap = /* @__PURE__ */ new Map();
+          for (const c2 of allComments) {
+            uniqueCommentsMap.set(c2._id, c2);
+          }
+          return Array.from(uniqueCommentsMap.values());
+        }
+        async getComments(postId) {
+          const allComments = await this.getAllComments();
           return allComments.filter((c2) => c2.postId === postId).sort((a2, b2) => a2.createdAt - b2.createdAt);
         }
         async getGlobalDirectory() {
@@ -24537,14 +24593,20 @@ ${toHex(hashedRequest)}`;
           if (shouldEncrypt) {
             payload = await this.db.encryptRaw(data);
           }
-          await this.db.blobs.upload(id, payload, contentType);
+          if (isPublic) {
+            if (!this.db.publicBlobs) throw new Error("Public blob storage not configured (Identity not initialized?)");
+            await this.db.publicBlobs.upload(id, payload, contentType);
+          } else {
+            await this.db.blobs.upload(id, payload, contentType);
+          }
           const meta = {
             _id: id,
             name,
             size: data.length,
             contentType,
             createdAt: Date.now(),
-            isEncrypted: shouldEncrypt
+            isEncrypted: shouldEncrypt,
+            isPublic
           };
           await this.db.collection("blobs").save(meta);
           return meta;
@@ -24552,7 +24614,12 @@ ${toHex(hashedRequest)}`;
         async download(id, options) {
           if (!this.db.blobs) throw new Error("Blob storage not configured");
           const meta = await this.db.collection("blobs").get(id);
-          const raw = await this.db.blobs.download(id);
+          let raw = null;
+          if (meta && meta.isPublic && this.db.publicBlobs) {
+            raw = await this.db.publicBlobs.download(id);
+          } else {
+            raw = await this.db.blobs.download(id);
+          }
           if (!raw) return null;
           let shouldDecrypt = this.db.hasEncryption();
           if (meta) shouldDecrypt = meta.isEncrypted;
@@ -24572,7 +24639,12 @@ ${toHex(hashedRequest)}`;
         }
         async delete(id) {
           if (!this.db.blobs) throw new Error("Blob storage not configured");
-          await this.db.blobs.delete(id);
+          const meta = await this.db.collection("blobs").get(id);
+          if (meta && meta.isPublic && this.db.publicBlobs) {
+            await this.db.publicBlobs.delete(id);
+          } else {
+            await this.db.blobs.delete(id);
+          }
           await this.db.collection("blobs").delete(id);
         }
       };
@@ -24583,6 +24655,7 @@ ${toHex(hashedRequest)}`;
           this.isSyncing = false;
           this.lastSyncTime = 0;
           this.sharedDocs = /* @__PURE__ */ new Map();
+          this._publicId = null;
           this.config = config;
           if (config.s3?.endpoint && config.s3.endpoint.startsWith("http://")) {
             const isLocal = config.s3.endpoint.includes("localhost") || config.s3.endpoint.includes("127.0.0.1");
@@ -24607,6 +24680,9 @@ ${toHex(hashedRequest)}`;
         get shares() {
           return this.sharedDocs;
         }
+        get publicId() {
+          return this._publicId;
+        }
         getAddress() {
           if (this.config.s3) {
             return {
@@ -24614,25 +24690,21 @@ ${toHex(hashedRequest)}`;
               region: this.config.s3.region,
               bucket: this.config.s3.bucketName,
               appId: this.config.paths.appId,
-              userId: this.config.paths.userId
+              userId: this._publicId || "unknown"
+              // Share Public ID
             };
           }
           return {
             region: "unknown",
             bucket: "unknown",
             appId: this.config.paths.appId,
-            userId: this.config.paths.userId
+            userId: this._publicId || "unknown"
           };
         }
         initRemote(config) {
           if (config.ociParUrl) {
             this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths, config.useManifest);
             this.blobs = new OCIBlobAdapter(config.ociParUrl, config.paths);
-            this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
-              appId: config.paths.appId,
-              userId: config.paths.userId,
-              storeId: "shared"
-            }, config.useManifest);
             this.globalRemote = new OCIPreAuthAdapter(config.ociParUrl, {
               appId: config.paths.appId,
               userId: "shared",
@@ -24641,11 +24713,6 @@ ${toHex(hashedRequest)}`;
           } else if (config.s3) {
             this.remote = new S3RemoteAdapter(config.s3, config.paths, config.useManifest);
             this.blobs = new S3BlobAdapter(config.s3, config.paths);
-            this.sharedRemote = new S3RemoteAdapter(config.s3, {
-              appId: config.paths.appId,
-              userId: config.paths.userId,
-              storeId: "shared"
-            }, config.useManifest);
             this.globalRemote = new S3RemoteAdapter(config.s3, {
               appId: config.paths.appId,
               userId: "shared",
@@ -24653,8 +24720,63 @@ ${toHex(hashedRequest)}`;
             });
           }
         }
+        initSharedRemote(publicId) {
+          const config = this.config;
+          if (config.ociParUrl) {
+            this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
+              appId: config.paths.appId,
+              userId: publicId,
+              storeId: "shared"
+            }, config.useManifest);
+            this.publicBlobs = new OCIBlobAdapter(config.ociParUrl, {
+              appId: config.paths.appId,
+              userId: publicId,
+              storeId: "public_blobs"
+            });
+          } else if (config.s3) {
+            this.sharedRemote = new S3RemoteAdapter(config.s3, {
+              appId: config.paths.appId,
+              userId: publicId,
+              storeId: "shared"
+            }, config.useManifest);
+            this.publicBlobs = new S3BlobAdapter(config.s3, {
+              appId: config.paths.appId,
+              userId: publicId,
+              storeId: "public_blobs"
+            });
+          }
+        }
         async init() {
           await this.localStore.init();
+          const identityDoc = await this.localStore.get("_sovereign_identity");
+          if (identityDoc) {
+            this._publicId = identityDoc.data.publicId;
+          } else {
+            if (this.remote) {
+              try {
+                const remoteIdentity = await this.remote.get("_sovereign_identity");
+                if (remoteIdentity) {
+                  const plain = await this.decryptData(remoteIdentity.data);
+                  this._publicId = plain.publicId;
+                  await this.localStore.put(remoteIdentity);
+                }
+              } catch (e2) {
+              }
+            }
+            if (!this._publicId) {
+              this._publicId = v4_default();
+              const newIdentity = {
+                _id: "_sovereign_identity",
+                _updatedAt: Date.now(),
+                data: { publicId: this._publicId, createdAt: Date.now() }
+              };
+              const encryptedData = await this.encryptData(newIdentity.data);
+              await this.putLocal({ ...newIdentity, data: encryptedData });
+            }
+          }
+          if (this._publicId) {
+            this.initSharedRemote(this._publicId);
+          }
           const meta = await this.localStore.get("_sovereign_meta");
           if (meta) {
             this.lastSyncTime = meta.data.lastSyncTime || 0;
@@ -24705,6 +24827,7 @@ ${toHex(hashedRequest)}`;
               return existing.sharedId;
             }
             existing.isPublic = isPublic;
+            existing.collection = doc.collection;
             if (isPublic && !existing.encryptionKey) {
               if (doc.collection !== "profiles") {
                 existing.encryptionKey = v4_default().replace(/-/g, "");
@@ -24719,7 +24842,8 @@ ${toHex(hashedRequest)}`;
           const sharedId = v4_default();
           const metadata = {
             sharedId,
-            isPublic
+            isPublic,
+            collection: doc.collection
           };
           if (isPublic && doc.collection !== "profiles") {
             metadata.encryptionKey = v4_default().replace(/-/g, "");
@@ -24747,7 +24871,7 @@ ${toHex(hashedRequest)}`;
           await this.persistShares();
           if (this.sharedRemote) {
             try {
-              await this.sharedRemote.delete(metadata.sharedId);
+              await this.sharedRemote.delete(metadata.sharedId, metadata.collection);
               if (metadata.isPublic) {
                 await this.removeFromPublicIndex(metadata.sharedId);
               }
@@ -24791,9 +24915,10 @@ ${toHex(hashedRequest)}`;
             _rev: v4_default(),
             _updatedAt: Date.now(),
             _deleted: doc._deleted,
+            collection: doc.collection,
             data: payload
           };
-          await this.sharedRemote.put(sharedDoc);
+          await this.sharedRemote.put(sharedDoc, doc.collection);
         }
         async putLocal(doc) {
           await this.localStore.put(doc, doc.collection);
@@ -24844,9 +24969,9 @@ ${toHex(hashedRequest)}`;
           }));
           return results.filter((r2) => r2 !== null);
         }
-        async getSharedDoc(sharedId, key) {
+        async getSharedDoc(sharedId, key, collection) {
           if (!this.sharedRemote) return null;
-          const doc = await this.sharedRemote.get(sharedId);
+          const doc = await this.sharedRemote.get(sharedId, collection);
           if (!doc) return null;
           if (key) {
             const tempCrypto = this.getCryptoAdapter(key);
@@ -24854,8 +24979,8 @@ ${toHex(hashedRequest)}`;
           }
           return doc.data;
         }
-        async saveSharedDocToLocal(sharedId, key) {
-          const plainData = await this.getSharedDoc(sharedId, key);
+        async saveSharedDocToLocal(sharedId, key, collection) {
+          const plainData = await this.getSharedDoc(sharedId, key, collection);
           if (!plainData) throw new Error("Shared document not found or decrypt failed");
           const newId = plainData._id || v4_default();
           const encryptedData = await this.encryptData(plainData);
@@ -24891,7 +25016,7 @@ ${toHex(hashedRequest)}`;
                   await this.addToPublicIndex(meta, doc.collection);
                 }
               } else if (doc && doc._deleted) {
-                await this.sharedRemote.delete(meta.sharedId);
+                await this.sharedRemote.delete(meta.sharedId, meta.collection);
                 if (meta.isPublic) {
                   await this.removeFromPublicIndex(meta.sharedId);
                 }
@@ -25094,7 +25219,7 @@ ${toHex(hashedRequest)}`;
                 if (file.collection === "public" || file.id.startsWith("public/")) {
                   const meta2 = indexDoc.data;
                   if (meta2.id) {
-                    const contentDoc2 = await followRemote.get(meta2.id);
+                    const contentDoc2 = await followRemote.get(meta2.id, meta2.collection);
                     if (contentDoc2) {
                       if (meta2.key) {
                         const tempCrypto = this.getCryptoAdapter(meta2.key);
@@ -25329,9 +25454,13 @@ ${toHex(hashedRequest)}`;
       document.getElementById("btn-connect")?.addEventListener("click", async () => {
         const mode = document.querySelector('input[name="auth-mode"]:checked').value;
         const appId = document.getElementById("app-id").value;
-        const userId = document.getElementById("user-id").value;
-        if (!appId || !userId) return showToast("Please fill in App ID and User ID", "error");
-        currentUser = userId;
+        let userId = document.getElementById("user-id").value;
+        if (!appId) return showToast("Please fill in App ID", "error");
+        if (!userId) {
+          userId = crypto.randomUUID();
+          document.getElementById("user-id").value = userId;
+          showToast("Generated new Private Access Key. Save this securely!", "success");
+        }
         let config = {
           paths: { appId, userId, storeId: "social" },
           encryptionKey: "demo-secret-key-must-be-32-bytes-long!",
@@ -25373,6 +25502,7 @@ ${toHex(hashedRequest)}`;
             }
           });
           await db.init();
+          currentUser = db.publicId || "unknown";
           views.auth.classList.add("hidden");
           appArea.classList.remove("hidden");
           loadProfile();
@@ -25385,30 +25515,10 @@ ${toHex(hashedRequest)}`;
           showToast("Failed to connect: " + e2, "error");
         }
       });
-      async function switchView(viewName) {
-        Object.values(views).forEach((el) => el.classList.add("hidden"));
-        Object.values(navLinks).forEach((el) => el.classList.remove("active"));
-        views[viewName].classList.remove("hidden");
-        navLinks[viewName].classList.add("active");
-        if (db) {
-          console.log("Syncing on tab change...");
-          await db.sync();
-          if (viewName === "feed") refreshFeed();
-        }
-      }
-      navLinks.feed.onclick = () => switchView("feed");
-      navLinks.profile.onclick = () => switchView("profile");
-      navLinks.network.onclick = () => {
-        switchView("network");
-        loadFollowing();
-      };
-      document.getElementById("btn-refresh")?.addEventListener("click", async () => {
-        if (!db) return;
-        await db.sync();
-        refreshFeed();
-      });
       async function loadProfile() {
         if (!db) return;
+        document.getElementById("profile-public-id").value = db.publicId || "Pending...";
+        document.getElementById("profile-private-id").value = db.config.paths.userId;
         const profile = await db.profile.get();
         if (profile) {
           document.getElementById("profile-name").value = profile.displayName;
@@ -25418,6 +25528,17 @@ ${toHex(hashedRequest)}`;
           }
         }
       }
+      document.getElementById("btn-show-key")?.addEventListener("click", () => {
+        const input = document.getElementById("profile-private-id");
+        const btn = document.getElementById("btn-show-key");
+        if (input.type === "password") {
+          input.type = "text";
+          btn.textContent = "\u{1F648}";
+        } else {
+          input.type = "password";
+          btn.textContent = "\u{1F441}\uFE0F";
+        }
+      });
       document.getElementById("btn-save-profile")?.addEventListener("click", async () => {
         if (!db) return;
         const name = document.getElementById("profile-name").value;
@@ -25440,10 +25561,7 @@ ${toHex(hashedRequest)}`;
         console.log("Refreshing feed...");
         const feed = await db.social.getFeed();
         console.log(`Feed loaded: ${feed.length} posts`);
-        const myComments = await db.collection("comments").getAll();
-        const followedDocs = await db.collection("followed_content").getAll();
-        const followedComments = followedDocs.filter((d2) => d2.text !== void 0 && d2.postId !== void 0);
-        const allComments = [...myComments, ...followedComments];
+        const allComments = await db.social.getAllComments();
         console.log(`Comments loaded: ${allComments.length} total`);
         const commentsByPost = /* @__PURE__ */ new Map();
         for (const c2 of allComments) {
@@ -25493,7 +25611,7 @@ ${toHex(hashedRequest)}`;
         `;
           container.appendChild(el);
           if (post.attachments && post.attachments.length > 0) {
-            renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`));
+            renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`), post.authorId);
           }
           loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`));
           let postComments = commentsByPost.get(post._id) || [];
@@ -25518,14 +25636,16 @@ ${toHex(hashedRequest)}`;
           const p2 = await db.profile.get();
           avatarId = p2?.avatarUrl;
         } else {
-          const id = `follow_${authorId}_me`;
-          const doc = await db.collection("followed_content").get(id);
+          const followedDocs = await db.collection("followed_content").getAll();
+          const doc = followedDocs.find(
+            (d2) => d2.address && d2.address.userId === authorId && (d2.collection === "profiles" || d2.displayName !== void 0)
+          );
           if (doc) {
             avatarId = doc.avatarUrl;
           }
         }
         if (avatarId) {
-          await renderImage(avatarId, imgEl);
+          await renderImage(avatarId, imgEl, authorId);
         } else {
           imgEl.style.backgroundColor = "#ccc";
         }
@@ -25547,14 +25667,28 @@ ${toHex(hashedRequest)}`;
     `;
         }).join("");
       }
-      async function renderImage(blobId, imgEl) {
+      async function renderImage(blobId, imgEl, authorId) {
         if (!db) return;
         try {
-          const meta = await db.collection("blobs").get(blobId);
-          const data = await db.storage.download(blobId, { decrypt: false });
+          let data = null;
+          let type = "image/jpeg";
+          try {
+            const meta = await db.collection("blobs").get(blobId);
+            if (meta) type = meta.contentType;
+            data = await db.storage.download(blobId, { decrypt: false });
+          } catch (e2) {
+          }
+          if (!data && authorId && authorId !== "me" && authorId !== currentUser) {
+            const followedDocs = await db.collection("followed_content").getAll();
+            const doc = followedDocs.find(
+              (d2) => d2.address && d2.address.userId === authorId && (d2.collection === "profiles" || d2.displayName !== void 0)
+            );
+            if (doc && doc.address) {
+              data = await db.social.getBlob(blobId, doc.address);
+            }
+          }
           if (data) {
-            const options = meta ? { type: meta.contentType } : void 0;
-            const blob = new Blob([data], options);
+            const blob = new Blob([data], { type });
             imgEl.src = URL.createObjectURL(blob);
           }
         } catch (e2) {
@@ -25665,17 +25799,26 @@ ${toHex(hashedRequest)}`;
         const directory = await db.social.getGlobalDirectory();
         const dirList = document.getElementById("directory-list");
         dirList.innerHTML = "";
-        directory.forEach((addr) => {
-          if (addr.userId === currentUser) return;
+        let newFollows = 0;
+        for (const addr of directory) {
+          if (addr.userId === currentUser) continue;
           const isFollowing = following.some((f2) => f2.userId === addr.userId && f2.appId === addr.appId);
-          const action = isFollowing ? '<span style="color:green; font-size:0.8em;">Following</span>' : `<button onclick='window.followUser(${JSON.stringify(addr)})' class="btn" style="padding:2px 5px; font-size:0.7em;">Follow</button>`;
+          if (!isFollowing) {
+            console.log(`Auto-following discovered user: ${addr.userId}`);
+            await db.social.follow(addr);
+            newFollows++;
+          }
           const li = document.createElement("li");
           li.innerHTML = `
             <strong>${addr.userId}</strong>
-            ${action}
+            <span style="color:green; font-size:0.8em;">Following (Auto)</span>
         `;
           dirList.appendChild(li);
-        });
+        }
+        if (newFollows > 0) {
+          showToast(`Auto-followed ${newFollows} new users found in directory`, "success");
+          db.sync().then(() => refreshFeed());
+        }
       }
       document.getElementById("btn-follow")?.addEventListener("click", async () => {
         if (!db) return;

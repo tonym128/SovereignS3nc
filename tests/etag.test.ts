@@ -18,6 +18,14 @@ describe('SovereignS3nc ETag Optimization', () => {
       paths: { appId: 'app', userId: 'user', storeId: 'store' },
       syncIntervalMs: 0
     });
+    
+    // Pre-populate identity to avoid remote fetch in init()
+    await (db as any).localStore.init();
+    await (db as any).localStore.put({ 
+        _id: '_sovereign_identity', 
+        data: { publicId: 'mock-public-id' }, 
+        _updatedAt: Date.now() 
+    });
   });
 
   test('should skip download if local ETag matches remote ETag', async () => {

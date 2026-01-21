@@ -11,6 +11,7 @@ describe('SovereignS3nc Social & Profiles', () => {
   let mockRemote: any;
   let mockSharedRemote: any;
   let mockBlobs: any;
+  let mockPublicBlobs: any;
 
   beforeEach(async () => {
     jest.clearAllMocks();
@@ -39,12 +40,15 @@ describe('SovereignS3nc Social & Profiles', () => {
     await db.init();
     
     // Get mock instances
+    // 1st: private remote, 2nd: global remote, 3rd: shared remote
     const remoteInstances = (S3RemoteAdapter as any).mock.instances;
     mockRemote = remoteInstances[0];
-    mockSharedRemote = remoteInstances[1];
+    mockSharedRemote = remoteInstances[2];
     
+    // 1st: private blobs, 2nd: public blobs
     const blobInstances = (S3BlobAdapter as any).mock.instances;
     mockBlobs = blobInstances[0];
+    mockPublicBlobs = blobInstances[1];
   });
 
   test('should update and retrieve profile', async () => {
@@ -53,7 +57,8 @@ describe('SovereignS3nc Social & Profiles', () => {
     const profile = await db.profile.get();
     expect(profile?.displayName).toBe('Tony Stark');
     expect(profile?.bio).toBe('I am Iron Man');
-    expect(profile?.address.userId).toBe('me');
+    // UserId is now a generated UUID, not the config userId ('me')
+    expect(profile?.address.userId).not.toBe('me'); 
 
     // Verify it was shared publicly (unencrypted)
     expect(mockSharedRemote.put).toHaveBeenCalled();
@@ -225,7 +230,7 @@ describe('SovereignS3nc Social & Profiles', () => {
     // 1. Upload Blob
     const blobMeta = await db.storage.upload('avatar.png', avatarData, 'image/png', true);
     expect(blobMeta._id).toBeDefined();
-    expect(mockBlobs.upload).toHaveBeenCalled();
+    expect(mockPublicBlobs.upload).toHaveBeenCalled();
     
     // 2. Update Profile
     await db.profile.update({
@@ -289,11 +294,12 @@ describe('SovereignS3nc Social & Profiles', () => {
           size: 3,
           contentType: 'image/png',
           createdAt: Date.now(),
-          isEncrypted: false
+          isEncrypted: false,
+          isPublic: true
       });
 
       // 2. Mock blob download
-      mockBlobs.download.mockResolvedValue(new Uint8Array([1, 2, 3]));
+      mockPublicBlobs.download.mockResolvedValue(new Uint8Array([1, 2, 3]));
       
       // 3. Retrieve profile
       const profile = await db.profile.get();

@@ -74,8 +74,12 @@ describe('Demo App Integration', () => {
       init: jest.fn().mockResolvedValue(undefined),
       connect: jest.fn().mockResolvedValue(undefined),
       sync: jest.fn().mockResolvedValue({ pulled: 0, pushed: 0, errors: 0 }),
+      share: jest.fn().mockResolvedValue('share-id'),
+      unshare: jest.fn().mockResolvedValue(undefined),
       on: jest.fn(),
       getAddress: jest.fn().mockReturnValue({ bucket: 'b', appId: 'a', userId: 'u' }),
+      config: { paths: { userId: 'mock-private-id' } },
+      publicId: 'mock-public-id',
       profile: {
         get: jest.fn().mockResolvedValue({ displayName: 'Test User' }),
         update: jest.fn().mockResolvedValue(undefined)
@@ -83,6 +87,7 @@ describe('Demo App Integration', () => {
       social: {
         getFeed: jest.fn().mockResolvedValue([]),
         getComments: jest.fn().mockResolvedValue([]),
+        getAllComments: jest.fn().mockResolvedValue([]),
         getFollowing: jest.fn().mockResolvedValue([]),
         getGlobalDirectory: jest.fn().mockResolvedValue([]),
         joinGlobalDirectory: jest.fn().mockResolvedValue(undefined),

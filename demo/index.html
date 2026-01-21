@@ -146,7 +146,7 @@
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
             
             <input type="text" id="app-id" class="input" placeholder="App ID (e.g. social-app)" value="social-app">
-            <input type="text" id="user-id" class="input" placeholder="User ID (e.g. tony)">
+            <input type="text" id="user-id" class="input" placeholder="Private Access Key (Leave empty to generate new identity)">
             <button id="btn-connect" class="btn">Connect</button>
         </div>
 
@@ -174,7 +174,18 @@
             <!-- Profile View -->
             <div id="view-profile" class="hidden">
                 <div class="card">
-                    <h3>My Profile</h3>
+                    <h3>My Identity</h3>
+                    <label>Public ID (Share this)</label>
+                    <input type="text" id="profile-public-id" class="input" readonly style="background: #f1f5f9;">
+                    
+                    <label>Private Access Key (Keep Secret)</label>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="password" id="profile-private-id" class="input" readonly style="background: #f1f5f9; margin:0;">
+                        <button id="btn-show-key" class="btn" style="background: #64748b; padding: 0 10px;">👁️</button>
+                    </div>
+                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+
+                    <h3>Edit Profile</h3>
                     <div style="text-align: center; margin-bottom: 15px;">
                         <img id="profile-avatar-preview" class="avatar" style="width: 100px; height: 100px;">
                     </div>

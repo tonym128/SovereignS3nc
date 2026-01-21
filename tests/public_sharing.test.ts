@@ -25,7 +25,7 @@ describe('SovereignS3nc Public Sharing', () => {
 
     await db.init();
     const mockInstances = (S3RemoteAdapter as any).mock.instances;
-    mockSharedRemote = mockInstances[1]; // The shared remote
+    mockSharedRemote = mockInstances[2]; // The shared remote
   });
 
   test('should share a document publicly and update public index', async () => {
@@ -64,7 +64,7 @@ describe('SovereignS3nc Public Sharing', () => {
     await db.unshare(id);
 
     // Verify delete of shared doc
-    expect(mockSharedRemote.delete).toHaveBeenCalledWith(sharedId);
+    expect(mockSharedRemote.delete).toHaveBeenCalledWith(sharedId, undefined);
     // Verify delete of public index file
     expect(mockSharedRemote.delete).toHaveBeenCalledWith(`public/${sharedId}`);
   });

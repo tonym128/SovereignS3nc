@@ -31,12 +31,13 @@ describe('SovereignS3nc Sharing', () => {
 
     await db.init();
 
-    // S3RemoteAdapter is instantiated twice in constructor.
-    // 1st: this.remote
-    // 2nd: this.sharedRemote
+    // S3RemoteAdapter is instantiated multiple times.
+    // 1st: this.remote (constructor)
+    // 2nd: this.globalRemote (constructor)
+    // 3rd: this.sharedRemote (in init)
     const mockInstances = (S3RemoteAdapter as any).mock.instances;
     mockRemote = mockInstances[0];
-    mockSharedRemote = mockInstances[1];
+    mockSharedRemote = mockInstances[2];
   });
 
   test('should share a document', async () => {
@@ -99,7 +100,7 @@ describe('SovereignS3nc Sharing', () => {
     await db.unshare(id);
 
     // Shared remote delete should be called
-    expect(mockSharedRemote.delete).toHaveBeenCalledWith(sharedId);
+    expect(mockSharedRemote.delete).toHaveBeenCalledWith(sharedId, undefined);
 
     // Update original -> should NOT update shared
     mockSharedRemote.put.mockClear();

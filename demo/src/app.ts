@@ -47,32 +47,34 @@ const navLinks = {
 const loading = document.getElementById('loading')!;
 
 // --- Auto-fill Config ---
-window.addEventListener('load', async () => {
-    try {
-        const res = await fetch('config.json');
-        if (res.ok) {
-            const config = await res.json();
-            if (config.s3) {
-                (document.getElementById('s3-endpoint') as HTMLInputElement).value = config.s3.endpoint;
-                (document.getElementById('s3-bucket') as HTMLInputElement).value = config.s3.bucketName;
-                (document.getElementById('s3-region') as HTMLInputElement).value = config.s3.region;
-                (document.getElementById('s3-access-key') as HTMLInputElement).value = config.s3.accessKeyId;
-                (document.getElementById('s3-secret-key') as HTMLInputElement).value = config.s3.secretAccessKey;
-                
-                // Select S3 mode
-                (document.querySelector('input[name="auth-mode"][value="s3"]') as HTMLInputElement).checked = true;
-                document.getElementById('auth-oci')!.classList.add('hidden');
-                document.getElementById('auth-s3')!.classList.remove('hidden');
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+    window.addEventListener('load', async () => {
+        try {
+            const res = await fetch('config.json');
+            if (res.ok) {
+                const config = await res.json();
+                if (config.s3) {
+                    (document.getElementById('s3-endpoint') as HTMLInputElement).value = config.s3.endpoint;
+                    (document.getElementById('s3-bucket') as HTMLInputElement).value = config.s3.bucketName;
+                    (document.getElementById('s3-region') as HTMLInputElement).value = config.s3.region;
+                    (document.getElementById('s3-access-key') as HTMLInputElement).value = config.s3.accessKeyId;
+                    (document.getElementById('s3-secret-key') as HTMLInputElement).value = config.s3.secretAccessKey;
+                    
+                    // Select S3 mode
+                    (document.querySelector('input[name="auth-mode"][value="s3"]') as HTMLInputElement).checked = true;
+                    document.getElementById('auth-oci')!.classList.add('hidden');
+                    document.getElementById('auth-s3')!.classList.remove('hidden');
+                }
+                if (config.appId) {
+                    (document.getElementById('app-id') as HTMLInputElement).value = config.appId;
+                }
+                showToast('Auto-filled connection details from server', 'info');
             }
-            if (config.appId) {
-                (document.getElementById('app-id') as HTMLInputElement).value = config.appId;
-            }
-            showToast('Auto-filled connection details from server', 'info');
+        } catch (e) {
+            console.log('No local config.json found or failed to parse');
         }
-    } catch (e) {
-        console.log('No local config.json found or failed to parse');
-    }
-});
+    });
+}
 
 // --- Initialization ---
 
@@ -99,10 +101,16 @@ authRadios.forEach(radio => {
 document.getElementById('btn-connect')?.addEventListener('click', async () => {
     const mode = (document.querySelector('input[name="auth-mode"]:checked') as HTMLInputElement).value;
     const appId = (document.getElementById('app-id') as HTMLInputElement).value;
-    const userId = (document.getElementById('user-id') as HTMLInputElement).value;
+    let userId = (document.getElementById('user-id') as HTMLInputElement).value;
 
-    if (!appId || !userId) return showToast('Please fill in App ID and User ID', 'error');
-    currentUser = userId;
+    if (!appId) return showToast('Please fill in App ID', 'error');
+    
+    // New User Flow
+    if (!userId) {
+        userId = crypto.randomUUID();
+        (document.getElementById('user-id') as HTMLInputElement).value = userId;
+        showToast('Generated new Private Access Key. Save this securely!', 'success');
+    }
 
     let config: any = {
         paths: { appId, userId, storeId: 'social' },
@@ -151,19 +159,10 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         });
 
         await db.init();
-        // Connect passes minimal config if needed, but we initialized with full config.
-        // The connect() method signature is: connect(config: { s3?: ..., ociParUrl?: ... })
-        // But since we passed config to constructor, we might not need to pass it again IF we used the constructor that takes everything.
-        // Wait, the constructor takes (config, localStore, crypto).
-        // Let's check if we need to call connect().
-        // If we provided s3/ociParUrl in constructor, init() prepares local, but does it prepare remote?
-        // Checking SovereignS3nc.ts: constructor calls initRemote(config).
-        // So we don't strictly need to call connect() unless we want to "re-connect" or if the constructor didn't have it.
-        // BUT, the existing code called db.connect().
-        // Let's call it just to be safe or skip it if initialized. 
-        // Actually, db.init() does NOT trigger a sync automatically unless interval is set.
-        // Let's just do an initial sync manually.
         
+        // Set current user to Public ID for UI logic
+        currentUser = db.publicId || 'unknown';
+
         // Switch View
         views.auth.classList.add('hidden');
         appArea.classList.remove('hidden');
@@ -180,34 +179,14 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     }
 });
 
-// --- Navigation ---
-async function switchView(viewName: 'feed' | 'profile' | 'network') {
-    Object.values(views).forEach(el => el.classList.add('hidden'));
-    Object.values(navLinks).forEach(el => el.classList.remove('active'));
-
-    views[viewName].classList.remove('hidden');
-    navLinks[viewName].classList.add('active');
-    
-    if (db) {
-        console.log('Syncing on tab change...');
-        await db.sync();
-        if (viewName === 'feed') refreshFeed();
-    }
-}
-
-navLinks.feed.onclick = () => switchView('feed');
-navLinks.profile.onclick = () => switchView('profile');
-navLinks.network.onclick = () => { switchView('network'); loadFollowing(); };
-
-document.getElementById('btn-refresh')?.addEventListener('click', async () => {
-    if (!db) return;
-    await db.sync();
-    refreshFeed();
-});
-
 // --- Profile Logic ---
 async function loadProfile() {
     if (!db) return;
+    
+    // Identity Info
+    (document.getElementById('profile-public-id') as HTMLInputElement).value = db.publicId || 'Pending...';
+    (document.getElementById('profile-private-id') as HTMLInputElement).value = db.config.paths.userId;
+
     const profile = await db.profile.get();
     if (profile) {
         (document.getElementById('profile-name') as HTMLInputElement).value = profile.displayName;
@@ -218,6 +197,18 @@ async function loadProfile() {
         }
     }
 }
+
+document.getElementById('btn-show-key')?.addEventListener('click', () => {
+    const input = document.getElementById('profile-private-id') as HTMLInputElement;
+    const btn = document.getElementById('btn-show-key') as HTMLButtonElement;
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+    }
+});
 
 document.getElementById('btn-save-profile')?.addEventListener('click', async () => {
     if (!db) return;
@@ -345,7 +336,7 @@ async function loadAvatarForPost(authorId: string, imgEl: HTMLImageElement) {
     } else {
         // Try to find followed profile
         const followedDocs = await db.collection('followed_content').getAll<Profile>();
-        const doc = followedDocs.find(d => 
+        const doc = followedDocs.find((d: any) => 
             d.address && d.address.userId === authorId && 
             (d.collection === 'profiles' || d.displayName !== undefined)
         );
@@ -397,7 +388,7 @@ async function renderImage(blobId: string, imgEl: HTMLImageElement, authorId?: s
         // Fallback: Try to download from author's storage if known
         if (!data && authorId && authorId !== 'me' && authorId !== currentUser) {
              const followedDocs = await db.collection('followed_content').getAll<Profile>();
-             const doc = followedDocs.find(d => 
+             const doc = followedDocs.find((d: any) => 
                 d.address && d.address.userId === authorId && 
                 (d.collection === 'profiles' || d.displayName !== undefined)
              );
@@ -409,7 +400,7 @@ async function renderImage(blobId: string, imgEl: HTMLImageElement, authorId?: s
         }
         
         if (data) {
-            const blob = new Blob([data], { type });
+            const blob = new Blob([data as any], { type });
             imgEl.src = URL.createObjectURL(blob);
         }
     } catch (e) {

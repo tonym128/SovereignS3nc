@@ -64,4 +64,5 @@ export interface BlobMetadata {
   hash?: string;
   createdAt: number;
   isEncrypted: boolean;
+  isPublic?: boolean;
 }

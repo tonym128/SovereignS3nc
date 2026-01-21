@@ -6,6 +6,7 @@ jest.mock('../src/adapters/S3BlobAdapter');
 describe('SovereignS3nc Public vs Private Blobs', () => {
   let db: SovereignS3nc;
   let mockBlobAdapter: any;
+  let mockPublicBlobs: any;
 
   beforeEach(async () => {
     (S3BlobAdapter as any).mockClear();
@@ -29,6 +30,7 @@ describe('SovereignS3nc Public vs Private Blobs', () => {
 
     await db.init();
     mockBlobAdapter = (S3BlobAdapter as any).mock.instances[0];
+    mockPublicBlobs = (S3BlobAdapter as any).mock.instances[1];
   });
 
   test('should encrypt private blobs by default', async () => {
@@ -47,7 +49,7 @@ describe('SovereignS3nc Public vs Private Blobs', () => {
     const data = new Uint8Array([1, 2, 3]);
     await db.storage.upload('public-avatar.png', data, 'image/png', true); // isPublic = true
 
-    const uploadCall = mockBlobAdapter.upload.mock.calls[0];
+    const uploadCall = mockPublicBlobs.upload.mock.calls[0];
     const uploadedData = uploadCall[1];
 
     // Public data should be identical to input
@@ -60,7 +62,7 @@ describe('SovereignS3nc Public vs Private Blobs', () => {
     const meta = await db.storage.upload('public.bin', data, 'application/octet-stream', true);
     
     // 2. Mock download returning RAW data (since it wasn't encrypted)
-    mockBlobAdapter.download.mockResolvedValueOnce(data);
+    mockPublicBlobs.download.mockResolvedValueOnce(data);
 
     // 3. Download
     const result = await db.storage.download(meta._id);

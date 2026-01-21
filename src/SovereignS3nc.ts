@@ -51,7 +51,12 @@ export class StorageManager {
         payload = await this.db.encryptRaw(data);
     }
 
-    await this.db.blobs.upload(id, payload, contentType);
+    if (isPublic) {
+        if (!this.db.publicBlobs) throw new Error('Public blob storage not configured (Identity not initialized?)');
+        await this.db.publicBlobs.upload(id, payload, contentType);
+    } else {
+        await this.db.blobs.upload(id, payload, contentType);
+    }
 
     const meta: BlobMetadata = {
         _id: id,
@@ -59,7 +64,8 @@ export class StorageManager {
         size: data.length,
         contentType,
         createdAt: Date.now(),
-        isEncrypted: shouldEncrypt
+        isEncrypted: shouldEncrypt,
+        isPublic
     };
 
     await this.db.collection('blobs').save(meta);
@@ -70,7 +76,14 @@ export class StorageManager {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
     
     const meta = await this.db.collection('blobs').get<BlobMetadata>(id);
-    const raw = await this.db.blobs.download(id);
+    
+    let raw: Uint8Array | null = null;
+    if (meta && meta.isPublic && this.db.publicBlobs) {
+        raw = await this.db.publicBlobs.download(id);
+    } else {
+        raw = await this.db.blobs.download(id);
+    }
+    
     if (!raw) return null;
 
     // Determine encryption status
@@ -98,7 +111,15 @@ export class StorageManager {
 
   async delete(id: string): Promise<void> {
     if (!this.db.blobs) throw new Error('Blob storage not configured');
-    await this.db.blobs.delete(id);
+    
+    const meta = await this.db.collection('blobs').get<BlobMetadata>(id);
+    
+    if (meta && meta.isPublic && this.db.publicBlobs) {
+        await this.db.publicBlobs.delete(id);
+    } else {
+        await this.db.blobs.delete(id);
+    }
+    
     await this.db.collection('blobs').delete(id);
   }
 }
@@ -108,6 +129,7 @@ export class SovereignS3nc extends EventEmitter {
   public remote?: IRemoteAdapter; 
   public blobs?: IBlobAdapter;
   public sharedRemote?: IRemoteAdapter; 
+  public publicBlobs?: IBlobAdapter;
   public globalRemote?: IRemoteAdapter;
   public readonly config: SovereignConfig;
   private crypto?: ICryptoAdapter;
@@ -115,6 +137,7 @@ export class SovereignS3nc extends EventEmitter {
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
   private sharedDocs: Map<string, ShareMetadata> = new Map();
+  private _publicId: string | null = null;
 
   public readonly profile: ProfileManager;
   public readonly social: SocialManager;
@@ -123,6 +146,10 @@ export class SovereignS3nc extends EventEmitter {
 
   public get shares(): Map<string, ShareMetadata> {
     return this.sharedDocs;
+  }
+
+  public get publicId(): string | null {
+    return this._publicId;
   }
 
   constructor(
@@ -166,14 +193,14 @@ export class SovereignS3nc extends EventEmitter {
         region: this.config.s3.region,
         bucket: this.config.s3.bucketName,
         appId: this.config.paths.appId,
-        userId: this.config.paths.userId
+        userId: this._publicId || 'unknown' // Share Public ID
       };
     }
     return {
         region: 'unknown',
         bucket: 'unknown',
         appId: this.config.paths.appId,
-        userId: this.config.paths.userId
+        userId: this._publicId || 'unknown'
     };
   }
 
@@ -181,11 +208,7 @@ export class SovereignS3nc extends EventEmitter {
     if (config.ociParUrl) {
       this.remote = new OCIPreAuthAdapter(config.ociParUrl, config.paths, config.useManifest);
       this.blobs = new OCIBlobAdapter(config.ociParUrl, config.paths);
-      this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
-        appId: config.paths.appId,
-        userId: config.paths.userId,
-        storeId: 'shared'
-      }, config.useManifest);
+      // Global remote remains on the 'shared' user for discovery
       this.globalRemote = new OCIPreAuthAdapter(config.ociParUrl, {
         appId: config.paths.appId,
         userId: 'shared',
@@ -194,11 +217,6 @@ export class SovereignS3nc extends EventEmitter {
     } else if (config.s3) {
       this.remote = new S3RemoteAdapter(config.s3, config.paths, config.useManifest);
       this.blobs = new S3BlobAdapter(config.s3, config.paths);
-      this.sharedRemote = new S3RemoteAdapter(config.s3, {
-        appId: config.paths.appId,
-        userId: config.paths.userId,
-        storeId: 'shared'
-      }, config.useManifest);
       this.globalRemote = new S3RemoteAdapter(config.s3, {
         appId: config.paths.appId,
         userId: 'shared',
@@ -207,9 +225,75 @@ export class SovereignS3nc extends EventEmitter {
     }
   }
 
+  private initSharedRemote(publicId: string) {
+    const config = this.config;
+    if (config.ociParUrl) {
+      this.sharedRemote = new OCIPreAuthAdapter(config.ociParUrl, {
+        appId: config.paths.appId,
+        userId: publicId,
+        storeId: 'shared'
+      }, config.useManifest);
+      this.publicBlobs = new OCIBlobAdapter(config.ociParUrl, {
+          appId: config.paths.appId,
+          userId: publicId,
+          storeId: 'public_blobs'
+      });
+    } else if (config.s3) {
+      this.sharedRemote = new S3RemoteAdapter(config.s3, {
+        appId: config.paths.appId,
+        userId: publicId,
+        storeId: 'shared'
+      }, config.useManifest);
+      this.publicBlobs = new S3BlobAdapter(config.s3, {
+          appId: config.paths.appId,
+          userId: publicId,
+          storeId: 'public_blobs'
+      });
+    }
+  }
+
   async init(): Promise<void> {
     await this.localStore.init();
     
+    // --- Identity Management ---
+    const identityDoc = await this.localStore.get('_sovereign_identity');
+    if (identityDoc) {
+        this._publicId = identityDoc.data.publicId;
+    } else {
+        // Check remote private store
+        if (this.remote) {
+            try {
+                const remoteIdentity = await this.remote.get('_sovereign_identity');
+                if (remoteIdentity) {
+                    const plain = await this.decryptData(remoteIdentity.data);
+                    this._publicId = plain.publicId;
+                    await this.localStore.put(remoteIdentity);
+                }
+            } catch (e) {
+                // Not found or error
+            }
+        }
+        
+        if (!this._publicId) {
+            // Generate new
+            this._publicId = uuidv4();
+            const newIdentity = {
+                _id: '_sovereign_identity',
+                _updatedAt: Date.now(),
+                data: { publicId: this._publicId, createdAt: Date.now() }
+            };
+            // Encrypt and save
+            const encryptedData = await this.encryptData(newIdentity.data);
+            await this.putLocal({ ...newIdentity, data: encryptedData });
+            // Will be pushed to remote on next sync
+        }
+    }
+
+    if (this._publicId) {
+        this.initSharedRemote(this._publicId);
+    }
+    // ---------------------------
+
     const meta = await this.localStore.get('_sovereign_meta');
     if (meta) {
       this.lastSyncTime = meta.data.lastSyncTime || 0;

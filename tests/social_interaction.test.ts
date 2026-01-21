@@ -97,6 +97,9 @@ describe('Social Network Integration Test', () => {
 
         await userA.init();
         await userB.init();
+        
+        const publicIdA = userA.publicId!;
+        const publicIdB = userB.publicId!;
 
         // 2. User A Profile & Post
         console.log('User A: Updating profile and posting...');
@@ -120,13 +123,13 @@ describe('Social Network Integration Test', () => {
         console.log('User B: Updating profile and following Alice...');
         await userB.profile.update({ displayName: 'Bob' });
         
-        // Address of User A
+        // Address of User A (using Public ID)
         const addressA = {
             endpoint: `http://localhost:${PORT_S3}`,
             region: 'us-east-1',
             bucket: BUCKET_NAME,
             appId: 'social-app',
-            userId: 'userA'
+            userId: publicIdA
         };
         await userB.social.follow(addressA);
 
@@ -148,7 +151,7 @@ describe('Social Network Integration Test', () => {
             region: 'us-east-1',
             bucket: BUCKET_NAME,
             appId: 'social-app',
-            userId: 'userB'
+            userId: publicIdB
         };
         await userA.social.follow(addressB);
 

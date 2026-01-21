@@ -77,13 +77,13 @@ export class SocialManager {
           }, {
               appId: address.appId,
               userId: address.userId,
-              storeId: 'social'
+              storeId: 'public_blobs'
           });
       } else if (this.db.config.ociParUrl) {
           adapter = new OCIBlobAdapter(this.db.config.ociParUrl, {
               appId: address.appId,
               userId: address.userId,
-              storeId: 'social'
+              storeId: 'public_blobs'
           });
       }
       
