@@ -179,6 +179,27 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     }
 });
 
+// --- Navigation ---
+async function switchView(viewName: 'feed' | 'profile' | 'network') {
+    Object.values(views).forEach(el => el.classList.add('hidden'));
+    Object.values(navLinks).forEach(el => el.classList.remove('active'));
+
+    views[viewName].classList.remove('hidden');
+    navLinks[viewName].classList.add('active');
+    
+    if (db) {
+        console.log('Syncing on tab change...');
+        await db.sync();
+        if (viewName === 'feed') refreshFeed();
+    }
+}
+
+document.getElementById('btn-refresh')?.addEventListener('click', async () => {
+    if (!db) return;
+    await db.sync();
+    refreshFeed();
+});
+
 // --- Profile Logic ---
 async function loadProfile() {
     if (!db) return;
@@ -621,4 +642,13 @@ document.getElementById('btn-follow')?.addEventListener('click', async () => {
     await db.social.unfollow(id);
     loadFollowing();
 };
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', () => {
+        console.log('Binding navigation events on load...');
+        navLinks.feed.onclick = () => switchView('feed');
+        navLinks.profile.onclick = () => switchView('profile');
+        navLinks.network.onclick = () => { switchView('network'); loadFollowing(); };
+    });
+}
 

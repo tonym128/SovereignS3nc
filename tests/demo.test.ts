@@ -109,6 +109,11 @@ describe('Demo App Integration', () => {
 
     (SovereignS3nc as unknown as jest.Mock).mockImplementation(() => mockDb);
 
+    // Mock window.addEventListener
+    global.window.addEventListener = jest.fn((event, handler) => {
+        listeners.set(`window:${event}`, handler as Function);
+    });
+
     // Capture event listeners when they are added
     mockDocument.getElementById.mockImplementation((id: string) => {
         if (!mockElements.has(id)) {
@@ -239,8 +244,17 @@ describe('Demo App Integration', () => {
       }));
   });
 
-  test.skip('should switch tabs', async () => {
+  test('should switch tabs', async () => {
       loadApp();
+      
+      // Trigger window load to bind nav links
+      // We might have multiple load listeners (config + nav)
+      // Iterate listeners map
+      for (const [key, handler] of listeners.entries()) {
+          if (key === 'window:load') {
+              await handler();
+          }
+      }
       
       const feedLink = mockDocument.getElementById('nav-feed');
       const profileLink = mockDocument.getElementById('nav-profile');
