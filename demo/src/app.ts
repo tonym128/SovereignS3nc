@@ -312,7 +312,7 @@ async function refreshFeed() {
 
         // Render Post Image
         if (post.attachments && post.attachments.length > 0) {
-            renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`) as HTMLImageElement);
+            renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`) as HTMLImageElement, post.authorId);
         }
 
         // Render Avatar
@@ -358,7 +358,7 @@ async function loadAvatarForPost(authorId: string, imgEl: HTMLImageElement) {
     }
 
     if (avatarId) {
-        await renderImage(avatarId, imgEl);
+        await renderImage(avatarId, imgEl, authorId);
     } else {
         // Fallback or keep generic
         imgEl.style.backgroundColor = '#ccc';
@@ -384,18 +384,35 @@ function renderComments(postId: string, comments: any[]) {
     `}).join('');
 }
 
-async function renderImage(blobId: string, imgEl: HTMLImageElement) {
+async function renderImage(blobId: string, imgEl: HTMLImageElement, authorId?: string) {
     if (!db) return;
     try {
-        // Fetch metadata to get Content-Type
-        const meta = await db.collection('blobs').get<any>(blobId);
-        // In this demo, all images are uploaded as public. 
-        // We explicitly skip decryption to avoid issues if metadata is missing/delayed.
-        const data = await db.storage.download(blobId, { decrypt: false });
+        let data: Uint8Array | null = null;
+        let type = 'image/jpeg';
+
+        // Try local first
+        try {
+            const meta = await db.collection('blobs').get<any>(blobId);
+            if (meta) type = meta.contentType;
+            data = await db.storage.download(blobId, { decrypt: false });
+        } catch (e) { }
+
+        // Fallback: Try to download from author's storage if known
+        if (!data && authorId && authorId !== 'me' && authorId !== currentUser) {
+             const followedDocs = await db.collection('followed_content').getAll<Profile>();
+             const doc = followedDocs.find(d => 
+                d.address && d.address.userId === authorId && 
+                (d.collection === 'profiles' || d.displayName !== undefined)
+             );
+             
+             if (doc && doc.address) {
+                 data = await db.social.getBlob(blobId, doc.address);
+                 // We don't know content type without metadata, but browsers are good at guessing or we default to jpeg
+             }
+        }
         
         if (data) {
-            const options = meta ? { type: meta.contentType } : undefined;
-            const blob = new Blob([data as any], options);
+            const blob = new Blob([data], { type });
             imgEl.src = URL.createObjectURL(blob);
         }
     } catch (e) {
@@ -537,27 +554,38 @@ async function loadFollowing() {
         followList.appendChild(li);
     });
 
-    // 3. Global Directory
+    // 3. Global Directory & Auto-Follow
     const directory = await db.social.getGlobalDirectory();
     const dirList = document.getElementById('directory-list')!;
     dirList.innerHTML = '';
-
-    directory.forEach(addr => {
-        // Don't show myself
-        if (addr.userId === currentUser) return;
+    
+    let newFollows = 0;
+    for (const addr of directory) {
+        // Don't show/follow myself
+        if (addr.userId === currentUser) continue;
         
         const isFollowing = following.some(f => f.userId === addr.userId && f.appId === addr.appId);
-        const action = isFollowing 
-            ? '<span style="color:green; font-size:0.8em;">Following</span>'
-            : `<button onclick='window.followUser(${JSON.stringify(addr)})' class="btn" style="padding:2px 5px; font-size:0.7em;">Follow</button>`;
+        
+        if (!isFollowing) {
+            // Auto-Follow Logic requested by user ("view all other users posts")
+            console.log(`Auto-following discovered user: ${addr.userId}`);
+            await db.social.follow(addr);
+            newFollows++;
+        }
 
         const li = document.createElement('li');
         li.innerHTML = `
             <strong>${addr.userId}</strong>
-            ${action}
+            <span style="color:green; font-size:0.8em;">Following (Auto)</span>
         `;
         dirList.appendChild(li);
-    });
+    }
+    
+    if (newFollows > 0) {
+        showToast(`Auto-followed ${newFollows} new users found in directory`, 'success');
+        // Trigger sync to pull their content
+        db.sync().then(() => refreshFeed()); 
+    }
 }
 
 document.getElementById('btn-follow')?.addEventListener('click', async () => {

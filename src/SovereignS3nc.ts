@@ -109,7 +109,7 @@ export class SovereignS3nc extends EventEmitter {
   public blobs?: IBlobAdapter;
   public sharedRemote?: IRemoteAdapter; 
   public globalRemote?: IRemoteAdapter;
-  private config: SovereignConfig;
+  public readonly config: SovereignConfig;
   private crypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
@@ -764,7 +764,7 @@ export class SovereignS3nc extends EventEmitter {
                      // Case A: Dereference
                      const meta = indexDoc.data; 
                      if (meta.id) {
-                         const contentDoc = await followRemote.get(meta.id);
+                         const contentDoc = await followRemote.get(meta.id, meta.collection);
                          if (contentDoc) {
                              if (meta.key) {
                                  const tempCrypto = this.getCryptoAdapter(meta.key);

@@ -2,6 +2,8 @@ import { merge } from 'ts-deepmerge';
 import { v4 as uuidv4 } from 'uuid';
 import { SovereignS3nc } from '../SovereignS3nc';
 import { SovereignAddress, SyncDocument } from '../types';
+import { S3BlobAdapter } from '../adapters/S3BlobAdapter';
+import { OCIBlobAdapter } from '../adapters/OCIBlobAdapter';
 
 export interface Profile {
   displayName: string;
@@ -64,6 +66,33 @@ export class SocialManager {
     return this.db.getAll<SovereignAddress>('_social_following');
   }
 
+  async getBlob(blobId: string, address: SovereignAddress): Promise<Uint8Array | null> {
+      let adapter;
+      if (this.db.config.s3) {
+          adapter = new S3BlobAdapter({
+              ...this.db.config.s3,
+              bucketName: address.bucket || this.db.config.s3.bucketName,
+              endpoint: address.endpoint || this.db.config.s3.endpoint,
+              region: address.region || this.db.config.s3.region
+          }, {
+              appId: address.appId,
+              userId: address.userId,
+              storeId: 'social'
+          });
+      } else if (this.db.config.ociParUrl) {
+          adapter = new OCIBlobAdapter(this.db.config.ociParUrl, {
+              appId: address.appId,
+              userId: address.userId,
+              storeId: 'social'
+          });
+      }
+      
+      if (adapter) {
+          return adapter.download(blobId);
+      }
+      return null;
+  }
+
   private parseAddress(addrStr: string): SovereignAddress {
     if (addrStr.startsWith('s3://')) {
         const parts = addrStr.substring(5).split('/');
@@ -77,17 +106,46 @@ export class SocialManager {
     throw new Error('Invalid address format');
   }
 
+  private normalizeFollowedContent<T extends { _id: string, authorId: string }>(doc: T): T {
+    // Check if this is a followed document (id format: follow_userId_originalId)
+    if (doc._id.startsWith('follow_')) {
+      const parts = doc._id.split('_');
+      if (parts.length >= 3) {
+        const userId = parts[1];
+        const originalId = parts.slice(2).join('_');
+        
+        // Return a copy with corrected author and ID
+        return {
+          ...doc,
+          _id: originalId,
+          authorId: userId
+        };
+      }
+    }
+    return doc;
+  }
+
   async getFeed(): Promise<Post[]> {
     const myPosts = await this.db.collection('posts').getAll<Post>();
     const followedDocs = await this.db.collection('followed_content').getAll<any>();
     
     // Filter followed docs to only be Posts (have text, no postId)
-    const followedPosts = followedDocs.filter(d => d.text !== undefined && d.postId === undefined);
+    const followedPostsRaw = followedDocs.filter(d => d.text !== undefined && d.postId === undefined);
+    const followedPosts = followedPostsRaw.map(p => this.normalizeFollowedContent<Post>(p));
     
     const allPosts = [...myPosts, ...followedPosts];
     
-    // Deduplicate by ID
-    const uniquePosts = Array.from(new Map(allPosts.map(p => [p._id, p])).values());
+    // Deduplicate by ID (Last Write Wins for display if duplicates exist)
+    const uniquePostsMap = new Map<string, Post>();
+    for (const p of allPosts) {
+        // If we have duplicates (e.g. local and followed-self), prefer the one that is NOT from followed content (my local copy)
+        // OR simply rely on map overwriting. 
+        // If I follow myself, I have local copy (author=me) and followed copy (author=me after normalization).
+        // They are identical.
+        uniquePostsMap.set(p._id, p);
+    }
+    
+    const uniquePosts = Array.from(uniquePostsMap.values());
     
     return uniquePosts.sort((a, b) => b.createdAt - a.createdAt);
   }
@@ -97,7 +155,8 @@ export class SocialManager {
     const followedDocs = await this.db.collection('followed_content').getAll<any>();
     
     // Filter followed docs to be Comments (have text AND postId)
-    const followedComments = followedDocs.filter(d => d.text !== undefined && d.postId !== undefined) as Comment[];
+    const followedCommentsRaw = followedDocs.filter(d => d.text !== undefined && d.postId !== undefined) as Comment[];
+    const followedComments = followedCommentsRaw.map(c => this.normalizeFollowedContent<Comment>(c));
 
     const allComments = [...myComments, ...followedComments];
 
