@@ -7,7 +7,7 @@ jest.mock('../src/adapters/S3RemoteAdapter');
 describe('SovereignS3nc ETag Optimization', () => {
   let db: SovereignS3nc;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     (S3RemoteAdapter as any).mockClear();
     (S3RemoteAdapter.prototype as any).put = jest.fn().mockResolvedValue('new-etag');
     (S3RemoteAdapter.prototype as any).get = jest.fn().mockResolvedValue(null);
