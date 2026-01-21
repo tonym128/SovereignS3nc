@@ -122,4 +122,28 @@ describe('Social Fixes', () => {
       expect(lastCall[0].region).toBe('us-west-2');
       expect(lastCall[1].userId).toBe('friend-user');
   });
+
+  test('getAllComments should normalize followed comments', async () => {
+    // 1. Inject a "Followed Comment"
+    const originalId = 'comment-abc';
+    const friendId = 'friend-user';
+    const followedId = `follow_${friendId}_${originalId}`;
+    
+    await db.collection('followed_content').save({
+        _id: followedId,
+        postId: 'post-1',
+        text: 'Friend Comment',
+        authorId: 'me', // Original local author was 'me'
+        createdAt: 3000
+    });
+
+    // 2. Call getAllComments
+    const comments = await db.social.getAllComments();
+    
+    // 3. Verify
+    const comment = comments.find(c => c._id === originalId);
+    expect(comment).toBeDefined();
+    expect(comment?.text).toBe('Friend Comment');
+    expect(comment?.authorId).toBe(friendId); // Should be normalized
+  });
 });

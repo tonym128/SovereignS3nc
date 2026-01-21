@@ -150,7 +150,7 @@ export class SocialManager {
     return uniquePosts.sort((a, b) => b.createdAt - a.createdAt);
   }
 
-  async getComments(postId: string): Promise<Comment[]> {
+  async getAllComments(): Promise<Comment[]> {
     const myComments = await this.db.collection('comments').getAll<Comment>();
     const followedDocs = await this.db.collection('followed_content').getAll<any>();
     
@@ -159,6 +159,16 @@ export class SocialManager {
     const followedComments = followedCommentsRaw.map(c => this.normalizeFollowedContent<Comment>(c));
 
     const allComments = [...myComments, ...followedComments];
+    // Deduplicate by ID
+    const uniqueCommentsMap = new Map<string, Comment>();
+    for (const c of allComments) {
+        uniqueCommentsMap.set(c._id, c);
+    }
+    return Array.from(uniqueCommentsMap.values());
+  }
+
+  async getComments(postId: string): Promise<Comment[]> {
+    const allComments = await this.getAllComments();
 
     return allComments
         .filter(c => c.postId === postId)

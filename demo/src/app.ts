@@ -248,11 +248,8 @@ async function refreshFeed() {
     console.log(`Feed loaded: ${feed.length} posts`);
     
     // Optimization: Fetch all comments once instead of N+1
-    const myComments = await db.collection('comments').getAll<any>();
-    const followedDocs = await db.collection('followed_content').getAll<any>();
-    const followedComments = followedDocs.filter(d => d.text !== undefined && d.postId !== undefined);
-    
-    const allComments = [...myComments, ...followedComments];
+    // Use the social module to ensure normalization of authors
+    const allComments = await db.social.getAllComments();
     console.log(`Comments loaded: ${allComments.length} total`);
 
     const commentsByPost = new Map<string, any[]>();
