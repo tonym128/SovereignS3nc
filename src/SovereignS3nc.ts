@@ -25,6 +25,7 @@ export interface ShareMetadata {
   sharedId: string;
   isPublic: boolean;
   encryptionKey?: string;
+  collection?: string;
 }
 
 export class Collection {
@@ -270,6 +271,7 @@ export class SovereignS3nc extends EventEmitter {
         return existing.sharedId;
       }
       existing.isPublic = isPublic;
+      existing.collection = doc.collection; // Ensure collection is up to date
       if (isPublic && !existing.encryptionKey) {
         if (doc.collection !== 'profiles') {
             existing.encryptionKey = uuidv4().replace(/-/g, '');
@@ -285,7 +287,8 @@ export class SovereignS3nc extends EventEmitter {
     const sharedId = uuidv4();
     const metadata: ShareMetadata = {
       sharedId,
-      isPublic
+      isPublic,
+      collection: doc.collection
     };
     
     if (isPublic && doc.collection !== 'profiles') {
@@ -320,7 +323,7 @@ export class SovereignS3nc extends EventEmitter {
     
     if (this.sharedRemote) {
       try {
-        await this.sharedRemote.delete(metadata.sharedId);
+        await this.sharedRemote.delete(metadata.sharedId, metadata.collection);
         if (metadata.isPublic) {
           await this.removeFromPublicIndex(metadata.sharedId);
         }
@@ -369,9 +372,10 @@ export class SovereignS3nc extends EventEmitter {
       _rev: uuidv4(),
       _updatedAt: Date.now(),
       _deleted: doc._deleted,
+      collection: doc.collection,
       data: payload
     };
-    await this.sharedRemote.put(sharedDoc);
+    await this.sharedRemote.put(sharedDoc, doc.collection);
   }
 
   private async putLocal(doc: SyncDocument): Promise<void> {
@@ -430,9 +434,9 @@ export class SovereignS3nc extends EventEmitter {
     return results.filter(r => r !== null);
   }
 
-  async getSharedDoc(sharedId: string, key?: string): Promise<any> {
+  async getSharedDoc(sharedId: string, key?: string, collection?: string): Promise<any> {
     if (!this.sharedRemote) return null;
-    const doc = await this.sharedRemote.get(sharedId);
+    const doc = await this.sharedRemote.get(sharedId, collection);
     if (!doc) return null;
     
     if (key) {
@@ -442,8 +446,8 @@ export class SovereignS3nc extends EventEmitter {
     return doc.data;
   }
 
-  async saveSharedDocToLocal(sharedId: string, key?: string): Promise<string> {
-    const plainData = await this.getSharedDoc(sharedId, key);
+  async saveSharedDocToLocal(sharedId: string, key?: string, collection?: string): Promise<string> {
+    const plainData = await this.getSharedDoc(sharedId, key, collection);
     if (!plainData) throw new Error('Shared document not found or decrypt failed');
     
     const newId = plainData._id || uuidv4();
@@ -489,7 +493,7 @@ export class SovereignS3nc extends EventEmitter {
                await this.addToPublicIndex(meta, doc.collection);
            }
          } else if (doc && doc._deleted) {
-           await this.sharedRemote.delete(meta.sharedId);
+           await this.sharedRemote.delete(meta.sharedId, meta.collection);
            if (meta.isPublic) {
              await this.removeFromPublicIndex(meta.sharedId);
            }

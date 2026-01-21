@@ -347,9 +347,11 @@ async function loadAvatarForPost(authorId: string, imgEl: HTMLImageElement) {
         avatarId = p?.avatarUrl;
     } else {
         // Try to find followed profile
-        // Format: follow_{userId}_me
-        const id = `follow_${authorId}_me`;
-        const doc = await db.collection('followed_content').get<Profile>(id);
+        const followedDocs = await db.collection('followed_content').getAll<Profile>();
+        const doc = followedDocs.find(d => 
+            d.address && d.address.userId === authorId && 
+            (d.collection === 'profiles' || d.displayName !== undefined)
+        );
         if (doc) {
             avatarId = doc.avatarUrl;
         }

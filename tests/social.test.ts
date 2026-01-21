@@ -304,4 +304,30 @@ describe('SovereignS3nc Social & Profiles', () => {
       expect(image).toBeDefined();
       expect(image!.length).toBe(3);
   });
+
+  test('should verify correct path usage when sharing posts', async () => {
+    // 1. Create a post
+    const id = await db.collection('posts').save({ text: 'Public Post' });
+    
+    // 2. Share it
+    await db.share(id, true, 'posts');
+
+    // 3. Verify 'put' was called on sharedRemote with 'posts' collection as 2nd arg
+    expect(mockSharedRemote.put).toHaveBeenCalledWith(
+        expect.objectContaining({ _id: expect.any(String) }), 
+        'posts'
+    );
+  });
+
+  test('should verify correct path usage when unsharing', async () => {
+    const id = await db.collection('posts').save({ text: 'To Delete' });
+    await db.share(id, true, 'posts');
+    
+    // Clear mocks to focus on unshare
+    mockSharedRemote.delete.mockClear();
+    
+    await db.unshare(id);
+    
+    expect(mockSharedRemote.delete).toHaveBeenCalledWith(expect.any(String), 'posts');
+  });
 });
