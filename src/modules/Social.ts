@@ -4,6 +4,7 @@ import { SovereignS3nc } from '../SovereignS3nc';
 import { SovereignAddress, SyncDocument } from '../types';
 import { S3BlobAdapter } from '../adapters/S3BlobAdapter';
 import { OCIBlobAdapter } from '../adapters/OCIBlobAdapter';
+import { deriveKey, createCryptoAdapter } from '../cryptoUtils';
 
 export interface Profile {
   displayName: string;
@@ -88,7 +89,31 @@ export class SocialManager {
       }
       
       if (adapter) {
-          return adapter.download(blobId);
+          const raw = await adapter.download(blobId);
+          if (!raw) return null;
+
+          // If the target address has a public passphrase, we assume the content might be encrypted with it
+          if (address.publicPassphrase) {
+              try {
+                  // We need to derive the key used by the AUTHOR of the blob
+                  const key = await deriveKey(address.publicPassphrase, address.appId);
+                  const crypto = createCryptoAdapter(key);
+                  return await crypto.decryptRaw(raw);
+              } catch (e) {
+                  // Failed to decrypt with their key, maybe it wasn't encrypted?
+                  return raw;
+              }
+          }
+
+          if (this.db.hasPublicEncryption()) {
+              try {
+                  return await this.db.decryptPublicRaw(raw);
+              } catch (e) {
+                  // Not encrypted or decryption failed, return raw
+                  return raw;
+              }
+          }
+          return raw;
       }
       return null;
   }

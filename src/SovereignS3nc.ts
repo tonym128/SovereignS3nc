@@ -907,7 +907,7 @@ export class SovereignS3nc extends EventEmitter {
                 // If the user has a public passphrase, the index doc is encrypted.
                 if (addr.publicPassphrase) {
                      try {
-                         const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.userId);
+                         const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.appId);
                          const theirCrypto = createCryptoAdapter(theirPublicKey);
                          
                          if (typeof indexDoc.data === 'string') {
