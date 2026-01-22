@@ -148,6 +148,9 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     }
 
     try {
+        if (db) {
+            db.stopAutoSync();
+        }
         db = new SovereignS3nc(config);
 
         db.on('syncStart', () => loading.style.display = 'block');

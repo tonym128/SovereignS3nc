@@ -266,8 +266,14 @@ export class SovereignS3nc extends EventEmitter {
                 const remoteIdentity = await this.remote.get('_sovereign_identity');
                 if (remoteIdentity) {
                     const plain = await this.decryptData(remoteIdentity.data);
-                    this._publicId = plain.publicId;
-                    await this.localStore.put(remoteIdentity);
+                    // Safety check: Ensure decryption yielded an object with publicId
+                    if (plain && typeof plain === 'object' && plain.publicId) {
+                        this._publicId = plain.publicId;
+                        await this.localStore.put(remoteIdentity);
+                    } else {
+                        console.warn('Remote identity found but invalid or decryption failed. Regenerating.');
+                        this._publicId = null; 
+                    }
                 }
             } catch (e) {
                 // Not found or error

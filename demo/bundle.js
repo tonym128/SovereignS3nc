@@ -23982,6 +23982,7 @@ ${toHex(hashedRequest)}`;
           });
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+          this.useManifest = useManifest;
         }
         getKey(id, collection) {
           if (collection) {
@@ -24008,7 +24009,7 @@ ${toHex(hashedRequest)}`;
           });
           const response = await this.client.send(command);
           const etag = response.ETag ? response.ETag.replace(/"/g, "") : void 0;
-          if (!doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
+          if (this.useManifest && !doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
             await this.updateManifest(doc, etag);
           }
           return etag;
@@ -24067,7 +24068,59 @@ ${toHex(hashedRequest)}`;
           }
         }
         async listChanges(since, collection) {
-          return this.listChangesFromManifest(since, collection);
+          if (this.useManifest) {
+            return this.listChangesFromManifest(since, collection);
+          }
+          return this.listChangesFromS3(since, collection);
+        }
+        async listChangesFromS3(since, collection) {
+          const changes = [];
+          let searchPrefix = this.prefix;
+          if (collection) {
+            searchPrefix = `${this.prefix}${collection}/`;
+          }
+          try {
+            let continuationToken;
+            do {
+              const cmd = new ListObjectsV2Command({
+                Bucket: this.bucket,
+                Prefix: searchPrefix,
+                ContinuationToken: continuationToken
+              });
+              const res = await this.client.send(cmd);
+              continuationToken = res.NextContinuationToken;
+              if (res.Contents) {
+                for (const obj of res.Contents) {
+                  if (!obj.Key || obj.Key.endsWith("manifest.json")) continue;
+                  if (!obj.LastModified) continue;
+                  if (obj.LastModified <= since) continue;
+                  const relPath = obj.Key.substring(this.prefix.length);
+                  const parts = relPath.split("/");
+                  let id = "";
+                  let col;
+                  if (parts.length === 1) {
+                    id = parts[0].replace(".json", "");
+                  } else if (parts.length === 2) {
+                    col = parts[0];
+                    id = parts[1].replace(".json", "");
+                  } else {
+                    continue;
+                  }
+                  if (collection && col !== collection) continue;
+                  changes.push({
+                    id,
+                    collection: col,
+                    key: obj.Key,
+                    etag: obj.ETag ? obj.ETag.replace(/"/g, "") : void 0,
+                    lastModified: obj.LastModified
+                  });
+                }
+              }
+            } while (continuationToken);
+          } catch (e2) {
+            console.error("ListObjectsV2 failed", e2);
+          }
+          return changes;
         }
         async listChangesFromManifest(since, collection) {
           const manifestKey = this.getManifestKey(collection);
@@ -24757,8 +24810,13 @@ ${toHex(hashedRequest)}`;
                 const remoteIdentity = await this.remote.get("_sovereign_identity");
                 if (remoteIdentity) {
                   const plain = await this.decryptData(remoteIdentity.data);
-                  this._publicId = plain.publicId;
-                  await this.localStore.put(remoteIdentity);
+                  if (plain && typeof plain === "object" && plain.publicId) {
+                    this._publicId = plain.publicId;
+                    await this.localStore.put(remoteIdentity);
+                  } else {
+                    console.warn("Remote identity found but invalid or decryption failed. Regenerating.");
+                    this._publicId = null;
+                  }
                 }
               } catch (e2) {
               }
@@ -25412,30 +25470,32 @@ ${toHex(hashedRequest)}`;
         network: document.getElementById("nav-network")
       };
       var loading = document.getElementById("loading");
-      window.addEventListener("load", async () => {
-        try {
-          const res = await fetch("config.json");
-          if (res.ok) {
-            const config = await res.json();
-            if (config.s3) {
-              document.getElementById("s3-endpoint").value = config.s3.endpoint;
-              document.getElementById("s3-bucket").value = config.s3.bucketName;
-              document.getElementById("s3-region").value = config.s3.region;
-              document.getElementById("s3-access-key").value = config.s3.accessKeyId;
-              document.getElementById("s3-secret-key").value = config.s3.secretAccessKey;
-              document.querySelector('input[name="auth-mode"][value="s3"]').checked = true;
-              document.getElementById("auth-oci").classList.add("hidden");
-              document.getElementById("auth-s3").classList.remove("hidden");
+      if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+        window.addEventListener("load", async () => {
+          try {
+            const res = await fetch("config.json");
+            if (res.ok) {
+              const config = await res.json();
+              if (config.s3) {
+                document.getElementById("s3-endpoint").value = config.s3.endpoint;
+                document.getElementById("s3-bucket").value = config.s3.bucketName;
+                document.getElementById("s3-region").value = config.s3.region;
+                document.getElementById("s3-access-key").value = config.s3.accessKeyId;
+                document.getElementById("s3-secret-key").value = config.s3.secretAccessKey;
+                document.querySelector('input[name="auth-mode"][value="s3"]').checked = true;
+                document.getElementById("auth-oci").classList.add("hidden");
+                document.getElementById("auth-s3").classList.remove("hidden");
+              }
+              if (config.appId) {
+                document.getElementById("app-id").value = config.appId;
+              }
+              showToast("Auto-filled connection details from server", "info");
             }
-            if (config.appId) {
-              document.getElementById("app-id").value = config.appId;
-            }
-            showToast("Auto-filled connection details from server", "info");
+          } catch (e2) {
+            console.log("No local config.json found or failed to parse");
           }
-        } catch (e2) {
-          console.log("No local config.json found or failed to parse");
-        }
-      });
+        });
+      }
       var authRadios = document.querySelectorAll('input[name="auth-mode"]');
       var authOci = document.getElementById("auth-oci");
       var authS3 = document.getElementById("auth-s3");
@@ -25493,6 +25553,9 @@ ${toHex(hashedRequest)}`;
           config.useManifest = false;
         }
         try {
+          if (db) {
+            db.stopAutoSync();
+          }
           db = new SovereignS3nc(config);
           db.on("syncStart", () => loading.style.display = "block");
           db.on("syncComplete", (stats) => {
@@ -25514,6 +25577,22 @@ ${toHex(hashedRequest)}`;
           console.error(e2);
           showToast("Failed to connect: " + e2, "error");
         }
+      });
+      async function switchView(viewName) {
+        Object.values(views).forEach((el) => el.classList.add("hidden"));
+        Object.values(navLinks).forEach((el) => el.classList.remove("active"));
+        views[viewName].classList.remove("hidden");
+        navLinks[viewName].classList.add("active");
+        if (db) {
+          console.log("Syncing on tab change...");
+          await db.sync();
+          if (viewName === "feed") refreshFeed();
+        }
+      }
+      document.getElementById("btn-refresh")?.addEventListener("click", async () => {
+        if (!db) return;
+        await db.sync();
+        refreshFeed();
       });
       async function loadProfile() {
         if (!db) return;
@@ -25861,6 +25940,17 @@ ${toHex(hashedRequest)}`;
         await db.social.unfollow(id);
         loadFollowing();
       };
+      if (typeof window !== "undefined") {
+        window.addEventListener("load", () => {
+          console.log("Binding navigation events on load...");
+          navLinks.feed.onclick = () => switchView("feed");
+          navLinks.profile.onclick = () => switchView("profile");
+          navLinks.network.onclick = () => {
+            switchView("network");
+            loadFollowing();
+          };
+        });
+      }
     }
   });
   require_app();
