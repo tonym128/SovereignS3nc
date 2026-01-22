@@ -171,7 +171,9 @@ export class SovereignS3nc extends EventEmitter {
       }
     }
 
-    this.localStore = customLocalStorage || new InMemoryStorage(config.localPersistencePath);
+    const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+    const defaultPath = (isBrowser && !config.localPersistencePath) ? config.paths.userId : config.localPersistencePath;
+    this.localStore = customLocalStorage || new InMemoryStorage(defaultPath);
     this.initRemote(config);
     
     if (customCryptoAdapter) {

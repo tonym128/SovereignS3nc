@@ -24665,7 +24665,9 @@ ${toHex(hashedRequest)}`;
               );
             }
           }
-          this.localStore = customLocalStorage || new IndexedDBStorage(config.localPersistencePath);
+          const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+          const defaultPath = isBrowser && !config.localPersistencePath ? config.paths.userId : config.localPersistencePath;
+          this.localStore = customLocalStorage || new IndexedDBStorage(defaultPath);
           this.initRemote(config);
           if (customCryptoAdapter) {
             this.crypto = customCryptoAdapter;
