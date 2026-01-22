@@ -148,7 +148,7 @@ describe('Demo App Integration', () => {
 
   const loadApp = () => {
       jest.isolateModules(() => {
-          require('../demo/src/app.ts');
+          require('../demo/social/src/app.ts');
       });
       
       // Capture onclick handlers that were assigned directly

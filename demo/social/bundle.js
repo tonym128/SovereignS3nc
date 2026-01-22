@@ -25396,9 +25396,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // demo/src/app.ts
+  // demo/social/src/app.ts
   var require_app = __commonJS({
-    "demo/src/app.ts"() {
+    "demo/social/src/app.ts"() {
       init_src();
       var db = null;
       var currentUser = "";

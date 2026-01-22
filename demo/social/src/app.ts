@@ -1,4 +1,4 @@
-import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage } from '../../src/index';
+import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage } from '../../../src/index';
 
 // --- State ---
 let db: SovereignS3nc | null = null;
