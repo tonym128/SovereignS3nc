@@ -25462,8 +25462,8 @@ ${toHex(hashedRequest)}`;
       });
       document.getElementById("btn-connect")?.addEventListener("click", async () => {
         const mode = document.querySelector('input[name="auth-mode"]:checked').value;
-        const appId = document.getElementById("app-id").value;
-        let userId = document.getElementById("user-id").value;
+        const appId = document.getElementById("app-id").value.trim();
+        let userId = document.getElementById("user-id").value.trim();
         if (!appId) return showToast("Please fill in App ID", "error");
         if (!userId) {
           userId = crypto.randomUUID();
@@ -25585,6 +25585,21 @@ ${toHex(hashedRequest)}`;
         showToast("Profile updated!", "success");
         loadProfile();
       });
+      async function getProfileMap(db2) {
+        const myProfile = await db2.profile.get();
+        const followedDocs = await db2.collection("followed_content").getAll();
+        const map = /* @__PURE__ */ new Map();
+        if (myProfile) {
+          map.set("me", { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+          if (db2.publicId) map.set(db2.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+        }
+        for (const d2 of followedDocs) {
+          if (d2.address && d2.address.userId && (d2.collection === "profiles" || d2.displayName)) {
+            map.set(d2.address.userId, { name: d2.displayName, avatarUrl: d2.avatarUrl });
+          }
+        }
+        return map;
+      }
       async function refreshFeed() {
         if (!db) return;
         console.log("Refreshing feed...");
@@ -25592,6 +25607,7 @@ ${toHex(hashedRequest)}`;
         console.log(`Feed loaded: ${feed.length} posts`);
         const allComments = await db.social.getAllComments();
         console.log(`Comments loaded: ${allComments.length} total`);
+        const profileMap = await getProfileMap(db);
         const commentsByPost = /* @__PURE__ */ new Map();
         for (const c2 of allComments) {
           if (!commentsByPost.has(c2.postId)) {
@@ -25604,7 +25620,8 @@ ${toHex(hashedRequest)}`;
         for (const post of feed) {
           const el = document.createElement("div");
           el.className = "card";
-          const authorName = post.authorId === "me" ? "Me" : post.authorId;
+          const authorProfile = profileMap.get(post.authorId);
+          const authorName = authorProfile?.name || (post.authorId === "me" ? "Me" : post.authorId);
           const isMine = post.authorId === "me";
           let imgHtml = "";
           if (post.attachments && post.attachments.length > 0) {
@@ -25642,7 +25659,12 @@ ${toHex(hashedRequest)}`;
           if (post.attachments && post.attachments.length > 0) {
             renderImage(post.attachments[0], el.querySelector(`#img-${post.attachments[0]}`), post.authorId);
           }
-          loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`));
+          if (authorProfile?.avatarUrl) {
+            const imgEl = el.querySelector(`#avatar-post-${post._id}`);
+            renderImage(authorProfile.avatarUrl, imgEl, post.authorId);
+          } else {
+            loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`));
+          }
           let postComments = commentsByPost.get(post._id) || [];
           if (postComments.length === 0 && post._id.startsWith("follow_")) {
             const parts = post._id.split("_");
@@ -25655,7 +25677,7 @@ ${toHex(hashedRequest)}`;
             }
           }
           postComments.sort((a2, b2) => a2.createdAt - b2.createdAt);
-          renderComments(post._id, postComments);
+          renderComments(post._id, postComments, profileMap);
         }
       }
       async function loadAvatarForPost(authorId, imgEl) {
@@ -25679,7 +25701,7 @@ ${toHex(hashedRequest)}`;
           imgEl.style.backgroundColor = "#ccc";
         }
       }
-      function renderComments(postId, comments) {
+      function renderComments(postId, comments, profileMap) {
         const container = document.getElementById(`comments-${postId}`);
         if (!container) return;
         if (comments.length === 0) {
@@ -25688,10 +25710,16 @@ ${toHex(hashedRequest)}`;
         }
         container.innerHTML = comments.map((c2) => {
           const isMine = c2.authorId === "me";
+          let authorName = c2.authorId;
+          if (profileMap) {
+            const p2 = profileMap.get(c2.authorId);
+            if (p2) authorName = p2.name;
+            else if (c2.authorId === "me") authorName = "Me";
+          }
           const actions = isMine ? ` <span style="font-size:0.7em; color:#888;">(<a href="#" onclick="window.deleteComment('${c2._id}'); return false;">x</a>)</span>` : "";
           return `
         <div class="comment">
-            <strong>${c2.authorId}</strong>: ${c2.text} ${actions}
+            <strong>${authorName}</strong>: ${c2.text} ${actions}
         </div>
     `;
         }).join("");
@@ -25764,7 +25792,8 @@ ${toHex(hashedRequest)}`;
       async function loadComments(postId) {
         if (!db) return;
         const comments = await db.social.getComments(postId);
-        renderComments(postId, comments);
+        const profileMap = await getProfileMap(db);
+        renderComments(postId, comments, profileMap);
       }
       window.postComment = async (postId) => {
         if (!db) return;

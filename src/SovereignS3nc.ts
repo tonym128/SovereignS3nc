@@ -260,8 +260,14 @@ export class SovereignS3nc extends EventEmitter {
     // --- Identity Management ---
     const identityDoc = await this.localStore.get('_sovereign_identity');
     if (identityDoc) {
-        this._publicId = identityDoc.data.publicId;
-    } else {
+        const plain = await this.decryptData(identityDoc.data);
+        if (plain && typeof plain === 'object' && plain.publicId) {
+             this._publicId = plain.publicId;
+        }
+    }
+    
+    // If not found locally (or failed to decrypt), try remote
+    if (!this._publicId) {
         // Check remote private store
         if (this.remote) {
             try {

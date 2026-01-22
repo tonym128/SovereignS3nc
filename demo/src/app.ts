@@ -100,8 +100,8 @@ authRadios.forEach(radio => {
 
 document.getElementById('btn-connect')?.addEventListener('click', async () => {
     const mode = (document.querySelector('input[name="auth-mode"]:checked') as HTMLInputElement).value;
-    const appId = (document.getElementById('app-id') as HTMLInputElement).value;
-    let userId = (document.getElementById('user-id') as HTMLInputElement).value;
+    const appId = (document.getElementById('app-id') as HTMLInputElement).value.trim();
+    let userId = (document.getElementById('user-id') as HTMLInputElement).value.trim();
 
     if (!appId) return showToast('Please fill in App ID', 'error');
     
@@ -258,19 +258,39 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
 });
 
 // --- Feed Logic ---
+
+async function getProfileMap(db: SovereignS3nc): Promise<Map<string, { name: string, avatarUrl?: string }>> {
+    const myProfile = await db.profile.get();
+    const followedDocs = await db.collection('followed_content').getAll<any>();
+    const map = new Map();
+    
+    if (myProfile) {
+        map.set('me', { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+        // Map my public ID if known
+        if (db.publicId) map.set(db.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+    }
+
+    for (const d of followedDocs) {
+        if (d.address && d.address.userId && (d.collection === 'profiles' || d.displayName)) {
+             map.set(d.address.userId, { name: d.displayName, avatarUrl: d.avatarUrl });
+        }
+    }
+    return map;
+}
+
 async function refreshFeed() {
     if (!db) return;
     console.log('Refreshing feed...');
     const feed = await db.social.getFeed();
     console.log(`Feed loaded: ${feed.length} posts`);
     
-    // Optimization: Fetch all comments once instead of N+1
-    // Use the social module to ensure normalization of authors
     const allComments = await db.social.getAllComments();
     console.log(`Comments loaded: ${allComments.length} total`);
 
+    // Fetch profiles for resolution
+    const profileMap = await getProfileMap(db);
+
     const commentsByPost = new Map<string, any[]>();
-    
     for (const c of allComments) {
         if (!commentsByPost.has(c.postId)) {
             commentsByPost.set(c.postId, []);
@@ -285,7 +305,10 @@ async function refreshFeed() {
         const el = document.createElement('div');
         el.className = 'card';
         
-        const authorName = post.authorId === 'me' ? 'Me' : post.authorId;
+        // Resolve Author Name
+        const authorProfile = profileMap.get(post.authorId);
+        const authorName = authorProfile?.name || (post.authorId === 'me' ? 'Me' : post.authorId);
+
         const isMine = post.authorId === 'me';
         
         let imgHtml = '';
@@ -330,7 +353,12 @@ async function refreshFeed() {
         }
 
         // Render Avatar
-        loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`) as HTMLImageElement);
+        if (authorProfile?.avatarUrl) {
+             const imgEl = el.querySelector(`#avatar-post-${post._id}`) as HTMLImageElement;
+             renderImage(authorProfile.avatarUrl, imgEl, post.authorId);
+        } else {
+             loadAvatarForPost(post.authorId, el.querySelector(`#avatar-post-${post._id}`) as HTMLImageElement);
+        }
 
         // Render comments immediately from cache
         let postComments = commentsByPost.get(post._id) || [];
@@ -348,7 +376,7 @@ async function refreshFeed() {
         }
 
         postComments.sort((a, b) => a.createdAt - b.createdAt);
-        renderComments(post._id, postComments);
+        renderComments(post._id, postComments, profileMap);
     }
 }
 
@@ -379,7 +407,7 @@ async function loadAvatarForPost(authorId: string, imgEl: HTMLImageElement) {
     }
 }
 
-function renderComments(postId: string, comments: any[]) {
+function renderComments(postId: string, comments: any[], profileMap?: Map<string, { name: string, avatarUrl?: string }>) {
     const container = document.getElementById(`comments-${postId}`);
     if (!container) return;
 
@@ -390,10 +418,18 @@ function renderComments(postId: string, comments: any[]) {
 
     container.innerHTML = comments.map(c => {
         const isMine = c.authorId === 'me';
+        
+        let authorName = c.authorId;
+        if (profileMap) {
+             const p = profileMap.get(c.authorId);
+             if (p) authorName = p.name;
+             else if (c.authorId === 'me') authorName = 'Me';
+        }
+
         const actions = isMine ? ` <span style="font-size:0.7em; color:#888;">(<a href="#" onclick="window.deleteComment('${c._id}'); return false;">x</a>)</span>` : '';
         return `
         <div class="comment">
-            <strong>${c.authorId}</strong>: ${c.text} ${actions}
+            <strong>${authorName}</strong>: ${c.text} ${actions}
         </div>
     `}).join('');
 }
@@ -486,7 +522,8 @@ document.getElementById('btn-post')?.addEventListener('click', async () => {
 async function loadComments(postId: string) {
     if (!db) return;
     const comments = await db.social.getComments(postId);
-    renderComments(postId, comments);
+    const profileMap = await getProfileMap(db);
+    renderComments(postId, comments, profileMap);
 }
 
 (window as any).postComment = async (postId: string) => {
