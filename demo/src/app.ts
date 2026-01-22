@@ -1,4 +1,4 @@
-import { SovereignS3nc, Post, Profile, SovereignAddress } from '../../src/index';
+import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage } from '../../src/index';
 
 // --- State ---
 let db: SovereignS3nc | null = null;
@@ -147,11 +147,13 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         config.useManifest = true; 
     }
 
+    const storage = new IndexedDBStorage(userId);
+
     try {
         if (db) {
             db.stopAutoSync();
         }
-        db = new SovereignS3nc(config);
+        db = new SovereignS3nc(config, storage);
 
         db.on('syncStart', () => loading.style.display = 'block');
         db.on('syncComplete', (stats) => {

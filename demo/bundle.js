@@ -25501,11 +25501,12 @@ ${toHex(hashedRequest)}`;
           };
           config.useManifest = true;
         }
+        const storage = new IndexedDBStorage(userId);
         try {
           if (db) {
             db.stopAutoSync();
           }
-          db = new SovereignS3nc(config);
+          db = new SovereignS3nc(config, storage);
           db.on("syncStart", () => loading.style.display = "block");
           db.on("syncComplete", (stats) => {
             loading.style.display = "none";
