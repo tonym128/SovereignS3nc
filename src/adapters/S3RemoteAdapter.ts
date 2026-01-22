@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { S3Config, SyncDocument, RemoteChange } from '../types';
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 
@@ -13,7 +13,6 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
   private bucket: string;
   private prefix: string;
-  private useManifest: boolean;
 
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
     this.client = new S3Client({
@@ -24,7 +23,6 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     });
     this.bucket = config.bucketName;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-    this.useManifest = useManifest;
   }
 
   private getKey(id: string, collection?: string): string {
@@ -57,7 +55,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     const response = await this.client.send(command);
     const etag = response.ETag ? response.ETag.replace(/"/g, '') : undefined;
 
-    if (this.useManifest && !doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
+    if (!doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
       await this.updateManifest(doc, etag);
     }
 
@@ -131,87 +129,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   }
 
   async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
-    if (this.useManifest) {
-        return this.listChangesFromManifest(since, collection);
-    }
-    return this.listChangesFromS3(since, collection);
-  }
-
-  private async listChangesFromS3(since: Date, collection?: string): Promise<RemoteChange[]> {
-      const changes: RemoteChange[] = [];
-      // If collection is provided, prefix is prefix + collection/
-      // If not, prefix is prefix.
-      
-      let searchPrefix = this.prefix;
-      if (collection) {
-          searchPrefix = `${this.prefix}${collection}/`;
-      }
-
-      try {
-          // Note: S3 List is flat. We need to iterate recursively if no collection?
-          // But our structure is:
-          // prefix/id.json (no collection)
-          // prefix/collection/id.json
-          
-          // For now, let's assume flat or one-level deep.
-          // ListObjectsV2 is recursive by default unless Delimiter is set.
-          
-          let continuationToken: string | undefined;
-          
-          do {
-              const cmd = new ListObjectsV2Command({
-                  Bucket: this.bucket,
-                  Prefix: searchPrefix,
-                  ContinuationToken: continuationToken
-              });
-              
-              const res = await this.client.send(cmd);
-              continuationToken = res.NextContinuationToken;
-
-              if (res.Contents) {
-                  for (const obj of res.Contents) {
-                      if (!obj.Key || obj.Key.endsWith('manifest.json')) continue;
-                      if (!obj.LastModified) continue;
-                      if (obj.LastModified <= since) continue;
-                      
-                      // Parse Key to get ID and Collection
-                      // Key: prefix/id.json OR prefix/collection/id.json
-                      // Remove prefix
-                      const relPath = obj.Key.substring(this.prefix.length);
-                      const parts = relPath.split('/');
-                      
-                      let id = '';
-                      let col: string | undefined;
-
-                      if (parts.length === 1) {
-                          // id.json
-                          id = parts[0].replace('.json', '');
-                      } else if (parts.length === 2) {
-                          // collection/id.json
-                          col = parts[0];
-                          id = parts[1].replace('.json', '');
-                      } else {
-                          // unexpected structure, skip or handle
-                          continue;
-                      }
-                      
-                      if (collection && col !== collection) continue;
-
-                      changes.push({
-                          id,
-                          collection: col,
-                          key: obj.Key,
-                          etag: obj.ETag ? obj.ETag.replace(/"/g, '') : undefined,
-                          lastModified: obj.LastModified
-                      });
-                  }
-              }
-          } while (continuationToken);
-
-      } catch (e) {
-          console.error('ListObjectsV2 failed', e);
-      }
-      return changes;
+    return this.listChangesFromManifest(since, collection);
   }
 
   private async listChangesFromManifest(since: Date, collection?: string): Promise<RemoteChange[]> {

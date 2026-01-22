@@ -23982,7 +23982,6 @@ ${toHex(hashedRequest)}`;
           });
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-          this.useManifest = useManifest;
         }
         getKey(id, collection) {
           if (collection) {
@@ -24009,7 +24008,7 @@ ${toHex(hashedRequest)}`;
           });
           const response = await this.client.send(command);
           const etag = response.ETag ? response.ETag.replace(/"/g, "") : void 0;
-          if (this.useManifest && !doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
+          if (!doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
             await this.updateManifest(doc, etag);
           }
           return etag;
@@ -24068,59 +24067,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async listChanges(since, collection) {
-          if (this.useManifest) {
-            return this.listChangesFromManifest(since, collection);
-          }
-          return this.listChangesFromS3(since, collection);
-        }
-        async listChangesFromS3(since, collection) {
-          const changes = [];
-          let searchPrefix = this.prefix;
-          if (collection) {
-            searchPrefix = `${this.prefix}${collection}/`;
-          }
-          try {
-            let continuationToken;
-            do {
-              const cmd = new ListObjectsV2Command({
-                Bucket: this.bucket,
-                Prefix: searchPrefix,
-                ContinuationToken: continuationToken
-              });
-              const res = await this.client.send(cmd);
-              continuationToken = res.NextContinuationToken;
-              if (res.Contents) {
-                for (const obj of res.Contents) {
-                  if (!obj.Key || obj.Key.endsWith("manifest.json")) continue;
-                  if (!obj.LastModified) continue;
-                  if (obj.LastModified <= since) continue;
-                  const relPath = obj.Key.substring(this.prefix.length);
-                  const parts = relPath.split("/");
-                  let id = "";
-                  let col;
-                  if (parts.length === 1) {
-                    id = parts[0].replace(".json", "");
-                  } else if (parts.length === 2) {
-                    col = parts[0];
-                    id = parts[1].replace(".json", "");
-                  } else {
-                    continue;
-                  }
-                  if (collection && col !== collection) continue;
-                  changes.push({
-                    id,
-                    collection: col,
-                    key: obj.Key,
-                    etag: obj.ETag ? obj.ETag.replace(/"/g, "") : void 0,
-                    lastModified: obj.LastModified
-                  });
-                }
-              }
-            } while (continuationToken);
-          } catch (e2) {
-            console.error("ListObjectsV2 failed", e2);
-          }
-          return changes;
+          return this.listChangesFromManifest(since, collection);
         }
         async listChangesFromManifest(since, collection) {
           const manifestKey = this.getManifestKey(collection);
@@ -25550,7 +25497,7 @@ ${toHex(hashedRequest)}`;
             forcePathStyle: true
             // Usually needed for Garage/MinIO
           };
-          config.useManifest = false;
+          config.useManifest = true;
         }
         try {
           if (db) {

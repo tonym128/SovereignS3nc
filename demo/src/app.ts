@@ -144,7 +144,7 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
             forcePathStyle: true // Usually needed for Garage/MinIO
         };
         // We can use manifest or not. For Garage, standard listing works.
-        config.useManifest = false; 
+        config.useManifest = true; 
     }
 
     try {
