@@ -134,12 +134,40 @@ cat <<EOF > demo/social/config.json
 }
 EOF
 
+cat <<EOF > demo/notes/config.json
+{
+  "s3": {
+    "endpoint": "http://localhost:3900",
+    "bucketName": "sovereign-demo",
+    "region": "us-east-1",
+    "accessKeyId": "$ACCESS_KEY",
+    "secretAccessKey": "$SECRET_KEY"
+  },
+  "appId": "notes-app"
+}
+EOF
+
+cat <<EOF > demo/chat/config.json
+{
+  "s3": {
+    "endpoint": "http://localhost:3900",
+    "bucketName": "sovereign-demo",
+    "region": "us-east-1",
+    "accessKeyId": "$ACCESS_KEY",
+    "secretAccessKey": "$SECRET_KEY"
+  },
+  "appId": "chat-app"
+}
+EOF
+
 # 6. Output Access Info
 echo "================================================================"
 echo "          SOVEREIGN S3NC DEMO ENV SETUP COMPLETE"
 echo "================================================================"
 echo ""
-echo "Website URL:      http://localhost:8080/demo/social/"
+echo "Social Demo:      http://localhost:8080/demo/social/"
+echo "Notes Demo:       http://localhost:8080/demo/notes/"
+echo "Chat Demo:        http://localhost:8080/demo/chat/"
 echo ""
 echo "--- S3 CONNECTION DETAILS ---"
 echo "Endpoint:     http://localhost:3900"

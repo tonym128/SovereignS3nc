@@ -20,10 +20,12 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the project and the demo
-# We need to explicitly build the demo bundle since it's not in the main build script
+# Build the project and the demos
+# We need to explicitly build the demo bundles since they're not in the main build script
 RUN npm run build
 RUN npx esbuild demo/social/src/app.ts --bundle --outfile=demo/social/bundle.js --sourcemap --platform=browser
+RUN npx esbuild demo/notes/src/app.ts --bundle --outfile=demo/notes/bundle.js --sourcemap --platform=browser
+RUN npx esbuild demo/chat/src/app.ts --bundle --outfile=demo/chat/bundle.js --sourcemap --platform=browser
 
 # Install a simple HTTP server
 RUN npm install -g http-server
