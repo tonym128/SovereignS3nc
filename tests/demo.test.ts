@@ -58,7 +58,12 @@ global.HTMLButtonElement = class {} as any;
 // Mock the library
 jest.mock('../src/index', () => {
   return {
-    SovereignS3nc: jest.fn()
+    SovereignS3nc: jest.fn(),
+    IndexedDBStorage: jest.fn().mockImplementation(() => ({
+      init: jest.fn(),
+      put: jest.fn(),
+      get: jest.fn()
+    }))
   };
 });
 
@@ -181,7 +186,7 @@ describe('Demo App Integration', () => {
       expect(SovereignS3nc).toHaveBeenCalledWith(expect.objectContaining({
           ociParUrl: 'https://oci.example.com',
           paths: { appId: 'my-app', userId: 'my-user', storeId: 'social' }
-      }));
+      }), expect.anything());
       expect(mockDb.init).toHaveBeenCalled();
       expect(mockDb.profile.get).toHaveBeenCalled();
       expect(mockDb.social.getFeed).toHaveBeenCalled();

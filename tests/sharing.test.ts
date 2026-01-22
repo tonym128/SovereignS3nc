@@ -54,7 +54,7 @@ describe('SovereignS3nc Sharing', () => {
     expect(mockSharedRemote.put).toHaveBeenCalledTimes(1);
     const putCall = mockSharedRemote.put.mock.calls[0][0];
     expect(putCall._id).toBe(sharedId);
-    expect(putCall.data).toEqual({ name: 'shared item' });
+    expect(putCall.data).toEqual({ name: 'shared item', _id: id });
 
     // Check mapping persistence
     // We can't access private members easily, but we can verify it's persisted by checking internal storage calls if we mocked it, 
