@@ -176,6 +176,9 @@ describe('Demo App Integration', () => {
       urlInput.value = 'https://oci.example.com';
       appIdInput.value = 'my-app';
       userIdInput.value = 'my-user';
+      
+      mockDocument.getElementById('private-passphrase').value = 'secret';
+      mockDocument.getElementById('public-passphrase').value = 'public';
 
       // Trigger click
       const handler = listeners.get('btn-connect:click');
@@ -206,6 +209,8 @@ describe('Demo App Integration', () => {
       mockDocument.getElementById('oci-url').value = 'url';
       mockDocument.getElementById('app-id').value = 'my-app';
       mockDocument.getElementById('user-id').value = 'user';
+      mockDocument.getElementById('private-passphrase').value = 'secret';
+      mockDocument.getElementById('public-passphrase').value = 'public';
       await connectHandler!();
 
       // Setup post input
@@ -234,6 +239,8 @@ describe('Demo App Integration', () => {
       mockDocument.getElementById('oci-url').value = 'url';
       mockDocument.getElementById('app-id').value = 'my-app';
       mockDocument.getElementById('user-id').value = 'user';
+      mockDocument.getElementById('private-passphrase').value = 'secret';
+      mockDocument.getElementById('public-passphrase').value = 'public';
       await connectHandler!();
 
       // Input profile data

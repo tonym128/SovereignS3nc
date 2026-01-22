@@ -1,28 +1,38 @@
 import { ICryptoAdapter } from '../interfaces/ICryptoAdapter';
 
 export class WebCryptoAdapter implements ICryptoAdapter {
-  private keyStr: string;
+  private keyData: string | Uint8Array;
   private key: CryptoKey | null = null;
 
-  constructor(secretKey: string) {
-    this.keyStr = secretKey;
+  constructor(secretKey: string | Uint8Array) {
+    this.keyData = secretKey;
   }
 
   private async initKey(): Promise<CryptoKey> {
     if (this.key) return this.key;
 
-    const enc = new TextEncoder();
-    const keyData = enc.encode(this.keyStr);
-    
-    const hash = await window.crypto.subtle.digest('SHA-256', keyData);
-    
-    this.key = await window.crypto.subtle.importKey(
-      'raw',
-      hash,
-      { name: 'AES-GCM' },
-      false,
-      ['encrypt', 'decrypt']
-    );
+    if (this.keyData instanceof Uint8Array) {
+       this.key = await window.crypto.subtle.importKey(
+        'raw',
+        this.keyData as BufferSource,
+        { name: 'AES-GCM' },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    } else {
+      const enc = new TextEncoder();
+      const keyData = enc.encode(this.keyData);
+      
+      const hash = await window.crypto.subtle.digest('SHA-256', keyData);
+      
+      this.key = await window.crypto.subtle.importKey(
+        'raw',
+        hash,
+        { name: 'AES-GCM' },
+        false,
+        ['encrypt', 'decrypt']
+      );
+    }
     return this.key;
   }
 

@@ -8,7 +8,8 @@
   "types": "dist/index.d.ts",
   "browser": {
     "./src/adapters/InMemoryStorage.ts": "./src/stubs/InMemoryStorage.ts",
-    "./src/adapters/AESCryptoAdapter.ts": "./src/stubs/AESCryptoAdapter.ts"
+    "./src/adapters/AESCryptoAdapter.ts": "./src/stubs/AESCryptoAdapter.ts",
+    "./src/utils/nodeCrypto.ts": "./src/stubs/nodeCrypto.ts"
   },
   "scripts": {
     "test": "jest",

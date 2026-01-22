@@ -5,8 +5,10 @@ export class AESCryptoAdapter implements ICryptoAdapter {
   private key: Buffer;
   private algorithm = 'aes-256-gcm';
 
-  constructor(secretKey: string) {
-    if (Buffer.from(secretKey, 'utf-8').length !== 32) {
+  constructor(secretKey: string | Buffer) {
+    if (Buffer.isBuffer(secretKey)) {
+      this.key = secretKey;
+    } else if (Buffer.from(secretKey, 'utf-8').length !== 32) {
       this.key = crypto.createHash('sha256').update(secretKey).digest();
     } else {
       this.key = Buffer.from(secretKey, 'utf-8');

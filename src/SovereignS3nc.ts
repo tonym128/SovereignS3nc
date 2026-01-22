@@ -6,6 +6,7 @@ import { ILocalStorage } from './interfaces/IStorage';
 import { InMemoryStorage } from './adapters/InMemoryStorage';
 import { ICryptoAdapter } from './interfaces/ICryptoAdapter';
 import { AESCryptoAdapter } from './adapters/AESCryptoAdapter';
+import { deriveKey, createCryptoAdapter } from './cryptoUtils';
 
 // Remote Adapters
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
@@ -49,6 +50,8 @@ export class StorageManager {
     
     if (shouldEncrypt) {
         payload = await this.db.encryptRaw(data);
+    } else if (isPublic && this.db.hasPublicEncryption()) {
+        payload = await this.db.encryptPublicRaw(data);
     }
 
     if (isPublic) {
@@ -101,6 +104,13 @@ export class StorageManager {
             console.warn(`Decryption failed for blob ${id}. Returning raw (might be plaintext).`);
             return raw;
         }
+    } else if (meta && meta.isPublic && this.db.hasPublicEncryption()) {
+        try {
+            return await this.db.decryptPublicRaw(raw);
+        } catch (e) {
+            console.warn(`Public Decryption failed for blob ${id}. Returning raw.`);
+            return raw;
+        }
     }
     return raw;
   }
@@ -133,6 +143,7 @@ export class SovereignS3nc extends EventEmitter {
   public globalRemote?: IRemoteAdapter;
   public readonly config: SovereignConfig;
   private crypto?: ICryptoAdapter;
+  private publicCrypto?: ICryptoAdapter;
   private syncInterval: NodeJS.Timeout | null = null;
   private isSyncing: boolean = false;
   private lastSyncTime: number = 0;
@@ -179,6 +190,7 @@ export class SovereignS3nc extends EventEmitter {
     if (customCryptoAdapter) {
       this.crypto = customCryptoAdapter;
     } else if (config.encryptionKey) {
+       // Legacy support
       this.crypto = new AESCryptoAdapter(config.encryptionKey);
     }
 
@@ -189,21 +201,24 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   public getAddress(): SovereignAddress {
-    if (this.config.s3) {
-      return {
-        endpoint: this.config.s3.endpoint,
-        region: this.config.s3.region,
-        bucket: this.config.s3.bucketName,
-        appId: this.config.paths.appId,
-        userId: this._publicId || 'unknown' // Share Public ID
-      };
-    }
-    return {
+    const addr: SovereignAddress = {
         region: 'unknown',
         bucket: 'unknown',
         appId: this.config.paths.appId,
         userId: this._publicId || 'unknown'
     };
+
+    if (this.config.s3) {
+      addr.endpoint = this.config.s3.endpoint;
+      addr.region = this.config.s3.region;
+      addr.bucket = this.config.s3.bucketName;
+    }
+    
+    if (this.config.auth && this.config.auth.publicPassphrase) {
+        addr.publicPassphrase = this.config.auth.publicPassphrase;
+    }
+    
+    return addr;
   }
 
   private initRemote(config: SovereignConfig) {
@@ -256,6 +271,19 @@ export class SovereignS3nc extends EventEmitter {
 
   async init(): Promise<void> {
     await this.localStore.init();
+
+    // Derive Keys if auth is present
+    if (this.config.auth) {
+        if (this.config.auth.privatePassphrase) {
+            const derivedKey = await deriveKey(this.config.auth.privatePassphrase, this.config.paths.userId);
+            this.crypto = createCryptoAdapter(derivedKey);
+        }
+        if (this.config.auth.publicPassphrase) {
+             // Use AppId as salt so all users in the app with the same passphrase can decrypt/share public data
+             const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
+             this.publicCrypto = createCryptoAdapter(derivedPublicKey);
+        }
+    }
     
     // --- Identity Management ---
     const identityDoc = await this.localStore.get('_sovereign_identity');
@@ -345,6 +373,10 @@ export class SovereignS3nc extends EventEmitter {
     return !!this.crypto;
   }
 
+  public hasPublicEncryption(): boolean {
+    return !!this.publicCrypto;
+  }
+
   public async encryptRaw(data: Uint8Array): Promise<Uint8Array> {
     if (!this.crypto) return data;
     return this.crypto.encryptRaw(data);
@@ -353,6 +385,32 @@ export class SovereignS3nc extends EventEmitter {
   public async decryptRaw(data: Uint8Array): Promise<Uint8Array> {
     if (!this.crypto) return data;
     return this.crypto.decryptRaw(data);
+  }
+
+  public async encryptPublicRaw(data: Uint8Array): Promise<Uint8Array> {
+    if (!this.publicCrypto) return data;
+    return this.publicCrypto.encryptRaw(data);
+  }
+
+  public async decryptPublicRaw(data: Uint8Array): Promise<Uint8Array> {
+    if (!this.publicCrypto) return data;
+    return this.publicCrypto.decryptRaw(data);
+  }
+
+  public async encryptPublic(data: any): Promise<any> {
+    if (!this.publicCrypto) return data;
+    return await this.publicCrypto.encrypt(data);
+  }
+
+  public async decryptPublic(data: any): Promise<any> {
+    if (!this.publicCrypto) return data;
+    if (typeof data !== 'string') return data;
+    try {
+        return await this.publicCrypto.decrypt(data);
+    } catch (e) {
+        console.warn('Failed to decrypt public data', e);
+        return data;
+    }
   }
 
   // --- Sharing ---
@@ -489,15 +547,20 @@ export class SovereignS3nc extends EventEmitter {
   }
 
   private async addToPublicIndex(metadata: ShareMetadata, collection?: string): Promise<void> {
-    const doc: SyncDocument = {
-      _id: `public/${metadata.sharedId}`,
-      _updatedAt: Date.now(),
-      data: {
+    const plainData = {
         id: metadata.sharedId,
         key: metadata.encryptionKey, 
         collection: collection,
         updatedAt: Date.now()
-      }
+    };
+    
+    // Encrypt the metadata so only those with the Public Passphrase can read the index
+    const encryptedData = await this.encryptPublic(plainData);
+
+    const doc: SyncDocument = {
+      _id: `public/${metadata.sharedId}`,
+      _updatedAt: Date.now(),
+      data: encryptedData
     };
     try {
         await this.sharedRemote!.put(doc);
@@ -524,7 +587,9 @@ export class SovereignS3nc extends EventEmitter {
     const results = await Promise.all(publicFiles.map(async c => {
         try {
             const doc = await this.sharedRemote!.get(c.id, c.collection);
-            return doc ? doc.data : null;
+            if (!doc) return null;
+            
+            return await this.decryptPublic(doc.data);
         } catch (e) {
             return null;
         }
@@ -837,176 +902,27 @@ export class SovereignS3nc extends EventEmitter {
                 const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
                 
-                // If it's a "public" share metadata, it wraps the actual content key/id
-                // But for regular posts, the doc IS the content.
-                // We need to distinguish between "Shared Metadata" (which points to encrypted content)
-                // and "Direct Content" (like posts/comments which might be plaintext or encrypted).
+                let meta = indexDoc.data;
                 
-                // In the current architecture:
-                // 1. "Public Shares" (via db.share) create a metadata doc in 'public/' which points to the real doc.
-                // 2. "Posts" (via demo) are just saved to 'posts' collection. They are NOT explicitly "shared" via db.share() in the demo code (except profile).
-                //    Wait, in demo/src/app.ts: `await db.collection('posts').save(...)`. This is private by default.
-                //    If it's private, `followRemote` (which uses the USER'S path) can access it IF the S3 policy allows.
-                //    Assuming the follower has read access to the user's bucket path (security via obscurity/shared key),
-                //    then `indexDoc` is the Post itself.
-                
-                // The existing logic inside this loop assumes `indexDoc.data` contains `id`, `key`, `updatedAt` (metadata structure).
-                // THIS IS WRONG for direct content like Posts!
-                
-                // We need to handle two cases:
-                // A) Public Share Metadata (collection == 'public') -> fetch content it points to.
-                // B) Direct Content (posts, comments) -> fetch and save directly.
-                
-                let docToSave = indexDoc;
-                let dataToSave = indexDoc.data;
-
-                if (file.collection === 'public' || file.id.startsWith('public/')) {
-                     // Case A: Dereference
-                     const meta = indexDoc.data; 
-                     if (meta.id) {
-                         const contentDoc = await followRemote.get(meta.id, meta.collection);
-                         if (contentDoc) {
-                             if (meta.key) {
-                                 const tempCrypto = this.getCryptoAdapter(meta.key);
-                                 dataToSave = await tempCrypto.decrypt(contentDoc.data);
-                             } else {
-                                 dataToSave = contentDoc.data;
-                             }
-                             // Use original update time from meta to stay in sync
-                             docToSave = { ...contentDoc, _updatedAt: meta.updatedAt };
+                // If the user has a public passphrase, the index doc is encrypted.
+                if (addr.publicPassphrase) {
+                     try {
+                         const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.userId);
+                         const theirCrypto = createCryptoAdapter(theirPublicKey);
+                         
+                         if (typeof indexDoc.data === 'string') {
+                             meta = await theirCrypto.decrypt(indexDoc.data);
                          } else {
-                             continue;
+                             meta = indexDoc.data;
                          }
+                     } catch (e) {
+                         console.error(`Failed to decrypt public index for ${addr.userId}`, e);
+                         continue;
                      }
-                } else {
-                    // Case B: Direct content (e.g. posts)
-                    // If the followed user encrypted it with THEIR key, we can't read it unless we have their key.
-                    // The demo uses `db.save` which uses the user's `encryptionKey`.
-                    // If `encryptionKey` is set (it is in demo), posts are encrypted.
-                    // Followers DO NOT have the user's private key.
-                    // THEREFORE, for followers to see posts, the posts MUST be:
-                    // 1. Unencrypted (public write)
-                    // 2. OR Encrypted with a shared key (Public Share)
-                    
-                    // In the demo, `db` is init with `encryptionKey`.
-                    // `db.collection('posts').save` encrypts it.
-                    // Follower downloads it. Follower tries to decrypt with THEIR key? No.
-                    // Follower stores it as `followed_content`.
-                    // When displaying, `SocialManager.getFeed` reads it.
-                    // `db.getAll` decrypts with LOCAL key.
-                    // So: Followed content MUST be re-encrypted for the follower OR stored plaintext.
-                    
-                    // IF the user simply saves to 'posts', it is encrypted with User A's key.
-                    // User B downloads it. User B cannot decrypt it.
-                    
-                    // FIX: The demo app MUST save posts as "Public" (unencrypted) OR explicitly share them.
-                    // In `demo/src/app.ts`, `save` is used. 
-                    // `SovereignS3nc.save` encrypts.
-                    
-                    // I will check `StorageManager.upload` in `SovereignS3nc.ts`. It supports `isPublic`.
-                    // But `Collection.save` does not support `isPublic` flag in the current `save` signature (it just takes `data`).
-                    
-                    // However, `SovereignS3nc.save` method is:
-                    // async save<T>(data: T & { _id?: string }, collection?: string, explicitId?: string): Promise<string>
-                    // It unconditionally calls `encryptData`.
-                    
-                    // To support public posts in the social demo, I should probably:
-                    // 1. Allow `save` to skip encryption (maybe via a config or flag).
-                    // 2. OR Update the demo to use `share` mechanism for posts.
-                    
-                    // Given the user wants "Feed Visibility", and the existing code in `pullFollowedContent` was designed for "Public Shares" (dereferencing),
-                    // it seems the INTENDED pattern was:
-                    // User A `shares` the post -> Metadata in `public/`.
-                    // User B sees metadata -> Downloads content -> Re-encrypts for themselves.
-                    
-                    // BUT, the demo app just does `db.collection('posts').save(...)`.
-                    // It does NOT call `share`.
-                    
-                    // OPTION 1: Update Demo to call `db.share(id, true)` after posting.
-                    // This creates the `public/` metadata.
-                    // Then `pullFollowedContent` (with my fix to allow non-public files? No, if it uses share, it uses public/ collection).
-                    // Wait, if I use `share`, the METADATA is in `public/`.
-                    // The EXISTING `pullFollowedContent` logic handled `public/` correctly.
-                    // So why didn't it work?
-                    // Because the demo app DID NOT CALL `share` for posts!
-                    
-                    // So, I should update the demo to share posts.
-                    // AND I should update `pullFollowedContent` to be robust.
-                    
-                    // However, if I want to support "following" in a raw sense (seeing their 'posts' collection),
-                    // they must be unencrypted.
-                    
-                    // Let's assume for this "Social Network" demo, posts should be PUBLIC (unencrypted).
-                    // I will modify `SovereignS3nc.ts` to allow `save` to accept an `unencrypted` flag?
-                    // Or easier: Update demo to use `db.share`.
-                    
-                    // Let's update `pullFollowedContent` to handle the case where the user simply `saves` (if we change save to be unencrypted).
-                    // BUT `save` encrypts.
-                    
-                    // Correct approach for this architecture:
-                    // 1. Demo App: After `save('posts')`, call `share(id, true)`.
-                    // 2. `pullFollowedContent`: The existing logic handles `public/` items.
-                    
-                    // So, if I fix the demo to `share` posts, the feed should appear.
-                    // AND `pullFollowedContent` needs to correctly identifying the ID/collection from the share metadata.
-                    
-                    // Let's look at `pullFollowedContent` again.
-                    // `const changes = await followRemote.listChanges(...)`
-                    // `const publicFiles = changes.filter(...)`
-                    
-                    // If I share a post, `S3RemoteAdapter` puts a file in `public/`.
-                    // `listChanges` sees it.
-                    // `pullFollowedContent` sees it.
-                    // It gets `indexDoc` (the metadata).
-                    // `indexDoc.data` has `key` (encryption key for the content) and `id` (content ID).
-                    // It fetches content, decrypts with `key`, re-encrypts with `this` user's key, and saves to `followed_content`.
-                    
-                    // THIS IS CORRECT.
-                    
-                    // So the missing piece is simply: **The demo app is not sharing posts.**
-                    
-                    // I will ALSO refine `pullFollowedContent` to be safe against non-metadata files if I open up the filter.
-                    // But if I strictly stick to the "Share" model, I don't need to open the filter much, just ensure it works.
-                    
-                    // WAIT. The user said: "I don't see other peoples feeds when I follow them."
-                    // If I update the demo to share, new posts will show. Old posts won't (unless I share them).
-                    // That's acceptable.
-                    
-                    // I will ALSO implement the "Sync on Tab Change" etc.
-                    
-                    // Let's first update `pullFollowedContent` to be slightly more permissive or robust, just in case.
-                    // Actually, the current logic is:
-                    // `const publicFiles = changes.filter(c => c.collection === 'public' || c.id.startsWith('public/'));`
-                    // This expects the *Change* to be in `public`.
-                    // `db.share(..., true)` puts the metadata in `public/`.
-                    // So this works.
-                    
-                    // CONCLUSION: The main fix for visibility is in `demo/src/app.ts` (calling share).
-                    // I will NOT modify `pullFollowedContent` logic deeply if it is correct for the Share model.
-                    // However, `contentToPull` implies I might want to pull other things.
-                    // For now, I will stick to the Share model.
-                    
-                    // Wait, `pullFollowedContent` in `src/SovereignS3nc.ts` has a logic bug?
-                    /*
-                    const local = await this.localStore.get(localId, 'followed_content');
-                    if (local && local._updatedAt >= meta.updatedAt) continue;
-                    */
-                    // This looks okay.
-                    
-                    // Let's proceed with updating `demo/src/app.ts` first to add `share`.
-                    // But wait, the user also wants "Edit and Delete".
-                    // Editing a shared post: Update local, then `share` updates the public metadata/content?
-                    // `updateSharedDoc` handles updating the remote content.
-                    
-                    // Let's refine `demo/src/app.ts` extensively.
                 }
-                
-                const meta = indexDoc.data; 
+
                 // Check if this looks like a ShareMetadata object (has id and updatedAt)
                 if (!meta || !meta.id || !meta.updatedAt) {
-                    // This might be a raw file if we allowed non-public. 
-                    // For now, if it's not metadata, skip or handle as raw.
-                    // Since we are fixing the demo to use share, we expect metadata.
                     continue;
                 }
 
@@ -1037,9 +953,6 @@ export class SovereignS3nc extends EventEmitter {
                         collection: 'followed_content',
                         data: encryptedForMe,
                         _rev: uuidv4(),
-                        // Store extra metadata to help with UI
-                        // e.g. original author
-                        // But `plainContent` (the Post) has `authorId`.
                     });
                     stats.pulled++;
                 }

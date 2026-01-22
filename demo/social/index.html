@@ -147,8 +147,16 @@
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
             
             <input type="text" id="app-id" class="input" placeholder="App ID (e.g. social-app)" value="social-app">
-            <input type="text" id="user-id" class="input" placeholder="Private Access Key (Leave empty to generate new identity)">
-            <button id="btn-connect" class="btn">Connect</button>
+            <input type="text" id="user-id" class="input" placeholder="User ID (Leave empty to generate new)">
+            
+            <div style="margin-top: 10px; padding: 10px; background: #e0e7ff; border-radius: 8px;">
+                <label style="font-weight:bold; color:#3730a3;">Zero Knowledge Security</label>
+                <input type="password" id="private-passphrase" class="input" placeholder="Private Passphrase (for your eyes only)">
+                <input type="text" id="public-passphrase" class="input" placeholder="Public Passphrase (share with followers)">
+                <small style="color:#666;">These keys never leave your device.</small>
+            </div>
+
+            <button id="btn-connect" class="btn" style="margin-top:10px;">Connect</button>
         </div>
 
         <!-- Main App Area -->

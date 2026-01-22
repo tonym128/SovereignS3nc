@@ -102,19 +102,25 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     const mode = (document.querySelector('input[name="auth-mode"]:checked') as HTMLInputElement).value;
     const appId = (document.getElementById('app-id') as HTMLInputElement).value.trim();
     let userId = (document.getElementById('user-id') as HTMLInputElement).value.trim();
+    const privatePassphrase = (document.getElementById('private-passphrase') as HTMLInputElement).value.trim();
+    const publicPassphrase = (document.getElementById('public-passphrase') as HTMLInputElement).value.trim();
 
     if (!appId) return showToast('Please fill in App ID', 'error');
+    if (!privatePassphrase || !publicPassphrase) return showToast('Please set both passphrases', 'error');
     
     // New User Flow
     if (!userId) {
         userId = crypto.randomUUID();
         (document.getElementById('user-id') as HTMLInputElement).value = userId;
-        showToast('Generated new Private Access Key. Save this securely!', 'success');
+        showToast('Generated new User ID. Save this securely!', 'success');
     }
 
     let config: any = {
         paths: { appId, userId, storeId: 'social' },
-        encryptionKey: 'demo-secret-key-must-be-32-bytes-long!', // Demo key
+        auth: {
+            privatePassphrase,
+            publicPassphrase
+        },
         syncIntervalMs: 0 // Manual sync only
     };
 

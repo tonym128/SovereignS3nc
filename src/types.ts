@@ -20,7 +20,11 @@ export interface SovereignConfig {
   syncIntervalMs?: number; // Auto-sync interval, 0 to disable
   localPersistencePath?: string; // Optional path for file-based persistence (if using a file adapter)
   conflictResolutionStrategy?: 'LastWriteWins' | 'Merge'; // Default: Merge
-  encryptionKey?: string; // Optional: Enable transparent encryption
+  auth?: {
+      privatePassphrase?: string;
+      publicPassphrase?: string;
+  };
+  encryptionKey?: string; // Legacy: Explicit key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
 }
 
@@ -54,6 +58,7 @@ export interface SovereignAddress {
   bucket: string;
   appId: string;
   userId: string;
+  publicPassphrase?: string; // Optional: Required if the user uses Zero Knowledge encryption
 }
 
 export interface BlobMetadata {

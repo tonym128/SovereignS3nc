@@ -6,10 +6,16 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
+    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+  }) : x2)(function(x2) {
+    if (typeof require !== "undefined") return require.apply(this, arguments);
+    throw Error('Dynamic require of "' + x2 + '" is not supported');
+  });
   var __esm = (fn, res) => function __init() {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
   };
-  var __commonJS = (cb2, mod) => function __require() {
+  var __commonJS = (cb2, mod) => function __require2() {
     return mod || (0, cb2[__getOwnPropNames(cb2)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
@@ -857,20 +863,30 @@
       WebCryptoAdapter = class {
         constructor(secretKey) {
           this.key = null;
-          this.keyStr = secretKey;
+          this.keyData = secretKey;
         }
         async initKey() {
           if (this.key) return this.key;
-          const enc = new TextEncoder();
-          const keyData = enc.encode(this.keyStr);
-          const hash = await window.crypto.subtle.digest("SHA-256", keyData);
-          this.key = await window.crypto.subtle.importKey(
-            "raw",
-            hash,
-            { name: "AES-GCM" },
-            false,
-            ["encrypt", "decrypt"]
-          );
+          if (this.keyData instanceof Uint8Array) {
+            this.key = await window.crypto.subtle.importKey(
+              "raw",
+              this.keyData,
+              { name: "AES-GCM" },
+              false,
+              ["encrypt", "decrypt"]
+            );
+          } else {
+            const enc = new TextEncoder();
+            const keyData = enc.encode(this.keyData);
+            const hash = await window.crypto.subtle.digest("SHA-256", keyData);
+            this.key = await window.crypto.subtle.importKey(
+              "raw",
+              hash,
+              { name: "AES-GCM" },
+              false,
+              ["encrypt", "decrypt"]
+            );
+          }
           return this.key;
         }
         async encrypt(data) {
@@ -952,6 +968,57 @@
   var init_AESCryptoAdapter = __esm({
     "src/stubs/AESCryptoAdapter.ts"() {
       "use strict";
+      init_WebCryptoAdapter();
+    }
+  });
+
+  // src/cryptoUtils.ts
+  async function deriveKey(passphrase, salt) {
+    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    const iterations = 1e5;
+    const keyLength = 32;
+    if (isBrowser) {
+      const enc = new TextEncoder();
+      const passwordKey = await window.crypto.subtle.importKey(
+        "raw",
+        enc.encode(passphrase),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits", "deriveKey"]
+      );
+      const derivedBits = await window.crypto.subtle.deriveBits(
+        {
+          name: "PBKDF2",
+          salt: enc.encode(salt),
+          iterations,
+          hash: "SHA-256"
+        },
+        passwordKey,
+        keyLength * 8
+      );
+      return new Uint8Array(derivedBits);
+    } else {
+      const crypto2 = await import("crypto");
+      return new Promise((resolve, reject) => {
+        crypto2.pbkdf2(passphrase, salt, iterations, keyLength, "sha256", (err, derivedKey) => {
+          if (err) reject(err);
+          else resolve(derivedKey);
+        });
+      });
+    }
+  }
+  function createCryptoAdapter(key) {
+    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    if (isBrowser) {
+      return new WebCryptoAdapter(key);
+    } else {
+      return new WebCryptoAdapter(key);
+    }
+  }
+  var init_cryptoUtils = __esm({
+    "src/cryptoUtils.ts"() {
+      "use strict";
+      init_AESCryptoAdapter();
       init_WebCryptoAdapter();
     }
   });
@@ -24559,6 +24626,7 @@ ${toHex(hashedRequest)}`;
       init_esm();
       init_InMemoryStorage();
       init_AESCryptoAdapter();
+      init_cryptoUtils();
       init_S3RemoteAdapter();
       init_OCIPreAuthAdapter();
       init_S3BlobAdapter();
@@ -24594,6 +24662,8 @@ ${toHex(hashedRequest)}`;
           const shouldEncrypt = this.db.hasEncryption() && !isPublic;
           if (shouldEncrypt) {
             payload = await this.db.encryptRaw(data);
+          } else if (isPublic && this.db.hasPublicEncryption()) {
+            payload = await this.db.encryptPublicRaw(data);
           }
           if (isPublic) {
             if (!this.db.publicBlobs) throw new Error("Public blob storage not configured (Identity not initialized?)");
@@ -24631,6 +24701,13 @@ ${toHex(hashedRequest)}`;
               return await this.db.decryptRaw(raw);
             } catch (e2) {
               console.warn(`Decryption failed for blob ${id}. Returning raw (might be plaintext).`);
+              return raw;
+            }
+          } else if (meta && meta.isPublic && this.db.hasPublicEncryption()) {
+            try {
+              return await this.db.decryptPublicRaw(raw);
+            } catch (e2) {
+              console.warn(`Public Decryption failed for blob ${id}. Returning raw.`);
               return raw;
             }
           }
@@ -24688,22 +24765,21 @@ ${toHex(hashedRequest)}`;
           return this._publicId;
         }
         getAddress() {
-          if (this.config.s3) {
-            return {
-              endpoint: this.config.s3.endpoint,
-              region: this.config.s3.region,
-              bucket: this.config.s3.bucketName,
-              appId: this.config.paths.appId,
-              userId: this._publicId || "unknown"
-              // Share Public ID
-            };
-          }
-          return {
+          const addr = {
             region: "unknown",
             bucket: "unknown",
             appId: this.config.paths.appId,
             userId: this._publicId || "unknown"
           };
+          if (this.config.s3) {
+            addr.endpoint = this.config.s3.endpoint;
+            addr.region = this.config.s3.region;
+            addr.bucket = this.config.s3.bucketName;
+          }
+          if (this.config.auth && this.config.auth.publicPassphrase) {
+            addr.publicPassphrase = this.config.auth.publicPassphrase;
+          }
+          return addr;
         }
         initRemote(config) {
           if (config.ociParUrl) {
@@ -24752,6 +24828,17 @@ ${toHex(hashedRequest)}`;
         }
         async init() {
           await this.localStore.init();
+          if (this.config.auth) {
+            if (this.config.auth.privatePassphrase) {
+              const derivedKey = await deriveKey(this.config.auth.privatePassphrase, this.config.paths.userId);
+              this.crypto = createCryptoAdapter(derivedKey);
+            }
+            if (this.config.auth.publicPassphrase) {
+              const derivedKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
+              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.userId);
+              this.publicCrypto = createCryptoAdapter(derivedPublicKey);
+            }
+          }
           const identityDoc = await this.localStore.get("_sovereign_identity");
           if (identityDoc) {
             const plain = await this.decryptData(identityDoc.data);
@@ -24820,6 +24907,9 @@ ${toHex(hashedRequest)}`;
         hasEncryption() {
           return !!this.crypto;
         }
+        hasPublicEncryption() {
+          return !!this.publicCrypto;
+        }
         async encryptRaw(data) {
           if (!this.crypto) return data;
           return this.crypto.encryptRaw(data);
@@ -24827,6 +24917,28 @@ ${toHex(hashedRequest)}`;
         async decryptRaw(data) {
           if (!this.crypto) return data;
           return this.crypto.decryptRaw(data);
+        }
+        async encryptPublicRaw(data) {
+          if (!this.publicCrypto) return data;
+          return this.publicCrypto.encryptRaw(data);
+        }
+        async decryptPublicRaw(data) {
+          if (!this.publicCrypto) return data;
+          return this.publicCrypto.decryptRaw(data);
+        }
+        async encryptPublic(data) {
+          if (!this.publicCrypto) return data;
+          return await this.publicCrypto.encrypt(data);
+        }
+        async decryptPublic(data) {
+          if (!this.publicCrypto) return data;
+          if (typeof data !== "string") return data;
+          try {
+            return await this.publicCrypto.decrypt(data);
+          } catch (e2) {
+            console.warn("Failed to decrypt public data", e2);
+            return data;
+          }
         }
         // --- Sharing ---
         async share(docId, isPublic = false, collection) {
@@ -24944,15 +25056,17 @@ ${toHex(hashedRequest)}`;
           }
         }
         async addToPublicIndex(metadata, collection) {
+          const plainData = {
+            id: metadata.sharedId,
+            key: metadata.encryptionKey,
+            collection,
+            updatedAt: Date.now()
+          };
+          const encryptedData = await this.encryptPublic(plainData);
           const doc = {
             _id: `public/${metadata.sharedId}`,
             _updatedAt: Date.now(),
-            data: {
-              id: metadata.sharedId,
-              key: metadata.encryptionKey,
-              collection,
-              updatedAt: Date.now()
-            }
+            data: encryptedData
           };
           try {
             await this.sharedRemote.put(doc);
@@ -24975,7 +25089,8 @@ ${toHex(hashedRequest)}`;
           const results = await Promise.all(publicFiles.map(async (c2) => {
             try {
               const doc = await this.sharedRemote.get(c2.id, c2.collection);
-              return doc ? doc.data : null;
+              if (!doc) return null;
+              return await this.decryptPublic(doc.data);
             } catch (e2) {
               return null;
             }
@@ -25228,27 +25343,17 @@ ${toHex(hashedRequest)}`;
               for (const file of contentToPull) {
                 const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
-                let docToSave = indexDoc;
-                let dataToSave = indexDoc.data;
-                if (file.collection === "public" || file.id.startsWith("public/")) {
-                  const meta2 = indexDoc.data;
-                  if (meta2.id) {
-                    const contentDoc2 = await followRemote.get(meta2.id, meta2.collection);
-                    if (contentDoc2) {
-                      if (meta2.key) {
-                        const tempCrypto = this.getCryptoAdapter(meta2.key);
-                        dataToSave = await tempCrypto.decrypt(contentDoc2.data);
-                      } else {
-                        dataToSave = contentDoc2.data;
-                      }
-                      docToSave = { ...contentDoc2, _updatedAt: meta2.updatedAt };
-                    } else {
-                      continue;
-                    }
+                let meta = indexDoc.data;
+                if (addr.publicPassphrase) {
+                  try {
+                    const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.userId);
+                    const theirCrypto = createCryptoAdapter(theirPublicKey);
+                    meta = await theirCrypto.decrypt(indexDoc.data);
+                  } catch (e2) {
+                    console.error(`Failed to decrypt public index for ${addr.userId}`, e2);
+                    continue;
                   }
-                } else {
                 }
-                const meta = indexDoc.data;
                 if (!meta || !meta.id || !meta.updatedAt) {
                   continue;
                 }
@@ -25274,9 +25379,6 @@ ${toHex(hashedRequest)}`;
                     collection: "followed_content",
                     data: encryptedForMe,
                     _rev: v4_default()
-                    // Store extra metadata to help with UI
-                    // e.g. original author
-                    // But `plainContent` (the Post) has `authorId`.
                   });
                   stats.pulled++;
                 }
@@ -25474,16 +25576,21 @@ ${toHex(hashedRequest)}`;
         const mode = document.querySelector('input[name="auth-mode"]:checked').value;
         const appId = document.getElementById("app-id").value.trim();
         let userId = document.getElementById("user-id").value.trim();
+        const privatePassphrase = document.getElementById("private-passphrase").value.trim();
+        const publicPassphrase = document.getElementById("public-passphrase").value.trim();
         if (!appId) return showToast("Please fill in App ID", "error");
+        if (!privatePassphrase || !publicPassphrase) return showToast("Please set both passphrases", "error");
         if (!userId) {
           userId = crypto.randomUUID();
           document.getElementById("user-id").value = userId;
-          showToast("Generated new Private Access Key. Save this securely!", "success");
+          showToast("Generated new User ID. Save this securely!", "success");
         }
         let config = {
           paths: { appId, userId, storeId: "social" },
-          encryptionKey: "demo-secret-key-must-be-32-bytes-long!",
-          // Demo key
+          auth: {
+            privatePassphrase,
+            publicPassphrase
+          },
           syncIntervalMs: 0
           // Manual sync only
         };
