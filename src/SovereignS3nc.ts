@@ -620,7 +620,9 @@ export class SovereignS3nc extends EventEmitter {
 
   async save<T>(data: T & { _id?: string }, collection?: string, explicitId?: string): Promise<string> {
     const id = explicitId || data._id || uuidv4();
-    const storedData = await this.encryptData(data);
+    // Inject _id into the payload so it persists across shares/syncs where the key might change
+    const payload = { ...data, _id: id };
+    const storedData = await this.encryptData(payload);
 
     const doc: SyncDocument<any> = {
       _id: id,
@@ -1019,14 +1021,13 @@ export class SovereignS3nc extends EventEmitter {
                     if (meta.key) {
                         const tempCrypto = this.getCryptoAdapter(meta.key);
                         plainContent = await tempCrypto.decrypt(contentDoc.data);
-                    } else if (docToSave.collection === 'profiles') {
-                         // Profiles are public but maybe encrypted with user key?
-                         // In `updateSharedDoc`, profiles are decrypted before upload if public.
-                         // So `contentDoc.data` should be plaintext if it came from `public/` logic?
-                         // Wait, `updateSharedDoc` puts `payload` into `sharedRemote`.
-                         // If `isPublic` and `profiles`, `payload` is `decryptData(doc.data)`. So it is PLAINTEXT.
-                         // So we don't need to decrypt `contentDoc.data`.
+                    } else if (meta.collection === 'profiles') {
                          plainContent = contentDoc.data;
+                    }
+
+                    // Preserve original ID in case it differs from the Shared ID (which is used for the key)
+                    if (plainContent && typeof plainContent === 'object' && plainContent._id) {
+                        plainContent._originalId = plainContent._id;
                     }
 
                     const encryptedForMe = await this.encryptData(plainContent);

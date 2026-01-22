@@ -24426,12 +24426,14 @@ ${toHex(hashedRequest)}`;
             const parts = doc._id.split("_");
             if (parts.length >= 3) {
               const userId = parts[1];
-              const originalId = parts.slice(2).join("_");
-              return {
+              const originalId = doc._originalId || parts.slice(2).join("_");
+              const normalized = {
                 ...doc,
                 _id: originalId,
                 authorId: userId
               };
+              delete normalized._originalId;
+              return normalized;
             }
           }
           return doc;
@@ -24752,8 +24754,12 @@ ${toHex(hashedRequest)}`;
           await this.localStore.init();
           const identityDoc = await this.localStore.get("_sovereign_identity");
           if (identityDoc) {
-            this._publicId = identityDoc.data.publicId;
-          } else {
+            const plain = await this.decryptData(identityDoc.data);
+            if (plain && typeof plain === "object" && plain.publicId) {
+              this._publicId = plain.publicId;
+            }
+          }
+          if (!this._publicId) {
             if (this.remote) {
               try {
                 const remoteIdentity = await this.remote.get("_sovereign_identity");
@@ -25049,7 +25055,8 @@ ${toHex(hashedRequest)}`;
         }
         async save(data, collection, explicitId) {
           const id = explicitId || data._id || v4_default();
-          const storedData = await this.encryptData(data);
+          const payload = { ...data, _id: id };
+          const storedData = await this.encryptData(payload);
           const doc = {
             _id: id,
             _updatedAt: Date.now(),
@@ -25254,8 +25261,11 @@ ${toHex(hashedRequest)}`;
                   if (meta.key) {
                     const tempCrypto = this.getCryptoAdapter(meta.key);
                     plainContent = await tempCrypto.decrypt(contentDoc.data);
-                  } else if (docToSave.collection === "profiles") {
+                  } else if (meta.collection === "profiles") {
                     plainContent = contentDoc.data;
+                  }
+                  if (plainContent && typeof plainContent === "object" && plainContent._id) {
+                    plainContent._originalId = plainContent._id;
                   }
                   const encryptedForMe = await this.encryptData(plainContent);
                   await this.localStore.put({

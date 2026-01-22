@@ -112,14 +112,18 @@ export class SocialManager {
       const parts = doc._id.split('_');
       if (parts.length >= 3) {
         const userId = parts[1];
-        const originalId = parts.slice(2).join('_');
+        
+        // Prefer explicit original ID if preserved during pull, otherwise fallback to parsing
+        const originalId = (doc as any)._originalId || parts.slice(2).join('_');
         
         // Return a copy with corrected author and ID
-        return {
+        const normalized = {
           ...doc,
           _id: originalId,
           authorId: userId
         };
+        delete (normalized as any)._originalId;
+        return normalized;
       }
     }
     return doc;
