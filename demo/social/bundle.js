@@ -25520,6 +25520,7 @@ ${toHex(hashedRequest)}`;
       init_S3RemoteAdapter();
       init_IndexedDBStorage();
       init_WebCryptoAdapter();
+      init_cryptoUtils();
       init_Social();
       init_Boards();
     }
@@ -25646,6 +25647,22 @@ ${toHex(hashedRequest)}`;
           config.useManifest = true;
         }
         const storage = new IndexedDBStorage(userId);
+        try {
+          await storage.init();
+          const identity = await storage.get("_sovereign_identity");
+          if (identity && typeof identity.data === "string") {
+            try {
+              const key = await deriveKey(privatePassphrase, userId);
+              const crypto2 = createCryptoAdapter(key);
+              await crypto2.decrypt(identity.data);
+            } catch (e2) {
+              console.error("Decryption check failed", e2);
+              return showToast("Incorrect Private Passphrase!", "error");
+            }
+          }
+        } catch (e2) {
+          console.warn("Pre-check of storage failed", e2);
+        }
         try {
           if (db) {
             db.stopAutoSync();

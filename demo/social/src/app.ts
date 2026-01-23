@@ -1,4 +1,4 @@
-import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage } from '../../../src/index';
+import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage, deriveKey, createCryptoAdapter } from '../../../src/index';
 
 // --- State ---
 let db: SovereignS3nc | null = null;
@@ -154,6 +154,27 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
     }
 
     const storage = new IndexedDBStorage(userId);
+
+    // --- Verify Passphrase First ---
+    try {
+        await storage.init();
+        const identity = await storage.get('_sovereign_identity');
+        if (identity && typeof identity.data === 'string') {
+            try {
+                const key = await deriveKey(privatePassphrase, userId);
+                const crypto = createCryptoAdapter(key);
+                await crypto.decrypt(identity.data);
+                // If we get here, decryption worked
+            } catch (e) {
+                console.error('Decryption check failed', e);
+                return showToast('Incorrect Private Passphrase!', 'error');
+            }
+        }
+    } catch (e) {
+        // If storage init fails, we might have bigger issues, or just proceed to try connect
+        console.warn('Pre-check of storage failed', e);
+    }
+    // -------------------------------
 
     try {
         if (db) {
