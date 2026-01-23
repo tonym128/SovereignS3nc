@@ -6,16 +6,10 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
-    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
-  }) : x2)(function(x2) {
-    if (typeof require !== "undefined") return require.apply(this, arguments);
-    throw Error('Dynamic require of "' + x2 + '" is not supported');
-  });
   var __esm = (fn, res) => function __init() {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
   };
-  var __commonJS = (cb2, mod) => function __require2() {
+  var __commonJS = (cb2, mod) => function __require() {
     return mod || (0, cb2[__getOwnPropNames(cb2)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
@@ -972,6 +966,15 @@
     }
   });
 
+  // src/stubs/nodeCrypto.ts
+  var nodeCrypto;
+  var init_nodeCrypto = __esm({
+    "src/stubs/nodeCrypto.ts"() {
+      "use strict";
+      nodeCrypto = async () => null;
+    }
+  });
+
   // src/cryptoUtils.ts
   async function deriveKey(passphrase, salt) {
     const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
@@ -998,7 +1001,8 @@
       );
       return new Uint8Array(derivedBits);
     } else {
-      const crypto2 = await import("crypto");
+      const crypto2 = await nodeCrypto();
+      if (!crypto2) throw new Error("Node crypto module not available");
       return new Promise((resolve, reject) => {
         crypto2.pbkdf2(passphrase, salt, iterations, keyLength, "sha256", (err, derivedKey) => {
           if (err) reject(err);
@@ -1020,6 +1024,7 @@
       "use strict";
       init_AESCryptoAdapter();
       init_WebCryptoAdapter();
+      init_nodeCrypto();
     }
   });
 
@@ -24419,6 +24424,7 @@ ${toHex(hashedRequest)}`;
       init_esm_browser();
       init_S3BlobAdapter();
       init_OCIBlobAdapter();
+      init_cryptoUtils();
       ProfileManager = class {
         constructor(db) {
           this.db = db;
@@ -24472,7 +24478,25 @@ ${toHex(hashedRequest)}`;
             });
           }
           if (adapter) {
-            return adapter.download(blobId);
+            const raw = await adapter.download(blobId);
+            if (!raw) return null;
+            if (address.publicPassphrase) {
+              try {
+                const key = await deriveKey(address.publicPassphrase, address.appId);
+                const crypto2 = createCryptoAdapter(key);
+                return await crypto2.decryptRaw(raw);
+              } catch (e2) {
+                return raw;
+              }
+            }
+            if (this.db.hasPublicEncryption()) {
+              try {
+                return await this.db.decryptPublicRaw(raw);
+              } catch (e2) {
+                return raw;
+              }
+            }
+            return raw;
           }
           return null;
         }
@@ -24834,8 +24858,7 @@ ${toHex(hashedRequest)}`;
               this.crypto = createCryptoAdapter(derivedKey);
             }
             if (this.config.auth.publicPassphrase) {
-              const derivedKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
-              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.userId);
+              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
               this.publicCrypto = createCryptoAdapter(derivedPublicKey);
             }
           }
@@ -25346,9 +25369,13 @@ ${toHex(hashedRequest)}`;
                 let meta = indexDoc.data;
                 if (addr.publicPassphrase) {
                   try {
-                    const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.userId);
+                    const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.appId);
                     const theirCrypto = createCryptoAdapter(theirPublicKey);
-                    meta = await theirCrypto.decrypt(indexDoc.data);
+                    if (typeof indexDoc.data === "string") {
+                      meta = await theirCrypto.decrypt(indexDoc.data);
+                    } else {
+                      meta = indexDoc.data;
+                    }
                   } catch (e2) {
                     console.error(`Failed to decrypt public index for ${addr.userId}`, e2);
                     continue;
@@ -25665,12 +25692,17 @@ ${toHex(hashedRequest)}`;
         if (!db) return;
         document.getElementById("profile-public-id").value = db.publicId || "Pending...";
         document.getElementById("profile-private-id").value = db.config.paths.userId;
+        document.getElementById("profile-name").value = "";
+        document.getElementById("profile-bio").value = "";
+        const avatarEl = document.getElementById("profile-avatar-preview");
+        avatarEl.src = "";
+        avatarEl.removeAttribute("src");
         const profile = await db.profile.get();
         if (profile) {
           document.getElementById("profile-name").value = profile.displayName;
           document.getElementById("profile-bio").value = profile.bio || "";
           if (profile.avatarUrl) {
-            renderImage(profile.avatarUrl, document.getElementById("profile-avatar-preview"));
+            renderImage(profile.avatarUrl, avatarEl);
           }
         }
       }

@@ -219,13 +219,20 @@ async function loadProfile() {
     (document.getElementById('profile-public-id') as HTMLInputElement).value = db.publicId || 'Pending...';
     (document.getElementById('profile-private-id') as HTMLInputElement).value = db.config.paths.userId;
 
+    // Reset profile fields to prevent leaks from previous session
+    (document.getElementById('profile-name') as HTMLInputElement).value = '';
+    (document.getElementById('profile-bio') as HTMLInputElement).value = '';
+    const avatarEl = document.getElementById('profile-avatar-preview') as HTMLImageElement;
+    avatarEl.src = '';
+    avatarEl.removeAttribute('src');
+
     const profile = await db.profile.get();
     if (profile) {
         (document.getElementById('profile-name') as HTMLInputElement).value = profile.displayName;
         (document.getElementById('profile-bio') as HTMLInputElement).value = profile.bio || '';
         
         if (profile.avatarUrl) {
-           renderImage(profile.avatarUrl, document.getElementById('profile-avatar-preview') as HTMLImageElement);
+           renderImage(profile.avatarUrl, avatarEl);
         }
     }
 }
