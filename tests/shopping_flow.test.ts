@@ -1,203 +1,187 @@
+import fs from 'fs';
+import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { S3RemoteAdapter } from '../src/adapters/S3RemoteAdapter';
-import { SyncDocument } from '../src/types';
+import { InMemoryStorage } from '../src/adapters/InMemoryStorage';
+import { S3Config, SovereignConfig, SovereignAddress } from '../src/types';
 
-// --- Mock Cloud Infrastructure ---
-// Simulates a global S3 bucket
-const mockCloudStorage = new Map<string, SyncDocument>();
+const CONFIG_PATH = path.join(__dirname, '../.test-env.json');
 
-// Helper to generate a key exactly like S3RemoteAdapter does
-function getKey(paths: any, id: string, collection?: string) {
-    // Basic logic from S3RemoteAdapter
-    let prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
-    if (collection) prefix += `${collection}/`;
-    return prefix + id;
-}
+describe('Shopping App Social Flow', () => {
+    let config: any;
 
-// Concrete Mock Implementation
-class MemoryAdapter {
-    constructor(private config: any, private paths: any) {}
-
-    async put(doc: SyncDocument, collection?: string): Promise<string> {
-        const key = getKey(this.paths, doc._id, collection);
-        mockCloudStorage.set(key, JSON.parse(JSON.stringify(doc)));
-        return 'etag-' + Date.now();
-    }
-
-    async get(id: string, collection?: string): Promise<SyncDocument | null> {
-        const key = getKey(this.paths, id, collection);
-        const doc = mockCloudStorage.get(key);
-        return doc ? JSON.parse(JSON.stringify(doc)) : null;
-    }
-
-    async listChanges(since: Date, collection?: string): Promise<any[]> {
-        const prefix = `${this.paths.appId}/${this.paths.userId}/${this.paths.storeId}/` + (collection ? `${collection}/` : '');
-        const results = [];
-        
-        for (const [key, doc] of mockCloudStorage.entries()) {
-            if (key.startsWith(prefix)) {
-                if (new Date(doc._updatedAt) > since) {
-                    results.push({
-                        id: doc._id,
-                        collection: collection, // simplified
-                        etag: 'etag',
-                        key: key,
-                        updatedAt: new Date(doc._updatedAt)
-                    });
-                }
-            }
+    beforeAll(() => {
+        if (!fs.existsSync(CONFIG_PATH)) {
+            throw new Error(`Test config not found at ${CONFIG_PATH}. Run 'npm run setup:test-env' first.`);
         }
-        return results;
-    }
-
-    async delete(id: string, collection?: string): Promise<void> {
-        const key = getKey(this.paths, id, collection);
-        mockCloudStorage.delete(key);
-    }
-}
-
-// Mock the S3RemoteAdapter module
-jest.mock('../src/adapters/S3RemoteAdapter', () => {
-    return {
-        S3RemoteAdapter: jest.fn().mockImplementation((config, paths) => {
-            return new MemoryAdapter(config, paths);
-        })
-    };
-});
-
-describe('Shopping List Collaborative Flow', () => {
-    let alice: SovereignS3nc;
-    let bob: SovereignS3nc;
-
-    beforeEach(async () => {
-        mockCloudStorage.clear();
-        (S3RemoteAdapter as any).mockClear();
-
-        // --- ALICE ---
-        alice = new SovereignS3nc({
-            s3: { endpoint: 'mock', region: 'us-east-1', bucketName: 'bucket', credentials: { accessKeyId: 'a', secretAccessKey: 's' } },
-            paths: { appId: 'shopping', userId: 'alice', storeId: 'data' },
-            syncIntervalMs: 0
-        });
-        await alice.init();
-
-        // --- BOB ---
-        bob = new SovereignS3nc({
-            s3: { endpoint: 'mock', region: 'us-east-1', bucketName: 'bucket', credentials: { accessKeyId: 'b', secretAccessKey: 's' } },
-            paths: { appId: 'shopping', userId: 'bob', storeId: 'data' },
-            syncIntervalMs: 0
-        });
-        await bob.init();
+        config = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
     });
 
-    test('Full Collaboration Cycle', async () => {
-        // 1. Alice creates a list
-        const listId = await alice.collection('lists').save({
-            title: 'Groceries',
-            ownerId: 'alice',
+    const createInstance = async (appId: string, userId: string, storeId: string = 'shopping') => {
+        const s3Config: S3Config = {
+            endpoint: config.endpoint,
+            region: config.region,
+            credentials: {
+                accessKeyId: config.accessKeyId,
+                secretAccessKey: config.secretAccessKey
+            },
+            bucketName: config.bucketName,
+            forcePathStyle: true
+        };
+
+        const sovereignConfig: SovereignConfig = {
+            s3: s3Config,
+            paths: { appId, userId, storeId },
+            conflictResolutionStrategy: 'Merge',
+            // Shopping app uses passphrase derivation but for tests we can skip or simulate.
+            // But wait, SovereignS3nc init() derives keys if auth is present.
+            // We'll skip auth config here and assume no encryption for simplicity of testing LOGIC first.
+            // Ideally we should test with encryption if the app enforces it.
+            // The app.ts snippet shows it decrypts identity.
+            // Let's stick to unencrypted for logic verification to avoid debugging crypto.
+        };
+
+        const storage = new InMemoryStorage();
+        const sovereign = new SovereignS3nc(sovereignConfig, storage);
+        
+        await sovereign.init();
+        // Force identity creation (normally done by UI/Auth)
+        // We need this for 'getAddress()' to work correctly if it relies on _publicId
+        // SovereignS3nc auto-generates publicId if missing? No, checks remote.
+        // If we don't provide auth, it might not generate one?
+        // Actually SovereignS3nc generates _publicId if not found? 
+        // Let's check getAddress().
+        
+        return { sovereign, storage };
+    };
+
+    test('User B should see User A\'s shared list after following', async () => {
+        const appId = `shopping-social-${uuidv4()}`;
+        const userA = await createInstance(appId, 'Alice');
+        const userB = await createInstance(appId, 'Bob');
+
+        // 1. A creates a list
+        const listData = {
+            title: "Alice's Party",
+            ownerId: 'Alice',
             createdAt: Date.now(),
             type: 'list'
-        });
-
-        // 2. Alice shares the list
-        const shareId = await alice.share(listId, true, 'lists');
-        
-        // Ensure Alice syncs to "Cloud"
-        await alice.sync();
-
-        // 3. Bob follows Alice
-        // Bob must follow Alice's PUBLIC ID, not her private login ID
-        expect(alice.publicId).toBeDefined();
-
-        const aliceAddress = {
-            appId: 'shopping',
-            userId: alice.publicId!, // Use Public ID
-            endpoint: 'mock',
-            bucket: 'bucket',
-            region: 'us-east-1'
         };
+        const listId = await userA.sovereign.save(listData, 'lists');
+        
+        // 2. A shares the list
+        await userA.sovereign.share(listId, true, 'lists');
+        await userA.sovereign.sync(); // Push share to A's public store
 
-        await bob.social.follow(aliceAddress);
+        // 3. B follows A
+        const addrA: SovereignAddress = userA.sovereign.getAddress();
+        await userB.sovereign.social.follow(addrA);
         
-        // 4. Bob Syncs -> Should pull Alice's shared content
-        const stats = await bob.sync();
-        expect(stats.pulled).toBeGreaterThan(0);
+        // 4. B syncs (Pulls followed content)
+        await userB.sovereign.sync();
 
-        // 5. Bob should see the list
-        // It will be in 'followed_content' collection
-        const followedLists = await bob.collection('followed_content').getAll<any>();
-        const sharedList = followedLists.find(d => d.type === 'list' && d.title === 'Groceries');
+        // 5. Verify B has the list in 'followed_content'
+        const followed = await userB.sovereign.collection('followed_content').getAll<any>();
+        const foundList = followed.find(d => d.type === 'list' && d.title === "Alice's Party");
         
-        expect(sharedList).toBeDefined();
-        // The ID in followed_content is 'follow_alice_{shareId}' or similar depending on implementation
-        // Check app.ts logic: "follow_userId_originalId" or based on share logic
-        
-        // 6. Bob adds an item to this list
-        // Bob needs to reference the *Original* List ID (or the ID he knows).
-        // In the app, items are stored in Bob's 'items' collection.
-        // The 'listId' field points to Alice's list.
-        
-        // We need the ID that Bob sees. 
-        // The share logic in SovereignS3nc:
-        // Alice shares `listId` -> `shareId` in Alice's 'shared' store.
-        // Bob pulls `shareId` -> saves as `follow_alice_{shareId}` in 'followed_content'.
-        // Wait, does Bob decrypt it? 
-        // If it's public share, yes.
-        
-        // Let's verify the content of the shared list
-        // expect(sharedList._id).toContain('alice');
+        expect(foundList).toBeDefined();
+        // Check owner
+        expect(foundList.ownerId).toBe('Alice');
+    }, 60000);
 
-        // Bob creates item
-        // Note: For Alice to see this, Bob must share the item too!
-        const itemId = await bob.collection('items').save({
-            listId: listId, // Referring to original ID (assuming Bob knows it or we use the shared one?)
-                            // In app.ts, we used logic to strip 'follow_' prefix if present.
-            text: 'Milk',
-            type: 'item',
-            authorId: 'bob',
-            createdAt: Date.now()
-        });
-        
-        // Bob shares the item
-        await bob.share(itemId, true, 'items');
-        await bob.sync();
+    test('Both users editing (Mutual Follow)', async () => {
+        const appId = `shopping-coedit-${uuidv4()}`;
+        const userA = await createInstance(appId, 'Alice');
+        const userB = await createInstance(appId, 'Bob');
 
-        // 7. Alice needs to follow Bob to see his items
-        expect(bob.publicId).toBeDefined();
-        const bobAddress = {
-            appId: 'shopping',
-            userId: bob.publicId!, // Use Public ID
-            endpoint: 'mock',
-            bucket: 'bucket',
-            region: 'us-east-1'
-        };
-        await alice.social.follow(bobAddress);
-        
-        // 8. Alice syncs
-        await alice.sync();
-        
-        // 9. Alice checks for items
-        const aliceFollowedItems = await alice.collection('followed_content').getAll<any>();
-        const milkItem = aliceFollowedItems.find(i => i.text === 'Milk');
-        expect(milkItem).toBeDefined();
-        expect(milkItem.authorId).toBe('bob');
+        // Mutual Follow
+        const addrA = userA.sovereign.getAddress();
+        const addrB = userB.sovereign.getAddress();
+        await userA.sovereign.social.follow(addrB);
+        await userB.sovereign.social.follow(addrA);
 
-        // 10. Conflict / Toggle State
-        // Alice checks the item
-        const stateId = await alice.collection('item_states').save({
-            itemId: milkItem._originalId || milkItem._id, // References the item
+        // 1. A creates list and item
+        const listId = await userA.sovereign.save({ title: "Shared List", type: 'list', ownerId: 'Alice', createdAt: Date.now() }, 'lists');
+        await userA.sovereign.share(listId, true, 'lists');
+        
+        const item1Id = await userA.sovereign.save({ listId, text: "Milk", type: 'item', createdAt: Date.now(), authorId: 'Alice' }, 'items');
+        await userA.sovereign.share(item1Id, true, 'items');
+        
+        await userA.sovereign.sync(); // A publishes
+
+        // 2. B syncs and sees list
+        await userB.sovereign.sync();
+        const followedB = await userB.sovereign.collection('followed_content').getAll<any>();
+        const listB = followedB.find(d => d.type === 'list' && d.title === "Shared List");
+        expect(listB).toBeDefined();
+        
+        // Resolve original list ID (B sees it wrapped/renamed? No, getAll decrypts inner data.
+        // But SovereignS3nc 'followed_content' usually stores it with ID 'follow_user_origId'
+        // But the DATA inside has the original ID usually?
+        // Let's check the fetched doc.
+        // In the app logic: `if (listId.startsWith('follow_')) ... targetListId = parts...`
+        // The ID of the document IN THE STORE is 'follow_Alice_<listId>'.
+        // The DATA inside has '_id': listId (original).
+        // Let's confirm this behavior.
+        
+        const originalListId = listB._id; // Wait, getAll returns doc with _id from store key?
+        // InMemoryStorage: lists(false) -> keys are store keys. 
+        // SovereignS3nc getAll: pushes { ...plain, _id: doc._id }
+        // So _id is the LOCAL STORE ID (follow_Alice_...).
+        
+        // We need the original ID to link items.
+        // The app logic parses it from the ID string.
+        let targetListId = originalListId;
+        if (targetListId.startsWith('follow_')) {
+             targetListId = targetListId.split('_').slice(2).join('_');
+        }
+        expect(targetListId).toBe(listId);
+
+        // 3. B adds an item "Eggs" linking to ORIGINAL List ID
+        const item2Id = await userB.sovereign.save({ 
+            listId: targetListId, 
+            text: "Eggs", 
+            type: 'item', 
+            createdAt: Date.now(), 
+            authorId: 'Bob' 
+        }, 'items');
+        await userB.sovereign.share(item2Id, true, 'items');
+        await userB.sovereign.sync(); // B publishes
+
+        // 4. A syncs and sees "Eggs"
+        await userA.sovereign.sync();
+        const followedA = await userA.sovereign.collection('followed_content').getAll<any>();
+        const eggItem = followedA.find(d => d.type === 'item' && d.text === "Eggs");
+        
+        expect(eggItem).toBeDefined();
+        expect(eggItem.authorId).toBe('Bob');
+        
+        // 5. A checks "Eggs" (creates state)
+        // A needs to refer to "Eggs" original ID.
+        let eggOriginalId = eggItem._id;
+        if (eggOriginalId.startsWith('follow_')) {
+            eggOriginalId = eggOriginalId.split('_').slice(2).join('_');
+        }
+        expect(eggOriginalId).toBe(item2Id);
+
+        const stateId = await userA.sovereign.save({
+            itemId: eggOriginalId,
             isChecked: true,
-            type: 'item_state',
-            updatedAt: Date.now()
-        });
-        await alice.share(stateId, true, 'item_states');
-        await alice.sync();
+            updatedAt: Date.now(),
+            authorId: 'Alice',
+            type: 'item_state'
+        }, 'item_states');
+        await userA.sovereign.share(stateId, true, 'item_states');
+        await userA.sovereign.sync();
 
-        // Bob syncs
-        await bob.sync();
+        // 6. B syncs and sees state
+        await userB.sovereign.sync();
+        const followedStatesB = await userB.sovereign.collection('followed_content').getAll<any>();
+        const eggState = followedStatesB.find(d => d.type === 'item_state' && d.itemId === item2Id);
         
-        const bobFollowedStates = await bob.collection('followed_content').getAll<any>();
-        const state = bobFollowedStates.find(s => s.type === 'item_state' && s.isChecked === true);
-        expect(state).toBeDefined();
-    });
+        expect(eggState).toBeDefined();
+        expect(eggState.isChecked).toBe(true);
+        expect(eggState.authorId).toBe('Alice');
+
+    }, 60000);
 });
