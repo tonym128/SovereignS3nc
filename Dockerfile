@@ -1,7 +1,7 @@
 FROM node:20-slim
 
 # Install basics
-RUN apt-get update && apt-get install -y curl wget unzip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl wget unzip dos2unix && rm -rf /var/lib/apt/lists/*
 
 # Install Garage (S3 Compatible Storage)
 # Using v1.0.0 static binary
@@ -26,6 +26,7 @@ RUN npm run build
 RUN npx esbuild demo/social/src/app.ts --bundle --outfile=demo/social/bundle.js --sourcemap --platform=browser --external:crypto
 RUN npx esbuild demo/notes/src/app.ts --bundle --outfile=demo/notes/bundle.js --sourcemap --platform=browser --external:crypto
 RUN npx esbuild demo/chat/src/app.ts --bundle --outfile=demo/chat/bundle.js --sourcemap --platform=browser --external:crypto
+RUN npx esbuild demo/shopping/src/app.ts --bundle --outfile=demo/shopping/bundle.js --sourcemap --platform=browser --external:crypto
 
 # Install a simple HTTP server
 RUN npm install -g http-server
@@ -35,7 +36,7 @@ RUN mkdir -p /etc/garage
 
 # Copy startup script
 COPY start.sh /start.sh
-RUN chmod +x /start.sh
+RUN dos2unix /start.sh && chmod +x /start.sh
 
 # Expose ports
 # 3900: S3 API

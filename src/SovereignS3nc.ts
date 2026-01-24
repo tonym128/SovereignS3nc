@@ -216,6 +216,7 @@ export class SovereignS3nc extends EventEmitter {
     
     if (this.config.auth && this.config.auth.publicPassphrase) {
         addr.publicPassphrase = this.config.auth.publicPassphrase;
+        addr.publicSalt = this.config.auth.publicSalt || this.config.paths.appId;
     }
     
     return addr;
@@ -279,8 +280,9 @@ export class SovereignS3nc extends EventEmitter {
             this.crypto = createCryptoAdapter(derivedKey);
         }
         if (this.config.auth.publicPassphrase) {
-             // Use AppId as salt so all users in the app with the same passphrase can decrypt/share public data
-             const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), this.config.paths.appId.trim());
+             // Use publicSalt if available, otherwise AppId as salt
+             const salt = this.config.auth.publicSalt || this.config.paths.appId;
+             const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), salt.trim());
              this.publicCrypto = createCryptoAdapter(derivedPublicKey);
         }
     }
@@ -907,7 +909,8 @@ export class SovereignS3nc extends EventEmitter {
                 // If the user has a public passphrase, the index doc is encrypted.
                 if (addr.publicPassphrase) {
                      try {
-                         const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), addr.appId.trim());
+                         const salt = addr.publicSalt || addr.appId;
+                         const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), salt.trim());
                          const theirCrypto = createCryptoAdapter(theirPublicKey);
                          
                          if (typeof indexDoc.data === 'string') {

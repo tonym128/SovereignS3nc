@@ -134,12 +134,12 @@ describe('Demo App Integration', () => {
                 addEventListener: jest.fn((event, handler) => {
                    listeners.set(`${id}:${event}`, handler);
                 }),
-                onclick: null, // For direct assignment
-                appendChild: jest.fn(),
-                querySelector: jest.fn().mockReturnValue({}),
-                files: [],
-                innerHTML: ''
-            };
+                        onclick: null, // For direct assignment
+                        appendChild: jest.fn(),
+                        querySelector: jest.fn().mockReturnValue({}),
+                        removeAttribute: jest.fn(),
+                        files: [],
+                        innerHTML: ''            };
             mockElements.set(id, el);
         }
         return mockElements.get(id);

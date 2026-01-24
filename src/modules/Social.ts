@@ -96,7 +96,8 @@ export class SocialManager {
           if (address.publicPassphrase) {
               try {
                   // We need to derive the key used by the AUTHOR of the blob
-                  const key = await deriveKey(address.publicPassphrase, address.appId);
+                  const salt = address.publicSalt || address.appId;
+                  const key = await deriveKey(address.publicPassphrase.trim(), salt.trim());
                   const crypto = createCryptoAdapter(key);
                   return await crypto.decryptRaw(raw);
               } catch (e) {

@@ -23,6 +23,7 @@ export interface SovereignConfig {
   auth?: {
       privatePassphrase?: string;
       publicPassphrase?: string;
+      publicSalt?: string;
   };
   encryptionKey?: string; // Legacy: Explicit key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
@@ -59,6 +60,7 @@ export interface SovereignAddress {
   appId: string;
   userId: string;
   publicPassphrase?: string; // Optional: Required if the user uses Zero Knowledge encryption
+  publicSalt?: string;
 }
 
 export interface BlobMetadata {
