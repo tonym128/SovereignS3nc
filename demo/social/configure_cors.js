@@ -29,9 +29,10 @@ const corsParams = {
         CORSRules: [
             {
                 AllowedHeaders: ["*"],
-                AllowedMethods: ["GET", "PUT", "POST", "DELETE", "HEAD"],
+                AllowedMethods: ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
                 AllowedOrigins: ["*"], // For demo purposes, allow all. In prod, restrict this.
-                ExposeHeaders: ["ETag", "Content-Type", "Content-Length", "Last-Modified"]
+                ExposeHeaders: ["ETag", "Content-Type", "Content-Length", "Last-Modified", "Date", "Server", "Connection", "Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers", "Access-Control-Max-Age"],
+                MaxAgeSeconds: 3000
             }
         ]
     }

@@ -113,11 +113,14 @@ garage bucket create sovereign-demo || true
 garage bucket allow sovereign-demo --read --write --owner --key demo-key || true
 
 # Make it public for public sharing features
-# garage bucket allow sovereign-demo --read || true
+# Note: Garage doesn't support --anonymous, so we'll rely on proper CORS and object ACLs
+# The objects will be uploaded with public-read ACL as needed by the application
 
-# 5b. Configure CORS
+# 5b. Configure CORS - Add delay to ensure Garage S3 API is ready
+echo "Waiting for S3 API to be ready..."
+sleep 10
 echo "Applying CORS configuration..."
-ACCESS_KEY=$ACCESS_KEY SECRET_KEY=$SECRET_KEY node demo/social/configure_cors.js
+ACCESS_KEY=$ACCESS_KEY SECRET_KEY=$SECRET_KEY node demo/social/configure_cors.js || echo "Warning: CORS configuration failed, continuing anyway..."
 
 # 5c. Generate demo config for auto-fill
 echo "Generating demo config.json..."
