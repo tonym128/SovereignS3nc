@@ -118,6 +118,15 @@
 <body>
     <div id="loading">Syncing...</div>
     <div id="toast-container"></div>
+
+    <!-- User Profile Header -->
+    <div id="user-profile-header" class="hidden" style="position: fixed; top: 10px; right: 10px; display: flex; align-items: center; gap: 10px; z-index: 100;">
+        <div id="user-profile-info" style="display: flex; align-items: center; gap: 8px; background: var(--surface); padding: 8px 12px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid var(--border);">
+            <img id="header-avatar" class="avatar" style="width: 30px; height: 30px;">
+            <span id="header-display-name" style="font-weight: 500; color: var(--text);"></span>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Sovereign Social</h1>
         

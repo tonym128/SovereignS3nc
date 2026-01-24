@@ -8,13 +8,11 @@ TODO
 - Allow a user to clear all their local data from the connection page
 
 - When a user deletes a post it should be deleted from the public index, it should be marked deleted and the data cleared and on sync other users should pick up and remove the post from their local store.
-- Use ETags to check for changes on content
 - When doing a sync, check for new users to follow
 - On the network page show the users names and profile photos
 - On the networks page remove the My Soveriegn Address.
 - Add the idea of a read only anonymous user with no write access or profile and show the main public feed, this should be feature flagged and shown on the login page as an option if enabled.
 - Periodic sync ?
-- Add the users current login name and a small profile photo on the top right of the screen
 
 DONE
 - The list function should never be used anywhere in SovereignS3nc as security relies on unknown locations in S3 or OCI. For instance the friends list should be fetched from a known location, any user who logs in should be able to add anyone on the server as a follow from the public index, removal is the same as well. Rely on eventual consistency, when downloading the user list for the server, make sure the current user is in there and add them if required.
@@ -27,3 +25,4 @@ DONE
 - If a user logs in using their private guid (optional) it has to already exist for them to log in.
 - Social network demo in docker build should be set to have the correct config details and the correct credentials.
 - When the tab is shown in the social network demo for connection it's set to s3 but is showing the par screen.
+- Use ETags to check for changes on content
