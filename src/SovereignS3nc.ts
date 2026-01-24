@@ -275,12 +275,12 @@ export class SovereignS3nc extends EventEmitter {
     // Derive Keys if auth is present
     if (this.config.auth) {
         if (this.config.auth.privatePassphrase) {
-            const derivedKey = await deriveKey(this.config.auth.privatePassphrase, this.config.paths.userId);
+            const derivedKey = await deriveKey(this.config.auth.privatePassphrase.trim(), this.config.paths.userId);
             this.crypto = createCryptoAdapter(derivedKey);
         }
         if (this.config.auth.publicPassphrase) {
              // Use AppId as salt so all users in the app with the same passphrase can decrypt/share public data
-             const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
+             const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), this.config.paths.appId.trim());
              this.publicCrypto = createCryptoAdapter(derivedPublicKey);
         }
     }
@@ -907,7 +907,7 @@ export class SovereignS3nc extends EventEmitter {
                 // If the user has a public passphrase, the index doc is encrypted.
                 if (addr.publicPassphrase) {
                      try {
-                         const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.appId);
+                         const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), addr.appId.trim());
                          const theirCrypto = createCryptoAdapter(theirPublicKey);
                          
                          if (typeof indexDoc.data === 'string') {
@@ -916,7 +916,7 @@ export class SovereignS3nc extends EventEmitter {
                              meta = indexDoc.data;
                          }
                      } catch (e) {
-                         console.error(`Failed to decrypt public index for ${addr.userId}`, e);
+                         console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e);
                          continue;
                      }
                 }
