@@ -192,6 +192,26 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
 
         await db.init();
         
+        // --- Verify Public Passphrase ---
+        if (db.publicId && db.shares && db.shares.size > 0) {
+             const publicShares = Array.from(db.shares.values()).filter(s => s.isPublic);
+             if (publicShares.length > 0 && db.sharedRemote) {
+                 try {
+                     const check = publicShares[0];
+                     const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
+                     if (raw && typeof raw.data === 'string') {
+                         const decrypted = await db.decryptPublic(raw.data);
+                         if (decrypted === raw.data) {
+                             throw new Error('Public Key Decryption Failed');
+                         }
+                     }
+                 } catch (e) {
+                     console.error('Public Key Verification Failed', e);
+                     return showToast('Incorrect Public Passphrase!', 'error');
+                 }
+             }
+        }
+
         // Set current user to Public ID for UI logic
         currentUser = db.publicId || 'unknown';
 
