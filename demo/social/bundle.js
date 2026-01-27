@@ -24482,7 +24482,8 @@ ${toHex(hashedRequest)}`;
             if (!raw) return null;
             if (address.publicPassphrase) {
               try {
-                const key = await deriveKey(address.publicPassphrase, address.appId);
+                const salt = address.publicSalt || address.appId;
+                const key = await deriveKey(address.publicPassphrase.trim(), salt.trim());
                 const crypto2 = createCryptoAdapter(key);
                 return await crypto2.decryptRaw(raw);
               } catch (e2) {
@@ -24802,6 +24803,7 @@ ${toHex(hashedRequest)}`;
           }
           if (this.config.auth && this.config.auth.publicPassphrase) {
             addr.publicPassphrase = this.config.auth.publicPassphrase;
+            addr.publicSalt = this.config.auth.publicSalt || this.config.paths.appId;
           }
           return addr;
         }
@@ -24854,11 +24856,12 @@ ${toHex(hashedRequest)}`;
           await this.localStore.init();
           if (this.config.auth) {
             if (this.config.auth.privatePassphrase) {
-              const derivedKey = await deriveKey(this.config.auth.privatePassphrase, this.config.paths.userId);
+              const derivedKey = await deriveKey(this.config.auth.privatePassphrase.trim(), this.config.paths.userId);
               this.crypto = createCryptoAdapter(derivedKey);
             }
             if (this.config.auth.publicPassphrase) {
-              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
+              const salt = this.config.auth.publicSalt || this.config.paths.appId;
+              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), salt.trim());
               this.publicCrypto = createCryptoAdapter(derivedPublicKey);
             }
           }
@@ -25369,7 +25372,8 @@ ${toHex(hashedRequest)}`;
                 let meta = indexDoc.data;
                 if (addr.publicPassphrase) {
                   try {
-                    const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.appId);
+                    const salt = addr.publicSalt || addr.appId;
+                    const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), salt.trim());
                     const theirCrypto = createCryptoAdapter(theirPublicKey);
                     if (typeof indexDoc.data === "string") {
                       meta = await theirCrypto.decrypt(indexDoc.data);
@@ -25377,7 +25381,7 @@ ${toHex(hashedRequest)}`;
                       meta = indexDoc.data;
                     }
                   } catch (e2) {
-                    console.error(`Failed to decrypt public index for ${addr.userId}`, e2);
+                    console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
                     continue;
                   }
                 }
@@ -25676,6 +25680,24 @@ ${toHex(hashedRequest)}`;
             }
           });
           await db.init();
+          if (db.publicId && db.shares && db.shares.size > 0) {
+            const publicShares = Array.from(db.shares.values()).filter((s2) => s2.isPublic);
+            if (publicShares.length > 0 && db.sharedRemote) {
+              try {
+                const check = publicShares[0];
+                const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
+                if (raw && typeof raw.data === "string") {
+                  const decrypted = await db.decryptPublic(raw.data);
+                  if (decrypted === raw.data) {
+                    throw new Error("Public Key Decryption Failed");
+                  }
+                }
+              } catch (e2) {
+                console.error("Public Key Verification Failed", e2);
+                return showToast("Incorrect Public Passphrase!", "error");
+              }
+            }
+          }
           currentUser = db.publicId || "unknown";
           views.auth.classList.add("hidden");
           appArea.classList.remove("hidden");
