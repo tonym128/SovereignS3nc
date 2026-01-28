@@ -47,6 +47,15 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Connect to Storage</h4>
                     
+                    <div id="saved-sessions-area" class="hidden mb-4" style="display:none; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                        <h5>Reconnect</h5>
+                        <div id="saved-sessions-list" class="list-group mb-3"></div>
+                        <div class="text-center">
+                            <button id="btn-show-new-login" class="btn btn-outline-secondary btn-sm">Connect with different details</button>
+                        </div>
+                    </div>
+
+                    <div id="new-login-area">
                     <div class="mb-3">
                         <label class="form-label">App ID</label>
                         <input type="text" class="form-control" id="app-id" value="sovereign-shopping">
@@ -93,6 +102,7 @@
                     </div>
 
                     <button class="btn btn-primary w-100" id="btn-connect">Connect</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -170,7 +180,8 @@
         <h3>Settings</h3>
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-danger" id="btn-clear-data">Clear Local Data & Logout</button>
+                <button class="btn btn-warning mb-2" id="btn-logout">Logout</button>
+                <button class="btn btn-danger mb-2" id="btn-clear-data">Clear Local Data</button>
             </div>
         </div>
     </div>

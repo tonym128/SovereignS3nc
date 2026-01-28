@@ -61,6 +61,16 @@
     <!-- Auth View -->
     <div id="view-auth">
         <h2 style="text-align: center;">Sovereign Chat</h2>
+        
+        <div id="saved-sessions-area" class="hidden" style="margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 20px;">
+            <h3>Reconnect</h3>
+            <div id="saved-sessions-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="btn-show-new-login" class="secondary" style="font-size: 0.9em;">Connect with different details</button>
+            </div>
+        </div>
+
+        <div id="new-login-area">
         <div class="input-group">
             <label>App ID</label>
             <input type="text" id="app-id" value="sovereign-chat">
@@ -87,6 +97,7 @@
             <input type="password" id="s3-secret-key">
         </div>
         <button id="btn-connect">Connect</button>
+        </div>
     </div>
 
     <!-- Main App Area -->

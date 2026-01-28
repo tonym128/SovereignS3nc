@@ -24482,7 +24482,8 @@ ${toHex(hashedRequest)}`;
             if (!raw) return null;
             if (address.publicPassphrase) {
               try {
-                const key = await deriveKey(address.publicPassphrase, address.appId);
+                const salt = address.publicSalt || address.appId;
+                const key = await deriveKey(address.publicPassphrase.trim(), salt.trim());
                 const crypto2 = createCryptoAdapter(key);
                 return await crypto2.decryptRaw(raw);
               } catch (e2) {
@@ -24802,6 +24803,7 @@ ${toHex(hashedRequest)}`;
           }
           if (this.config.auth && this.config.auth.publicPassphrase) {
             addr.publicPassphrase = this.config.auth.publicPassphrase;
+            addr.publicSalt = this.config.auth.publicSalt || this.config.paths.appId;
           }
           return addr;
         }
@@ -24854,11 +24856,12 @@ ${toHex(hashedRequest)}`;
           await this.localStore.init();
           if (this.config.auth) {
             if (this.config.auth.privatePassphrase) {
-              const derivedKey = await deriveKey(this.config.auth.privatePassphrase, this.config.paths.userId);
+              const derivedKey = await deriveKey(this.config.auth.privatePassphrase.trim(), this.config.paths.userId);
               this.crypto = createCryptoAdapter(derivedKey);
             }
             if (this.config.auth.publicPassphrase) {
-              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase, this.config.paths.appId);
+              const salt = this.config.auth.publicSalt || this.config.paths.appId;
+              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), salt.trim());
               this.publicCrypto = createCryptoAdapter(derivedPublicKey);
             }
           }
@@ -25369,7 +25372,8 @@ ${toHex(hashedRequest)}`;
                 let meta = indexDoc.data;
                 if (addr.publicPassphrase) {
                   try {
-                    const theirPublicKey = await deriveKey(addr.publicPassphrase, addr.appId);
+                    const salt = addr.publicSalt || addr.appId;
+                    const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), salt.trim());
                     const theirCrypto = createCryptoAdapter(theirPublicKey);
                     if (typeof indexDoc.data === "string") {
                       meta = await theirCrypto.decrypt(indexDoc.data);
@@ -25377,7 +25381,7 @@ ${toHex(hashedRequest)}`;
                       meta = indexDoc.data;
                     }
                   } catch (e2) {
-                    console.error(`Failed to decrypt public index for ${addr.userId}`, e2);
+                    console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
                     continue;
                   }
                 }
@@ -25530,6 +25534,43 @@ ${toHex(hashedRequest)}`;
   var require_app = __commonJS({
     "demo/shopping/src/app.ts"() {
       init_src();
+      function getSavedSessions() {
+        try {
+          return JSON.parse(localStorage.getItem("shopping_sessions") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function saveSession(config) {
+        const sessions = getSavedSessions();
+        const userId = config.paths.userId;
+        const appId = config.paths.appId;
+        const idx = sessions.findIndex((s2) => s2.userId === userId && s2.appId === appId);
+        const session = {
+          id: crypto.randomUUID(),
+          userId,
+          appId,
+          config,
+          lastActive: Date.now()
+        };
+        let sessionId = session.id;
+        if (idx >= 0) {
+          sessionId = sessions[idx].id;
+          sessions[idx] = { ...session, id: sessionId };
+        } else {
+          sessions.push(session);
+        }
+        localStorage.setItem("shopping_sessions", JSON.stringify(sessions));
+        localStorage.setItem("shopping_current_session_id", sessionId);
+      }
+      function clearCurrentSession() {
+        localStorage.removeItem("shopping_current_session_id");
+      }
+      function removeSession(id) {
+        const sessions = getSavedSessions().filter((s2) => s2.id !== id);
+        localStorage.setItem("shopping_sessions", JSON.stringify(sessions));
+        renderSavedSessionsList();
+      }
       var db = null;
       var currentListId = null;
       var currentUser = "";
@@ -25567,52 +25608,95 @@ ${toHex(hashedRequest)}`;
           views[viewName].style.display = "block";
         }
       }
-      async function connect() {
-        const appId = document.getElementById("app-id").value.trim();
-        let userId = document.getElementById("user-id").value.trim();
-        const isOci = document.querySelector('.nav-link.active[data-bs-target="#tab-oci"]');
-        const config = {
-          paths: { appId, userId, storeId: "shopping" },
-          auth: {
-            privatePassphrase: document.getElementById("private-passphrase").value,
-            publicPassphrase: document.getElementById("public-passphrase").value
-          },
-          syncIntervalMs: 5e3
-          // Auto sync every 5s
-        };
-        if (!config.auth.privatePassphrase || !config.auth.publicPassphrase) {
-          return showToast("Both passphrases are required");
+      function renderSavedSessionsList() {
+        const list = document.getElementById("saved-sessions-list");
+        const area = document.getElementById("saved-sessions-area");
+        const sessions = getSavedSessions();
+        if (!list || !area) return;
+        if (sessions.length === 0) {
+          area.style.display = "none";
+          toggleLoginView(false);
+          return;
         }
-        if (!userId) {
-          userId = crypto.randomUUID().split("-")[0];
-          document.getElementById("user-id").value = userId;
-          config.paths.userId = userId;
-          alert(`Generated User ID: ${userId}. Save this!`);
-        }
-        if (isOci) {
-          config.ociParUrl = document.getElementById("oci-url").value;
-          config.useManifest = true;
+        list.innerHTML = "";
+        sessions.sort((a2, b2) => b2.lastActive - a2.lastActive);
+        sessions.forEach((s2) => {
+          const item = document.createElement("a");
+          item.className = "list-group-item list-group-item-action d-flex justify-content-between align-items-center";
+          item.style.cursor = "pointer";
+          item.onclick = () => connect(s2.config, false);
+          item.innerHTML = `
+            <div>
+                <div class="fw-bold">${s2.userId}</div>
+                <small class="text-muted">${s2.appId} \u2022 ${new Date(s2.lastActive).toLocaleDateString()}</small>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s2.id}')" class="btn btn-sm btn-outline-danger">\u2715</button>
+        `;
+          list.appendChild(item);
+        });
+        document.getElementById("btn-show-new-login")?.addEventListener("click", () => toggleLoginView(false));
+        toggleLoginView(true);
+      }
+      window.removeSession = removeSession;
+      function toggleLoginView(showSaved) {
+        const savedArea = document.getElementById("saved-sessions-area");
+        const newArea = document.getElementById("new-login-area");
+        if (showSaved && getSavedSessions().length > 0) {
+          if (savedArea) savedArea.style.display = "block";
+          if (newArea) newArea.style.display = "none";
         } else {
-          config.s3 = {
-            endpoint: document.getElementById("s3-endpoint").value,
-            region: document.getElementById("s3-region").value,
-            bucketName: document.getElementById("s3-bucket").value,
-            credentials: {
-              accessKeyId: document.getElementById("s3-access-key").value,
-              secretAccessKey: document.getElementById("s3-secret-key").value
+          if (savedArea) savedArea.style.display = "none";
+          if (newArea) newArea.style.display = "block";
+        }
+      }
+      async function connect(config, save = true) {
+        if (!config) {
+          const appId = document.getElementById("app-id").value.trim();
+          let userId = document.getElementById("user-id").value.trim();
+          const isOci = document.querySelector('.nav-link.active[data-bs-target="#tab-oci"]');
+          config = {
+            paths: { appId, userId, storeId: "shopping" },
+            auth: {
+              privatePassphrase: document.getElementById("private-passphrase").value,
+              publicPassphrase: document.getElementById("public-passphrase").value
             },
-            forcePathStyle: true
+            syncIntervalMs: 5e3
+            // Auto sync every 5s
           };
-          config.useManifest = true;
+          if (!config.auth.privatePassphrase || !config.auth.publicPassphrase) {
+            return showToast("Both passphrases are required");
+          }
+          if (!userId) {
+            userId = crypto.randomUUID().split("-")[0];
+            document.getElementById("user-id").value = userId;
+            config.paths.userId = userId;
+            alert(`Generated User ID: ${userId}. Save this!`);
+          }
+          if (isOci) {
+            config.ociParUrl = document.getElementById("oci-url").value;
+            config.useManifest = true;
+          } else {
+            config.s3 = {
+              endpoint: document.getElementById("s3-endpoint").value,
+              region: document.getElementById("s3-region").value,
+              bucketName: document.getElementById("s3-bucket").value,
+              credentials: {
+                accessKeyId: document.getElementById("s3-access-key").value,
+                secretAccessKey: document.getElementById("s3-secret-key").value
+              },
+              forcePathStyle: true
+            };
+            config.useManifest = true;
+          }
         }
         try {
           showLoading(true);
-          const storage = new IndexedDBStorage(userId);
+          const storage = new IndexedDBStorage(config.paths.userId);
           await storage.init();
           const identity = await storage.get("_sovereign_identity");
           if (identity && typeof identity.data === "string") {
             try {
-              const key = await deriveKey(config.auth.privatePassphrase, userId);
+              const key = await deriveKey(config.auth.privatePassphrase, config.paths.userId);
               const adapter = createCryptoAdapter(key);
               await adapter.decrypt(identity.data);
             } catch (e2) {
@@ -25629,7 +25713,12 @@ ${toHex(hashedRequest)}`;
             }
           });
           await db.init();
-          currentUser = userId;
+          currentUser = config.paths.userId;
+          if (save) {
+            saveSession(config);
+          } else {
+            saveSession(config);
+          }
           switchView("app");
           refreshLists();
           loadNetwork();
@@ -25846,7 +25935,7 @@ ${toHex(hashedRequest)}`;
           showToast("Invalid JSON");
         }
       });
-      document.getElementById("btn-connect").addEventListener("click", connect);
+      document.getElementById("btn-connect").addEventListener("click", () => connect(void 0, true));
       document.getElementById("btn-create-list").addEventListener("click", window.createList);
       document.getElementById("btn-add-item").addEventListener("click", window.addItem);
       document.getElementById("nav-lists").addEventListener("click", () => {
@@ -25858,13 +25947,31 @@ ${toHex(hashedRequest)}`;
         loadNetwork();
       });
       document.getElementById("nav-settings").addEventListener("click", () => switchView("settings"));
+      document.getElementById("btn-logout").addEventListener("click", () => {
+        if (db) db.stopAutoSync();
+        clearCurrentSession();
+        location.reload();
+      });
       document.getElementById("btn-clear-data").addEventListener("click", async () => {
         if (confirm("Delete all local data?")) {
           indexedDB.deleteDatabase("sovereign_db_" + currentUser);
+          if (db) db.stopAutoSync();
+          clearCurrentSession();
           location.reload();
         }
       });
       window.addEventListener("load", async () => {
+        renderSavedSessionsList();
+        const currentSessionId = localStorage.getItem("shopping_current_session_id");
+        if (currentSessionId) {
+          const sessions = getSavedSessions();
+          const session = sessions.find((s2) => s2.id === currentSessionId);
+          if (session) {
+            console.log("Auto-logging in:", session.userId);
+            await connect(session.config, false);
+            return;
+          }
+        }
         try {
           const c2 = await (await fetch("config.json")).json();
           if (c2.s3) {

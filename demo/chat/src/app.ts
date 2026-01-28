@@ -18,6 +18,58 @@ interface ChatMessage {
     createdAt: number;
 }
 
+// --- Session Management ---
+interface SavedSession {
+    id: string;
+    userId: string;
+    appId: string;
+    config: any;
+    lastActive: number;
+}
+
+function getSavedSessions(): SavedSession[] {
+    try {
+        return JSON.parse(localStorage.getItem('chat_sessions') || '[]');
+    } catch { return []; }
+}
+
+function saveSession(config: any) {
+    const sessions = getSavedSessions();
+    const userId = config.paths.userId;
+    const appId = config.paths.appId;
+    const idx = sessions.findIndex(s => s.userId === userId && s.appId === appId);
+    
+    const session: SavedSession = {
+        id: crypto.randomUUID(),
+        userId,
+        appId,
+        config,
+        lastActive: Date.now()
+    };
+
+    let sessionId = session.id;
+
+    if (idx >= 0) {
+        sessionId = sessions[idx].id;
+        sessions[idx] = { ...session, id: sessionId }; 
+    } else {
+        sessions.push(session);
+    }
+    
+    localStorage.setItem('chat_sessions', JSON.stringify(sessions));
+    localStorage.setItem('chat_current_session_id', sessionId);
+}
+
+function clearCurrentSession() {
+    localStorage.removeItem('chat_current_session_id');
+}
+
+function removeSession(id: string) {
+    const sessions = getSavedSessions().filter(s => s.id !== id);
+    localStorage.setItem('chat_sessions', JSON.stringify(sessions));
+    renderSavedSessionsList();
+}
+
 // --- State ---
 let db: SovereignS3nc | null = null;
 let currentRoom: Room | null = null;
@@ -46,44 +98,103 @@ const inputs = {
 
 const loading = document.getElementById('loading')!;
 
-// --- Initialization ---
+// --- Session UI Helpers ---
+function renderSavedSessionsList() {
+    const list = document.getElementById('saved-sessions-list');
+    const area = document.getElementById('saved-sessions-area');
+    const sessions = getSavedSessions();
 
-async function connect() {
-    const appId = inputs.appId.value.trim();
-    let userId = inputs.userId.value.trim();
-    const endpoint = inputs.endpoint.value.trim();
-    const bucket = inputs.bucket.value.trim();
-    const accessKeyId = inputs.accessKey.value.trim();
-    const secretAccessKey = inputs.secretKey.value.trim();
+    if (!list || !area) return;
 
-    if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
-        alert('Please fill in all connection details');
+    if (sessions.length === 0) {
+        area.classList.add('hidden');
+        toggleLoginView(false);
         return;
     }
 
-    if (!userId) {
-        // This case is unlikely now that we pre-fill, but kept for safety
-        userId = crypto.randomUUID();
-        inputs.userId.value = userId;
-    }
-    localStorage.setItem('chat-user-id', userId);
+    list.innerHTML = '';
+    sessions.sort((a, b) => b.lastActive - a.lastActive);
 
-    const config = {
-        paths: { appId, userId, storeId: 'chat' },
-        encryptionKey: 'chat-demo-encryption-key-32-chars!', // For demo
-        s3: {
-            endpoint,
-            region: 'us-east-1',
-            bucketName: bucket,
-            credentials: { accessKeyId, secretAccessKey },
-            forcePathStyle: true
-        },
-        useManifest: true,
-        syncIntervalMs: 5000 // 5s auto-sync for chat
-    };
+    sessions.forEach(s => {
+        const item = document.createElement('div');
+        item.style.padding = '10px';
+        item.style.border = '1px solid #ddd';
+        item.style.borderRadius = '4px';
+        item.style.cursor = 'pointer';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+        item.style.background = '#f9f9f9';
+        
+        item.onclick = () => connect(s.config, false);
+
+        item.innerHTML = `
+            <div>
+                <strong>${s.userId.substring(0, 8)}...</strong> <small>(${s.appId})</small><br>
+                <small style="color:#666;">${new Date(s.lastActive).toLocaleDateString()}</small>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s.id}')" class="secondary" style="background:#ff4d4d; color:white; padding: 2px 6px; font-size: 0.8em; border-radius: 4px;">✕</button>
+        `;
+        list.appendChild(item);
+    });
+
+    document.getElementById('btn-show-new-login')?.addEventListener('click', () => toggleLoginView(false));
+    toggleLoginView(true);
+}
+
+(window as any).removeSession = removeSession;
+
+function toggleLoginView(showSaved: boolean) {
+    const savedArea = document.getElementById('saved-sessions-area');
+    const newArea = document.getElementById('new-login-area');
+    
+    if (showSaved && getSavedSessions().length > 0) {
+        savedArea?.classList.remove('hidden');
+        newArea?.classList.add('hidden');
+    } else {
+        savedArea?.classList.add('hidden');
+        newArea?.classList.remove('hidden');
+    }
+}
+
+// --- Initialization ---
+
+async function connect(config?: any, save: boolean = true) {
+    if (!config) {
+        const appId = inputs.appId.value.trim();
+        let userId = inputs.userId.value.trim();
+        const endpoint = inputs.endpoint.value.trim();
+        const bucket = inputs.bucket.value.trim();
+        const accessKeyId = inputs.accessKey.value.trim();
+        const secretAccessKey = inputs.secretKey.value.trim();
+
+        if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
+            alert('Please fill in all connection details');
+            return;
+        }
+
+        if (!userId) {
+            userId = crypto.randomUUID();
+            inputs.userId.value = userId;
+        }
+        
+        config = {
+            paths: { appId, userId, storeId: 'chat' },
+            encryptionKey: 'chat-demo-encryption-key-32-chars!', // For demo
+            s3: {
+                endpoint,
+                region: 'us-east-1',
+                bucketName: bucket,
+                credentials: { accessKeyId, secretAccessKey },
+                forcePathStyle: true
+            },
+            useManifest: true,
+            syncIntervalMs: 5000 // 5s auto-sync for chat
+        };
+    }
 
     try {
-        const storage = new IndexedDBStorage(userId);
+        const storage = new IndexedDBStorage(config.paths.userId);
         db = new SovereignS3nc(config, storage);
 
         db.on('syncStart', () => loading.style.display = 'block');
@@ -94,6 +205,12 @@ async function connect() {
 
         await db.init();
         
+        if (save) {
+            saveSession(config);
+        } else {
+             saveSession(config); // Update last active
+        }
+
         // Show App
         views.auth.classList.add('hidden');
         views.app.classList.remove('hidden');
@@ -366,9 +483,10 @@ function escapeHtml(text: string) {
 
 // --- Events ---
 
-document.getElementById('btn-connect')!.onclick = connect;
+document.getElementById('btn-connect')!.onclick = () => connect(undefined, true);
 document.getElementById('btn-logout')!.onclick = () => {
-    localStorage.removeItem('chat-user-id');
+    if (db) db.stopAutoSync();
+    clearCurrentSession();
     location.reload();
 };
 document.getElementById('btn-new-room')!.onclick = createRoom;
@@ -387,20 +505,32 @@ document.getElementById('btn-sync-small')!.onclick = async () => {
     }
 };
 
-// Auto-fill and Pre-generate GUID
-const savedUserId = localStorage.getItem('chat-user-id');
-if (savedUserId) {
-    inputs.userId.value = savedUserId;
-} else {
-    inputs.userId.value = crypto.randomUUID();
-    // We don't save to localStorage yet, only if they actually connect
-}
+// Initialization
+window.addEventListener('load', async () => {
+    renderSavedSessionsList();
 
-fetch('config.json').then(r => r.json()).then(config => {
-    if (config.s3) {
-        inputs.endpoint.value = config.s3.endpoint || '';
-        inputs.bucket.value = config.s3.bucketName || '';
-        inputs.accessKey.value = config.s3.accessKeyId || '';
-        inputs.secretKey.value = config.s3.secretAccessKey || '';
+    const currentSessionId = localStorage.getItem('chat_current_session_id');
+    if (currentSessionId) {
+        const sessions = getSavedSessions();
+        const session = sessions.find(s => s.id === currentSessionId);
+        if (session) {
+            console.log('Auto-logging in:', session.userId);
+            // Show a simple loading indicator or toast if possible, but alert is too intrusive
+            // Just connect
+            await connect(session.config, false);
+            return;
+        }
     }
-}).catch(() => {});
+
+    // Auto-fill and Pre-generate GUID if not restoring
+    // inputs.userId.value = crypto.randomUUID(); // Optional: pre-fill new ID
+
+    fetch('config.json').then(r => r.json()).then(config => {
+        if (config.s3) {
+            inputs.endpoint.value = config.s3.endpoint || '';
+            inputs.bucket.value = config.s3.bucketName || '';
+            inputs.accessKey.value = config.s3.accessKeyId || '';
+            inputs.secretKey.value = config.s3.secretAccessKey || '';
+        }
+    }).catch(() => {});
+});
