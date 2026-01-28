@@ -325,14 +325,7 @@ async function connect(config: any, save: boolean = true) {
         }
 
         // Update Header UI
-        const profile = await db.profile.get();
-        const headerName = document.getElementById('header-display-name');
-        if (headerName) headerName.textContent = profile?.displayName || currentUser;
-        
-        const headerAvatar = document.getElementById('header-avatar') as HTMLImageElement;
-        if (profile?.avatarUrl && headerAvatar) {
-            renderImage(profile.avatarUrl, headerAvatar, 'me');
-        }
+        await updateHeaderUI();
 
         await db.sync(); // Initial sync
         await db.social.joinGlobalDirectory();
@@ -342,6 +335,18 @@ async function connect(config: any, save: boolean = true) {
     } catch (e) {
         console.error(e);
         showToast('Failed to connect: ' + e, 'error');
+    }
+}
+
+async function updateHeaderUI() {
+    if (!db) return;
+    const profile = await db.profile.get();
+    const headerName = document.getElementById('header-display-name');
+    if (headerName) headerName.textContent = profile?.displayName || currentUser;
+    
+    const headerAvatar = document.getElementById('header-avatar') as HTMLImageElement;
+    if (profile?.avatarUrl && headerAvatar) {
+        renderImage(profile.avatarUrl, headerAvatar, 'me');
     }
 }
 
@@ -487,6 +492,7 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
     await db.sync();
     showToast('Profile updated!', 'success');
     loadProfile();
+    updateHeaderUI();
 });
 
 // --- Feed Logic ---

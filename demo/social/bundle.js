@@ -25764,18 +25764,12 @@ ${toHex(hashedRequest)}`;
           if (header) header.classList.remove("hidden");
           await loadProfile();
           if (save || !getSavedSessions().find((s2) => s2.userId === userId)) {
-            const profile2 = await db.profile.get();
-            saveSession(config, profile2);
+            const profile = await db.profile.get();
+            saveSession(config, profile);
           } else {
             saveSession(config, await db.profile.get());
           }
-          const profile = await db.profile.get();
-          const headerName = document.getElementById("header-display-name");
-          if (headerName) headerName.textContent = profile?.displayName || currentUser;
-          const headerAvatar = document.getElementById("header-avatar");
-          if (profile?.avatarUrl && headerAvatar) {
-            renderImage(profile.avatarUrl, headerAvatar, "me");
-          }
+          await updateHeaderUI();
           await db.sync();
           await db.social.joinGlobalDirectory();
           refreshFeed();
@@ -25783,6 +25777,16 @@ ${toHex(hashedRequest)}`;
         } catch (e2) {
           console.error(e2);
           showToast("Failed to connect: " + e2, "error");
+        }
+      }
+      async function updateHeaderUI() {
+        if (!db) return;
+        const profile = await db.profile.get();
+        const headerName = document.getElementById("header-display-name");
+        if (headerName) headerName.textContent = profile?.displayName || currentUser;
+        const headerAvatar = document.getElementById("header-avatar");
+        if (profile?.avatarUrl && headerAvatar) {
+          renderImage(profile.avatarUrl, headerAvatar, "me");
         }
       }
       document.getElementById("btn-connect")?.addEventListener("click", async () => {
@@ -25899,6 +25903,7 @@ ${toHex(hashedRequest)}`;
         await db.sync();
         showToast("Profile updated!", "success");
         loadProfile();
+        updateHeaderUI();
       });
       async function getProfileMap(db2) {
         const myProfile = await db2.profile.get();
