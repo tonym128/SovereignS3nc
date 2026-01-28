@@ -116,13 +116,14 @@ The `sync()` method performs a two-way synchronization:
 *   **Keys**: The encryption key is held only by the client. It is never sent to the server.
 
 ### 6.2 Sharing Mechanism
-*   **Private**: Default. Encrypted with the user's private key.
+*   **Private**: Default. Encrypted with the user's private key (derived from `privatePassphrase`).
 *   **Public Share**:
     1.  A random symmetric key is generated for the document.
     2.  The document is encrypted with this random key.
     3.  A "Share Metadata" document is created in the `public/` folder containing the document ID and the random key.
-    4.  The Share Metadata is uploaded to the public path.
-    *   *Note*: For purely public data (like profiles), encryption might be skipped or a well-known key used.
+    4.  **Metadata Encryption**: The "Share Metadata" itself is encrypted using the user's *Public Key* (derived from `publicPassphrase` + `appId`).
+    
+    This ensures that while the files are publicly accessible in the bucket, only users who know the application's `publicPassphrase` (e.g., "social-app-v1") can decrypt the index and discover/read the content. This prevents random scraping while allowing open federation among app users.
 
 ## 7. Identity
 *   **Anonymous**: Users can start without an identity.
