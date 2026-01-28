@@ -857,20 +857,30 @@
       WebCryptoAdapter = class {
         constructor(secretKey) {
           this.key = null;
-          this.keyStr = secretKey;
+          this.keyData = secretKey;
         }
         async initKey() {
           if (this.key) return this.key;
-          const enc = new TextEncoder();
-          const keyData = enc.encode(this.keyStr);
-          const hash = await window.crypto.subtle.digest("SHA-256", keyData);
-          this.key = await window.crypto.subtle.importKey(
-            "raw",
-            hash,
-            { name: "AES-GCM" },
-            false,
-            ["encrypt", "decrypt"]
-          );
+          if (this.keyData instanceof Uint8Array) {
+            this.key = await window.crypto.subtle.importKey(
+              "raw",
+              this.keyData,
+              { name: "AES-GCM" },
+              false,
+              ["encrypt", "decrypt"]
+            );
+          } else {
+            const enc = new TextEncoder();
+            const keyData = enc.encode(this.keyData);
+            const hash = await window.crypto.subtle.digest("SHA-256", keyData);
+            this.key = await window.crypto.subtle.importKey(
+              "raw",
+              hash,
+              { name: "AES-GCM" },
+              false,
+              ["encrypt", "decrypt"]
+            );
+          }
           return this.key;
         }
         async encrypt(data) {
@@ -953,6 +963,68 @@
     "src/stubs/AESCryptoAdapter.ts"() {
       "use strict";
       init_WebCryptoAdapter();
+    }
+  });
+
+  // src/stubs/nodeCrypto.ts
+  var nodeCrypto;
+  var init_nodeCrypto = __esm({
+    "src/stubs/nodeCrypto.ts"() {
+      "use strict";
+      nodeCrypto = async () => null;
+    }
+  });
+
+  // src/cryptoUtils.ts
+  async function deriveKey(passphrase, salt) {
+    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    const iterations = 1e5;
+    const keyLength = 32;
+    if (isBrowser) {
+      const enc = new TextEncoder();
+      const passwordKey = await window.crypto.subtle.importKey(
+        "raw",
+        enc.encode(passphrase),
+        { name: "PBKDF2" },
+        false,
+        ["deriveBits", "deriveKey"]
+      );
+      const derivedBits = await window.crypto.subtle.deriveBits(
+        {
+          name: "PBKDF2",
+          salt: enc.encode(salt),
+          iterations,
+          hash: "SHA-256"
+        },
+        passwordKey,
+        keyLength * 8
+      );
+      return new Uint8Array(derivedBits);
+    } else {
+      const crypto2 = await nodeCrypto();
+      if (!crypto2) throw new Error("Node crypto module not available");
+      return new Promise((resolve, reject) => {
+        crypto2.pbkdf2(passphrase, salt, iterations, keyLength, "sha256", (err, derivedKey) => {
+          if (err) reject(err);
+          else resolve(derivedKey);
+        });
+      });
+    }
+  }
+  function createCryptoAdapter(key) {
+    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    if (isBrowser) {
+      return new WebCryptoAdapter(key);
+    } else {
+      return new WebCryptoAdapter(key);
+    }
+  }
+  var init_cryptoUtils = __esm({
+    "src/cryptoUtils.ts"() {
+      "use strict";
+      init_AESCryptoAdapter();
+      init_WebCryptoAdapter();
+      init_nodeCrypto();
     }
   });
 
@@ -24352,6 +24424,7 @@ ${toHex(hashedRequest)}`;
       init_esm_browser();
       init_S3BlobAdapter();
       init_OCIBlobAdapter();
+      init_cryptoUtils();
       ProfileManager = class {
         constructor(db) {
           this.db = db;
@@ -24405,7 +24478,26 @@ ${toHex(hashedRequest)}`;
             });
           }
           if (adapter) {
-            return adapter.download(blobId);
+            const raw = await adapter.download(blobId);
+            if (!raw) return null;
+            if (address.publicPassphrase) {
+              try {
+                const salt = address.publicSalt || address.appId;
+                const key = await deriveKey(address.publicPassphrase.trim(), salt.trim());
+                const crypto2 = createCryptoAdapter(key);
+                return await crypto2.decryptRaw(raw);
+              } catch (e2) {
+                return raw;
+              }
+            }
+            if (this.db.hasPublicEncryption()) {
+              try {
+                return await this.db.decryptPublicRaw(raw);
+              } catch (e2) {
+                return raw;
+              }
+            }
+            return raw;
           }
           return null;
         }
@@ -24559,6 +24651,7 @@ ${toHex(hashedRequest)}`;
       init_esm();
       init_InMemoryStorage();
       init_AESCryptoAdapter();
+      init_cryptoUtils();
       init_S3RemoteAdapter();
       init_OCIPreAuthAdapter();
       init_S3BlobAdapter();
@@ -24594,6 +24687,8 @@ ${toHex(hashedRequest)}`;
           const shouldEncrypt = this.db.hasEncryption() && !isPublic;
           if (shouldEncrypt) {
             payload = await this.db.encryptRaw(data);
+          } else if (isPublic && this.db.hasPublicEncryption()) {
+            payload = await this.db.encryptPublicRaw(data);
           }
           if (isPublic) {
             if (!this.db.publicBlobs) throw new Error("Public blob storage not configured (Identity not initialized?)");
@@ -24631,6 +24726,13 @@ ${toHex(hashedRequest)}`;
               return await this.db.decryptRaw(raw);
             } catch (e2) {
               console.warn(`Decryption failed for blob ${id}. Returning raw (might be plaintext).`);
+              return raw;
+            }
+          } else if (meta && meta.isPublic && this.db.hasPublicEncryption()) {
+            try {
+              return await this.db.decryptPublicRaw(raw);
+            } catch (e2) {
+              console.warn(`Public Decryption failed for blob ${id}. Returning raw.`);
               return raw;
             }
           }
@@ -24688,22 +24790,22 @@ ${toHex(hashedRequest)}`;
           return this._publicId;
         }
         getAddress() {
-          if (this.config.s3) {
-            return {
-              endpoint: this.config.s3.endpoint,
-              region: this.config.s3.region,
-              bucket: this.config.s3.bucketName,
-              appId: this.config.paths.appId,
-              userId: this._publicId || "unknown"
-              // Share Public ID
-            };
-          }
-          return {
+          const addr = {
             region: "unknown",
             bucket: "unknown",
             appId: this.config.paths.appId,
             userId: this._publicId || "unknown"
           };
+          if (this.config.s3) {
+            addr.endpoint = this.config.s3.endpoint;
+            addr.region = this.config.s3.region;
+            addr.bucket = this.config.s3.bucketName;
+          }
+          if (this.config.auth && this.config.auth.publicPassphrase) {
+            addr.publicPassphrase = this.config.auth.publicPassphrase;
+            addr.publicSalt = this.config.auth.publicSalt || this.config.paths.appId;
+          }
+          return addr;
         }
         initRemote(config) {
           if (config.ociParUrl) {
@@ -24752,6 +24854,17 @@ ${toHex(hashedRequest)}`;
         }
         async init() {
           await this.localStore.init();
+          if (this.config.auth) {
+            if (this.config.auth.privatePassphrase) {
+              const derivedKey = await deriveKey(this.config.auth.privatePassphrase.trim(), this.config.paths.userId);
+              this.crypto = createCryptoAdapter(derivedKey);
+            }
+            if (this.config.auth.publicPassphrase) {
+              const salt = this.config.auth.publicSalt || this.config.paths.appId;
+              const derivedPublicKey = await deriveKey(this.config.auth.publicPassphrase.trim(), salt.trim());
+              this.publicCrypto = createCryptoAdapter(derivedPublicKey);
+            }
+          }
           const identityDoc = await this.localStore.get("_sovereign_identity");
           if (identityDoc) {
             const plain = await this.decryptData(identityDoc.data);
@@ -24820,6 +24933,9 @@ ${toHex(hashedRequest)}`;
         hasEncryption() {
           return !!this.crypto;
         }
+        hasPublicEncryption() {
+          return !!this.publicCrypto;
+        }
         async encryptRaw(data) {
           if (!this.crypto) return data;
           return this.crypto.encryptRaw(data);
@@ -24827,6 +24943,28 @@ ${toHex(hashedRequest)}`;
         async decryptRaw(data) {
           if (!this.crypto) return data;
           return this.crypto.decryptRaw(data);
+        }
+        async encryptPublicRaw(data) {
+          if (!this.publicCrypto) return data;
+          return this.publicCrypto.encryptRaw(data);
+        }
+        async decryptPublicRaw(data) {
+          if (!this.publicCrypto) return data;
+          return this.publicCrypto.decryptRaw(data);
+        }
+        async encryptPublic(data) {
+          if (!this.publicCrypto) return data;
+          return await this.publicCrypto.encrypt(data);
+        }
+        async decryptPublic(data) {
+          if (!this.publicCrypto) return data;
+          if (typeof data !== "string") return data;
+          try {
+            return await this.publicCrypto.decrypt(data);
+          } catch (e2) {
+            console.warn("Failed to decrypt public data", e2);
+            return data;
+          }
         }
         // --- Sharing ---
         async share(docId, isPublic = false, collection) {
@@ -24944,15 +25082,17 @@ ${toHex(hashedRequest)}`;
           }
         }
         async addToPublicIndex(metadata, collection) {
+          const plainData = {
+            id: metadata.sharedId,
+            key: metadata.encryptionKey,
+            collection,
+            updatedAt: Date.now()
+          };
+          const encryptedData = await this.encryptPublic(plainData);
           const doc = {
             _id: `public/${metadata.sharedId}`,
             _updatedAt: Date.now(),
-            data: {
-              id: metadata.sharedId,
-              key: metadata.encryptionKey,
-              collection,
-              updatedAt: Date.now()
-            }
+            data: encryptedData
           };
           try {
             await this.sharedRemote.put(doc);
@@ -24975,7 +25115,8 @@ ${toHex(hashedRequest)}`;
           const results = await Promise.all(publicFiles.map(async (c2) => {
             try {
               const doc = await this.sharedRemote.get(c2.id, c2.collection);
-              return doc ? doc.data : null;
+              if (!doc) return null;
+              return await this.decryptPublic(doc.data);
             } catch (e2) {
               return null;
             }
@@ -25228,27 +25369,22 @@ ${toHex(hashedRequest)}`;
               for (const file of contentToPull) {
                 const indexDoc = await followRemote.get(file.id, file.collection);
                 if (!indexDoc) continue;
-                let docToSave = indexDoc;
-                let dataToSave = indexDoc.data;
-                if (file.collection === "public" || file.id.startsWith("public/")) {
-                  const meta2 = indexDoc.data;
-                  if (meta2.id) {
-                    const contentDoc2 = await followRemote.get(meta2.id, meta2.collection);
-                    if (contentDoc2) {
-                      if (meta2.key) {
-                        const tempCrypto = this.getCryptoAdapter(meta2.key);
-                        dataToSave = await tempCrypto.decrypt(contentDoc2.data);
-                      } else {
-                        dataToSave = contentDoc2.data;
-                      }
-                      docToSave = { ...contentDoc2, _updatedAt: meta2.updatedAt };
+                let meta = indexDoc.data;
+                if (addr.publicPassphrase) {
+                  try {
+                    const salt = addr.publicSalt || addr.appId;
+                    const theirPublicKey = await deriveKey(addr.publicPassphrase.trim(), salt.trim());
+                    const theirCrypto = createCryptoAdapter(theirPublicKey);
+                    if (typeof indexDoc.data === "string") {
+                      meta = await theirCrypto.decrypt(indexDoc.data);
                     } else {
-                      continue;
+                      meta = indexDoc.data;
                     }
+                  } catch (e2) {
+                    console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
+                    continue;
                   }
-                } else {
                 }
-                const meta = indexDoc.data;
                 if (!meta || !meta.id || !meta.updatedAt) {
                   continue;
                 }
@@ -25274,9 +25410,6 @@ ${toHex(hashedRequest)}`;
                     collection: "followed_content",
                     data: encryptedForMe,
                     _rev: v4_default()
-                    // Store extra metadata to help with UI
-                    // e.g. original author
-                    // But `plainContent` (the Post) has `authorId`.
                   });
                   stats.pulled++;
                 }
@@ -25391,6 +25524,7 @@ ${toHex(hashedRequest)}`;
       init_S3RemoteAdapter();
       init_IndexedDBStorage();
       init_WebCryptoAdapter();
+      init_cryptoUtils();
       init_Social();
       init_Boards();
     }
@@ -25400,6 +25534,43 @@ ${toHex(hashedRequest)}`;
   var require_app = __commonJS({
     "demo/notes/src/app.ts"() {
       init_src();
+      function getSavedSessions() {
+        try {
+          return JSON.parse(localStorage.getItem("notes_sessions") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function saveSession(config) {
+        const sessions = getSavedSessions();
+        const userId = config.paths.userId;
+        const appId = config.paths.appId;
+        const idx = sessions.findIndex((s2) => s2.userId === userId && s2.appId === appId);
+        const session = {
+          id: crypto.randomUUID(),
+          userId,
+          appId,
+          config,
+          lastActive: Date.now()
+        };
+        let sessionId = session.id;
+        if (idx >= 0) {
+          sessionId = sessions[idx].id;
+          sessions[idx] = { ...session, id: sessionId };
+        } else {
+          sessions.push(session);
+        }
+        localStorage.setItem("notes_sessions", JSON.stringify(sessions));
+        localStorage.setItem("notes_current_session_id", sessionId);
+      }
+      function clearCurrentSession() {
+        localStorage.removeItem("notes_current_session_id");
+      }
+      function removeSession(id) {
+        const sessions = getSavedSessions().filter((s2) => s2.id !== id);
+        localStorage.setItem("notes_sessions", JSON.stringify(sessions));
+        renderSavedSessionsList();
+      }
       var db = null;
       var currentNoteId = null;
       var views = {
@@ -25429,42 +25600,89 @@ ${toHex(hashedRequest)}`;
         Object.values(views).forEach((el) => el.classList.add("hidden"));
         views[view].classList.remove("hidden");
       }
-      async function connect() {
-        const appId = inputs.appId.value.trim();
-        let userId = inputs.userId.value.trim();
-        const endpoint = inputs.endpoint.value.trim();
-        const bucket = inputs.bucket.value.trim();
-        const region = inputs.region.value.trim();
-        const accessKeyId = inputs.accessKey.value.trim();
-        const secretAccessKey = inputs.secretKey.value.trim();
-        if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
-          showToast("Please fill in all fields");
+      function renderSavedSessionsList() {
+        const list = document.getElementById("saved-sessions-list");
+        const area = document.getElementById("saved-sessions-area");
+        const sessions = getSavedSessions();
+        if (!list || !area) return;
+        if (sessions.length === 0) {
+          area.classList.add("hidden");
+          toggleLoginView(false);
           return;
         }
-        if (!userId) {
-          userId = crypto.randomUUID();
-          inputs.userId.value = userId;
-          alert(`New User ID generated: ${userId}
+        list.innerHTML = "";
+        sessions.sort((a2, b2) => b2.lastActive - a2.lastActive);
+        sessions.forEach((s2) => {
+          const item = document.createElement("div");
+          item.style.padding = "10px";
+          item.style.border = "1px solid #ddd";
+          item.style.borderRadius = "4px";
+          item.style.cursor = "pointer";
+          item.style.display = "flex";
+          item.style.justifyContent = "space-between";
+          item.style.alignItems = "center";
+          item.style.background = "#f9f9f9";
+          item.onclick = () => connect(s2.config, false);
+          item.innerHTML = `
+            <div>
+                <strong>${s2.userId.substring(0, 8)}...</strong> <small>(${s2.appId})</small><br>
+                <small style="color:#666;">${new Date(s2.lastActive).toLocaleDateString()}</small>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s2.id}')" class="danger" style="padding: 2px 6px; font-size: 0.8em;">\u2715</button>
+        `;
+          list.appendChild(item);
+        });
+        document.getElementById("btn-show-new-login")?.addEventListener("click", () => toggleLoginView(false));
+        toggleLoginView(true);
+      }
+      window.removeSession = removeSession;
+      function toggleLoginView(showSaved) {
+        const savedArea = document.getElementById("saved-sessions-area");
+        const newArea = document.getElementById("new-login-area");
+        if (showSaved && getSavedSessions().length > 0) {
+          savedArea?.classList.remove("hidden");
+          newArea?.classList.add("hidden");
+        } else {
+          savedArea?.classList.add("hidden");
+          newArea?.classList.remove("hidden");
+        }
+      }
+      async function connect(config, save = true) {
+        if (!config) {
+          const appId = inputs.appId.value.trim();
+          let userId = inputs.userId.value.trim();
+          const endpoint = inputs.endpoint.value.trim();
+          const bucket = inputs.bucket.value.trim();
+          const region = inputs.region.value.trim();
+          const accessKeyId = inputs.accessKey.value.trim();
+          const secretAccessKey = inputs.secretKey.value.trim();
+          if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
+            showToast("Please fill in all fields");
+            return;
+          }
+          if (!userId) {
+            userId = crypto.randomUUID();
+            inputs.userId.value = userId;
+            alert(`New User ID generated: ${userId}
 
 Save this ID! You will need it to access these notes on other devices.`);
+          }
+          config = {
+            paths: { appId, userId, storeId: "notes" },
+            encryptionKey: "demo-notes-secret-key-32-bytes!!",
+            s3: {
+              endpoint,
+              region,
+              bucketName: bucket,
+              credentials: { accessKeyId, secretAccessKey },
+              forcePathStyle: true
+            },
+            useManifest: true,
+            syncIntervalMs: 0
+          };
         }
-        const config = {
-          paths: { appId, userId, storeId: "notes" },
-          encryptionKey: "demo-notes-secret-key-32-bytes!!",
-          // Hardcoded for demo simplicity
-          s3: {
-            endpoint,
-            region,
-            bucketName: bucket,
-            credentials: { accessKeyId, secretAccessKey },
-            forcePathStyle: true
-          },
-          useManifest: true,
-          syncIntervalMs: 0
-          // Manual sync
-        };
         try {
-          const storage = new IndexedDBStorage(userId);
+          const storage = new IndexedDBStorage(config.paths.userId);
           db = new SovereignS3nc(config, storage);
           db.on("syncStart", () => loading.style.display = "block");
           db.on("syncComplete", () => {
@@ -25472,6 +25690,11 @@ Save this ID! You will need it to access these notes on other devices.`);
             refreshList();
           });
           await db.init();
+          if (save) {
+            saveSession(config);
+          } else {
+            saveSession(config);
+          }
           showToast("Connected!");
           showView("list");
           await db.sync();
@@ -25552,7 +25775,7 @@ Save this ID! You will need it to access these notes on other devices.`);
         const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
         return text.replace(/[&<>"']/g, (m2) => map[m2]);
       }
-      document.getElementById("btn-connect").addEventListener("click", connect);
+      document.getElementById("btn-connect").addEventListener("click", () => connect(void 0, true));
       document.getElementById("btn-sync").addEventListener("click", async () => {
         if (db) {
           await db.sync();
@@ -25562,21 +25785,37 @@ Save this ID! You will need it to access these notes on other devices.`);
       });
       document.getElementById("btn-create").addEventListener("click", createNote);
       document.getElementById("btn-logout").addEventListener("click", () => {
+        if (db) db.stopAutoSync();
+        clearCurrentSession();
         location.reload();
       });
       document.getElementById("btn-save").addEventListener("click", saveNote);
       document.getElementById("btn-cancel").addEventListener("click", () => showView("list"));
       document.getElementById("btn-delete").addEventListener("click", deleteNote);
-      fetch("config.json").then((r2) => r2.json()).then((config) => {
-        if (config.s3) {
-          inputs.endpoint.value = config.s3.endpoint || "";
-          inputs.bucket.value = config.s3.bucketName || "";
-          inputs.region.value = config.s3.region || "";
-          inputs.accessKey.value = config.s3.accessKeyId || "";
-          inputs.secretKey.value = config.s3.secretAccessKey || "";
+      window.addEventListener("load", async () => {
+        renderSavedSessionsList();
+        const currentSessionId = localStorage.getItem("notes_current_session_id");
+        if (currentSessionId) {
+          const sessions = getSavedSessions();
+          const session = sessions.find((s2) => s2.id === currentSessionId);
+          if (session) {
+            console.log("Auto-logging in:", session.userId);
+            showToast(`Restoring session...`);
+            await connect(session.config, false);
+            return;
+          }
         }
-        if (config.appId) inputs.appId.value = config.appId;
-      }).catch(() => {
+        fetch("config.json").then((r2) => r2.json()).then((config) => {
+          if (config.s3) {
+            inputs.endpoint.value = config.s3.endpoint || "";
+            inputs.bucket.value = config.s3.bucketName || "";
+            inputs.region.value = config.s3.region || "";
+            inputs.accessKey.value = config.s3.accessKeyId || "";
+            inputs.secretKey.value = config.s3.secretAccessKey || "";
+          }
+          if (config.appId) inputs.appId.value = config.appId;
+        }).catch(() => {
+        });
       });
     }
   });

@@ -27,6 +27,58 @@ interface ItemState {
     type: 'item_state';
 }
 
+// --- Session Management ---
+interface SavedSession {
+    id: string;
+    userId: string;
+    appId: string;
+    config: any;
+    lastActive: number;
+}
+
+function getSavedSessions(): SavedSession[] {
+    try {
+        return JSON.parse(localStorage.getItem('shopping_sessions') || '[]');
+    } catch { return []; }
+}
+
+function saveSession(config: any) {
+    const sessions = getSavedSessions();
+    const userId = config.paths.userId;
+    const appId = config.paths.appId;
+    const idx = sessions.findIndex(s => s.userId === userId && s.appId === appId);
+    
+    const session: SavedSession = {
+        id: crypto.randomUUID(),
+        userId,
+        appId,
+        config,
+        lastActive: Date.now()
+    };
+
+    let sessionId = session.id;
+
+    if (idx >= 0) {
+        sessionId = sessions[idx].id;
+        sessions[idx] = { ...session, id: sessionId }; 
+    } else {
+        sessions.push(session);
+    }
+    
+    localStorage.setItem('shopping_sessions', JSON.stringify(sessions));
+    localStorage.setItem('shopping_current_session_id', sessionId);
+}
+
+function clearCurrentSession() {
+    localStorage.removeItem('shopping_current_session_id');
+}
+
+function removeSession(id: string) {
+    const sessions = getSavedSessions().filter(s => s.id !== id);
+    localStorage.setItem('shopping_sessions', JSON.stringify(sessions));
+    renderSavedSessionsList();
+}
+
 // --- Global State ---
 let db: SovereignS3nc | null = null;
 let currentListId: string | null = null;
@@ -74,62 +126,117 @@ function switchView(viewName: keyof typeof views) {
     }
 }
 
+// --- Session UI Helpers ---
+function renderSavedSessionsList() {
+    const list = document.getElementById('saved-sessions-list');
+    const area = document.getElementById('saved-sessions-area');
+    const sessions = getSavedSessions();
+
+    if (!list || !area) return;
+
+    if (sessions.length === 0) {
+        area.style.display = 'none';
+        toggleLoginView(false);
+        return;
+    }
+
+    list.innerHTML = '';
+    sessions.sort((a, b) => b.lastActive - a.lastActive);
+
+    sessions.forEach(s => {
+        const item = document.createElement('a');
+        item.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
+        item.style.cursor = 'pointer';
+        
+        item.onclick = () => connect(s.config, false);
+
+        item.innerHTML = `
+            <div>
+                <div class="fw-bold">${s.userId}</div>
+                <small class="text-muted">${s.appId} • ${new Date(s.lastActive).toLocaleDateString()}</small>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s.id}')" class="btn btn-sm btn-outline-danger">✕</button>
+        `;
+        list.appendChild(item);
+    });
+
+    document.getElementById('btn-show-new-login')?.addEventListener('click', () => toggleLoginView(false));
+    toggleLoginView(true);
+}
+
+(window as any).removeSession = removeSession;
+
+function toggleLoginView(showSaved: boolean) {
+    const savedArea = document.getElementById('saved-sessions-area');
+    const newArea = document.getElementById('new-login-area');
+    
+    if (showSaved && getSavedSessions().length > 0) {
+        if(savedArea) savedArea.style.display = 'block';
+        if(newArea) newArea.style.display = 'none';
+    } else {
+        if(savedArea) savedArea.style.display = 'none';
+        if(newArea) newArea.style.display = 'block';
+    }
+}
+
 // --- Logic ---
 
-async function connect() {
-    const appId = (document.getElementById('app-id') as HTMLInputElement).value.trim();
-    let userId = (document.getElementById('user-id') as HTMLInputElement).value.trim();
-    
-    // Auth Mode
-    const isOci = document.querySelector('.nav-link.active[data-bs-target="#tab-oci"]');
-    
-    const config: any = {
-        paths: { appId, userId, storeId: 'shopping' },
-        auth: {
-            privatePassphrase: (document.getElementById('private-passphrase') as HTMLInputElement).value,
-            publicPassphrase: (document.getElementById('public-passphrase') as HTMLInputElement).value
-        },
-        syncIntervalMs: 5000 // Auto sync every 5s
-    };
-
-    if (!config.auth.privatePassphrase || !config.auth.publicPassphrase) {
-        return showToast('Both passphrases are required');
-    }
-
-    if (!userId) {
-        userId = crypto.randomUUID().split('-')[0]; // Short ID
-        (document.getElementById('user-id') as HTMLInputElement).value = userId;
-        config.paths.userId = userId;
-        alert(`Generated User ID: ${userId}. Save this!`);
-    }
-
-    if (isOci) {
-        config.ociParUrl = (document.getElementById('oci-url') as HTMLInputElement).value;
-        config.useManifest = true;
-    } else {
-        config.s3 = {
-            endpoint: (document.getElementById('s3-endpoint') as HTMLInputElement).value,
-            region: (document.getElementById('s3-region') as HTMLInputElement).value,
-            bucketName: (document.getElementById('s3-bucket') as HTMLInputElement).value,
-            credentials: {
-                accessKeyId: (document.getElementById('s3-access-key') as HTMLInputElement).value,
-                secretAccessKey: (document.getElementById('s3-secret-key') as HTMLInputElement).value
+async function connect(config?: any, save: boolean = true) {
+    if (!config) {
+        const appId = (document.getElementById('app-id') as HTMLInputElement).value.trim();
+        let userId = (document.getElementById('user-id') as HTMLInputElement).value.trim();
+        
+        // Auth Mode
+        const isOci = document.querySelector('.nav-link.active[data-bs-target="#tab-oci"]');
+        
+        config = {
+            paths: { appId, userId, storeId: 'shopping' },
+            auth: {
+                privatePassphrase: (document.getElementById('private-passphrase') as HTMLInputElement).value,
+                publicPassphrase: (document.getElementById('public-passphrase') as HTMLInputElement).value
             },
-            forcePathStyle: true
+            syncIntervalMs: 5000 // Auto sync every 5s
         };
-        config.useManifest = true;
+
+        if (!config.auth.privatePassphrase || !config.auth.publicPassphrase) {
+            return showToast('Both passphrases are required');
+        }
+
+        if (!userId) {
+            userId = crypto.randomUUID().split('-')[0]; // Short ID
+            (document.getElementById('user-id') as HTMLInputElement).value = userId;
+            config.paths.userId = userId;
+            alert(`Generated User ID: ${userId}. Save this!`);
+        }
+
+        if (isOci) {
+            config.ociParUrl = (document.getElementById('oci-url') as HTMLInputElement).value;
+            config.useManifest = true;
+        } else {
+            config.s3 = {
+                endpoint: (document.getElementById('s3-endpoint') as HTMLInputElement).value,
+                region: (document.getElementById('s3-region') as HTMLInputElement).value,
+                bucketName: (document.getElementById('s3-bucket') as HTMLInputElement).value,
+                credentials: {
+                    accessKeyId: (document.getElementById('s3-access-key') as HTMLInputElement).value,
+                    secretAccessKey: (document.getElementById('s3-secret-key') as HTMLInputElement).value
+                },
+                forcePathStyle: true
+            };
+            config.useManifest = true;
+        }
     }
 
     try {
         showLoading(true);
-        const storage = new IndexedDBStorage(userId);
+        const storage = new IndexedDBStorage(config.paths.userId);
         
         // Verify Passphrase (decryption check)
         await storage.init();
         const identity = await storage.get('_sovereign_identity');
         if (identity && typeof identity.data === 'string') {
             try {
-                const key = await deriveKey(config.auth.privatePassphrase, userId);
+                const key = await deriveKey(config.auth.privatePassphrase, config.paths.userId);
                 const adapter = createCryptoAdapter(key);
                 await adapter.decrypt(identity.data);
             } catch (e) {
@@ -149,7 +256,13 @@ async function connect() {
         });
 
         await db.init();
-        currentUser = userId;
+        currentUser = config.paths.userId;
+
+        if (save) {
+            saveSession(config);
+        } else {
+             saveSession(config); // Update last active
+        }
 
         switchView('app');
         refreshLists();
@@ -482,7 +595,7 @@ document.getElementById('btn-follow')!.addEventListener('click', async () => {
 });
 
 // --- Event Listeners ---
-document.getElementById('btn-connect')!.addEventListener('click', connect);
+document.getElementById('btn-connect')!.addEventListener('click', () => connect(undefined, true));
 document.getElementById('btn-create-list')!.addEventListener('click', (window as any).createList);
 document.getElementById('btn-add-item')!.addEventListener('click', (window as any).addItem);
 
@@ -496,15 +609,36 @@ document.getElementById('nav-network')!.addEventListener('click', () => {
 });
 document.getElementById('nav-settings')!.addEventListener('click', () => switchView('settings'));
 
+document.getElementById('btn-logout')!.addEventListener('click', () => {
+    if (db) db.stopAutoSync();
+    clearCurrentSession();
+    location.reload();
+});
+
 document.getElementById('btn-clear-data')!.addEventListener('click', async () => {
     if (confirm('Delete all local data?')) {
         indexedDB.deleteDatabase('sovereign_db_' + currentUser);
+        if (db) db.stopAutoSync();
+        clearCurrentSession();
         location.reload();
     }
 });
 
-// Auto-fill config
+// Auto-fill config and Session Restore
 window.addEventListener('load', async () => {
+    renderSavedSessionsList();
+
+    const currentSessionId = localStorage.getItem('shopping_current_session_id');
+    if (currentSessionId) {
+        const sessions = getSavedSessions();
+        const session = sessions.find(s => s.id === currentSessionId);
+        if (session) {
+            console.log('Auto-logging in:', session.userId);
+            await connect(session.config, false);
+            return;
+        }
+    }
+
     try {
         const c = await (await fetch('config.json')).json();
         if (c.s3) {

@@ -7,6 +7,58 @@ interface Note {
     updatedAt: number;
 }
 
+// --- Session Management ---
+interface SavedSession {
+    id: string;
+    userId: string;
+    appId: string;
+    config: any;
+    lastActive: number;
+}
+
+function getSavedSessions(): SavedSession[] {
+    try {
+        return JSON.parse(localStorage.getItem('notes_sessions') || '[]');
+    } catch { return []; }
+}
+
+function saveSession(config: any) {
+    const sessions = getSavedSessions();
+    const userId = config.paths.userId;
+    const appId = config.paths.appId;
+    const idx = sessions.findIndex(s => s.userId === userId && s.appId === appId);
+    
+    const session: SavedSession = {
+        id: crypto.randomUUID(),
+        userId,
+        appId,
+        config,
+        lastActive: Date.now()
+    };
+
+    let sessionId = session.id;
+
+    if (idx >= 0) {
+        sessionId = sessions[idx].id;
+        sessions[idx] = { ...session, id: sessionId }; 
+    } else {
+        sessions.push(session);
+    }
+    
+    localStorage.setItem('notes_sessions', JSON.stringify(sessions));
+    localStorage.setItem('notes_current_session_id', sessionId);
+}
+
+function clearCurrentSession() {
+    localStorage.removeItem('notes_current_session_id');
+}
+
+function removeSession(id: string) {
+    const sessions = getSavedSessions().filter(s => s.id !== id);
+    localStorage.setItem('notes_sessions', JSON.stringify(sessions));
+    renderSavedSessionsList();
+}
+
 // --- State ---
 let db: SovereignS3nc | null = null;
 let currentNoteId: string | null = null;
@@ -46,56 +98,125 @@ function showView(view: 'login' | 'list' | 'editor') {
     views[view].classList.remove('hidden');
 }
 
-// --- Logic ---
+// --- Session UI Helpers ---
+function renderSavedSessionsList() {
+    const list = document.getElementById('saved-sessions-list');
+    const area = document.getElementById('saved-sessions-area');
+    const sessions = getSavedSessions();
 
-async function connect() {
-    const appId = inputs.appId.value.trim();
-    let userId = inputs.userId.value.trim();
-    
-    const endpoint = inputs.endpoint.value.trim();
-    const bucket = inputs.bucket.value.trim();
-    const region = inputs.region.value.trim();
-    const accessKeyId = inputs.accessKey.value.trim();
-    const secretAccessKey = inputs.secretKey.value.trim();
+    if (!list || !area) return;
 
-    if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
-        showToast('Please fill in all fields');
+    if (sessions.length === 0) {
+        area.classList.add('hidden');
+        toggleLoginView(false);
         return;
     }
 
-    if (!userId) {
-        userId = crypto.randomUUID();
-        inputs.userId.value = userId;
-        alert(`New User ID generated: ${userId}\n\nSave this ID! You will need it to access these notes on other devices.`);
+    list.innerHTML = '';
+    sessions.sort((a, b) => b.lastActive - a.lastActive);
+
+    sessions.forEach(s => {
+        const item = document.createElement('div');
+        item.style.padding = '10px';
+        item.style.border = '1px solid #ddd';
+        item.style.borderRadius = '4px';
+        item.style.cursor = 'pointer';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+        item.style.background = '#f9f9f9';
+        
+        item.onclick = () => connect(s.config, false);
+
+        item.innerHTML = `
+            <div>
+                <strong>${s.userId.substring(0, 8)}...</strong> <small>(${s.appId})</small><br>
+                <small style="color:#666;">${new Date(s.lastActive).toLocaleDateString()}</small>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s.id}')" class="danger" style="padding: 2px 6px; font-size: 0.8em;">✕</button>
+        `;
+        list.appendChild(item);
+    });
+
+    document.getElementById('btn-show-new-login')?.addEventListener('click', () => toggleLoginView(false));
+    toggleLoginView(true);
+}
+
+(window as any).removeSession = removeSession;
+
+function toggleLoginView(showSaved: boolean) {
+    const savedArea = document.getElementById('saved-sessions-area');
+    const newArea = document.getElementById('new-login-area');
+    
+    if (showSaved && getSavedSessions().length > 0) {
+        savedArea?.classList.remove('hidden');
+        newArea?.classList.add('hidden');
+    } else {
+        savedArea?.classList.add('hidden');
+        newArea?.classList.remove('hidden');
+    }
+}
+
+// --- Logic ---
+
+async function connect(config?: any, save: boolean = true) {
+    if (!config) {
+        // Build config from inputs
+        const appId = inputs.appId.value.trim();
+        let userId = inputs.userId.value.trim();
+        
+        const endpoint = inputs.endpoint.value.trim();
+        const bucket = inputs.bucket.value.trim();
+        const region = inputs.region.value.trim();
+        const accessKeyId = inputs.accessKey.value.trim();
+        const secretAccessKey = inputs.secretKey.value.trim();
+
+        if (!appId || !endpoint || !bucket || !accessKeyId || !secretAccessKey) {
+            showToast('Please fill in all fields');
+            return;
+        }
+
+        if (!userId) {
+            userId = crypto.randomUUID();
+            inputs.userId.value = userId;
+            alert(`New User ID generated: ${userId}\n\nSave this ID! You will need it to access these notes on other devices.`);
+        }
+
+        config = {
+            paths: { appId, userId, storeId: 'notes' },
+            encryptionKey: 'demo-notes-secret-key-32-bytes!!', 
+            s3: {
+                endpoint,
+                region,
+                bucketName: bucket,
+                credentials: { accessKeyId, secretAccessKey },
+                forcePathStyle: true
+            },
+            useManifest: true,
+            syncIntervalMs: 0
+        };
     }
 
-    const config = {
-        paths: { appId, userId, storeId: 'notes' },
-        encryptionKey: 'demo-notes-secret-key-32-bytes!!', // Hardcoded for demo simplicity
-        s3: {
-            endpoint,
-            region,
-            bucketName: bucket,
-            credentials: { accessKeyId, secretAccessKey },
-            forcePathStyle: true
-        },
-        useManifest: true,
-        syncIntervalMs: 0 // Manual sync
-    };
-
     try {
-        const storage = new IndexedDBStorage(userId);
+        const storage = new IndexedDBStorage(config.paths.userId);
         db = new SovereignS3nc(config, storage);
 
         db.on('syncStart', () => loading.style.display = 'block');
         db.on('syncComplete', () => {
             loading.style.display = 'none';
-            refreshList(); // Refresh list after sync
+            refreshList(); 
         });
 
         await db.init();
-        showToast('Connected!');
         
+        if (save) {
+            saveSession(config);
+        } else {
+            // Update last active
+            saveSession(config);
+        }
+
+        showToast('Connected!');
         showView('list');
         await db.sync();
         refreshList();
@@ -199,7 +320,7 @@ function escapeHtml(text: string) {
 
 // --- Event Listeners ---
 
-document.getElementById('btn-connect')!.addEventListener('click', connect);
+document.getElementById('btn-connect')!.addEventListener('click', () => connect(undefined, true));
 document.getElementById('btn-sync')!.addEventListener('click', async () => {
     if (db) {
         await db.sync();
@@ -209,6 +330,8 @@ document.getElementById('btn-sync')!.addEventListener('click', async () => {
 });
 document.getElementById('btn-create')!.addEventListener('click', createNote);
 document.getElementById('btn-logout')!.addEventListener('click', () => {
+    if (db) db.stopAutoSync();
+    clearCurrentSession();
     location.reload();
 });
 
@@ -216,14 +339,31 @@ document.getElementById('btn-save')!.addEventListener('click', saveNote);
 document.getElementById('btn-cancel')!.addEventListener('click', () => showView('list'));
 document.getElementById('btn-delete')!.addEventListener('click', deleteNote);
 
-// Try to auto-fill config if config.json exists (dev convenience)
-fetch('config.json').then(r => r.json()).then(config => {
-    if (config.s3) {
-        inputs.endpoint.value = config.s3.endpoint || '';
-        inputs.bucket.value = config.s3.bucketName || '';
-        inputs.region.value = config.s3.region || '';
-        inputs.accessKey.value = config.s3.accessKeyId || '';
-        inputs.secretKey.value = config.s3.secretAccessKey || '';
+// Initialization
+window.addEventListener('load', async () => {
+    renderSavedSessionsList();
+
+    const currentSessionId = localStorage.getItem('notes_current_session_id');
+    if (currentSessionId) {
+        const sessions = getSavedSessions();
+        const session = sessions.find(s => s.id === currentSessionId);
+        if (session) {
+            console.log('Auto-logging in:', session.userId);
+            showToast(`Restoring session...`);
+            await connect(session.config, false);
+            return;
+        }
     }
-    if (config.appId) inputs.appId.value = config.appId;
-}).catch(() => {});
+
+    // Fallback to config.json
+    fetch('config.json').then(r => r.json()).then(config => {
+        if (config.s3) {
+            inputs.endpoint.value = config.s3.endpoint || '';
+            inputs.bucket.value = config.s3.bucketName || '';
+            inputs.region.value = config.s3.region || '';
+            inputs.accessKey.value = config.s3.accessKeyId || '';
+            inputs.secretKey.value = config.s3.secretAccessKey || '';
+        }
+        if (config.appId) inputs.appId.value = config.appId;
+    }).catch(() => {});
+});

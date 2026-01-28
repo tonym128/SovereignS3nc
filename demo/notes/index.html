@@ -38,6 +38,15 @@
         <h1>Sovereign Notes</h1>
         <p>Secure, offline-first notes synced via S3.</p>
         
+        <div id="saved-sessions-area" class="hidden" style="margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 20px;">
+            <h3>Reconnect</h3>
+            <div id="saved-sessions-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="btn-show-new-login" class="secondary" style="font-size: 0.9em;">Connect with different details</button>
+            </div>
+        </div>
+
+        <div id="new-login-area">
         <div class="input-group">
             <label>App ID (Namespace)</label>
             <input type="text" id="config-app-id" value="sovereign-notes" placeholder="e.g. my-notes-app">
@@ -73,6 +82,7 @@
         </div>
 
         <button id="btn-connect">Connect & Sync</button>
+        </div>
     </div>
 
     <!-- List View -->
