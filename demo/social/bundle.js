@@ -25534,6 +25534,44 @@ ${toHex(hashedRequest)}`;
   var require_app = __commonJS({
     "demo/social/src/app.ts"() {
       init_src();
+      function getSavedSessions() {
+        try {
+          return JSON.parse(localStorage.getItem("sovereign_sessions") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      function saveSession(config, profile) {
+        const sessions = getSavedSessions();
+        const userId = config.paths.userId;
+        const idx = sessions.findIndex((s2) => s2.userId === userId && s2.config.paths.appId === config.paths.appId);
+        const session = {
+          id: crypto.randomUUID(),
+          // New ID if new
+          userId,
+          displayName: profile?.displayName || userId,
+          avatarUrl: profile?.avatarUrl,
+          config,
+          lastActive: Date.now()
+        };
+        let sessionId = session.id;
+        if (idx >= 0) {
+          sessionId = sessions[idx].id;
+          sessions[idx] = { ...session, id: sessionId };
+        } else {
+          sessions.push(session);
+        }
+        localStorage.setItem("sovereign_sessions", JSON.stringify(sessions));
+        localStorage.setItem("sovereign_current_session_id", sessionId);
+      }
+      function clearCurrentSession() {
+        localStorage.removeItem("sovereign_current_session_id");
+      }
+      function removeSession(id) {
+        const sessions = getSavedSessions().filter((s2) => s2.id !== id);
+        localStorage.setItem("sovereign_sessions", JSON.stringify(sessions));
+        renderSavedSessionsList();
+      }
       var db = null;
       var currentUser = "";
       function showToast(message, type = "info") {
@@ -25563,8 +25601,73 @@ ${toHex(hashedRequest)}`;
         network: document.getElementById("nav-network")
       };
       var loading = document.getElementById("loading");
+      function renderSavedSessionsList() {
+        const list = document.getElementById("saved-sessions-list");
+        const area = document.getElementById("saved-sessions-area");
+        const sessions = getSavedSessions();
+        if (!list || !area) return;
+        if (sessions.length === 0) {
+          area.classList.add("hidden");
+          toggleLoginView(false);
+          return;
+        }
+        list.innerHTML = "";
+        sessions.sort((a2, b2) => b2.lastActive - a2.lastActive);
+        sessions.forEach((s2) => {
+          const item = document.createElement("div");
+          item.className = "card";
+          item.style.marginBottom = "10px";
+          item.style.padding = "10px";
+          item.style.cursor = "pointer";
+          item.style.display = "flex";
+          item.style.alignItems = "center";
+          item.style.gap = "10px";
+          item.style.border = "1px solid #cbd5e1";
+          item.style.transition = "transform 0.1s";
+          item.onmouseover = () => item.style.backgroundColor = "#f1f5f9";
+          item.onmouseout = () => item.style.backgroundColor = "white";
+          item.onclick = () => connect(s2.config, false);
+          const initial = (s2.displayName || s2.userId || "?")[0].toUpperCase();
+          const avatar = s2.avatarUrl ? `<div class="avatar" style="width:30px; height:30px; background:#ccc;"></div>` : `<div class="avatar" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:0.8em; background:#ddd;">${initial}</div>`;
+          item.innerHTML = `
+            ${avatar}
+            <div style="flex-grow:1; overflow:hidden;">
+                <div style="font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s2.displayName || s2.userId}</div>
+                <div style="font-size:0.7em; color:#64748b;">${s2.config.ociParUrl ? "OCI" : "S3"} \u2022 ${new Date(s2.lastActive).toLocaleDateString()}</div>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s2.id}')" class="btn" style="background:#ef4444; padding:2px 6px; font-size:0.7em; z-index:10;">\u2715</button>
+        `;
+          list.appendChild(item);
+        });
+        document.getElementById("btn-show-new-login")?.addEventListener("click", () => toggleLoginView(false));
+        toggleLoginView(true);
+      }
+      window.removeSession = removeSession;
+      function toggleLoginView(showSaved) {
+        const savedArea = document.getElementById("saved-sessions-area");
+        const newArea = document.getElementById("new-login-area");
+        if (showSaved && getSavedSessions().length > 0) {
+          savedArea?.classList.remove("hidden");
+          newArea?.classList.add("hidden");
+        } else {
+          savedArea?.classList.add("hidden");
+          newArea?.classList.remove("hidden");
+        }
+      }
       if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
         window.addEventListener("load", async () => {
+          renderSavedSessionsList();
+          const currentSessionId = localStorage.getItem("sovereign_current_session_id");
+          if (currentSessionId) {
+            const sessions = getSavedSessions();
+            const session = sessions.find((s2) => s2.id === currentSessionId);
+            if (session) {
+              console.log("Auto-logging in:", session.userId);
+              showToast(`Restoring session for ${session.displayName || session.userId}...`, "info");
+              await connect(session.config, false);
+              return;
+            }
+          }
           try {
             const res = await fetch("config.json");
             if (res.ok) {
@@ -25604,6 +25707,84 @@ ${toHex(hashedRequest)}`;
           }
         });
       });
+      async function connect(config, save = true) {
+        const userId = config.paths.userId;
+        const storage = new IndexedDBStorage(userId);
+        try {
+          await storage.init();
+          const identity = await storage.get("_sovereign_identity");
+          if (identity && typeof identity.data === "string") {
+            try {
+              const key = await deriveKey(config.auth.privatePassphrase, userId);
+              const crypto2 = createCryptoAdapter(key);
+              await crypto2.decrypt(identity.data);
+            } catch (e2) {
+              console.error("Decryption check failed", e2);
+              return showToast("Incorrect Private Passphrase!", "error");
+            }
+          }
+        } catch (e2) {
+          console.warn("Pre-check of storage failed", e2);
+        }
+        try {
+          if (db) {
+            db.stopAutoSync();
+          }
+          db = new SovereignS3nc(config, storage);
+          db.on("syncStart", () => loading.style.display = "block");
+          db.on("syncComplete", (stats) => {
+            loading.style.display = "none";
+            if (stats.pulled > 0) {
+              console.log("New data received");
+            }
+          });
+          await db.init();
+          if (db.publicId && db.shares && db.shares.size > 0) {
+            const publicShares = Array.from(db.shares.values()).filter((s2) => s2.isPublic);
+            if (publicShares.length > 0 && db.sharedRemote) {
+              try {
+                const check = publicShares[0];
+                const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
+                if (raw && typeof raw.data === "string") {
+                  const decrypted = await db.decryptPublic(raw.data);
+                  if (decrypted === raw.data) {
+                    throw new Error("Public Key Decryption Failed");
+                  }
+                }
+              } catch (e2) {
+                console.error("Public Key Verification Failed", e2);
+                return showToast("Incorrect Public Passphrase!", "error");
+              }
+            }
+          }
+          currentUser = db.publicId || "unknown";
+          views.auth.classList.add("hidden");
+          appArea.classList.remove("hidden");
+          const header = document.getElementById("user-profile-header");
+          if (header) header.classList.remove("hidden");
+          await loadProfile();
+          if (save || !getSavedSessions().find((s2) => s2.userId === userId)) {
+            const profile2 = await db.profile.get();
+            saveSession(config, profile2);
+          } else {
+            saveSession(config, await db.profile.get());
+          }
+          const profile = await db.profile.get();
+          const headerName = document.getElementById("header-display-name");
+          if (headerName) headerName.textContent = profile?.displayName || currentUser;
+          const headerAvatar = document.getElementById("header-avatar");
+          if (profile?.avatarUrl && headerAvatar) {
+            renderImage(profile.avatarUrl, headerAvatar, "me");
+          }
+          await db.sync();
+          await db.social.joinGlobalDirectory();
+          refreshFeed();
+          loadFollowing();
+        } catch (e2) {
+          console.error(e2);
+          showToast("Failed to connect: " + e2, "error");
+        }
+      }
       document.getElementById("btn-connect")?.addEventListener("click", async () => {
         const mode = document.querySelector('input[name="auth-mode"]:checked').value;
         const appId = document.getElementById("app-id").value.trim();
@@ -25650,66 +25831,12 @@ ${toHex(hashedRequest)}`;
           };
           config.useManifest = true;
         }
-        const storage = new IndexedDBStorage(userId);
-        try {
-          await storage.init();
-          const identity = await storage.get("_sovereign_identity");
-          if (identity && typeof identity.data === "string") {
-            try {
-              const key = await deriveKey(privatePassphrase, userId);
-              const crypto2 = createCryptoAdapter(key);
-              await crypto2.decrypt(identity.data);
-            } catch (e2) {
-              console.error("Decryption check failed", e2);
-              return showToast("Incorrect Private Passphrase!", "error");
-            }
-          }
-        } catch (e2) {
-          console.warn("Pre-check of storage failed", e2);
-        }
-        try {
-          if (db) {
-            db.stopAutoSync();
-          }
-          db = new SovereignS3nc(config, storage);
-          db.on("syncStart", () => loading.style.display = "block");
-          db.on("syncComplete", (stats) => {
-            loading.style.display = "none";
-            if (stats.pulled > 0) {
-              console.log("New data received");
-            }
-          });
-          await db.init();
-          if (db.publicId && db.shares && db.shares.size > 0) {
-            const publicShares = Array.from(db.shares.values()).filter((s2) => s2.isPublic);
-            if (publicShares.length > 0 && db.sharedRemote) {
-              try {
-                const check = publicShares[0];
-                const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
-                if (raw && typeof raw.data === "string") {
-                  const decrypted = await db.decryptPublic(raw.data);
-                  if (decrypted === raw.data) {
-                    throw new Error("Public Key Decryption Failed");
-                  }
-                }
-              } catch (e2) {
-                console.error("Public Key Verification Failed", e2);
-                return showToast("Incorrect Public Passphrase!", "error");
-              }
-            }
-          }
-          currentUser = db.publicId || "unknown";
-          views.auth.classList.add("hidden");
-          appArea.classList.remove("hidden");
-          loadProfile();
-          await db.sync();
-          await db.social.joinGlobalDirectory();
-          refreshFeed();
-          loadFollowing();
-        } catch (e2) {
-          console.error(e2);
-          showToast("Failed to connect: " + e2, "error");
-        }
+        await connect(config, true);
+      });
+      document.getElementById("btn-logout")?.addEventListener("click", () => {
+        if (db) db.stopAutoSync();
+        clearCurrentSession();
+        window.location.reload();
       });
       async function switchView(viewName) {
         Object.values(views).forEach((el) => el.classList.add("hidden"));

@@ -1,5 +1,59 @@
 import { SovereignS3nc, Post, Profile, SovereignAddress, IndexedDBStorage, deriveKey, createCryptoAdapter } from '../../../src/index';
 
+// --- Session Management ---
+interface SavedSession {
+    id: string;
+    userId: string;
+    displayName?: string;
+    avatarUrl?: string;
+    config: any;
+    lastActive: number;
+}
+
+function getSavedSessions(): SavedSession[] {
+    try {
+        return JSON.parse(localStorage.getItem('sovereign_sessions') || '[]');
+    } catch { return []; }
+}
+
+function saveSession(config: any, profile?: Profile) {
+    const sessions = getSavedSessions();
+    const userId = config.paths.userId;
+    const idx = sessions.findIndex(s => s.userId === userId && s.config.paths.appId === config.paths.appId);
+    
+    const session: SavedSession = {
+        id: crypto.randomUUID(), // New ID if new
+        userId,
+        displayName: profile?.displayName || userId,
+        avatarUrl: profile?.avatarUrl,
+        config,
+        lastActive: Date.now()
+    };
+
+    let sessionId = session.id;
+
+    if (idx >= 0) {
+        // Update existing
+        sessionId = sessions[idx].id;
+        sessions[idx] = { ...session, id: sessionId }; 
+    } else {
+        sessions.push(session);
+    }
+    
+    localStorage.setItem('sovereign_sessions', JSON.stringify(sessions));
+    localStorage.setItem('sovereign_current_session_id', sessionId);
+}
+
+function clearCurrentSession() {
+    localStorage.removeItem('sovereign_current_session_id');
+}
+
+function removeSession(id: string) {
+    const sessions = getSavedSessions().filter(s => s.id !== id);
+    localStorage.setItem('sovereign_sessions', JSON.stringify(sessions));
+    renderSavedSessionsList();
+}
+
 // --- State ---
 let db: SovereignS3nc | null = null;
 let currentUser: string = '';
@@ -46,9 +100,97 @@ const navLinks = {
 
 const loading = document.getElementById('loading')!;
 
-// --- Auto-fill Config ---
+// --- Session UI Helpers ---
+function renderSavedSessionsList() {
+    const list = document.getElementById('saved-sessions-list');
+    const area = document.getElementById('saved-sessions-area');
+    const sessions = getSavedSessions();
+
+    if (!list || !area) return;
+
+    if (sessions.length === 0) {
+        area.classList.add('hidden');
+        toggleLoginView(false);
+        return;
+    }
+
+    list.innerHTML = '';
+    sessions.sort((a, b) => b.lastActive - a.lastActive);
+
+    sessions.forEach(s => {
+        const item = document.createElement('div');
+        item.className = 'card';
+        item.style.marginBottom = '10px';
+        item.style.padding = '10px';
+        item.style.cursor = 'pointer';
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.gap = '10px';
+        item.style.border = '1px solid #cbd5e1';
+        item.style.transition = 'transform 0.1s';
+        
+        item.onmouseover = () => item.style.backgroundColor = '#f1f5f9';
+        item.onmouseout = () => item.style.backgroundColor = 'white';
+        item.onclick = () => connect(s.config, false); // Auto-connect
+
+        const initial = (s.displayName || s.userId || '?')[0].toUpperCase();
+        const avatar = s.avatarUrl 
+            ? `<div class="avatar" style="width:30px; height:30px; background:#ccc;"></div>` // Placeholder until online
+            : `<div class="avatar" style="width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:0.8em; background:#ddd;">${initial}</div>`;
+
+        item.innerHTML = `
+            ${avatar}
+            <div style="flex-grow:1; overflow:hidden;">
+                <div style="font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.displayName || s.userId}</div>
+                <div style="font-size:0.7em; color:#64748b;">${s.config.ociParUrl ? 'OCI' : 'S3'} • ${new Date(s.lastActive).toLocaleDateString()}</div>
+            </div>
+            <button onclick="event.stopPropagation(); window.removeSession('${s.id}')" class="btn" style="background:#ef4444; padding:2px 6px; font-size:0.7em; z-index:10;">✕</button>
+        `;
+        list.appendChild(item);
+    });
+
+    // Handle "Connect New" button
+    document.getElementById('btn-show-new-login')?.addEventListener('click', () => toggleLoginView(false));
+    
+    // Default to showing saved sessions
+    toggleLoginView(true);
+}
+
+(window as any).removeSession = removeSession;
+
+function toggleLoginView(showSaved: boolean) {
+    const savedArea = document.getElementById('saved-sessions-area');
+    const newArea = document.getElementById('new-login-area');
+    
+    if (showSaved && getSavedSessions().length > 0) {
+        savedArea?.classList.remove('hidden');
+        newArea?.classList.add('hidden');
+    } else {
+        savedArea?.classList.add('hidden');
+        newArea?.classList.remove('hidden');
+    }
+}
+
+// --- Initialization & Auto-fill ---
 if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
     window.addEventListener('load', async () => {
+        // 1. Render Saved Sessions
+        renderSavedSessionsList();
+
+        // 2. Check for Auto-Login
+        const currentSessionId = localStorage.getItem('sovereign_current_session_id');
+        if (currentSessionId) {
+            const sessions = getSavedSessions();
+            const session = sessions.find(s => s.id === currentSessionId);
+            if (session) {
+                console.log('Auto-logging in:', session.userId);
+                showToast(`Restoring session for ${session.displayName || session.userId}...`, 'info');
+                await connect(session.config, false);
+                return;
+            }
+        }
+
+        // 3. Fallback to Config.json
         try {
             const res = await fetch('config.json');
             if (res.ok) {
@@ -97,6 +239,111 @@ authRadios.forEach(radio => {
         }
     });
 });
+
+// --- Connection Logic ---
+
+async function connect(config: any, save: boolean = true) {
+    const userId = config.paths.userId;
+    const storage = new IndexedDBStorage(userId);
+
+    // --- Verify Passphrase First ---
+    try {
+        await storage.init();
+        const identity = await storage.get('_sovereign_identity');
+        if (identity && typeof identity.data === 'string') {
+            try {
+                const key = await deriveKey(config.auth.privatePassphrase, userId);
+                const crypto = createCryptoAdapter(key);
+                await crypto.decrypt(identity.data);
+                // If we get here, decryption worked
+            } catch (e) {
+                console.error('Decryption check failed', e);
+                return showToast('Incorrect Private Passphrase!', 'error');
+            }
+        }
+    } catch (e) {
+        console.warn('Pre-check of storage failed', e);
+    }
+    // -------------------------------
+
+    try {
+        if (db) {
+            db.stopAutoSync();
+        }
+        db = new SovereignS3nc(config, storage);
+
+        db.on('syncStart', () => loading.style.display = 'block');
+        db.on('syncComplete', (stats) => {
+            loading.style.display = 'none';
+            if (stats.pulled > 0) {
+                console.log('New data received');
+            }
+        });
+
+        await db.init();
+        
+        // --- Verify Public Passphrase ---
+        if (db.publicId && db.shares && db.shares.size > 0) {
+             const publicShares = Array.from(db.shares.values()).filter(s => s.isPublic);
+             if (publicShares.length > 0 && db.sharedRemote) {
+                 try {
+                     const check = publicShares[0];
+                     const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
+                     if (raw && typeof raw.data === 'string') {
+                         const decrypted = await db.decryptPublic(raw.data);
+                         if (decrypted === raw.data) {
+                             throw new Error('Public Key Decryption Failed');
+                         }
+                     }
+                 } catch (e) {
+                     console.error('Public Key Verification Failed', e);
+                     return showToast('Incorrect Public Passphrase!', 'error');
+                 }
+             }
+        }
+
+        // Set current user to Public ID for UI logic
+        currentUser = db.publicId || 'unknown';
+
+        // Switch View
+        views.auth.classList.add('hidden');
+        appArea.classList.remove('hidden');
+        
+        // Show header
+        const header = document.getElementById('user-profile-header');
+        if (header) header.classList.remove('hidden');
+
+        await loadProfile();
+        
+        // Save Session
+        if (save || !getSavedSessions().find(s => s.userId === userId)) {
+            const profile = await db.profile.get();
+            saveSession(config, profile);
+        } else {
+             // Just update last active
+             saveSession(config, await db.profile.get()); 
+        }
+
+        // Update Header UI
+        const profile = await db.profile.get();
+        const headerName = document.getElementById('header-display-name');
+        if (headerName) headerName.textContent = profile?.displayName || currentUser;
+        
+        const headerAvatar = document.getElementById('header-avatar') as HTMLImageElement;
+        if (profile?.avatarUrl && headerAvatar) {
+            renderImage(profile.avatarUrl, headerAvatar, 'me');
+        }
+
+        await db.sync(); // Initial sync
+        await db.social.joinGlobalDirectory();
+        refreshFeed();
+        loadFollowing();
+
+    } catch (e) {
+        console.error(e);
+        showToast('Failed to connect: ' + e, 'error');
+    }
+}
 
 document.getElementById('btn-connect')?.addEventListener('click', async () => {
     const mode = (document.querySelector('input[name="auth-mode"]:checked') as HTMLInputElement).value;
@@ -153,82 +400,13 @@ document.getElementById('btn-connect')?.addEventListener('click', async () => {
         config.useManifest = true; 
     }
 
-    const storage = new IndexedDBStorage(userId);
+    await connect(config, true);
+});
 
-    // --- Verify Passphrase First ---
-    try {
-        await storage.init();
-        const identity = await storage.get('_sovereign_identity');
-        if (identity && typeof identity.data === 'string') {
-            try {
-                const key = await deriveKey(privatePassphrase, userId);
-                const crypto = createCryptoAdapter(key);
-                await crypto.decrypt(identity.data);
-                // If we get here, decryption worked
-            } catch (e) {
-                console.error('Decryption check failed', e);
-                return showToast('Incorrect Private Passphrase!', 'error');
-            }
-        }
-    } catch (e) {
-        // If storage init fails, we might have bigger issues, or just proceed to try connect
-        console.warn('Pre-check of storage failed', e);
-    }
-    // -------------------------------
-
-    try {
-        if (db) {
-            db.stopAutoSync();
-        }
-        db = new SovereignS3nc(config, storage);
-
-        db.on('syncStart', () => loading.style.display = 'block');
-        db.on('syncComplete', (stats) => {
-            loading.style.display = 'none';
-            if (stats.pulled > 0) {
-                console.log('New data received');
-            }
-        });
-
-        await db.init();
-        
-        // --- Verify Public Passphrase ---
-        if (db.publicId && db.shares && db.shares.size > 0) {
-             const publicShares = Array.from(db.shares.values()).filter(s => s.isPublic);
-             if (publicShares.length > 0 && db.sharedRemote) {
-                 try {
-                     const check = publicShares[0];
-                     const raw = await db.sharedRemote.get(`public/${check.sharedId}`);
-                     if (raw && typeof raw.data === 'string') {
-                         const decrypted = await db.decryptPublic(raw.data);
-                         if (decrypted === raw.data) {
-                             throw new Error('Public Key Decryption Failed');
-                         }
-                     }
-                 } catch (e) {
-                     console.error('Public Key Verification Failed', e);
-                     return showToast('Incorrect Public Passphrase!', 'error');
-                 }
-             }
-        }
-
-        // Set current user to Public ID for UI logic
-        currentUser = db.publicId || 'unknown';
-
-        // Switch View
-        views.auth.classList.add('hidden');
-        appArea.classList.remove('hidden');
-        
-        loadProfile();
-        await db.sync(); // Initial sync
-        await db.social.joinGlobalDirectory();
-        refreshFeed();
-        loadFollowing();
-
-    } catch (e) {
-        console.error(e);
-        showToast('Failed to connect: ' + e, 'error');
-    }
+document.getElementById('btn-logout')?.addEventListener('click', () => {
+    if (db) db.stopAutoSync();
+    clearCurrentSession();
+    window.location.reload();
 });
 
 // --- Navigation ---

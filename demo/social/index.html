@@ -125,6 +125,7 @@
             <img id="header-avatar" class="avatar" style="width: 30px; height: 30px;">
             <span id="header-display-name" style="font-weight: 500; color: var(--text);"></span>
         </div>
+        <button id="btn-logout" class="btn" style="background: #ef4444; padding: 8px 12px; border-radius: 20px;">Logout</button>
     </div>
 
     <div class="container">
@@ -132,7 +133,17 @@
         
         <!-- Auth / Config View -->
         <div id="view-auth" class="card">
-            <h2>Connect</h2>
+            
+            <div id="saved-sessions-area" class="hidden" style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+                <h3>Reconnect</h3>
+                <div id="saved-sessions-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button id="btn-show-new-login" class="btn" style="background: #64748b; font-size: 0.9em;">Connect with different details</button>
+                </div>
+            </div>
+
+            <div id="new-login-area">
+                <h2>Connect</h2>
             
             <div style="margin-bottom: 15px;">
                 <label><input type="radio" name="auth-mode" value="oci" checked> OCI PAR</label>
@@ -166,6 +177,7 @@
             </div>
 
             <button id="btn-connect" class="btn" style="margin-top:10px;">Connect</button>
+            </div>
         </div>
 
         <!-- Main App Area -->
