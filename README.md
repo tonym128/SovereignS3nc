@@ -4,12 +4,13 @@ A generic, offline-first data storage library that syncs with any S3-compatible 
 
 ## Features
 
-- **Offline-First**: Reads and writes to local storage (in-memory or file-based).
-- **S3 Sync**: Automatically syncs changes to an S3 bucket.
-- **Optimized Sync**: Uses S3 ETags to avoid unnecessary downloads.
-- **Generic**: Store any JSON-serializable data.
-- **Conflict Resolution**: Last-Write-Wins (LWW) strategy.
-- **Pluggable**: Use the built-in file storage or provide your own local storage adapter (e.g., wrapping IndexedDB, SQLite, etc.).
+- **Offline-First**: Reads and writes to local storage (in-memory, file-based, or IndexedDB).
+- **S3 Sync**: Automatically syncs changes to an S3 bucket or OCI PAR.
+- **End-to-End Encryption**: Client-side AES-256-GCM encryption. Keys never leave the client.
+- **Social & Sharing**: Built-in support for public profiles, following users, and sharing content.
+- **Blob Storage**: specialized adapter for handling large binary assets (images, attachments).
+- **Conflict Resolution**: Last-Write-Wins (LWW) or Deep Merge.
+- **Pluggable**: Adapters for storage, remote communication, and cryptography.
 
 ## Installation
 
@@ -21,292 +22,217 @@ npm install sovereigns3nc
 
 ### 1. Initialize
 
-```typescript
-import { SovereignS3nc } from 'sovereigns3nc';
-
-const db = new SovereignS3nc({
-  s3: {
-    region: 'us-east-1', // or your region
-    endpoint: 'https://s3.us-east-1.amazonaws.com', // Optional for AWS, required for others
-    credentials: {
-      accessKeyId: 'YOUR_ACCESS_KEY',
-      secretAccessKey: 'YOUR_SECRET_KEY'
-    },
-    bucketName: 'my-app-data'
-  },
-  paths: {
-    appId: 'my-app-guid',
-    userId: 'user-guid-123',
-    storeId: 'notes-store'
-  },
-  syncIntervalMs: 5000,
-  conflictResolutionStrategy: 'Merge', // 'Merge' (default) or 'LastWriteWins'
-  encryptionKey: 'your-32-byte-secret-key-here' // Optional: Transparent encryption
-});
-
-await db.init();
-
-### Local-Only Mode (Offline First)
-
-You can initialize `SovereignS3nc` without S3 credentials to work in a strictly local mode. This is useful for onboarding users before they have an account or if you want to delay cloud sync.
-
-```typescript
-const db = new SovereignS3nc({
-  paths: { appId, userId, storeId },
-  encryptionKey: '...'
-});
-
-await db.init();
-// Works fully offline
-await db.save({ ... });
-```
-
-### Connect to Cloud
-
-Later, when credentials are available, you can connect and sync everything (including retroactive shares):
-
-```typescript
-await db.connect({
-  region: 'us-east-1',
-  bucketName: 'my-bucket',
-  credentials: { ... }
-});
-```
-
-### Encryption
-
-If `encryptionKey` is provided, all document data is transparently encrypted (AES-256-GCM) before being saved to local storage or synced to S3.
-- **Export**: Returns decrypted JSON (plain text) for backup/portability.
-- **Import**: Accepts decrypted JSON and re-encrypts it upon storage.
-- **Metadata**: Document IDs and timestamps remain unencrypted for sync coordination.
-
-### Using IndexedDB (Browser)
-
-For web applications, you can use the built-in `IndexedDBStorage` adapter for persistence across page reloads.
+SovereignS3nc supports both AWS S3 (via credentials) and Oracle OCI (via Pre-Authenticated Requests).
 
 ```typescript
 import { SovereignS3nc, IndexedDBStorage } from 'sovereigns3nc';
 
-const db = new SovereignS3nc(
-  {
-    s3: { ... }, // S3 Config
-    syncIntervalMs: 5000
+const db = new SovereignS3nc({
+  // Option A: Standard S3 (AWS, MinIO, Garage)
+  s3: {
+    region: 'us-east-1',
+    endpoint: 'https://s3.us-east-1.amazonaws.com',
+    bucketName: 'my-app-data',
+    credentials: {
+      accessKeyId: 'YOUR_ACCESS_KEY',
+      secretAccessKey: 'YOUR_SECRET_KEY'
+    }
   },
-  new IndexedDBStorage('MyAppDB', 'documents')
-);
+  
+  // Option B: OCI Pre-Authenticated Request (No credentials needed)
+  // ociParUrl: 'https://objectstorage.us-phoenix-1.oraclecloud.com/p/...',
+
+  paths: {
+    appId: 'my-social-app',
+    userId: 'user-guid-123', // Unique User ID
+    storeId: 'default'
+  },
+  
+  // Security & Encryption
+  auth: {
+    privatePassphrase: 'my-secret-password', // Derives encryption key for private data
+    publicPassphrase: 'my-public-password'    // Derives key for public identity/index
+  },
+
+  syncIntervalMs: 5000, // Auto-sync every 5 seconds
+}, new IndexedDBStorage('MyAppDB'));
 
 await db.init();
 ```
 
-### 2. CRUD Operations
+### 2. Core Operations
+
+The core API handles JSON documents.
 
 ```typescript
-// Save a document
+// Save a document (Encryption handled automatically)
 const id = await db.save({
   title: 'My Note',
-  content: 'Hello World'
-});
+  content: 'Hello World',
+  tags: ['personal']
+}, 'notes'); // Collection name
 
 // Get a document
-const doc = await db.get(id);
+const doc = await db.get(id, 'notes');
 console.log(doc);
 
 // Delete
-await db.delete(id);
+await db.delete(id, 'notes');
 
-// List all
-const allDocs = await db.getAll();
+// List all in a collection
+const notes = await db.collection('notes').getAll();
 ```
 
-### 3. Sync
+### 3. Modules
 
-If `syncIntervalMs` is set, sync happens automatically. You can also trigger it manually:
+SovereignS3nc includes specialized modules for common patterns.
+
+#### Social Manager (`db.social`)
+Handles user profiles, following, and feeds.
 
 ```typescript
-// Check status
-if (db.syncing) {
-  console.log('Sync in progress...');
-}
-
-console.log('Last Sync:', new Date(db.lastSyncedAt));
-
-// Listen for events
-db.on('syncComplete', (stats) => {
-  console.log('Sync finished:', stats);
+// Create/Update Profile
+await db.profile.update({
+    displayName: 'Alice',
+    bio: 'Crypto enthusiast'
 });
 
+// Follow a user
+await db.social.follow({
+    userId: 'bob-guid-456',
+    appId: 'my-social-app',
+    bucket: 'bobs-bucket', // If different
+    region: 'us-east-1'
+});
+
+// Get Feed (Aggregated from followed users)
+const feed = await db.social.getFeed();
+```
+
+#### Blob Storage (`db.storage`)
+Handles binary files like images.
+
+```typescript
+// Upload (automatically encrypted unless isPublic=true)
+const fileData = await fileInput.files[0].arrayBuffer();
+const meta = await db.storage.upload(
+    'avatar.jpg', 
+    new Uint8Array(fileData), 
+    'image/jpeg', 
+    true // isPublic
+);
+
+console.log('Blob ID:', meta._id);
+
+// Download
+const data = await db.storage.download(meta._id);
+```
+
+#### Board Manager (`db.boards`)
+Kanban-style board management.
+
+```typescript
+const boardId = await db.boards.createBoard('Project Alpha');
+await db.boards.addColumn(boardId, 'To Do');
+await db.boards.addCard(boardId, columnId, 'Setup Repo');
+```
+
+### 4. Sync & Sharing
+
+#### Synchronization
+Sync handles pushing local changes and pulling remote updates (including content from followed users).
+
+```typescript
 // Force sync
-await db.sync();
-```
+const stats = await db.sync();
+console.log(`Synced: ${stats.pushed} pushed, ${stats.pulled} pulled`);
 
-### 4. Import / Export
-
-You can export data to a JSON string (e.g., for backup) and import it back (e.g., for restore or seeding). Importing merges changes with existing data.
-
-```typescript
-// Export all documents (decrypted)
-const jsonBackup = await db.exportData();
-
-// Export specific document
-const singleDocJson = await db.exportData('my-doc-id');
-
-// Import (merges with existing)
-await db.importData(jsonBackup);
-```
-
-### 5. Sharing
-
-SovereignS3nc allows you to share documents. Shared documents are replicated to a separate "shared" path in your S3 bucket, allowing for read-only access by others or yourself across different application contexts.
-
-#### Private Sharing
-Creates a read-only copy of the document in a shared location. Updates to the original document are automatically propagated.
-
-```typescript
-// Share a document
-const sharedId = await db.share('original-doc-id');
-console.log(`Shared at: ${sharedId}`);
-
-// Unshare (removes the shared copy)
-await db.unshare('original-doc-id');
+// Listen for events
+db.on('syncComplete', (stats) => updateUI(stats));
 ```
 
 #### Public Sharing
-Public sharing generates a unique encryption key for the document and publishes a metadata file to the `shared/public/` directory. This allows anyone with access to that bucket path (and the specific key) to discover and decrypt the content.
-
-*Note: The public index uses a directory-based approach (`shared/public/{sharedId}.json`) to ensure atomic, conflict-free updates.*
+Share specific documents with the world.
 
 ```typescript
-// Share publicly
-const sharedId = await db.share('original-doc-id', true);
+// Share a document publicly
+// Generates a unique key, encrypts the doc with it, and publishes metadata to 'shared/public/'
+const shareId = await db.share(docId, true, 'posts');
+
+// Unshare
+await db.unshare(docId);
 ```
 
-#### Consuming Shared Documents
-You can list publicly available documents and save them to your local store. The system handles decrypting the public content and re-encrypting it with your personal master key.
+## Demos
 
-```typescript
-// List public shares (fetches metadata from shared/public/)
-const publicShares = await db.getPublicShares();
+The project includes several demos in the `demo/` folder showcasing different capabilities.
 
-// Import a shared document
-if (publicShares.length > 0) {
-  const { id, key } = publicShares[0];
-  const localId = await db.saveSharedDocToLocal(id, key);
-  console.log(`Imported shared doc as: ${localId}`);
-}
-```
+### Prerequisites
+- Node.js 16+
+- An S3-compatible bucket (AWS, MinIO, Garage, OCI)
 
-## API Reference
+### Running Demos
 
-The `SovereignS3nc` class provides a generic interface that abstracts away the underlying storage details.
+1. **Build the project:**
+   ```bash
+   npm install
+   npm run build
+   ```
 
-### Properties
-- `syncing: boolean`: Returns `true` if a sync is currently in progress.
-- `lastSyncedAt: number`: Timestamp of the last successful sync.
+2. **Serve the demos:**
+   You can use any static file server.
+   ```bash
+   npx http-server .
+   ```
 
-### Methods
-- `init(): Promise<void>`: Initialize local storage and load metadata.
-- `save<T>(data: T): Promise<string>`: Create or update a document. Returns the ID.
-- `get<T>(id: string): Promise<T | null>`: Retrieve a document by ID.
-- `getAll<T>(): Promise<T[]>`: Retrieve all non-deleted documents.
-- `delete(id: string): Promise<void>`: Soft-delete a document.
-- `sync(): Promise<SyncStats>`: Force a synchronization cycle.
-- `export(id?: string): Promise<string>`: Export all or a specific document to a JSON string.
-- `import(json: string): Promise<void>`: Bulk load/merge documents from a JSON string.
-- `share(id: string, isPublic?: boolean): Promise<string>`: Share a document (privately or publicly). Returns the shared ID.
-- `unshare(id: string): Promise<void>`: Stop sharing a document and delete the remote copy.
-- `getPublicShares(): Promise<any[]>`: List all publicly shared documents available in the shared store.
-- `saveSharedDocToLocal(sharedId: string, key: string): Promise<string>`: Fetch, decrypt, and save a shared document to your local store.
+3. **Open a demo:**
+   Navigate to the demo folder in your browser:
+   - **Social App**: `http://127.0.0.1:8080/demo/social/`
+     - *Features*: Profiles, Posting with images, Comments, Follow users (Federation), OCI/S3 support.
+   - **Notes App**: `http://127.0.0.1:8080/demo/notes/`
+   - **Chat App**: `http://127.0.0.1:8080/demo/chat/`
 
-## S3 Bucket Setup
-
-For SovereignS3nc to function correctly with sharing enabled, your S3 bucket (or IAM user) needs permissions to access both the private user paths and the global shared path.
-
-### Path Structure
-- **Private User Data:** `${appId}/${userId}/${storeId}/...`
-- **Shared/Public Data:** `${appId}/shared/shared/...`
-
-### Security Model: Isolation via GUIDs (Single Credential)
-
-In many deployments, a single S3 IAM user is shared across all application instances. In this model, isolation is achieved through **Security via Obscurity**:
-- **GUIDs:** The `userId` and `storeId` are high-entropy GUIDs. The probability of one user guessing another user's 128-bit ID is effectively zero.
-- **Restricted Listing:** By disabling the ability to list the root of the bucket and only allowing listing on specific prefixes, malicious discovery of other users' IDs is prevented.
-- **MANDATORY HTTPS:** Since the GUIDs are part of the file path (URL), you **MUST** use HTTPS. If you use plain HTTP, the GUIDs will be visible in network traffic, completely defeating this security model.
-
-**Note:** The `sync()` function **requires** `s3:ListBucket` permissions on the user's specific prefix to identify remote changes.
-
-### Minimal IAM Policy (Single Credential Model)
-
-Use this policy if all your users share the same S3 Access Key. It allows sync for the active user and discovery for the public share, while preventing "walking" the bucket to find other users.
+### Demo Configuration
+The demos provide a UI to enter your S3 credentials. For repeated use, you can create a `config.json` in the specific demo folder (e.g., `demo/social/config.json`):
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "ObjectAccess",
-            "Effect": "Allow",
-            "Action": [
-                "s3:PutObject",
-                "s3:GetObject",
-                "s3:DeleteObject"
-            ],
-            "Resource": "arn:aws:s3:::your-bucket-name/*"
-        },
-        {
-            "Sid": "AllowSyncAndPublicDiscovery",
-            "Effect": "Allow",
-            "Action": "s3:ListBucket",
-            "Resource": "arn:aws:s3:::your-bucket-name",
-            "Condition": {
-                "StringLike": {
-                    "s3:prefix": [
-                        "${appId}/${userId}/${storeId}/*",
-                        "${appId}/shared/shared/public/*"
-                    ]
-                }
-            }
-        }
-    ]
+  "s3": {
+    "endpoint": "https://s3.us-east-1.amazonaws.com",
+    "region": "us-east-1",
+    "bucketName": "my-bucket",
+    "accessKeyId": "...",
+    "secretAccessKey": "..."
+  },
+  "appId": "social-demo"
 }
 ```
 
-## Configuration Examples
+## Deployment (Netlify)
 
-### AWS S3
-```typescript
-{
-  region: 'us-west-2',
-  bucketName: 'my-bucket',
-  credentials: { ... }
-}
-```
+You can easily host any of the demo apps for free on [Netlify](https://www.netlify.com/).
 
-### Garage (Self-Hosted)
-```typescript
-{
-  region: 'garage', // often ignored or 'us-east-1'
-  endpoint: 'http://localhost:3900',
-  forcePathStyle: true, // Important for some S3 clones
-  bucketName: 'my-bucket',
-  credentials: { ... }
-}
-```
+### Simple Drag & Drop
+1. **Build the demo**: Run the build command for the app you want (e.g., `npx esbuild demo/social/src/app.ts --bundle --outfile=demo/social/bundle.js --platform=browser`).
+2. **Login to Netlify**: Go to [Netlify Drop](https://app.netlify.com/drop).
+3. **Upload**: Drag the entire demo folder (e.g., `demo/social/`) into the browser window.
+4. **Done**: Your app will be live on an `https://...` URL in seconds.
 
-### OCI Object Storage
-```typescript
-{
-  region: 'us-phoenix-1',
-  endpoint: 'https://<namespace>.compat.objectstorage.us-phoenix-1.oraclecloud.com',
-  bucketName: 'my-bucket',
-  credentials: { ... }
-}
-```
+*Note: Ensure your S3 bucket CORS policy allows requests from your Netlify domain.*
+
+## Security Model
+
+- **Identity**: Users are identified by a GUID (Public ID).
+- **Isolation**: Data is stored under `${appId}/${userId}/${storeId}/`.
+- **Discovery**: Public profiles and shared content are indexed in `${appId}/shared/`.
+- **Encryption**:
+    - **Private Data**: Encrypted with a key derived from your `privatePassphrase`.
+    - **Public Data**: Encrypted with a key derived from your `publicPassphrase` (allows for public directories while preventing harvesting by bots without the passphrase/salt).
+    - **Shared Docs**: Encrypted with a random key, which is then shared via the public index.
 
 ## Architecture
 
-- **Local Store**: Keeps a copy of data locally. Default implementation uses an in-memory map backed by a JSON file.
-- **Remote Adapter**: Communicates with S3.
-- **Documents**: Stored as individual JSON files in the S3 bucket under `docs/<id>.json`.
+See [docs/Architecture.md](docs/Architecture.md) for detailed design diagrams and data flow.
 
 ## License
 
