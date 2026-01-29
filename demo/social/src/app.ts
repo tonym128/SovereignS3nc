@@ -597,6 +597,118 @@ async function loadProfile() {
     renderProfileStats();
 }
 
+// --- User Profile Viewer (Read-Only) ---
+(window as any).showUserProfile = async (userId: string) => {
+    if (!db) return;
+    
+    // 1. Resolve Profile Data
+    const profileMap = await getProfileMap(db);
+    let profile = profileMap.get(userId);
+    
+    // If not in map, try to find raw doc just in case (e.g. not followed but somehow local?)
+    if (!profile && userId !== 'me') {
+        const followedDocs = await db.collection('followed_content').getAll<any>();
+        const doc = followedDocs.find((d: any) => 
+            d.address && d.address.userId === userId && 
+            (d.collection === 'profiles' || d.displayName !== undefined)
+        );
+        if (doc) {
+            profile = { name: doc.displayName, avatarUrl: doc.avatarUrl, bio: doc.bio };
+        }
+    } else if (userId === 'me' || userId === currentUser) {
+        const myProfile = await db.profile.get();
+        if (myProfile) {
+            profile = { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl, bio: myProfile.bio };
+        }
+    }
+
+    // 2. Create/Show Modal
+    const modalId = 'user-profile-modal';
+    let modal = document.getElementById(modalId);
+    if (modal) modal.remove(); // Re-create to be safe
+
+    modal = document.createElement('div');
+    modal.id = modalId;
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    modal.style.zIndex = '1000';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    
+    // Close on background click
+    modal.onclick = (e) => {
+        if (e.target === modal) modal!.remove();
+    };
+
+    const content = document.createElement('div');
+    content.className = 'card';
+    content.style.width = '90%';
+    content.style.maxWidth = '400px';
+    content.style.position = 'relative';
+    content.style.textAlign = 'center';
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '✕';
+    closeBtn.className = 'btn';
+    closeBtn.style.position = 'absolute';
+    closeBtn.style.top = '10px';
+    closeBtn.style.right = '10px';
+    closeBtn.style.background = 'transparent';
+    closeBtn.style.color = '#64748b';
+    closeBtn.style.padding = '5px';
+    closeBtn.onclick = () => modal!.remove();
+    
+    const avatar = document.createElement('img');
+    avatar.className = 'avatar';
+    avatar.style.width = '120px';
+    avatar.style.height = '120px';
+    avatar.style.marginBottom = '15px';
+    
+    const name = document.createElement('h2');
+    name.style.margin = '0 0 10px 0';
+    
+    const bio = document.createElement('p');
+    bio.style.color = '#64748b';
+    bio.style.fontStyle = 'italic';
+    
+    const idInfo = document.createElement('small');
+    idInfo.style.display = 'block';
+    idInfo.style.marginTop = '15px';
+    idInfo.style.color = '#94a3b8';
+    idInfo.textContent = `ID: ${userId}`;
+
+    if (profile) {
+        name.textContent = profile.name;
+        bio.textContent = (profile as any).bio || 'No bio available.';
+        if (profile.avatarUrl) {
+            renderImage(profile.avatarUrl, avatar, userId);
+        } else {
+            avatar.style.backgroundColor = '#ccc';
+            avatar.style.display = 'inline-flex';
+            avatar.style.alignItems = 'center';
+            avatar.style.justifyContent = 'center';
+            // Placeholder text if no image
+        }
+    } else {
+        name.textContent = 'Unknown User';
+        bio.textContent = 'Profile not found or not yet synced.';
+        avatar.style.backgroundColor = '#e2e8f0';
+    }
+
+    content.appendChild(closeBtn);
+    content.appendChild(avatar);
+    content.appendChild(name);
+    content.appendChild(bio);
+    content.appendChild(idInfo);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+};
+
 document.getElementById('btn-show-key')?.addEventListener('click', () => {
     const input = document.getElementById('profile-private-id') as HTMLInputElement;
     const btn = document.getElementById('btn-show-key') as HTMLButtonElement;
@@ -648,7 +760,7 @@ async function getProfileMap(db: SovereignS3nc): Promise<Map<string, { name: str
 
     for (const d of followedDocs) {
         if (d.address && d.address.userId && (d.collection === 'profiles' || d.displayName)) {
-             map.set(d.address.userId, { name: d.displayName, avatarUrl: d.avatarUrl });
+             map.set(d.address.userId, { name: d.displayName, avatarUrl: d.avatarUrl, bio: d.bio });
         }
     }
     return map;
@@ -704,7 +816,7 @@ async function refreshFeed() {
 
         el.innerHTML = `
             <div class="post-header">
-                <img id="avatar-post-${post._id}" class="avatar">
+                <img id="avatar-post-${post._id}" class="avatar" style="cursor: pointer;" onclick="window.showUserProfile('${post.authorId}')">
                 <div style="flex-grow:1;">
                     ${actionsHtml}
                     <strong>${authorName}</strong><br>
@@ -1033,6 +1145,9 @@ async function loadFollowing() {
     const myAddr = db.getAddress();
     (document.getElementById('my-address') as HTMLInputElement).value = JSON.stringify(myAddr);
 
+    // Get Profiles
+    const profileMap = await getProfileMap(db);
+
     // 2. Following List
     const following = await db.social.getFollowing();
     const followList = document.getElementById('following-list')!;
@@ -1040,11 +1155,35 @@ async function loadFollowing() {
     
     following.forEach(addr => {
         const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.gap = '10px';
+        li.style.marginBottom = '5px';
+
+        const profile = profileMap.get(addr.userId);
+        const name = profile?.name || addr.userId;
+        const avatarId = profile?.avatarUrl;
+
+        let avatarHtml = `<div class="avatar" style="width:30px; height:30px; background:#ccc; display:flex; align-items:center; justify-content:center; font-size:0.8em;">${name[0].toUpperCase()}</div>`;
+        if (avatarId) {
+            avatarHtml = `<img id="avatar-follow-${addr.userId}" class="avatar" style="width:30px; height:30px; cursor:pointer;">`;
+        }
+
         li.innerHTML = `
-            <strong>${addr.userId}</strong> (${addr.appId})
+            ${avatarHtml}
+            <div style="flex-grow:1;">
+                <strong style="cursor:pointer;" onclick="window.showUserProfile('${addr.userId}')">${name}</strong><br>
+                <span style="font-size:0.7em; color:#64748b;">${addr.appId}</span>
+            </div>
             <button onclick="window.unfollowUser('${addr.appId}.${addr.userId}')" class="btn" style="padding:2px 5px; font-size:0.7em; background:#ef4444; margin-left:10px;">Unfollow</button>
         `;
         followList.appendChild(li);
+
+        if (avatarId) {
+            const img = li.querySelector(`#avatar-follow-${addr.userId}`) as HTMLImageElement;
+            renderImage(avatarId, img, addr.userId);
+            img.onclick = () => (window as any).showUserProfile(addr.userId);
+        }
     });
 
     // 3. Global Directory & Auto-Follow
@@ -1066,18 +1205,43 @@ async function loadFollowing() {
             newFollows++;
         }
 
+        const profile = profileMap.get(addr.userId);
+        const name = profile?.name || addr.userId;
+        const avatarId = profile?.avatarUrl;
+
         const li = document.createElement('li');
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.gap = '10px';
+        li.style.marginBottom = '5px';
+
+        let avatarHtml = `<div class="avatar" style="width:30px; height:30px; background:#ccc; display:flex; align-items:center; justify-content:center; font-size:0.8em;">${name[0].toUpperCase()}</div>`;
+        if (avatarId) {
+            avatarHtml = `<img id="avatar-dir-${addr.userId}" class="avatar" style="width:30px; height:30px; cursor:pointer;">`;
+        }
+
         li.innerHTML = `
-            <strong>${addr.userId}</strong>
-            <span style="color:green; font-size:0.8em;">Following (Auto)</span>
+            ${avatarHtml}
+            <div style="flex-grow:1;">
+                <strong style="cursor:pointer;" onclick="window.showUserProfile('${addr.userId}')">${name}</strong>
+                ${isFollowing ? '<span style="color:green; font-size:0.8em; margin-left:5px;">Following</span>' : ''}
+            </div>
         `;
         dirList.appendChild(li);
+
+        if (avatarId) {
+            const img = li.querySelector(`#avatar-dir-${addr.userId}`) as HTMLImageElement;
+            renderImage(avatarId, img, addr.userId);
+            img.onclick = () => (window as any).showUserProfile(addr.userId);
+        }
     }
     
     if (newFollows > 0) {
         showToast(`Auto-followed ${newFollows} new users found in directory`, 'success');
         // Trigger sync to pull their content
         triggerSync(); 
+        // Reload list after short delay to show profiles if sync is fast? 
+        // Or user can refresh manually.
     }
 }
 
