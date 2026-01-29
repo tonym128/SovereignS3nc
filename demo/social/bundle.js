@@ -19723,11 +19723,11 @@ ${toHex(hashedRequest)}`;
   var init_dist_es46 = __esm({
     "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
-        const navigator = typeof window !== "undefined" ? window.navigator : void 0;
-        const uaString = navigator?.userAgent ?? "";
-        const osName = navigator?.userAgentData?.platform ?? fallback.os(uaString) ?? "other";
+        const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
+        const uaString = navigator2?.userAgent ?? "";
+        const osName = navigator2?.userAgentData?.platform ?? fallback.os(uaString) ?? "other";
         const osVersion = void 0;
-        const brands = navigator?.userAgentData?.brands ?? [];
+        const brands = navigator2?.userAgentData?.brands ?? [];
         const brand = brands[brands.length - 1];
         const browserName = brand?.brand ?? fallback.browser(uaString) ?? "unknown";
         const browserVersion = brand?.version ?? "unknown";
@@ -20738,15 +20738,15 @@ ${toHex(hashedRequest)}`;
         }
       });
       useMobileConfiguration = () => {
-        const navigator = window?.navigator;
-        if (navigator?.connection) {
-          const { effectiveType, rtt, downlink } = navigator?.connection;
+        const navigator2 = window?.navigator;
+        if (navigator2?.connection) {
+          const { effectiveType, rtt, downlink } = navigator2?.connection;
           const slow = typeof effectiveType === "string" && effectiveType !== "4g" || Number(rtt) > 100 || Number(downlink) < 10;
           if (slow) {
             return true;
           }
         }
-        return navigator?.userAgentData?.mobile || typeof navigator?.maxTouchPoints === "number" && navigator?.maxTouchPoints > 1;
+        return navigator2?.userAgentData?.mobile || typeof navigator2?.maxTouchPoints === "number" && navigator2?.maxTouchPoints > 1;
       };
     }
   });
@@ -25841,6 +25841,41 @@ ${toHex(hashedRequest)}`;
       }
       if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
         window.addEventListener("load", async () => {
+          if (window.location.hash.startsWith("#invite=")) {
+            try {
+              const b64 = window.location.hash.substring(8);
+              const json = atob(b64);
+              const inviteData = JSON.parse(json);
+              console.log("Magic Invite detected:", inviteData);
+              if (inviteData.s3) {
+                document.getElementById("s3-endpoint").value = inviteData.s3.endpoint || "";
+                document.getElementById("s3-bucket").value = inviteData.s3.bucketName || "";
+                document.getElementById("s3-region").value = inviteData.s3.region || "";
+                document.querySelector('input[name="auth-mode"][value="s3"]').checked = true;
+                document.getElementById("auth-oci").classList.add("hidden");
+                document.getElementById("auth-s3").classList.remove("hidden");
+                showToast("Connection details loaded from Invite!", "success");
+              } else if (inviteData.ociParUrl) {
+                document.getElementById("oci-url").value = inviteData.ociParUrl;
+                document.querySelector('input[name="auth-mode"][value="oci"]').checked = true;
+                document.getElementById("auth-oci").classList.remove("hidden");
+                document.getElementById("auth-s3").classList.add("hidden");
+                showToast("Connection details loaded from Invite!", "success");
+              }
+              if (inviteData.appId) {
+                document.getElementById("app-id").value = inviteData.appId;
+              }
+              if (inviteData.inviter) {
+                sessionStorage.setItem("sovereign_pending_follow", JSON.stringify(inviteData.inviter));
+                showToast(`You have been invited by ${inviteData.inviter.userId}. Login to follow them automatically.`, "info");
+              }
+              history.replaceState(null, "", window.location.pathname);
+              return;
+            } catch (e2) {
+              console.error("Invalid Invite Link", e2);
+              showToast("Invalid Invite Link", "error");
+            }
+          }
           renderSavedSessionsList();
           const currentSessionId = localStorage.getItem("sovereign_current_session_id");
           if (currentSessionId) {
@@ -25877,6 +25912,43 @@ ${toHex(hashedRequest)}`;
           }
         });
       }
+      document.getElementById("btn-generate-invite")?.addEventListener("click", () => {
+        if (!db) return;
+        const inviteData = {
+          appId: db.config.paths.appId,
+          inviter: {
+            userId: db.config.paths.userId,
+            // Include public info needed to follow
+            appId: db.config.paths.appId
+            // Ideally we'd include publicPassphrase if we want them to be able to decrypt our public posts immediately
+            // But checking config... publicPassphrase IS stored in config.auth.publicPassphrase
+          }
+        };
+        if (db.config.s3) {
+          inviteData.s3 = {
+            endpoint: db.config.s3.endpoint,
+            bucketName: db.config.s3.bucketName,
+            region: db.config.s3.region
+          };
+        } else if (db.config.ociParUrl) {
+          inviteData.ociParUrl = db.config.ociParUrl;
+        }
+        if (db.config.auth && db.config.auth.publicPassphrase) {
+          inviteData.inviter.publicPassphrase = db.config.auth.publicPassphrase;
+          if (db.config.auth.publicSalt) {
+            inviteData.inviter.publicSalt = db.config.auth.publicSalt;
+          }
+        }
+        const json = JSON.stringify(inviteData);
+        const b64 = btoa(json);
+        const link = `${window.location.origin}${window.location.pathname}#invite=${b64}`;
+        const area = document.getElementById("invite-area");
+        const input = document.getElementById("invite-link");
+        area.classList.remove("hidden");
+        input.value = link;
+        input.select();
+        navigator.clipboard.writeText(link);
+      });
       var authRadios = document.querySelectorAll('input[name="auth-mode"]');
       var authOci = document.getElementById("auth-oci");
       var authS3 = document.getElementById("auth-s3");
@@ -25958,6 +26030,29 @@ ${toHex(hashedRequest)}`;
           initWorker(config);
           triggerSync();
           await db.social.joinGlobalDirectory();
+          const pendingFollowJson = sessionStorage.getItem("sovereign_pending_follow");
+          if (pendingFollowJson) {
+            try {
+              const inviter = JSON.parse(pendingFollowJson);
+              if (inviter.userId && inviter.appId) {
+                const addr = {
+                  appId: inviter.appId,
+                  userId: inviter.userId,
+                  region: config.s3?.region || "us-east-1",
+                  bucket: config.s3?.bucketName || "unknown",
+                  endpoint: config.s3?.endpoint
+                };
+                if (inviter.publicPassphrase) addr.publicPassphrase = inviter.publicPassphrase;
+                if (inviter.publicSalt) addr.publicSalt = inviter.publicSalt;
+                console.log("Auto-following inviter:", addr);
+                await db.social.follow(addr);
+                showToast(`Auto-followed inviter: ${inviter.userId}`, "success");
+                sessionStorage.removeItem("sovereign_pending_follow");
+              }
+            } catch (e2) {
+              console.error("Failed to process pending follow", e2);
+            }
+          }
           refreshFeed();
           loadFollowing();
         } catch (e2) {
