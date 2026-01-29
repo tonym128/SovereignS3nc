@@ -26090,9 +26090,10 @@ ${toHex(hashedRequest)}`;
         const fileInput = document.getElementById("profile-avatar-input");
         let avatarUrl = void 0;
         if (fileInput.files && fileInput.files[0]) {
-          const file = fileInput.files[0];
-          const buffer = await file.arrayBuffer();
-          const meta = await db.storage.upload(file.name, new Uint8Array(buffer), file.type, true);
+          const originalFile = fileInput.files[0];
+          const compressedBlob = await compressImage(originalFile);
+          const buffer = await compressedBlob.arrayBuffer();
+          const meta = await db.storage.upload(originalFile.name, new Uint8Array(buffer), compressedBlob.type, true);
           avatarUrl = meta._id;
         }
         await db.profile.update({ displayName: name, bio, avatarUrl });
@@ -26268,6 +26269,52 @@ ${toHex(hashedRequest)}`;
           console.error("Failed to load image", e2);
         }
       }
+      async function compressImage(file, maxSizeKB = 100) {
+        if (!file.type.startsWith("image/")) return file;
+        if (file.size <= maxSizeKB * 1024) return file;
+        console.log(`Compressing ${file.name} (${(file.size / 1024).toFixed(1)} KB)...`);
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+          img.src = url;
+          img.onload = () => {
+            URL.revokeObjectURL(url);
+            const canvas = document.createElement("canvas");
+            let width = img.width;
+            let height = img.height;
+            const MAX_DIM = 1920;
+            if (width > MAX_DIM || height > MAX_DIM) {
+              const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+              width = Math.floor(width * ratio);
+              height = Math.floor(height * ratio);
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) return reject(new Error("Canvas context failed"));
+            ctx.drawImage(img, 0, 0, width, height);
+            let quality = 0.9;
+            const targetBytes = maxSizeKB * 1024;
+            const tryCompress = () => {
+              canvas.toBlob((blob) => {
+                if (!blob) return reject(new Error("Compression failed"));
+                if (blob.size <= targetBytes || quality < 0.2) {
+                  console.log(`Compressed to ${(blob.size / 1024).toFixed(1)} KB (Quality: ${quality.toFixed(1)})`);
+                  resolve(blob);
+                } else {
+                  quality -= 0.1;
+                  tryCompress();
+                }
+              }, "image/jpeg", quality);
+            };
+            tryCompress();
+          };
+          img.onerror = (e2) => {
+            URL.revokeObjectURL(url);
+            reject(e2);
+          };
+        });
+      }
       document.getElementById("btn-post")?.addEventListener("click", async () => {
         if (!db) return;
         const btn = document.getElementById("btn-post");
@@ -26280,9 +26327,10 @@ ${toHex(hashedRequest)}`;
         try {
           let attachments = [];
           if (fileInput.files && fileInput.files[0]) {
-            const file = fileInput.files[0];
-            const buffer = await file.arrayBuffer();
-            const meta = await db.storage.upload(file.name, new Uint8Array(buffer), file.type, true);
+            const originalFile = fileInput.files[0];
+            const compressedBlob = await compressImage(originalFile);
+            const buffer = await compressedBlob.arrayBuffer();
+            const meta = await db.storage.upload(originalFile.name, new Uint8Array(buffer), compressedBlob.type, true);
             attachments.push(meta._id);
           }
           const id = await db.collection("posts").save({
