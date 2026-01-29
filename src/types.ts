@@ -47,10 +47,27 @@ export interface RemoteChange {
   lastModified?: Date;
 }
 
+export interface AdapterMetrics {
+  requests: {
+    get: number;
+    put: number;
+    list: number;
+    delete: number;
+    head: number;
+    total: number;
+  };
+  bytes: {
+    tx: number; // Transmitted (Upload)
+    rx: number; // Received (Download)
+    total: number;
+  };
+}
+
 export interface SyncStats {
   pushed: number;
   pulled: number;
   errors: number;
+  metrics?: AdapterMetrics;
 }
 
 export interface SovereignAddress {

@@ -57,6 +57,128 @@ function removeSession(id: string) {
 // --- State ---
 let db: SovereignS3nc | null = null;
 let currentUser: string = '';
+let syncWorker: Worker | null = null;
+let lastStats: any = null;
+const statsHistory: any[] = [];
+
+// --- Worker Init ---
+function initWorker(config: any) {
+    if (syncWorker) syncWorker.terminate();
+    syncWorker = new Worker('worker.js');
+    
+    syncWorker.onmessage = (e) => {
+        const { type, payload } = e.data;
+        if (type === 'SYNC_COMPLETE') {
+            loading.style.display = 'none';
+            if (payload.pulled > 0) {
+                console.log('New data received via Worker');
+                refreshFeed();
+                loadFollowing();
+            }
+            updateStatsUI(payload);
+        } else if (type === 'ERROR') {
+            console.error('Worker Error:', payload);
+            loading.style.display = 'none';
+        } else if (type === 'INIT_COMPLETE') {
+            console.log('Worker Initialized');
+        }
+    };
+
+    syncWorker.postMessage({ type: 'INIT', payload: config });
+}
+
+function triggerSync() {
+    if (syncWorker) {
+        loading.style.display = 'block';
+        syncWorker.postMessage({ type: 'SYNC' });
+    } else if (db) {
+        // Fallback if worker fails
+        db.sync();
+    }
+}
+
+function updateStatsUI(stats: any) {
+    lastStats = stats;
+    statsHistory.push({ time: Date.now(), ...stats });
+    if (statsHistory.length > 50) statsHistory.shift(); // Keep last 50
+    
+    if (views.profile && !views.profile.classList.contains('hidden')) {
+        renderProfileStats();
+    }
+}
+
+function renderProfileStats() {
+    const container = document.getElementById('profile-stats');
+    if (!container) return;
+    
+    if (!lastStats || !lastStats.metrics) {
+        container.innerHTML = '<p>No stats available yet.</p>';
+        return;
+    }
+
+    const m = lastStats.metrics;
+    
+    // Canvas Graph
+    const canvasId = 'stats-graph';
+    let canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+    if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.id = canvasId;
+        canvas.width = 500;
+        canvas.height = 150;
+        canvas.style.width = '100%';
+        canvas.style.border = '1px solid #ddd';
+        canvas.style.marginTop = '10px';
+        container.appendChild(canvas);
+    }
+    
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw Traffic (Bytes)
+    ctx.beginPath();
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2;
+    
+    const maxBytes = Math.max(...statsHistory.map((s: any) => (s.metrics?.bytes?.total || 0))) || 1;
+    const step = canvas.width / 50;
+    
+    statsHistory.forEach((s: any, i: number) => {
+        const val = s.metrics?.bytes?.total || 0;
+        const h = (val / maxBytes) * (canvas.height - 20);
+        const x = i * step;
+        const y = canvas.height - h;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    container.innerHTML = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+            <div style="background:#f1f5f9; padding:10px; border-radius:8px;">
+                <div style="font-size:0.8em; color:#64748b;">Requests</div>
+                <div style="font-size:1.5em; font-weight:bold;">${m.requests.total}</div>
+                <div style="font-size:0.7em;">GET: ${m.requests.get} | PUT: ${m.requests.put}</div>
+            </div>
+            <div style="background:#f1f5f9; padding:10px; border-radius:8px;">
+                <div style="font-size:0.8em; color:#64748b;">Data Transfer</div>
+                <div style="font-size:1.5em; font-weight:bold;">${formatBytes(m.bytes.total)}</div>
+                <div style="font-size:0.7em;">Tx: ${formatBytes(m.bytes.tx)} | Rx: ${formatBytes(m.bytes.rx)}</div>
+            </div>
+        </div>
+        <p style="font-size:0.8em; color:#64748b;">Network Activity (Cumulative Bytes)</p>
+    `;
+    container.appendChild(canvas);
+}
+
+function formatBytes(bytes: number, decimals = 2) {
+    if (!+bytes) return '0 B';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+}
 
 // --- Toast ---
 function showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
@@ -327,7 +449,9 @@ async function connect(config: any, save: boolean = true) {
         // Update Header UI
         await updateHeaderUI();
 
-        await db.sync(); // Initial sync
+        initWorker(config); // Initialize Background Worker
+        triggerSync();      // Start Background Sync
+
         await db.social.joinGlobalDirectory();
         refreshFeed();
         loadFollowing();
@@ -424,14 +548,14 @@ async function switchView(viewName: 'feed' | 'profile' | 'network') {
     
     if (db) {
         console.log('Syncing on tab change...');
-        await db.sync();
+        triggerSync();
         if (viewName === 'feed') refreshFeed();
     }
 }
 
 document.getElementById('btn-refresh')?.addEventListener('click', async () => {
     if (!db) return;
-    await db.sync();
+    triggerSync();
     refreshFeed();
 });
 
@@ -459,6 +583,18 @@ async function loadProfile() {
            renderImage(profile.avatarUrl, avatarEl);
         }
     }
+
+    // Add Stats Container if missing
+    let statsContainer = document.getElementById('profile-stats');
+    if (!statsContainer) {
+        statsContainer = document.createElement('div');
+        statsContainer.id = 'profile-stats';
+        statsContainer.style.marginTop = '20px';
+        statsContainer.innerHTML = '<h3>Network Stats</h3>';
+        const card = document.querySelector('#view-profile .card');
+        if (card) card.appendChild(statsContainer);
+    }
+    renderProfileStats();
 }
 
 document.getElementById('btn-show-key')?.addEventListener('click', () => {
@@ -489,7 +625,7 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
     }
 
     await db.profile.update({ displayName: name, bio, avatarUrl });
-    await db.sync();
+    triggerSync();
     showToast('Profile updated!', 'success');
     loadProfile();
     updateHeaderUI();
@@ -745,7 +881,7 @@ document.getElementById('btn-post')?.addEventListener('click', async () => {
         fileInput.value = '';
         
         console.log('Syncing after post...');
-        await db.sync();
+        triggerSync();
         await refreshFeed();
     } catch (e) {
         console.error(e);
@@ -782,7 +918,7 @@ async function loadComments(postId: string) {
     input.value = '';
     
     console.log('Syncing after comment...');
-    await db.sync();
+    triggerSync();
     loadComments(postId);
 };
 
@@ -790,7 +926,7 @@ async function loadComments(postId: string) {
     if (!db || !confirm('Delete this post?')) return;
     await db.unshare(id);
     await db.collection('posts').delete(id);
-    await db.sync();
+    triggerSync();
     refreshFeed();
 };
 
@@ -805,7 +941,7 @@ async function loadComments(postId: string) {
         await db.collection('posts').save(post);
         // Reshare to update public metadata/content
         await db.share(id, true, 'posts'); 
-        await db.sync();
+        triggerSync();
         refreshFeed();
     }
 };
@@ -817,7 +953,7 @@ async function loadComments(postId: string) {
     // Find post id to refresh
     // We might need to refresh whole feed or just find parent
     // For simplicity, refresh feed or finding parent is hard without the doc
-    await db.sync();
+    triggerSync();
     refreshFeed();
 };
 
@@ -873,7 +1009,7 @@ async function loadFollowing() {
     if (newFollows > 0) {
         showToast(`Auto-followed ${newFollows} new users found in directory`, 'success');
         // Trigger sync to pull their content
-        db.sync().then(() => refreshFeed()); 
+        triggerSync(); 
     }
 }
 

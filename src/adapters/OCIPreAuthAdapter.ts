@@ -1,5 +1,5 @@
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
-import { SyncDocument, RemoteChange } from '../types';
+import { SyncDocument, RemoteChange, AdapterMetrics } from '../types';
 
 interface ManifestEntry {
   id: string;
@@ -11,10 +11,27 @@ interface ManifestEntry {
 export class OCIPreAuthAdapter implements IRemoteAdapter {
   private baseUrl: string;
   private prefix: string;
+  private metrics: AdapterMetrics = {
+    requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 },
+    bytes: { tx: 0, rx: 0, total: 0 }
+  };
 
   constructor(parUrl: string, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
     this.baseUrl = parUrl.endsWith('/') ? parUrl.slice(0, -1) : parUrl;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+  }
+
+  public getMetrics(): AdapterMetrics {
+      return this.metrics;
+  }
+
+  private trackRequest(type: keyof AdapterMetrics['requests'], bytes: number = 0, direction: 'tx' | 'rx' = 'tx') {
+      this.metrics.requests[type]++;
+      this.metrics.requests.total++;
+      if (bytes > 0) {
+          this.metrics.bytes[direction] += bytes;
+          this.metrics.bytes.total += bytes;
+      }
   }
 
   private getUrl(id: string, collection?: string): string {
@@ -33,13 +50,17 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
 
   async put(doc: SyncDocument, collection?: string): Promise<string | undefined> {
     const url = this.getUrl(doc._id, collection);
+    const body = JSON.stringify(doc);
+    
     const response = await fetch(url, {
       method: 'PUT',
-      body: JSON.stringify(doc),
+      body: body,
       headers: {
         'Content-Type': 'application/json'
       }
     });
+
+    this.trackRequest('put', body.length, 'tx');
 
     if (!response.ok) {
       throw new Error(`OCI PAR Put Failed: ${response.statusText}`);
@@ -60,9 +81,15 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
     // 1. Get existing
     let entries: Record<string, ManifestEntry> = {};
     try {
+        this.trackRequest('get', 0, 'rx');
         const res = await fetch(manifestUrl);
         if (res.ok) {
-            entries = await res.json();
+            const blob = await res.blob();
+            this.metrics.bytes.rx += blob.size;
+            this.metrics.bytes.total += blob.size;
+            
+            const text = await blob.text();
+            entries = JSON.parse(text);
         }
     } catch (e) { }
 
@@ -82,11 +109,13 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
 
     // 3. Save
     try {
+        const body = JSON.stringify(entries);
         await fetch(manifestUrl, {
             method: 'PUT',
-            body: JSON.stringify(entries),
+            body: body,
             headers: { 'Content-Type': 'application/json' }
         });
+        this.trackRequest('put', body.length, 'tx');
     } catch (e) {
         console.error('Failed to update manifest', e);
         // We do not throw here to avoid blocking the main save operation
@@ -96,12 +125,20 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
 
   async get(id: string, collection?: string): Promise<SyncDocument | null> {
     const url = this.getUrl(id, collection);
+    
+    this.trackRequest('get', 0, 'rx');
     const response = await fetch(url);
     
     if (response.status === 404) return null;
     if (!response.ok) throw new Error(`OCI PAR Get Failed: ${response.statusText}`);
 
-    const doc = await response.json();
+    const blob = await response.blob();
+    this.metrics.bytes.rx += blob.size;
+    this.metrics.bytes.total += blob.size;
+    
+    const text = await blob.text();
+    const doc = JSON.parse(text);
+
     const etag = response.headers.get('etag');
     if (etag) {
       doc._etag = etag.replace(/"/g, '');
@@ -118,9 +155,14 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
       let entries: Record<string, ManifestEntry> = {};
       
       try {
+        this.trackRequest('get', 0, 'rx');
         const res = await fetch(manifestUrl);
         if (res.ok) {
-            entries = await res.json();
+            const blob = await res.blob();
+            this.metrics.bytes.rx += blob.size;
+            this.metrics.bytes.total += blob.size;
+            const text = await blob.text();
+            entries = JSON.parse(text);
         }
       } catch (e) {
           return [];
@@ -147,6 +189,7 @@ export class OCIPreAuthAdapter implements IRemoteAdapter {
 
   async delete(id: string, collection?: string): Promise<void> {
     const url = this.getUrl(id, collection);
+    this.trackRequest('delete');
     const response = await fetch(url, { method: 'DELETE' });
     if (!response.ok && response.status !== 404) {
       throw new Error(`OCI PAR Delete Failed: ${response.statusText}`);

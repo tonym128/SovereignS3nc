@@ -4,13 +4,15 @@ import { WebCryptoAdapter } from './adapters/WebCryptoAdapter';
 import { nodeCrypto } from './utils/nodeCrypto';
 
 export async function deriveKey(passphrase: string, salt: string): Promise<Uint8Array | Buffer> {
-  const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  const isBrowser = (typeof window !== 'undefined' || typeof self !== 'undefined') && (typeof window !== 'undefined' ? window.crypto : self.crypto);
+  const cryptoSubtle = typeof window !== 'undefined' && window.crypto ? window.crypto.subtle : (typeof self !== 'undefined' && self.crypto ? self.crypto.subtle : null);
+  
   const iterations = 100000;
   const keyLength = 32;
 
-  if (isBrowser) {
+  if (isBrowser && cryptoSubtle) {
     const enc = new TextEncoder();
-    const passwordKey = await window.crypto.subtle.importKey(
+    const passwordKey = await cryptoSubtle.importKey(
       'raw',
       enc.encode(passphrase),
       { name: 'PBKDF2' },
@@ -18,7 +20,7 @@ export async function deriveKey(passphrase: string, salt: string): Promise<Uint8
       ['deriveBits', 'deriveKey']
     );
 
-    const derivedBits = await window.crypto.subtle.deriveBits(
+    const derivedBits = await cryptoSubtle.deriveBits(
       {
         name: 'PBKDF2',
         salt: enc.encode(salt),
@@ -44,7 +46,7 @@ export async function deriveKey(passphrase: string, salt: string): Promise<Uint8
 }
 
 export function createCryptoAdapter(key: Uint8Array | Buffer): ICryptoAdapter {
-    const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+    const isBrowser = (typeof window !== 'undefined' || typeof self !== 'undefined') && (typeof window !== 'undefined' ? window.crypto : self.crypto);
     if (isBrowser) {
         return new WebCryptoAdapter(key as Uint8Array);
     } else {

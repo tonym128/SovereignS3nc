@@ -8,11 +8,17 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     this.keyData = secretKey;
   }
 
+  private get crypto(): Crypto {
+      if (typeof window !== 'undefined' && window.crypto) return window.crypto;
+      if (typeof self !== 'undefined' && self.crypto) return self.crypto;
+      throw new Error('WebCrypto API not available in this environment');
+  }
+
   private async initKey(): Promise<CryptoKey> {
     if (this.key) return this.key;
 
     if (this.keyData instanceof Uint8Array) {
-       this.key = await window.crypto.subtle.importKey(
+       this.key = await this.crypto.subtle.importKey(
         'raw',
         this.keyData as BufferSource,
         { name: 'AES-GCM' },
@@ -23,9 +29,9 @@ export class WebCryptoAdapter implements ICryptoAdapter {
       const enc = new TextEncoder();
       const keyData = enc.encode(this.keyData);
       
-      const hash = await window.crypto.subtle.digest('SHA-256', keyData);
+      const hash = await this.crypto.subtle.digest('SHA-256', keyData);
       
-      this.key = await window.crypto.subtle.importKey(
+      this.key = await this.crypto.subtle.importKey(
         'raw',
         hash,
         { name: 'AES-GCM' },
@@ -39,10 +45,10 @@ export class WebCryptoAdapter implements ICryptoAdapter {
   async encrypt(data: any): Promise<string> {
     const enc = new TextEncoder();
     const encodedData = enc.encode(JSON.stringify(data));
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const iv = this.crypto.getRandomValues(new Uint8Array(12));
     const key = await this.initKey();
 
-    const ciphertextWithTag = await window.crypto.subtle.encrypt(
+    const ciphertextWithTag = await this.crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       key,
       encodedData
@@ -72,7 +78,7 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     combined.set(encrypted);
     combined.set(tag, encrypted.length);
 
-    const decryptedBuf = await window.crypto.subtle.decrypt(
+    const decryptedBuf = await this.crypto.subtle.decrypt(
       { name: 'AES-GCM', iv: iv as any },
       key,
       combined
@@ -84,9 +90,9 @@ export class WebCryptoAdapter implements ICryptoAdapter {
 
   async encryptRaw(data: Uint8Array): Promise<Uint8Array> {
     const key = await this.initKey();
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const iv = this.crypto.getRandomValues(new Uint8Array(12));
     
-    const ciphertextWithTag = await window.crypto.subtle.encrypt(
+    const ciphertextWithTag = await this.crypto.subtle.encrypt(
       { name: 'AES-GCM', iv },
       key,
       data as any
@@ -103,7 +109,7 @@ export class WebCryptoAdapter implements ICryptoAdapter {
     const iv = data.slice(0, 12);
     const ciphertextWithTag = data.slice(12);
 
-    const decryptedBuf = await window.crypto.subtle.decrypt(
+    const decryptedBuf = await this.crypto.subtle.decrypt(
       { name: 'AES-GCM', iv: iv as any },
       key,
       ciphertextWithTag
