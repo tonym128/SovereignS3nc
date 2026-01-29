@@ -617,10 +617,12 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
 
     let avatarUrl = undefined;
     if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        const buffer = await file.arrayBuffer();
+        const originalFile = fileInput.files[0];
+        const compressedBlob = await compressImage(originalFile);
+        const buffer = await compressedBlob.arrayBuffer();
+        
         // Public upload!
-        const meta = await db.storage.upload(file.name, new Uint8Array(buffer), file.type, true);
+        const meta = await db.storage.upload(originalFile.name, new Uint8Array(buffer), compressedBlob.type, true);
         avatarUrl = meta._id;
     }
 
@@ -844,6 +846,70 @@ async function renderImage(blobId: string, imgEl: HTMLImageElement, authorId?: s
     }
 }
 
+// --- Helper: Image Compression ---
+async function compressImage(file: File, maxSizeKB: number = 100): Promise<Blob> {
+    // Only compress images
+    if (!file.type.startsWith('image/')) return file;
+    // If already small enough, return as is
+    if (file.size <= maxSizeKB * 1024) return file;
+
+    console.log(`Compressing ${file.name} (${(file.size / 1024).toFixed(1)} KB)...`);
+
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.src = url;
+
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            
+            // Initial downscale if dimensions are huge (e.g., > 1920px) to help compression
+            const MAX_DIM = 1920;
+            if (width > MAX_DIM || height > MAX_DIM) {
+                const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+                width = Math.floor(width * ratio);
+                height = Math.floor(height * ratio);
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return reject(new Error('Canvas context failed'));
+            
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Iterative quality reduction
+            let quality = 0.9;
+            const targetBytes = maxSizeKB * 1024;
+
+            const tryCompress = () => {
+                canvas.toBlob((blob) => {
+                    if (!blob) return reject(new Error('Compression failed'));
+                    
+                    if (blob.size <= targetBytes || quality < 0.2) {
+                        console.log(`Compressed to ${(blob.size / 1024).toFixed(1)} KB (Quality: ${quality.toFixed(1)})`);
+                        resolve(blob);
+                    } else {
+                        quality -= 0.1;
+                        tryCompress();
+                    }
+                }, 'image/jpeg', quality);
+            };
+
+            tryCompress();
+        };
+
+        img.onerror = (e) => {
+            URL.revokeObjectURL(url);
+            reject(e);
+        };
+    });
+}
+
 document.getElementById('btn-post')?.addEventListener('click', async () => {
     if (!db) return;
     const btn = document.getElementById('btn-post') as HTMLButtonElement;
@@ -860,10 +926,12 @@ document.getElementById('btn-post')?.addEventListener('click', async () => {
     try {
         let attachments: string[] = [];
         if (fileInput.files && fileInput.files[0]) {
-            const file = fileInput.files[0];
-            const buffer = await file.arrayBuffer();
+            const originalFile = fileInput.files[0];
+            const compressedBlob = await compressImage(originalFile);
+            
+            const buffer = await compressedBlob.arrayBuffer();
             // Upload immediately (Note: requires network currently)
-            const meta = await db.storage.upload(file.name, new Uint8Array(buffer), file.type, true);
+            const meta = await db.storage.upload(originalFile.name, new Uint8Array(buffer), compressedBlob.type, true);
             attachments.push(meta._id);
         }
 
