@@ -213,6 +213,17 @@
                         <input type="password" id="profile-private-id" class="input" readonly style="background: #f1f5f9; margin:0;">
                         <button id="btn-show-key" class="btn" style="background: #64748b; padding: 0 10px;">👁️</button>
                     </div>
+
+                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+                    
+                    <h3>Magic Invite</h3>
+                    <p style="font-size:0.9em; color:#64748b;">Generate a secure link to help friends connect and follow you instantly.</p>
+                    <button id="btn-generate-invite" class="btn" style="width:100%; margin-bottom:10px;">Generate Invite Link</button>
+                    <div id="invite-area" class="hidden">
+                        <textarea id="invite-link" class="input" readonly onclick="this.select()" rows="3" style="font-family:monospace; font-size:0.8em;"></textarea>
+                        <p style="font-size:0.8em; color:green;">Link copied to clipboard!</p>
+                    </div>
+
                     <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
 
                     <h3>Edit Profile</h3>

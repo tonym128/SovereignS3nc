@@ -296,10 +296,61 @@ function toggleLoginView(showSaved: boolean) {
 // --- Initialization & Auto-fill ---
 if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
     window.addEventListener('load', async () => {
-        // 1. Render Saved Sessions
+        // 1. Check for Magic Invite in Hash
+        if (window.location.hash.startsWith('#invite=')) {
+            try {
+                const b64 = window.location.hash.substring(8);
+                const json = atob(b64);
+                const inviteData = JSON.parse(json);
+                
+                console.log('Magic Invite detected:', inviteData);
+                
+                // Pre-fill Form
+                if (inviteData.s3) {
+                    (document.getElementById('s3-endpoint') as HTMLInputElement).value = inviteData.s3.endpoint || '';
+                    (document.getElementById('s3-bucket') as HTMLInputElement).value = inviteData.s3.bucketName || '';
+                    (document.getElementById('s3-region') as HTMLInputElement).value = inviteData.s3.region || '';
+                    // Credentials are NOT shared, user must provide their own or use public bucket if read-only
+                    // But usually invites are for same-server collaboration, so endpoint/bucket is key.
+                    
+                    (document.querySelector('input[name="auth-mode"][value="s3"]') as HTMLInputElement).checked = true;
+                    document.getElementById('auth-oci')!.classList.add('hidden');
+                    document.getElementById('auth-s3')!.classList.remove('hidden');
+                    showToast('Connection details loaded from Invite!', 'success');
+                } else if (inviteData.ociParUrl) {
+                    (document.getElementById('oci-url') as HTMLInputElement).value = inviteData.ociParUrl;
+                    (document.querySelector('input[name="auth-mode"][value="oci"]') as HTMLInputElement).checked = true;
+                    document.getElementById('auth-oci')!.classList.remove('hidden');
+                    document.getElementById('auth-s3')!.classList.add('hidden');
+                    showToast('Connection details loaded from Invite!', 'success');
+                }
+
+                if (inviteData.appId) {
+                    (document.getElementById('app-id') as HTMLInputElement).value = inviteData.appId;
+                }
+                
+                // Store Inviter for Auto-Follow
+                if (inviteData.inviter) {
+                    sessionStorage.setItem('sovereign_pending_follow', JSON.stringify(inviteData.inviter));
+                    showToast(`You have been invited by ${inviteData.inviter.userId}. Login to follow them automatically.`, 'info');
+                }
+
+                // Clear hash to clean URL
+                history.replaceState(null, '', window.location.pathname);
+                
+                // Don't auto-login if we just loaded an invite, let user confirm/create account
+                return; 
+
+            } catch (e) {
+                console.error('Invalid Invite Link', e);
+                showToast('Invalid Invite Link', 'error');
+            }
+        }
+
+        // 2. Render Saved Sessions
         renderSavedSessionsList();
 
-        // 2. Check for Auto-Login
+        // 3. Check for Auto-Login
         const currentSessionId = localStorage.getItem('sovereign_current_session_id');
         if (currentSessionId) {
             const sessions = getSavedSessions();
@@ -312,7 +363,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
             }
         }
 
-        // 3. Fallback to Config.json
+        // 4. Fallback to Config.json
         try {
             const res = await fetch('config.json');
             if (res.ok) {
@@ -339,6 +390,53 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
         }
     });
 }
+
+// --- Invite Generation ---
+document.getElementById('btn-generate-invite')?.addEventListener('click', () => {
+    if (!db) return;
+    
+    // Construct Invite Data
+    const inviteData: any = {
+        appId: db.config.paths.appId,
+        inviter: {
+            userId: db.config.paths.userId,
+            // Include public info needed to follow
+            appId: db.config.paths.appId
+            // Ideally we'd include publicPassphrase if we want them to be able to decrypt our public posts immediately
+            // But checking config... publicPassphrase IS stored in config.auth.publicPassphrase
+        }
+    };
+
+    // Add Network Config (Sanitized)
+    if (db.config.s3) {
+        inviteData.s3 = {
+            endpoint: db.config.s3.endpoint,
+            bucketName: db.config.s3.bucketName,
+            region: db.config.s3.region
+        };
+    } else if (db.config.ociParUrl) {
+        inviteData.ociParUrl = db.config.ociParUrl;
+    }
+
+    if (db.config.auth && db.config.auth.publicPassphrase) {
+        inviteData.inviter.publicPassphrase = db.config.auth.publicPassphrase;
+        if (db.config.auth.publicSalt) {
+            inviteData.inviter.publicSalt = db.config.auth.publicSalt;
+        }
+    }
+
+    const json = JSON.stringify(inviteData);
+    const b64 = btoa(json);
+    const link = `${window.location.origin}${window.location.pathname}#invite=${b64}`;
+
+    const area = document.getElementById('invite-area')!;
+    const input = document.getElementById('invite-link') as HTMLTextAreaElement;
+    
+    area.classList.remove('hidden');
+    input.value = link;
+    input.select();
+    navigator.clipboard.writeText(link);
+});
 
 // --- Initialization ---
 
@@ -453,6 +551,34 @@ async function connect(config: any, save: boolean = true) {
         triggerSync();      // Start Background Sync
 
         await db.social.joinGlobalDirectory();
+
+        // --- Check Pending Auto-Follow (from Invite) ---
+        const pendingFollowJson = sessionStorage.getItem('sovereign_pending_follow');
+        if (pendingFollowJson) {
+            try {
+                const inviter = JSON.parse(pendingFollowJson);
+                // Ensure we have necessary fields
+                if (inviter.userId && inviter.appId) {
+                    const addr: SovereignAddress = {
+                        appId: inviter.appId,
+                        userId: inviter.userId,
+                        region: config.s3?.region || 'us-east-1',
+                        bucket: config.s3?.bucketName || 'unknown',
+                        endpoint: config.s3?.endpoint
+                    };
+                    if (inviter.publicPassphrase) addr.publicPassphrase = inviter.publicPassphrase;
+                    if (inviter.publicSalt) addr.publicSalt = inviter.publicSalt;
+
+                    console.log('Auto-following inviter:', addr);
+                    await db.social.follow(addr);
+                    showToast(`Auto-followed inviter: ${inviter.userId}`, 'success');
+                    sessionStorage.removeItem('sovereign_pending_follow');
+                }
+            } catch (e) {
+                console.error('Failed to process pending follow', e);
+            }
+        }
+
         refreshFeed();
         loadFollowing();
 
