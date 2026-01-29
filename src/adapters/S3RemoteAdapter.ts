@@ -1,5 +1,5 @@
 import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { S3Config, SyncDocument, RemoteChange } from '../types';
+import { S3Config, SyncDocument, RemoteChange, AdapterMetrics } from '../types';
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 
 interface ManifestEntry {
@@ -13,6 +13,10 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
   private bucket: string;
   private prefix: string;
+  private metrics: AdapterMetrics = {
+    requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 },
+    bytes: { tx: 0, rx: 0, total: 0 }
+  };
 
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
     this.client = new S3Client({
@@ -23,6 +27,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     });
     this.bucket = config.bucketName;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+  }
+
+  public getMetrics(): AdapterMetrics {
+      return this.metrics;
+  }
+
+  private trackRequest(type: keyof AdapterMetrics['requests'], bytes: number = 0, direction: 'tx' | 'rx' = 'tx') {
+      this.metrics.requests[type]++;
+      this.metrics.requests.total++;
+      if (bytes > 0) {
+          this.metrics.bytes[direction] += bytes;
+          this.metrics.bytes.total += bytes;
+      }
   }
 
   private getKey(id: string, collection?: string): string {
@@ -43,15 +60,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async put(doc: SyncDocument, collection?: string): Promise<string | undefined> {
     const key = this.getKey(doc._id, collection);
+    const body = JSON.stringify(doc);
+    
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
-      Body: JSON.stringify(doc),
+      Body: body,
       ContentType: 'application/json',
       Metadata: {
         updatedAt: doc._updatedAt.toString()
       }
     });
+    
+    this.trackRequest('put', body.length, 'tx');
     const response = await this.client.send(command);
     const etag = response.ETag ? response.ETag.replace(/"/g, '') : undefined;
 
@@ -69,9 +90,13 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     let entries: Record<string, ManifestEntry> = {};
     try {
         const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
+        this.trackRequest('get', 0, 'rx'); // Track request start
+        
         const res = await this.client.send(getCmd);
         if (res.Body) {
             const str = await res.Body.transformToString();
+            this.metrics.bytes.rx += str.length; // Approximate bytes
+            this.metrics.bytes.total += str.length;
             entries = JSON.parse(str);
         }
     } catch (e) {
@@ -94,12 +119,14 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     }
 
     // 3. Save
+    const body = JSON.stringify(entries);
     const putCmd = new PutObjectCommand({
         Bucket: this.bucket,
         Key: manifestKey,
-        Body: JSON.stringify(entries),
+        Body: body,
         ContentType: 'application/json'
     });
+    this.trackRequest('put', body.length, 'tx');
     await this.client.send(putCmd);
   }
 
@@ -110,10 +137,15 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         Bucket: this.bucket,
         Key: key
       });
+      
+      this.trackRequest('get', 0, 'rx');
       const response = await this.client.send(command);
       if (!response.Body) return null;
       
       const str = await response.Body.transformToString();
+      this.metrics.bytes.rx += str.length;
+      this.metrics.bytes.total += str.length;
+
       const doc = JSON.parse(str);
       
       if (response.ETag) {
@@ -138,9 +170,13 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       
       try {
         const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
+        this.trackRequest('get', 0, 'rx');
+        
         const res = await this.client.send(getCmd);
         if (res.Body) {
             const str = await res.Body.transformToString();
+            this.metrics.bytes.rx += str.length;
+            this.metrics.bytes.total += str.length;
             entries = JSON.parse(str);
         }
       } catch (e) {
@@ -172,19 +208,9 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       Bucket: this.bucket,
       Key: key
     });
+    this.trackRequest('delete');
     await this.client.send(command);
 
-    // For delete, we might want to update manifest to remove entry OR mark as deleted
-    // Ideally we mark as deleted so others know to delete?
-    // But our Sync Logic uses LAST_WRITE_WINS on the doc itself.
-    // If we remove from manifest, others won't know it's gone unless they already have it.
-    // Let's remove for now to keep manifest clean, relying on 'delete' propagation via doc tombstone?
-    // Wait, if I delete the file, I can't sync the tombstone!
-    // SovereignS3nc typically keeps the tombstone file.
-    // So 'delete' here is usually called only if we REALLY want to remove it.
-    // But in sync(), we put() the tombstone.
-    // So this delete() method is likely used for 'unshare' or hard cleanup.
-    // Let's update manifest to remove it.
     await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
   }
 }

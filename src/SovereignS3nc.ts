@@ -757,7 +757,7 @@ export class SovereignS3nc extends EventEmitter {
     if (!this.remote) return { pushed: 0, pulled: 0, errors: 0 };
     if (this.isSyncing) return { pushed: 0, pulled: 0, errors: 0 };
     this.isSyncing = true;
-    const stats: SyncStats = { pushed: 0, pulled: 0, errors: 0 };
+    const stats: SyncStats = { pushed: 0, pulled: 0, errors: 0, metrics: this.getMetrics() };
 
     try {
       this.emit('syncStart');
@@ -766,17 +766,18 @@ export class SovereignS3nc extends EventEmitter {
       const lastSyncDate = new Date(this.lastSyncTime);
       const changes = await this.remote.listChanges(lastSyncDate);
 
-      for (const change of changes) {
+      // --- Parallel Pull ---
+      await Promise.all(changes.map(async (change) => {
         try {
           const id = change.id;
           const collection = change.collection;
           const localDoc = await this.localStore.get(id, collection);
 
           if (localDoc && change.etag && localDoc._etag === change.etag) {
-             continue;
+             return;
           }
 
-          const remoteDoc = await this.remote.get(id, collection);
+          const remoteDoc = await this.remote!.get(id, collection);
           
           if (remoteDoc) {
             if (collection && !remoteDoc.collection) remoteDoc.collection = collection;
@@ -812,14 +813,15 @@ export class SovereignS3nc extends EventEmitter {
           console.error(`Failed to pull/merge key ${change.key}`, e);
           stats.errors++;
         }
-      }
+      }));
 
       const localChanges = await this.localStore.getChanges(this.lastSyncTime);
       
-      for (const doc of localChanges) {
-        if (doc._id.startsWith('_sovereign_')) continue; 
+      // --- Parallel Push ---
+      await Promise.all(localChanges.map(async (doc) => {
+        if (doc._id.startsWith('_sovereign_')) return; 
         try {
-          const etag = await this.remote.put(doc, doc.collection);
+          const etag = await this.remote!.put(doc, doc.collection);
           stats.pushed++;
           
           if (etag) {
@@ -830,7 +832,7 @@ export class SovereignS3nc extends EventEmitter {
           console.error(`Failed to push doc ${doc._id}`, e);
           stats.errors++;
         }
-      }
+      }));
 
       if (this.sharedRemote) {
         await this.syncShares(); 
@@ -845,6 +847,8 @@ export class SovereignS3nc extends EventEmitter {
         data: { lastSyncTime: this.lastSyncTime }
       });
 
+      // Update stats with final metrics
+      stats.metrics = this.getMetrics();
       this.emit('syncComplete', stats);
     } catch (err) {
       this.emit('error', err);
@@ -855,9 +859,26 @@ export class SovereignS3nc extends EventEmitter {
     return stats;
   }
 
+  public getMetrics() {
+      const empty = { requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 }, bytes: { tx: 0, rx: 0, total: 0 } };
+      const m1 = this.remote && this.remote.getMetrics ? this.remote.getMetrics() : empty;
+      const m2 = this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : empty;
+      
+      // Deep merge summations
+      const sum = (a: any, b: any) => {
+          const res: any = JSON.parse(JSON.stringify(a));
+          for (const k in b.requests) res.requests[k] += b.requests[k];
+          for (const k in b.bytes) res.bytes[k] += b.bytes[k];
+          return res;
+      };
+      return sum(m1, m2);
+  }
+
   private async pullFollowedContent(stats: SyncStats): Promise<void> {
     const following = await this.social.getFollowing();
-    for (const addr of following) {
+    
+    // Parallelize Users
+    await Promise.all(following.map(async (addr) => {
         try {
             let followRemote: IRemoteAdapter;
             
@@ -876,23 +897,13 @@ export class SovereignS3nc extends EventEmitter {
                 });
             } else if (this.config.ociParUrl) {
                 // OCI Mode
-                // Note: For OCI PAR, we typically don't have separate credentials for other users.
-                // We assume the PAR URL allows access OR the user provided a full PAR URL as the 'endpoint' in the address.
-                // If the user followed an address like s3://..., that won't work with OCI PAR unless we can derive the URL.
-                // OCI PAR URLs are unique per bucket/prefix. 
-                // IF we are in the SAME bucket (same PAR root), we can just change the path.
-                
-                // Heuristic: If we are using OCI, and the followed user is in the same bucket/app, we can construct the path.
-                // If they are external, we need their PAR URL.
-                
-                // For this demo (Single Bucket), we assume same base URL.
                 followRemote = new OCIPreAuthAdapter(this.config.ociParUrl, {
                     appId: addr.appId,
                     userId: addr.userId,
                     storeId: 'shared'
                 }, this.config.useManifest);
             } else {
-                continue;
+                return;
             }
 
             const changes = await followRemote.listChanges(new Date(0));
@@ -900,9 +911,10 @@ export class SovereignS3nc extends EventEmitter {
             // The 'listChanges' ensures we only see what is in their manifest.
             const contentToPull = changes.filter(c => c.id !== 'public/index.json' && !c.id.startsWith('_sovereign_'));
 
-            for (const file of contentToPull) {
+            // Parallelize Content for this User
+            await Promise.all(contentToPull.map(async (file) => {
                 const indexDoc = await followRemote.get(file.id, file.collection);
-                if (!indexDoc) continue;
+                if (!indexDoc) return;
                 
                 let meta = indexDoc.data;
                 
@@ -920,19 +932,19 @@ export class SovereignS3nc extends EventEmitter {
                          }
                      } catch (e) {
                          console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e);
-                         continue;
+                         return;
                      }
                 }
 
                 // Check if this looks like a ShareMetadata object (has id and updatedAt)
                 if (!meta || !meta.id || !meta.updatedAt) {
-                    continue;
+                    return;
                 }
 
                 const localId = `follow_${addr.userId}_${meta.id}`;
                 
                 const local = await this.localStore.get(localId, 'followed_content');
-                if (local && local._updatedAt >= meta.updatedAt) continue;
+                if (local && local._updatedAt >= meta.updatedAt) return;
 
                 const contentDoc = await followRemote.get(meta.id, meta.collection); // Pass collection if available in meta
                 if (contentDoc) {
@@ -959,12 +971,12 @@ export class SovereignS3nc extends EventEmitter {
                     });
                     stats.pulled++;
                 }
-            }
+            }));
         } catch (e) {
             console.error(`Failed to pull content from ${addr.userId}`, e);
             stats.errors++;
         }
-    }
+    }));
   }
 
   async exportData(id?: string): Promise<string> {
