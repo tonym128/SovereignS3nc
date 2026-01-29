@@ -859,10 +859,15 @@
           this.key = null;
           this.keyData = secretKey;
         }
+        get crypto() {
+          if (typeof window !== "undefined" && window.crypto) return window.crypto;
+          if (typeof self !== "undefined" && self.crypto) return self.crypto;
+          throw new Error("WebCrypto API not available in this environment");
+        }
         async initKey() {
           if (this.key) return this.key;
           if (this.keyData instanceof Uint8Array) {
-            this.key = await window.crypto.subtle.importKey(
+            this.key = await this.crypto.subtle.importKey(
               "raw",
               this.keyData,
               { name: "AES-GCM" },
@@ -872,8 +877,8 @@
           } else {
             const enc = new TextEncoder();
             const keyData = enc.encode(this.keyData);
-            const hash = await window.crypto.subtle.digest("SHA-256", keyData);
-            this.key = await window.crypto.subtle.importKey(
+            const hash = await this.crypto.subtle.digest("SHA-256", keyData);
+            this.key = await this.crypto.subtle.importKey(
               "raw",
               hash,
               { name: "AES-GCM" },
@@ -886,9 +891,9 @@
         async encrypt(data) {
           const enc = new TextEncoder();
           const encodedData = enc.encode(JSON.stringify(data));
-          const iv = window.crypto.getRandomValues(new Uint8Array(12));
+          const iv = this.crypto.getRandomValues(new Uint8Array(12));
           const key = await this.initKey();
-          const ciphertextWithTag = await window.crypto.subtle.encrypt(
+          const ciphertextWithTag = await this.crypto.subtle.encrypt(
             { name: "AES-GCM", iv },
             key,
             encodedData
@@ -912,7 +917,7 @@
           const combined = new Uint8Array(encrypted.length + tag.length);
           combined.set(encrypted);
           combined.set(tag, encrypted.length);
-          const decryptedBuf = await window.crypto.subtle.decrypt(
+          const decryptedBuf = await this.crypto.subtle.decrypt(
             { name: "AES-GCM", iv },
             key,
             combined
@@ -922,8 +927,8 @@
         }
         async encryptRaw(data) {
           const key = await this.initKey();
-          const iv = window.crypto.getRandomValues(new Uint8Array(12));
-          const ciphertextWithTag = await window.crypto.subtle.encrypt(
+          const iv = this.crypto.getRandomValues(new Uint8Array(12));
+          const ciphertextWithTag = await this.crypto.subtle.encrypt(
             { name: "AES-GCM", iv },
             key,
             data
@@ -937,7 +942,7 @@
           const key = await this.initKey();
           const iv = data.slice(0, 12);
           const ciphertextWithTag = data.slice(12);
-          const decryptedBuf = await window.crypto.subtle.decrypt(
+          const decryptedBuf = await this.crypto.subtle.decrypt(
             { name: "AES-GCM", iv },
             key,
             ciphertextWithTag
@@ -977,19 +982,20 @@
 
   // src/cryptoUtils.ts
   async function deriveKey(passphrase, salt) {
-    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    const isBrowser = (typeof window !== "undefined" || typeof self !== "undefined") && (typeof window !== "undefined" ? window.crypto : self.crypto);
+    const cryptoSubtle = typeof window !== "undefined" && window.crypto ? window.crypto.subtle : typeof self !== "undefined" && self.crypto ? self.crypto.subtle : null;
     const iterations = 1e5;
     const keyLength = 32;
-    if (isBrowser) {
+    if (isBrowser && cryptoSubtle) {
       const enc = new TextEncoder();
-      const passwordKey = await window.crypto.subtle.importKey(
+      const passwordKey = await cryptoSubtle.importKey(
         "raw",
         enc.encode(passphrase),
         { name: "PBKDF2" },
         false,
         ["deriveBits", "deriveKey"]
       );
-      const derivedBits = await window.crypto.subtle.deriveBits(
+      const derivedBits = await cryptoSubtle.deriveBits(
         {
           name: "PBKDF2",
           salt: enc.encode(salt),
@@ -1012,7 +1018,7 @@
     }
   }
   function createCryptoAdapter(key) {
-    const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
+    const isBrowser = (typeof window !== "undefined" || typeof self !== "undefined") && (typeof window !== "undefined" ? window.crypto : self.crypto);
     if (isBrowser) {
       return new WebCryptoAdapter(key);
     } else {
@@ -24046,6 +24052,10 @@ ${toHex(hashedRequest)}`;
       init_dist_es58();
       S3RemoteAdapter = class {
         constructor(config, paths, useManifest = true) {
+          this.metrics = {
+            requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 },
+            bytes: { tx: 0, rx: 0, total: 0 }
+          };
           this.client = new S3Client({
             region: config.region,
             endpoint: config.endpoint,
@@ -24054,6 +24064,17 @@ ${toHex(hashedRequest)}`;
           });
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+        }
+        getMetrics() {
+          return this.metrics;
+        }
+        trackRequest(type, bytes = 0, direction = "tx") {
+          this.metrics.requests[type]++;
+          this.metrics.requests.total++;
+          if (bytes > 0) {
+            this.metrics.bytes[direction] += bytes;
+            this.metrics.bytes.total += bytes;
+          }
         }
         getKey(id, collection) {
           if (collection) {
@@ -24069,15 +24090,17 @@ ${toHex(hashedRequest)}`;
         }
         async put(doc, collection) {
           const key = this.getKey(doc._id, collection);
+          const body = JSON.stringify(doc);
           const command = new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
-            Body: JSON.stringify(doc),
+            Body: body,
             ContentType: "application/json",
             Metadata: {
               updatedAt: doc._updatedAt.toString()
             }
           });
+          this.trackRequest("put", body.length, "tx");
           const response = await this.client.send(command);
           const etag = response.ETag ? response.ETag.replace(/"/g, "") : void 0;
           if (!doc._id.startsWith("public/manifest.json") && doc._id !== "_manifest.json") {
@@ -24090,9 +24113,12 @@ ${toHex(hashedRequest)}`;
           let entries = {};
           try {
             const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
+            this.trackRequest("get", 0, "rx");
             const res = await this.client.send(getCmd);
             if (res.Body) {
               const str = await res.Body.transformToString();
+              this.metrics.bytes.rx += str.length;
+              this.metrics.bytes.total += str.length;
               entries = JSON.parse(str);
             }
           } catch (e2) {
@@ -24108,12 +24134,14 @@ ${toHex(hashedRequest)}`;
               etag
             };
           }
+          const body = JSON.stringify(entries);
           const putCmd = new PutObjectCommand({
             Bucket: this.bucket,
             Key: manifestKey,
-            Body: JSON.stringify(entries),
+            Body: body,
             ContentType: "application/json"
           });
+          this.trackRequest("put", body.length, "tx");
           await this.client.send(putCmd);
         }
         async get(id, collection) {
@@ -24123,9 +24151,12 @@ ${toHex(hashedRequest)}`;
               Bucket: this.bucket,
               Key: key
             });
+            this.trackRequest("get", 0, "rx");
             const response = await this.client.send(command);
             if (!response.Body) return null;
             const str = await response.Body.transformToString();
+            this.metrics.bytes.rx += str.length;
+            this.metrics.bytes.total += str.length;
             const doc = JSON.parse(str);
             if (response.ETag) {
               doc._etag = response.ETag.replace(/"/g, "");
@@ -24146,9 +24177,12 @@ ${toHex(hashedRequest)}`;
           let entries = {};
           try {
             const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
+            this.trackRequest("get", 0, "rx");
             const res = await this.client.send(getCmd);
             if (res.Body) {
               const str = await res.Body.transformToString();
+              this.metrics.bytes.rx += str.length;
+              this.metrics.bytes.total += str.length;
               entries = JSON.parse(str);
             }
           } catch (e2) {
@@ -24176,6 +24210,7 @@ ${toHex(hashedRequest)}`;
             Bucket: this.bucket,
             Key: key
           });
+          this.trackRequest("delete");
           await this.client.send(command);
           await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true });
         }
@@ -24190,8 +24225,23 @@ ${toHex(hashedRequest)}`;
       "use strict";
       OCIPreAuthAdapter = class {
         constructor(parUrl, paths, useManifest = true) {
+          this.metrics = {
+            requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 },
+            bytes: { tx: 0, rx: 0, total: 0 }
+          };
           this.baseUrl = parUrl.endsWith("/") ? parUrl.slice(0, -1) : parUrl;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+        }
+        getMetrics() {
+          return this.metrics;
+        }
+        trackRequest(type, bytes = 0, direction = "tx") {
+          this.metrics.requests[type]++;
+          this.metrics.requests.total++;
+          if (bytes > 0) {
+            this.metrics.bytes[direction] += bytes;
+            this.metrics.bytes.total += bytes;
+          }
         }
         getUrl(id, collection) {
           if (collection) {
@@ -24207,13 +24257,15 @@ ${toHex(hashedRequest)}`;
         }
         async put(doc, collection) {
           const url = this.getUrl(doc._id, collection);
+          const body = JSON.stringify(doc);
           const response = await fetch(url, {
             method: "PUT",
-            body: JSON.stringify(doc),
+            body,
             headers: {
               "Content-Type": "application/json"
             }
           });
+          this.trackRequest("put", body.length, "tx");
           if (!response.ok) {
             throw new Error(`OCI PAR Put Failed: ${response.statusText}`);
           }
@@ -24227,9 +24279,14 @@ ${toHex(hashedRequest)}`;
           const manifestUrl = this.getManifestUrl(doc.collection);
           let entries = {};
           try {
+            this.trackRequest("get", 0, "rx");
             const res = await fetch(manifestUrl);
             if (res.ok) {
-              entries = await res.json();
+              const blob = await res.blob();
+              this.metrics.bytes.rx += blob.size;
+              this.metrics.bytes.total += blob.size;
+              const text = await blob.text();
+              entries = JSON.parse(text);
             }
           } catch (e2) {
           }
@@ -24245,21 +24302,28 @@ ${toHex(hashedRequest)}`;
             };
           }
           try {
+            const body = JSON.stringify(entries);
             await fetch(manifestUrl, {
               method: "PUT",
-              body: JSON.stringify(entries),
+              body,
               headers: { "Content-Type": "application/json" }
             });
+            this.trackRequest("put", body.length, "tx");
           } catch (e2) {
             console.error("Failed to update manifest", e2);
           }
         }
         async get(id, collection) {
           const url = this.getUrl(id, collection);
+          this.trackRequest("get", 0, "rx");
           const response = await fetch(url);
           if (response.status === 404) return null;
           if (!response.ok) throw new Error(`OCI PAR Get Failed: ${response.statusText}`);
-          const doc = await response.json();
+          const blob = await response.blob();
+          this.metrics.bytes.rx += blob.size;
+          this.metrics.bytes.total += blob.size;
+          const text = await blob.text();
+          const doc = JSON.parse(text);
           const etag = response.headers.get("etag");
           if (etag) {
             doc._etag = etag.replace(/"/g, "");
@@ -24273,9 +24337,14 @@ ${toHex(hashedRequest)}`;
           const manifestUrl = this.getManifestUrl(collection);
           let entries = {};
           try {
+            this.trackRequest("get", 0, "rx");
             const res = await fetch(manifestUrl);
             if (res.ok) {
-              entries = await res.json();
+              const blob = await res.blob();
+              this.metrics.bytes.rx += blob.size;
+              this.metrics.bytes.total += blob.size;
+              const text = await blob.text();
+              entries = JSON.parse(text);
             }
           } catch (e2) {
             return [];
@@ -24298,6 +24367,7 @@ ${toHex(hashedRequest)}`;
         }
         async delete(id, collection) {
           const url = this.getUrl(id, collection);
+          this.trackRequest("delete");
           const response = await fetch(url, { method: "DELETE" });
           if (!response.ok && response.status !== 404) {
             throw new Error(`OCI PAR Delete Failed: ${response.statusText}`);
@@ -25256,19 +25326,19 @@ ${toHex(hashedRequest)}`;
           if (!this.remote) return { pushed: 0, pulled: 0, errors: 0 };
           if (this.isSyncing) return { pushed: 0, pulled: 0, errors: 0 };
           this.isSyncing = true;
-          const stats = { pushed: 0, pulled: 0, errors: 0 };
+          const stats = { pushed: 0, pulled: 0, errors: 0, metrics: this.getMetrics() };
           try {
             this.emit("syncStart");
             const startSyncTime = Date.now();
             const lastSyncDate = new Date(this.lastSyncTime);
             const changes = await this.remote.listChanges(lastSyncDate);
-            for (const change of changes) {
+            await Promise.all(changes.map(async (change) => {
               try {
                 const id = change.id;
                 const collection = change.collection;
                 const localDoc = await this.localStore.get(id, collection);
                 if (localDoc && change.etag && localDoc._etag === change.etag) {
-                  continue;
+                  return;
                 }
                 const remoteDoc = await this.remote.get(id, collection);
                 if (remoteDoc) {
@@ -25303,10 +25373,10 @@ ${toHex(hashedRequest)}`;
                 console.error(`Failed to pull/merge key ${change.key}`, e2);
                 stats.errors++;
               }
-            }
+            }));
             const localChanges = await this.localStore.getChanges(this.lastSyncTime);
-            for (const doc of localChanges) {
-              if (doc._id.startsWith("_sovereign_")) continue;
+            await Promise.all(localChanges.map(async (doc) => {
+              if (doc._id.startsWith("_sovereign_")) return;
               try {
                 const etag = await this.remote.put(doc, doc.collection);
                 stats.pushed++;
@@ -25318,7 +25388,7 @@ ${toHex(hashedRequest)}`;
                 console.error(`Failed to push doc ${doc._id}`, e2);
                 stats.errors++;
               }
-            }
+            }));
             if (this.sharedRemote) {
               await this.syncShares();
             }
@@ -25329,6 +25399,7 @@ ${toHex(hashedRequest)}`;
               _updatedAt: Date.now(),
               data: { lastSyncTime: this.lastSyncTime }
             });
+            stats.metrics = this.getMetrics();
             this.emit("syncComplete", stats);
           } catch (err) {
             this.emit("error", err);
@@ -25338,9 +25409,21 @@ ${toHex(hashedRequest)}`;
           }
           return stats;
         }
+        getMetrics() {
+          const empty = { requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 }, bytes: { tx: 0, rx: 0, total: 0 } };
+          const m1 = this.remote && this.remote.getMetrics ? this.remote.getMetrics() : empty;
+          const m2 = this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : empty;
+          const sum = (a2, b2) => {
+            const res = JSON.parse(JSON.stringify(a2));
+            for (const k2 in b2.requests) res.requests[k2] += b2.requests[k2];
+            for (const k2 in b2.bytes) res.bytes[k2] += b2.bytes[k2];
+            return res;
+          };
+          return sum(m1, m2);
+        }
         async pullFollowedContent(stats) {
           const following = await this.social.getFollowing();
-          for (const addr of following) {
+          await Promise.all(following.map(async (addr) => {
             try {
               let followRemote;
               if (this.config.s3) {
@@ -25362,13 +25445,13 @@ ${toHex(hashedRequest)}`;
                   storeId: "shared"
                 }, this.config.useManifest);
               } else {
-                continue;
+                return;
               }
               const changes = await followRemote.listChanges(/* @__PURE__ */ new Date(0));
               const contentToPull = changes.filter((c2) => c2.id !== "public/index.json" && !c2.id.startsWith("_sovereign_"));
-              for (const file of contentToPull) {
+              await Promise.all(contentToPull.map(async (file) => {
                 const indexDoc = await followRemote.get(file.id, file.collection);
-                if (!indexDoc) continue;
+                if (!indexDoc) return;
                 let meta = indexDoc.data;
                 if (addr.publicPassphrase) {
                   try {
@@ -25382,15 +25465,15 @@ ${toHex(hashedRequest)}`;
                     }
                   } catch (e2) {
                     console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
-                    continue;
+                    return;
                   }
                 }
                 if (!meta || !meta.id || !meta.updatedAt) {
-                  continue;
+                  return;
                 }
                 const localId = `follow_${addr.userId}_${meta.id}`;
                 const local = await this.localStore.get(localId, "followed_content");
-                if (local && local._updatedAt >= meta.updatedAt) continue;
+                if (local && local._updatedAt >= meta.updatedAt) return;
                 const contentDoc = await followRemote.get(meta.id, meta.collection);
                 if (contentDoc) {
                   let plainContent = contentDoc.data;
@@ -25413,12 +25496,12 @@ ${toHex(hashedRequest)}`;
                   });
                   stats.pulled++;
                 }
-              }
+              }));
             } catch (e2) {
               console.error(`Failed to pull content from ${addr.userId}`, e2);
               stats.errors++;
             }
-          }
+          }));
         }
         async exportData(id) {
           let docs = [];
