@@ -463,6 +463,35 @@ authRadios.forEach(radio => {
 // --- Connection Logic ---
 
 async function connect(config: any, save: boolean = true) {
+    // --- Pre-populate Form (for edit/debug) ---
+    if (config.s3) {
+        (document.getElementById('s3-endpoint') as HTMLInputElement).value = config.s3.endpoint || '';
+        (document.getElementById('s3-bucket') as HTMLInputElement).value = config.s3.bucketName || '';
+        (document.getElementById('s3-region') as HTMLInputElement).value = config.s3.region || '';
+        (document.getElementById('s3-access-key') as HTMLInputElement).value = config.s3.credentials?.accessKeyId || '';
+        (document.getElementById('s3-secret-key') as HTMLInputElement).value = config.s3.credentials?.secretAccessKey || '';
+        
+        (document.querySelector('input[name="auth-mode"][value="s3"]') as HTMLInputElement).checked = true;
+        document.getElementById('auth-oci')!.classList.add('hidden');
+        document.getElementById('auth-s3')!.classList.remove('hidden');
+    } else if (config.ociParUrl) {
+        (document.getElementById('oci-url') as HTMLInputElement).value = config.ociParUrl;
+        
+        (document.querySelector('input[name="auth-mode"][value="oci"]') as HTMLInputElement).checked = true;
+        document.getElementById('auth-oci')!.classList.remove('hidden');
+        document.getElementById('auth-s3')!.classList.add('hidden');
+    }
+
+    if (config.paths) {
+        (document.getElementById('app-id') as HTMLInputElement).value = config.paths.appId || '';
+        (document.getElementById('user-id') as HTMLInputElement).value = config.paths.userId || '';
+    }
+
+    if (config.auth) {
+        (document.getElementById('private-passphrase') as HTMLInputElement).value = config.auth.privatePassphrase || '';
+        (document.getElementById('public-passphrase') as HTMLInputElement).value = config.auth.publicPassphrase || '';
+    }
+
     const userId = config.paths.userId;
     const storage = new IndexedDBStorage(userId);
 
