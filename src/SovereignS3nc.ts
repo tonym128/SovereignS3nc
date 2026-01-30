@@ -861,11 +861,13 @@ export class SovereignS3nc extends EventEmitter {
 
   public getMetrics() {
       const empty = { requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 }, bytes: { tx: 0, rx: 0, total: 0 } };
-      const m1 = this.remote && this.remote.getMetrics ? this.remote.getMetrics() : empty;
-      const m2 = this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : empty;
+      const m1 = (this.remote && this.remote.getMetrics ? this.remote.getMetrics() : null) || empty;
+      const m2 = (this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : null) || empty;
       
       // Deep merge summations
       const sum = (a: any, b: any) => {
+          if (!a) a = empty;
+          if (!b) b = empty;
           const res: any = JSON.parse(JSON.stringify(a));
           for (const k in b.requests) res.requests[k] += b.requests[k];
           for (const k in b.bytes) res.bytes[k] += b.bytes[k];
