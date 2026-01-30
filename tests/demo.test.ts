@@ -55,6 +55,50 @@ global.HTMLInputElement = class {} as any;
 global.HTMLImageElement = class {} as any;
 global.HTMLButtonElement = class {} as any;
 
+// Mock localStorage
+const localStorageMock = (function() {
+  let store: any = {};
+  return {
+    getItem: jest.fn((key: string) => store[key] || null),
+    setItem: jest.fn((key: string, value: string) => {
+      store[key] = value.toString();
+    }),
+    removeItem: jest.fn((key: string) => {
+      delete store[key];
+    }),
+    clear: jest.fn(() => {
+      store = {};
+    })
+  };
+})();
+global.localStorage = localStorageMock as any;
+
+// Mock sessionStorage
+const sessionStorageMock = (function() {
+  let store: any = {};
+  return {
+    getItem: jest.fn((key: string) => store[key] || null),
+    setItem: jest.fn((key: string, value: string) => {
+      store[key] = value.toString();
+    }),
+    removeItem: jest.fn((key: string) => {
+      delete store[key];
+    }),
+    clear: jest.fn(() => {
+      store = {};
+    })
+  };
+})();
+global.sessionStorage = sessionStorageMock as any;
+
+// Mock Worker
+global.Worker = class {
+  constructor(stringUrl: string) {}
+  postMessage(msg: any) {}
+  onmessage: ((this: Worker, ev: MessageEvent) => any) | null = null;
+  terminate() {}
+} as any;
+
 // Mock the library
 jest.mock('../src/index', () => {
   return {

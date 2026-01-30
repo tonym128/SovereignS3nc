@@ -16,7 +16,7 @@ function getSavedSessions(): SavedSession[] {
     } catch { return []; }
 }
 
-function saveSession(config: any, profile?: Profile) {
+function saveSession(config: any, profile?: Profile | null) {
     const sessions = getSavedSessions();
     const userId = config.paths.userId;
     const idx = sessions.findIndex(s => s.userId === userId && s.config.paths.appId === config.paths.appId);
@@ -902,15 +902,15 @@ document.getElementById('btn-save-profile')?.addEventListener('click', async () 
 
 // --- Feed Logic ---
 
-async function getProfileMap(db: SovereignS3nc): Promise<Map<string, { name: string, avatarUrl?: string }>> {
+async function getProfileMap(db: SovereignS3nc): Promise<Map<string, { name: string, avatarUrl?: string, bio?: string }>> {
     const myProfile = await db.profile.get();
     const followedDocs = await db.collection('followed_content').getAll<any>();
-    const map = new Map();
+    const map = new Map<string, { name: string, avatarUrl?: string, bio?: string }>();
     
     if (myProfile) {
-        map.set('me', { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+        map.set('me', { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl, bio: myProfile.bio });
         // Map my public ID if known
-        if (db.publicId) map.set(db.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+        if (db.publicId) map.set(db.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl, bio: myProfile.bio });
     }
 
     for (const d of followedDocs) {
