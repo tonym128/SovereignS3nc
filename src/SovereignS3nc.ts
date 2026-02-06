@@ -878,6 +878,7 @@ export class SovereignS3nc extends EventEmitter {
 
   private async pullFollowedContent(stats: SyncStats): Promise<void> {
     const following = await this.social.getFollowing();
+    console.log(`[Sync] Pulling content for ${following.length} followed users.`);
     
     // Parallelize Users
     await Promise.all(following.map(async (addr) => {
@@ -909,6 +910,8 @@ export class SovereignS3nc extends EventEmitter {
             }
 
             const changes = await followRemote.listChanges(new Date(0));
+            console.log(`[Sync] Found ${changes.length} changes for user ${addr.userId}`);
+
             // We pull all content from followed users. 
             // The 'listChanges' ensures we only see what is in their manifest.
             const contentToPull = changes.filter(c => c.id !== 'public/index.json' && !c.id.startsWith('_sovereign_'));
@@ -933,7 +936,7 @@ export class SovereignS3nc extends EventEmitter {
                              meta = indexDoc.data;
                          }
                      } catch (e) {
-                         console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e);
+                         console.error(`[Sync] Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e);
                          return;
                      }
                 }
@@ -972,6 +975,7 @@ export class SovereignS3nc extends EventEmitter {
                         _rev: uuidv4(),
                     });
                     stats.pulled++;
+                    console.log(`[Sync] Pulled followed content: ${localId}`);
                 }
             }));
         } catch (e) {

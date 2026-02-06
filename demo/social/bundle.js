@@ -24642,7 +24642,11 @@ ${toHex(hashedRequest)}`;
           return [];
         }
         async joinGlobalDirectory() {
-          if (!this.db.globalRemote) return;
+          if (!this.db.globalRemote) {
+            console.warn("Global remote not configured. Cannot join directory.");
+            return;
+          }
+          console.log("Joining Global Directory...");
           const myAddress = this.db.getAddress();
           let directory = [];
           let doc = null;
@@ -24650,6 +24654,7 @@ ${toHex(hashedRequest)}`;
             doc = await this.db.globalRemote.get("directory");
             if (doc && doc.data) {
               directory = doc.data;
+              console.log(`Fetched existing directory. Size: ${directory.length}`);
             }
           } catch (e2) {
             console.warn("Could not fetch global directory (likely first run or CORS 404). Bootstrapping...");
@@ -24657,11 +24662,14 @@ ${toHex(hashedRequest)}`;
           const existingIndex = directory.findIndex((a2) => a2.userId === myAddress.userId && a2.appId === myAddress.appId);
           if (existingIndex >= 0) {
             const existing = directory[existingIndex];
-            if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
+            if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint && existing.publicPassphrase === myAddress.publicPassphrase && existing.publicSalt === myAddress.publicSalt) {
+              console.log("User already in directory with matching details. Skipping update.");
               return;
             }
+            console.log("Updating existing directory entry.");
             directory[existingIndex] = myAddress;
           } else {
+            console.log("Adding new user to directory.");
             directory.push(myAddress);
           }
           const newDoc = {
@@ -24672,6 +24680,7 @@ ${toHex(hashedRequest)}`;
           };
           try {
             await this.db.globalRemote.put(newDoc);
+            console.log("Successfully updated Global Directory.");
           } catch (e2) {
             console.error("Failed to update global directory", e2);
           }
@@ -25411,9 +25420,11 @@ ${toHex(hashedRequest)}`;
         }
         getMetrics() {
           const empty = { requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 }, bytes: { tx: 0, rx: 0, total: 0 } };
-          const m1 = this.remote && this.remote.getMetrics ? this.remote.getMetrics() : empty;
-          const m2 = this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : empty;
+          const m1 = (this.remote && this.remote.getMetrics ? this.remote.getMetrics() : null) || empty;
+          const m2 = (this.sharedRemote && this.sharedRemote.getMetrics ? this.sharedRemote.getMetrics() : null) || empty;
           const sum = (a2, b2) => {
+            if (!a2) a2 = empty;
+            if (!b2) b2 = empty;
             const res = JSON.parse(JSON.stringify(a2));
             for (const k2 in b2.requests) res.requests[k2] += b2.requests[k2];
             for (const k2 in b2.bytes) res.bytes[k2] += b2.bytes[k2];
@@ -25423,6 +25434,7 @@ ${toHex(hashedRequest)}`;
         }
         async pullFollowedContent(stats) {
           const following = await this.social.getFollowing();
+          console.log(`[Sync] Pulling content for ${following.length} followed users.`);
           await Promise.all(following.map(async (addr) => {
             try {
               let followRemote;
@@ -25448,6 +25460,7 @@ ${toHex(hashedRequest)}`;
                 return;
               }
               const changes = await followRemote.listChanges(/* @__PURE__ */ new Date(0));
+              console.log(`[Sync] Found ${changes.length} changes for user ${addr.userId}`);
               const contentToPull = changes.filter((c2) => c2.id !== "public/index.json" && !c2.id.startsWith("_sovereign_"));
               await Promise.all(contentToPull.map(async (file) => {
                 const indexDoc = await followRemote.get(file.id, file.collection);
@@ -25464,7 +25477,7 @@ ${toHex(hashedRequest)}`;
                       meta = indexDoc.data;
                     }
                   } catch (e2) {
-                    console.error(`Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
+                    console.error(`[Sync] Failed to decrypt public index for ${addr.userId}. Data type: ${typeof indexDoc.data}`, e2);
                     return;
                   }
                 }
@@ -25495,6 +25508,7 @@ ${toHex(hashedRequest)}`;
                     _rev: v4_default()
                   });
                   stats.pulled++;
+                  console.log(`[Sync] Pulled followed content: ${localId}`);
                 }
               }));
             } catch (e2) {
@@ -25965,6 +25979,29 @@ ${toHex(hashedRequest)}`;
         });
       });
       async function connect(config, save = true) {
+        if (config.s3) {
+          document.getElementById("s3-endpoint").value = config.s3.endpoint || "";
+          document.getElementById("s3-bucket").value = config.s3.bucketName || "";
+          document.getElementById("s3-region").value = config.s3.region || "";
+          document.getElementById("s3-access-key").value = config.s3.credentials?.accessKeyId || "";
+          document.getElementById("s3-secret-key").value = config.s3.credentials?.secretAccessKey || "";
+          document.querySelector('input[name="auth-mode"][value="s3"]').checked = true;
+          document.getElementById("auth-oci").classList.add("hidden");
+          document.getElementById("auth-s3").classList.remove("hidden");
+        } else if (config.ociParUrl) {
+          document.getElementById("oci-url").value = config.ociParUrl;
+          document.querySelector('input[name="auth-mode"][value="oci"]').checked = true;
+          document.getElementById("auth-oci").classList.remove("hidden");
+          document.getElementById("auth-s3").classList.add("hidden");
+        }
+        if (config.paths) {
+          document.getElementById("app-id").value = config.paths.appId || "";
+          document.getElementById("user-id").value = config.paths.userId || "";
+        }
+        if (config.auth) {
+          document.getElementById("private-passphrase").value = config.auth.privatePassphrase || "";
+          document.getElementById("public-passphrase").value = config.auth.publicPassphrase || "";
+        }
         const userId = config.paths.userId;
         const storage = new IndexedDBStorage(userId);
         try {
@@ -26293,8 +26330,8 @@ ${toHex(hashedRequest)}`;
         const followedDocs = await db2.collection("followed_content").getAll();
         const map = /* @__PURE__ */ new Map();
         if (myProfile) {
-          map.set("me", { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
-          if (db2.publicId) map.set(db2.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl });
+          map.set("me", { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl, bio: myProfile.bio });
+          if (db2.publicId) map.set(db2.publicId, { name: myProfile.displayName, avatarUrl: myProfile.avatarUrl, bio: myProfile.bio });
         }
         for (const d2 of followedDocs) {
           if (d2.address && d2.address.userId && (d2.collection === "profiles" || d2.displayName)) {

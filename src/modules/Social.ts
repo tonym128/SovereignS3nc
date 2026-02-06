@@ -220,8 +220,12 @@ export class SocialManager {
   }
 
   async joinGlobalDirectory(): Promise<void> {
-      if (!this.db.globalRemote) return;
-
+      if (!this.db.globalRemote) {
+          console.warn('Global remote not configured. Cannot join directory.');
+          return;
+      }
+      
+      console.log('Joining Global Directory...');
       const myAddress = this.db.getAddress();
       let directory: SovereignAddress[] = [];
       let doc: SyncDocument | null = null;
@@ -230,6 +234,7 @@ export class SocialManager {
           doc = await this.db.globalRemote.get('directory');
           if (doc && doc.data) {
               directory = doc.data as SovereignAddress[];
+              console.log(`Fetched existing directory. Size: ${directory.length}`);
           }
       } catch (e) {
           // If fetch fails, it might be 404 masked by CORS (common in some S3 impls)
@@ -244,13 +249,19 @@ export class SocialManager {
       if (existingIndex >= 0) {
           const existing = directory[existingIndex];
           // If details match, no need to update
-          if (existing.bucket === myAddress.bucket && existing.endpoint === myAddress.endpoint) {
+          if (existing.bucket === myAddress.bucket && 
+              existing.endpoint === myAddress.endpoint &&
+              existing.publicPassphrase === myAddress.publicPassphrase &&
+              existing.publicSalt === myAddress.publicSalt) {
+              console.log('User already in directory with matching details. Skipping update.');
               return;
           }
           // Update
+          console.log('Updating existing directory entry.');
           directory[existingIndex] = myAddress;
       } else {
           // Add
+          console.log('Adding new user to directory.');
           directory.push(myAddress);
       }
 
@@ -264,6 +275,7 @@ export class SocialManager {
       
       try {
           await this.db.globalRemote.put(newDoc);
+          console.log('Successfully updated Global Directory.');
       } catch (e) {
           console.error('Failed to update global directory', e);
       }
