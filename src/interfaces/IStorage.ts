@@ -1,6 +1,7 @@
 export interface FollowedUser {
   userId: string;
   lastSync: string;
+  publicKey: string;
 }
 
 export interface IStorage {
@@ -117,7 +118,7 @@ export interface IStorage {
     /**
      * Add a user to the following list.
      */
-    followUser(userId: string, lastSync: string): Promise<void>;
+    followUser(userId: string, lastSync: string, publicKey: string): Promise<void>;
 
     /**
      * Update the last sync date for a followed user.

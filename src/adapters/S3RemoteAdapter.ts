@@ -21,6 +21,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async uploadFile(path: string, data: Uint8Array): Promise<void> {
     const key = this.getKey(path);
+    console.log(`[S3] Uploading to key: ${key}`);
     const hash = crypto.createHash('sha256').update(data).digest('hex');
     
     await this.client.send(new PutObjectCommand({
@@ -35,6 +36,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async downloadFile(path: string): Promise<Uint8Array | null> {
     const key = this.getKey(path);
+    console.log(`[S3] Downloading key: ${key}`);
     try {
         const response = await this.client.send(new GetObjectCommand({
             Bucket: this.bucket,
