@@ -6,11 +6,6 @@
   "module": "dist/sovereigns3nc.esm.js",
   "unpkg": "dist/sovereigns3nc.global.js",
   "types": "dist/index.d.ts",
-  "browser": {
-    "./src/adapters/InMemoryStorage.ts": "./src/stubs/InMemoryStorage.ts",
-    "./src/adapters/AESCryptoAdapter.ts": "./src/stubs/AESCryptoAdapter.ts",
-    "./src/utils/nodeCrypto.ts": "./src/stubs/nodeCrypto.ts"
-  },
   "scripts": {
     "test": "jest",
     "test:docker": "jest -c jest.integration.config.js",
@@ -29,17 +24,15 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.969.0",
     "@types/node": "^25.0.8",
-    "@types/uuid": "^9.0.0",
-    "events": "^3.3.0",
-    "idb": "^8.0.3",
-    "ts-deepmerge": "^7.0.3",
-    "typescript": "^5.9.3",
-    "uuid": "^9.0.0"
+    "better-sqlite3": "^12.6.2",
+    "fs-extra": "^11.3.3",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",
     "esbuild": "^0.27.2",
-    "fake-indexeddb": "^6.2.5",
     "jest": "^30.2.0",
     "rimraf": "^6.1.2",
     "ts-jest": "^29.4.6",

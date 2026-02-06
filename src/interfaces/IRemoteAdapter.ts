@@ -1,9 +1,5 @@
-import { SyncDocument, RemoteChange, AdapterMetrics } from '../types';
-
 export interface IRemoteAdapter {
-  put(doc: SyncDocument, collection?: string): Promise<string | undefined>; // Returns ETag
-  get(id: string, collection?: string): Promise<SyncDocument | null>;
-  listChanges(since: Date, collection?: string): Promise<RemoteChange[]>;
-  delete(id: string, collection?: string): Promise<void>;
-  getMetrics?(): AdapterMetrics;
+  uploadFile(path: string, data: Uint8Array): Promise<void>;
+  downloadFile(path: string): Promise<Uint8Array | null>;
+  getFileHash(path: string): Promise<string | null>;
 }
