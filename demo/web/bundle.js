@@ -90159,16 +90159,41 @@ ${toHex(hashedRequest)}`;
           await this.post(content, true, image, parentId, parentUserId);
         }
         async updateProfile(name, bio, avatar) {
-          const profile = { name, bio, avatar, updatedAt: Date.now() };
+          const profile = { name, bio, avatar, updatedAt: Date.now(), userId: this.db.config.paths.userId };
           const data = new TextEncoder().encode(JSON.stringify(profile));
           await this.db.storage.savePublicUserFile(data);
         }
         async getProfile(userId) {
-          if (!userId || userId === this.db.config.paths.userId) {
-            const data = await this.db.storage.getPublicUserFile();
-            return data ? JSON.parse(new TextDecoder().decode(data)) : null;
+          const myId = this.db.config.paths.userId;
+          const targetId = userId || myId;
+          if (targetId === myId) {
+            const data2 = await this.db.storage.getPublicUserFile();
+            return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
+          }
+          const data = await this.db.storage.getDailyDb(`${targetId}/profile`, "followed");
+          if (data) {
+            return JSON.parse(new TextDecoder().decode(data));
           }
           return null;
+        }
+        async syncOtherProfiles() {
+          const following = await this.db.getFollowing();
+          console.log(`[Social] Syncing profiles for ${following.length} users...`);
+          for (const user of following) {
+            const userRemote = this.db.createRemote(user.userId);
+            try {
+              const data = await userRemote.downloadFile("public/user.json");
+              if (data) {
+                const decrypted = await this.db.decrypt(data, user.publicKey);
+                await this.db.storage.saveDailyDb(`${user.userId}/profile`, "followed", decrypted);
+                console.log(`[Social] Synced and decrypted profile for ${user.userId}`);
+              } else {
+                console.log(`[Social] No profile file found for ${user.userId}`);
+              }
+            } catch (e2) {
+              console.warn(`[Social] Failed to sync profile for ${user.userId}: ${e2.message}`);
+            }
+          }
         }
         async getPosts(date2, type) {
           const db = await this.getDb(date2, type);
@@ -90230,6 +90255,7 @@ ${toHex(hashedRequest)}`;
         const [newPost, setNewPost] = (0, import_react.useState)("");
         const [newImage, setNewPostImage] = (0, import_react.useState)(null);
         const [profile, setProfile] = (0, import_react.useState)(null);
+        const [profileCache, setProfileCache] = (0, import_react.useState)({});
         const [isEditingProfile, setIsEditingProfile] = (0, import_react.useState)(false);
         const [syncing, setSyncing] = (0, import_react.useState)(false);
         const [savedAccounts, setSavedAccounts] = (0, import_react.useState)([]);
@@ -90356,19 +90382,16 @@ ${toHex(hashedRequest)}`;
                 let width = img.width;
                 let height = img.height;
                 const MAX_DIM = 1920;
+                let scale = 1;
                 if (width > MAX_DIM || height > MAX_DIM) {
-                  if (width > height) {
-                    height *= MAX_DIM / width;
-                    width = MAX_DIM;
-                  } else {
-                    width *= MAX_DIM / height;
-                    height = MAX_DIM;
-                  }
+                  scale = Math.min(MAX_DIM / width, MAX_DIM / height);
                 }
-                canvas.width = width;
-                canvas.height = height;
+                const targetWidth = width * scale;
+                const targetHeight = height * scale;
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
                 const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
                 let quality = 0.9;
                 let dataUrl = canvas.toDataURL("image/jpeg", quality);
                 console.log(`[Demo] Initial compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB`);
@@ -90410,10 +90433,11 @@ ${toHex(hashedRequest)}`;
           await loadPosts();
         };
         const sync = async () => {
-          if (!sov) return;
+          if (!sov || !social) return;
           setSyncing(true);
           try {
             await sov.sync();
+            await social.syncOtherProfiles();
             setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
             await loadPosts();
           } finally {
@@ -90459,6 +90483,39 @@ ${toHex(hashedRequest)}`;
           console.log(`[Demo] Total feed items: ${allPosts.length}`);
           setPosts(allPosts);
         };
+        const UserAvatar = ({ userId }) => {
+          const [isHovered, setIsHovered] = (0, import_react.useState)(false);
+          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
+          (0, import_react.useEffect)(() => {
+            if (!userData && social) {
+              console.log(`[UI] Fetching profile for ${userId}...`);
+              social.getProfile(userId).then((p3) => {
+                if (p3) {
+                  console.log(`[UI] Found profile for ${userId}:`, p3.name);
+                  setUserData(p3);
+                  setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
+                } else {
+                  console.log(`[UI] No local profile for ${userId}`);
+                }
+              });
+            }
+          }, [userId, social, userData]);
+          const p2 = userData || { name: userId };
+          return /* @__PURE__ */ import_react.default.createElement(
+            "div",
+            {
+              className: "position-relative d-inline-block",
+              onMouseEnter: () => setIsHovered(true),
+              onMouseLeave: () => setIsHovered(false)
+            },
+            /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center cursor-pointer" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, className: "profile-img-sm me-2", style: { width: "32px", height: "32px", borderRadius: "50%" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px", fontSize: "0.8rem" } }, userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold text-primary" }, p2.name || userId)),
+            isHovered && /* @__PURE__ */ import_react.default.createElement("div", { className: "card position-absolute shadow-lg p-3", style: { zIndex: 1e3, width: "250px", top: "100%", left: 0, backgroundColor: "white", border: "1px solid #007bff" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-2" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, className: "profile-img mb-2", style: { width: "80px", height: "80px", objectFit: "cover", borderRadius: "50%" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2", style: { width: "80px", height: "80px", fontSize: "2rem" } }, userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0 text-dark" }, p2.name || userId), /* @__PURE__ */ import_react.default.createElement("small", { className: "text-muted" }, "@", userId)), p2.bio && /* @__PURE__ */ import_react.default.createElement("p", { className: "small mb-0 mt-2 border-top pt-2 text-dark" }, p2.bio), !userData && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "spinner-border spinner-border-sm" })))
+          );
+        };
+        const renderPost = (post, depth = 0) => {
+          const replies = posts.filter((p2) => p2.parentId === post.id);
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `post-wrapper ${depth > 0 ? "ms-4 border-start ps-3" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 text-muted small" }, new Date(post.timestamp).toLocaleString())), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, post.content), post.image && /* @__PURE__ */ import_react.default.createElement("div", { className: "post-image-container mb-2 text-center bg-light rounded", style: { minHeight: "100px" } }, /* @__PURE__ */ import_react.default.createElement("img", { src: post.image, className: "img-fluid rounded", style: { maxHeight: "800px", objectFit: "contain" } })), /* @__PURE__ */ import_react.default.createElement("div", { className: "pt-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-link text-decoration-none p-0", onClick: () => handleComment(post) }, "Reply"))), replies.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "replies-container mt-2" }, replies.map((reply) => renderPost(reply, depth + 1))));
+        };
         if (!isLoggedIn) {
           return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "SovereignS3nc Login"), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-2 mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "Region", value: config.region, onChange: (e2) => setConfig({ ...config, region: e2.target.value }) }))), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: login }, "Enter Workspace"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger btn-sm w-100", onClick: () => {
             if (confirm("Clear all local data?")) {
@@ -90477,7 +90534,7 @@ ${toHex(hashedRequest)}`;
         } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm", onClick: saveProfile }, "Save")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100 mb-2", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : "Sync Everything"), lastSyncTime && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center small text-success mb-2" }, "Last Sync: ", lastSyncTime), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-info w-100 mb-2", onClick: loadPosts }, "Refresh Feed"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-outline-warning w-100 mb-3", onClick: () => sov?.testPermissions() }, "Test Permissions"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-3", onClick: handleFollow }, "Follow User"), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Following (", following.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, following.map((f2) => /* @__PURE__ */ import_react.default.createElement("div", { key: f2.userId, className: "list-group-item bg-transparent px-0 border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, f2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, "Last sync: ", f2.lastSync))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small" }, "No users followed yet.")), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Global Registry (", allUsers.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, allUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: "list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small" }, u2.userId), !following.find((f2) => f2.userId === u2.userId) && u2.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-link p-0", onClick: async () => {
           await sov.follow(u2.userId);
           loadPosts();
-        } }, "Follow")))), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small border-top pt-2" }, "Zero Knowledge Sync Active")), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }), newImage && /* @__PURE__ */ import_react.default.createElement("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", onClick: handlePost }, "Post"))), posts.map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: "card post-card p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary" }, p2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 text-muted small" }, new Date(p2.timestamp).toLocaleString())), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, p2.content), p2.image && /* @__PURE__ */ import_react.default.createElement("img", { src: p2.image, className: "img-fluid rounded mb-2" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light", onClick: () => handleComment(p2) }, "Reply")))))));
+        } }, "Follow")))), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small border-top pt-2" }, "Zero Knowledge Sync Active")), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }), newImage && /* @__PURE__ */ import_react.default.createElement("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", onClick: handlePost }, "Post"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, posts.filter((p2) => !p2.parentId).map((p2) => renderPost(p2)), posts.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center text-muted mt-5" }, "Your feed is empty. Post something or sync to discover others!")))));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
       root.render(/* @__PURE__ */ import_react.default.createElement(App, null));

@@ -84,17 +84,46 @@ export class SocialManager {
     }
 
     async updateProfile(name: string, bio: string, avatar?: string) {
-        const profile = { name, bio, avatar, updatedAt: Date.now() };
+        const profile = { name, bio, avatar, updatedAt: Date.now(), userId: (this.db as any).config.paths.userId };
         const data = new TextEncoder().encode(JSON.stringify(profile));
         await (this.db as any).storage.savePublicUserFile(data);
     }
 
     async getProfile(userId?: string): Promise<any> {
-        if (!userId || userId === (this.db as any).config.paths.userId) {
+        const myId = (this.db as any).config.paths.userId;
+        const targetId = userId || myId;
+
+        if (targetId === myId) {
             const data = await (this.db as any).storage.getPublicUserFile();
             return data ? JSON.parse(new TextDecoder().decode(data)) : null;
         }
+
+        // Check if we have their profile locally
+        const data = await (this.db as any).storage.getDailyDb(`${targetId}/profile`, 'followed' as any);
+        if (data) {
+            return JSON.parse(new TextDecoder().decode(data));
+        }
         return null;
+    }
+
+    async syncOtherProfiles() {
+        const following = await this.db.getFollowing();
+        console.log(`[Social] Syncing profiles for ${following.length} users...`);
+        for (const user of following) {
+            const userRemote = (this.db as any).createRemote(user.userId);
+            try {
+                const data = await userRemote.downloadFile('public/user.json');
+                if (data) {
+                    const decrypted = await (this.db as any).decrypt(data, user.publicKey);
+                    await (this.db as any).storage.saveDailyDb(`${user.userId}/profile`, 'followed' as any, decrypted);
+                    console.log(`[Social] Synced and decrypted profile for ${user.userId}`);
+                } else {
+                    console.log(`[Social] No profile file found for ${user.userId}`);
+                }
+            } catch (e: any) {
+                console.warn(`[Social] Failed to sync profile for ${user.userId}: ${e.message}`);
+            }
+        }
     }
 
     async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {

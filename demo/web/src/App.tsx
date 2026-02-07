@@ -28,6 +28,7 @@ const App = () => {
     const [newPost, setNewPost] = useState('');
     const [newImage, setNewPostImage] = useState<string | null>(null);
     const [profile, setProfile] = useState<any>(null);
+    const [profileCache, setProfileCache] = useState<Record<string, any>>({});
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [syncing, setSyncing] = useState(false);
     const [savedAccounts, setSavedAccounts] = useState<string[]>([]);
@@ -175,22 +176,20 @@ const App = () => {
                     let width = img.width;
                     let height = img.height;
 
-                    // 1. Resize to HD (max 1920px) if bigger
+                    // 1. Resize to HD (max 1920px) if bigger, maintaining aspect ratio
                     const MAX_DIM = 1920;
+                    let scale = 1;
                     if (width > MAX_DIM || height > MAX_DIM) {
-                        if (width > height) {
-                            height *= MAX_DIM / width;
-                            width = MAX_DIM;
-                        } else {
-                            width *= MAX_DIM / height;
-                            height = MAX_DIM;
-                        }
+                        scale = Math.min(MAX_DIM / width, MAX_DIM / height);
                     }
 
-                    canvas.width = width;
-                    canvas.height = height;
+                    const targetWidth = width * scale;
+                    const targetHeight = height * scale;
+
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
                     const ctx = canvas.getContext('2d')!;
-                    ctx.drawImage(img, 0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
                     // 2. Iterative Compression to ~100KB
                     let quality = 0.9;
@@ -244,10 +243,11 @@ const App = () => {
     };
 
     const sync = async () => {
-        if (!sov) return;
+        if (!sov || !social) return;
         setSyncing(true);
         try {
             await sov.sync();
+            await social.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
             await loadPosts();
         } finally {
@@ -306,6 +306,92 @@ const App = () => {
         allPosts.sort((a, b) => b.timestamp - a.timestamp);
         console.log(`[Demo] Total feed items: ${allPosts.length}`);
         setPosts(allPosts);
+    };
+
+    const UserAvatar = ({ userId }: { userId: string }) => {
+        const [isHovered, setIsHovered] = useState(false);
+        const [userData, setUserData] = useState<any>(profileCache[userId]);
+
+        useEffect(() => {
+            if (!userData && social) {
+                console.log(`[UI] Fetching profile for ${userId}...`);
+                social.getProfile(userId).then(p => {
+                    if (p) {
+                        console.log(`[UI] Found profile for ${userId}:`, p.name);
+                        setUserData(p);
+                        setProfileCache(prev => ({ ...prev, [userId]: p }));
+                    } else {
+                        console.log(`[UI] No local profile for ${userId}`);
+                    }
+                });
+            }
+        }, [userId, social, userData]);
+
+        const p = userData || { name: userId };
+
+        return (
+            <div className="position-relative d-inline-block" 
+                 onMouseEnter={() => setIsHovered(true)} 
+                 onMouseLeave={() => setIsHovered(false)}>
+                <div className="d-flex align-items-center cursor-pointer">
+                    {p.avatar ? (
+                        <img src={p.avatar} className="profile-img-sm me-2" style={{width: '32px', height: '32px', borderRadius: '50%'}} />
+                    ) : (
+                        <div className="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style={{width: '32px', height: '32px', fontSize: '0.8rem'}}>
+                            {userId[0].toUpperCase()}
+                        </div>
+                    )}
+                    <span className="fw-bold text-primary">{p.name || userId}</span>
+                </div>
+
+                {isHovered && (
+                    <div className="card position-absolute shadow-lg p-3" style={{zIndex: 1000, width: '250px', top: '100%', left: 0, backgroundColor: 'white', border: '1px solid #007bff'}}>
+                        <div className="text-center mb-2">
+                            {p.avatar ? (
+                                <img src={p.avatar} className="profile-img mb-2" style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '50%'}} />
+                            ) : (
+                                <div className="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2" style={{width: '80px', height: '80px', fontSize: '2rem'}}>
+                                    {userId[0].toUpperCase()}
+                                </div>
+                            )}
+                            <h5 className="mb-0 text-dark">{p.name || userId}</h5>
+                            <small className="text-muted">@{userId}</small>
+                        </div>
+                        {p.bio && <p className="small mb-0 mt-2 border-top pt-2 text-dark">{p.bio}</p>}
+                        {!userData && <div className="text-center mt-2"><span className="spinner-border spinner-border-sm"></span></div>}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    const renderPost = (post: Post, depth = 0) => {
+        const replies = posts.filter(p => p.parentId === post.id);
+        
+        return (
+            <div key={post.id} className={`post-wrapper ${depth > 0 ? 'ms-4 border-start ps-3' : ''}`}>
+                <div className="card post-card p-3">
+                    <div className="d-flex align-items-center mb-2">
+                        <UserAvatar userId={post.userId} />
+                        <div className="ms-2 text-muted small">{new Date(post.timestamp).toLocaleString()}</div>
+                    </div>
+                    <div className="mb-2">{post.content}</div>
+                    {post.image && (
+                        <div className="post-image-container mb-2 text-center bg-light rounded" style={{ minHeight: '100px' }}>
+                            <img src={post.image} className="img-fluid rounded" style={{ maxHeight: '800px', objectFit: 'contain' }} />
+                        </div>
+                    )}
+                    <div className="pt-2">
+                        <button className="btn btn-sm btn-link text-decoration-none p-0" onClick={() => handleComment(post)}>Reply</button>
+                    </div>
+                </div>
+                {replies.length > 0 && (
+                    <div className="replies-container mt-2">
+                        {replies.map(reply => renderPost(reply, depth + 1))}
+                    </div>
+                )}
+            </div>
+        );
     };
 
     if (!isLoggedIn) {
@@ -431,19 +517,10 @@ const App = () => {
                         </div>
                     </div>
                     
-                    {posts.map(p => (
-                        <div key={p.id} className="card post-card p-3">
-                            <div className="d-flex align-items-center mb-2">
-                                <div className="fw-bold text-primary">{p.userId}</div>
-                                <div className="ms-2 text-muted small">{new Date(p.timestamp).toLocaleString()}</div>
-                            </div>
-                            <div className="mb-2">{p.content}</div>
-                            {p.image && <img src={p.image} className="img-fluid rounded mb-2" />}
-                            <div className="border-top pt-2">
-                                <button className="btn btn-sm btn-light" onClick={() => handleComment(p)}>Reply</button>
-                            </div>
-                        </div>
-                    ))}
+                    <div className="feed-container">
+                        {posts.filter(p => !p.parentId).map(p => renderPost(p))}
+                        {posts.length === 0 && <div className="text-center text-muted mt-5">Your feed is empty. Post something or sync to discover others!</div>}
+                    </div>
                 </div>
             </div>
         </div>
