@@ -1,10 +1,10 @@
 import { SovereignConfig } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { FilesystemStorage } from './adapters/FilesystemStorage';
+import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import * as crypto from 'crypto';
-import * as fs from 'fs-extra';
 import * as path from 'path';
 
 export class SovereignS3nc {
@@ -29,9 +29,16 @@ export class SovereignS3nc {
             this.config.publicEncryptionKey = keys.publicKey;
         }
 
-        // Initialize Storage
-        const localPath = config.localPersistencePath || './data';
-        this.storage = new FilesystemStorage(localPath);
+        // Auto-detect environment for storage
+        const isBrowser = typeof window !== 'undefined' && typeof window.indexedDB !== 'undefined';
+        if (isBrowser) {
+            this.storage = new IndexedDBStorage();
+        } else {
+            // We use a dynamic require or avoid direct reference to keep bundlers happy
+            const { FilesystemStorage: FSStorage } = require('./adapters/FilesystemStorage');
+            const localPath = config.localPersistencePath || './data';
+            this.storage = new FSStorage(localPath);
+        }
         
         // Initialize Remotes (Placeholder, will be finalized in initKeys)
         if (remote) {
@@ -197,15 +204,15 @@ export class SovereignS3nc {
             }
         }
         
-        const existing = userList.find(u => u.userId === myUserId);
-        if (!existing || existing.publicKey !== myPublicKey) {
+        if (!userList.find(u => u.userId === myUserId) || userList.find(u => u.userId === myUserId)?.publicKey !== myPublicKey) {
             console.log(`[Sync] Registering/Updating user ${myUserId} in global registry.`);
+            const existing = userList.find(u => u.userId === myUserId);
             if (existing) {
                 existing.publicKey = myPublicKey;
             } else {
                 userList.push({ userId: myUserId, publicKey: myPublicKey });
             }
-            const newData = Buffer.from(JSON.stringify(userList));
+            const newData = new TextEncoder().encode(JSON.stringify(userList));
             await this.globalRemote.uploadFile(remotePath, newData);
         }
     }
@@ -379,8 +386,6 @@ export class SovereignS3nc {
     private async encrypt(data: Uint8Array, key: string): Promise<Uint8Array> {
         const iv = crypto.randomBytes(12);
         const keyBuffer = Buffer.from(key, 'hex');
-        if (keyBuffer.length !== 32) throw new Error(`Invalid key length for encryption: ${keyBuffer.length}. Expected 32.`);
-        
         const cipher = crypto.createCipheriv('aes-256-gcm', keyBuffer, iv);
         const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
         const tag = cipher.getAuthTag();
@@ -393,8 +398,6 @@ export class SovereignS3nc {
             const tag = data.slice(12, 28);
             const encrypted = data.slice(28);
             const keyBuffer = Buffer.from(key, 'hex');
-            if (keyBuffer.length !== 32) throw new Error(`Invalid key length for decryption: ${keyBuffer.length}. Expected 32.`);
-
             const decipher = crypto.createDecipheriv('aes-256-gcm', keyBuffer, iv);
             decipher.setAuthTag(tag);
             return Buffer.concat([decipher.update(encrypted), decipher.final()]);
