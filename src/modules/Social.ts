@@ -1,5 +1,4 @@
 import { SovereignS3nc } from '../SovereignS3nc';
-import * as fs from 'fs-extra';
 import * as path from 'path';
 
 export interface Post {
@@ -8,6 +7,8 @@ export interface Post {
     timestamp: number;
     userId: string;
     image?: string; // Base64 or URL
+    parentId?: string;
+    parentUserId?: string;
 }
 
 export class SocialManager {
@@ -16,28 +17,22 @@ export class SocialManager {
     constructor(private db: SovereignS3nc, private localPath: string, private sqliteProvider?: any) {}
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed'): Promise<any> {
-        const isBrowser = typeof window !== 'undefined';
-        const datePath = type === 'followed' ? date : `${type}/${date}`;
-        
         const data = await (this.db as any).storage.getDailyDb(date, type);
         
-        let db: any;
-        if (isBrowser) {
-            const initSqlJs = (window as any).initSqlJs;
-            if (!this.sqliteInstance) {
-                this.sqliteInstance = await initSqlJs();
-            }
-            db = new this.sqliteInstance.Database(data || undefined);
-        } else {
-            const Database = eval('require')('better-sqlite3');
-            const dir = path.join(this.localPath, type === 'followed' ? 'followed' : type);
-            await fs.ensureDir(dir);
-            const dbPath = path.join(dir, type === 'followed' ? `${date}.db` : `${date}.db`);
-            db = new Database(dbPath);
+        console.log(`[Social] getDb: ${type}/${date} (found locally: ${!!data})`);
+
+        const initSqlJs = (globalThis as any).initSqlJs;
+        if (!initSqlJs) {
+            throw new Error('sql.js not found. Ensure it is loaded in the environment.');
         }
 
+        if (!this.sqliteInstance) {
+            this.sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        }
+        const db = new this.sqliteInstance.Database(data || undefined);
+
         // Initialize Schema
-        db.run(`
+        db.exec(`
             CREATE TABLE IF NOT EXISTS posts (
                 id TEXT PRIMARY KEY,
                 content TEXT,
@@ -48,6 +43,16 @@ export class SocialManager {
                 parentUserId TEXT
             );
         `);
+
+        // Migration: Ensure image column exists if table was created earlier
+        try {
+            db.exec('ALTER TABLE posts ADD COLUMN image TEXT;');
+        } catch (e) {}
+        try {
+            db.exec('ALTER TABLE posts ADD COLUMN parentId TEXT;');
+            db.exec('ALTER TABLE posts ADD COLUMN parentUserId TEXT;');
+        } catch (e) {}
+
         return db;
     }
 
@@ -60,19 +65,18 @@ export class SocialManager {
         const timestamp = Date.now();
         const userId = (this.db as any).config.paths.userId;
 
+        console.log(`[Social] Creating post. Image size: ${image ? Math.round(image.length / 1024) : 0} KB`);
+
         const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId) VALUES (?, ?, ?, ?, ?, ?, ?)';
         const params = [id, content, timestamp, userId, image || null, parentId || null, parentUserId || null];
 
-        if (typeof db.prepare === 'function') {
-            db.prepare(sql).run(...params);
-        } else {
-            db.run(sql, params);
-        }
+        db.run(sql, params);
 
-        if (typeof window !== 'undefined') {
-            await (this.db as any).storage.saveDailyDb(date, type, db.export());
-        }
-        if (db.close) db.close();
+        // Always save back to storage
+        const binary = db.export();
+        await (this.db as any).storage.saveDailyDb(date, type, binary);
+        
+        db.close();
     }
 
     async comment(parentId: string, parentUserId: string, content: string, image?: string) {
@@ -86,12 +90,10 @@ export class SocialManager {
     }
 
     async getProfile(userId?: string): Promise<any> {
-        // If no userId, get own profile
         if (!userId || userId === (this.db as any).config.paths.userId) {
             const data = await (this.db as any).storage.getPublicUserFile();
             return data ? JSON.parse(new TextDecoder().decode(data)) : null;
         }
-        // Discovery logic for other users would go here
         return null;
     }
 
@@ -99,21 +101,27 @@ export class SocialManager {
         const db = await this.getDb(date, type);
         let posts: Post[] = [];
 
-        if (typeof db.prepare === 'function') {
-            posts = db.prepare('SELECT * FROM posts ORDER BY timestamp DESC').all();
-        } else {
+        try {
             const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
-            if (res.length > 0) {
+            if (res && res.length > 0) {
                 const columns = res[0].columns;
                 posts = res[0].values.map((row: any) => {
                     const post: any = {};
                     columns.forEach((col: string, i: number) => post[col] = row[i]);
+                    // If the row didn't have a userId (legacy or bug), use the folder name
+                    if (!post.userId && type === 'followed') {
+                        post.userId = date.split('/')[0];
+                    }
                     return post;
                 });
             }
+        } catch (e: any) {
+            console.warn(`[Social] Query failed for ${type}/${date}: ${e.message}`);
+            posts = [];
         }
 
-        if (db.close) db.close();
+        db.close();
+        console.log(`[Social] Found ${posts.length} posts in ${type}/${date}`);
         return posts;
     }
 }

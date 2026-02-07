@@ -38,13 +38,12 @@
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
-  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
   // node_modules/base64-js/index.js
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -145,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -230,7 +229,7 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -730,7 +729,7 @@
         if (y2 < x2) return 1;
         return 0;
       };
-      function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir2) {
+      function bidirectionalIndexOf(buffer, val, byteOffset, encoding, dir) {
         if (buffer.length === 0) return -1;
         if (typeof byteOffset === "string") {
           encoding = byteOffset;
@@ -742,14 +741,14 @@
         }
         byteOffset = +byteOffset;
         if (numberIsNaN(byteOffset)) {
-          byteOffset = dir2 ? 0 : buffer.length - 1;
+          byteOffset = dir ? 0 : buffer.length - 1;
         }
         if (byteOffset < 0) byteOffset = buffer.length + byteOffset;
         if (byteOffset >= buffer.length) {
-          if (dir2) return -1;
+          if (dir) return -1;
           else byteOffset = buffer.length - 1;
         } else if (byteOffset < 0) {
-          if (dir2) byteOffset = 0;
+          if (dir) byteOffset = 0;
           else return -1;
         }
         if (typeof val === "string") {
@@ -759,21 +758,21 @@
           if (val.length === 0) {
             return -1;
           }
-          return arrayIndexOf(buffer, val, byteOffset, encoding, dir2);
+          return arrayIndexOf(buffer, val, byteOffset, encoding, dir);
         } else if (typeof val === "number") {
           val = val & 255;
           if (typeof Uint8Array.prototype.indexOf === "function") {
-            if (dir2) {
+            if (dir) {
               return Uint8Array.prototype.indexOf.call(buffer, val, byteOffset);
             } else {
               return Uint8Array.prototype.lastIndexOf.call(buffer, val, byteOffset);
             }
           }
-          return arrayIndexOf(buffer, [val], byteOffset, encoding, dir2);
+          return arrayIndexOf(buffer, [val], byteOffset, encoding, dir);
         }
         throw new TypeError("val must be string, number or Buffer");
       }
-      function arrayIndexOf(arr, val, byteOffset, encoding, dir2) {
+      function arrayIndexOf(arr, val, byteOffset, encoding, dir) {
         let indexSize = 1;
         let arrLength = arr.length;
         let valLength = val.length;
@@ -797,7 +796,7 @@
           }
         }
         let i2;
-        if (dir2) {
+        if (dir) {
           let foundIndex = -1;
           for (i2 = byteOffset; i2 < arrLength; i2++) {
             if (read(arr, i2) === read(val, foundIndex === -1 ? 0 : i2 - foundIndex)) {
@@ -1678,17 +1677,17 @@
           throw new errors.ERR_INVALID_ARG_TYPE(name, "number", value);
         }
       }
-      function boundsError(value, length, type2) {
+      function boundsError(value, length, type) {
         if (Math.floor(value) !== value) {
-          validateNumber(value, type2);
-          throw new errors.ERR_OUT_OF_RANGE(type2 || "offset", "an integer", value);
+          validateNumber(value, type);
+          throw new errors.ERR_OUT_OF_RANGE(type || "offset", "an integer", value);
         }
         if (length < 0) {
           throw new errors.ERR_BUFFER_OUT_OF_BOUNDS();
         }
         throw new errors.ERR_OUT_OF_RANGE(
-          type2 || "offset",
-          `>= ${type2 ? 1 : 0} and <= ${length}`,
+          type || "offset",
+          `>= ${type ? 1 : 0} and <= ${length}`,
           value
         );
       }
@@ -1793,8 +1792,8 @@
         }
         return i2;
       }
-      function isInstance(obj, type2) {
-        return obj instanceof type2 || obj != null && obj.constructor != null && obj.constructor.name != null && obj.constructor.name === type2.name;
+      function isInstance(obj, type) {
+        return obj instanceof type || obj != null && obj.constructor != null && obj.constructor.name != null && obj.constructor.name === type.name;
       }
       function numberIsNaN(obj) {
         return obj !== obj;
@@ -1826,7 +1825,21 @@
       var import_buffer = __toESM(require_buffer());
       window.Buffer = import_buffer.Buffer;
       window.global = window;
-      window.process = { env: { NODE_ENV: "development" }, nextTick: (fn) => setTimeout(fn, 0) };
+      window.process = {
+        env: { NODE_ENV: "development" },
+        nextTick: (fn) => setTimeout(fn, 0),
+        version: "v18.0.0",
+        versions: {},
+        browser: true
+      };
+      window.require = (name) => {
+        console.warn(`Browser: dynamic require of "${name}" suppressed.`);
+        return {};
+      };
+      window.addEventListener("error", (e2) => {
+        console.error("GLOBAL ERROR:", e2.error);
+        document.body.innerHTML += `<div class="alert alert-danger">Runtime Error: ${e2.message}</div>`;
+      });
     }
   });
 
@@ -1834,7 +1847,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -1900,12 +1913,12 @@
             return testStringCoercion(value);
           }
         }
-        function getComponentNameFromType(type2) {
-          if (null == type2) return null;
-          if ("function" === typeof type2)
-            return type2.$$typeof === REACT_CLIENT_REFERENCE ? null : type2.displayName || type2.name || null;
-          if ("string" === typeof type2) return type2;
-          switch (type2) {
+        function getComponentNameFromType(type) {
+          if (null == type) return null;
+          if ("function" === typeof type)
+            return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+          if ("string" === typeof type) return type;
+          switch (type) {
             case REACT_FRAGMENT_TYPE:
               return "Fragment";
             case REACT_PROFILER_TYPE:
@@ -1919,39 +1932,39 @@
             case REACT_ACTIVITY_TYPE:
               return "Activity";
           }
-          if ("object" === typeof type2)
-            switch ("number" === typeof type2.tag && console.error(
+          if ("object" === typeof type)
+            switch ("number" === typeof type.tag && console.error(
               "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
-            ), type2.$$typeof) {
+            ), type.$$typeof) {
               case REACT_PORTAL_TYPE:
                 return "Portal";
               case REACT_CONTEXT_TYPE:
-                return type2.displayName || "Context";
+                return type.displayName || "Context";
               case REACT_CONSUMER_TYPE:
-                return (type2._context.displayName || "Context") + ".Consumer";
+                return (type._context.displayName || "Context") + ".Consumer";
               case REACT_FORWARD_REF_TYPE:
-                var innerType = type2.render;
-                type2 = type2.displayName;
-                type2 || (type2 = innerType.displayName || innerType.name || "", type2 = "" !== type2 ? "ForwardRef(" + type2 + ")" : "ForwardRef");
-                return type2;
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
               case REACT_MEMO_TYPE:
-                return innerType = type2.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type2.type) || "Memo";
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
               case REACT_LAZY_TYPE:
-                innerType = type2._payload;
-                type2 = type2._init;
+                innerType = type._payload;
+                type = type._init;
                 try {
-                  return getComponentNameFromType(type2(innerType));
+                  return getComponentNameFromType(type(innerType));
                 } catch (x2) {
                 }
             }
           return null;
         }
-        function getTaskName(type2) {
-          if (type2 === REACT_FRAGMENT_TYPE) return "<>";
-          if ("object" === typeof type2 && null !== type2 && type2.$$typeof === REACT_LAZY_TYPE)
+        function getTaskName(type) {
+          if (type === REACT_FRAGMENT_TYPE) return "<>";
+          if ("object" === typeof type && null !== type && type.$$typeof === REACT_LAZY_TYPE)
             return "<...>";
           try {
-            var name = getComponentNameFromType(type2);
+            var name = getComponentNameFromType(type);
             return name ? "<" + name + ">" : "<...>";
           } catch (x2) {
             return "<...>";
@@ -1992,46 +2005,46 @@
           componentName = this.props.ref;
           return void 0 !== componentName ? componentName : null;
         }
-        function ReactElement(type2, key, props, owner, debugStack, debugTask) {
+        function ReactElement(type, key, props, owner, debugStack, debugTask) {
           var refProp = props.ref;
-          type2 = {
+          type = {
             $$typeof: REACT_ELEMENT_TYPE,
-            type: type2,
+            type,
             key,
             props,
             _owner: owner
           };
-          null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type2, "ref", {
+          null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type, "ref", {
             enumerable: false,
             get: elementRefGetterWithDeprecationWarning
-          }) : Object.defineProperty(type2, "ref", { enumerable: false, value: null });
-          type2._store = {};
-          Object.defineProperty(type2._store, "validated", {
+          }) : Object.defineProperty(type, "ref", { enumerable: false, value: null });
+          type._store = {};
+          Object.defineProperty(type._store, "validated", {
             configurable: false,
             enumerable: false,
             writable: true,
             value: 0
           });
-          Object.defineProperty(type2, "_debugInfo", {
+          Object.defineProperty(type, "_debugInfo", {
             configurable: false,
             enumerable: false,
             writable: true,
             value: null
           });
-          Object.defineProperty(type2, "_debugStack", {
+          Object.defineProperty(type, "_debugStack", {
             configurable: false,
             enumerable: false,
             writable: true,
             value: debugStack
           });
-          Object.defineProperty(type2, "_debugTask", {
+          Object.defineProperty(type, "_debugTask", {
             configurable: false,
             enumerable: false,
             writable: true,
             value: debugTask
           });
-          Object.freeze && (Object.freeze(type2.props), Object.freeze(type2));
-          return type2;
+          Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+          return type;
         }
         function cloneAndReplaceKey(oldElement, newKey) {
           newKey = ReactElement(
@@ -2084,12 +2097,12 @@
           throw thenable;
         }
         function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
-          var type2 = typeof children;
-          if ("undefined" === type2 || "boolean" === type2) children = null;
+          var type = typeof children;
+          if ("undefined" === type || "boolean" === type) children = null;
           var invokeCallback = false;
           if (null === children) invokeCallback = true;
           else
-            switch (type2) {
+            switch (type) {
               case "bigint":
               case "string":
               case "number":
@@ -2130,25 +2143,25 @@
           childKey = "" === nameSoFar ? "." : nameSoFar + ":";
           if (isArrayImpl(children))
             for (var i2 = 0; i2 < children.length; i2++)
-              nameSoFar = children[i2], type2 = childKey + getElementKey(nameSoFar, i2), invokeCallback += mapIntoArray(
+              nameSoFar = children[i2], type = childKey + getElementKey(nameSoFar, i2), invokeCallback += mapIntoArray(
                 nameSoFar,
                 array,
                 escapedPrefix,
-                type2,
+                type,
                 callback
               );
           else if (i2 = getIteratorFn(children), "function" === typeof i2)
             for (i2 === children.entries && (didWarnAboutMaps || console.warn(
               "Using Maps as children is not supported. Use an array of keyed ReactElements instead."
             ), didWarnAboutMaps = true), children = i2.call(children), i2 = 0; !(nameSoFar = children.next()).done; )
-              nameSoFar = nameSoFar.value, type2 = childKey + getElementKey(nameSoFar, i2++), invokeCallback += mapIntoArray(
+              nameSoFar = nameSoFar.value, type = childKey + getElementKey(nameSoFar, i2++), invokeCallback += mapIntoArray(
                 nameSoFar,
                 array,
                 escapedPrefix,
-                type2,
+                type,
                 callback
               );
-          else if ("object" === type2) {
+          else if ("object" === type) {
             if ("function" === typeof children.then)
               return mapIntoArray(
                 resolveThenable(children),
@@ -2587,7 +2600,7 @@
           defaultValue._currentRenderer2 = null;
           return defaultValue;
         };
-        exports.createElement = function(type2, config, children) {
+        exports.createElement = function(type, config, children) {
           for (var i2 = 2; i2 < arguments.length; i2++)
             validateChildKeys(arguments[i2]);
           i2 = {};
@@ -2605,21 +2618,21 @@
             Object.freeze && Object.freeze(childArray);
             i2.children = childArray;
           }
-          if (type2 && type2.defaultProps)
-            for (propName in childrenLength = type2.defaultProps, childrenLength)
+          if (type && type.defaultProps)
+            for (propName in childrenLength = type.defaultProps, childrenLength)
               void 0 === i2[propName] && (i2[propName] = childrenLength[propName]);
           key && defineKeyPropWarningGetter(
             i2,
-            "function" === typeof type2 ? type2.displayName || type2.name || "Unknown" : type2
+            "function" === typeof type ? type.displayName || type.name || "Unknown" : type
           );
           var propName = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
           return ReactElement(
-            type2,
+            type,
             key,
             i2,
             getOwner(),
             propName ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
-            propName ? createTask(getTaskName(type2)) : unknownOwnerDebugTask
+            propName ? createTask(getTaskName(type)) : unknownOwnerDebugTask
           );
         };
         exports.createRef = function() {
@@ -2674,14 +2687,14 @@
           lazyType._debugInfo = [{ awaited: ioInfo }];
           return lazyType;
         };
-        exports.memo = function(type2, compare) {
-          null == type2 && console.error(
+        exports.memo = function(type, compare) {
+          null == type && console.error(
             "memo: The first argument must be a component. Instead received: %s",
-            null === type2 ? "null" : typeof type2
+            null === type ? "null" : typeof type
           );
           compare = {
             $$typeof: REACT_MEMO_TYPE,
-            type: type2,
+            type,
             compare: void 0 === compare ? null : compare
           };
           var ownName;
@@ -2693,7 +2706,7 @@
             },
             set: function(name) {
               ownName = name;
-              type2.name || type2.displayName || (Object.defineProperty(type2, "name", { value: name }), type2.displayName = name);
+              type.name || type.displayName || (Object.defineProperty(type, "name", { value: name }), type.displayName = name);
             }
           });
           return compare;
@@ -2807,7 +2820,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2820,7 +2833,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3080,7 +3093,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3093,7 +3106,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3338,7 +3351,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3352,17 +3365,17 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
             fiber = fiber.next, id--;
           return fiber;
         }
-        function copyWithSetImpl(obj, path3, index, value) {
-          if (index >= path3.length) return value;
-          var key = path3[index], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
-          updated[key] = copyWithSetImpl(obj[key], path3, index + 1, value);
+        function copyWithSetImpl(obj, path, index, value) {
+          if (index >= path.length) return value;
+          var key = path[index], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
+          updated[key] = copyWithSetImpl(obj[key], path, index + 1, value);
           return updated;
         }
         function copyWithRename(obj, oldPath, newPath) {
@@ -3389,11 +3402,11 @@
           );
           return updated;
         }
-        function copyWithDeleteImpl(obj, path3, index) {
-          var key = path3[index], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
-          if (index + 1 === path3.length)
+        function copyWithDeleteImpl(obj, path, index) {
+          var key = path[index], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
+          if (index + 1 === path.length)
             return isArrayImpl(updated) ? updated.splice(key, 1) : delete updated[key], updated;
-          updated[key] = copyWithDeleteImpl(obj[key], path3, index + 1);
+          updated[key] = copyWithDeleteImpl(obj[key], path, index + 1);
           return updated;
         }
         function shouldSuspendImpl() {
@@ -3571,12 +3584,12 @@
           maybeIterable = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable["@@iterator"];
           return "function" === typeof maybeIterable ? maybeIterable : null;
         }
-        function getComponentNameFromType(type2) {
-          if (null == type2) return null;
-          if ("function" === typeof type2)
-            return type2.$$typeof === REACT_CLIENT_REFERENCE ? null : type2.displayName || type2.name || null;
-          if ("string" === typeof type2) return type2;
-          switch (type2) {
+        function getComponentNameFromType(type) {
+          if (null == type) return null;
+          if ("function" === typeof type)
+            return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+          if ("string" === typeof type) return type;
+          switch (type) {
             case REACT_FRAGMENT_TYPE:
               return "Fragment";
             case REACT_PROFILER_TYPE:
@@ -3590,28 +3603,28 @@
             case REACT_ACTIVITY_TYPE:
               return "Activity";
           }
-          if ("object" === typeof type2)
-            switch ("number" === typeof type2.tag && console.error(
+          if ("object" === typeof type)
+            switch ("number" === typeof type.tag && console.error(
               "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
-            ), type2.$$typeof) {
+            ), type.$$typeof) {
               case REACT_PORTAL_TYPE:
                 return "Portal";
               case REACT_CONTEXT_TYPE:
-                return type2.displayName || "Context";
+                return type.displayName || "Context";
               case REACT_CONSUMER_TYPE:
-                return (type2._context.displayName || "Context") + ".Consumer";
+                return (type._context.displayName || "Context") + ".Consumer";
               case REACT_FORWARD_REF_TYPE:
-                var innerType = type2.render;
-                type2 = type2.displayName;
-                type2 || (type2 = innerType.displayName || innerType.name || "", type2 = "" !== type2 ? "ForwardRef(" + type2 + ")" : "ForwardRef");
-                return type2;
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
               case REACT_MEMO_TYPE:
-                return innerType = type2.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type2.type) || "Memo";
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
               case REACT_LAZY_TYPE:
-                innerType = type2._payload;
-                type2 = type2._init;
+                innerType = type._payload;
+                type = type._init;
                 try {
-                  return getComponentNameFromType(type2(innerType));
+                  return getComponentNameFromType(type(innerType));
                 } catch (x2) {
                 }
             }
@@ -3621,26 +3634,26 @@
           return "number" === typeof owner.tag ? getComponentNameFromFiber(owner) : "string" === typeof owner.name ? owner.name : null;
         }
         function getComponentNameFromFiber(fiber) {
-          var type2 = fiber.type;
+          var type = fiber.type;
           switch (fiber.tag) {
             case 31:
               return "Activity";
             case 24:
               return "Cache";
             case 9:
-              return (type2._context.displayName || "Context") + ".Consumer";
+              return (type._context.displayName || "Context") + ".Consumer";
             case 10:
-              return type2.displayName || "Context";
+              return type.displayName || "Context";
             case 18:
               return "DehydratedFragment";
             case 11:
-              return fiber = type2.render, fiber = fiber.displayName || fiber.name || "", type2.displayName || ("" !== fiber ? "ForwardRef(" + fiber + ")" : "ForwardRef");
+              return fiber = type.render, fiber = fiber.displayName || fiber.name || "", type.displayName || ("" !== fiber ? "ForwardRef(" + fiber + ")" : "ForwardRef");
             case 7:
               return "Fragment";
             case 26:
             case 27:
             case 5:
-              return type2;
+              return type;
             case 4:
               return "Portal";
             case 3:
@@ -3648,9 +3661,9 @@
             case 6:
               return "Text";
             case 16:
-              return getComponentNameFromType(type2);
+              return getComponentNameFromType(type);
             case 8:
-              return type2 === REACT_STRICT_MODE_TYPE ? "StrictMode" : "Mode";
+              return type === REACT_STRICT_MODE_TYPE ? "StrictMode" : "Mode";
             case 22:
               return "Offscreen";
             case 12:
@@ -3667,15 +3680,15 @@
             case 0:
             case 14:
             case 15:
-              if ("function" === typeof type2)
-                return type2.displayName || type2.name || null;
-              if ("string" === typeof type2) return type2;
+              if ("function" === typeof type)
+                return type.displayName || type.name || null;
+              if ("string" === typeof type) return type;
               break;
             case 29:
-              type2 = fiber._debugInfo;
-              if (null != type2) {
-                for (var i2 = type2.length - 1; 0 <= i2; i2--)
-                  if ("string" === typeof type2[i2].name) return type2[i2].name;
+              type = fiber._debugInfo;
+              if (null != type) {
+                for (var i2 = type.length - 1; 0 <= i2; i2--)
+                  if ("string" === typeof type[i2].name) return type[i2].name;
               }
               if (null !== fiber.return)
                 return getComponentNameFromFiber(fiber.return);
@@ -3749,10 +3762,10 @@
         function pushHostContext(fiber) {
           null !== fiber.memoizedState && push(hostTransitionProviderCursor, fiber, fiber);
           var context = requiredContext(contextStackCursor.current);
-          var type2 = fiber.type;
-          var nextContext = getChildHostContextProd(context.context, type2);
-          type2 = updatedAncestorInfoDev(context.ancestorInfo, type2);
-          nextContext = { context: nextContext, ancestorInfo: type2 };
+          var type = fiber.type;
+          var nextContext = getChildHostContextProd(context.context, type);
+          type = updatedAncestorInfoDev(context.ancestorInfo, type);
+          nextContext = { context: nextContext, ancestorInfo: type };
           context !== nextContext && (push(contextFiberStackCursor, fiber, fiber), push(contextStackCursor, nextContext, fiber));
         }
         function popHostContext(fiber) {
@@ -4567,8 +4580,8 @@
           }
         }
         function isCheckable(elem) {
-          var type2 = elem.type;
-          return (elem = elem.nodeName) && "input" === elem.toLowerCase() && ("checkbox" === type2 || "radio" === type2);
+          var type = elem.type;
+          return (elem = elem.nodeName) && "input" === elem.toLowerCase() && ("checkbox" === type || "radio" === type);
         }
         function trackValueOnNode(node, valueField, currentValue) {
           var descriptor = Object.getOwnPropertyDescriptor(
@@ -4655,26 +4668,26 @@
             props.type
           ), didWarnValueDefaultValue$1 = true);
         }
-        function updateInput(element, value, defaultValue, lastDefaultValue, checked, defaultChecked, type2, name) {
+        function updateInput(element, value, defaultValue, lastDefaultValue, checked, defaultChecked, type, name) {
           element.name = "";
-          null != type2 && "function" !== typeof type2 && "symbol" !== typeof type2 && "boolean" !== typeof type2 ? (checkAttributeStringCoercion(type2, "type"), element.type = type2) : element.removeAttribute("type");
+          null != type && "function" !== typeof type && "symbol" !== typeof type && "boolean" !== typeof type ? (checkAttributeStringCoercion(type, "type"), element.type = type) : element.removeAttribute("type");
           if (null != value)
-            if ("number" === type2) {
+            if ("number" === type) {
               if (0 === value && "" === element.value || element.value != value)
                 element.value = "" + getToStringValue(value);
             } else
               element.value !== "" + getToStringValue(value) && (element.value = "" + getToStringValue(value));
           else
-            "submit" !== type2 && "reset" !== type2 || element.removeAttribute("value");
-          null != value ? setDefaultValue(element, type2, getToStringValue(value)) : null != defaultValue ? setDefaultValue(element, type2, getToStringValue(defaultValue)) : null != lastDefaultValue && element.removeAttribute("value");
+            "submit" !== type && "reset" !== type || element.removeAttribute("value");
+          null != value ? setDefaultValue(element, type, getToStringValue(value)) : null != defaultValue ? setDefaultValue(element, type, getToStringValue(defaultValue)) : null != lastDefaultValue && element.removeAttribute("value");
           null == checked && null != defaultChecked && (element.defaultChecked = !!defaultChecked);
           null != checked && (element.checked = checked && "function" !== typeof checked && "symbol" !== typeof checked);
           null != name && "function" !== typeof name && "symbol" !== typeof name && "boolean" !== typeof name ? (checkAttributeStringCoercion(name, "name"), element.name = "" + getToStringValue(name)) : element.removeAttribute("name");
         }
-        function initInput(element, value, defaultValue, checked, defaultChecked, type2, name, isHydrating2) {
-          null != type2 && "function" !== typeof type2 && "symbol" !== typeof type2 && "boolean" !== typeof type2 && (checkAttributeStringCoercion(type2, "type"), element.type = type2);
+        function initInput(element, value, defaultValue, checked, defaultChecked, type, name, isHydrating2) {
+          null != type && "function" !== typeof type && "symbol" !== typeof type && "boolean" !== typeof type && (checkAttributeStringCoercion(type, "type"), element.type = type);
           if (null != value || null != defaultValue) {
-            if (!("submit" !== type2 && "reset" !== type2 || void 0 !== value && null !== value)) {
+            if (!("submit" !== type && "reset" !== type || void 0 !== value && null !== value)) {
               track(element);
               return;
             }
@@ -4690,8 +4703,8 @@
           null != name && "function" !== typeof name && "symbol" !== typeof name && "boolean" !== typeof name && (checkAttributeStringCoercion(name, "name"), element.name = name);
           track(element);
         }
-        function setDefaultValue(node, type2, value) {
-          "number" === type2 && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
+        function setDefaultValue(node, type, value) {
+          "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
           null == props.value && ("object" === typeof props.children && null !== props.children ? React.Children.forEach(props.children, function(child) {
@@ -4887,8 +4900,8 @@
         function describePropValue(value, maxLength) {
           return "string" !== typeof value || needsEscaping.test(value) ? "{" + describeValue(value, maxLength - 2) + "}" : value.length > maxLength - 2 ? 5 > maxLength ? '"..."' : '"' + value.slice(0, maxLength - 5) + '..."' : '"' + value + '"';
         }
-        function describeExpandedElement(type2, props, rowPrefix) {
-          var remainingRowLength = 120 - rowPrefix.length - type2.length, properties = [], propName;
+        function describeExpandedElement(type, props, rowPrefix) {
+          var remainingRowLength = 120 - rowPrefix.length - type.length, properties = [], propName;
           for (propName in props)
             if (props.hasOwnProperty(propName) && "children" !== propName) {
               var propValue = describePropValue(
@@ -4898,7 +4911,7 @@
               remainingRowLength -= propName.length + propValue.length + 2;
               properties.push(propName + "=" + propValue);
             }
-          return 0 === properties.length ? rowPrefix + "<" + type2 + ">\n" : 0 < remainingRowLength ? rowPrefix + "<" + type2 + " " + properties.join(" ") + ">\n" : rowPrefix + "<" + type2 + "\n" + rowPrefix + "  " + properties.join("\n" + rowPrefix + "  ") + "\n" + rowPrefix + ">\n";
+          return 0 === properties.length ? rowPrefix + "<" + type + ">\n" : 0 < remainingRowLength ? rowPrefix + "<" + type + " " + properties.join(" ") + ">\n" : rowPrefix + "<" + type + "\n" + rowPrefix + "  " + properties.join("\n" + rowPrefix + "  ") + "\n" + rowPrefix + ">\n";
         }
         function describePropertiesDiff(clientObject, serverObject, indent) {
           var properties = "", remainingServerProperties = assign({}, serverObject), propName;
@@ -4915,7 +4928,7 @@
             ), properties += removed(indent) + _propName + ": " + clientObject + "\n");
           return properties;
         }
-        function describeElementDiff(type2, clientProps, serverProps, indent) {
+        function describeElementDiff(type, clientProps, serverProps, indent) {
           var content = "", serverPropNames = /* @__PURE__ */ new Map();
           for (propName$jscomp$0 in serverProps)
             serverProps.hasOwnProperty(propName$jscomp$0) && serverPropNames.set(
@@ -4924,7 +4937,7 @@
             );
           if (1 === serverPropNames.size && serverPropNames.has("children"))
             content += describeExpandedElement(
-              type2,
+              type,
               clientProps,
               indentation(indent)
             );
@@ -4958,28 +4971,28 @@
                 content += removed(indent + 1) + propName + "=" + describePropValue(serverProps[propName], maxLength) + "\n";
               }
             });
-            content = "" === content ? indentation(indent) + "<" + type2 + ">\n" : indentation(indent) + "<" + type2 + "\n" + content + indentation(indent) + ">\n";
+            content = "" === content ? indentation(indent) + "<" + type + ">\n" : indentation(indent) + "<" + type + "\n" + content + indentation(indent) + ">\n";
           }
-          type2 = serverProps.children;
+          type = serverProps.children;
           clientProps = clientProps.children;
-          if ("string" === typeof type2 || "number" === typeof type2 || "bigint" === typeof type2) {
+          if ("string" === typeof type || "number" === typeof type || "bigint" === typeof type) {
             serverPropNames = "";
             if ("string" === typeof clientProps || "number" === typeof clientProps || "bigint" === typeof clientProps)
               serverPropNames = "" + clientProps;
-            content += describeTextDiff(serverPropNames, "" + type2, indent + 1);
+            content += describeTextDiff(serverPropNames, "" + type, indent + 1);
           } else if ("string" === typeof clientProps || "number" === typeof clientProps || "bigint" === typeof clientProps)
-            content = null == type2 ? content + describeTextDiff("" + clientProps, null, indent + 1) : content + describeTextDiff("" + clientProps, void 0, indent + 1);
+            content = null == type ? content + describeTextDiff("" + clientProps, null, indent + 1) : content + describeTextDiff("" + clientProps, void 0, indent + 1);
           return content;
         }
         function describeSiblingFiber(fiber, indent) {
-          var type2 = describeFiberType(fiber);
-          if (null === type2) {
-            type2 = "";
+          var type = describeFiberType(fiber);
+          if (null === type) {
+            type = "";
             for (fiber = fiber.child; fiber; )
-              type2 += describeSiblingFiber(fiber, indent), fiber = fiber.sibling;
-            return type2;
+              type += describeSiblingFiber(fiber, indent), fiber = fiber.sibling;
+            return type;
           }
-          return indentation(indent) + "<" + type2 + ">\n";
+          return indentation(indent) + "<" + type + ">\n";
         }
         function describeNode(node, indent) {
           var skipToNode = findNotableNode(node, indent);
@@ -5395,21 +5408,21 @@
           }
           return true;
         }
-        function validateProperties$2(type2, props) {
+        function validateProperties$2(type, props) {
           var invalidProps = [], key;
           for (key in props)
-            validateProperty$1(type2, key) || invalidProps.push(key);
+            validateProperty$1(type, key) || invalidProps.push(key);
           props = invalidProps.map(function(prop) {
             return "`" + prop + "`";
           }).join(", ");
           1 === invalidProps.length ? console.error(
             "Invalid aria prop %s on <%s> tag. For details, see https://react.dev/link/invalid-aria-props",
             props,
-            type2
+            type
           ) : 1 < invalidProps.length && console.error(
             "Invalid aria props %s on <%s> tag. For details, see https://react.dev/link/invalid-aria-props",
             props,
-            type2
+            type
           );
         }
         function validateProperty(tagName, name, value, eventRegistry) {
@@ -5605,21 +5618,21 @@
           }
           return true;
         }
-        function warnUnknownProperties(type2, props, eventRegistry) {
+        function warnUnknownProperties(type, props, eventRegistry) {
           var unknownProps = [], key;
           for (key in props)
-            validateProperty(type2, key, props[key], eventRegistry) || unknownProps.push(key);
+            validateProperty(type, key, props[key], eventRegistry) || unknownProps.push(key);
           props = unknownProps.map(function(prop) {
             return "`" + prop + "`";
           }).join(", ");
           1 === unknownProps.length ? console.error(
             "Invalid value for prop %s on <%s> tag. Either remove it from the element, or pass a string or number value to keep it in the DOM. For details, see https://react.dev/link/attribute-behavior ",
             props,
-            type2
+            type
           ) : 1 < unknownProps.length && console.error(
             "Invalid values for props %s on <%s> tag. Either remove them from the element, or pass a string or number value to keep them in the DOM. For details, see https://react.dev/link/attribute-behavior ",
             props,
-            type2
+            type
           );
         }
         function sanitizeURL(url) {
@@ -6604,15 +6617,15 @@
             null === node.alternate && 0 !== (node.flags & 4098) && warnAboutUpdateOnNotYetMountedFiberInDEV(sourceFiber), node = parent, parent = node.return;
           return 3 === node.tag ? node.stateNode : null;
         }
-        function resolveFunctionForHotReloading(type2) {
-          if (null === resolveFamily) return type2;
-          var family = resolveFamily(type2);
-          return void 0 === family ? type2 : family.current;
+        function resolveFunctionForHotReloading(type) {
+          if (null === resolveFamily) return type;
+          var family = resolveFamily(type);
+          return void 0 === family ? type : family.current;
         }
-        function resolveForwardRefForHotReloading(type2) {
-          if (null === resolveFamily) return type2;
-          var family = resolveFamily(type2);
-          return void 0 === family ? null !== type2 && void 0 !== type2 && "function" === typeof type2.render && (family = resolveFunctionForHotReloading(type2.render), type2.render !== family) ? (family = { $$typeof: REACT_FORWARD_REF_TYPE, render: family }, void 0 !== type2.displayName && (family.displayName = type2.displayName), family) : type2 : family.current;
+        function resolveForwardRefForHotReloading(type) {
+          if (null === resolveFamily) return type;
+          var family = resolveFamily(type);
+          return void 0 === family ? null !== type && void 0 !== type && "function" === typeof type.render && (family = resolveFunctionForHotReloading(type.render), type.render !== family) ? (family = { $$typeof: REACT_FORWARD_REF_TYPE, render: family }, void 0 !== type.displayName && (family.displayName = type.displayName), family) : type : family.current;
         }
         function isCompatibleFamilyForHotReloading(fiber, element) {
           if (null === resolveFamily) return false;
@@ -6750,14 +6763,14 @@
           }, workInProgress2.selfBaseDuration = current2.selfBaseDuration, workInProgress2.treeBaseDuration = current2.treeBaseDuration);
           return workInProgress2;
         }
-        function createFiberFromTypeAndProps(type2, key, pendingProps, owner, mode, lanes) {
-          var fiberTag = 0, resolvedType = type2;
-          if ("function" === typeof type2)
-            shouldConstruct(type2) && (fiberTag = 1), resolvedType = resolveFunctionForHotReloading(resolvedType);
-          else if ("string" === typeof type2)
-            fiberTag = getHostContext(), fiberTag = isHostHoistableType(type2, pendingProps, fiberTag) ? 26 : "html" === type2 || "head" === type2 || "body" === type2 ? 27 : 5;
+        function createFiberFromTypeAndProps(type, key, pendingProps, owner, mode, lanes) {
+          var fiberTag = 0, resolvedType = type;
+          if ("function" === typeof type)
+            shouldConstruct(type) && (fiberTag = 1), resolvedType = resolveFunctionForHotReloading(resolvedType);
+          else if ("string" === typeof type)
+            fiberTag = getHostContext(), fiberTag = isHostHoistableType(type, pendingProps, fiberTag) ? 26 : "html" === type || "head" === type || "body" === type ? 27 : 5;
           else
-            a: switch (type2) {
+            a: switch (type) {
               case REACT_ACTIVITY_TYPE:
                 return key = createFiber(31, pendingProps, key, mode), key.elementType = REACT_ACTIVITY_TYPE, key.lanes = lanes, key;
               case REACT_FRAGMENT_TYPE:
@@ -6773,17 +6786,17 @@
                 mode |= StrictEffectsMode;
                 break;
               case REACT_PROFILER_TYPE:
-                return type2 = pendingProps, owner = mode, "string" !== typeof type2.id && console.error(
+                return type = pendingProps, owner = mode, "string" !== typeof type.id && console.error(
                   'Profiler must specify an "id" of type `string` as a prop. Received the type `%s` instead.',
-                  typeof type2.id
-                ), key = createFiber(12, type2, key, owner | ProfileMode), key.elementType = REACT_PROFILER_TYPE, key.lanes = lanes, key.stateNode = { effectDuration: 0, passiveEffectDuration: 0 }, key;
+                  typeof type.id
+                ), key = createFiber(12, type, key, owner | ProfileMode), key.elementType = REACT_PROFILER_TYPE, key.lanes = lanes, key.stateNode = { effectDuration: 0, passiveEffectDuration: 0 }, key;
               case REACT_SUSPENSE_TYPE:
                 return key = createFiber(13, pendingProps, key, mode), key.elementType = REACT_SUSPENSE_TYPE, key.lanes = lanes, key;
               case REACT_SUSPENSE_LIST_TYPE:
                 return key = createFiber(19, pendingProps, key, mode), key.elementType = REACT_SUSPENSE_LIST_TYPE, key.lanes = lanes, key;
               default:
-                if ("object" === typeof type2 && null !== type2)
-                  switch (type2.$$typeof) {
+                if ("object" === typeof type && null !== type)
+                  switch (type.$$typeof) {
                     case REACT_CONTEXT_TYPE:
                       fiberTag = 10;
                       break a;
@@ -6803,9 +6816,9 @@
                       break a;
                   }
                 resolvedType = "";
-                if (void 0 === type2 || "object" === typeof type2 && null !== type2 && 0 === Object.keys(type2).length)
+                if (void 0 === type || "object" === typeof type && null !== type && 0 === Object.keys(type).length)
                   resolvedType += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
-                null === type2 ? pendingProps = "null" : isArrayImpl(type2) ? pendingProps = "array" : void 0 !== type2 && type2.$$typeof === REACT_ELEMENT_TYPE ? (pendingProps = "<" + (getComponentNameFromType(type2.type) || "Unknown") + " />", resolvedType = " Did you accidentally export a JSX literal instead of a component?") : pendingProps = typeof type2;
+                null === type ? pendingProps = "null" : isArrayImpl(type) ? pendingProps = "array" : void 0 !== type && type.$$typeof === REACT_ELEMENT_TYPE ? (pendingProps = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />", resolvedType = " Did you accidentally export a JSX literal instead of a component?") : pendingProps = typeof type;
                 (fiberTag = owner ? getComponentNameFromOwner(owner) : null) && (resolvedType += "\n\nCheck the render method of `" + fiberTag + "`.");
                 fiberTag = 29;
                 pendingProps = Error(
@@ -6814,7 +6827,7 @@
                 resolvedType = null;
             }
           key = createFiber(fiberTag, pendingProps, key, mode);
-          key.elementType = type2;
+          key.elementType = type;
           key.type = resolvedType;
           key.lanes = lanes;
           key._debugOwner = owner;
@@ -6997,11 +7010,11 @@
         }
         function prepareToHydrateHostInstance(fiber) {
           var didHydrate = fiber.stateNode;
-          var type2 = fiber.type, props = fiber.memoizedProps;
+          var type = fiber.type, props = fiber.memoizedProps;
           didHydrate[internalInstanceKey] = fiber;
           didHydrate[internalPropsKey] = props;
-          validatePropertiesInDevelopment(type2, props);
-          switch (type2) {
+          validatePropertiesInDevelopment(type, props);
+          switch (type) {
             case "dialog":
               listenToNonDelegatedEvent("cancel", didHydrate);
               listenToNonDelegatedEvent("close", didHydrate);
@@ -7013,8 +7026,8 @@
               break;
             case "video":
             case "audio":
-              for (type2 = 0; type2 < mediaEventTypes.length; type2++)
-                listenToNonDelegatedEvent(mediaEventTypes[type2], didHydrate);
+              for (type = 0; type < mediaEventTypes.length; type++)
+                listenToNonDelegatedEvent(mediaEventTypes[type], didHydrate);
               break;
             case "source":
               listenToNonDelegatedEvent("error", didHydrate);
@@ -7059,8 +7072,8 @@
                 props.children
               );
           }
-          type2 = props.children;
-          "string" !== typeof type2 && "number" !== typeof type2 && "bigint" !== typeof type2 || didHydrate.textContent === "" + type2 || true === props.suppressHydrationWarning || checkForUnmatchedText(didHydrate.textContent, type2) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", didHydrate), listenToNonDelegatedEvent("toggle", didHydrate)), null != props.onScroll && listenToNonDelegatedEvent("scroll", didHydrate), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", didHydrate), null != props.onClick && (didHydrate.onclick = noop$1), didHydrate = true) : didHydrate = false;
+          type = props.children;
+          "string" !== typeof type && "number" !== typeof type && "bigint" !== typeof type || didHydrate.textContent === "" + type || true === props.suppressHydrationWarning || checkForUnmatchedText(didHydrate.textContent, type) ? (null != props.popover && (listenToNonDelegatedEvent("beforetoggle", didHydrate), listenToNonDelegatedEvent("toggle", didHydrate)), null != props.onScroll && listenToNonDelegatedEvent("scroll", didHydrate), null != props.onScrollEnd && listenToNonDelegatedEvent("scrollend", didHydrate), null != props.onClick && (didHydrate.onclick = noop$1), didHydrate = true) : didHydrate = false;
           didHydrate || throwOnHydrationMismatch(fiber, true);
         }
         function popToNextHostParent(fiber) {
@@ -10283,9 +10296,9 @@
         }
         function updateMemoComponent(current2, workInProgress2, Component, nextProps, renderLanes2) {
           if (null === current2) {
-            var type2 = Component.type;
-            if ("function" === typeof type2 && !shouldConstruct(type2) && void 0 === type2.defaultProps && null === Component.compare)
-              return Component = resolveFunctionForHotReloading(type2), workInProgress2.tag = 15, workInProgress2.type = Component, validateFunctionComponentInDev(workInProgress2, type2), updateSimpleMemoComponent(
+            var type = Component.type;
+            if ("function" === typeof type && !shouldConstruct(type) && void 0 === type.defaultProps && null === Component.compare)
+              return Component = resolveFunctionForHotReloading(type), workInProgress2.tag = 15, workInProgress2.type = Component, validateFunctionComponentInDev(workInProgress2, type), updateSimpleMemoComponent(
                 current2,
                 workInProgress2,
                 Component,
@@ -10304,9 +10317,9 @@
             current2.return = workInProgress2;
             return workInProgress2.child = current2;
           }
-          type2 = current2.child;
+          type = current2.child;
           if (!checkScheduledUpdateOrContext(current2, renderLanes2)) {
-            var prevProps = type2.memoizedProps;
+            var prevProps = type.memoizedProps;
             Component = Component.compare;
             Component = null !== Component ? Component : shallowEqual;
             if (Component(prevProps, nextProps) && current2.ref === workInProgress2.ref)
@@ -10317,7 +10330,7 @@
               );
           }
           workInProgress2.flags |= 1;
-          current2 = createWorkInProgress(type2, nextProps);
+          current2 = createWorkInProgress(type, nextProps);
           current2.ref = workInProgress2.ref;
           current2.return = workInProgress2;
           return workInProgress2.child = current2;
@@ -11911,10 +11924,10 @@
         function markUpdate(workInProgress2) {
           workInProgress2.flags |= 4;
         }
-        function preloadInstanceAndSuspendIfNeeded(workInProgress2, type2, oldProps, newProps, renderLanes2) {
-          if (type2 = (workInProgress2.mode & SuspenseyImagesMode) !== NoMode)
-            type2 = false;
-          if (type2) {
+        function preloadInstanceAndSuspendIfNeeded(workInProgress2, type, oldProps, newProps, renderLanes2) {
+          if (type = (workInProgress2.mode & SuspenseyImagesMode) !== NoMode)
+            type = false;
+          if (type) {
             if (workInProgress2.flags |= 16777216, (renderLanes2 & 335544128) === renderLanes2)
               if (workInProgress2.stateNode.complete) workInProgress2.flags |= 8192;
               else if (shouldRemainOnPreviousScreen()) workInProgress2.flags |= 8192;
@@ -12003,13 +12016,13 @@
               bubbleProperties(workInProgress2);
               return null;
             case 26:
-              var type2 = workInProgress2.type, nextResource = workInProgress2.memoizedState;
+              var type = workInProgress2.type, nextResource = workInProgress2.memoizedState;
               null === current2 ? (markUpdate(workInProgress2), null !== nextResource ? (bubbleProperties(workInProgress2), preloadResourceAndSuspendIfNeeded(
                 workInProgress2,
                 nextResource
               )) : (bubbleProperties(workInProgress2), preloadInstanceAndSuspendIfNeeded(
                 workInProgress2,
-                type2,
+                type,
                 null,
                 newProps,
                 renderLanes2
@@ -12018,7 +12031,7 @@
                 nextResource
               )) : (bubbleProperties(workInProgress2), workInProgress2.flags &= -16777217) : (current2 = current2.memoizedProps, current2 !== newProps && markUpdate(workInProgress2), bubbleProperties(workInProgress2), preloadInstanceAndSuspendIfNeeded(
                 workInProgress2,
-                type2,
+                type,
                 current2,
                 newProps,
                 renderLanes2
@@ -12027,7 +12040,7 @@
             case 27:
               popHostContext(workInProgress2);
               renderLanes2 = requiredContext(rootInstanceStackCursor.current);
-              type2 = workInProgress2.type;
+              type = workInProgress2.type;
               if (null !== current2 && null != workInProgress2.stateNode)
                 current2.memoizedProps !== newProps && markUpdate(workInProgress2);
               else {
@@ -12041,7 +12054,7 @@
                 }
                 current2 = getHostContext();
                 popHydrationState(workInProgress2) ? prepareToHydrateHostInstance(workInProgress2, current2) : (current2 = resolveSingletonInstance(
-                  type2,
+                  type,
                   newProps,
                   renderLanes2,
                   current2,
@@ -12052,7 +12065,7 @@
               return null;
             case 5:
               popHostContext(workInProgress2);
-              type2 = workInProgress2.type;
+              type = workInProgress2.type;
               if (null !== current2 && null != workInProgress2.stateNode)
                 current2.memoizedProps !== newProps && markUpdate(workInProgress2);
               else {
@@ -12069,34 +12082,34 @@
                   prepareToHydrateHostInstance(workInProgress2, _currentHostContext);
                 else {
                   nextResource = requiredContext(rootInstanceStackCursor.current);
-                  validateDOMNesting(type2, _currentHostContext.ancestorInfo);
+                  validateDOMNesting(type, _currentHostContext.ancestorInfo);
                   _currentHostContext = _currentHostContext.context;
                   nextResource = getOwnerDocumentFromRootContainer(nextResource);
                   switch (_currentHostContext) {
                     case HostContextNamespaceSvg:
                       nextResource = nextResource.createElementNS(
                         SVG_NAMESPACE,
-                        type2
+                        type
                       );
                       break;
                     case HostContextNamespaceMath:
                       nextResource = nextResource.createElementNS(
                         MATH_NAMESPACE,
-                        type2
+                        type
                       );
                       break;
                     default:
-                      switch (type2) {
+                      switch (type) {
                         case "svg":
                           nextResource = nextResource.createElementNS(
                             SVG_NAMESPACE,
-                            type2
+                            type
                           );
                           break;
                         case "math":
                           nextResource = nextResource.createElementNS(
                             MATH_NAMESPACE,
-                            type2
+                            type
                           );
                           break;
                         case "script":
@@ -12113,14 +12126,14 @@
                           newProps.multiple ? nextResource.multiple = true : newProps.size && (nextResource.size = newProps.size);
                           break;
                         default:
-                          nextResource = "string" === typeof newProps.is ? nextResource.createElement(type2, {
+                          nextResource = "string" === typeof newProps.is ? nextResource.createElement(type, {
                             is: newProps.is
-                          }) : nextResource.createElement(type2), -1 === type2.indexOf("-") && (type2 !== type2.toLowerCase() && console.error(
+                          }) : nextResource.createElement(type), -1 === type.indexOf("-") && (type !== type.toLowerCase() && console.error(
                             "<%s /> is using incorrect casing. Use PascalCase for React components, or lowercase for HTML elements.",
-                            type2
-                          ), "[object HTMLUnknownElement]" !== Object.prototype.toString.call(nextResource) || hasOwnProperty.call(warnedUnknownTags, type2) || (warnedUnknownTags[type2] = true, console.error(
+                            type
+                          ), "[object HTMLUnknownElement]" !== Object.prototype.toString.call(nextResource) || hasOwnProperty.call(warnedUnknownTags, type) || (warnedUnknownTags[type] = true, console.error(
                             "The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.",
-                            type2
+                            type
                           )));
                       }
                   }
@@ -12144,7 +12157,7 @@
                     _currentHostContext = _currentHostContext.sibling;
                   }
                   workInProgress2.stateNode = nextResource;
-                  a: switch (setInitialProperties(nextResource, type2, newProps), type2) {
+                  a: switch (setInitialProperties(nextResource, type, newProps), type) {
                     case "button":
                     case "input":
                     case "select":
@@ -12182,36 +12195,36 @@
                 if (popHydrationState(workInProgress2)) {
                   current2 = workInProgress2.stateNode;
                   renderLanes2 = workInProgress2.memoizedProps;
-                  type2 = !didSuspendOrErrorDEV;
+                  type = !didSuspendOrErrorDEV;
                   newProps = null;
                   nextResource = hydrationParentFiber;
                   if (null !== nextResource)
                     switch (nextResource.tag) {
                       case 3:
-                        type2 && (type2 = diffHydratedTextForDevWarnings(
+                        type && (type = diffHydratedTextForDevWarnings(
                           current2,
                           renderLanes2,
                           newProps
-                        ), null !== type2 && (buildHydrationDiffNode(workInProgress2, 0).serverProps = type2));
+                        ), null !== type && (buildHydrationDiffNode(workInProgress2, 0).serverProps = type));
                         break;
                       case 27:
                       case 5:
-                        newProps = nextResource.memoizedProps, type2 && (type2 = diffHydratedTextForDevWarnings(
+                        newProps = nextResource.memoizedProps, type && (type = diffHydratedTextForDevWarnings(
                           current2,
                           renderLanes2,
                           newProps
-                        ), null !== type2 && (buildHydrationDiffNode(
+                        ), null !== type && (buildHydrationDiffNode(
                           workInProgress2,
                           0
-                        ).serverProps = type2));
+                        ).serverProps = type));
                     }
                   current2[internalInstanceKey] = workInProgress2;
                   current2 = current2.nodeValue === renderLanes2 || null !== newProps && true === newProps.suppressHydrationWarning || checkForUnmatchedText(current2.nodeValue, renderLanes2) ? true : false;
                   current2 || throwOnHydrationMismatch(workInProgress2, true);
                 } else
-                  type2 = renderLanes2.ancestorInfo.current, null != type2 && validateTextNesting(
+                  type = renderLanes2.ancestorInfo.current, null != type && validateTextNesting(
                     newProps,
-                    type2.tag,
+                    type.tag,
                     renderLanes2.ancestorInfo.implicitRootScope
                   ), current2 = getOwnerDocumentFromRootContainer(current2).createTextNode(
                     newProps
@@ -12259,9 +12272,9 @@
             case 13:
               newProps = workInProgress2.memoizedState;
               if (null === current2 || null !== current2.memoizedState && null !== current2.memoizedState.dehydrated) {
-                type2 = newProps;
+                type = newProps;
                 nextResource = popHydrationState(workInProgress2);
-                if (null !== type2 && null !== type2.dehydrated) {
+                if (null !== type && null !== type.dehydrated) {
                   if (null === current2) {
                     if (!nextResource)
                       throw Error(
@@ -12275,13 +12288,13 @@
                       );
                     nextResource[internalInstanceKey] = workInProgress2;
                     bubbleProperties(workInProgress2);
-                    (workInProgress2.mode & ProfileMode) !== NoMode && null !== type2 && (type2 = workInProgress2.child, null !== type2 && (workInProgress2.treeBaseDuration -= type2.treeBaseDuration));
+                    (workInProgress2.mode & ProfileMode) !== NoMode && null !== type && (type = workInProgress2.child, null !== type && (workInProgress2.treeBaseDuration -= type.treeBaseDuration));
                   } else
-                    emitPendingHydrationWarnings(), resetHydrationState(), 0 === (workInProgress2.flags & 128) && (type2 = workInProgress2.memoizedState = null), workInProgress2.flags |= 4, bubbleProperties(workInProgress2), (workInProgress2.mode & ProfileMode) !== NoMode && null !== type2 && (type2 = workInProgress2.child, null !== type2 && (workInProgress2.treeBaseDuration -= type2.treeBaseDuration));
-                  type2 = false;
+                    emitPendingHydrationWarnings(), resetHydrationState(), 0 === (workInProgress2.flags & 128) && (type = workInProgress2.memoizedState = null), workInProgress2.flags |= 4, bubbleProperties(workInProgress2), (workInProgress2.mode & ProfileMode) !== NoMode && null !== type && (type = workInProgress2.child, null !== type && (workInProgress2.treeBaseDuration -= type.treeBaseDuration));
+                  type = false;
                 } else
-                  type2 = upgradeHydrationErrorsToRecoverable(), null !== current2 && null !== current2.memoizedState && (current2.memoizedState.hydrationErrors = type2), type2 = true;
-                if (!type2) {
+                  type = upgradeHydrationErrorsToRecoverable(), null !== current2 && null !== current2.memoizedState && (current2.memoizedState.hydrationErrors = type), type = true;
+                if (!type) {
                   if (workInProgress2.flags & 256)
                     return popSuspenseHandler(workInProgress2), workInProgress2;
                   popSuspenseHandler(workInProgress2);
@@ -12293,7 +12306,7 @@
                 return workInProgress2.lanes = renderLanes2, (workInProgress2.mode & ProfileMode) !== NoMode && transferActualDuration(workInProgress2), workInProgress2;
               renderLanes2 = null !== newProps;
               current2 = null !== current2 && null !== current2.memoizedState;
-              renderLanes2 && (newProps = workInProgress2.child, type2 = null, null !== newProps.alternate && null !== newProps.alternate.memoizedState && null !== newProps.alternate.memoizedState.cachePool && (type2 = newProps.alternate.memoizedState.cachePool.pool), nextResource = null, null !== newProps.memoizedState && null !== newProps.memoizedState.cachePool && (nextResource = newProps.memoizedState.cachePool.pool), nextResource !== type2 && (newProps.flags |= 2048));
+              renderLanes2 && (newProps = workInProgress2.child, type = null, null !== newProps.alternate && null !== newProps.alternate.memoizedState && null !== newProps.alternate.memoizedState.cachePool && (type = newProps.alternate.memoizedState.cachePool.pool), nextResource = null, null !== newProps.memoizedState && null !== newProps.memoizedState.cachePool && (nextResource = newProps.memoizedState.cachePool.pool), nextResource !== type && (newProps.flags |= 2048));
               renderLanes2 !== current2 && renderLanes2 && (workInProgress2.child.flags |= 8192);
               scheduleRetryEffect(workInProgress2, workInProgress2.updateQueue);
               bubbleProperties(workInProgress2);
@@ -12309,10 +12322,10 @@
               pop(suspenseStackCursor, workInProgress2);
               newProps = workInProgress2.memoizedState;
               if (null === newProps) return bubbleProperties(workInProgress2), null;
-              type2 = 0 !== (workInProgress2.flags & 128);
+              type = 0 !== (workInProgress2.flags & 128);
               nextResource = newProps.rendering;
               if (null === nextResource)
-                if (type2) cutOffTailIfNeeded(newProps, false);
+                if (type) cutOffTailIfNeeded(newProps, false);
                 else {
                   if (workInProgressRootExitStatus !== RootInProgress || null !== current2 && 0 !== (current2.flags & 128))
                     for (current2 = workInProgress2.child; null !== current2; ) {
@@ -12337,19 +12350,19 @@
                       }
                       current2 = current2.sibling;
                     }
-                  null !== newProps.tail && now$1() > workInProgressRootRenderTargetTime && (workInProgress2.flags |= 128, type2 = true, cutOffTailIfNeeded(newProps, false), workInProgress2.lanes = 4194304);
+                  null !== newProps.tail && now$1() > workInProgressRootRenderTargetTime && (workInProgress2.flags |= 128, type = true, cutOffTailIfNeeded(newProps, false), workInProgress2.lanes = 4194304);
                 }
               else {
-                if (!type2)
+                if (!type)
                   if (current2 = findFirstSuspended(nextResource), null !== current2) {
-                    if (workInProgress2.flags |= 128, type2 = true, current2 = current2.updateQueue, workInProgress2.updateQueue = current2, scheduleRetryEffect(workInProgress2, current2), cutOffTailIfNeeded(newProps, true), null === newProps.tail && "hidden" === newProps.tailMode && !nextResource.alternate && !isHydrating)
+                    if (workInProgress2.flags |= 128, type = true, current2 = current2.updateQueue, workInProgress2.updateQueue = current2, scheduleRetryEffect(workInProgress2, current2), cutOffTailIfNeeded(newProps, true), null === newProps.tail && "hidden" === newProps.tailMode && !nextResource.alternate && !isHydrating)
                       return bubbleProperties(workInProgress2), null;
                   } else
-                    2 * now$1() - newProps.renderingStartTime > workInProgressRootRenderTargetTime && 536870912 !== renderLanes2 && (workInProgress2.flags |= 128, type2 = true, cutOffTailIfNeeded(newProps, false), workInProgress2.lanes = 4194304);
+                    2 * now$1() - newProps.renderingStartTime > workInProgressRootRenderTargetTime && 536870912 !== renderLanes2 && (workInProgress2.flags |= 128, type = true, cutOffTailIfNeeded(newProps, false), workInProgress2.lanes = 4194304);
                 newProps.isBackwards ? (nextResource.sibling = workInProgress2.child, workInProgress2.child = nextResource) : (current2 = newProps.last, null !== current2 ? current2.sibling = nextResource : workInProgress2.child = nextResource, newProps.last = nextResource);
               }
               if (null !== newProps.tail)
-                return current2 = newProps.tail, newProps.rendering = current2, newProps.tail = current2.sibling, newProps.renderingStartTime = now$1(), current2.sibling = null, renderLanes2 = suspenseStackCursor.current, renderLanes2 = type2 ? renderLanes2 & SubtreeSuspenseContextMask | ForceSuspenseFallback : renderLanes2 & SubtreeSuspenseContextMask, push(suspenseStackCursor, renderLanes2, workInProgress2), isHydrating && pushTreeFork(workInProgress2, newProps.treeForkCount), current2;
+                return current2 = newProps.tail, newProps.rendering = current2, newProps.tail = current2.sibling, newProps.renderingStartTime = now$1(), current2.sibling = null, renderLanes2 = suspenseStackCursor.current, renderLanes2 = type ? renderLanes2 & SubtreeSuspenseContextMask | ForceSuspenseFallback : renderLanes2 & SubtreeSuspenseContextMask, push(suspenseStackCursor, renderLanes2, workInProgress2), isHydrating && pushTreeFork(workInProgress2, newProps.treeForkCount), current2;
               bubbleProperties(workInProgress2);
               return null;
             case 22:
@@ -12722,13 +12735,13 @@
           );
         }
         function commitHostMount(finishedWork) {
-          var type2 = finishedWork.type, props = finishedWork.memoizedProps, instance = finishedWork.stateNode;
+          var type = finishedWork.type, props = finishedWork.memoizedProps, instance = finishedWork.stateNode;
           try {
             runWithFiberInDEV(
               finishedWork,
               commitMount,
               instance,
-              type2,
+              type,
               props,
               finishedWork
             );
@@ -17183,20 +17196,20 @@
           }
           0 !== listeners.length && dispatchQueue.push({ event, listeners });
         }
-        function validatePropertiesInDevelopment(type2, props) {
-          validateProperties$2(type2, props);
-          "input" !== type2 && "textarea" !== type2 && "select" !== type2 || null == props || null !== props.value || didWarnValueNull || (didWarnValueNull = true, "select" === type2 && props.multiple ? console.error(
+        function validatePropertiesInDevelopment(type, props) {
+          validateProperties$2(type, props);
+          "input" !== type && "textarea" !== type && "select" !== type || null == props || null !== props.value || didWarnValueNull || (didWarnValueNull = true, "select" === type && props.multiple ? console.error(
             "`value` prop on `%s` should not be null. Consider using an empty array when `multiple` is set to `true` to clear the component or `undefined` for uncontrolled components.",
-            type2
+            type
           ) : console.error(
             "`value` prop on `%s` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components.",
-            type2
+            type
           ));
           var eventRegistry = {
             registrationNameDependencies,
             possibleRegistrationNames
           };
-          isCustomElement(type2) || "string" === typeof props.is || warnUnknownProperties(type2, props, eventRegistry);
+          isCustomElement(type) || "string" === typeof props.is || warnUnknownProperties(type, props, eventRegistry);
           props.contentEditable && !props.suppressContentEditableWarning && null != props.children && console.error(
             "A component is `contentEditable` and contains `children` managed by React. It is now your responsibility to guarantee that none of those nodes are unexpectedly modified or duplicated. This is probably not intentional."
           );
@@ -17866,7 +17879,7 @@
             case "li":
               break;
             case "input":
-              var name = null, type2 = null, value = null, defaultValue = null, lastDefaultValue = null, checked = null, defaultChecked = null;
+              var name = null, type = null, value = null, defaultValue = null, lastDefaultValue = null, checked = null, defaultChecked = null;
               for (propKey in lastProps) {
                 var lastProp = lastProps[propKey];
                 if (lastProps.hasOwnProperty(propKey) && null != lastProp)
@@ -17894,7 +17907,7 @@
                 if (nextProps.hasOwnProperty(_propKey8) && (null != propKey || null != lastProp))
                   switch (_propKey8) {
                     case "type":
-                      type2 = propKey;
+                      type = propKey;
                       break;
                     case "name":
                       name = propKey;
@@ -17944,46 +17957,46 @@
                 lastDefaultValue,
                 checked,
                 defaultChecked,
-                type2,
+                type,
                 name
               );
               return;
             case "select":
               propKey = value = defaultValue = _propKey8 = null;
-              for (type2 in lastProps)
-                if (lastDefaultValue = lastProps[type2], lastProps.hasOwnProperty(type2) && null != lastDefaultValue)
-                  switch (type2) {
+              for (type in lastProps)
+                if (lastDefaultValue = lastProps[type], lastProps.hasOwnProperty(type) && null != lastDefaultValue)
+                  switch (type) {
                     case "value":
                       break;
                     case "multiple":
                       propKey = lastDefaultValue;
                     default:
-                      nextProps.hasOwnProperty(type2) || setProp(
+                      nextProps.hasOwnProperty(type) || setProp(
                         domElement,
                         tag,
-                        type2,
+                        type,
                         null,
                         nextProps,
                         lastDefaultValue
                       );
                   }
               for (name in nextProps)
-                if (type2 = nextProps[name], lastDefaultValue = lastProps[name], nextProps.hasOwnProperty(name) && (null != type2 || null != lastDefaultValue))
+                if (type = nextProps[name], lastDefaultValue = lastProps[name], nextProps.hasOwnProperty(name) && (null != type || null != lastDefaultValue))
                   switch (name) {
                     case "value":
-                      _propKey8 = type2;
+                      _propKey8 = type;
                       break;
                     case "defaultValue":
-                      defaultValue = type2;
+                      defaultValue = type;
                       break;
                     case "multiple":
-                      value = type2;
+                      value = type;
                     default:
-                      type2 !== lastDefaultValue && setProp(
+                      type !== lastDefaultValue && setProp(
                         domElement,
                         tag,
                         name,
-                        type2,
+                        type,
                         nextProps,
                         lastDefaultValue
                       );
@@ -18006,7 +18019,7 @@
                       setProp(domElement, tag, defaultValue, null, nextProps, name);
                   }
               for (value in nextProps)
-                if (name = nextProps[value], type2 = lastProps[value], nextProps.hasOwnProperty(value) && (null != name || null != type2))
+                if (name = nextProps[value], type = lastProps[value], nextProps.hasOwnProperty(value) && (null != name || null != type))
                   switch (value) {
                     case "value":
                       _propKey8 = name;
@@ -18023,7 +18036,7 @@
                         );
                       break;
                     default:
-                      name !== type2 && setProp(domElement, tag, value, name, nextProps, type2);
+                      name !== type && setProp(domElement, tag, value, name, nextProps, type);
                   }
               updateTextarea(domElement, _propKey8, propKey);
               return;
@@ -18902,9 +18915,9 @@
               return HostContextNamespaceNone;
           }
         }
-        function getChildHostContextProd(parentNamespace, type2) {
+        function getChildHostContextProd(parentNamespace, type) {
           if (parentNamespace === HostContextNamespaceNone)
-            switch (type2) {
+            switch (type) {
               case "svg":
                 return HostContextNamespaceSvg;
               case "math":
@@ -18912,10 +18925,10 @@
               default:
                 return HostContextNamespaceNone;
             }
-          return parentNamespace === HostContextNamespaceSvg && "foreignObject" === type2 ? HostContextNamespaceNone : parentNamespace;
+          return parentNamespace === HostContextNamespaceSvg && "foreignObject" === type ? HostContextNamespaceNone : parentNamespace;
         }
-        function shouldSetTextContent(type2, props) {
-          return "textarea" === type2 || "noscript" === type2 || "string" === typeof props.children || "number" === typeof props.children || "bigint" === typeof props.children || "object" === typeof props.dangerouslySetInnerHTML && null !== props.dangerouslySetInnerHTML && null != props.dangerouslySetInnerHTML.__html;
+        function shouldSetTextContent(type, props) {
+          return "textarea" === type || "noscript" === type || "string" === typeof props.children || "number" === typeof props.children || "bigint" === typeof props.children || "object" === typeof props.dangerouslySetInnerHTML && null !== props.dangerouslySetInnerHTML && null != props.dangerouslySetInnerHTML.__html;
         }
         function shouldAttemptEagerTransition() {
           var event = window.event;
@@ -18940,8 +18953,8 @@
             throw error;
           });
         }
-        function commitMount(domElement, type2, newProps) {
-          switch (type2) {
+        function commitMount(domElement, type, newProps) {
+          switch (type) {
             case "button":
             case "input":
             case "select":
@@ -18954,8 +18967,8 @@
         }
         function commitHydratedInstance() {
         }
-        function commitUpdate(domElement, type2, oldProps, newProps) {
-          updateProperties(domElement, type2, oldProps, newProps);
+        function commitUpdate(domElement, type, oldProps, newProps) {
+          updateProperties(domElement, type, oldProps, newProps);
           domElement[internalPropsKey] = newProps;
         }
         function resetTextContent(domElement) {
@@ -18981,8 +18994,8 @@
             }
           }
         }
-        function isSingletonScope(type2) {
-          return "head" === type2;
+        function isSingletonScope(type) {
+          return "head" === type;
         }
         function removeChild(parentInstance, child) {
           parentInstance.removeChild(child);
@@ -19081,21 +19094,21 @@
             container.removeChild(node);
           }
         }
-        function canHydrateInstance(instance, type2, props, inRootOrSingleton) {
+        function canHydrateInstance(instance, type, props, inRootOrSingleton) {
           for (; 1 === instance.nodeType; ) {
             var anyProps = props;
-            if (instance.nodeName.toLowerCase() !== type2.toLowerCase()) {
+            if (instance.nodeName.toLowerCase() !== type.toLowerCase()) {
               if (!inRootOrSingleton && ("INPUT" !== instance.nodeName || "hidden" !== instance.type))
                 break;
             } else if (!inRootOrSingleton)
-              if ("input" === type2 && "hidden" === instance.type) {
+              if ("input" === type && "hidden" === instance.type) {
                 checkAttributeStringCoercion(anyProps.name, "name");
                 var name = null == anyProps.name ? null : "" + anyProps.name;
                 if ("hidden" === anyProps.type && instance.getAttribute("name") === name)
                   return instance;
               } else return instance;
             else if (!instance[internalHoistableMarker])
-              switch (type2) {
+              switch (type) {
                 case "meta":
                   if (!instance.hasAttribute("itemprop")) break;
                   return instance;
@@ -19193,13 +19206,13 @@
           hydrationInstance = hydrationInstance.nextSibling;
           for (var depth = 0; hydrationInstance; ) {
             if (8 === hydrationInstance.nodeType) {
-              var data2 = hydrationInstance.data;
-              if (data2 === SUSPENSE_END_DATA || data2 === ACTIVITY_END_DATA) {
+              var data = hydrationInstance.data;
+              if (data === SUSPENSE_END_DATA || data === ACTIVITY_END_DATA) {
                 if (0 === depth)
                   return getNextHydratable(hydrationInstance.nextSibling);
                 depth--;
               } else
-                data2 !== SUSPENSE_START_DATA && data2 !== SUSPENSE_FALLBACK_START_DATA && data2 !== SUSPENSE_PENDING_START_DATA && data2 !== SUSPENSE_QUEUED_START_DATA && data2 !== ACTIVITY_START_DATA || depth++;
+                data !== SUSPENSE_START_DATA && data !== SUSPENSE_FALLBACK_START_DATA && data !== SUSPENSE_PENDING_START_DATA && data !== SUSPENSE_QUEUED_START_DATA && data !== ACTIVITY_START_DATA || depth++;
             }
             hydrationInstance = hydrationInstance.nextSibling;
           }
@@ -19209,12 +19222,12 @@
           targetInstance = targetInstance.previousSibling;
           for (var depth = 0; targetInstance; ) {
             if (8 === targetInstance.nodeType) {
-              var data2 = targetInstance.data;
-              if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA || data2 === SUSPENSE_QUEUED_START_DATA || data2 === ACTIVITY_START_DATA) {
+              var data = targetInstance.data;
+              if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA || data === SUSPENSE_QUEUED_START_DATA || data === ACTIVITY_START_DATA) {
                 if (0 === depth) return targetInstance;
                 depth--;
               } else
-                data2 !== SUSPENSE_END_DATA && data2 !== ACTIVITY_END_DATA || depth++;
+                data !== SUSPENSE_END_DATA && data !== ACTIVITY_END_DATA || depth++;
             }
             targetInstance = targetInstance.previousSibling;
           }
@@ -19229,38 +19242,38 @@
         function commitHydratedSuspenseInstance(suspenseInstance) {
           retryIfBlockedOn(suspenseInstance);
         }
-        function resolveSingletonInstance(type2, props, rootContainerInstance, hostContext, validateDOMNestingDev) {
-          validateDOMNestingDev && validateDOMNesting(type2, hostContext.ancestorInfo);
+        function resolveSingletonInstance(type, props, rootContainerInstance, hostContext, validateDOMNestingDev) {
+          validateDOMNestingDev && validateDOMNesting(type, hostContext.ancestorInfo);
           props = getOwnerDocumentFromRootContainer(rootContainerInstance);
-          switch (type2) {
+          switch (type) {
             case "html":
-              type2 = props.documentElement;
-              if (!type2)
+              type = props.documentElement;
+              if (!type)
                 throw Error(
                   "React expected an <html> element (document.documentElement) to exist in the Document but one was not found. React never removes the documentElement for any Document it renders into so the cause is likely in some other script running on this page."
                 );
-              return type2;
+              return type;
             case "head":
-              type2 = props.head;
-              if (!type2)
+              type = props.head;
+              if (!type)
                 throw Error(
                   "React expected a <head> element (document.head) to exist in the Document but one was not found. React never removes the head for any Document it renders into so the cause is likely in some other script running on this page."
                 );
-              return type2;
+              return type;
             case "body":
-              type2 = props.body;
-              if (!type2)
+              type = props.body;
+              if (!type)
                 throw Error(
                   "React expected a <body> element (document.body) to exist in the Document but one was not found. React never removes the body for any Document it renders into so the cause is likely in some other script running on this page."
                 );
-              return type2;
+              return type;
             default:
               throw Error(
                 "resolveSingletonInstance was called with an element type that is not supported. This is a bug in React."
               );
           }
         }
-        function acquireSingletonInstance(type2, props, instance, internalInstanceHandle) {
+        function acquireSingletonInstance(type, props, instance, internalInstanceHandle) {
           if (!instance[internalContainerInstanceKey] && getInstanceFromNode(instance)) {
             var tagName = instance.tagName.toLowerCase();
             console.error(
@@ -19270,7 +19283,7 @@
               tagName
             );
           }
-          switch (type2) {
+          switch (type) {
             case "html":
             case "head":
             case "body":
@@ -19282,7 +19295,7 @@
           }
           for (tagName = instance.attributes; tagName.length; )
             instance.removeAttributeNode(tagName[0]);
-          setInitialProperties(instance, type2, props);
+          setInitialProperties(instance, type, props);
           instance[internalInstanceKey] = internalInstanceHandle;
           instance[internalPropsKey] = props;
         }
@@ -19303,13 +19316,13 @@
             preconnectsSet.has(limitedEscapedHref) || (preconnectsSet.add(limitedEscapedHref), rel = { rel, crossOrigin, href }, null === ownerDocument.querySelector(limitedEscapedHref) && (href = ownerDocument.createElement("link"), setInitialProperties(href, "link", rel), markNodeAsHoistable(href), ownerDocument.head.appendChild(href)));
           }
         }
-        function getResource(type2, currentProps, pendingProps, currentResource) {
+        function getResource(type, currentProps, pendingProps, currentResource) {
           var resourceRoot = (resourceRoot = rootInstanceStackCursor.current) ? getHoistableRoot(resourceRoot) : null;
           if (!resourceRoot)
             throw Error(
               '"resourceRoot" was expected to exist. This is a bug in React.'
             );
-          switch (type2) {
+          switch (type) {
             case "meta":
             case "title":
               return null;
@@ -19322,16 +19335,16 @@
               }, currentProps.set(pendingProps, currentResource)), currentResource) : { type: "void", instance: null, count: 0, state: null };
             case "link":
               if ("stylesheet" === pendingProps.rel && "string" === typeof pendingProps.href && "string" === typeof pendingProps.precedence) {
-                type2 = getStyleKey(pendingProps.href);
-                var _styles = getResourcesFromRoot(resourceRoot).hoistableStyles, _resource = _styles.get(type2);
+                type = getStyleKey(pendingProps.href);
+                var _styles = getResourcesFromRoot(resourceRoot).hoistableStyles, _resource = _styles.get(type);
                 if (!_resource && (resourceRoot = resourceRoot.ownerDocument || resourceRoot, _resource = {
                   type: "stylesheet",
                   instance: null,
                   count: 0,
                   state: { loading: NotLoaded, preload: null }
-                }, _styles.set(type2, _resource), (_styles = resourceRoot.querySelector(
-                  getStylesheetSelectorFromKey(type2)
-                )) && !_styles._p && (_resource.instance = _styles, _resource.state.loading = Loaded | Inserted), !preloadPropsMap.has(type2))) {
+                }, _styles.set(type, _resource), (_styles = resourceRoot.querySelector(
+                  getStylesheetSelectorFromKey(type)
+                )) && !_styles._p && (_resource.instance = _styles, _resource.state.loading = Loaded | Inserted), !preloadPropsMap.has(type))) {
                   var preloadProps = {
                     rel: "preload",
                     as: "style",
@@ -19342,10 +19355,10 @@
                     hrefLang: pendingProps.hrefLang,
                     referrerPolicy: pendingProps.referrerPolicy
                   };
-                  preloadPropsMap.set(type2, preloadProps);
+                  preloadPropsMap.set(type, preloadProps);
                   _styles || preloadStylesheet(
                     resourceRoot,
-                    type2,
+                    type,
                     preloadProps,
                     _resource.state
                   );
@@ -19370,7 +19383,7 @@
               }, currentProps.set(pendingProps, currentResource)), currentResource) : { type: "void", instance: null, count: 0, state: null };
             default:
               throw Error(
-                'getResource encountered a type it did not expect: "' + type2 + '". this is a bug in React.'
+                'getResource encountered a type it did not expect: "' + type + '". this is a bug in React.'
               );
           }
         }
@@ -19496,43 +19509,43 @@
           null == scriptProps.referrerPolicy && (scriptProps.referrerPolicy = preloadProps.referrerPolicy);
           null == scriptProps.integrity && (scriptProps.integrity = preloadProps.integrity);
         }
-        function getHydratableHoistableCache(type2, keyAttribute, ownerDocument) {
+        function getHydratableHoistableCache(type, keyAttribute, ownerDocument) {
           if (null === tagCaches) {
             var cache2 = /* @__PURE__ */ new Map();
             var caches = tagCaches = /* @__PURE__ */ new Map();
             caches.set(ownerDocument, cache2);
           } else
             caches = tagCaches, cache2 = caches.get(ownerDocument), cache2 || (cache2 = /* @__PURE__ */ new Map(), caches.set(ownerDocument, cache2));
-          if (cache2.has(type2)) return cache2;
-          cache2.set(type2, null);
-          ownerDocument = ownerDocument.getElementsByTagName(type2);
+          if (cache2.has(type)) return cache2;
+          cache2.set(type, null);
+          ownerDocument = ownerDocument.getElementsByTagName(type);
           for (caches = 0; caches < ownerDocument.length; caches++) {
             var node = ownerDocument[caches];
-            if (!(node[internalHoistableMarker] || node[internalInstanceKey] || "link" === type2 && "stylesheet" === node.getAttribute("rel")) && node.namespaceURI !== SVG_NAMESPACE) {
+            if (!(node[internalHoistableMarker] || node[internalInstanceKey] || "link" === type && "stylesheet" === node.getAttribute("rel")) && node.namespaceURI !== SVG_NAMESPACE) {
               var nodeKey = node.getAttribute(keyAttribute) || "";
-              nodeKey = type2 + nodeKey;
+              nodeKey = type + nodeKey;
               var existing = cache2.get(nodeKey);
               existing ? existing.push(node) : cache2.set(nodeKey, [node]);
             }
           }
           return cache2;
         }
-        function mountHoistable(hoistableRoot, type2, instance) {
+        function mountHoistable(hoistableRoot, type, instance) {
           hoistableRoot = hoistableRoot.ownerDocument || hoistableRoot;
           hoistableRoot.head.insertBefore(
             instance,
-            "title" === type2 ? hoistableRoot.querySelector("head > title") : null
+            "title" === type ? hoistableRoot.querySelector("head > title") : null
           );
         }
-        function isHostHoistableType(type2, props, hostContext) {
+        function isHostHoistableType(type, props, hostContext) {
           var outsideHostContainerContext = !hostContext.ancestorInfo.containerTagInScope;
           if (hostContext.context === HostContextNamespaceSvg || null != props.itemProp)
-            return !outsideHostContainerContext || null == props.itemProp || "meta" !== type2 && "title" !== type2 && "style" !== type2 && "link" !== type2 && "script" !== type2 || console.error(
+            return !outsideHostContainerContext || null == props.itemProp || "meta" !== type && "title" !== type && "style" !== type && "link" !== type && "script" !== type || console.error(
               "Cannot render a <%s> outside the main document if it has an `itemProp` prop. `itemProp` suggests the tag belongs to an `itemScope` which can appear anywhere in the DOM. If you were intending for React to hoist this <%s> remove the `itemProp` prop. Otherwise, try moving this tag into the <head> or <body> of the Document.",
-              type2,
-              type2
+              type,
+              type
             ), false;
-          switch (type2) {
+          switch (type) {
             case "meta":
             case "title":
               return true;
@@ -19547,7 +19560,7 @@
             case "link":
               if ("string" !== typeof props.rel || "string" !== typeof props.href || "" === props.href || props.onLoad || props.onError) {
                 if ("stylesheet" === props.rel && "string" === typeof props.precedence) {
-                  type2 = props.href;
+                  type = props.href;
                   var onError = props.onError, disabled = props.disabled;
                   hostContext = [];
                   props.onLoad && hostContext.push("`onLoad`");
@@ -19558,7 +19571,7 @@
                   disabled = 1 === hostContext.length ? "an " + onError : "the " + onError;
                   hostContext.length && console.error(
                     'React encountered a <link rel="stylesheet" href="%s" ... /> with a `precedence` prop that also included %s. The presence of loading and error handlers indicates an intent to manage the stylesheet loading state from your from your Component code and React will not hoist or deduplicate this stylesheet. If your intent was to have React hoist and deduplciate this stylesheet using the `precedence` prop remove the %s, otherwise remove the `precedence` prop.',
-                    type2,
+                    type,
                     disabled,
                     onError
                   );
@@ -19572,16 +19585,16 @@
               }
               switch (props.rel) {
                 case "stylesheet":
-                  return type2 = props.precedence, props = props.disabled, "string" !== typeof type2 && outsideHostContainerContext && console.error(
+                  return type = props.precedence, props = props.disabled, "string" !== typeof type && outsideHostContainerContext && console.error(
                     'Cannot render a <link rel="stylesheet" /> outside the main document without knowing its precedence. Consider adding precedence="default" or moving it into the root <head> tag.'
-                  ), "string" === typeof type2 && null == props;
+                  ), "string" === typeof type && null == props;
                 default:
                   return true;
               }
             case "script":
-              type2 = props.async && "function" !== typeof props.async && "symbol" !== typeof props.async;
-              if (!type2 || props.onLoad || props.onError || !props.src || "string" !== typeof props.src) {
-                outsideHostContainerContext && (type2 ? props.onLoad || props.onError ? console.error(
+              type = props.async && "function" !== typeof props.async && "symbol" !== typeof props.async;
+              if (!type || props.onLoad || props.onError || !props.src || "string" !== typeof props.src) {
+                outsideHostContainerContext && (type ? props.onLoad || props.onError ? console.error(
                   "Cannot render a <script> with onLoad or onError listeners outside the main document. Try removing onLoad={...} and onError={...} or moving it into the root <head> tag or somewhere in the <body>."
                 ) : console.error(
                   "Cannot render a <script> outside the main document without `async={true}` and a non-empty `src` prop. Ensure there is a valid `src` and either make the script async or move it into the root <head> tag or somewhere in the <body>."
@@ -19595,7 +19608,7 @@
             case "template":
               outsideHostContainerContext && console.error(
                 "Cannot render <%s> outside the main document. Try moving it into the root <head> tag.",
-                type2
+                type
               );
           }
           return false;
@@ -21402,7 +21415,7 @@
         var currentlyRenderingFiber$1 = null, lastContextDependency = null, isDisallowedContextReadInDEV = false, AbortControllerLocal = "undefined" !== typeof AbortController ? AbortController : function() {
           var listeners = [], signal = this.signal = {
             aborted: false,
-            addEventListener: function(type2, listener) {
+            addEventListener: function(type, listener) {
               listeners.push(listener);
             }
           };
@@ -23028,29 +23041,29 @@
         }, badgeFormat = "%c%s%c", badgeStyle = "background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px", resetStyle = "", pad = " ", bind = Function.prototype.bind;
         var didWarnAboutNestedUpdates = false;
         var overrideHookState = null, overrideHookStateDeletePath = null, overrideHookStateRenamePath = null, overrideProps = null, overridePropsDeletePath = null, overridePropsRenamePath = null, scheduleUpdate = null, scheduleRetry = null, setErrorHandler = null, setSuspenseHandler = null;
-        overrideHookState = function(fiber, id, path3, value) {
+        overrideHookState = function(fiber, id, path, value) {
           id = findHook(fiber, id);
-          null !== id && (path3 = copyWithSetImpl(id.memoizedState, path3, 0, value), id.memoizedState = path3, id.baseState = path3, fiber.memoizedProps = assign({}, fiber.memoizedProps), path3 = enqueueConcurrentRenderForLane(fiber, 2), null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2));
+          null !== id && (path = copyWithSetImpl(id.memoizedState, path, 0, value), id.memoizedState = path, id.baseState = path, fiber.memoizedProps = assign({}, fiber.memoizedProps), path = enqueueConcurrentRenderForLane(fiber, 2), null !== path && scheduleUpdateOnFiber(path, fiber, 2));
         };
-        overrideHookStateDeletePath = function(fiber, id, path3) {
+        overrideHookStateDeletePath = function(fiber, id, path) {
           id = findHook(fiber, id);
-          null !== id && (path3 = copyWithDeleteImpl(id.memoizedState, path3, 0), id.memoizedState = path3, id.baseState = path3, fiber.memoizedProps = assign({}, fiber.memoizedProps), path3 = enqueueConcurrentRenderForLane(fiber, 2), null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2));
+          null !== id && (path = copyWithDeleteImpl(id.memoizedState, path, 0), id.memoizedState = path, id.baseState = path, fiber.memoizedProps = assign({}, fiber.memoizedProps), path = enqueueConcurrentRenderForLane(fiber, 2), null !== path && scheduleUpdateOnFiber(path, fiber, 2));
         };
         overrideHookStateRenamePath = function(fiber, id, oldPath, newPath) {
           id = findHook(fiber, id);
           null !== id && (oldPath = copyWithRename(id.memoizedState, oldPath, newPath), id.memoizedState = oldPath, id.baseState = oldPath, fiber.memoizedProps = assign({}, fiber.memoizedProps), oldPath = enqueueConcurrentRenderForLane(fiber, 2), null !== oldPath && scheduleUpdateOnFiber(oldPath, fiber, 2));
         };
-        overrideProps = function(fiber, path3, value) {
-          fiber.pendingProps = copyWithSetImpl(fiber.memoizedProps, path3, 0, value);
+        overrideProps = function(fiber, path, value) {
+          fiber.pendingProps = copyWithSetImpl(fiber.memoizedProps, path, 0, value);
           fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-          path3 = enqueueConcurrentRenderForLane(fiber, 2);
-          null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2);
+          path = enqueueConcurrentRenderForLane(fiber, 2);
+          null !== path && scheduleUpdateOnFiber(path, fiber, 2);
         };
-        overridePropsDeletePath = function(fiber, path3) {
-          fiber.pendingProps = copyWithDeleteImpl(fiber.memoizedProps, path3, 0);
+        overridePropsDeletePath = function(fiber, path) {
+          fiber.pendingProps = copyWithDeleteImpl(fiber.memoizedProps, path, 0);
           fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-          path3 = enqueueConcurrentRenderForLane(fiber, 2);
-          null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2);
+          path = enqueueConcurrentRenderForLane(fiber, 2);
+          null !== path && scheduleUpdateOnFiber(path, fiber, 2);
         };
         overridePropsRenamePath = function(fiber, oldPath, newPath) {
           fiber.pendingProps = copyWithRename(
@@ -23252,7 +23265,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23262,337 +23275,11 @@
     }
   });
 
-  // node_modules/idb/build/index.js
-  function getIdbProxyableTypes() {
-    return idbProxyableTypes || (idbProxyableTypes = [
-      IDBDatabase,
-      IDBObjectStore,
-      IDBIndex,
-      IDBCursor,
-      IDBTransaction
-    ]);
-  }
-  function getCursorAdvanceMethods() {
-    return cursorAdvanceMethods || (cursorAdvanceMethods = [
-      IDBCursor.prototype.advance,
-      IDBCursor.prototype.continue,
-      IDBCursor.prototype.continuePrimaryKey
-    ]);
-  }
-  function promisifyRequest(request) {
-    const promise = new Promise((resolve, reject) => {
-      const unlisten = () => {
-        request.removeEventListener("success", success);
-        request.removeEventListener("error", error);
-      };
-      const success = () => {
-        resolve(wrap(request.result));
-        unlisten();
-      };
-      const error = () => {
-        reject(request.error);
-        unlisten();
-      };
-      request.addEventListener("success", success);
-      request.addEventListener("error", error);
-    });
-    reverseTransformCache.set(promise, request);
-    return promise;
-  }
-  function cacheDonePromiseForTransaction(tx) {
-    if (transactionDoneMap.has(tx))
-      return;
-    const done = new Promise((resolve, reject) => {
-      const unlisten = () => {
-        tx.removeEventListener("complete", complete);
-        tx.removeEventListener("error", error);
-        tx.removeEventListener("abort", error);
-      };
-      const complete = () => {
-        resolve();
-        unlisten();
-      };
-      const error = () => {
-        reject(tx.error || new DOMException("AbortError", "AbortError"));
-        unlisten();
-      };
-      tx.addEventListener("complete", complete);
-      tx.addEventListener("error", error);
-      tx.addEventListener("abort", error);
-    });
-    transactionDoneMap.set(tx, done);
-  }
-  function replaceTraps(callback) {
-    idbProxyTraps = callback(idbProxyTraps);
-  }
-  function wrapFunction(func) {
-    if (getCursorAdvanceMethods().includes(func)) {
-      return function(...args) {
-        func.apply(unwrap(this), args);
-        return wrap(this.request);
-      };
-    }
-    return function(...args) {
-      return wrap(func.apply(unwrap(this), args));
-    };
-  }
-  function transformCachableValue(value) {
-    if (typeof value === "function")
-      return wrapFunction(value);
-    if (value instanceof IDBTransaction)
-      cacheDonePromiseForTransaction(value);
-    if (instanceOfAny(value, getIdbProxyableTypes()))
-      return new Proxy(value, idbProxyTraps);
-    return value;
-  }
-  function wrap(value) {
-    if (value instanceof IDBRequest)
-      return promisifyRequest(value);
-    if (transformCache.has(value))
-      return transformCache.get(value);
-    const newValue = transformCachableValue(value);
-    if (newValue !== value) {
-      transformCache.set(value, newValue);
-      reverseTransformCache.set(newValue, value);
-    }
-    return newValue;
-  }
-  function openDB(name, version, { blocked, upgrade, blocking, terminated } = {}) {
-    const request = indexedDB.open(name, version);
-    const openPromise = wrap(request);
-    if (upgrade) {
-      request.addEventListener("upgradeneeded", (event) => {
-        upgrade(wrap(request.result), event.oldVersion, event.newVersion, wrap(request.transaction), event);
-      });
-    }
-    if (blocked) {
-      request.addEventListener("blocked", (event) => blocked(
-        // Casting due to https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/1405
-        event.oldVersion,
-        event.newVersion,
-        event
-      ));
-    }
-    openPromise.then((db2) => {
-      if (terminated)
-        db2.addEventListener("close", () => terminated());
-      if (blocking) {
-        db2.addEventListener("versionchange", (event) => blocking(event.oldVersion, event.newVersion, event));
-      }
-    }).catch(() => {
-    });
-    return openPromise;
-  }
-  function getMethod(target, prop) {
-    if (!(target instanceof IDBDatabase && !(prop in target) && typeof prop === "string")) {
-      return;
-    }
-    if (cachedMethods.get(prop))
-      return cachedMethods.get(prop);
-    const targetFuncName = prop.replace(/FromIndex$/, "");
-    const useIndex = prop !== targetFuncName;
-    const isWrite = writeMethods.includes(targetFuncName);
-    if (
-      // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
-      !(targetFuncName in (useIndex ? IDBIndex : IDBObjectStore).prototype) || !(isWrite || readMethods.includes(targetFuncName))
-    ) {
-      return;
-    }
-    const method = async function(storeName, ...args) {
-      const tx = this.transaction(storeName, isWrite ? "readwrite" : "readonly");
-      let target2 = tx.store;
-      if (useIndex)
-        target2 = target2.index(args.shift());
-      return (await Promise.all([
-        target2[targetFuncName](...args),
-        isWrite && tx.done
-      ]))[0];
-    };
-    cachedMethods.set(prop, method);
-    return method;
-  }
-  async function* iterate(...args) {
-    let cursor = this;
-    if (!(cursor instanceof IDBCursor)) {
-      cursor = await cursor.openCursor(...args);
-    }
-    if (!cursor)
-      return;
-    cursor = cursor;
-    const proxiedCursor = new Proxy(cursor, cursorIteratorTraps);
-    ittrProxiedCursorToOriginalProxy.set(proxiedCursor, cursor);
-    reverseTransformCache.set(proxiedCursor, unwrap(cursor));
-    while (cursor) {
-      yield proxiedCursor;
-      cursor = await (advanceResults.get(proxiedCursor) || cursor.continue());
-      advanceResults.delete(proxiedCursor);
-    }
-  }
-  function isIteratorProp(target, prop) {
-    return prop === Symbol.asyncIterator && instanceOfAny(target, [IDBIndex, IDBObjectStore, IDBCursor]) || prop === "iterate" && instanceOfAny(target, [IDBIndex, IDBObjectStore]);
-  }
-  var import_polyfills, instanceOfAny, idbProxyableTypes, cursorAdvanceMethods, transactionDoneMap, transformCache, reverseTransformCache, idbProxyTraps, unwrap, readMethods, writeMethods, cachedMethods, advanceMethodProps, methodMap, advanceResults, ittrProxiedCursorToOriginalProxy, cursorIteratorTraps;
-  var init_build = __esm({
-    "node_modules/idb/build/index.js"() {
-      import_polyfills = __toESM(require_polyfills(), 1);
-      instanceOfAny = (object, constructors) => constructors.some((c2) => object instanceof c2);
-      transactionDoneMap = /* @__PURE__ */ new WeakMap();
-      transformCache = /* @__PURE__ */ new WeakMap();
-      reverseTransformCache = /* @__PURE__ */ new WeakMap();
-      idbProxyTraps = {
-        get(target, prop, receiver) {
-          if (target instanceof IDBTransaction) {
-            if (prop === "done")
-              return transactionDoneMap.get(target);
-            if (prop === "store") {
-              return receiver.objectStoreNames[1] ? void 0 : receiver.objectStore(receiver.objectStoreNames[0]);
-            }
-          }
-          return wrap(target[prop]);
-        },
-        set(target, prop, value) {
-          target[prop] = value;
-          return true;
-        },
-        has(target, prop) {
-          if (target instanceof IDBTransaction && (prop === "done" || prop === "store")) {
-            return true;
-          }
-          return prop in target;
-        }
-      };
-      unwrap = (value) => reverseTransformCache.get(value);
-      readMethods = ["get", "getKey", "getAll", "getAllKeys", "count"];
-      writeMethods = ["put", "add", "delete", "clear"];
-      cachedMethods = /* @__PURE__ */ new Map();
-      replaceTraps((oldTraps) => ({
-        ...oldTraps,
-        get: (target, prop, receiver) => getMethod(target, prop) || oldTraps.get(target, prop, receiver),
-        has: (target, prop) => !!getMethod(target, prop) || oldTraps.has(target, prop)
-      }));
-      advanceMethodProps = ["continue", "continuePrimaryKey", "advance"];
-      methodMap = {};
-      advanceResults = /* @__PURE__ */ new WeakMap();
-      ittrProxiedCursorToOriginalProxy = /* @__PURE__ */ new WeakMap();
-      cursorIteratorTraps = {
-        get(target, prop) {
-          if (!advanceMethodProps.includes(prop))
-            return target[prop];
-          let cachedFunc = methodMap[prop];
-          if (!cachedFunc) {
-            cachedFunc = methodMap[prop] = function(...args) {
-              advanceResults.set(this, ittrProxiedCursorToOriginalProxy.get(this)[prop](...args));
-            };
-          }
-          return cachedFunc;
-        }
-      };
-      replaceTraps((oldTraps) => ({
-        ...oldTraps,
-        get(target, prop, receiver) {
-          if (isIteratorProp(target, prop))
-            return iterate;
-          return oldTraps.get(target, prop, receiver);
-        },
-        has(target, prop) {
-          return isIteratorProp(target, prop) || oldTraps.has(target, prop);
-        }
-      }));
-    }
-  });
-
-  // src/adapters/IndexedDBStorage.ts
-  var import_polyfills2, IndexedDBStorage;
-  var init_IndexedDBStorage = __esm({
-    "src/adapters/IndexedDBStorage.ts"() {
-      "use strict";
-      import_polyfills2 = __toESM(require_polyfills());
-      init_build();
-      IndexedDBStorage = class {
-        constructor() {
-          this.DB_NAME = "sovereign_s3nc";
-          this.STORE_FILES = "files";
-          this.STORE_META = "metadata";
-        }
-        async init() {
-          this.db = await openDB(this.DB_NAME, 1, {
-            upgrade(db2) {
-              db2.createObjectStore("files");
-              db2.createObjectStore("metadata");
-            }
-          });
-        }
-        async getDailyDb(date3, type2) {
-          return await this.db.get(this.STORE_FILES, `${type2}/${date3}`) || null;
-        }
-        async saveDailyDb(date3, type2, data2) {
-          await this.db.put(this.STORE_FILES, data2, `${type2}/${date3}`);
-        }
-        async getDailyDbHash(date3, type2) {
-          const data2 = await this.getDailyDb(date3, type2);
-          if (!data2) return null;
-          return this.hash(data2);
-        }
-        async getPublicUserFile() {
-          return await this.db.get(this.STORE_FILES, "public/user.json") || null;
-        }
-        async savePublicUserFile(data2) {
-          await this.db.put(this.STORE_FILES, data2, "public/user.json");
-        }
-        async getRemoteHashCache(date3, type2) {
-          return await this.db.get(this.STORE_META, `hash:${date3}-${type2}`) || null;
-        }
-        async setRemoteHashCache(date3, type2, hash) {
-          await this.db.put(this.STORE_META, hash, `hash:${date3}-${type2}`);
-        }
-        async getLastSyncDate() {
-          return await this.db.get(this.STORE_META, "lastSyncDate") || null;
-        }
-        async setLastSyncDate(date3) {
-          await this.db.put(this.STORE_META, date3, "lastSyncDate");
-        }
-        async saveFollowedDb(userId, date3, data2) {
-          await this.db.put(this.STORE_FILES, data2, `followed/${userId}/${date3}`);
-        }
-        async getFollowedDbHash(userId, date3) {
-          const data2 = await this.db.get(this.STORE_FILES, `followed/${userId}/${date3}`);
-          return data2 ? this.hash(data2) : null;
-        }
-        async getFollowing() {
-          const following = await this.db.get(this.STORE_META, "following") || {};
-          return Object.entries(following).map(([userId, info]) => ({
-            userId,
-            lastSync: info.lastSync,
-            publicKey: info.publicKey
-          }));
-        }
-        async followUser(userId, lastSync, publicKey) {
-          const following = await this.db.get(this.STORE_META, "following") || {};
-          if (!following[userId]) {
-            following[userId] = { lastSync, publicKey };
-            await this.db.put(this.STORE_META, following, "following");
-          }
-        }
-        async updateFollowedUserSync(userId, date3) {
-          const following = await this.db.get(this.STORE_META, "following") || {};
-          if (following[userId]) {
-            following[userId].lastSync = date3;
-            await this.db.put(this.STORE_META, following, "following");
-          }
-        }
-        async hash(data2) {
-          const hashBuffer = await crypto.subtle.digest("SHA-256", data2);
-          return Array.from(new Uint8Array(hashBuffer)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
-        }
-      };
-    }
-  });
-
   // node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
-  var import_polyfills3, getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
+  var import_polyfills, getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
   var init_httpExtensionConfiguration = __esm({
     "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
-      import_polyfills3 = __toESM(require_polyfills());
+      import_polyfills = __toESM(require_polyfills());
       getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
         return {
           setHttpHandler(handler) {
@@ -23618,27 +23305,27 @@
   });
 
   // node_modules/@smithy/protocol-http/dist-es/extensions/index.js
-  var import_polyfills4;
+  var import_polyfills2;
   var init_extensions = __esm({
     "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
-      import_polyfills4 = __toESM(require_polyfills());
+      import_polyfills2 = __toESM(require_polyfills());
       init_httpExtensionConfiguration();
     }
   });
 
   // node_modules/@smithy/types/dist-es/abort.js
-  var import_polyfills5;
+  var import_polyfills3;
   var init_abort = __esm({
     "node_modules/@smithy/types/dist-es/abort.js"() {
-      import_polyfills5 = __toESM(require_polyfills());
+      import_polyfills3 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/auth/auth.js
-  var import_polyfills6, HttpAuthLocation;
+  var import_polyfills4, HttpAuthLocation;
   var init_auth = __esm({
     "node_modules/@smithy/types/dist-es/auth/auth.js"() {
-      import_polyfills6 = __toESM(require_polyfills());
+      import_polyfills4 = __toESM(require_polyfills());
       (function(HttpAuthLocation2) {
         HttpAuthLocation2["HEADER"] = "header";
         HttpAuthLocation2["QUERY"] = "query";
@@ -23647,10 +23334,10 @@
   });
 
   // node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
-  var import_polyfills7, HttpApiKeyAuthLocation;
+  var import_polyfills5, HttpApiKeyAuthLocation;
   var init_HttpApiKeyAuth = __esm({
     "node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
-      import_polyfills7 = __toESM(require_polyfills());
+      import_polyfills5 = __toESM(require_polyfills());
       (function(HttpApiKeyAuthLocation2) {
         HttpApiKeyAuthLocation2["HEADER"] = "header";
         HttpApiKeyAuthLocation2["QUERY"] = "query";
@@ -23659,42 +23346,42 @@
   });
 
   // node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
-  var import_polyfills8;
+  var import_polyfills6;
   var init_HttpAuthScheme = __esm({
     "node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
-      import_polyfills8 = __toESM(require_polyfills());
+      import_polyfills6 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
-  var import_polyfills9;
+  var import_polyfills7;
   var init_HttpAuthSchemeProvider = __esm({
     "node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
-      import_polyfills9 = __toESM(require_polyfills());
+      import_polyfills7 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/auth/HttpSigner.js
-  var import_polyfills10;
+  var import_polyfills8;
   var init_HttpSigner = __esm({
     "node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
-      import_polyfills10 = __toESM(require_polyfills());
+      import_polyfills8 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
-  var import_polyfills11;
+  var import_polyfills9;
   var init_IdentityProviderConfig = __esm({
     "node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
-      import_polyfills11 = __toESM(require_polyfills());
+      import_polyfills9 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/auth/index.js
-  var import_polyfills12;
+  var import_polyfills10;
   var init_auth2 = __esm({
     "node_modules/@smithy/types/dist-es/auth/index.js"() {
-      import_polyfills12 = __toESM(require_polyfills());
+      import_polyfills10 = __toESM(require_polyfills());
       init_auth();
       init_HttpApiKeyAuth();
       init_HttpAuthScheme();
@@ -23705,66 +23392,66 @@
   });
 
   // node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
-  var import_polyfills13;
+  var import_polyfills11;
   var init_blob_payload_input_types = __esm({
     "node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
-      import_polyfills13 = __toESM(require_polyfills());
+      import_polyfills11 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/checksum.js
-  var import_polyfills14;
+  var import_polyfills12;
   var init_checksum = __esm({
     "node_modules/@smithy/types/dist-es/checksum.js"() {
-      import_polyfills14 = __toESM(require_polyfills());
+      import_polyfills12 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/client.js
-  var import_polyfills15;
+  var import_polyfills13;
   var init_client = __esm({
     "node_modules/@smithy/types/dist-es/client.js"() {
-      import_polyfills15 = __toESM(require_polyfills());
+      import_polyfills13 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/command.js
-  var import_polyfills16;
+  var import_polyfills14;
   var init_command = __esm({
     "node_modules/@smithy/types/dist-es/command.js"() {
-      import_polyfills16 = __toESM(require_polyfills());
+      import_polyfills14 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/connection/config.js
-  var import_polyfills17;
+  var import_polyfills15;
   var init_config = __esm({
     "node_modules/@smithy/types/dist-es/connection/config.js"() {
-      import_polyfills17 = __toESM(require_polyfills());
+      import_polyfills15 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/connection/manager.js
-  var import_polyfills18;
+  var import_polyfills16;
   var init_manager = __esm({
     "node_modules/@smithy/types/dist-es/connection/manager.js"() {
-      import_polyfills18 = __toESM(require_polyfills());
+      import_polyfills16 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/connection/pool.js
-  var import_polyfills19;
+  var import_polyfills17;
   var init_pool = __esm({
     "node_modules/@smithy/types/dist-es/connection/pool.js"() {
-      import_polyfills19 = __toESM(require_polyfills());
+      import_polyfills17 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/connection/index.js
-  var import_polyfills20;
+  var import_polyfills18;
   var init_connection = __esm({
     "node_modules/@smithy/types/dist-es/connection/index.js"() {
-      import_polyfills20 = __toESM(require_polyfills());
+      import_polyfills18 = __toESM(require_polyfills());
       init_config();
       init_manager();
       init_pool();
@@ -23772,26 +23459,26 @@
   });
 
   // node_modules/@smithy/types/dist-es/crypto.js
-  var import_polyfills21;
+  var import_polyfills19;
   var init_crypto = __esm({
     "node_modules/@smithy/types/dist-es/crypto.js"() {
-      import_polyfills21 = __toESM(require_polyfills());
+      import_polyfills19 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/encode.js
-  var import_polyfills22;
+  var import_polyfills20;
   var init_encode = __esm({
     "node_modules/@smithy/types/dist-es/encode.js"() {
-      import_polyfills22 = __toESM(require_polyfills());
+      import_polyfills20 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoint.js
-  var import_polyfills23, EndpointURLScheme;
+  var import_polyfills21, EndpointURLScheme;
   var init_endpoint = __esm({
     "node_modules/@smithy/types/dist-es/endpoint.js"() {
-      import_polyfills23 = __toESM(require_polyfills());
+      import_polyfills21 = __toESM(require_polyfills());
       (function(EndpointURLScheme2) {
         EndpointURLScheme2["HTTP"] = "http";
         EndpointURLScheme2["HTTPS"] = "https";
@@ -23800,50 +23487,50 @@
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
-  var import_polyfills24;
+  var import_polyfills22;
   var init_EndpointRuleObject = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
-      import_polyfills24 = __toESM(require_polyfills());
+      import_polyfills22 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
-  var import_polyfills25;
+  var import_polyfills23;
   var init_ErrorRuleObject = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
-      import_polyfills25 = __toESM(require_polyfills());
+      import_polyfills23 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
-  var import_polyfills26;
+  var import_polyfills24;
   var init_RuleSetObject = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
-      import_polyfills26 = __toESM(require_polyfills());
+      import_polyfills24 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/shared.js
-  var import_polyfills27;
+  var import_polyfills25;
   var init_shared = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
-      import_polyfills27 = __toESM(require_polyfills());
+      import_polyfills25 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
-  var import_polyfills28;
+  var import_polyfills26;
   var init_TreeRuleObject = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
-      import_polyfills28 = __toESM(require_polyfills());
+      import_polyfills26 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/endpoints/index.js
-  var import_polyfills29;
+  var import_polyfills27;
   var init_endpoints = __esm({
     "node_modules/@smithy/types/dist-es/endpoints/index.js"() {
-      import_polyfills29 = __toESM(require_polyfills());
+      import_polyfills27 = __toESM(require_polyfills());
       init_EndpointRuleObject();
       init_ErrorRuleObject();
       init_RuleSetObject();
@@ -23853,18 +23540,18 @@
   });
 
   // node_modules/@smithy/types/dist-es/eventStream.js
-  var import_polyfills30;
+  var import_polyfills28;
   var init_eventStream = __esm({
     "node_modules/@smithy/types/dist-es/eventStream.js"() {
-      import_polyfills30 = __toESM(require_polyfills());
+      import_polyfills28 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/extensions/checksum.js
-  var import_polyfills31, AlgorithmId;
+  var import_polyfills29, AlgorithmId;
   var init_checksum2 = __esm({
     "node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
-      import_polyfills31 = __toESM(require_polyfills());
+      import_polyfills29 = __toESM(require_polyfills());
       (function(AlgorithmId2) {
         AlgorithmId2["MD5"] = "md5";
         AlgorithmId2["CRC32"] = "crc32";
@@ -23876,26 +23563,26 @@
   });
 
   // node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
-  var import_polyfills32;
+  var import_polyfills30;
   var init_defaultClientConfiguration = __esm({
     "node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
-      import_polyfills32 = __toESM(require_polyfills());
+      import_polyfills30 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
-  var import_polyfills33;
+  var import_polyfills31;
   var init_defaultExtensionConfiguration = __esm({
     "node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
-      import_polyfills33 = __toESM(require_polyfills());
+      import_polyfills31 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/extensions/index.js
-  var import_polyfills34;
+  var import_polyfills32;
   var init_extensions2 = __esm({
     "node_modules/@smithy/types/dist-es/extensions/index.js"() {
-      import_polyfills34 = __toESM(require_polyfills());
+      import_polyfills32 = __toESM(require_polyfills());
       init_defaultClientConfiguration();
       init_defaultExtensionConfiguration();
       init_checksum2();
@@ -23903,18 +23590,18 @@
   });
 
   // node_modules/@smithy/types/dist-es/feature-ids.js
-  var import_polyfills35;
+  var import_polyfills33;
   var init_feature_ids = __esm({
     "node_modules/@smithy/types/dist-es/feature-ids.js"() {
-      import_polyfills35 = __toESM(require_polyfills());
+      import_polyfills33 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/http.js
-  var import_polyfills36, FieldPosition;
+  var import_polyfills34, FieldPosition;
   var init_http = __esm({
     "node_modules/@smithy/types/dist-es/http.js"() {
-      import_polyfills36 = __toESM(require_polyfills());
+      import_polyfills34 = __toESM(require_polyfills());
       (function(FieldPosition2) {
         FieldPosition2[FieldPosition2["HEADER"] = 0] = "HEADER";
         FieldPosition2[FieldPosition2["TRAILER"] = 1] = "TRAILER";
@@ -23923,50 +23610,50 @@
   });
 
   // node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
-  var import_polyfills37;
+  var import_polyfills35;
   var init_httpHandlerInitialization = __esm({
     "node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
-      import_polyfills37 = __toESM(require_polyfills());
+      import_polyfills35 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
-  var import_polyfills38;
+  var import_polyfills36;
   var init_apiKeyIdentity = __esm({
     "node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
-      import_polyfills38 = __toESM(require_polyfills());
+      import_polyfills36 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
-  var import_polyfills39;
+  var import_polyfills37;
   var init_awsCredentialIdentity = __esm({
     "node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
-      import_polyfills39 = __toESM(require_polyfills());
+      import_polyfills37 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/identity/identity.js
-  var import_polyfills40;
+  var import_polyfills38;
   var init_identity = __esm({
     "node_modules/@smithy/types/dist-es/identity/identity.js"() {
-      import_polyfills40 = __toESM(require_polyfills());
+      import_polyfills38 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
-  var import_polyfills41;
+  var import_polyfills39;
   var init_tokenIdentity = __esm({
     "node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
-      import_polyfills41 = __toESM(require_polyfills());
+      import_polyfills39 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/identity/index.js
-  var import_polyfills42;
+  var import_polyfills40;
   var init_identity2 = __esm({
     "node_modules/@smithy/types/dist-es/identity/index.js"() {
-      import_polyfills42 = __toESM(require_polyfills());
+      import_polyfills40 = __toESM(require_polyfills());
       init_apiKeyIdentity();
       init_awsCredentialIdentity();
       init_identity();
@@ -23975,35 +23662,35 @@
   });
 
   // node_modules/@smithy/types/dist-es/logger.js
-  var import_polyfills43;
+  var import_polyfills41;
   var init_logger = __esm({
     "node_modules/@smithy/types/dist-es/logger.js"() {
-      import_polyfills43 = __toESM(require_polyfills());
+      import_polyfills41 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/middleware.js
-  var import_polyfills44, SMITHY_CONTEXT_KEY;
+  var import_polyfills42, SMITHY_CONTEXT_KEY;
   var init_middleware = __esm({
     "node_modules/@smithy/types/dist-es/middleware.js"() {
-      import_polyfills44 = __toESM(require_polyfills());
+      import_polyfills42 = __toESM(require_polyfills());
       SMITHY_CONTEXT_KEY = "__smithy_context";
     }
   });
 
   // node_modules/@smithy/types/dist-es/pagination.js
-  var import_polyfills45;
+  var import_polyfills43;
   var init_pagination = __esm({
     "node_modules/@smithy/types/dist-es/pagination.js"() {
-      import_polyfills45 = __toESM(require_polyfills());
+      import_polyfills43 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/profile.js
-  var import_polyfills46, IniSectionType;
+  var import_polyfills44, IniSectionType;
   var init_profile = __esm({
     "node_modules/@smithy/types/dist-es/profile.js"() {
-      import_polyfills46 = __toESM(require_polyfills());
+      import_polyfills44 = __toESM(require_polyfills());
       (function(IniSectionType2) {
         IniSectionType2["PROFILE"] = "profile";
         IniSectionType2["SSO_SESSION"] = "sso-session";
@@ -24013,122 +23700,122 @@
   });
 
   // node_modules/@smithy/types/dist-es/response.js
-  var import_polyfills47;
+  var import_polyfills45;
   var init_response = __esm({
     "node_modules/@smithy/types/dist-es/response.js"() {
-      import_polyfills47 = __toESM(require_polyfills());
+      import_polyfills45 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/retry.js
-  var import_polyfills48;
+  var import_polyfills46;
   var init_retry = __esm({
     "node_modules/@smithy/types/dist-es/retry.js"() {
-      import_polyfills48 = __toESM(require_polyfills());
+      import_polyfills46 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/schema/schema.js
-  var import_polyfills49;
+  var import_polyfills47;
   var init_schema = __esm({
     "node_modules/@smithy/types/dist-es/schema/schema.js"() {
-      import_polyfills49 = __toESM(require_polyfills());
+      import_polyfills47 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/schema/traits.js
-  var import_polyfills50;
+  var import_polyfills48;
   var init_traits = __esm({
     "node_modules/@smithy/types/dist-es/schema/traits.js"() {
-      import_polyfills50 = __toESM(require_polyfills());
+      import_polyfills48 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
-  var import_polyfills51;
+  var import_polyfills49;
   var init_schema_deprecated = __esm({
     "node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
-      import_polyfills51 = __toESM(require_polyfills());
+      import_polyfills49 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/schema/sentinels.js
-  var import_polyfills52;
+  var import_polyfills50;
   var init_sentinels = __esm({
     "node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
-      import_polyfills52 = __toESM(require_polyfills());
+      import_polyfills50 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/schema/static-schemas.js
-  var import_polyfills53;
+  var import_polyfills51;
   var init_static_schemas = __esm({
     "node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
-      import_polyfills53 = __toESM(require_polyfills());
+      import_polyfills51 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/serde.js
-  var import_polyfills54;
+  var import_polyfills52;
   var init_serde = __esm({
     "node_modules/@smithy/types/dist-es/serde.js"() {
-      import_polyfills54 = __toESM(require_polyfills());
+      import_polyfills52 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/shapes.js
-  var import_polyfills55;
+  var import_polyfills53;
   var init_shapes = __esm({
     "node_modules/@smithy/types/dist-es/shapes.js"() {
-      import_polyfills55 = __toESM(require_polyfills());
+      import_polyfills53 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/signature.js
-  var import_polyfills56;
+  var import_polyfills54;
   var init_signature = __esm({
     "node_modules/@smithy/types/dist-es/signature.js"() {
-      import_polyfills56 = __toESM(require_polyfills());
+      import_polyfills54 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/stream.js
-  var import_polyfills57;
+  var import_polyfills55;
   var init_stream = __esm({
     "node_modules/@smithy/types/dist-es/stream.js"() {
-      import_polyfills57 = __toESM(require_polyfills());
+      import_polyfills55 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
-  var import_polyfills58;
+  var import_polyfills56;
   var init_streaming_blob_common_types = __esm({
     "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
-      import_polyfills58 = __toESM(require_polyfills());
+      import_polyfills56 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
-  var import_polyfills59;
+  var import_polyfills57;
   var init_streaming_blob_payload_input_types = __esm({
     "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
-      import_polyfills59 = __toESM(require_polyfills());
+      import_polyfills57 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
-  var import_polyfills60;
+  var import_polyfills58;
   var init_streaming_blob_payload_output_types = __esm({
     "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
-      import_polyfills60 = __toESM(require_polyfills());
+      import_polyfills58 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/transfer.js
-  var import_polyfills61, RequestHandlerProtocol;
+  var import_polyfills59, RequestHandlerProtocol;
   var init_transfer = __esm({
     "node_modules/@smithy/types/dist-es/transfer.js"() {
-      import_polyfills61 = __toESM(require_polyfills());
+      import_polyfills59 = __toESM(require_polyfills());
       (function(RequestHandlerProtocol2) {
         RequestHandlerProtocol2["HTTP_0_9"] = "http/0.9";
         RequestHandlerProtocol2["HTTP_1_0"] = "http/1.0";
@@ -24138,66 +23825,66 @@
   });
 
   // node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
-  var import_polyfills62;
+  var import_polyfills60;
   var init_client_payload_blob_type_narrow = __esm({
     "node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
-      import_polyfills62 = __toESM(require_polyfills());
+      import_polyfills60 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/transform/mutable.js
-  var import_polyfills63;
+  var import_polyfills61;
   var init_mutable = __esm({
     "node_modules/@smithy/types/dist-es/transform/mutable.js"() {
-      import_polyfills63 = __toESM(require_polyfills());
+      import_polyfills61 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/transform/no-undefined.js
-  var import_polyfills64;
+  var import_polyfills62;
   var init_no_undefined = __esm({
     "node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
-      import_polyfills64 = __toESM(require_polyfills());
+      import_polyfills62 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/transform/type-transform.js
-  var import_polyfills65;
+  var import_polyfills63;
   var init_type_transform = __esm({
     "node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
-      import_polyfills65 = __toESM(require_polyfills());
+      import_polyfills63 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/uri.js
-  var import_polyfills66;
+  var import_polyfills64;
   var init_uri = __esm({
     "node_modules/@smithy/types/dist-es/uri.js"() {
-      import_polyfills66 = __toESM(require_polyfills());
+      import_polyfills64 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/util.js
-  var import_polyfills67;
+  var import_polyfills65;
   var init_util = __esm({
     "node_modules/@smithy/types/dist-es/util.js"() {
-      import_polyfills67 = __toESM(require_polyfills());
+      import_polyfills65 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/waiter.js
-  var import_polyfills68;
+  var import_polyfills66;
   var init_waiter = __esm({
     "node_modules/@smithy/types/dist-es/waiter.js"() {
-      import_polyfills68 = __toESM(require_polyfills());
+      import_polyfills66 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/types/dist-es/index.js
-  var import_polyfills69;
+  var import_polyfills67;
   var init_dist_es = __esm({
     "node_modules/@smithy/types/dist-es/index.js"() {
-      import_polyfills69 = __toESM(require_polyfills());
+      import_polyfills67 = __toESM(require_polyfills());
       init_abort();
       init_auth2();
       init_blob_payload_input_types();
@@ -24245,26 +23932,26 @@
   });
 
   // node_modules/@smithy/protocol-http/dist-es/Field.js
-  var import_polyfills70;
+  var import_polyfills68;
   var init_Field = __esm({
     "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
-      import_polyfills70 = __toESM(require_polyfills());
+      import_polyfills68 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/protocol-http/dist-es/Fields.js
-  var import_polyfills71;
+  var import_polyfills69;
   var init_Fields = __esm({
     "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
-      import_polyfills71 = __toESM(require_polyfills());
+      import_polyfills69 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/protocol-http/dist-es/httpHandler.js
-  var import_polyfills72;
+  var import_polyfills70;
   var init_httpHandler = __esm({
     "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
-      import_polyfills72 = __toESM(require_polyfills());
+      import_polyfills70 = __toESM(require_polyfills());
     }
   });
 
@@ -24278,10 +23965,10 @@
       };
     }, {});
   }
-  var import_polyfills73, HttpRequest;
+  var import_polyfills71, HttpRequest;
   var init_httpRequest = __esm({
     "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
-      import_polyfills73 = __toESM(require_polyfills());
+      import_polyfills71 = __toESM(require_polyfills());
       HttpRequest = class _HttpRequest {
         method;
         protocol;
@@ -24332,10 +24019,10 @@
   });
 
   // node_modules/@smithy/protocol-http/dist-es/httpResponse.js
-  var import_polyfills74, HttpResponse;
+  var import_polyfills72, HttpResponse;
   var init_httpResponse = __esm({
     "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
-      import_polyfills74 = __toESM(require_polyfills());
+      import_polyfills72 = __toESM(require_polyfills());
       HttpResponse = class {
         statusCode;
         reason;
@@ -24358,26 +24045,26 @@
   });
 
   // node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
-  var import_polyfills75;
+  var import_polyfills73;
   var init_isValidHostname = __esm({
     "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
-      import_polyfills75 = __toESM(require_polyfills());
+      import_polyfills73 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/protocol-http/dist-es/types.js
-  var import_polyfills76;
+  var import_polyfills74;
   var init_types = __esm({
     "node_modules/@smithy/protocol-http/dist-es/types.js"() {
-      import_polyfills76 = __toESM(require_polyfills());
+      import_polyfills74 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/protocol-http/dist-es/index.js
-  var import_polyfills77;
+  var import_polyfills75;
   var init_dist_es2 = __esm({
     "node_modules/@smithy/protocol-http/dist-es/index.js"() {
-      import_polyfills77 = __toESM(require_polyfills());
+      import_polyfills75 = __toESM(require_polyfills());
       init_extensions();
       init_Field();
       init_Fields();
@@ -24414,10 +24101,10 @@
       });
     };
   }
-  var import_polyfills78, addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
+  var import_polyfills76, addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
   var init_dist_es3 = __esm({
     "node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
-      import_polyfills78 = __toESM(require_polyfills());
+      import_polyfills76 = __toESM(require_polyfills());
       init_dist_es2();
       addExpectContinueMiddlewareOptions = {
         step: "build",
@@ -24434,10 +24121,10 @@
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
-  var import_polyfills79, RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
+  var import_polyfills77, RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
   var init_constants = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
-      import_polyfills79 = __toESM(require_polyfills());
+      import_polyfills77 = __toESM(require_polyfills());
       RequestChecksumCalculation = {
         WHEN_SUPPORTED: "WHEN_SUPPORTED",
         WHEN_REQUIRED: "WHEN_REQUIRED"
@@ -24465,26 +24152,26 @@
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
-  var import_polyfills80;
+  var import_polyfills78;
   var init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
-      import_polyfills80 = __toESM(require_polyfills());
+      import_polyfills78 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
-  var import_polyfills81;
+  var import_polyfills79;
   var init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
-      import_polyfills81 = __toESM(require_polyfills());
+      import_polyfills79 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
-  var import_polyfills82;
+  var import_polyfills80;
   var init_emitWarningIfUnsupportedVersion = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
-      import_polyfills82 = __toESM(require_polyfills());
+      import_polyfills80 = __toESM(require_polyfills());
     }
   });
 
@@ -24496,10 +24183,10 @@
     credentials.$source[feature] = value;
     return credentials;
   }
-  var import_polyfills83;
+  var import_polyfills81;
   var init_setCredentialFeature = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
-      import_polyfills83 = __toESM(require_polyfills());
+      import_polyfills81 = __toESM(require_polyfills());
     }
   });
 
@@ -24514,26 +24201,26 @@
     }
     context.__aws_sdk_context.features[feature] = value;
   }
-  var import_polyfills84;
+  var import_polyfills82;
   var init_setFeature = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
-      import_polyfills84 = __toESM(require_polyfills());
+      import_polyfills82 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
-  var import_polyfills85;
+  var import_polyfills83;
   var init_setTokenFeature = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
-      import_polyfills85 = __toESM(require_polyfills());
+      import_polyfills83 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
-  var import_polyfills86;
+  var import_polyfills84;
   var init_client2 = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
-      import_polyfills86 = __toESM(require_polyfills());
+      import_polyfills84 = __toESM(require_polyfills());
       init_emitWarningIfUnsupportedVersion();
       init_setCredentialFeature();
       init_setFeature();
@@ -24542,39 +24229,39 @@
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
-  var import_polyfills87, getDateHeader;
+  var import_polyfills85, getDateHeader;
   var init_getDateHeader = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
-      import_polyfills87 = __toESM(require_polyfills());
+      import_polyfills85 = __toESM(require_polyfills());
       init_dist_es2();
       getDateHeader = (response) => HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0;
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
-  var import_polyfills88, getSkewCorrectedDate;
+  var import_polyfills86, getSkewCorrectedDate;
   var init_getSkewCorrectedDate = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
-      import_polyfills88 = __toESM(require_polyfills());
+      import_polyfills86 = __toESM(require_polyfills());
       getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
-  var import_polyfills89, isClockSkewed;
+  var import_polyfills87, isClockSkewed;
   var init_isClockSkewed = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
-      import_polyfills89 = __toESM(require_polyfills());
+      import_polyfills87 = __toESM(require_polyfills());
       init_getSkewCorrectedDate();
       isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
-  var import_polyfills90, getUpdatedSystemClockOffset;
+  var import_polyfills88, getUpdatedSystemClockOffset;
   var init_getUpdatedSystemClockOffset = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
-      import_polyfills90 = __toESM(require_polyfills());
+      import_polyfills88 = __toESM(require_polyfills());
       init_isClockSkewed();
       getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
         const clockTimeInMs = Date.parse(clockTime);
@@ -24587,10 +24274,10 @@
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
-  var import_polyfills91;
+  var import_polyfills89;
   var init_utils = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
-      import_polyfills91 = __toESM(require_polyfills());
+      import_polyfills89 = __toESM(require_polyfills());
       init_getDateHeader();
       init_getSkewCorrectedDate();
       init_getUpdatedSystemClockOffset();
@@ -24598,10 +24285,10 @@
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
-  var import_polyfills92, throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
+  var import_polyfills90, throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
   var init_AwsSdkSigV4Signer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
-      import_polyfills92 = __toESM(require_polyfills());
+      import_polyfills90 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
       throwSigningPropertyError = (name, property) => {
@@ -24677,10 +24364,10 @@
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
-  var import_polyfills93, AwsSdkSigV4ASigner;
+  var import_polyfills91, AwsSdkSigV4ASigner;
   var init_AwsSdkSigV4ASigner = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
-      import_polyfills93 = __toESM(require_polyfills());
+      import_polyfills91 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
       init_AwsSdkSigV4Signer();
@@ -24704,44 +24391,44 @@
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
-  var import_polyfills94;
+  var import_polyfills92;
   var init_getBearerTokenEnvKey = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
-      import_polyfills94 = __toESM(require_polyfills());
+      import_polyfills92 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
-  var import_polyfills95;
+  var import_polyfills93;
   var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
-      import_polyfills95 = __toESM(require_polyfills());
+      import_polyfills93 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/getSmithyContext.js
-  var import_polyfills96;
+  var import_polyfills94;
   var init_getSmithyContext = __esm({
     "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
-      import_polyfills96 = __toESM(require_polyfills());
+      import_polyfills94 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
-  var import_polyfills97, getSmithyContext;
+  var import_polyfills95, getSmithyContext;
   var init_getSmithyContext2 = __esm({
     "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
-      import_polyfills97 = __toESM(require_polyfills());
+      import_polyfills95 = __toESM(require_polyfills());
       init_dist_es();
       getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
     }
   });
 
   // node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
-  var import_polyfills98, normalizeProvider;
+  var import_polyfills96, normalizeProvider;
   var init_normalizeProvider = __esm({
     "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
-      import_polyfills98 = __toESM(require_polyfills());
+      import_polyfills96 = __toESM(require_polyfills());
       normalizeProvider = (input) => {
         if (typeof input === "function")
           return input;
@@ -24752,20 +24439,20 @@
   });
 
   // node_modules/@smithy/util-middleware/dist-es/index.js
-  var import_polyfills99;
+  var import_polyfills97;
   var init_dist_es4 = __esm({
     "node_modules/@smithy/util-middleware/dist-es/index.js"() {
-      import_polyfills99 = __toESM(require_polyfills());
+      import_polyfills97 = __toESM(require_polyfills());
       init_getSmithyContext2();
       init_normalizeProvider();
     }
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
-  var import_polyfills100, resolveAuthOptions;
+  var import_polyfills98, resolveAuthOptions;
   var init_resolveAuthOptions = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
-      import_polyfills100 = __toESM(require_polyfills());
+      import_polyfills98 = __toESM(require_polyfills());
       resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
         if (!authSchemePreference || authSchemePreference.length === 0) {
           return candidateAuthOptions;
@@ -24797,10 +24484,10 @@
     }
     return map;
   }
-  var import_polyfills101, httpAuthSchemeMiddleware;
+  var import_polyfills99, httpAuthSchemeMiddleware;
   var init_httpAuthSchemeMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
-      import_polyfills101 = __toESM(require_polyfills());
+      import_polyfills99 = __toESM(require_polyfills());
       init_dist_es4();
       init_resolveAuthOptions();
       httpAuthSchemeMiddleware = (config, mwOptions) => (next, context) => async (args) => {
@@ -24840,10 +24527,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
-  var import_polyfills102, httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
+  var import_polyfills100, httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
   var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
-      import_polyfills102 = __toESM(require_polyfills());
+      import_polyfills100 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
         step: "serialize",
@@ -24865,26 +24552,26 @@
   });
 
   // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
-  var import_polyfills103;
+  var import_polyfills101;
   var init_deserializerMiddleware = __esm({
     "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
-      import_polyfills103 = __toESM(require_polyfills());
+      import_polyfills101 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
-  var import_polyfills104;
+  var import_polyfills102;
   var init_serializerMiddleware = __esm({
     "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
-      import_polyfills104 = __toESM(require_polyfills());
+      import_polyfills102 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
-  var import_polyfills105, serializerMiddlewareOption;
+  var import_polyfills103, serializerMiddlewareOption;
   var init_serdePlugin = __esm({
     "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
-      import_polyfills105 = __toESM(require_polyfills());
+      import_polyfills103 = __toESM(require_polyfills());
       serializerMiddlewareOption = {
         name: "serializerMiddleware",
         step: "serialize",
@@ -24895,10 +24582,10 @@
   });
 
   // node_modules/@smithy/middleware-serde/dist-es/index.js
-  var import_polyfills106;
+  var import_polyfills104;
   var init_dist_es5 = __esm({
     "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
-      import_polyfills106 = __toESM(require_polyfills());
+      import_polyfills104 = __toESM(require_polyfills());
       init_deserializerMiddleware();
       init_serdePlugin();
       init_serializerMiddleware();
@@ -24906,10 +24593,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
-  var import_polyfills107, httpAuthSchemeMiddlewareOptions;
+  var import_polyfills105, httpAuthSchemeMiddlewareOptions;
   var init_getHttpAuthSchemePlugin = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
-      import_polyfills107 = __toESM(require_polyfills());
+      import_polyfills105 = __toESM(require_polyfills());
       init_dist_es5();
       httpAuthSchemeMiddlewareOptions = {
         step: "serialize",
@@ -24923,10 +24610,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
-  var import_polyfills108;
+  var import_polyfills106;
   var init_middleware_http_auth_scheme = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
-      import_polyfills108 = __toESM(require_polyfills());
+      import_polyfills106 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       init_getHttpAuthSchemeEndpointRuleSetPlugin();
       init_getHttpAuthSchemePlugin();
@@ -24934,10 +24621,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
-  var import_polyfills109, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
+  var import_polyfills107, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
-      import_polyfills109 = __toESM(require_polyfills());
+      import_polyfills107 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
       defaultErrorHandler = (signingProperties) => (error) => {
@@ -24966,10 +24653,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
-  var import_polyfills110, httpSigningMiddlewareOptions, getHttpSigningPlugin;
+  var import_polyfills108, httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
-      import_polyfills110 = __toESM(require_polyfills());
+      import_polyfills108 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       httpSigningMiddlewareOptions = {
         step: "finalizeRequest",
@@ -24989,20 +24676,20 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
-  var import_polyfills111;
+  var import_polyfills109;
   var init_middleware_http_signing = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
-      import_polyfills111 = __toESM(require_polyfills());
+      import_polyfills109 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       init_getHttpSigningMiddleware();
     }
   });
 
   // node_modules/@smithy/core/dist-es/normalizeProvider.js
-  var import_polyfills112, normalizeProvider2;
+  var import_polyfills110, normalizeProvider2;
   var init_normalizeProvider2 = __esm({
     "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
-      import_polyfills112 = __toESM(require_polyfills());
+      import_polyfills110 = __toESM(require_polyfills());
       normalizeProvider2 = (input) => {
         if (typeof input === "function")
           return input;
@@ -25037,18 +24724,18 @@
       return void 0;
     };
   }
-  var import_polyfills113, makePagedClientRequest, get;
+  var import_polyfills111, makePagedClientRequest, get;
   var init_createPaginator = __esm({
     "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
-      import_polyfills113 = __toESM(require_polyfills());
+      import_polyfills111 = __toESM(require_polyfills());
       makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
         let command = new CommandCtor(input);
         command = withCommand(command) ?? command;
         return await client.send(command, ...args);
       };
-      get = (fromObject, path3) => {
+      get = (fromObject, path) => {
         let cursor = fromObject;
-        const pathComponents = path3.split(".");
+        const pathComponents = path.split(".");
         for (const step of pathComponents) {
           if (!cursor || typeof cursor !== "object") {
             return void 0;
@@ -25061,10 +24748,10 @@
   });
 
   // node_modules/@smithy/util-base64/dist-es/constants.browser.js
-  var import_polyfills114, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
+  var import_polyfills112, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
-      import_polyfills114 = __toESM(require_polyfills());
+      import_polyfills112 = __toESM(require_polyfills());
       chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
       alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
         acc[c2] = Number(i2);
@@ -25078,10 +24765,10 @@
   });
 
   // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
-  var import_polyfills115, fromBase64;
+  var import_polyfills113, fromBase64;
   var init_fromBase64_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
-      import_polyfills115 = __toESM(require_polyfills());
+      import_polyfills113 = __toESM(require_polyfills());
       init_constants_browser();
       fromBase64 = (input) => {
         let totalByteLength = input.length / 4 * 3;
@@ -25120,37 +24807,37 @@
   });
 
   // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-  var import_polyfills116, fromUtf8;
+  var import_polyfills114, fromUtf8;
   var init_fromUtf8_browser = __esm({
     "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-      import_polyfills116 = __toESM(require_polyfills());
+      import_polyfills114 = __toESM(require_polyfills());
       fromUtf8 = (input) => new TextEncoder().encode(input);
     }
   });
 
   // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-  var import_polyfills117, toUint8Array;
+  var import_polyfills115, toUint8Array;
   var init_toUint8Array = __esm({
     "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-      import_polyfills117 = __toESM(require_polyfills());
+      import_polyfills115 = __toESM(require_polyfills());
       init_fromUtf8_browser();
-      toUint8Array = (data2) => {
-        if (typeof data2 === "string") {
-          return fromUtf8(data2);
+      toUint8Array = (data) => {
+        if (typeof data === "string") {
+          return fromUtf8(data);
         }
-        if (ArrayBuffer.isView(data2)) {
-          return new Uint8Array(data2.buffer, data2.byteOffset, data2.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+        if (ArrayBuffer.isView(data)) {
+          return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
         }
-        return new Uint8Array(data2);
+        return new Uint8Array(data);
       };
     }
   });
 
   // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-  var import_polyfills118, toUtf8;
+  var import_polyfills116, toUtf8;
   var init_toUtf8_browser = __esm({
     "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-      import_polyfills118 = __toESM(require_polyfills());
+      import_polyfills116 = __toESM(require_polyfills());
       toUtf8 = (input) => {
         if (typeof input === "string") {
           return input;
@@ -25164,10 +24851,10 @@
   });
 
   // node_modules/@smithy/util-utf8/dist-es/index.js
-  var import_polyfills119;
+  var import_polyfills117;
   var init_dist_es6 = __esm({
     "node_modules/@smithy/util-utf8/dist-es/index.js"() {
-      import_polyfills119 = __toESM(require_polyfills());
+      import_polyfills117 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       init_toUint8Array();
       init_toUtf8_browser();
@@ -25205,30 +24892,30 @@
     }
     return str;
   }
-  var import_polyfills120;
+  var import_polyfills118;
   var init_toBase64_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
-      import_polyfills120 = __toESM(require_polyfills());
+      import_polyfills118 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants_browser();
     }
   });
 
   // node_modules/@smithy/util-base64/dist-es/index.js
-  var import_polyfills121;
+  var import_polyfills119;
   var init_dist_es7 = __esm({
     "node_modules/@smithy/util-base64/dist-es/index.js"() {
-      import_polyfills121 = __toESM(require_polyfills());
+      import_polyfills119 = __toESM(require_polyfills());
       init_fromBase64_browser();
       init_toBase64_browser();
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
-  var import_polyfills122, Uint8ArrayBlobAdapter;
+  var import_polyfills120, Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
     "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
-      import_polyfills122 = __toESM(require_polyfills());
+      import_polyfills120 = __toESM(require_polyfills());
       init_dist_es7();
       init_dist_es6();
       Uint8ArrayBlobAdapter = class _Uint8ArrayBlobAdapter extends Uint8Array {
@@ -25256,10 +24943,10 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
-  var import_polyfills123, ReadableStreamRef, ChecksumStream;
+  var import_polyfills121, ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
-      import_polyfills123 = __toESM(require_polyfills());
+      import_polyfills121 = __toESM(require_polyfills());
       ReadableStreamRef = typeof ReadableStream === "function" ? ReadableStream : function() {
       };
       ChecksumStream = class extends ReadableStreamRef {
@@ -25268,19 +24955,19 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
-  var import_polyfills124, isReadableStream;
+  var import_polyfills122, isReadableStream;
   var init_stream_type_check = __esm({
     "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
-      import_polyfills124 = __toESM(require_polyfills());
+      import_polyfills122 = __toESM(require_polyfills());
       isReadableStream = (stream) => typeof ReadableStream === "function" && (stream?.constructor?.name === ReadableStream.name || stream instanceof ReadableStream);
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
-  var import_polyfills125, createChecksumStream;
+  var import_polyfills123, createChecksumStream;
   var init_createChecksumStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
-      import_polyfills125 = __toESM(require_polyfills());
+      import_polyfills123 = __toESM(require_polyfills());
       init_dist_es7();
       init_stream_type_check();
       init_ChecksumStream_browser();
@@ -25319,10 +25006,10 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
-  var import_polyfills126, ByteArrayCollector;
+  var import_polyfills124, ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
     "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
-      import_polyfills126 = __toESM(require_polyfills());
+      import_polyfills124 = __toESM(require_polyfills());
       ByteArrayCollector = class {
         allocByteArray;
         byteLength = 0;
@@ -25449,20 +25136,20 @@
     }
     return -1;
   }
-  var import_polyfills127, createBufferedReadable;
+  var import_polyfills125, createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
     "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
-      import_polyfills127 = __toESM(require_polyfills());
+      import_polyfills125 = __toESM(require_polyfills());
       init_ByteArrayCollector();
       createBufferedReadable = createBufferedReadableStream;
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
-  var import_polyfills128, getAwsChunkedEncodingStream;
+  var import_polyfills126, getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
-      import_polyfills128 = __toESM(require_polyfills());
+      import_polyfills126 = __toESM(require_polyfills());
       getAwsChunkedEncodingStream = (readableStream, options) => {
         const { base64Encoder, bodyLengthChecker, checksumAlgorithmFn, checksumLocationName, streamHasher } = options;
         const checksumRequired = base64Encoder !== void 0 && bodyLengthChecker !== void 0 && checksumAlgorithmFn !== void 0 && checksumLocationName !== void 0 && streamHasher !== void 0;
@@ -25524,36 +25211,36 @@ ${value}\r
     }
     return collected;
   }
-  var import_polyfills129;
+  var import_polyfills127;
   var init_headStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
-      import_polyfills129 = __toESM(require_polyfills());
+      import_polyfills127 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
-  var import_polyfills130, escapeUri, hexEncode;
+  var import_polyfills128, escapeUri, hexEncode;
   var init_escape_uri = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
-      import_polyfills130 = __toESM(require_polyfills());
+      import_polyfills128 = __toESM(require_polyfills());
       escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
       hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
-  var import_polyfills131;
+  var import_polyfills129;
   var init_escape_uri_path = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
-      import_polyfills131 = __toESM(require_polyfills());
+      import_polyfills129 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/index.js
-  var import_polyfills132;
+  var import_polyfills130;
   var init_dist_es8 = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
-      import_polyfills132 = __toESM(require_polyfills());
+      import_polyfills130 = __toESM(require_polyfills());
       init_escape_uri();
       init_escape_uri_path();
     }
@@ -25579,10 +25266,10 @@ ${value}\r
     }
     return parts.join("&");
   }
-  var import_polyfills133;
+  var import_polyfills131;
   var init_dist_es9 = __esm({
     "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
-      import_polyfills133 = __toESM(require_polyfills());
+      import_polyfills131 = __toESM(require_polyfills());
       init_dist_es8();
     }
   });
@@ -25591,10 +25278,10 @@ ${value}\r
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
-  var import_polyfills134;
+  var import_polyfills132;
   var init_create_request = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
-      import_polyfills134 = __toESM(require_polyfills());
+      import_polyfills132 = __toESM(require_polyfills());
     }
   });
 
@@ -25610,18 +25297,18 @@ ${value}\r
       }
     });
   }
-  var import_polyfills135;
+  var import_polyfills133;
   var init_request_timeout = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
-      import_polyfills135 = __toESM(require_polyfills());
+      import_polyfills133 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
-  var import_polyfills136, keepAliveSupport, FetchHttpHandler;
+  var import_polyfills134, keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
-      import_polyfills136 = __toESM(require_polyfills());
+      import_polyfills134 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es9();
       init_create_request();
@@ -25663,13 +25350,13 @@ ${value}\r
             abortError.name = "AbortError";
             return Promise.reject(abortError);
           }
-          let path3 = request.path;
+          let path = request.path;
           const queryString = buildQueryString(request.query || {});
           if (queryString) {
-            path3 += `?${queryString}`;
+            path += `?${queryString}`;
           }
           if (request.fragment) {
-            path3 += `#${request.fragment}`;
+            path += `#${request.fragment}`;
           }
           let auth = "";
           if (request.username != null || request.password != null) {
@@ -25678,7 +25365,7 @@ ${value}\r
             auth = `${username}:${password}@`;
           }
           const { port, method } = request;
-          const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path3}`;
+          const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path}`;
           const body = method === "GET" || method === "HEAD" ? void 0 : request.body;
           const requestOptions = {
             body,
@@ -25809,10 +25496,10 @@ ${value}\r
       reader.readAsDataURL(blob);
     });
   }
-  var import_polyfills137, streamCollector;
+  var import_polyfills135, streamCollector;
   var init_stream_collector = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
-      import_polyfills137 = __toESM(require_polyfills());
+      import_polyfills135 = __toESM(require_polyfills());
       init_dist_es7();
       streamCollector = async (stream) => {
         if (typeof Blob === "function" && stream instanceof Blob || stream.constructor?.name === "Blob") {
@@ -25827,10 +25514,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/fetch-http-handler/dist-es/index.js
-  var import_polyfills138;
+  var import_polyfills136;
   var init_dist_es10 = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
-      import_polyfills138 = __toESM(require_polyfills());
+      import_polyfills136 = __toESM(require_polyfills());
       init_fetch_http_handler();
       init_stream_collector();
     }
@@ -25859,10 +25546,10 @@ ${value}\r
     }
     return out;
   }
-  var import_polyfills139, SHORT_TO_HEX, HEX_TO_SHORT;
+  var import_polyfills137, SHORT_TO_HEX, HEX_TO_SHORT;
   var init_dist_es11 = __esm({
     "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
-      import_polyfills139 = __toESM(require_polyfills());
+      import_polyfills137 = __toESM(require_polyfills());
       SHORT_TO_HEX = {};
       HEX_TO_SHORT = {};
       for (let i2 = 0; i2 < 256; i2++) {
@@ -25877,10 +25564,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
-  var import_polyfills140, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
+  var import_polyfills138, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
-      import_polyfills140 = __toESM(require_polyfills());
+      import_polyfills138 = __toESM(require_polyfills());
       init_dist_es10();
       init_dist_es7();
       init_dist_es11();
@@ -25949,18 +25636,18 @@ ${value}\r
     const readableStream = stream;
     return readableStream.tee();
   }
-  var import_polyfills141;
+  var import_polyfills139;
   var init_splitStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
-      import_polyfills141 = __toESM(require_polyfills());
+      import_polyfills139 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/index.js
-  var import_polyfills142;
+  var import_polyfills140;
   var init_dist_es12 = __esm({
     "node_modules/@smithy/util-stream/dist-es/index.js"() {
-      import_polyfills142 = __toESM(require_polyfills());
+      import_polyfills140 = __toESM(require_polyfills());
       init_Uint8ArrayBlobAdapter();
       init_ChecksumStream_browser();
       init_createChecksumStream_browser();
@@ -25973,10 +25660,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
-  var import_polyfills143, collectBody;
+  var import_polyfills141, collectBody;
   var init_collect_stream_body = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
-      import_polyfills143 = __toESM(require_polyfills());
+      import_polyfills141 = __toESM(require_polyfills());
       init_dist_es12();
       collectBody = async (streamBody = new Uint8Array(), context) => {
         if (streamBody instanceof Uint8Array) {
@@ -25997,18 +25684,18 @@ ${value}\r
       return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
     });
   }
-  var import_polyfills144;
+  var import_polyfills142;
   var init_extended_encode_uri_component = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
-      import_polyfills144 = __toESM(require_polyfills());
+      import_polyfills142 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
-  var import_polyfills145, deref;
+  var import_polyfills143, deref;
   var init_deref = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
-      import_polyfills145 = __toESM(require_polyfills());
+      import_polyfills143 = __toESM(require_polyfills());
       deref = (schemaRef) => {
         if (typeof schemaRef === "function") {
           return schemaRef();
@@ -26019,10 +25706,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
-  var import_polyfills146, operation;
+  var import_polyfills144, operation;
   var init_operation = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
-      import_polyfills146 = __toESM(require_polyfills());
+      import_polyfills144 = __toESM(require_polyfills());
       operation = (namespace, name, traits, input, output) => ({
         name,
         namespace,
@@ -26034,10 +25721,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
-  var import_polyfills147, schemaDeserializationMiddleware, findHeader;
+  var import_polyfills145, schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
-      import_polyfills147 = __toESM(require_polyfills());
+      import_polyfills145 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
       init_operation();
@@ -26103,10 +25790,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
-  var import_polyfills148, schemaSerializationMiddleware;
+  var import_polyfills146, schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
-      import_polyfills148 = __toESM(require_polyfills());
+      import_polyfills146 = __toESM(require_polyfills());
       init_dist_es4();
       init_operation();
       schemaSerializationMiddleware = (config) => (next, context) => async (args) => {
@@ -26136,10 +25823,10 @@ ${value}\r
       }
     };
   }
-  var import_polyfills149, deserializerMiddlewareOption, serializerMiddlewareOption2;
+  var import_polyfills147, deserializerMiddlewareOption, serializerMiddlewareOption2;
   var init_getSchemaSerdePlugin = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
-      import_polyfills149 = __toESM(require_polyfills());
+      import_polyfills147 = __toESM(require_polyfills());
       init_schemaDeserializationMiddleware();
       init_schemaSerializationMiddleware();
       deserializerMiddlewareOption = {
@@ -26158,50 +25845,50 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
-  var import_polyfills150;
+  var import_polyfills148;
   var init_Schema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
-      import_polyfills150 = __toESM(require_polyfills());
+      import_polyfills148 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
-  var import_polyfills151;
+  var import_polyfills149;
   var init_ListSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
-      import_polyfills151 = __toESM(require_polyfills());
+      import_polyfills149 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
-  var import_polyfills152;
+  var import_polyfills150;
   var init_MapSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
-      import_polyfills152 = __toESM(require_polyfills());
+      import_polyfills150 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
-  var import_polyfills153;
+  var import_polyfills151;
   var init_OperationSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
-      import_polyfills153 = __toESM(require_polyfills());
+      import_polyfills151 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
-  var import_polyfills154;
+  var import_polyfills152;
   var init_StructureSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
-      import_polyfills154 = __toESM(require_polyfills());
+      import_polyfills152 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
-  var import_polyfills155;
+  var import_polyfills153;
   var init_ErrorSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
-      import_polyfills155 = __toESM(require_polyfills());
+      import_polyfills153 = __toESM(require_polyfills());
     }
   });
 
@@ -26228,10 +25915,10 @@ ${value}\r
     }
     return traits;
   }
-  var import_polyfills156;
+  var import_polyfills154;
   var init_translateTraits = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
-      import_polyfills156 = __toESM(require_polyfills());
+      import_polyfills154 = __toESM(require_polyfills());
     }
   });
 
@@ -26246,10 +25933,10 @@ ${value}\r
     const internalCtorAccess = NormalizedSchema;
     return new internalCtorAccess(memberSchema, memberName);
   }
-  var import_polyfills157, NormalizedSchema, isMemberSchema, isStaticSchema;
+  var import_polyfills155, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
-      import_polyfills157 = __toESM(require_polyfills());
+      import_polyfills155 = __toESM(require_polyfills());
       init_deref();
       init_translateTraits();
       NormalizedSchema = class _NormalizedSchema {
@@ -26482,26 +26169,26 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
-  var import_polyfills158;
+  var import_polyfills156;
   var init_SimpleSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
-      import_polyfills158 = __toESM(require_polyfills());
+      import_polyfills156 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
-  var import_polyfills159;
+  var import_polyfills157;
   var init_sentinels2 = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
-      import_polyfills159 = __toESM(require_polyfills());
+      import_polyfills157 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
-  var import_polyfills160, TypeRegistry;
+  var import_polyfills158, TypeRegistry;
   var init_TypeRegistry = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
-      import_polyfills160 = __toESM(require_polyfills());
+      import_polyfills158 = __toESM(require_polyfills());
       TypeRegistry = class _TypeRegistry {
         namespace;
         schemas;
@@ -26571,10 +26258,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/index.js
-  var import_polyfills161;
+  var import_polyfills159;
   var init_schema2 = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
-      import_polyfills161 = __toESM(require_polyfills());
+      import_polyfills159 = __toESM(require_polyfills());
       init_deref();
       init_getSchemaSerdePlugin();
       init_ListSchema();
@@ -26593,18 +26280,18 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
-  var import_polyfills162;
+  var import_polyfills160;
   var init_copyDocumentWithTransform = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
-      import_polyfills162 = __toESM(require_polyfills());
+      import_polyfills160 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
-  var import_polyfills163, expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
+  var import_polyfills161, expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
   var init_parse_utils = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
-      import_polyfills163 = __toESM(require_polyfills());
+      import_polyfills161 = __toESM(require_polyfills());
       expectNumber = (value) => {
         if (value === null || value === void 0) {
           return void 0;
@@ -26697,24 +26384,24 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
-  function dateToUtcString(date3) {
-    const year2 = date3.getUTCFullYear();
-    const month = date3.getUTCMonth();
-    const dayOfWeek = date3.getUTCDay();
-    const dayOfMonthInt = date3.getUTCDate();
-    const hoursInt = date3.getUTCHours();
-    const minutesInt = date3.getUTCMinutes();
-    const secondsInt = date3.getUTCSeconds();
+  function dateToUtcString(date2) {
+    const year2 = date2.getUTCFullYear();
+    const month = date2.getUTCMonth();
+    const dayOfWeek = date2.getUTCDay();
+    const dayOfMonthInt = date2.getUTCDate();
+    const hoursInt = date2.getUTCHours();
+    const minutesInt = date2.getUTCMinutes();
+    const secondsInt = date2.getUTCSeconds();
     const dayOfMonthString = dayOfMonthInt < 10 ? `0${dayOfMonthInt}` : `${dayOfMonthInt}`;
     const hoursString = hoursInt < 10 ? `0${hoursInt}` : `${hoursInt}`;
     const minutesString = minutesInt < 10 ? `0${minutesInt}` : `${minutesInt}`;
     const secondsString = secondsInt < 10 ? `0${secondsInt}` : `${secondsInt}`;
     return `${DAYS[dayOfWeek]}, ${dayOfMonthString} ${MONTHS[month]} ${year2} ${hoursString}:${minutesString}:${secondsString} GMT`;
   }
-  var import_polyfills164, DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
+  var import_polyfills162, DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
   var init_date_utils = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
-      import_polyfills164 = __toESM(require_polyfills());
+      import_polyfills162 = __toESM(require_polyfills());
       init_parse_utils();
       DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
       MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -26792,10 +26479,10 @@ ${value}\r
       isLeapYear = (year2) => {
         return year2 % 4 === 0 && (year2 % 100 !== 0 || year2 % 400 === 0);
       };
-      parseDateValue = (value, type2, lower, upper) => {
+      parseDateValue = (value, type, lower, upper) => {
         const dateVal = strictParseByte(stripLeadingZeroes(value));
         if (dateVal < lower || dateVal > upper) {
-          throw new TypeError(`${type2} must be between ${lower} and ${upper}, inclusive`);
+          throw new TypeError(`${type} must be between ${lower} and ${upper}, inclusive`);
         }
         return dateVal;
       };
@@ -26819,19 +26506,19 @@ ${value}\r
   });
 
   // node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
-  var import_polyfills165, randomUUID;
+  var import_polyfills163, randomUUID;
   var init_randomUUID_browser = __esm({
     "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
-      import_polyfills165 = __toESM(require_polyfills());
+      import_polyfills163 = __toESM(require_polyfills());
       randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
     }
   });
 
   // node_modules/@smithy/uuid/dist-es/v4.js
-  var import_polyfills166, decimalToHex, v4;
+  var import_polyfills164, decimalToHex, v4;
   var init_v4 = __esm({
     "node_modules/@smithy/uuid/dist-es/v4.js"() {
-      import_polyfills166 = __toESM(require_polyfills());
+      import_polyfills164 = __toESM(require_polyfills());
       init_randomUUID_browser();
       decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
       v4 = () => {
@@ -26848,28 +26535,28 @@ ${value}\r
   });
 
   // node_modules/@smithy/uuid/dist-es/index.js
-  var import_polyfills167;
+  var import_polyfills165;
   var init_dist_es13 = __esm({
     "node_modules/@smithy/uuid/dist-es/index.js"() {
-      import_polyfills167 = __toESM(require_polyfills());
+      import_polyfills165 = __toESM(require_polyfills());
       init_v4();
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
-  var import_polyfills168;
+  var import_polyfills166;
   var init_generateIdempotencyToken = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
-      import_polyfills168 = __toESM(require_polyfills());
+      import_polyfills166 = __toESM(require_polyfills());
       init_dist_es13();
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
-  var import_polyfills169, LazyJsonString;
+  var import_polyfills167, LazyJsonString;
   var init_lazy_json = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
-      import_polyfills169 = __toESM(require_polyfills());
+      import_polyfills167 = __toESM(require_polyfills());
       LazyJsonString = function LazyJsonString2(val) {
         const str = Object.assign(new String(val), {
           deserializeJSON() {
@@ -26903,10 +26590,10 @@ ${value}\r
     }
     return part;
   }
-  var import_polyfills170;
+  var import_polyfills168;
   var init_quote_header = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
-      import_polyfills170 = __toESM(require_polyfills());
+      import_polyfills168 = __toESM(require_polyfills());
     }
   });
 
@@ -26917,18 +26604,18 @@ ${value}\r
       throw new Error(`Value ${_v} out of range [${min}, ${max}]`);
     }
   }
-  var import_polyfills171, ddd, mmm, time, date2, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
+  var import_polyfills169, ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
   var init_schema_date_utils = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
-      import_polyfills171 = __toESM(require_polyfills());
+      import_polyfills169 = __toESM(require_polyfills());
       ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
       mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
       time = `(\\d?\\d):(\\d{2}):(\\d{2})(?:\\.(\\d+))?`;
-      date2 = `(\\d?\\d)`;
+      date = `(\\d?\\d)`;
       year = `(\\d{4})`;
       RFC3339_WITH_OFFSET2 = new RegExp(/^(\d{4})-(\d\d)-(\d\d)[tT](\d\d):(\d\d):(\d\d)(\.(\d+))?(([-+]\d\d:\d\d)|[zZ])$/);
-      IMF_FIXDATE2 = new RegExp(`^${ddd}, ${date2} ${mmm} ${year} ${time} GMT$`);
-      RFC_850_DATE2 = new RegExp(`^${ddd}, ${date2}-${mmm}-(\\d\\d) ${time} GMT$`);
+      IMF_FIXDATE2 = new RegExp(`^${ddd}, ${date} ${mmm} ${year} ${time} GMT$`);
+      RFC_850_DATE2 = new RegExp(`^${ddd}, ${date}-${mmm}-(\\d\\d) ${time} GMT$`);
       ASC_TIME2 = new RegExp(`^${ddd} ${mmm} ( [1-9]|\\d\\d) ${time} ${year}$`);
       months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       _parseEpochTimestamp = (value) => {
@@ -26968,14 +26655,14 @@ ${value}\r
         range(hours, 0, 23);
         range(minutes, 0, 59);
         range(seconds, 0, 60);
-        const date3 = new Date(Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), Number(hours), Number(minutes), Number(seconds), Number(ms) ? Math.round(parseFloat(`0.${ms}`) * 1e3) : 0));
-        date3.setUTCFullYear(Number(yearStr));
+        const date2 = new Date(Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), Number(hours), Number(minutes), Number(seconds), Number(ms) ? Math.round(parseFloat(`0.${ms}`) * 1e3) : 0));
+        date2.setUTCFullYear(Number(yearStr));
         if (offsetStr.toUpperCase() != "Z") {
           const [, sign, offsetH, offsetM] = /([+-])(\d\d):(\d\d)/.exec(offsetStr) || [void 0, "+", 0, 0];
           const scalar = sign === "-" ? 1 : -1;
-          date3.setTime(date3.getTime() + scalar * (Number(offsetH) * 60 * 60 * 1e3 + Number(offsetM) * 60 * 1e3));
+          date2.setTime(date2.getTime() + scalar * (Number(offsetH) * 60 * 60 * 1e3 + Number(offsetM) * 60 * 1e3));
         }
-        return date3;
+        return date2;
       };
       _parseRfc7231DateTime = (value) => {
         if (value == null) {
@@ -27006,9 +26693,9 @@ ${value}\r
           range(hour, 0, 23);
           range(minute, 0, 59);
           range(second, 0, 60);
-          const date3 = new Date(timestamp);
-          date3.setUTCFullYear(Number(year2));
-          return date3;
+          const date2 = new Date(timestamp);
+          date2.setUTCFullYear(Number(year2));
+          return date2;
         }
         throw new TypeError(`Invalid RFC7231 date-time value ${value}.`);
       };
@@ -27042,18 +26729,18 @@ ${value}\r
     }
     return compoundSegments;
   }
-  var import_polyfills172;
+  var import_polyfills170;
   var init_split_every = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
-      import_polyfills172 = __toESM(require_polyfills());
+      import_polyfills170 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
-  var import_polyfills173, splitHeader;
+  var import_polyfills171, splitHeader;
   var init_split_header = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
-      import_polyfills173 = __toESM(require_polyfills());
+      import_polyfills171 = __toESM(require_polyfills());
       splitHeader = (value) => {
         const z2 = value.length;
         const values = [];
@@ -27095,17 +26782,17 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
-  var import_polyfills174, format, NumericValue;
+  var import_polyfills172, format, NumericValue;
   var init_NumericValue = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
-      import_polyfills174 = __toESM(require_polyfills());
+      import_polyfills172 = __toESM(require_polyfills());
       format = /^-?\d*(\.\d+)?$/;
       NumericValue = class _NumericValue {
         string;
         type;
-        constructor(string, type2) {
+        constructor(string, type) {
           this.string = string;
-          this.type = type2;
+          this.type = type;
           if (!format.test(string)) {
             throw new Error(`@smithy/core/serde - NumericValue must only contain [0-9], at most one decimal point ".", and an optional negation prefix "-".`);
           }
@@ -27125,10 +26812,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/serde/index.js
-  var import_polyfills175;
+  var import_polyfills173;
   var init_serde2 = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
-      import_polyfills175 = __toESM(require_polyfills());
+      import_polyfills173 = __toESM(require_polyfills());
       init_copyDocumentWithTransform();
       init_date_utils();
       init_generateIdempotencyToken();
@@ -27143,10 +26830,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
-  var import_polyfills176, SerdeContext;
+  var import_polyfills174, SerdeContext;
   var init_SerdeContext = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
-      import_polyfills176 = __toESM(require_polyfills());
+      import_polyfills174 = __toESM(require_polyfills());
       SerdeContext = class {
         serdeContext;
         setSerdeContext(serdeContext) {
@@ -27157,10 +26844,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
-  var import_polyfills177, EventStreamSerde;
+  var import_polyfills175, EventStreamSerde;
   var init_EventStreamSerde = __esm({
     "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
-      import_polyfills177 = __toESM(require_polyfills());
+      import_polyfills175 = __toESM(require_polyfills());
       init_dist_es6();
       EventStreamSerde = class {
         marshaller;
@@ -27329,8 +27016,8 @@ ${value}\r
           })();
           const additionalHeaders = {};
           if (!isKnownSchema) {
-            const [type2, value] = event[unionMember];
-            eventType = type2;
+            const [type, value] = event[unionMember];
+            eventType = type;
             serializer.write(15, value);
           } else {
             const eventSchema = unionSchema.getMemberSchema(unionMember);
@@ -27341,23 +27028,23 @@ ${value}\r
                   explicitPayloadMember = memberName;
                 } else if (eventHeader) {
                   const value = event[unionMember][memberName];
-                  let type2 = "binary";
+                  let type = "binary";
                   if (memberSchema.isNumericSchema()) {
                     if ((-2) ** 31 <= value && value <= 2 ** 31 - 1) {
-                      type2 = "integer";
+                      type = "integer";
                     } else {
-                      type2 = "long";
+                      type = "long";
                     }
                   } else if (memberSchema.isTimestampSchema()) {
-                    type2 = "timestamp";
+                    type = "timestamp";
                   } else if (memberSchema.isStringSchema()) {
-                    type2 = "string";
+                    type = "string";
                   } else if (memberSchema.isBooleanSchema()) {
-                    type2 = "boolean";
+                    type = "boolean";
                   }
                   if (value != null) {
                     additionalHeaders[memberName] = {
-                      type: type2,
+                      type,
                       value
                     };
                     delete event[unionMember][memberName];
@@ -27397,19 +27084,19 @@ ${value}\r
   __export(event_streams_exports, {
     EventStreamSerde: () => EventStreamSerde
   });
-  var import_polyfills178;
+  var import_polyfills176;
   var init_event_streams = __esm({
     "node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
-      import_polyfills178 = __toESM(require_polyfills());
+      import_polyfills176 = __toESM(require_polyfills());
       init_EventStreamSerde();
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
-  var import_polyfills179, HttpProtocol;
+  var import_polyfills177, HttpProtocol;
   var init_HttpProtocol = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
-      import_polyfills179 = __toESM(require_polyfills());
+      import_polyfills177 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es2();
       init_SerdeContext();
@@ -27538,10 +27225,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
-  var import_polyfills180, HttpBindingProtocol;
+  var import_polyfills178, HttpBindingProtocol;
   var init_HttpBindingProtocol = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
-      import_polyfills180 = __toESM(require_polyfills());
+      import_polyfills178 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
       init_dist_es2();
@@ -27578,11 +27265,11 @@ ${value}\r
             const opTraits = translateTraits(operationSchema.traits);
             if (opTraits.http) {
               request.method = opTraits.http[0];
-              const [path3, search] = opTraits.http[1].split("?");
+              const [path, search] = opTraits.http[1].split("?");
               if (request.path == "/") {
-                request.path = path3;
+                request.path = path;
               } else {
-                request.path += path3;
+                request.path += path;
               }
               const traitSearchParams = new URLSearchParams(search ?? "");
               Object.assign(query, Object.fromEntries(traitSearchParams));
@@ -27649,11 +27336,11 @@ ${value}\r
           request.body = payload;
           return request;
         }
-        serializeQuery(ns, data2, query) {
+        serializeQuery(ns, data, query) {
           const serializer = this.serializer;
           const traits = ns.getMergedTraits();
           if (traits.httpQueryParams) {
-            for (const [key, val] of Object.entries(data2)) {
+            for (const [key, val] of Object.entries(data)) {
               if (!(key in query)) {
                 const valueSchema = ns.getValueSchema();
                 Object.assign(valueSchema.getMergedTraits(), {
@@ -27669,7 +27356,7 @@ ${value}\r
           if (ns.isListSchema()) {
             const sparse = !!ns.getMergedTraits().sparse;
             const buffer = [];
-            for (const item of data2) {
+            for (const item of data) {
               serializer.write([ns.getValueSchema(), traits], item);
               const serializable = serializer.flush();
               if (sparse || serializable !== void 0) {
@@ -27678,7 +27365,7 @@ ${value}\r
             }
             query[traits.httpQuery] = buffer;
           } else {
-            serializer.write([ns, traits], data2);
+            serializer.write([ns, traits], data);
             query[traits.httpQuery] = serializer.flush();
           }
         }
@@ -27791,26 +27478,26 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
-  var import_polyfills181;
+  var import_polyfills179;
   var init_RpcProtocol = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
-      import_polyfills181 = __toESM(require_polyfills());
+      import_polyfills179 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
-  var import_polyfills182;
+  var import_polyfills180;
   var init_resolve_path = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
-      import_polyfills182 = __toESM(require_polyfills());
+      import_polyfills180 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
-  var import_polyfills183;
+  var import_polyfills181;
   var init_requestBuilder = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
-      import_polyfills183 = __toESM(require_polyfills());
+      import_polyfills181 = __toESM(require_polyfills());
     }
   });
 
@@ -27825,18 +27512,18 @@ ${value}\r
     const bindingFormat = settings.httpBindings ? typeof httpPrefixHeaders === "string" || Boolean(httpHeader) ? 6 : Boolean(httpQuery) || Boolean(httpLabel) ? 5 : void 0 : void 0;
     return bindingFormat ?? settings.timestampFormat.default;
   }
-  var import_polyfills184;
+  var import_polyfills182;
   var init_determineTimestampFormat = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
-      import_polyfills184 = __toESM(require_polyfills());
+      import_polyfills182 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
-  var import_polyfills185, FromStringShapeDeserializer;
+  var import_polyfills183, FromStringShapeDeserializer;
   var init_FromStringShapeDeserializer = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
-      import_polyfills185 = __toESM(require_polyfills());
+      import_polyfills183 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
       init_dist_es7();
@@ -27849,31 +27536,31 @@ ${value}\r
           super();
           this.settings = settings;
         }
-        read(_schema, data2) {
+        read(_schema, data) {
           const ns = NormalizedSchema.of(_schema);
           if (ns.isListSchema()) {
-            return splitHeader(data2).map((item) => this.read(ns.getValueSchema(), item));
+            return splitHeader(data).map((item) => this.read(ns.getValueSchema(), item));
           }
           if (ns.isBlobSchema()) {
-            return (this.serdeContext?.base64Decoder ?? fromBase64)(data2);
+            return (this.serdeContext?.base64Decoder ?? fromBase64)(data);
           }
           if (ns.isTimestampSchema()) {
             const format2 = determineTimestampFormat(ns, this.settings);
             switch (format2) {
               case 5:
-                return _parseRfc3339DateTimeWithOffset(data2);
+                return _parseRfc3339DateTimeWithOffset(data);
               case 6:
-                return _parseRfc7231DateTime(data2);
+                return _parseRfc7231DateTime(data);
               case 7:
-                return _parseEpochTimestamp(data2);
+                return _parseEpochTimestamp(data);
               default:
-                console.warn("Missing timestamp format, parsing value with Date constructor:", data2);
-                return new Date(data2);
+                console.warn("Missing timestamp format, parsing value with Date constructor:", data);
+                return new Date(data);
             }
           }
           if (ns.isStringSchema()) {
             const mediaType = ns.getMergedTraits().mediaType;
-            let intermediateValue = data2;
+            let intermediateValue = data;
             if (mediaType) {
               if (ns.getMergedTraits().httpHeader) {
                 intermediateValue = this.base64ToUtf8(intermediateValue);
@@ -27886,18 +27573,18 @@ ${value}\r
             }
           }
           if (ns.isNumericSchema()) {
-            return Number(data2);
+            return Number(data);
           }
           if (ns.isBigIntegerSchema()) {
-            return BigInt(data2);
+            return BigInt(data);
           }
           if (ns.isBigDecimalSchema()) {
-            return new NumericValue(data2, "bigDecimal");
+            return new NumericValue(data, "bigDecimal");
           }
           if (ns.isBooleanSchema()) {
-            return String(data2).toLowerCase() === "true";
+            return String(data).toLowerCase() === "true";
           }
-          return data2;
+          return data;
         }
         base64ToUtf8(base64String) {
           return (this.serdeContext?.utf8Encoder ?? toUtf8)((this.serdeContext?.base64Decoder ?? fromBase64)(base64String));
@@ -27907,10 +27594,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
-  var import_polyfills186, HttpInterceptingShapeDeserializer;
+  var import_polyfills184, HttpInterceptingShapeDeserializer;
   var init_HttpInterceptingShapeDeserializer = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
-      import_polyfills186 = __toESM(require_polyfills());
+      import_polyfills184 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es6();
       init_SerdeContext();
@@ -27928,38 +27615,38 @@ ${value}\r
           this.codecDeserializer.setSerdeContext(serdeContext);
           this.serdeContext = serdeContext;
         }
-        read(schema, data2) {
+        read(schema, data) {
           const ns = NormalizedSchema.of(schema);
           const traits = ns.getMergedTraits();
           const toString = this.serdeContext?.utf8Encoder ?? toUtf8;
           if (traits.httpHeader || traits.httpResponseCode) {
-            return this.stringDeserializer.read(ns, toString(data2));
+            return this.stringDeserializer.read(ns, toString(data));
           }
           if (traits.httpPayload) {
             if (ns.isBlobSchema()) {
               const toBytes = this.serdeContext?.utf8Decoder ?? fromUtf8;
-              if (typeof data2 === "string") {
-                return toBytes(data2);
+              if (typeof data === "string") {
+                return toBytes(data);
               }
-              return data2;
+              return data;
             } else if (ns.isStringSchema()) {
-              if ("byteLength" in data2) {
-                return toString(data2);
+              if ("byteLength" in data) {
+                return toString(data);
               }
-              return data2;
+              return data;
             }
           }
-          return this.codecDeserializer.read(ns, data2);
+          return this.codecDeserializer.read(ns, data);
         }
       };
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
-  var import_polyfills187, ToStringShapeSerializer;
+  var import_polyfills185, ToStringShapeSerializer;
   var init_ToStringShapeSerializer = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
-      import_polyfills187 = __toESM(require_polyfills());
+      import_polyfills185 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
       init_dist_es7();
@@ -28054,10 +27741,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
-  var import_polyfills188, HttpInterceptingShapeSerializer;
+  var import_polyfills186, HttpInterceptingShapeSerializer;
   var init_HttpInterceptingShapeSerializer = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
-      import_polyfills188 = __toESM(require_polyfills());
+      import_polyfills186 = __toESM(require_polyfills());
       init_schema2();
       init_ToStringShapeSerializer();
       HttpInterceptingShapeSerializer = class {
@@ -28095,10 +27782,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/index.js
-  var import_polyfills189;
+  var import_polyfills187;
   var init_protocols = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
-      import_polyfills189 = __toESM(require_polyfills());
+      import_polyfills187 = __toESM(require_polyfills());
       init_collect_stream_body();
       init_extended_encode_uri_component();
       init_HttpBindingProtocol();
@@ -28116,10 +27803,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
-  var import_polyfills190;
+  var import_polyfills188;
   var init_requestBuilder2 = __esm({
     "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
-      import_polyfills190 = __toESM(require_polyfills());
+      import_polyfills188 = __toESM(require_polyfills());
     }
   });
 
@@ -28134,18 +27821,18 @@ ${value}\r
     }
     context.__smithy_context.features[feature] = value;
   }
-  var import_polyfills191;
+  var import_polyfills189;
   var init_setFeature2 = __esm({
     "node_modules/@smithy/core/dist-es/setFeature.js"() {
-      import_polyfills191 = __toESM(require_polyfills());
+      import_polyfills189 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
-  var import_polyfills192, DefaultIdentityProviderConfig;
+  var import_polyfills190, DefaultIdentityProviderConfig;
   var init_DefaultIdentityProviderConfig = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
-      import_polyfills192 = __toESM(require_polyfills());
+      import_polyfills190 = __toESM(require_polyfills());
       DefaultIdentityProviderConfig = class {
         authSchemes = /* @__PURE__ */ new Map();
         constructor(config) {
@@ -28163,34 +27850,34 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
-  var import_polyfills193;
+  var import_polyfills191;
   var init_httpApiKeyAuth = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
-      import_polyfills193 = __toESM(require_polyfills());
+      import_polyfills191 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
-  var import_polyfills194;
+  var import_polyfills192;
   var init_httpBearerAuth = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
-      import_polyfills194 = __toESM(require_polyfills());
+      import_polyfills192 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
-  var import_polyfills195;
+  var import_polyfills193;
   var init_noAuth = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
-      import_polyfills195 = __toESM(require_polyfills());
+      import_polyfills193 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
-  var import_polyfills196;
+  var import_polyfills194;
   var init_httpAuthSchemes = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
-      import_polyfills196 = __toESM(require_polyfills());
+      import_polyfills194 = __toESM(require_polyfills());
       init_httpApiKeyAuth();
       init_httpBearerAuth();
       init_noAuth();
@@ -28198,10 +27885,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
-  var import_polyfills197, createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
+  var import_polyfills195, createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
   var init_memoizeIdentityProvider = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
-      import_polyfills197 = __toESM(require_polyfills());
+      import_polyfills195 = __toESM(require_polyfills());
       createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
         return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
       };
@@ -28260,10 +27947,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
-  var import_polyfills198;
+  var import_polyfills196;
   var init_util_identity_and_auth = __esm({
     "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
-      import_polyfills198 = __toESM(require_polyfills());
+      import_polyfills196 = __toESM(require_polyfills());
       init_DefaultIdentityProviderConfig();
       init_httpAuthSchemes();
       init_memoizeIdentityProvider();
@@ -28271,10 +27958,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/index.js
-  var import_polyfills199;
+  var import_polyfills197;
   var init_dist_es14 = __esm({
     "node_modules/@smithy/core/dist-es/index.js"() {
-      import_polyfills199 = __toESM(require_polyfills());
+      import_polyfills197 = __toESM(require_polyfills());
       init_getSmithyContext();
       init_middleware_http_auth_scheme();
       init_middleware_http_signing();
@@ -28287,50 +27974,50 @@ ${value}\r
   });
 
   // node_modules/@smithy/property-provider/dist-es/ProviderError.js
-  var import_polyfills200;
+  var import_polyfills198;
   var init_ProviderError = __esm({
     "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
-      import_polyfills200 = __toESM(require_polyfills());
+      import_polyfills198 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
-  var import_polyfills201;
+  var import_polyfills199;
   var init_CredentialsProviderError = __esm({
     "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
-      import_polyfills201 = __toESM(require_polyfills());
+      import_polyfills199 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
-  var import_polyfills202;
+  var import_polyfills200;
   var init_TokenProviderError = __esm({
     "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
-      import_polyfills202 = __toESM(require_polyfills());
+      import_polyfills200 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/property-provider/dist-es/chain.js
-  var import_polyfills203;
+  var import_polyfills201;
   var init_chain = __esm({
     "node_modules/@smithy/property-provider/dist-es/chain.js"() {
-      import_polyfills203 = __toESM(require_polyfills());
+      import_polyfills201 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/property-provider/dist-es/fromStatic.js
-  var import_polyfills204;
+  var import_polyfills202;
   var init_fromStatic = __esm({
     "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
-      import_polyfills204 = __toESM(require_polyfills());
+      import_polyfills202 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/property-provider/dist-es/memoize.js
-  var import_polyfills205, memoize;
+  var import_polyfills203, memoize;
   var init_memoize = __esm({
     "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
-      import_polyfills205 = __toESM(require_polyfills());
+      import_polyfills203 = __toESM(require_polyfills());
       memoize = (provider, isExpired, requiresRefresh) => {
         let resolved;
         let pending;
@@ -28379,10 +28066,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/property-provider/dist-es/index.js
-  var import_polyfills206;
+  var import_polyfills204;
   var init_dist_es15 = __esm({
     "node_modules/@smithy/property-provider/dist-es/index.js"() {
-      import_polyfills206 = __toESM(require_polyfills());
+      import_polyfills204 = __toESM(require_polyfills());
       init_CredentialsProviderError();
       init_ProviderError();
       init_TokenProviderError();
@@ -28393,10 +28080,10 @@ ${value}\r
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
-  var import_polyfills207, resolveAwsSdkSigV4AConfig;
+  var import_polyfills205, resolveAwsSdkSigV4AConfig;
   var init_resolveAwsSdkSigV4AConfig = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
-      import_polyfills207 = __toESM(require_polyfills());
+      import_polyfills205 = __toESM(require_polyfills());
       init_dist_es14();
       resolveAwsSdkSigV4AConfig = (config) => {
         config.sigv4aSigningRegionSet = normalizeProvider2(config.sigv4aSigningRegionSet);
@@ -28406,10 +28093,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/constants.js
-  var import_polyfills208, ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
+  var import_polyfills206, ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
   var init_constants2 = __esm({
     "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
-      import_polyfills208 = __toESM(require_polyfills());
+      import_polyfills206 = __toESM(require_polyfills());
       ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
       CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
       AMZ_DATE_QUERY_PARAM = "X-Amz-Date";
@@ -28453,10 +28140,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
-  var import_polyfills209, signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
+  var import_polyfills207, signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
   var init_credentialDerivation = __esm({
     "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
-      import_polyfills209 = __toESM(require_polyfills());
+      import_polyfills207 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
       init_constants2();
@@ -28479,19 +28166,19 @@ ${value}\r
         }
         return signingKeyCache[cacheKey] = key;
       };
-      hmac = (ctor, secret, data2) => {
+      hmac = (ctor, secret, data) => {
         const hash = new ctor(secret);
-        hash.update(toUint8Array(data2));
+        hash.update(toUint8Array(data));
         return hash.digest();
       };
     }
   });
 
   // node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
-  var import_polyfills210, getCanonicalHeaders;
+  var import_polyfills208, getCanonicalHeaders;
   var init_getCanonicalHeaders = __esm({
     "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
-      import_polyfills210 = __toESM(require_polyfills());
+      import_polyfills208 = __toESM(require_polyfills());
       init_constants2();
       getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
         const canonical = {};
@@ -28513,19 +28200,19 @@ ${value}\r
   });
 
   // node_modules/@smithy/is-array-buffer/dist-es/index.js
-  var import_polyfills211, isArrayBuffer;
+  var import_polyfills209, isArrayBuffer;
   var init_dist_es16 = __esm({
     "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
-      import_polyfills211 = __toESM(require_polyfills());
+      import_polyfills209 = __toESM(require_polyfills());
       isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
     }
   });
 
   // node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
-  var import_polyfills212, getPayloadHash;
+  var import_polyfills210, getPayloadHash;
   var init_getPayloadHash = __esm({
     "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
-      import_polyfills212 = __toESM(require_polyfills());
+      import_polyfills210 = __toESM(require_polyfills());
       init_dist_es16();
       init_dist_es11();
       init_dist_es6();
@@ -28559,10 +28246,10 @@ ${value}\r
         break;
     }
   }
-  var import_polyfills213, HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
+  var import_polyfills211, HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
   var init_HeaderFormatter = __esm({
     "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
-      import_polyfills213 = __toESM(require_polyfills());
+      import_polyfills211 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
       HeaderFormatter = class {
@@ -28682,10 +28369,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/headerUtil.js
-  var import_polyfills214, hasHeader;
+  var import_polyfills212, hasHeader;
   var init_headerUtil = __esm({
     "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
-      import_polyfills214 = __toESM(require_polyfills());
+      import_polyfills212 = __toESM(require_polyfills());
       hasHeader = (soughtHeader, headers) => {
         soughtHeader = soughtHeader.toLowerCase();
         for (const headerName of Object.keys(headers)) {
@@ -28699,10 +28386,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
-  var import_polyfills215, moveHeadersToQuery;
+  var import_polyfills213, moveHeadersToQuery;
   var init_moveHeadersToQuery = __esm({
     "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
-      import_polyfills215 = __toESM(require_polyfills());
+      import_polyfills213 = __toESM(require_polyfills());
       init_dist_es2();
       moveHeadersToQuery = (request, options = {}) => {
         const { headers, query = {} } = HttpRequest.clone(request);
@@ -28723,10 +28410,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
-  var import_polyfills216, prepareRequest;
+  var import_polyfills214, prepareRequest;
   var init_prepareRequest = __esm({
     "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
-      import_polyfills216 = __toESM(require_polyfills());
+      import_polyfills214 = __toESM(require_polyfills());
       init_dist_es2();
       init_constants2();
       prepareRequest = (request) => {
@@ -28742,10 +28429,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
-  var import_polyfills217, getCanonicalQuery;
+  var import_polyfills215, getCanonicalQuery;
   var init_getCanonicalQuery = __esm({
     "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
-      import_polyfills217 = __toESM(require_polyfills());
+      import_polyfills215 = __toESM(require_polyfills());
       init_dist_es8();
       init_constants2();
       getCanonicalQuery = ({ query = {} }) => {
@@ -28770,10 +28457,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/utilDate.js
-  var import_polyfills218, iso8601, toDate;
+  var import_polyfills216, iso8601, toDate;
   var init_utilDate = __esm({
     "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
-      import_polyfills218 = __toESM(require_polyfills());
+      import_polyfills216 = __toESM(require_polyfills());
       iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
       toDate = (time2) => {
         if (typeof time2 === "number") {
@@ -28791,10 +28478,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
-  var import_polyfills219, SignatureV4Base;
+  var import_polyfills217, SignatureV4Base;
   var init_SignatureV4Base = __esm({
     "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
-      import_polyfills219 = __toESM(require_polyfills());
+      import_polyfills217 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es4();
       init_dist_es8();
@@ -28835,10 +28522,10 @@ ${longDate}
 ${credentialScope}
 ${toHex(hashedRequest)}`;
         }
-        getCanonicalPath({ path: path3 }) {
+        getCanonicalPath({ path }) {
           if (this.uriEscapePath) {
             const normalizedPathSegments = [];
-            for (const pathSegment of path3.split("/")) {
+            for (const pathSegment of path.split("/")) {
               if (pathSegment?.length === 0)
                 continue;
               if (pathSegment === ".")
@@ -28849,11 +28536,11 @@ ${toHex(hashedRequest)}`;
                 normalizedPathSegments.push(pathSegment);
               }
             }
-            const normalizedPath = `${path3?.startsWith("/") ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && path3?.endsWith("/") ? "/" : ""}`;
+            const normalizedPath = `${path?.startsWith("/") ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && path?.endsWith("/") ? "/" : ""}`;
             const doubleEncoded = escapeUri(normalizedPath);
             return doubleEncoded.replace(/%2F/g, "/");
           }
-          return path3;
+          return path;
         }
         validateResolvedCredentials(credentials) {
           if (typeof credentials !== "object" || typeof credentials.accessKeyId !== "string" || typeof credentials.secretAccessKey !== "string") {
@@ -28875,10 +28562,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
-  var import_polyfills220, SignatureV4;
+  var import_polyfills218, SignatureV4;
   var init_SignatureV4 = __esm({
     "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
-      import_polyfills220 = __toESM(require_polyfills());
+      import_polyfills218 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
       init_constants2();
@@ -29011,10 +28698,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
-  var import_polyfills221, signatureV4aContainer;
+  var import_polyfills219, signatureV4aContainer;
   var init_signature_v4a_container = __esm({
     "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
-      import_polyfills221 = __toESM(require_polyfills());
+      import_polyfills219 = __toESM(require_polyfills());
       signatureV4aContainer = {
         SignatureV4a: null
       };
@@ -29022,10 +28709,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/signature-v4/dist-es/index.js
-  var import_polyfills222;
+  var import_polyfills220;
   var init_dist_es17 = __esm({
     "node_modules/@smithy/signature-v4/dist-es/index.js"() {
-      import_polyfills222 = __toESM(require_polyfills());
+      import_polyfills220 = __toESM(require_polyfills());
       init_SignatureV4();
       init_constants2();
       init_credentialDerivation();
@@ -29065,10 +28752,10 @@ ${toHex(hashedRequest)}`;
     fn.configBound = true;
     return fn;
   }
-  var import_polyfills223, resolveAwsSdkSigV4Config;
+  var import_polyfills221, resolveAwsSdkSigV4Config;
   var init_resolveAwsSdkSigV4Config = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
-      import_polyfills223 = __toESM(require_polyfills());
+      import_polyfills221 = __toESM(require_polyfills());
       init_client2();
       init_dist_es14();
       init_dist_es17();
@@ -29172,10 +28859,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
-  var import_polyfills224;
+  var import_polyfills222;
   var init_aws_sdk = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
-      import_polyfills224 = __toESM(require_polyfills());
+      import_polyfills222 = __toESM(require_polyfills());
       init_AwsSdkSigV4Signer();
       init_AwsSdkSigV4ASigner();
       init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS();
@@ -29185,20 +28872,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
-  var import_polyfills225;
+  var import_polyfills223;
   var init_httpAuthSchemes2 = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
-      import_polyfills225 = __toESM(require_polyfills());
+      import_polyfills223 = __toESM(require_polyfills());
       init_aws_sdk();
       init_getBearerTokenEnvKey();
     }
   });
 
   // node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
-  var import_polyfills226, TEXT_ENCODER, calculateBodyLength;
+  var import_polyfills224, TEXT_ENCODER, calculateBodyLength;
   var init_calculateBodyLength = __esm({
     "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
-      import_polyfills226 = __toESM(require_polyfills());
+      import_polyfills224 = __toESM(require_polyfills());
       TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
       calculateBodyLength = (body) => {
         if (typeof body === "string") {
@@ -29227,19 +28914,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-body-length-browser/dist-es/index.js
-  var import_polyfills227;
+  var import_polyfills225;
   var init_dist_es18 = __esm({
     "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
-      import_polyfills227 = __toESM(require_polyfills());
+      import_polyfills225 = __toESM(require_polyfills());
       init_calculateBodyLength();
     }
   });
 
   // node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
-  var import_polyfills228, getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
+  var import_polyfills226, getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
   var init_MiddlewareStack = __esm({
     "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
-      import_polyfills228 = __toESM(require_polyfills());
+      import_polyfills226 = __toESM(require_polyfills());
       getAllAliases = (name, aliases) => {
         const _aliases = [];
         if (name) {
@@ -29507,19 +29194,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-stack/dist-es/index.js
-  var import_polyfills229;
+  var import_polyfills227;
   var init_dist_es19 = __esm({
     "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
-      import_polyfills229 = __toESM(require_polyfills());
+      import_polyfills227 = __toESM(require_polyfills());
       init_MiddlewareStack();
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/client.js
-  var import_polyfills230, Client;
+  var import_polyfills228, Client;
   var init_client3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/client.js"() {
-      import_polyfills230 = __toESM(require_polyfills());
+      import_polyfills228 = __toESM(require_polyfills());
       init_dist_es19();
       Client = class {
         config;
@@ -29571,17 +29258,17 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
-  var import_polyfills231;
+  var import_polyfills229;
   var init_collect_stream_body2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
-      import_polyfills231 = __toESM(require_polyfills());
+      import_polyfills229 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
-  function schemaLogFilter(schema, data2) {
-    if (data2 == null) {
-      return data2;
+  function schemaLogFilter(schema, data) {
+    if (data == null) {
+      return data;
     }
     const ns = NormalizedSchema.of(schema);
     if (ns.getMergedTraits().sensitive) {
@@ -29597,8 +29284,8 @@ ${toHex(hashedRequest)}`;
       if (isSensitive) {
         return SENSITIVE_STRING;
       }
-    } else if (ns.isStructSchema() && typeof data2 === "object") {
-      const object = data2;
+    } else if (ns.isStructSchema() && typeof data === "object") {
+      const object = data;
       const newObject = {};
       for (const [member2, memberNs] of ns.structIterator()) {
         if (object[member2] != null) {
@@ -29607,22 +29294,22 @@ ${toHex(hashedRequest)}`;
       }
       return newObject;
     }
-    return data2;
+    return data;
   }
-  var import_polyfills232, SENSITIVE_STRING;
+  var import_polyfills230, SENSITIVE_STRING;
   var init_schemaLogFilter = __esm({
     "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
-      import_polyfills232 = __toESM(require_polyfills());
+      import_polyfills230 = __toESM(require_polyfills());
       init_schema2();
       SENSITIVE_STRING = "***SensitiveInformation***";
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/command.js
-  var import_polyfills233, Command, ClassBuilder;
+  var import_polyfills231, Command, ClassBuilder;
   var init_command2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/command.js"() {
-      import_polyfills233 = __toESM(require_polyfills());
+      import_polyfills231 = __toESM(require_polyfills());
       init_dist_es19();
       init_dist_es();
       init_schemaLogFilter();
@@ -29752,18 +29439,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/constants.js
-  var import_polyfills234;
+  var import_polyfills232;
   var init_constants3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
-      import_polyfills234 = __toESM(require_polyfills());
+      import_polyfills232 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
-  var import_polyfills235, createAggregatedClient;
+  var import_polyfills233, createAggregatedClient;
   var init_create_aggregated_client = __esm({
     "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
-      import_polyfills235 = __toESM(require_polyfills());
+      import_polyfills233 = __toESM(require_polyfills());
       createAggregatedClient = (commands2, Client2) => {
         for (const command of Object.keys(commands2)) {
           const CommandCtor = commands2[command];
@@ -29787,10 +29474,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/exceptions.js
-  var import_polyfills236, ServiceException, decorateServiceException;
+  var import_polyfills234, ServiceException, decorateServiceException;
   var init_exceptions = __esm({
     "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
-      import_polyfills236 = __toESM(require_polyfills());
+      import_polyfills234 = __toESM(require_polyfills());
       ServiceException = class _ServiceException extends Error {
         $fault;
         $response;
@@ -29840,18 +29527,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
-  var import_polyfills237;
+  var import_polyfills235;
   var init_default_error_handler = __esm({
     "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
-      import_polyfills237 = __toESM(require_polyfills());
+      import_polyfills235 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
-  var import_polyfills238, loadConfigsForDefaultMode;
+  var import_polyfills236, loadConfigsForDefaultMode;
   var init_defaults_mode = __esm({
     "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
-      import_polyfills238 = __toESM(require_polyfills());
+      import_polyfills236 = __toESM(require_polyfills());
       loadConfigsForDefaultMode = (mode) => {
         switch (mode) {
           case "standard":
@@ -29882,26 +29569,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
-  var import_polyfills239;
+  var import_polyfills237;
   var init_emitWarningIfUnsupportedVersion2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
-      import_polyfills239 = __toESM(require_polyfills());
+      import_polyfills237 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
-  var import_polyfills240;
+  var import_polyfills238;
   var init_extended_encode_uri_component2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
-      import_polyfills240 = __toESM(require_polyfills());
+      import_polyfills238 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
-  var import_polyfills241, getChecksumConfiguration, resolveChecksumRuntimeConfig;
+  var import_polyfills239, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
-      import_polyfills241 = __toESM(require_polyfills());
+      import_polyfills239 = __toESM(require_polyfills());
       init_dist_es();
       getChecksumConfiguration = (runtimeConfig) => {
         const checksumAlgorithms = [];
@@ -29935,10 +29622,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
-  var import_polyfills242, getRetryConfiguration, resolveRetryRuntimeConfig;
+  var import_polyfills240, getRetryConfiguration, resolveRetryRuntimeConfig;
   var init_retry2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
-      import_polyfills242 = __toESM(require_polyfills());
+      import_polyfills240 = __toESM(require_polyfills());
       getRetryConfiguration = (runtimeConfig) => {
         return {
           setRetryStrategy(retryStrategy) {
@@ -29958,10 +29645,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
-  var import_polyfills243, getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
+  var import_polyfills241, getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
   var init_defaultExtensionConfiguration2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
-      import_polyfills243 = __toESM(require_polyfills());
+      import_polyfills241 = __toESM(require_polyfills());
       init_checksum3();
       init_retry2();
       getDefaultExtensionConfiguration = (runtimeConfig) => {
@@ -29974,27 +29661,27 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extensions/index.js
-  var import_polyfills244;
+  var import_polyfills242;
   var init_extensions3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
-      import_polyfills244 = __toESM(require_polyfills());
+      import_polyfills242 = __toESM(require_polyfills());
       init_defaultExtensionConfiguration2();
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
-  var import_polyfills245;
+  var import_polyfills243;
   var init_get_array_if_single_item = __esm({
     "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
-      import_polyfills245 = __toESM(require_polyfills());
+      import_polyfills243 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
-  var import_polyfills246, getValueFromTextNode;
+  var import_polyfills244, getValueFromTextNode;
   var init_get_value_from_text_node = __esm({
     "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
-      import_polyfills246 = __toESM(require_polyfills());
+      import_polyfills244 = __toESM(require_polyfills());
       getValueFromTextNode = (obj) => {
         const textNodeName = "#text";
         for (const key in obj) {
@@ -30010,18 +29697,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
-  var import_polyfills247;
+  var import_polyfills245;
   var init_is_serializable_header_value = __esm({
     "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
-      import_polyfills247 = __toESM(require_polyfills());
+      import_polyfills245 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
-  var import_polyfills248, NoOpLogger;
+  var import_polyfills246, NoOpLogger;
   var init_NoOpLogger = __esm({
     "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
-      import_polyfills248 = __toESM(require_polyfills());
+      import_polyfills246 = __toESM(require_polyfills());
       NoOpLogger = class {
         trace() {
         }
@@ -30038,42 +29725,42 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/object-mapping.js
-  var import_polyfills249;
+  var import_polyfills247;
   var init_object_mapping = __esm({
     "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
-      import_polyfills249 = __toESM(require_polyfills());
+      import_polyfills247 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/resolve-path.js
-  var import_polyfills250;
+  var import_polyfills248;
   var init_resolve_path2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
-      import_polyfills250 = __toESM(require_polyfills());
+      import_polyfills248 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/ser-utils.js
-  var import_polyfills251;
+  var import_polyfills249;
   var init_ser_utils = __esm({
     "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
-      import_polyfills251 = __toESM(require_polyfills());
+      import_polyfills249 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/serde-json.js
-  var import_polyfills252;
+  var import_polyfills250;
   var init_serde_json = __esm({
     "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
-      import_polyfills252 = __toESM(require_polyfills());
+      import_polyfills250 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/smithy-client/dist-es/index.js
-  var import_polyfills253;
+  var import_polyfills251;
   var init_dist_es20 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/index.js"() {
-      import_polyfills253 = __toESM(require_polyfills());
+      import_polyfills251 = __toESM(require_polyfills());
       init_client3();
       init_collect_stream_body2();
       init_command2();
@@ -30098,10 +29785,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
-  var import_polyfills254, ProtocolLib;
+  var import_polyfills252, ProtocolLib;
   var init_ProtocolLib = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
-      import_polyfills254 = __toESM(require_polyfills());
+      import_polyfills252 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es20();
       ProtocolLib = class {
@@ -30222,26 +29909,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
-  var import_polyfills255;
+  var import_polyfills253;
   var init_AwsSmithyRpcV2CborProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
-      import_polyfills255 = __toESM(require_polyfills());
+      import_polyfills253 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
-  var import_polyfills256;
+  var import_polyfills254;
   var init_coercing_serializers = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
-      import_polyfills256 = __toESM(require_polyfills());
+      import_polyfills254 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
-  var import_polyfills257, SerdeContextConfig;
+  var import_polyfills255, SerdeContextConfig;
   var init_ConfigurableSerdeContext = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
-      import_polyfills257 = __toESM(require_polyfills());
+      import_polyfills255 = __toESM(require_polyfills());
       SerdeContextConfig = class {
         serdeContext;
         setSerdeContext(serdeContext) {
@@ -30267,19 +29954,19 @@ ${toHex(hashedRequest)}`;
       yield [key, memberNs];
     }
   }
-  var import_polyfills258;
+  var import_polyfills256;
   var init_structIterator = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/structIterator.js"() {
-      import_polyfills258 = __toESM(require_polyfills());
+      import_polyfills256 = __toESM(require_polyfills());
       init_schema2();
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
-  var import_polyfills259, UnionSerde;
+  var import_polyfills257, UnionSerde;
   var init_UnionSerde = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
-      import_polyfills259 = __toESM(require_polyfills());
+      import_polyfills257 = __toESM(require_polyfills());
       UnionSerde = class {
         from;
         to;
@@ -30307,74 +29994,74 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
-  var import_polyfills260;
+  var import_polyfills258;
   var init_parseJsonBody = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
-      import_polyfills260 = __toESM(require_polyfills());
+      import_polyfills258 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
-  var import_polyfills261;
+  var import_polyfills259;
   var init_JsonShapeDeserializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
-      import_polyfills261 = __toESM(require_polyfills());
+      import_polyfills259 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
-  var import_polyfills262;
+  var import_polyfills260;
   var init_JsonShapeSerializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
-      import_polyfills262 = __toESM(require_polyfills());
+      import_polyfills260 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
-  var import_polyfills263;
+  var import_polyfills261;
   var init_JsonCodec = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
-      import_polyfills263 = __toESM(require_polyfills());
+      import_polyfills261 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
-  var import_polyfills264;
+  var import_polyfills262;
   var init_AwsJsonRpcProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
-      import_polyfills264 = __toESM(require_polyfills());
+      import_polyfills262 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
-  var import_polyfills265;
+  var import_polyfills263;
   var init_AwsJson1_0Protocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
-      import_polyfills265 = __toESM(require_polyfills());
+      import_polyfills263 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
-  var import_polyfills266;
+  var import_polyfills264;
   var init_AwsJson1_1Protocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
-      import_polyfills266 = __toESM(require_polyfills());
+      import_polyfills264 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
-  var import_polyfills267;
+  var import_polyfills265;
   var init_AwsRestJsonProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
-      import_polyfills267 = __toESM(require_polyfills());
+      import_polyfills265 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
-  var import_polyfills268;
+  var import_polyfills266;
   var init_awsExpectUnion = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
-      import_polyfills268 = __toESM(require_polyfills());
+      import_polyfills266 = __toESM(require_polyfills());
     }
   });
 
@@ -30382,10 +30069,10 @@ ${toHex(hashedRequest)}`;
   function escapeAttribute(value) {
     return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
-  var import_polyfills269;
+  var import_polyfills267;
   var init_escape_attribute = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
-      import_polyfills269 = __toESM(require_polyfills());
+      import_polyfills267 = __toESM(require_polyfills());
     }
   });
 
@@ -30393,18 +30080,18 @@ ${toHex(hashedRequest)}`;
   function escapeElement(value) {
     return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r/g, "&#x0D;").replace(/\n/g, "&#x0A;").replace(/\u0085/g, "&#x85;").replace(/\u2028/, "&#x2028;");
   }
-  var import_polyfills270;
+  var import_polyfills268;
   var init_escape_element = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
-      import_polyfills270 = __toESM(require_polyfills());
+      import_polyfills268 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
-  var import_polyfills271, XmlText;
+  var import_polyfills269, XmlText;
   var init_XmlText = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
-      import_polyfills271 = __toESM(require_polyfills());
+      import_polyfills269 = __toESM(require_polyfills());
       init_escape_element();
       XmlText = class {
         value;
@@ -30419,10 +30106,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
-  var import_polyfills272, XmlNode;
+  var import_polyfills270, XmlNode;
   var init_XmlNode = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
-      import_polyfills272 = __toESM(require_polyfills());
+      import_polyfills270 = __toESM(require_polyfills());
       init_escape_attribute();
       init_XmlText();
       XmlNode = class _XmlNode {
@@ -30568,18 +30255,18 @@ ${toHex(hashedRequest)}`;
       [xmlDocument.documentElement.nodeName]: xmlToObj(xmlDocument.documentElement)
     };
   }
-  var import_polyfills273, parser;
+  var import_polyfills271, parser;
   var init_xml_parser_browser = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
-      import_polyfills273 = __toESM(require_polyfills());
+      import_polyfills271 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/index.js
-  var import_polyfills274;
+  var import_polyfills272;
   var init_dist_es21 = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
-      import_polyfills274 = __toESM(require_polyfills());
+      import_polyfills272 = __toESM(require_polyfills());
       init_XmlNode();
       init_XmlText();
       init_xml_parser_browser();
@@ -30587,10 +30274,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
-  var import_polyfills275, XmlShapeDeserializer;
+  var import_polyfills273, XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
-      import_polyfills275 = __toESM(require_polyfills());
+      import_polyfills273 = __toESM(require_polyfills());
       init_dist_es21();
       init_protocols();
       init_schema2();
@@ -30743,32 +30430,32 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
-  var import_polyfills276;
+  var import_polyfills274;
   var init_AwsQueryProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
-      import_polyfills276 = __toESM(require_polyfills());
+      import_polyfills274 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
-  var import_polyfills277;
+  var import_polyfills275;
   var init_AwsEc2QueryProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
-      import_polyfills277 = __toESM(require_polyfills());
+      import_polyfills275 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
-  var import_polyfills278, loadRestXmlErrorCode;
+  var import_polyfills276, loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
-      import_polyfills278 = __toESM(require_polyfills());
-      loadRestXmlErrorCode = (output, data2) => {
-        if (data2?.Error?.Code !== void 0) {
-          return data2.Error.Code;
+      import_polyfills276 = __toESM(require_polyfills());
+      loadRestXmlErrorCode = (output, data) => {
+        if (data?.Error?.Code !== void 0) {
+          return data.Error.Code;
         }
-        if (data2?.Code !== void 0) {
-          return data2.Code;
+        if (data?.Code !== void 0) {
+          return data.Code;
         }
         if (output.statusCode == 404) {
           return "NotFound";
@@ -30778,10 +30465,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
-  var import_polyfills279, XmlShapeSerializer;
+  var import_polyfills277, XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
-      import_polyfills279 = __toESM(require_polyfills());
+      import_polyfills277 = __toESM(require_polyfills());
       init_dist_es21();
       init_protocols();
       init_schema2();
@@ -31057,10 +30744,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
-  var import_polyfills280, XmlCodec;
+  var import_polyfills278, XmlCodec;
   var init_XmlCodec = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
-      import_polyfills280 = __toESM(require_polyfills());
+      import_polyfills278 = __toESM(require_polyfills());
       init_ConfigurableSerdeContext();
       init_XmlShapeDeserializer();
       init_XmlShapeSerializer();
@@ -31085,10 +30772,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
-  var import_polyfills281, AwsRestXmlProtocol;
+  var import_polyfills279, AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
-      import_polyfills281 = __toESM(require_polyfills());
+      import_polyfills279 = __toESM(require_polyfills());
       init_protocols();
       init_schema2();
       init_ProtocolLib();
@@ -31172,10 +30859,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
-  var import_polyfills282;
+  var import_polyfills280;
   var init_protocols2 = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
-      import_polyfills282 = __toESM(require_polyfills());
+      import_polyfills280 = __toESM(require_polyfills());
       init_AwsSmithyRpcV2CborProtocol();
       init_coercing_serializers();
       init_AwsJson1_0Protocol();
@@ -31198,10 +30885,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/index.js
-  var import_polyfills283;
+  var import_polyfills281;
   var init_dist_es22 = __esm({
     "node_modules/@aws-sdk/core/dist-es/index.js"() {
-      import_polyfills283 = __toESM(require_polyfills());
+      import_polyfills281 = __toESM(require_polyfills());
       init_client2();
       init_httpAuthSchemes2();
       init_protocols2();
@@ -31209,10 +30896,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
-  var import_polyfills284, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
+  var import_polyfills282, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
   var init_types2 = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
-      import_polyfills284 = __toESM(require_polyfills());
+      import_polyfills282 = __toESM(require_polyfills());
       init_constants();
       CLIENT_SUPPORTED_ALGORITHMS = [
         ChecksumAlgorithm.CRC32,
@@ -31232,10 +30919,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
-  var import_polyfills285, getChecksumAlgorithmForRequest;
+  var import_polyfills283, getChecksumAlgorithmForRequest;
   var init_getChecksumAlgorithmForRequest = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
-      import_polyfills285 = __toESM(require_polyfills());
+      import_polyfills283 = __toESM(require_polyfills());
       init_constants();
       init_types2();
       getChecksumAlgorithmForRequest = (input, { requestChecksumRequired, requestAlgorithmMember, requestChecksumCalculation }) => {
@@ -31255,20 +30942,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
-  var import_polyfills286, getChecksumLocationName;
+  var import_polyfills284, getChecksumLocationName;
   var init_getChecksumLocationName = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
-      import_polyfills286 = __toESM(require_polyfills());
+      import_polyfills284 = __toESM(require_polyfills());
       init_constants();
       getChecksumLocationName = (algorithm) => algorithm === ChecksumAlgorithm.MD5 ? "content-md5" : `x-amz-checksum-${algorithm.toLowerCase()}`;
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
-  var import_polyfills287, hasHeader2;
+  var import_polyfills285, hasHeader2;
   var init_hasHeader = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
-      import_polyfills287 = __toESM(require_polyfills());
+      import_polyfills285 = __toESM(require_polyfills());
       hasHeader2 = (header, headers) => {
         const soughtHeader = header.toLowerCase();
         for (const headerName of Object.keys(headers)) {
@@ -31282,10 +30969,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
-  var import_polyfills288, hasHeaderWithPrefix;
+  var import_polyfills286, hasHeaderWithPrefix;
   var init_hasHeaderWithPrefix = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
-      import_polyfills288 = __toESM(require_polyfills());
+      import_polyfills286 = __toESM(require_polyfills());
       hasHeaderWithPrefix = (headerPrefix, headers) => {
         const soughtHeaderPrefix = headerPrefix.toLowerCase();
         for (const headerName of Object.keys(headers)) {
@@ -31299,10 +30986,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
-  var import_polyfills289, isStreaming;
+  var import_polyfills287, isStreaming;
   var init_isStreaming = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
-      import_polyfills289 = __toESM(require_polyfills());
+      import_polyfills287 = __toESM(require_polyfills());
       init_dist_es16();
       isStreaming = (body) => body !== void 0 && typeof body !== "string" && !ArrayBuffer.isView(body) && !isArrayBuffer(body);
     }
@@ -31416,44 +31103,44 @@ ${toHex(hashedRequest)}`;
     };
     throw new TypeError(s2 ? "Object is not iterable." : "Symbol.iterator is not defined.");
   }
-  var import_polyfills290;
+  var import_polyfills288;
   var init_tslib_es6 = __esm({
     "node_modules/tslib/tslib.es6.mjs"() {
-      import_polyfills290 = __toESM(require_polyfills(), 1);
+      import_polyfills288 = __toESM(require_polyfills(), 1);
     }
   });
 
   // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-  var import_polyfills291, fromUtf82;
+  var import_polyfills289, fromUtf82;
   var init_fromUtf8_browser2 = __esm({
     "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-      import_polyfills291 = __toESM(require_polyfills());
+      import_polyfills289 = __toESM(require_polyfills());
       fromUtf82 = (input) => new TextEncoder().encode(input);
     }
   });
 
   // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-  var import_polyfills292;
+  var import_polyfills290;
   var init_toUint8Array2 = __esm({
     "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-      import_polyfills292 = __toESM(require_polyfills());
+      import_polyfills290 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
     }
   });
 
   // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-  var import_polyfills293;
+  var import_polyfills291;
   var init_toUtf8_browser2 = __esm({
     "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-      import_polyfills293 = __toESM(require_polyfills());
+      import_polyfills291 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
-  var import_polyfills294;
+  var import_polyfills292;
   var init_dist_es23 = __esm({
     "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
-      import_polyfills294 = __toESM(require_polyfills());
+      import_polyfills292 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
       init_toUint8Array2();
       init_toUtf8_browser2();
@@ -31461,21 +31148,21 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/util/build/module/convertToBuffer.js
-  function convertToBuffer(data2) {
-    if (data2 instanceof Uint8Array)
-      return data2;
-    if (typeof data2 === "string") {
-      return fromUtf83(data2);
+  function convertToBuffer(data) {
+    if (data instanceof Uint8Array)
+      return data;
+    if (typeof data === "string") {
+      return fromUtf83(data);
     }
-    if (ArrayBuffer.isView(data2)) {
-      return new Uint8Array(data2.buffer, data2.byteOffset, data2.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+    if (ArrayBuffer.isView(data)) {
+      return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
     }
-    return new Uint8Array(data2);
+    return new Uint8Array(data);
   }
-  var import_polyfills295, fromUtf83;
+  var import_polyfills293, fromUtf83;
   var init_convertToBuffer = __esm({
     "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
-      import_polyfills295 = __toESM(require_polyfills());
+      import_polyfills293 = __toESM(require_polyfills());
       init_dist_es23();
       fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
         return Buffer.from(input, "utf8");
@@ -31484,16 +31171,16 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/util/build/module/isEmptyData.js
-  function isEmptyData(data2) {
-    if (typeof data2 === "string") {
-      return data2.length === 0;
+  function isEmptyData(data) {
+    if (typeof data === "string") {
+      return data.length === 0;
     }
-    return data2.byteLength === 0;
+    return data.byteLength === 0;
   }
-  var import_polyfills296;
+  var import_polyfills294;
   var init_isEmptyData = __esm({
     "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
-      import_polyfills296 = __toESM(require_polyfills());
+      import_polyfills294 = __toESM(require_polyfills());
     }
   });
 
@@ -31506,10 +31193,10 @@ ${toHex(hashedRequest)}`;
       num & 255
     ]);
   }
-  var import_polyfills297;
+  var import_polyfills295;
   var init_numToUint8 = __esm({
     "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
-      import_polyfills297 = __toESM(require_polyfills());
+      import_polyfills295 = __toESM(require_polyfills());
     }
   });
 
@@ -31526,18 +31213,18 @@ ${toHex(hashedRequest)}`;
     }
     return Uint32Array.from(a_lookUpTable2);
   }
-  var import_polyfills298;
+  var import_polyfills296;
   var init_uint32ArrayFrom = __esm({
     "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
-      import_polyfills298 = __toESM(require_polyfills());
+      import_polyfills296 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/util/build/module/index.js
-  var import_polyfills299;
+  var import_polyfills297;
   var init_module = __esm({
     "node_modules/@aws-crypto/util/build/module/index.js"() {
-      import_polyfills299 = __toESM(require_polyfills());
+      import_polyfills297 = __toESM(require_polyfills());
       init_convertToBuffer();
       init_isEmptyData();
       init_numToUint8();
@@ -31546,10 +31233,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
-  var import_polyfills300, AwsCrc32c;
+  var import_polyfills298, AwsCrc32c;
   var init_aws_crc32c = __esm({
     "node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
-      import_polyfills300 = __toESM(require_polyfills());
+      import_polyfills298 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
       init_module2();
@@ -31579,10 +31266,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/crc32c/build/module/index.js
-  var import_polyfills301, Crc32c, a_lookupTable, lookupTable;
+  var import_polyfills299, Crc32c, a_lookupTable, lookupTable;
   var init_module2 = __esm({
     "node_modules/@aws-crypto/crc32c/build/module/index.js"() {
-      import_polyfills301 = __toESM(require_polyfills());
+      import_polyfills299 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
       init_aws_crc32c();
@@ -31591,10 +31278,10 @@ ${toHex(hashedRequest)}`;
         function Crc32c2() {
           this.checksum = 4294967295;
         }
-        Crc32c2.prototype.update = function(data2) {
+        Crc32c2.prototype.update = function(data) {
           var e_1, _a;
           try {
-            for (var data_1 = __values(data2), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
+            for (var data_1 = __values(data), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
               var byte = data_1_1.value;
               this.checksum = this.checksum >>> 8 ^ lookupTable[(this.checksum ^ byte) & 255];
             }
@@ -31877,10 +31564,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
-  var import_polyfills302, generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
+  var import_polyfills300, generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
   var init_Crc64Nvme = __esm({
     "node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
-      import_polyfills302 = __toESM(require_polyfills());
+      import_polyfills300 = __toESM(require_polyfills());
       generateCRC64NVMETable = () => {
         const sliceLength = 8;
         const tables = new Array(sliceLength);
@@ -31915,25 +31602,25 @@ ${toHex(hashedRequest)}`;
           ensureTablesInitialized();
           this.reset();
         }
-        update(data2) {
-          const len = data2.length;
+        update(data) {
+          const len = data.length;
           let i2 = 0;
           let crc1 = this.c1;
           let crc2 = this.c2;
           while (i2 + 8 <= len) {
-            const idx0 = ((crc2 ^ data2[i2++]) & 255) << 1;
-            const idx1 = ((crc2 >>> 8 ^ data2[i2++]) & 255) << 1;
-            const idx2 = ((crc2 >>> 16 ^ data2[i2++]) & 255) << 1;
-            const idx3 = ((crc2 >>> 24 ^ data2[i2++]) & 255) << 1;
-            const idx4 = ((crc1 ^ data2[i2++]) & 255) << 1;
-            const idx5 = ((crc1 >>> 8 ^ data2[i2++]) & 255) << 1;
-            const idx6 = ((crc1 >>> 16 ^ data2[i2++]) & 255) << 1;
-            const idx7 = ((crc1 >>> 24 ^ data2[i2++]) & 255) << 1;
+            const idx0 = ((crc2 ^ data[i2++]) & 255) << 1;
+            const idx1 = ((crc2 >>> 8 ^ data[i2++]) & 255) << 1;
+            const idx2 = ((crc2 >>> 16 ^ data[i2++]) & 255) << 1;
+            const idx3 = ((crc2 >>> 24 ^ data[i2++]) & 255) << 1;
+            const idx4 = ((crc1 ^ data[i2++]) & 255) << 1;
+            const idx5 = ((crc1 >>> 8 ^ data[i2++]) & 255) << 1;
+            const idx6 = ((crc1 >>> 16 ^ data[i2++]) & 255) << 1;
+            const idx7 = ((crc1 >>> 24 ^ data[i2++]) & 255) << 1;
             crc1 = t7[idx0] ^ t6[idx1] ^ t5[idx2] ^ t4[idx3] ^ t3[idx4] ^ t2[idx5] ^ t1[idx6] ^ t0[idx7];
             crc2 = t7[idx0 + 1] ^ t6[idx1 + 1] ^ t5[idx2 + 1] ^ t4[idx3 + 1] ^ t3[idx4 + 1] ^ t2[idx5 + 1] ^ t1[idx6 + 1] ^ t0[idx7 + 1];
           }
           while (i2 < len) {
-            const idx = ((crc2 ^ data2[i2]) & 255) << 1;
+            const idx = ((crc2 ^ data[i2]) & 255) << 1;
             crc2 = (crc2 >>> 8 | (crc1 & 255) << 24) >>> 0;
             crc1 = crc1 >>> 8 ^ t0[idx];
             crc2 ^= t0[idx + 1];
@@ -31965,10 +31652,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
-  var import_polyfills303, crc64NvmeCrtContainer;
+  var import_polyfills301, crc64NvmeCrtContainer;
   var init_crc64_nvme_crt_container = __esm({
     "node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
-      import_polyfills303 = __toESM(require_polyfills());
+      import_polyfills301 = __toESM(require_polyfills());
       crc64NvmeCrtContainer = {
         CrtCrc64Nvme: null
       };
@@ -31976,20 +31663,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
-  var import_polyfills304;
+  var import_polyfills302;
   var init_dist_es24 = __esm({
     "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
-      import_polyfills304 = __toESM(require_polyfills());
+      import_polyfills302 = __toESM(require_polyfills());
       init_Crc64Nvme();
       init_crc64_nvme_crt_container();
     }
   });
 
   // node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
-  var import_polyfills305, AwsCrc32;
+  var import_polyfills303, AwsCrc32;
   var init_aws_crc32 = __esm({
     "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
-      import_polyfills305 = __toESM(require_polyfills());
+      import_polyfills303 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
       init_module3();
@@ -32019,10 +31706,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/crc32/build/module/index.js
-  var import_polyfills306, Crc32, a_lookUpTable, lookupTable2;
+  var import_polyfills304, Crc32, a_lookUpTable, lookupTable2;
   var init_module3 = __esm({
     "node_modules/@aws-crypto/crc32/build/module/index.js"() {
-      import_polyfills306 = __toESM(require_polyfills());
+      import_polyfills304 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
       init_aws_crc32();
@@ -32031,10 +31718,10 @@ ${toHex(hashedRequest)}`;
         function Crc322() {
           this.checksum = 4294967295;
         }
-        Crc322.prototype.update = function(data2) {
+        Crc322.prototype.update = function(data) {
           var e_1, _a;
           try {
-            for (var data_1 = __values(data2), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
+            for (var data_1 = __values(data), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
               var byte = data_1_1.value;
               this.checksum = this.checksum >>> 8 ^ lookupTable2[(this.checksum ^ byte) & 255];
             }
@@ -32317,20 +32004,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
-  var import_polyfills307, getCrc32ChecksumAlgorithmFunction;
+  var import_polyfills305, getCrc32ChecksumAlgorithmFunction;
   var init_getCrc32ChecksumAlgorithmFunction_browser = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
-      import_polyfills307 = __toESM(require_polyfills());
+      import_polyfills305 = __toESM(require_polyfills());
       init_module3();
       getCrc32ChecksumAlgorithmFunction = () => AwsCrc32;
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
-  var import_polyfills308, selectChecksumAlgorithmFunction;
+  var import_polyfills306, selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
-      import_polyfills308 = __toESM(require_polyfills());
+      import_polyfills306 = __toESM(require_polyfills());
       init_module2();
       init_dist_es24();
       init_constants();
@@ -32360,10 +32047,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
-  var import_polyfills309, stringHasher;
+  var import_polyfills307, stringHasher;
   var init_stringHasher = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
-      import_polyfills309 = __toESM(require_polyfills());
+      import_polyfills307 = __toESM(require_polyfills());
       init_dist_es6();
       stringHasher = (checksumAlgorithmFn, body) => {
         const hash = new checksumAlgorithmFn();
@@ -32374,10 +32061,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
-  var import_polyfills310, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
+  var import_polyfills308, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
-      import_polyfills310 = __toESM(require_polyfills());
+      import_polyfills308 = __toESM(require_polyfills());
       init_dist_es22();
       init_dist_es2();
       init_dist_es12();
@@ -32497,10 +32184,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
-  var import_polyfills311, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
+  var import_polyfills309, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
-      import_polyfills311 = __toESM(require_polyfills());
+      import_polyfills309 = __toESM(require_polyfills());
       init_dist_es22();
       init_constants();
       flexibleChecksumsInputMiddlewareOptions = {
@@ -32542,10 +32229,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
-  var import_polyfills312, getChecksumAlgorithmListForResponse;
+  var import_polyfills310, getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
-      import_polyfills312 = __toESM(require_polyfills());
+      import_polyfills310 = __toESM(require_polyfills());
       init_types2();
       getChecksumAlgorithmListForResponse = (responseAlgorithms = []) => {
         const validChecksumAlgorithms = [];
@@ -32561,10 +32248,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
-  var import_polyfills313, isChecksumWithPartNumber;
+  var import_polyfills311, isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
-      import_polyfills313 = __toESM(require_polyfills());
+      import_polyfills311 = __toESM(require_polyfills());
       isChecksumWithPartNumber = (checksum) => {
         const lastHyphenIndex = checksum.lastIndexOf("-");
         if (lastHyphenIndex !== -1) {
@@ -32582,20 +32269,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
-  var import_polyfills314, getChecksum;
+  var import_polyfills312, getChecksum;
   var init_getChecksum = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
-      import_polyfills314 = __toESM(require_polyfills());
+      import_polyfills312 = __toESM(require_polyfills());
       init_stringHasher();
       getChecksum = async (body, { checksumAlgorithmFn, base64Encoder }) => base64Encoder(await stringHasher(checksumAlgorithmFn, body));
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
-  var import_polyfills315, validateChecksumFromResponse;
+  var import_polyfills313, validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
-      import_polyfills315 = __toESM(require_polyfills());
+      import_polyfills313 = __toESM(require_polyfills());
       init_dist_es12();
       init_constants();
       init_getChecksum();
@@ -32643,10 +32330,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
-  var import_polyfills316, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
+  var import_polyfills314, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
-      import_polyfills316 = __toESM(require_polyfills());
+      import_polyfills314 = __toESM(require_polyfills());
       init_dist_es2();
       init_getChecksumAlgorithmListForResponse();
       init_getChecksumLocationName();
@@ -32689,10 +32376,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
-  var import_polyfills317, getFlexibleChecksumsPlugin;
+  var import_polyfills315, getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
-      import_polyfills317 = __toESM(require_polyfills());
+      import_polyfills315 = __toESM(require_polyfills());
       init_flexibleChecksumsInputMiddleware();
       init_flexibleChecksumsMiddleware();
       init_flexibleChecksumsResponseMiddleware();
@@ -32707,10 +32394,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
-  var import_polyfills318, resolveFlexibleChecksumsConfig;
+  var import_polyfills316, resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
-      import_polyfills318 = __toESM(require_polyfills());
+      import_polyfills316 = __toESM(require_polyfills());
       init_dist_es4();
       init_constants();
       resolveFlexibleChecksumsConfig = (input) => {
@@ -32725,10 +32412,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
-  var import_polyfills319;
+  var import_polyfills317;
   var init_dist_es25 = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
-      import_polyfills319 = __toESM(require_polyfills());
+      import_polyfills317 = __toESM(require_polyfills());
       init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS();
       init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS();
       init_constants();
@@ -32742,10 +32429,10 @@ ${toHex(hashedRequest)}`;
   function resolveHostHeaderConfig(input) {
     return input;
   }
-  var import_polyfills320, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
+  var import_polyfills318, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
   var init_dist_es26 = __esm({
     "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
-      import_polyfills320 = __toESM(require_polyfills());
+      import_polyfills318 = __toESM(require_polyfills());
       init_dist_es2();
       hostHeaderMiddleware = (options) => (next) => async (args) => {
         if (!HttpRequest.isInstance(args.request))
@@ -32779,10 +32466,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
-  var import_polyfills321, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
+  var import_polyfills319, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
-      import_polyfills321 = __toESM(require_polyfills());
+      import_polyfills319 = __toESM(require_polyfills());
       loggerMiddleware = () => (next, context) => async (args) => {
         try {
           const response = await next(args);
@@ -32828,19 +32515,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
-  var import_polyfills322;
+  var import_polyfills320;
   var init_dist_es27 = __esm({
     "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
-      import_polyfills322 = __toESM(require_polyfills());
+      import_polyfills320 = __toESM(require_polyfills());
       init_loggerMiddleware();
     }
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
-  var import_polyfills323, recursionDetectionMiddlewareOptions;
+  var import_polyfills321, recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
-      import_polyfills323 = __toESM(require_polyfills());
+      import_polyfills321 = __toESM(require_polyfills());
       recursionDetectionMiddlewareOptions = {
         step: "build",
         tags: ["RECURSION_DETECTION"],
@@ -32852,19 +32539,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
-  var import_polyfills324, recursionDetectionMiddleware;
+  var import_polyfills322, recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
-      import_polyfills324 = __toESM(require_polyfills());
+      import_polyfills322 = __toESM(require_polyfills());
       recursionDetectionMiddleware = () => (next) => async (args) => next(args);
     }
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
-  var import_polyfills325, getRecursionDetectionPlugin;
+  var import_polyfills323, getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
-      import_polyfills325 = __toESM(require_polyfills());
+      import_polyfills323 = __toESM(require_polyfills());
       init_configuration();
       init_recursionDetectionMiddleware_browser();
       getRecursionDetectionPlugin = (options) => ({
@@ -32876,10 +32563,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
-  var import_polyfills326;
+  var import_polyfills324;
   var init_dist_es28 = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
-      import_polyfills326 = __toESM(require_polyfills());
+      import_polyfills324 = __toESM(require_polyfills());
       init_getRecursionDetectionPlugin();
       init_recursionDetectionMiddleware_browser();
     }
@@ -32902,10 +32589,10 @@ ${toHex(hashedRequest)}`;
       return next({ ...args });
     };
   }
-  var import_polyfills327, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
+  var import_polyfills325, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
-      import_polyfills327 = __toESM(require_polyfills());
+      import_polyfills325 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es20();
       CONTENT_LENGTH_HEADER = "content-length";
@@ -32925,10 +32612,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
-  var import_polyfills328, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
+  var import_polyfills326, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
-      import_polyfills328 = __toESM(require_polyfills());
+      import_polyfills326 = __toESM(require_polyfills());
       regionRedirectEndpointMiddleware = (config) => {
         return (next, context) => async (args) => {
           const originalRegion = await config.region();
@@ -33000,10 +32687,10 @@ ${toHex(hashedRequest)}`;
       }
     };
   }
-  var import_polyfills329, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
+  var import_polyfills327, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
-      import_polyfills329 = __toESM(require_polyfills());
+      import_polyfills327 = __toESM(require_polyfills());
       init_region_redirect_endpoint_middleware();
       regionRedirectMiddlewareOptions = {
         step: "initialize",
@@ -33021,10 +32708,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
-  var import_polyfills330, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
+  var import_polyfills328, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
-      import_polyfills330 = __toESM(require_polyfills());
+      import_polyfills328 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es20();
       s3ExpiresMiddleware = (config) => {
@@ -33061,16 +32748,16 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
-  var import_polyfills331, S3ExpressIdentityCache;
+  var import_polyfills329, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
-      import_polyfills331 = __toESM(require_polyfills());
+      import_polyfills329 = __toESM(require_polyfills());
       S3ExpressIdentityCache = class _S3ExpressIdentityCache {
         data;
         lastPurgeTime = Date.now();
         static EXPIRED_CREDENTIAL_PURGE_INTERVAL_MS = 3e4;
-        constructor(data2 = {}) {
-          this.data = data2;
+        constructor(data = {}) {
+          this.data = data;
         }
         get(key) {
           const entry = this.data[key];
@@ -33108,10 +32795,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
-  var import_polyfills332, S3ExpressIdentityCacheEntry;
+  var import_polyfills330, S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
-      import_polyfills332 = __toESM(require_polyfills());
+      import_polyfills330 = __toESM(require_polyfills());
       S3ExpressIdentityCacheEntry = class {
         _identity;
         isRefreshing;
@@ -33130,10 +32817,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
-  var import_polyfills333, S3ExpressIdentityProviderImpl;
+  var import_polyfills331, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
-      import_polyfills333 = __toESM(require_polyfills());
+      import_polyfills331 = __toESM(require_polyfills());
       init_S3ExpressIdentityCache();
       init_S3ExpressIdentityCacheEntry();
       S3ExpressIdentityProviderImpl = class _S3ExpressIdentityProviderImpl {
@@ -33187,10 +32874,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
-  var import_polyfills334, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
+  var import_polyfills332, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants4 = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
-      import_polyfills334 = __toESM(require_polyfills());
+      import_polyfills332 = __toESM(require_polyfills());
       S3_EXPRESS_BUCKET_TYPE = "Directory";
       S3_EXPRESS_BACKEND = "S3Express";
       S3_EXPRESS_AUTH_SCHEME = "sigv4-s3express";
@@ -33220,10 +32907,10 @@ ${toHex(hashedRequest)}`;
     };
     privateAccess.credentialProvider = overrideCredentialsProviderOnce;
   }
-  var import_polyfills335, SignatureV4S3Express;
+  var import_polyfills333, SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
-      import_polyfills335 = __toESM(require_polyfills());
+      import_polyfills333 = __toESM(require_polyfills());
       init_dist_es17();
       init_constants4();
       SignatureV4S3Express = class extends SignatureV4 {
@@ -33249,10 +32936,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
-  var import_polyfills336, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
+  var import_polyfills334, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
-      import_polyfills336 = __toESM(require_polyfills());
+      import_polyfills334 = __toESM(require_polyfills());
       init_dist_es22();
       init_dist_es2();
       init_constants4();
@@ -33297,10 +32984,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
-  var import_polyfills337, signS3Express;
+  var import_polyfills335, signS3Express;
   var init_signS3Express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
-      import_polyfills337 = __toESM(require_polyfills());
+      import_polyfills335 = __toESM(require_polyfills());
       signS3Express = async (s3ExpressIdentity, signingOptions, request, sigV4MultiRegionSigner) => {
         const signedRequest = await sigV4MultiRegionSigner.signWithCredentials(request, s3ExpressIdentity, {});
         if (signedRequest.headers["X-Amz-Security-Token"] || signedRequest.headers["x-amz-security-token"]) {
@@ -33312,10 +32999,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
-  var import_polyfills338, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
+  var import_polyfills336, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
-      import_polyfills338 = __toESM(require_polyfills());
+      import_polyfills336 = __toESM(require_polyfills());
       init_dist_es14();
       init_dist_es2();
       init_dist_es4();
@@ -33357,10 +33044,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
-  var import_polyfills339;
+  var import_polyfills337;
   var init_s3_express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
-      import_polyfills339 = __toESM(require_polyfills());
+      import_polyfills337 = __toESM(require_polyfills());
       init_S3ExpressIdentityProviderImpl();
       init_SignatureV4S3Express();
       init_s3ExpressMiddleware();
@@ -33369,10 +33056,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
-  var import_polyfills340, resolveS3Config;
+  var import_polyfills338, resolveS3Config;
   var init_s3Configuration = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
-      import_polyfills340 = __toESM(require_polyfills());
+      import_polyfills338 = __toESM(require_polyfills());
       init_s3_express();
       resolveS3Config = (input, { session }) => {
         const [s3ClientProvider, CreateSessionCommandCtor] = session;
@@ -33393,10 +33080,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
-  var import_polyfills341, THROW_IF_EMPTY_BODY, MAX_BYTES_TO_INSPECT, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
+  var import_polyfills339, THROW_IF_EMPTY_BODY, MAX_BYTES_TO_INSPECT, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
-      import_polyfills341 = __toESM(require_polyfills());
+      import_polyfills339 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es12();
       THROW_IF_EMPTY_BODY = {
@@ -33466,10 +33153,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
-  var import_polyfills342, validate;
+  var import_polyfills340, validate;
   var init_dist_es29 = __esm({
     "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
-      import_polyfills342 = __toESM(require_polyfills());
+      import_polyfills340 = __toESM(require_polyfills());
       validate = (str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6;
     }
   });
@@ -33503,10 +33190,10 @@ ${toHex(hashedRequest)}`;
       return next(args);
     };
   }
-  var import_polyfills343, bucketEndpointMiddlewareOptions;
+  var import_polyfills341, bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
-      import_polyfills343 = __toESM(require_polyfills());
+      import_polyfills341 = __toESM(require_polyfills());
       bucketEndpointMiddlewareOptions = {
         name: "bucketEndpointMiddleware",
         override: true,
@@ -33528,10 +33215,10 @@ ${toHex(hashedRequest)}`;
       return next({ ...args });
     };
   }
-  var import_polyfills344, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
+  var import_polyfills342, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
-      import_polyfills344 = __toESM(require_polyfills());
+      import_polyfills342 = __toESM(require_polyfills());
       init_dist_es29();
       init_bucket_endpoint_middleware();
       validateBucketNameMiddlewareOptions = {
@@ -33550,10 +33237,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
-  var import_polyfills345;
+  var import_polyfills343;
   var init_dist_es30 = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
-      import_polyfills345 = __toESM(require_polyfills());
+      import_polyfills343 = __toESM(require_polyfills());
       init_check_content_length_header();
       init_region_redirect_endpoint_middleware();
       init_region_redirect_middleware();
@@ -33591,20 +33278,20 @@ ${toHex(hashedRequest)}`;
       }
     });
   }
-  var import_polyfills346, DEFAULT_UA_APP_ID;
+  var import_polyfills344, DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
-      import_polyfills346 = __toESM(require_polyfills());
+      import_polyfills344 = __toESM(require_polyfills());
       init_dist_es14();
       DEFAULT_UA_APP_ID = void 0;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
-  var import_polyfills347, EndpointCache;
+  var import_polyfills345, EndpointCache;
   var init_EndpointCache = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
-      import_polyfills347 = __toESM(require_polyfills());
+      import_polyfills345 = __toESM(require_polyfills());
       EndpointCache = class {
         capacity;
         data = /* @__PURE__ */ new Map();
@@ -33659,20 +33346,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
-  var import_polyfills348, IP_V4_REGEX, isIpAddress;
+  var import_polyfills346, IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
-      import_polyfills348 = __toESM(require_polyfills());
+      import_polyfills346 = __toESM(require_polyfills());
       IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
       isIpAddress = (value) => IP_V4_REGEX.test(value) || value.startsWith("[") && value.endsWith("]");
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
-  var import_polyfills349, VALID_HOST_LABEL_REGEX, isValidHostLabel;
+  var import_polyfills347, VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
-      import_polyfills349 = __toESM(require_polyfills());
+      import_polyfills347 = __toESM(require_polyfills());
       VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
       isValidHostLabel = (value, allowSubDomains = false) => {
         if (!allowSubDomains) {
@@ -33690,19 +33377,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
-  var import_polyfills350, customEndpointFunctions;
+  var import_polyfills348, customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
-      import_polyfills350 = __toESM(require_polyfills());
+      import_polyfills348 = __toESM(require_polyfills());
       customEndpointFunctions = {};
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
-  var import_polyfills351, debugId;
+  var import_polyfills349, debugId;
   var init_debugId = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
-      import_polyfills351 = __toESM(require_polyfills());
+      import_polyfills349 = __toESM(require_polyfills());
       debugId = "endpoints";
     }
   });
@@ -33720,28 +33407,28 @@ ${toHex(hashedRequest)}`;
     }
     return JSON.stringify(input, null, 2);
   }
-  var import_polyfills352;
+  var import_polyfills350;
   var init_toDebugString = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
-      import_polyfills352 = __toESM(require_polyfills());
+      import_polyfills350 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
-  var import_polyfills353;
+  var import_polyfills351;
   var init_debug = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
-      import_polyfills353 = __toESM(require_polyfills());
+      import_polyfills351 = __toESM(require_polyfills());
       init_debugId();
       init_toDebugString();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
-  var import_polyfills354, EndpointError;
+  var import_polyfills352, EndpointError;
   var init_EndpointError = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
-      import_polyfills354 = __toESM(require_polyfills());
+      import_polyfills352 = __toESM(require_polyfills());
       EndpointError = class extends Error {
         constructor(message) {
           super(message);
@@ -33752,58 +33439,58 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
-  var import_polyfills355;
+  var import_polyfills353;
   var init_EndpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
-      import_polyfills355 = __toESM(require_polyfills());
+      import_polyfills353 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
-  var import_polyfills356;
+  var import_polyfills354;
   var init_EndpointRuleObject2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
-      import_polyfills356 = __toESM(require_polyfills());
+      import_polyfills354 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
-  var import_polyfills357;
+  var import_polyfills355;
   var init_ErrorRuleObject2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
-      import_polyfills357 = __toESM(require_polyfills());
+      import_polyfills355 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
-  var import_polyfills358;
+  var import_polyfills356;
   var init_RuleSetObject2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
-      import_polyfills358 = __toESM(require_polyfills());
+      import_polyfills356 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
-  var import_polyfills359;
+  var import_polyfills357;
   var init_TreeRuleObject2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
-      import_polyfills359 = __toESM(require_polyfills());
+      import_polyfills357 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
-  var import_polyfills360;
+  var import_polyfills358;
   var init_shared2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
-      import_polyfills360 = __toESM(require_polyfills());
+      import_polyfills358 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/index.js
-  var import_polyfills361;
+  var import_polyfills359;
   var init_types3 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
-      import_polyfills361 = __toESM(require_polyfills());
+      import_polyfills359 = __toESM(require_polyfills());
       init_EndpointError();
       init_EndpointFunctions();
       init_EndpointRuleObject2();
@@ -33815,32 +33502,32 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
-  var import_polyfills362, booleanEquals;
+  var import_polyfills360, booleanEquals;
   var init_booleanEquals = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
-      import_polyfills362 = __toESM(require_polyfills());
+      import_polyfills360 = __toESM(require_polyfills());
       booleanEquals = (value1, value2) => value1 === value2;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
-  var import_polyfills363, getAttrPathList;
+  var import_polyfills361, getAttrPathList;
   var init_getAttrPathList = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
-      import_polyfills363 = __toESM(require_polyfills());
+      import_polyfills361 = __toESM(require_polyfills());
       init_types3();
-      getAttrPathList = (path3) => {
-        const parts = path3.split(".");
+      getAttrPathList = (path) => {
+        const parts = path.split(".");
         const pathList = [];
         for (const part of parts) {
           const squareBracketIndex = part.indexOf("[");
           if (squareBracketIndex !== -1) {
             if (part.indexOf("]") !== part.length - 1) {
-              throw new EndpointError(`Path: '${path3}' does not end with ']'`);
+              throw new EndpointError(`Path: '${path}' does not end with ']'`);
             }
             const arrayIndex = part.slice(squareBracketIndex + 1, -1);
             if (Number.isNaN(parseInt(arrayIndex))) {
-              throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path3}'`);
+              throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path}'`);
             }
             if (squareBracketIndex !== 0) {
               pathList.push(part.slice(0, squareBracketIndex));
@@ -33856,15 +33543,15 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
-  var import_polyfills364, getAttr;
+  var import_polyfills362, getAttr;
   var init_getAttr = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
-      import_polyfills364 = __toESM(require_polyfills());
+      import_polyfills362 = __toESM(require_polyfills());
       init_types3();
       init_getAttrPathList();
-      getAttr = (value, path3) => getAttrPathList(path3).reduce((acc, index) => {
+      getAttr = (value, path) => getAttrPathList(path).reduce((acc, index) => {
         if (typeof acc !== "object") {
-          throw new EndpointError(`Index '${index}' in '${path3}' not found in '${JSON.stringify(value)}'`);
+          throw new EndpointError(`Index '${index}' in '${path}' not found in '${JSON.stringify(value)}'`);
         } else if (Array.isArray(acc)) {
           return acc[parseInt(index)];
         }
@@ -33874,28 +33561,28 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
-  var import_polyfills365, isSet;
+  var import_polyfills363, isSet;
   var init_isSet = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
-      import_polyfills365 = __toESM(require_polyfills());
+      import_polyfills363 = __toESM(require_polyfills());
       isSet = (value) => value != null;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
-  var import_polyfills366, not;
+  var import_polyfills364, not;
   var init_not = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
-      import_polyfills366 = __toESM(require_polyfills());
+      import_polyfills364 = __toESM(require_polyfills());
       not = (value) => !value;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
-  var import_polyfills367, DEFAULT_PORTS, parseURL;
+  var import_polyfills365, DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
-      import_polyfills367 = __toESM(require_polyfills());
+      import_polyfills365 = __toESM(require_polyfills());
       init_dist_es();
       init_isIpAddress();
       DEFAULT_PORTS = {
@@ -33909,8 +33596,8 @@ ${toHex(hashedRequest)}`;
               return value;
             }
             if (typeof value === "object" && "hostname" in value) {
-              const { hostname: hostname2, port, protocol: protocol2 = "", path: path3 = "", query = {} } = value;
-              const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path3}`);
+              const { hostname: hostname2, port, protocol: protocol2 = "", path = "", query = {} } = value;
+              const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path}`);
               url.search = Object.entries(query).map(([k2, v2]) => `${k2}=${v2}`).join("&");
               return url;
             }
@@ -33947,19 +33634,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
-  var import_polyfills368, stringEquals;
+  var import_polyfills366, stringEquals;
   var init_stringEquals = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
-      import_polyfills368 = __toESM(require_polyfills());
+      import_polyfills366 = __toESM(require_polyfills());
       stringEquals = (value1, value2) => value1 === value2;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
-  var import_polyfills369, substring;
+  var import_polyfills367, substring;
   var init_substring = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
-      import_polyfills369 = __toESM(require_polyfills());
+      import_polyfills367 = __toESM(require_polyfills());
       substring = (input, start, stop, reverse) => {
         if (start >= stop || input.length < stop) {
           return null;
@@ -33973,19 +33660,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
-  var import_polyfills370, uriEncode;
+  var import_polyfills368, uriEncode;
   var init_uriEncode = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
-      import_polyfills370 = __toESM(require_polyfills());
+      import_polyfills368 = __toESM(require_polyfills());
       uriEncode = (value) => encodeURIComponent(value).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
-  var import_polyfills371;
+  var import_polyfills369;
   var init_lib = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
-      import_polyfills371 = __toESM(require_polyfills());
+      import_polyfills369 = __toESM(require_polyfills());
       init_booleanEquals();
       init_getAttr();
       init_isSet();
@@ -33999,10 +33686,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
-  var import_polyfills372, endpointFunctions;
+  var import_polyfills370, endpointFunctions;
   var init_endpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
-      import_polyfills372 = __toESM(require_polyfills());
+      import_polyfills370 = __toESM(require_polyfills());
       init_lib();
       endpointFunctions = {
         booleanEquals,
@@ -34019,10 +33706,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
-  var import_polyfills373, evaluateTemplate;
+  var import_polyfills371, evaluateTemplate;
   var init_evaluateTemplate = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
-      import_polyfills373 = __toESM(require_polyfills());
+      import_polyfills371 = __toESM(require_polyfills());
       init_lib();
       evaluateTemplate = (template, options) => {
         const evaluatedTemplateArr = [];
@@ -34062,10 +33749,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
-  var import_polyfills374, getReferenceValue;
+  var import_polyfills372, getReferenceValue;
   var init_getReferenceValue = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
-      import_polyfills374 = __toESM(require_polyfills());
+      import_polyfills372 = __toESM(require_polyfills());
       getReferenceValue = ({ ref }, options) => {
         const referenceRecord = {
           ...options.endpointParams,
@@ -34077,10 +33764,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
-  var import_polyfills375, evaluateExpression, callFunction, group;
+  var import_polyfills373, evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
-      import_polyfills375 = __toESM(require_polyfills());
+      import_polyfills373 = __toESM(require_polyfills());
       init_types3();
       init_customEndpointFunctions();
       init_endpointFunctions();
@@ -34112,19 +33799,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
-  var import_polyfills376;
+  var import_polyfills374;
   var init_callFunction = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
-      import_polyfills376 = __toESM(require_polyfills());
+      import_polyfills374 = __toESM(require_polyfills());
       init_evaluateExpression();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
-  var import_polyfills377, evaluateCondition;
+  var import_polyfills375, evaluateCondition;
   var init_evaluateCondition = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
-      import_polyfills377 = __toESM(require_polyfills());
+      import_polyfills375 = __toESM(require_polyfills());
       init_debug();
       init_types3();
       init_callFunction();
@@ -34143,10 +33830,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js
-  var import_polyfills378, evaluateConditions;
+  var import_polyfills376, evaluateConditions;
   var init_evaluateConditions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js"() {
-      import_polyfills378 = __toESM(require_polyfills());
+      import_polyfills376 = __toESM(require_polyfills());
       init_debug();
       init_evaluateCondition();
       evaluateConditions = (conditions = [], options) => {
@@ -34173,10 +33860,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
-  var import_polyfills379, getEndpointHeaders;
+  var import_polyfills377, getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
-      import_polyfills379 = __toESM(require_polyfills());
+      import_polyfills377 = __toESM(require_polyfills());
       init_types3();
       init_evaluateExpression();
       getEndpointHeaders = (headers, options) => Object.entries(headers).reduce((acc, [headerKey, headerVal]) => ({
@@ -34193,10 +33880,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
-  var import_polyfills380, getEndpointProperties, getEndpointProperty, group2;
+  var import_polyfills378, getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
-      import_polyfills380 = __toESM(require_polyfills());
+      import_polyfills378 = __toESM(require_polyfills());
       init_types3();
       init_evaluateTemplate();
       getEndpointProperties = (properties, options) => Object.entries(properties).reduce((acc, [propertyKey, propertyVal]) => ({
@@ -34229,10 +33916,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
-  var import_polyfills381, getEndpointUrl;
+  var import_polyfills379, getEndpointUrl;
   var init_getEndpointUrl = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
-      import_polyfills381 = __toESM(require_polyfills());
+      import_polyfills379 = __toESM(require_polyfills());
       init_types3();
       init_evaluateExpression();
       getEndpointUrl = (endpointUrl, options) => {
@@ -34251,10 +33938,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js
-  var import_polyfills382, evaluateEndpointRule;
+  var import_polyfills380, evaluateEndpointRule;
   var init_evaluateEndpointRule = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js"() {
-      import_polyfills382 = __toESM(require_polyfills());
+      import_polyfills380 = __toESM(require_polyfills());
       init_debug();
       init_evaluateConditions();
       init_getEndpointHeaders();
@@ -34286,10 +33973,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js
-  var import_polyfills383, evaluateErrorRule;
+  var import_polyfills381, evaluateErrorRule;
   var init_evaluateErrorRule = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js"() {
-      import_polyfills383 = __toESM(require_polyfills());
+      import_polyfills381 = __toESM(require_polyfills());
       init_types3();
       init_evaluateConditions();
       init_evaluateExpression();
@@ -34308,10 +33995,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js
-  var import_polyfills384, evaluateRules, evaluateTreeRule, group3;
+  var import_polyfills382, evaluateRules, evaluateTreeRule, group3;
   var init_evaluateRules = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js"() {
-      import_polyfills384 = __toESM(require_polyfills());
+      import_polyfills382 = __toESM(require_polyfills());
       init_types3();
       init_evaluateConditions();
       init_evaluateEndpointRule();
@@ -34355,20 +34042,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/index.js
-  var import_polyfills385;
+  var import_polyfills383;
   var init_utils2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/index.js"() {
-      import_polyfills385 = __toESM(require_polyfills());
+      import_polyfills383 = __toESM(require_polyfills());
       init_customEndpointFunctions();
       init_evaluateRules();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
-  var import_polyfills386, resolveEndpoint;
+  var import_polyfills384, resolveEndpoint;
   var init_resolveEndpoint = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
-      import_polyfills386 = __toESM(require_polyfills());
+      import_polyfills384 = __toESM(require_polyfills());
       init_debug();
       init_types3();
       init_utils2();
@@ -34396,10 +34083,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/index.js
-  var import_polyfills387;
+  var import_polyfills385;
   var init_dist_es31 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
-      import_polyfills387 = __toESM(require_polyfills());
+      import_polyfills385 = __toESM(require_polyfills());
       init_EndpointCache();
       init_isIpAddress();
       init_isValidHostLabel();
@@ -34410,19 +34097,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
-  var import_polyfills388;
+  var import_polyfills386;
   var init_isIpAddress2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
-      import_polyfills388 = __toESM(require_polyfills());
+      import_polyfills386 = __toESM(require_polyfills());
       init_dist_es31();
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
-  var import_polyfills389, isVirtualHostableS3Bucket;
+  var import_polyfills387, isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
-      import_polyfills389 = __toESM(require_polyfills());
+      import_polyfills387 = __toESM(require_polyfills());
       init_dist_es31();
       init_isIpAddress2();
       isVirtualHostableS3Bucket = (value, allowSubDomains = false) => {
@@ -34452,10 +34139,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
-  var import_polyfills390, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
+  var import_polyfills388, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
-      import_polyfills390 = __toESM(require_polyfills());
+      import_polyfills388 = __toESM(require_polyfills());
       ARN_DELIMITER = ":";
       RESOURCE_DELIMITER = "/";
       parseArn = (value) => {
@@ -34752,10 +34439,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
-  var import_polyfills391, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
+  var import_polyfills389, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
-      import_polyfills391 = __toESM(require_polyfills());
+      import_polyfills389 = __toESM(require_polyfills());
       init_partitions();
       selectedPartitionsInfo = partitions_default;
       selectedUserAgentPrefix = "";
@@ -34793,10 +34480,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
-  var import_polyfills392, awsEndpointFunctions;
+  var import_polyfills390, awsEndpointFunctions;
   var init_aws = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
-      import_polyfills392 = __toESM(require_polyfills());
+      import_polyfills390 = __toESM(require_polyfills());
       init_dist_es31();
       init_isVirtualHostableS3Bucket();
       init_parseArn();
@@ -34832,18 +34519,18 @@ ${toHex(hashedRequest)}`;
     }
     return query;
   }
-  var import_polyfills393;
+  var import_polyfills391;
   var init_dist_es32 = __esm({
     "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
-      import_polyfills393 = __toESM(require_polyfills());
+      import_polyfills391 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/url-parser/dist-es/index.js
-  var import_polyfills394, parseUrl;
+  var import_polyfills392, parseUrl;
   var init_dist_es33 = __esm({
     "node_modules/@smithy/url-parser/dist-es/index.js"() {
-      import_polyfills394 = __toESM(require_polyfills());
+      import_polyfills392 = __toESM(require_polyfills());
       init_dist_es32();
       parseUrl = (url) => {
         if (typeof url === "string") {
@@ -34866,74 +34553,74 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
-  var import_polyfills395;
+  var import_polyfills393;
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
-      import_polyfills395 = __toESM(require_polyfills());
+      import_polyfills393 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
-  var import_polyfills396;
+  var import_polyfills394;
   var init_resolveEndpoint2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
-      import_polyfills396 = __toESM(require_polyfills());
+      import_polyfills394 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
-  var import_polyfills397;
+  var import_polyfills395;
   var init_EndpointError2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
-      import_polyfills397 = __toESM(require_polyfills());
+      import_polyfills395 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
-  var import_polyfills398;
+  var import_polyfills396;
   var init_EndpointRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
-      import_polyfills398 = __toESM(require_polyfills());
+      import_polyfills396 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
-  var import_polyfills399;
+  var import_polyfills397;
   var init_ErrorRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
-      import_polyfills399 = __toESM(require_polyfills());
+      import_polyfills397 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
-  var import_polyfills400;
+  var import_polyfills398;
   var init_RuleSetObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
-      import_polyfills400 = __toESM(require_polyfills());
+      import_polyfills398 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
-  var import_polyfills401;
+  var import_polyfills399;
   var init_TreeRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
-      import_polyfills401 = __toESM(require_polyfills());
+      import_polyfills399 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
-  var import_polyfills402;
+  var import_polyfills400;
   var init_shared3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
-      import_polyfills402 = __toESM(require_polyfills());
+      import_polyfills400 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
-  var import_polyfills403;
+  var import_polyfills401;
   var init_types4 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
-      import_polyfills403 = __toESM(require_polyfills());
+      import_polyfills401 = __toESM(require_polyfills());
       init_EndpointError2();
       init_EndpointRuleObject3();
       init_ErrorRuleObject3();
@@ -34944,10 +34631,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
-  var import_polyfills404;
+  var import_polyfills402;
   var init_dist_es34 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
-      import_polyfills404 = __toESM(require_polyfills());
+      import_polyfills402 = __toESM(require_polyfills());
       init_aws();
       init_partition();
       init_isIpAddress2();
@@ -35003,20 +34690,20 @@ ${toHex(hashedRequest)}`;
       }
     }
   }
-  var import_polyfills405, ACCOUNT_ID_ENDPOINT_REGEX;
+  var import_polyfills403, ACCOUNT_ID_ENDPOINT_REGEX;
   var init_check_features = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
-      import_polyfills405 = __toESM(require_polyfills());
+      import_polyfills403 = __toESM(require_polyfills());
       init_dist_es22();
       ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
     }
   });
 
   // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
-  var import_polyfills406, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
+  var import_polyfills404, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
   var init_constants5 = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
-      import_polyfills406 = __toESM(require_polyfills());
+      import_polyfills404 = __toESM(require_polyfills());
       USER_AGENT = "user-agent";
       X_AMZ_USER_AGENT = "x-amz-user-agent";
       SPACE = " ";
@@ -35044,19 +34731,19 @@ ${toHex(hashedRequest)}`;
     }
     return buffer;
   }
-  var import_polyfills407, BYTE_LIMIT;
+  var import_polyfills405, BYTE_LIMIT;
   var init_encode_features = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
-      import_polyfills407 = __toESM(require_polyfills());
+      import_polyfills405 = __toESM(require_polyfills());
       BYTE_LIMIT = 1024;
     }
   });
 
   // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
-  var import_polyfills408, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
+  var import_polyfills406, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
   var init_user_agent_middleware = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
-      import_polyfills408 = __toESM(require_polyfills());
+      import_polyfills406 = __toESM(require_polyfills());
       init_dist_es34();
       init_dist_es2();
       init_check_features();
@@ -35133,54 +34820,54 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
-  var import_polyfills409;
+  var import_polyfills407;
   var init_dist_es35 = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
-      import_polyfills409 = __toESM(require_polyfills());
+      import_polyfills407 = __toESM(require_polyfills());
       init_configurations();
       init_user_agent_middleware();
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
-  var import_polyfills410, DEFAULT_USE_DUALSTACK_ENDPOINT;
+  var import_polyfills408, DEFAULT_USE_DUALSTACK_ENDPOINT;
   var init_NodeUseDualstackEndpointConfigOptions = __esm({
     "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
-      import_polyfills410 = __toESM(require_polyfills());
+      import_polyfills408 = __toESM(require_polyfills());
       DEFAULT_USE_DUALSTACK_ENDPOINT = false;
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
-  var import_polyfills411, DEFAULT_USE_FIPS_ENDPOINT;
+  var import_polyfills409, DEFAULT_USE_FIPS_ENDPOINT;
   var init_NodeUseFipsEndpointConfigOptions = __esm({
     "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
-      import_polyfills411 = __toESM(require_polyfills());
+      import_polyfills409 = __toESM(require_polyfills());
       DEFAULT_USE_FIPS_ENDPOINT = false;
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
-  var import_polyfills412;
+  var import_polyfills410;
   var init_resolveCustomEndpointsConfig = __esm({
     "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
-      import_polyfills412 = __toESM(require_polyfills());
+      import_polyfills410 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
-  var import_polyfills413;
+  var import_polyfills411;
   var init_resolveEndpointsConfig = __esm({
     "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
-      import_polyfills413 = __toESM(require_polyfills());
+      import_polyfills411 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
-  var import_polyfills414;
+  var import_polyfills412;
   var init_endpointsConfig = __esm({
     "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
-      import_polyfills414 = __toESM(require_polyfills());
+      import_polyfills412 = __toESM(require_polyfills());
       init_NodeUseDualstackEndpointConfigOptions();
       init_NodeUseFipsEndpointConfigOptions();
       init_resolveCustomEndpointsConfig();
@@ -35189,18 +34876,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
-  var import_polyfills415;
+  var import_polyfills413;
   var init_config2 = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
-      import_polyfills415 = __toESM(require_polyfills());
+      import_polyfills413 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
-  var import_polyfills416, validRegions, checkRegion;
+  var import_polyfills414, validRegions, checkRegion;
   var init_checkRegion = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
-      import_polyfills416 = __toESM(require_polyfills());
+      import_polyfills414 = __toESM(require_polyfills());
       init_dist_es31();
       validRegions = /* @__PURE__ */ new Set();
       checkRegion = (region, check = isValidHostLabel) => {
@@ -35218,29 +34905,29 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
-  var import_polyfills417, isFipsRegion;
+  var import_polyfills415, isFipsRegion;
   var init_isFipsRegion = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
-      import_polyfills417 = __toESM(require_polyfills());
+      import_polyfills415 = __toESM(require_polyfills());
       isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
-  var import_polyfills418, getRealRegion;
+  var import_polyfills416, getRealRegion;
   var init_getRealRegion = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
-      import_polyfills418 = __toESM(require_polyfills());
+      import_polyfills416 = __toESM(require_polyfills());
       init_isFipsRegion();
       getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
-  var import_polyfills419, resolveRegionConfig;
+  var import_polyfills417, resolveRegionConfig;
   var init_resolveRegionConfig = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
-      import_polyfills419 = __toESM(require_polyfills());
+      import_polyfills417 = __toESM(require_polyfills());
       init_checkRegion();
       init_getRealRegion();
       init_isFipsRegion();
@@ -35269,44 +34956,44 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
-  var import_polyfills420;
+  var import_polyfills418;
   var init_regionConfig = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
-      import_polyfills420 = __toESM(require_polyfills());
+      import_polyfills418 = __toESM(require_polyfills());
       init_config2();
       init_resolveRegionConfig();
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
-  var import_polyfills421;
+  var import_polyfills419;
   var init_PartitionHash = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
-      import_polyfills421 = __toESM(require_polyfills());
+      import_polyfills419 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
-  var import_polyfills422;
+  var import_polyfills420;
   var init_RegionHash = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
-      import_polyfills422 = __toESM(require_polyfills());
+      import_polyfills420 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
-  var import_polyfills423;
+  var import_polyfills421;
   var init_getRegionInfo = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
-      import_polyfills423 = __toESM(require_polyfills());
+      import_polyfills421 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
-  var import_polyfills424;
+  var import_polyfills422;
   var init_regionInfo = __esm({
     "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
-      import_polyfills424 = __toESM(require_polyfills());
+      import_polyfills422 = __toESM(require_polyfills());
       init_PartitionHash();
       init_RegionHash();
       init_getRegionInfo();
@@ -35314,10 +35001,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/config-resolver/dist-es/index.js
-  var import_polyfills425;
+  var import_polyfills423;
   var init_dist_es36 = __esm({
     "node_modules/@smithy/config-resolver/dist-es/index.js"() {
-      import_polyfills425 = __toESM(require_polyfills());
+      import_polyfills423 = __toESM(require_polyfills());
       init_endpointsConfig();
       init_regionConfig();
       init_regionInfo();
@@ -35325,10 +35012,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
-  var import_polyfills426, resolveEventStreamSerdeConfig;
+  var import_polyfills424, resolveEventStreamSerdeConfig;
   var init_EventStreamSerdeConfig = __esm({
     "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
-      import_polyfills426 = __toESM(require_polyfills());
+      import_polyfills424 = __toESM(require_polyfills());
       resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
         eventStreamMarshaller: input.eventStreamSerdeProvider(input)
       });
@@ -35336,10 +35023,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
-  var import_polyfills427;
+  var import_polyfills425;
   var init_dist_es37 = __esm({
     "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
-      import_polyfills427 = __toESM(require_polyfills());
+      import_polyfills425 = __toESM(require_polyfills());
       init_EventStreamSerdeConfig();
     }
   });
@@ -35367,10 +35054,10 @@ ${toHex(hashedRequest)}`;
       });
     };
   }
-  var import_polyfills428, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
+  var import_polyfills426, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
   var init_dist_es38 = __esm({
     "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
-      import_polyfills428 = __toESM(require_polyfills());
+      import_polyfills426 = __toESM(require_polyfills());
       init_dist_es2();
       CONTENT_LENGTH_HEADER2 = "content-length";
       contentLengthMiddlewareOptions = {
@@ -35388,10 +35075,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
-  var import_polyfills429, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
+  var import_polyfills427, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
   var init_s3 = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
-      import_polyfills429 = __toESM(require_polyfills());
+      import_polyfills427 = __toESM(require_polyfills());
       resolveParamsForS3 = async (endpointParams) => {
         const bucket = endpointParams?.Bucket || "";
         if (typeof endpointParams.Bucket === "string") {
@@ -35427,19 +35114,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
-  var import_polyfills430;
+  var import_polyfills428;
   var init_service_customizations = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
-      import_polyfills430 = __toESM(require_polyfills());
+      import_polyfills428 = __toESM(require_polyfills());
       init_s3();
     }
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
-  var import_polyfills431, createConfigValueProvider;
+  var import_polyfills429, createConfigValueProvider;
   var init_createConfigValueProvider = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
-      import_polyfills431 = __toESM(require_polyfills());
+      import_polyfills429 = __toESM(require_polyfills());
       createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
         const configProvider = async () => {
           let configValue;
@@ -35480,8 +35167,8 @@ ${toHex(hashedRequest)}`;
                 return endpoint.url.href;
               }
               if ("hostname" in endpoint) {
-                const { protocol, hostname, port, path: path3 } = endpoint;
-                return `${protocol}//${hostname}${port ? ":" + port : ""}${path3}`;
+                const { protocol, hostname, port, path } = endpoint;
+                return `${protocol}//${hostname}${port ? ":" + port : ""}${path}`;
               }
             }
             return endpoint;
@@ -35493,19 +35180,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
-  var import_polyfills432, getEndpointFromConfig;
+  var import_polyfills430, getEndpointFromConfig;
   var init_getEndpointFromConfig_browser = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
-      import_polyfills432 = __toESM(require_polyfills());
+      import_polyfills430 = __toESM(require_polyfills());
       getEndpointFromConfig = async (serviceId) => void 0;
     }
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
-  var import_polyfills433, toEndpointV1;
+  var import_polyfills431, toEndpointV1;
   var init_toEndpointV1 = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
-      import_polyfills433 = __toESM(require_polyfills());
+      import_polyfills431 = __toESM(require_polyfills());
       init_dist_es33();
       toEndpointV1 = (endpoint) => {
         if (typeof endpoint === "object") {
@@ -35520,10 +35207,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
-  var import_polyfills434, getEndpointFromInstructions, resolveParams;
+  var import_polyfills432, getEndpointFromInstructions, resolveParams;
   var init_getEndpointFromInstructions = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
-      import_polyfills434 = __toESM(require_polyfills());
+      import_polyfills432 = __toESM(require_polyfills());
       init_service_customizations();
       init_createConfigValueProvider();
       init_getEndpointFromConfig_browser();
@@ -35582,20 +35269,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
-  var import_polyfills435;
+  var import_polyfills433;
   var init_adaptors = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
-      import_polyfills435 = __toESM(require_polyfills());
+      import_polyfills433 = __toESM(require_polyfills());
       init_getEndpointFromInstructions();
       init_toEndpointV1();
     }
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
-  var import_polyfills436, endpointMiddleware;
+  var import_polyfills434, endpointMiddleware;
   var init_endpointMiddleware = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
-      import_polyfills436 = __toESM(require_polyfills());
+      import_polyfills434 = __toESM(require_polyfills());
       init_dist_es14();
       init_dist_es4();
       init_getEndpointFromInstructions();
@@ -35636,10 +35323,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
-  var import_polyfills437, endpointMiddlewareOptions, getEndpointPlugin;
+  var import_polyfills435, endpointMiddlewareOptions, getEndpointPlugin;
   var init_getEndpointPlugin = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
-      import_polyfills437 = __toESM(require_polyfills());
+      import_polyfills435 = __toESM(require_polyfills());
       init_dist_es5();
       init_endpointMiddleware();
       endpointMiddlewareOptions = {
@@ -35662,10 +35349,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
-  var import_polyfills438, resolveEndpointConfig;
+  var import_polyfills436, resolveEndpointConfig;
   var init_resolveEndpointConfig = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
-      import_polyfills438 = __toESM(require_polyfills());
+      import_polyfills436 = __toESM(require_polyfills());
       init_dist_es4();
       init_getEndpointFromConfig_browser();
       init_toEndpointV1();
@@ -35694,26 +35381,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
-  var import_polyfills439;
+  var import_polyfills437;
   var init_resolveEndpointRequiredConfig = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
-      import_polyfills439 = __toESM(require_polyfills());
+      import_polyfills437 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/types.js
-  var import_polyfills440;
+  var import_polyfills438;
   var init_types5 = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
-      import_polyfills440 = __toESM(require_polyfills());
+      import_polyfills438 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-endpoint/dist-es/index.js
-  var import_polyfills441;
+  var import_polyfills439;
   var init_dist_es39 = __esm({
     "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
-      import_polyfills441 = __toESM(require_polyfills());
+      import_polyfills439 = __toESM(require_polyfills());
       init_adaptors();
       init_endpointMiddleware();
       init_getEndpointPlugin();
@@ -35724,10 +35411,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/config.js
-  var import_polyfills442, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
+  var import_polyfills440, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
   var init_config3 = __esm({
     "node_modules/@smithy/util-retry/dist-es/config.js"() {
-      import_polyfills442 = __toESM(require_polyfills());
+      import_polyfills440 = __toESM(require_polyfills());
       (function(RETRY_MODES2) {
         RETRY_MODES2["STANDARD"] = "standard";
         RETRY_MODES2["ADAPTIVE"] = "adaptive";
@@ -35738,10 +35425,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/service-error-classification/dist-es/constants.js
-  var import_polyfills443, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
+  var import_polyfills441, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
   var init_constants6 = __esm({
     "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
-      import_polyfills443 = __toESM(require_polyfills());
+      import_polyfills441 = __toESM(require_polyfills());
       THROTTLING_ERROR_CODES = [
         "BandwidthLimitExceeded",
         "EC2ThrottledException",
@@ -35766,10 +35453,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/service-error-classification/dist-es/index.js
-  var import_polyfills444, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
+  var import_polyfills442, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
   var init_dist_es40 = __esm({
     "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
-      import_polyfills444 = __toESM(require_polyfills());
+      import_polyfills442 = __toESM(require_polyfills());
       init_constants6();
       isRetryableByTrait = (error) => error?.$retryable !== void 0;
       isClockSkewCorrectedError = (error) => error.$metadata?.clockSkewCorrected;
@@ -35803,10 +35490,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
-  var import_polyfills445, DefaultRateLimiter;
+  var import_polyfills443, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
     "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
-      import_polyfills445 = __toESM(require_polyfills());
+      import_polyfills443 = __toESM(require_polyfills());
       init_dist_es40();
       DefaultRateLimiter = class _DefaultRateLimiter {
         static setTimeoutFn = setTimeout;
@@ -35919,10 +35606,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/constants.js
-  var import_polyfills446, DEFAULT_RETRY_DELAY_BASE, MAXIMUM_RETRY_DELAY, THROTTLING_RETRY_DELAY_BASE, INITIAL_RETRY_TOKENS, RETRY_COST, TIMEOUT_RETRY_COST, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
+  var import_polyfills444, DEFAULT_RETRY_DELAY_BASE, MAXIMUM_RETRY_DELAY, THROTTLING_RETRY_DELAY_BASE, INITIAL_RETRY_TOKENS, RETRY_COST, TIMEOUT_RETRY_COST, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
   var init_constants7 = __esm({
     "node_modules/@smithy/util-retry/dist-es/constants.js"() {
-      import_polyfills446 = __toESM(require_polyfills());
+      import_polyfills444 = __toESM(require_polyfills());
       DEFAULT_RETRY_DELAY_BASE = 100;
       MAXIMUM_RETRY_DELAY = 20 * 1e3;
       THROTTLING_RETRY_DELAY_BASE = 500;
@@ -35936,10 +35623,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js
-  var import_polyfills447, getDefaultRetryBackoffStrategy;
+  var import_polyfills445, getDefaultRetryBackoffStrategy;
   var init_defaultRetryBackoffStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js"() {
-      import_polyfills447 = __toESM(require_polyfills());
+      import_polyfills445 = __toESM(require_polyfills());
       init_constants7();
       getDefaultRetryBackoffStrategy = () => {
         let delayBase = DEFAULT_RETRY_DELAY_BASE;
@@ -35958,10 +35645,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js
-  var import_polyfills448, createDefaultRetryToken;
+  var import_polyfills446, createDefaultRetryToken;
   var init_defaultRetryToken = __esm({
     "node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js"() {
-      import_polyfills448 = __toESM(require_polyfills());
+      import_polyfills446 = __toESM(require_polyfills());
       init_constants7();
       createDefaultRetryToken = ({ retryDelay, retryCount, retryCost }) => {
         const getRetryCount = () => retryCount;
@@ -35977,10 +35664,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
-  var import_polyfills449, StandardRetryStrategy;
+  var import_polyfills447, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
-      import_polyfills449 = __toESM(require_polyfills());
+      import_polyfills447 = __toESM(require_polyfills());
       init_config3();
       init_constants7();
       init_defaultRetryBackoffStrategy();
@@ -36047,10 +35734,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
-  var import_polyfills450, AdaptiveRetryStrategy;
+  var import_polyfills448, AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
-      import_polyfills450 = __toESM(require_polyfills());
+      import_polyfills448 = __toESM(require_polyfills());
       init_config3();
       init_DefaultRateLimiter();
       init_StandardRetryStrategy();
@@ -36082,26 +35769,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
-  var import_polyfills451;
+  var import_polyfills449;
   var init_ConfiguredRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
-      import_polyfills451 = __toESM(require_polyfills());
+      import_polyfills449 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-retry/dist-es/types.js
-  var import_polyfills452;
+  var import_polyfills450;
   var init_types6 = __esm({
     "node_modules/@smithy/util-retry/dist-es/types.js"() {
-      import_polyfills452 = __toESM(require_polyfills());
+      import_polyfills450 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-retry/dist-es/index.js
-  var import_polyfills453;
+  var import_polyfills451;
   var init_dist_es41 = __esm({
     "node_modules/@smithy/util-retry/dist-es/index.js"() {
-      import_polyfills453 = __toESM(require_polyfills());
+      import_polyfills451 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy();
       init_ConfiguredRetryStrategy();
       init_DefaultRateLimiter();
@@ -36113,26 +35800,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/delayDecider.js
-  var import_polyfills454;
+  var import_polyfills452;
   var init_delayDecider = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/delayDecider.js"() {
-      import_polyfills454 = __toESM(require_polyfills());
+      import_polyfills452 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/retryDecider.js
-  var import_polyfills455;
+  var import_polyfills453;
   var init_retryDecider = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/retryDecider.js"() {
-      import_polyfills455 = __toESM(require_polyfills());
+      import_polyfills453 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/util.js
-  var import_polyfills456, asSdkError;
+  var import_polyfills454, asSdkError;
   var init_util2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
-      import_polyfills456 = __toESM(require_polyfills());
+      import_polyfills454 = __toESM(require_polyfills());
       asSdkError = (error) => {
         if (error instanceof Error)
           return error;
@@ -36146,26 +35833,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js
-  var import_polyfills457;
+  var import_polyfills455;
   var init_StandardRetryStrategy2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js"() {
-      import_polyfills457 = __toESM(require_polyfills());
+      import_polyfills455 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js
-  var import_polyfills458;
+  var import_polyfills456;
   var init_AdaptiveRetryStrategy2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js"() {
-      import_polyfills458 = __toESM(require_polyfills());
+      import_polyfills456 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/configurations.js
-  var import_polyfills459, resolveRetryConfig;
+  var import_polyfills457, resolveRetryConfig;
   var init_configurations2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
-      import_polyfills459 = __toESM(require_polyfills());
+      import_polyfills457 = __toESM(require_polyfills());
       init_dist_es4();
       init_dist_es41();
       resolveRetryConfig = (input) => {
@@ -36189,27 +35876,27 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
-  var import_polyfills460;
+  var import_polyfills458;
   var init_omitRetryHeadersMiddleware = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
-      import_polyfills460 = __toESM(require_polyfills());
+      import_polyfills458 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
-  var import_polyfills461, isStreamingPayload;
+  var import_polyfills459, isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
-      import_polyfills461 = __toESM(require_polyfills());
+      import_polyfills459 = __toESM(require_polyfills());
       isStreamingPayload = (request) => request?.body instanceof ReadableStream;
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
-  var import_polyfills462, retryMiddleware, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin, getRetryAfterHint;
+  var import_polyfills460, retryMiddleware, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin, getRetryAfterHint;
   var init_retryMiddleware = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
-      import_polyfills462 = __toESM(require_polyfills());
+      import_polyfills460 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es40();
       init_dist_es20();
@@ -36321,10 +36008,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/index.js
-  var import_polyfills463;
+  var import_polyfills461;
   var init_dist_es42 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
-      import_polyfills463 = __toESM(require_polyfills());
+      import_polyfills461 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy2();
       init_StandardRetryStrategy2();
       init_configurations2();
@@ -36336,10 +36023,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
-  var import_polyfills464, signatureV4CrtContainer;
+  var import_polyfills462, signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
-      import_polyfills464 = __toESM(require_polyfills());
+      import_polyfills462 = __toESM(require_polyfills());
       signatureV4CrtContainer = {
         CrtSignerV4: null
       };
@@ -36347,10 +36034,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
-  var import_polyfills465, SignatureV4MultiRegion;
+  var import_polyfills463, SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
-      import_polyfills465 = __toESM(require_polyfills());
+      import_polyfills463 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es17();
       init_signature_v4_crt_container();
@@ -36442,20 +36129,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
-  var import_polyfills466;
+  var import_polyfills464;
   var init_dist_es43 = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
-      import_polyfills466 = __toESM(require_polyfills());
+      import_polyfills464 = __toESM(require_polyfills());
       init_SignatureV4MultiRegion();
       init_signature_v4_crt_container();
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/ruleset.js
-  var import_polyfills467, cs, ct, cu, cv, cw, cx, cy, cz, cA, cB, cC, cD, cE, cF, cG, cH, cI, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, ar, as, at, au, av, aw, ax, ay, az, aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ, aK, aL, aM, aN, aO, aP, aQ, aR, aS, aT, aU, aV, aW, aX, aY, aZ, ba, bb, bc, bd, be, bf, bg, bh, bi, bj, bk, bl, bm, bn, bo, bp, bq, br, bs, bt, bu, bv, bw, bx, by, bz, bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM, bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ, ca, cb, cc, cd, ce, cf, cg, ch, ci, cj, ck, cl, cm, cn, co, cp, cq, cr, _data, ruleSet;
+  var import_polyfills465, cs, ct, cu, cv, cw, cx, cy, cz, cA, cB, cC, cD, cE, cF, cG, cH, cI, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, ar, as, at, au, av, aw, ax, ay, az, aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ, aK, aL, aM, aN, aO, aP, aQ, aR, aS, aT, aU, aV, aW, aX, aY, aZ, ba, bb, bc, bd, be, bf, bg, bh, bi, bj, bk, bl, bm, bn, bo, bp, bq, br, bs, bt, bu, bv, bw, bx, by, bz, bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM, bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ, ca, cb, cc, cd, ce, cf, cg, ch, ci, cj, ck, cl, cm, cn, co, cp, cq, cr, _data, ruleSet;
   var init_ruleset = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/ruleset.js"() {
-      import_polyfills467 = __toESM(require_polyfills());
+      import_polyfills465 = __toESM(require_polyfills());
       cs = "required";
       ct = "type";
       cu = "rules";
@@ -36653,10 +36340,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
-  var import_polyfills468, cache, defaultEndpointResolver;
+  var import_polyfills466, cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
-      import_polyfills468 = __toESM(require_polyfills());
+      import_polyfills466 = __toESM(require_polyfills());
       init_dist_es34();
       init_dist_es31();
       init_ruleset();
@@ -36720,10 +36407,10 @@ ${toHex(hashedRequest)}`;
       })
     };
   }
-  var import_polyfills469, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
+  var import_polyfills467, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
-      import_polyfills469 = __toESM(require_polyfills());
+      import_polyfills467 = __toESM(require_polyfills());
       init_dist_es22();
       init_dist_es43();
       init_dist_es39();
@@ -36817,10 +36504,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
-  var import_polyfills470, resolveClientEndpointParameters, commonParams;
+  var import_polyfills468, resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
-      import_polyfills470 = __toESM(require_polyfills());
+      import_polyfills468 = __toESM(require_polyfills());
       resolveClientEndpointParameters = (options) => {
         return Object.assign(options, {
           useFipsEndpoint: options.useFipsEndpoint ?? false,
@@ -36849,10 +36536,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
-  var import_polyfills471, S3ServiceException;
+  var import_polyfills469, S3ServiceException;
   var init_S3ServiceException = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
-      import_polyfills471 = __toESM(require_polyfills());
+      import_polyfills469 = __toESM(require_polyfills());
       init_dist_es20();
       S3ServiceException = class _S3ServiceException extends ServiceException {
         constructor(options) {
@@ -36864,10 +36551,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
-  var import_polyfills472, NoSuchUpload, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
+  var import_polyfills470, NoSuchUpload, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
-      import_polyfills472 = __toESM(require_polyfills());
+      import_polyfills470 = __toESM(require_polyfills());
       init_S3ServiceException();
       NoSuchUpload = class _NoSuchUpload extends S3ServiceException {
         name = "NoSuchUpload";
@@ -37045,10 +36732,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
-  var import_polyfills473, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _sm, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacrsba, _xacs, _xacs_, _xacs__, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacs, _xafhxacs_, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, CopySourceSSECustomerKey, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EncryptionTypeMismatch$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IdempotencyParameterMismatch$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectAlreadyInActiveTierError$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectNotInActiveTierError$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TooManyParts$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, S3ServiceException$, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
+  var import_polyfills471, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _sm, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacrsba, _xacs, _xacs_, _xacs__, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacs, _xafhxacs_, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, CopySourceSSECustomerKey, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EncryptionTypeMismatch$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IdempotencyParameterMismatch$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectAlreadyInActiveTierError$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectNotInActiveTierError$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TooManyParts$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, S3ServiceException$, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
-      import_polyfills473 = __toESM(require_polyfills());
+      import_polyfills471 = __toESM(require_polyfills());
       init_schema2();
       init_errors();
       init_S3ServiceException();
@@ -42166,10 +41853,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
-  var import_polyfills474, CreateSessionCommand;
+  var import_polyfills472, CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
-      import_polyfills474 = __toESM(require_polyfills());
+      import_polyfills472 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -42322,36 +42009,36 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-  var import_polyfills475, fromUtf84;
+  var import_polyfills473, fromUtf84;
   var init_fromUtf8_browser3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-      import_polyfills475 = __toESM(require_polyfills());
+      import_polyfills473 = __toESM(require_polyfills());
       fromUtf84 = (input) => new TextEncoder().encode(input);
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-  var import_polyfills476;
+  var import_polyfills474;
   var init_toUint8Array3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-      import_polyfills476 = __toESM(require_polyfills());
+      import_polyfills474 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-  var import_polyfills477;
+  var import_polyfills475;
   var init_toUtf8_browser3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-      import_polyfills477 = __toESM(require_polyfills());
+      import_polyfills475 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
-  var import_polyfills478;
+  var import_polyfills476;
   var init_dist_es44 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
-      import_polyfills478 = __toESM(require_polyfills());
+      import_polyfills476 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
       init_toUint8Array3();
       init_toUtf8_browser3();
@@ -42359,24 +42046,24 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
-  function isEmptyData2(data2) {
-    if (typeof data2 === "string") {
-      return data2.length === 0;
+  function isEmptyData2(data) {
+    if (typeof data === "string") {
+      return data.length === 0;
     }
-    return data2.byteLength === 0;
+    return data.byteLength === 0;
   }
-  var import_polyfills479;
+  var import_polyfills477;
   var init_isEmptyData2 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
-      import_polyfills479 = __toESM(require_polyfills());
+      import_polyfills477 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
-  var import_polyfills480, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
+  var import_polyfills478, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
-      import_polyfills480 = __toESM(require_polyfills());
+      import_polyfills478 = __toESM(require_polyfills());
       SHA_1_HASH = { name: "SHA-1" };
       SHA_1_HMAC_ALGO = {
         name: "HMAC",
@@ -42416,28 +42103,28 @@ ${toHex(hashedRequest)}`;
     }
     return fallbackWindow;
   }
-  var import_polyfills481, fallbackWindow;
+  var import_polyfills479, fallbackWindow;
   var init_dist_es45 = __esm({
     "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
-      import_polyfills481 = __toESM(require_polyfills());
+      import_polyfills479 = __toESM(require_polyfills());
       fallbackWindow = {};
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
-  function convertToBuffer2(data2) {
-    if (typeof data2 === "string") {
-      return fromUtf84(data2);
+  function convertToBuffer2(data) {
+    if (typeof data === "string") {
+      return fromUtf84(data);
     }
-    if (ArrayBuffer.isView(data2)) {
-      return new Uint8Array(data2.buffer, data2.byteOffset, data2.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+    if (ArrayBuffer.isView(data)) {
+      return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
     }
-    return new Uint8Array(data2);
+    return new Uint8Array(data);
   }
-  var import_polyfills482, Sha1;
+  var import_polyfills480, Sha1;
   var init_webCryptoSha1 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
-      import_polyfills482 = __toESM(require_polyfills());
+      import_polyfills480 = __toESM(require_polyfills());
       init_dist_es44();
       init_isEmptyData2();
       init_constants8();
@@ -42454,11 +42141,11 @@ ${toHex(hashedRequest)}`;
             });
           }
         }
-        Sha13.prototype.update = function(data2) {
-          if (isEmptyData2(data2)) {
+        Sha13.prototype.update = function(data) {
+          if (isEmptyData2(data)) {
             return;
           }
-          var update = convertToBuffer2(data2);
+          var update = convertToBuffer2(data);
           var typedArray = new Uint8Array(this.toHash.byteLength + update.byteLength);
           typedArray.set(this.toHash, 0);
           typedArray.set(update, this.toHash.byteLength);
@@ -42468,8 +42155,8 @@ ${toHex(hashedRequest)}`;
           var _this = this;
           if (this.key) {
             return this.key.then(function(key) {
-              return locateWindow().crypto.subtle.sign(SHA_1_HMAC_ALGO, key, _this.toHash).then(function(data2) {
-                return new Uint8Array(data2);
+              return locateWindow().crypto.subtle.sign(SHA_1_HMAC_ALGO, key, _this.toHash).then(function(data) {
+                return new Uint8Array(data);
               });
             });
           }
@@ -42478,8 +42165,8 @@ ${toHex(hashedRequest)}`;
           }
           return Promise.resolve().then(function() {
             return locateWindow().crypto.subtle.digest(SHA_1_HASH, _this.toHash);
-          }).then(function(data2) {
-            return Promise.resolve(new Uint8Array(data2));
+          }).then(function(data) {
+            return Promise.resolve(new Uint8Array(data));
           });
         };
         Sha13.prototype.reset = function() {
@@ -42510,10 +42197,10 @@ ${toHex(hashedRequest)}`;
       return typeof subtle[methodName] === "function";
     });
   }
-  var import_polyfills483, subtleCryptoMethods;
+  var import_polyfills481, subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
     "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
-      import_polyfills483 = __toESM(require_polyfills());
+      import_polyfills481 = __toESM(require_polyfills());
       subtleCryptoMethods = [
         "decrypt",
         "digest",
@@ -42528,19 +42215,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
-  var import_polyfills484;
+  var import_polyfills482;
   var init_module4 = __esm({
     "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
-      import_polyfills484 = __toESM(require_polyfills());
+      import_polyfills482 = __toESM(require_polyfills());
       init_supportsWebCrypto();
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
-  var import_polyfills485, Sha12;
+  var import_polyfills483, Sha12;
   var init_crossPlatformSha1 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
-      import_polyfills485 = __toESM(require_polyfills());
+      import_polyfills483 = __toESM(require_polyfills());
       init_webCryptoSha1();
       init_module4();
       init_dist_es45();
@@ -42554,8 +42241,8 @@ ${toHex(hashedRequest)}`;
             throw new Error("SHA1 not supported");
           }
         }
-        Sha13.prototype.update = function(data2, encoding) {
-          this.hash.update(convertToBuffer(data2));
+        Sha13.prototype.update = function(data, encoding) {
+          this.hash.update(convertToBuffer(data));
         };
         Sha13.prototype.digest = function() {
           return this.hash.digest();
@@ -42569,20 +42256,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/index.js
-  var import_polyfills486;
+  var import_polyfills484;
   var init_module5 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
-      import_polyfills486 = __toESM(require_polyfills());
+      import_polyfills484 = __toESM(require_polyfills());
       init_crossPlatformSha1();
       init_webCryptoSha1();
     }
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
-  var import_polyfills487, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
+  var import_polyfills485, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
-      import_polyfills487 = __toESM(require_polyfills());
+      import_polyfills485 = __toESM(require_polyfills());
       SHA_256_HASH = { name: "SHA-256" };
       SHA_256_HMAC_ALGO = {
         name: "HMAC",
@@ -42626,10 +42313,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
-  var import_polyfills488, Sha256;
+  var import_polyfills486, Sha256;
   var init_webCryptoSha256 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
-      import_polyfills488 = __toESM(require_polyfills());
+      import_polyfills486 = __toESM(require_polyfills());
       init_module();
       init_constants9();
       init_dist_es45();
@@ -42640,11 +42327,11 @@ ${toHex(hashedRequest)}`;
           this.secret = secret;
           this.reset();
         }
-        Sha2564.prototype.update = function(data2) {
-          if (isEmptyData(data2)) {
+        Sha2564.prototype.update = function(data) {
+          if (isEmptyData(data)) {
             return;
           }
-          var update = convertToBuffer(data2);
+          var update = convertToBuffer(data);
           var typedArray = new Uint8Array(this.toHash.byteLength + update.byteLength);
           typedArray.set(this.toHash, 0);
           typedArray.set(update, this.toHash.byteLength);
@@ -42654,8 +42341,8 @@ ${toHex(hashedRequest)}`;
           var _this = this;
           if (this.key) {
             return this.key.then(function(key) {
-              return locateWindow().crypto.subtle.sign(SHA_256_HMAC_ALGO, key, _this.toHash).then(function(data2) {
-                return new Uint8Array(data2);
+              return locateWindow().crypto.subtle.sign(SHA_256_HMAC_ALGO, key, _this.toHash).then(function(data) {
+                return new Uint8Array(data);
               });
             });
           }
@@ -42664,8 +42351,8 @@ ${toHex(hashedRequest)}`;
           }
           return Promise.resolve().then(function() {
             return locateWindow().crypto.subtle.digest(SHA_256_HASH, _this.toHash);
-          }).then(function(data2) {
-            return Promise.resolve(new Uint8Array(data2));
+          }).then(function(data) {
+            return Promise.resolve(new Uint8Array(data));
           });
         };
         Sha2564.prototype.reset = function() {
@@ -42685,10 +42372,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/constants.js
-  var import_polyfills489, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
+  var import_polyfills487, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
-      import_polyfills489 = __toESM(require_polyfills());
+      import_polyfills487 = __toESM(require_polyfills());
       BLOCK_SIZE = 64;
       DIGEST_LENGTH = 32;
       KEY = new Uint32Array([
@@ -42772,10 +42459,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
-  var import_polyfills490, RawSha256;
+  var import_polyfills488, RawSha256;
   var init_RawSha256 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
-      import_polyfills490 = __toESM(require_polyfills());
+      import_polyfills488 = __toESM(require_polyfills());
       init_constants10();
       RawSha256 = /** @class */
       (function() {
@@ -42787,18 +42474,18 @@ ${toHex(hashedRequest)}`;
           this.bytesHashed = 0;
           this.finished = false;
         }
-        RawSha2562.prototype.update = function(data2) {
+        RawSha2562.prototype.update = function(data) {
           if (this.finished) {
             throw new Error("Attempted to update an already finished hash.");
           }
           var position = 0;
-          var byteLength = data2.byteLength;
+          var byteLength = data.byteLength;
           this.bytesHashed += byteLength;
           if (this.bytesHashed * 8 > MAX_HASHABLE_LENGTH) {
             throw new Error("Cannot hash more than 2^53 - 1 bits");
           }
           while (byteLength > 0) {
-            this.buffer[this.bufferLength++] = data2[position++];
+            this.buffer[this.bufferLength++] = data[position++];
             byteLength--;
             if (this.bufferLength === BLOCK_SIZE) {
               this.hashBuffer();
@@ -42886,10 +42573,10 @@ ${toHex(hashedRequest)}`;
     buffer.set(input);
     return buffer;
   }
-  var import_polyfills491, Sha2562;
+  var import_polyfills489, Sha2562;
   var init_jsSha256 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
-      import_polyfills491 = __toESM(require_polyfills());
+      import_polyfills489 = __toESM(require_polyfills());
       init_tslib_es6();
       init_constants10();
       init_RawSha256();
@@ -42954,19 +42641,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/index.js
-  var import_polyfills492;
+  var import_polyfills490;
   var init_module6 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
-      import_polyfills492 = __toESM(require_polyfills());
+      import_polyfills490 = __toESM(require_polyfills());
       init_jsSha256();
     }
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
-  var import_polyfills493, Sha2563;
+  var import_polyfills491, Sha2563;
   var init_crossPlatformSha256 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
-      import_polyfills493 = __toESM(require_polyfills());
+      import_polyfills491 = __toESM(require_polyfills());
       init_webCryptoSha256();
       init_module6();
       init_module4();
@@ -42981,8 +42668,8 @@ ${toHex(hashedRequest)}`;
             this.hash = new Sha2562(secret);
           }
         }
-        Sha2564.prototype.update = function(data2, encoding) {
-          this.hash.update(convertToBuffer(data2));
+        Sha2564.prototype.update = function(data, encoding) {
+          this.hash.update(convertToBuffer(data));
         };
         Sha2564.prototype.digest = function() {
           return this.hash.digest();
@@ -42996,20 +42683,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/index.js
-  var import_polyfills494;
+  var import_polyfills492;
   var init_module7 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
-      import_polyfills494 = __toESM(require_polyfills());
+      import_polyfills492 = __toESM(require_polyfills());
       init_crossPlatformSha256();
       init_webCryptoSha256();
     }
   });
 
   // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
-  var import_polyfills495, createDefaultUserAgentProvider, fallback;
+  var import_polyfills493, createDefaultUserAgentProvider, fallback;
   var init_dist_es46 = __esm({
     "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
-      import_polyfills495 = __toESM(require_polyfills());
+      import_polyfills493 = __toESM(require_polyfills());
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
         const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
         const uaString = navigator2?.userAgent ?? "";
@@ -43075,10 +42762,10 @@ ${toHex(hashedRequest)}`;
         break;
     }
   }
-  var import_polyfills496, Int642;
+  var import_polyfills494, Int642;
   var init_Int64 = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
-      import_polyfills496 = __toESM(require_polyfills());
+      import_polyfills494 = __toESM(require_polyfills());
       init_dist_es11();
       Int642 = class _Int64 {
         bytes;
@@ -43117,10 +42804,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
-  var import_polyfills497, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
+  var import_polyfills495, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
-      import_polyfills497 = __toESM(require_polyfills());
+      import_polyfills495 = __toESM(require_polyfills());
       init_dist_es11();
       init_Int64();
       HeaderMarshaller = class {
@@ -43333,10 +43020,10 @@ ${toHex(hashedRequest)}`;
       body: new Uint8Array(buffer, byteOffset + PRELUDE_LENGTH + CHECKSUM_LENGTH + headerLength, messageLength - headerLength - (PRELUDE_LENGTH + CHECKSUM_LENGTH + CHECKSUM_LENGTH))
     };
   }
-  var import_polyfills498, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
+  var import_polyfills496, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
-      import_polyfills498 = __toESM(require_polyfills());
+      import_polyfills496 = __toESM(require_polyfills());
       init_module3();
       PRELUDE_MEMBER_LENGTH = 4;
       PRELUDE_LENGTH = PRELUDE_MEMBER_LENGTH * 2;
@@ -43346,10 +43033,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
-  var import_polyfills499, EventStreamCodec;
+  var import_polyfills497, EventStreamCodec;
   var init_EventStreamCodec = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
-      import_polyfills499 = __toESM(require_polyfills());
+      import_polyfills497 = __toESM(require_polyfills());
       init_module3();
       init_HeaderMarshaller();
       init_splitMessage();
@@ -43419,18 +43106,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/Message.js
-  var import_polyfills500;
+  var import_polyfills498;
   var init_Message = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
-      import_polyfills500 = __toESM(require_polyfills());
+      import_polyfills498 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
-  var import_polyfills501, MessageDecoderStream;
+  var import_polyfills499, MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
-      import_polyfills501 = __toESM(require_polyfills());
+      import_polyfills499 = __toESM(require_polyfills());
       MessageDecoderStream = class {
         options;
         constructor(options) {
@@ -43450,10 +43137,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
-  var import_polyfills502, MessageEncoderStream;
+  var import_polyfills500, MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
-      import_polyfills502 = __toESM(require_polyfills());
+      import_polyfills500 = __toESM(require_polyfills());
       MessageEncoderStream = class {
         options;
         constructor(options) {
@@ -43476,10 +43163,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
-  var import_polyfills503, SmithyMessageDecoderStream;
+  var import_polyfills501, SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
-      import_polyfills503 = __toESM(require_polyfills());
+      import_polyfills501 = __toESM(require_polyfills());
       SmithyMessageDecoderStream = class {
         options;
         constructor(options) {
@@ -43501,10 +43188,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
-  var import_polyfills504, SmithyMessageEncoderStream;
+  var import_polyfills502, SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
-      import_polyfills504 = __toESM(require_polyfills());
+      import_polyfills502 = __toESM(require_polyfills());
       SmithyMessageEncoderStream = class {
         options;
         constructor(options) {
@@ -43524,10 +43211,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/index.js
-  var import_polyfills505;
+  var import_polyfills503;
   var init_dist_es47 = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
-      import_polyfills505 = __toESM(require_polyfills());
+      import_polyfills503 = __toESM(require_polyfills());
       init_EventStreamCodec();
       init_HeaderMarshaller();
       init_Int64();
@@ -43604,10 +43291,10 @@ ${toHex(hashedRequest)}`;
       [Symbol.asyncIterator]: iterator
     };
   }
-  var import_polyfills506;
+  var import_polyfills504;
   var init_getChunkedStream = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
-      import_polyfills506 = __toESM(require_polyfills());
+      import_polyfills504 = __toESM(require_polyfills());
     }
   });
 
@@ -43642,18 +43329,18 @@ ${toHex(hashedRequest)}`;
       }
     };
   }
-  var import_polyfills507;
+  var import_polyfills505;
   var init_getUnmarshalledStream = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
-      import_polyfills507 = __toESM(require_polyfills());
+      import_polyfills505 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
-  var import_polyfills508, EventStreamMarshaller;
+  var import_polyfills506, EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
-      import_polyfills508 = __toESM(require_polyfills());
+      import_polyfills506 = __toESM(require_polyfills());
       init_dist_es47();
       init_getChunkedStream();
       init_getUnmarshalledStream();
@@ -43683,28 +43370,28 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
-  var import_polyfills509;
+  var import_polyfills507;
   var init_provider = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
-      import_polyfills509 = __toESM(require_polyfills());
+      import_polyfills507 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
-  var import_polyfills510;
+  var import_polyfills508;
   var init_dist_es48 = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
-      import_polyfills510 = __toESM(require_polyfills());
+      import_polyfills508 = __toESM(require_polyfills());
       init_EventStreamMarshaller();
       init_provider();
     }
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
-  var import_polyfills511, readableStreamtoIterable, iterableToReadableStream;
+  var import_polyfills509, readableStreamtoIterable, iterableToReadableStream;
   var init_utils3 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
-      import_polyfills511 = __toESM(require_polyfills());
+      import_polyfills509 = __toESM(require_polyfills());
       readableStreamtoIterable = (readableStream) => ({
         [Symbol.asyncIterator]: async function* () {
           const reader = readableStream.getReader();
@@ -43736,10 +43423,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
-  var import_polyfills512, EventStreamMarshaller2, isReadableStream2;
+  var import_polyfills510, EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
-      import_polyfills512 = __toESM(require_polyfills());
+      import_polyfills510 = __toESM(require_polyfills());
       init_dist_es48();
       init_utils3();
       EventStreamMarshaller2 = class {
@@ -43764,20 +43451,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
-  var import_polyfills513, eventStreamSerdeProvider;
+  var import_polyfills511, eventStreamSerdeProvider;
   var init_provider2 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
-      import_polyfills513 = __toESM(require_polyfills());
+      import_polyfills511 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       eventStreamSerdeProvider = (options) => new EventStreamMarshaller2(options);
     }
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
-  var import_polyfills514;
+  var import_polyfills512;
   var init_dist_es49 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
-      import_polyfills514 = __toESM(require_polyfills());
+      import_polyfills512 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       init_provider2();
       init_utils3();
@@ -43794,18 +43481,18 @@ ${toHex(hashedRequest)}`;
       totalBytesRead += slice.size;
     }
   }
-  var import_polyfills515;
+  var import_polyfills513;
   var init_dist_es50 = __esm({
     "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
-      import_polyfills515 = __toESM(require_polyfills());
+      import_polyfills513 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/hash-blob-browser/dist-es/index.js
-  var import_polyfills516, blobHasher;
+  var import_polyfills514, blobHasher;
   var init_dist_es51 = __esm({
     "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
-      import_polyfills516 = __toESM(require_polyfills());
+      import_polyfills514 = __toESM(require_polyfills());
       init_dist_es50();
       blobHasher = async function blobHasher2(hashCtor, blob) {
         const hash = new hashCtor();
@@ -43818,37 +43505,37 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
-  var import_polyfills517;
+  var import_polyfills515;
   var init_invalidFunction = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
-      import_polyfills517 = __toESM(require_polyfills());
+      import_polyfills515 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
-  var import_polyfills518, invalidProvider;
+  var import_polyfills516, invalidProvider;
   var init_invalidProvider = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
-      import_polyfills518 = __toESM(require_polyfills());
+      import_polyfills516 = __toESM(require_polyfills());
       invalidProvider = (message) => () => Promise.reject(message);
     }
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/index.js
-  var import_polyfills519;
+  var import_polyfills517;
   var init_dist_es52 = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
-      import_polyfills519 = __toESM(require_polyfills());
+      import_polyfills517 = __toESM(require_polyfills());
       init_invalidFunction();
       init_invalidProvider();
     }
   });
 
   // node_modules/@smithy/md5-js/dist-es/constants.js
-  var import_polyfills520, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
+  var import_polyfills518, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
     "node_modules/@smithy/md5-js/dist-es/constants.js"() {
-      import_polyfills520 = __toESM(require_polyfills());
+      import_polyfills518 = __toESM(require_polyfills());
       BLOCK_SIZE2 = 64;
       DIGEST_LENGTH2 = 16;
       INIT2 = [1732584193, 4023233417, 2562383102, 271733878];
@@ -43872,25 +43559,25 @@ ${toHex(hashedRequest)}`;
   function ii(a2, b2, c2, d2, x2, s2, t8) {
     return cmn(c2 ^ (b2 | ~d2), a2, b2, x2, s2, t8);
   }
-  function isEmptyData3(data2) {
-    if (typeof data2 === "string") {
-      return data2.length === 0;
+  function isEmptyData3(data) {
+    if (typeof data === "string") {
+      return data.length === 0;
     }
-    return data2.byteLength === 0;
+    return data.byteLength === 0;
   }
-  function convertToBuffer3(data2) {
-    if (typeof data2 === "string") {
-      return fromUtf8(data2);
+  function convertToBuffer3(data) {
+    if (typeof data === "string") {
+      return fromUtf8(data);
     }
-    if (ArrayBuffer.isView(data2)) {
-      return new Uint8Array(data2.buffer, data2.byteOffset, data2.byteLength / Uint8Array.BYTES_PER_ELEMENT);
+    if (ArrayBuffer.isView(data)) {
+      return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
     }
-    return new Uint8Array(data2);
+    return new Uint8Array(data);
   }
-  var import_polyfills521, Md5;
+  var import_polyfills519, Md5;
   var init_dist_es53 = __esm({
     "node_modules/@smithy/md5-js/dist-es/index.js"() {
-      import_polyfills521 = __toESM(require_polyfills());
+      import_polyfills519 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants11();
       Md5 = class {
@@ -43908,12 +43595,12 @@ ${toHex(hashedRequest)}`;
           } else if (this.finished) {
             throw new Error("Attempted to update an already finished hash.");
           }
-          const data2 = convertToBuffer3(sourceData);
+          const data = convertToBuffer3(sourceData);
           let position = 0;
-          let { byteLength } = data2;
+          let { byteLength } = data;
           this.bytesHashed += byteLength;
           while (byteLength > 0) {
-            this.buffer.setUint8(this.bufferLength++, data2[position++]);
+            this.buffer.setUint8(this.bufferLength++, data[position++]);
             byteLength--;
             if (this.bufferLength === BLOCK_SIZE2) {
               this.hashBuffer();
@@ -44031,19 +43718,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
-  var import_polyfills522, DEFAULTS_MODE_OPTIONS;
+  var import_polyfills520, DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
-      import_polyfills522 = __toESM(require_polyfills());
+      import_polyfills520 = __toESM(require_polyfills());
       DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
     }
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
-  var import_polyfills523, resolveDefaultsModeConfig, useMobileConfiguration;
+  var import_polyfills521, resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
-      import_polyfills523 = __toESM(require_polyfills());
+      import_polyfills521 = __toESM(require_polyfills());
       init_dist_es15();
       init_constants12();
       resolveDefaultsModeConfig = ({ defaultsMode } = {}) => memoize(async () => {
@@ -44078,19 +43765,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
-  var import_polyfills524;
+  var import_polyfills522;
   var init_dist_es54 = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
-      import_polyfills524 = __toESM(require_polyfills());
+      import_polyfills522 = __toESM(require_polyfills());
       init_resolveDefaultsModeConfig();
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
-  var import_polyfills525, getRuntimeConfig;
+  var import_polyfills523, getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
-      import_polyfills525 = __toESM(require_polyfills());
+      import_polyfills523 = __toESM(require_polyfills());
       init_dist_es22();
       init_protocols2();
       init_dist_es43();
@@ -44145,10 +43832,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
-  var import_polyfills526, getRuntimeConfig2;
+  var import_polyfills524, getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
-      import_polyfills526 = __toESM(require_polyfills());
+      import_polyfills524 = __toESM(require_polyfills());
       init_package();
       init_module5();
       init_module7();
@@ -44194,10 +43881,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
-  var import_polyfills527, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
+  var import_polyfills525, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
-      import_polyfills527 = __toESM(require_polyfills());
+      import_polyfills525 = __toESM(require_polyfills());
       getAwsRegionExtensionConfiguration = (runtimeConfig) => {
         return {
           setRegion(region) {
@@ -44217,26 +43904,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
-  var import_polyfills528;
+  var import_polyfills526;
   var init_awsRegionConfig = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
-      import_polyfills528 = __toESM(require_polyfills());
+      import_polyfills526 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
-  var import_polyfills529;
+  var import_polyfills527;
   var init_stsRegionDefaultResolver_browser = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
-      import_polyfills529 = __toESM(require_polyfills());
+      import_polyfills527 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
-  var import_polyfills530;
+  var import_polyfills528;
   var init_dist_es55 = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
-      import_polyfills530 = __toESM(require_polyfills());
+      import_polyfills528 = __toESM(require_polyfills());
       init_extensions4();
       init_awsRegionConfig();
       init_stsRegionDefaultResolver_browser();
@@ -44244,10 +43931,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
-  var import_polyfills531, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
+  var import_polyfills529, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
-      import_polyfills531 = __toESM(require_polyfills());
+      import_polyfills529 = __toESM(require_polyfills());
       getHttpAuthExtensionConfiguration = (runtimeConfig) => {
         const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
         let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
@@ -44289,10 +43976,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
-  var import_polyfills532, resolveRuntimeExtensions;
+  var import_polyfills530, resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
-      import_polyfills532 = __toESM(require_polyfills());
+      import_polyfills530 = __toESM(require_polyfills());
       init_dist_es55();
       init_dist_es2();
       init_dist_es20();
@@ -44306,10 +43993,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
-  var import_polyfills533, S3Client;
+  var import_polyfills531, S3Client;
   var init_S3Client = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
-      import_polyfills533 = __toESM(require_polyfills());
+      import_polyfills531 = __toESM(require_polyfills());
       init_dist_es3();
       init_dist_es25();
       init_dist_es26();
@@ -44377,10 +44064,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
-  var import_polyfills534, AbortMultipartUploadCommand;
+  var import_polyfills532, AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
-      import_polyfills534 = __toESM(require_polyfills());
+      import_polyfills532 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -44451,10 +44138,10 @@ ${toHex(hashedRequest)}`;
       return false;
     }
   }
-  var import_polyfills535, ssecMiddlewareOptions, getSsecPlugin;
+  var import_polyfills533, ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es56 = __esm({
     "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
-      import_polyfills535 = __toESM(require_polyfills());
+      import_polyfills533 = __toESM(require_polyfills());
       ssecMiddlewareOptions = {
         name: "ssecMiddleware",
         step: "initialize",
@@ -44470,10 +44157,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
-  var import_polyfills536, CompleteMultipartUploadCommand;
+  var import_polyfills534, CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
-      import_polyfills536 = __toESM(require_polyfills());
+      import_polyfills534 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -44496,10 +44183,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
-  var import_polyfills537, CopyObjectCommand;
+  var import_polyfills535, CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
-      import_polyfills537 = __toESM(require_polyfills());
+      import_polyfills535 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -44537,10 +44224,10 @@ ${toHex(hashedRequest)}`;
       return next(args);
     };
   }
-  var import_polyfills538, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
+  var import_polyfills536, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es57 = __esm({
     "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
-      import_polyfills538 = __toESM(require_polyfills());
+      import_polyfills536 = __toESM(require_polyfills());
       locationConstraintMiddlewareOptions = {
         step: "initialize",
         tags: ["LOCATION_CONSTRAINT", "CREATE_BUCKET_CONFIGURATION"],
@@ -44556,10 +44243,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
-  var import_polyfills539, CreateBucketCommand;
+  var import_polyfills537, CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
-      import_polyfills539 = __toESM(require_polyfills());
+      import_polyfills537 = __toESM(require_polyfills());
       init_dist_es57();
       init_dist_es30();
       init_dist_es39();
@@ -44583,10 +44270,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
-  var import_polyfills540, CreateBucketMetadataConfigurationCommand;
+  var import_polyfills538, CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
-      import_polyfills540 = __toESM(require_polyfills());
+      import_polyfills538 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -44610,10 +44297,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
-  var import_polyfills541, CreateBucketMetadataTableConfigurationCommand;
+  var import_polyfills539, CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills541 = __toESM(require_polyfills());
+      import_polyfills539 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -44637,10 +44324,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
-  var import_polyfills542, CreateMultipartUploadCommand;
+  var import_polyfills540, CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
-      import_polyfills542 = __toESM(require_polyfills());
+      import_polyfills540 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -44663,10 +44350,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
-  var import_polyfills543, DeleteBucketAnalyticsConfigurationCommand;
+  var import_polyfills541, DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills543 = __toESM(require_polyfills());
+      import_polyfills541 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44683,10 +44370,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
-  var import_polyfills544, DeleteBucketCommand;
+  var import_polyfills542, DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
-      import_polyfills544 = __toESM(require_polyfills());
+      import_polyfills542 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44703,10 +44390,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
-  var import_polyfills545, DeleteBucketCorsCommand;
+  var import_polyfills543, DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
-      import_polyfills545 = __toESM(require_polyfills());
+      import_polyfills543 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44723,10 +44410,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
-  var import_polyfills546, DeleteBucketEncryptionCommand;
+  var import_polyfills544, DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
-      import_polyfills546 = __toESM(require_polyfills());
+      import_polyfills544 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44743,10 +44430,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills547, DeleteBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills545, DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills547 = __toESM(require_polyfills());
+      import_polyfills545 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44763,10 +44450,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
-  var import_polyfills548, DeleteBucketInventoryConfigurationCommand;
+  var import_polyfills546, DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
-      import_polyfills548 = __toESM(require_polyfills());
+      import_polyfills546 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44783,10 +44470,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
-  var import_polyfills549, DeleteBucketLifecycleCommand;
+  var import_polyfills547, DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
-      import_polyfills549 = __toESM(require_polyfills());
+      import_polyfills547 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44803,10 +44490,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
-  var import_polyfills550, DeleteBucketMetadataConfigurationCommand;
+  var import_polyfills548, DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
-      import_polyfills550 = __toESM(require_polyfills());
+      import_polyfills548 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44823,10 +44510,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
-  var import_polyfills551, DeleteBucketMetadataTableConfigurationCommand;
+  var import_polyfills549, DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills551 = __toESM(require_polyfills());
+      import_polyfills549 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44843,10 +44530,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
-  var import_polyfills552, DeleteBucketMetricsConfigurationCommand;
+  var import_polyfills550, DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
-      import_polyfills552 = __toESM(require_polyfills());
+      import_polyfills550 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44863,10 +44550,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
-  var import_polyfills553, DeleteBucketOwnershipControlsCommand;
+  var import_polyfills551, DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
-      import_polyfills553 = __toESM(require_polyfills());
+      import_polyfills551 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44883,10 +44570,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
-  var import_polyfills554, DeleteBucketPolicyCommand;
+  var import_polyfills552, DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
-      import_polyfills554 = __toESM(require_polyfills());
+      import_polyfills552 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44903,10 +44590,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
-  var import_polyfills555, DeleteBucketReplicationCommand;
+  var import_polyfills553, DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
-      import_polyfills555 = __toESM(require_polyfills());
+      import_polyfills553 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44923,10 +44610,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
-  var import_polyfills556, DeleteBucketTaggingCommand;
+  var import_polyfills554, DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
-      import_polyfills556 = __toESM(require_polyfills());
+      import_polyfills554 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44943,10 +44630,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
-  var import_polyfills557, DeleteBucketWebsiteCommand;
+  var import_polyfills555, DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
-      import_polyfills557 = __toESM(require_polyfills());
+      import_polyfills555 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -44963,10 +44650,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
-  var import_polyfills558, DeleteObjectCommand;
+  var import_polyfills556, DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
-      import_polyfills558 = __toESM(require_polyfills());
+      import_polyfills556 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -44987,10 +44674,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
-  var import_polyfills559, DeleteObjectsCommand;
+  var import_polyfills557, DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
-      import_polyfills559 = __toESM(require_polyfills());
+      import_polyfills557 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -45015,10 +44702,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
-  var import_polyfills560, DeleteObjectTaggingCommand;
+  var import_polyfills558, DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
-      import_polyfills560 = __toESM(require_polyfills());
+      import_polyfills558 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45038,10 +44725,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
-  var import_polyfills561, DeletePublicAccessBlockCommand;
+  var import_polyfills559, DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
-      import_polyfills561 = __toESM(require_polyfills());
+      import_polyfills559 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -45058,10 +44745,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
-  var import_polyfills562, GetBucketAbacCommand;
+  var import_polyfills560, GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
-      import_polyfills562 = __toESM(require_polyfills());
+      import_polyfills560 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45081,10 +44768,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
-  var import_polyfills563, GetBucketAccelerateConfigurationCommand;
+  var import_polyfills561, GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
-      import_polyfills563 = __toESM(require_polyfills());
+      import_polyfills561 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45105,10 +44792,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
-  var import_polyfills564, GetBucketAclCommand;
+  var import_polyfills562, GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
-      import_polyfills564 = __toESM(require_polyfills());
+      import_polyfills562 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45129,10 +44816,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
-  var import_polyfills565, GetBucketAnalyticsConfigurationCommand;
+  var import_polyfills563, GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills565 = __toESM(require_polyfills());
+      import_polyfills563 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45153,10 +44840,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
-  var import_polyfills566, GetBucketCorsCommand;
+  var import_polyfills564, GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
-      import_polyfills566 = __toESM(require_polyfills());
+      import_polyfills564 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45177,10 +44864,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
-  var import_polyfills567, GetBucketEncryptionCommand;
+  var import_polyfills565, GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
-      import_polyfills567 = __toESM(require_polyfills());
+      import_polyfills565 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45201,10 +44888,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills568, GetBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills566, GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills568 = __toESM(require_polyfills());
+      import_polyfills566 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45225,10 +44912,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
-  var import_polyfills569, GetBucketInventoryConfigurationCommand;
+  var import_polyfills567, GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
-      import_polyfills569 = __toESM(require_polyfills());
+      import_polyfills567 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45249,10 +44936,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
-  var import_polyfills570, GetBucketLifecycleConfigurationCommand;
+  var import_polyfills568, GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
-      import_polyfills570 = __toESM(require_polyfills());
+      import_polyfills568 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45273,10 +44960,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
-  var import_polyfills571, GetBucketLocationCommand;
+  var import_polyfills569, GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
-      import_polyfills571 = __toESM(require_polyfills());
+      import_polyfills569 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45297,10 +44984,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
-  var import_polyfills572, GetBucketLoggingCommand;
+  var import_polyfills570, GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
-      import_polyfills572 = __toESM(require_polyfills());
+      import_polyfills570 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45321,10 +45008,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
-  var import_polyfills573, GetBucketMetadataConfigurationCommand;
+  var import_polyfills571, GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
-      import_polyfills573 = __toESM(require_polyfills());
+      import_polyfills571 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45345,10 +45032,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
-  var import_polyfills574, GetBucketMetadataTableConfigurationCommand;
+  var import_polyfills572, GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills574 = __toESM(require_polyfills());
+      import_polyfills572 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45369,10 +45056,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
-  var import_polyfills575, GetBucketMetricsConfigurationCommand;
+  var import_polyfills573, GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
-      import_polyfills575 = __toESM(require_polyfills());
+      import_polyfills573 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45393,10 +45080,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
-  var import_polyfills576, GetBucketNotificationConfigurationCommand;
+  var import_polyfills574, GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
-      import_polyfills576 = __toESM(require_polyfills());
+      import_polyfills574 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45417,10 +45104,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
-  var import_polyfills577, GetBucketOwnershipControlsCommand;
+  var import_polyfills575, GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
-      import_polyfills577 = __toESM(require_polyfills());
+      import_polyfills575 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45441,10 +45128,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
-  var import_polyfills578, GetBucketPolicyCommand;
+  var import_polyfills576, GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
-      import_polyfills578 = __toESM(require_polyfills());
+      import_polyfills576 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45465,10 +45152,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
-  var import_polyfills579, GetBucketPolicyStatusCommand;
+  var import_polyfills577, GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
-      import_polyfills579 = __toESM(require_polyfills());
+      import_polyfills577 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45489,10 +45176,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
-  var import_polyfills580, GetBucketReplicationCommand;
+  var import_polyfills578, GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
-      import_polyfills580 = __toESM(require_polyfills());
+      import_polyfills578 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45513,10 +45200,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
-  var import_polyfills581, GetBucketRequestPaymentCommand;
+  var import_polyfills579, GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
-      import_polyfills581 = __toESM(require_polyfills());
+      import_polyfills579 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45537,10 +45224,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
-  var import_polyfills582, GetBucketTaggingCommand;
+  var import_polyfills580, GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
-      import_polyfills582 = __toESM(require_polyfills());
+      import_polyfills580 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45561,10 +45248,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
-  var import_polyfills583, GetBucketVersioningCommand;
+  var import_polyfills581, GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
-      import_polyfills583 = __toESM(require_polyfills());
+      import_polyfills581 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45585,10 +45272,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
-  var import_polyfills584, GetBucketWebsiteCommand;
+  var import_polyfills582, GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
-      import_polyfills584 = __toESM(require_polyfills());
+      import_polyfills582 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45609,10 +45296,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
-  var import_polyfills585, GetObjectAclCommand;
+  var import_polyfills583, GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
-      import_polyfills585 = __toESM(require_polyfills());
+      import_polyfills583 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45633,10 +45320,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
-  var import_polyfills586, GetObjectAttributesCommand;
+  var import_polyfills584, GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
-      import_polyfills586 = __toESM(require_polyfills());
+      import_polyfills584 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -45658,10 +45345,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
-  var import_polyfills587, GetObjectCommand;
+  var import_polyfills585, GetObjectCommand;
   var init_GetObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
-      import_polyfills587 = __toESM(require_polyfills());
+      import_polyfills585 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es56();
@@ -45690,10 +45377,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
-  var import_polyfills588, GetObjectLegalHoldCommand;
+  var import_polyfills586, GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
-      import_polyfills588 = __toESM(require_polyfills());
+      import_polyfills586 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45713,10 +45400,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
-  var import_polyfills589, GetObjectLockConfigurationCommand;
+  var import_polyfills587, GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
-      import_polyfills589 = __toESM(require_polyfills());
+      import_polyfills587 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45736,10 +45423,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
-  var import_polyfills590, GetObjectRetentionCommand;
+  var import_polyfills588, GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
-      import_polyfills590 = __toESM(require_polyfills());
+      import_polyfills588 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45759,10 +45446,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
-  var import_polyfills591, GetObjectTaggingCommand;
+  var import_polyfills589, GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
-      import_polyfills591 = __toESM(require_polyfills());
+      import_polyfills589 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45782,10 +45469,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
-  var import_polyfills592, GetObjectTorrentCommand;
+  var import_polyfills590, GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
-      import_polyfills592 = __toESM(require_polyfills());
+      import_polyfills590 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -45801,10 +45488,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
-  var import_polyfills593, GetPublicAccessBlockCommand;
+  var import_polyfills591, GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
-      import_polyfills593 = __toESM(require_polyfills());
+      import_polyfills591 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45825,10 +45512,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
-  var import_polyfills594, HeadBucketCommand;
+  var import_polyfills592, HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
-      import_polyfills594 = __toESM(require_polyfills());
+      import_polyfills592 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45848,10 +45535,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
-  var import_polyfills595, HeadObjectCommand;
+  var import_polyfills593, HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
-      import_polyfills595 = __toESM(require_polyfills());
+      import_polyfills593 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -45875,10 +45562,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
-  var import_polyfills596, ListBucketAnalyticsConfigurationsCommand;
+  var import_polyfills594, ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
-      import_polyfills596 = __toESM(require_polyfills());
+      import_polyfills594 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45899,10 +45586,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
-  var import_polyfills597, ListBucketIntelligentTieringConfigurationsCommand;
+  var import_polyfills595, ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
-      import_polyfills597 = __toESM(require_polyfills());
+      import_polyfills595 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45923,10 +45610,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
-  var import_polyfills598, ListBucketInventoryConfigurationsCommand;
+  var import_polyfills596, ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
-      import_polyfills598 = __toESM(require_polyfills());
+      import_polyfills596 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45947,10 +45634,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
-  var import_polyfills599, ListBucketMetricsConfigurationsCommand;
+  var import_polyfills597, ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
-      import_polyfills599 = __toESM(require_polyfills());
+      import_polyfills597 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45970,10 +45657,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
-  var import_polyfills600, ListBucketsCommand;
+  var import_polyfills598, ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
-      import_polyfills600 = __toESM(require_polyfills());
+      import_polyfills598 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -45990,10 +45677,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
-  var import_polyfills601, ListDirectoryBucketsCommand;
+  var import_polyfills599, ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
-      import_polyfills601 = __toESM(require_polyfills());
+      import_polyfills599 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46013,10 +45700,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
-  var import_polyfills602, ListMultipartUploadsCommand;
+  var import_polyfills600, ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
-      import_polyfills602 = __toESM(require_polyfills());
+      import_polyfills600 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46037,10 +45724,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
-  var import_polyfills603, ListObjectsCommand;
+  var import_polyfills601, ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
-      import_polyfills603 = __toESM(require_polyfills());
+      import_polyfills601 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46061,10 +45748,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
-  var import_polyfills604, ListObjectsV2Command;
+  var import_polyfills602, ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
-      import_polyfills604 = __toESM(require_polyfills());
+      import_polyfills602 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46085,10 +45772,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
-  var import_polyfills605, ListObjectVersionsCommand;
+  var import_polyfills603, ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
-      import_polyfills605 = __toESM(require_polyfills());
+      import_polyfills603 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46109,10 +45796,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
-  var import_polyfills606, ListPartsCommand;
+  var import_polyfills604, ListPartsCommand;
   var init_ListPartsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
-      import_polyfills606 = __toESM(require_polyfills());
+      import_polyfills604 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -46135,10 +45822,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
-  var import_polyfills607, PutBucketAbacCommand;
+  var import_polyfills605, PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
-      import_polyfills607 = __toESM(require_polyfills());
+      import_polyfills605 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46161,10 +45848,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
-  var import_polyfills608, PutBucketAccelerateConfigurationCommand;
+  var import_polyfills606, PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
-      import_polyfills608 = __toESM(require_polyfills());
+      import_polyfills606 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46188,10 +45875,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
-  var import_polyfills609, PutBucketAclCommand;
+  var import_polyfills607, PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
-      import_polyfills609 = __toESM(require_polyfills());
+      import_polyfills607 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46215,10 +45902,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
-  var import_polyfills610, PutBucketAnalyticsConfigurationCommand;
+  var import_polyfills608, PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills610 = __toESM(require_polyfills());
+      import_polyfills608 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -46235,10 +45922,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
-  var import_polyfills611, PutBucketCorsCommand;
+  var import_polyfills609, PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
-      import_polyfills611 = __toESM(require_polyfills());
+      import_polyfills609 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46262,10 +45949,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
-  var import_polyfills612, PutBucketEncryptionCommand;
+  var import_polyfills610, PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
-      import_polyfills612 = __toESM(require_polyfills());
+      import_polyfills610 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46289,10 +45976,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills613, PutBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills611, PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills613 = __toESM(require_polyfills());
+      import_polyfills611 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -46309,10 +45996,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
-  var import_polyfills614, PutBucketInventoryConfigurationCommand;
+  var import_polyfills612, PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
-      import_polyfills614 = __toESM(require_polyfills());
+      import_polyfills612 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -46329,10 +46016,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
-  var import_polyfills615, PutBucketLifecycleConfigurationCommand;
+  var import_polyfills613, PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
-      import_polyfills615 = __toESM(require_polyfills());
+      import_polyfills613 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46358,10 +46045,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
-  var import_polyfills616, PutBucketLoggingCommand;
+  var import_polyfills614, PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
-      import_polyfills616 = __toESM(require_polyfills());
+      import_polyfills614 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46385,10 +46072,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
-  var import_polyfills617, PutBucketMetricsConfigurationCommand;
+  var import_polyfills615, PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
-      import_polyfills617 = __toESM(require_polyfills());
+      import_polyfills615 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -46405,10 +46092,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
-  var import_polyfills618, PutBucketNotificationConfigurationCommand;
+  var import_polyfills616, PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
-      import_polyfills618 = __toESM(require_polyfills());
+      import_polyfills616 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -46425,10 +46112,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
-  var import_polyfills619, PutBucketOwnershipControlsCommand;
+  var import_polyfills617, PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
-      import_polyfills619 = __toESM(require_polyfills());
+      import_polyfills617 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46452,10 +46139,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
-  var import_polyfills620, PutBucketPolicyCommand;
+  var import_polyfills618, PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
-      import_polyfills620 = __toESM(require_polyfills());
+      import_polyfills618 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46479,10 +46166,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
-  var import_polyfills621, PutBucketReplicationCommand;
+  var import_polyfills619, PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
-      import_polyfills621 = __toESM(require_polyfills());
+      import_polyfills619 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46506,10 +46193,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
-  var import_polyfills622, PutBucketRequestPaymentCommand;
+  var import_polyfills620, PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
-      import_polyfills622 = __toESM(require_polyfills());
+      import_polyfills620 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46533,10 +46220,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
-  var import_polyfills623, PutBucketTaggingCommand;
+  var import_polyfills621, PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
-      import_polyfills623 = __toESM(require_polyfills());
+      import_polyfills621 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46560,10 +46247,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
-  var import_polyfills624, PutBucketVersioningCommand;
+  var import_polyfills622, PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
-      import_polyfills624 = __toESM(require_polyfills());
+      import_polyfills622 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46587,10 +46274,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
-  var import_polyfills625, PutBucketWebsiteCommand;
+  var import_polyfills623, PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
-      import_polyfills625 = __toESM(require_polyfills());
+      import_polyfills623 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46614,10 +46301,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
-  var import_polyfills626, PutObjectAclCommand;
+  var import_polyfills624, PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
-      import_polyfills626 = __toESM(require_polyfills());
+      import_polyfills624 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46643,10 +46330,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
-  var import_polyfills627, PutObjectCommand;
+  var import_polyfills625, PutObjectCommand;
   var init_PutObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
-      import_polyfills627 = __toESM(require_polyfills());
+      import_polyfills625 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es56();
@@ -46675,10 +46362,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
-  var import_polyfills628, PutObjectLegalHoldCommand;
+  var import_polyfills626, PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
-      import_polyfills628 = __toESM(require_polyfills());
+      import_polyfills626 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46703,10 +46390,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
-  var import_polyfills629, PutObjectLockConfigurationCommand;
+  var import_polyfills627, PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
-      import_polyfills629 = __toESM(require_polyfills());
+      import_polyfills627 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46731,10 +46418,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
-  var import_polyfills630, PutObjectRetentionCommand;
+  var import_polyfills628, PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
-      import_polyfills630 = __toESM(require_polyfills());
+      import_polyfills628 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46759,10 +46446,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
-  var import_polyfills631, PutObjectTaggingCommand;
+  var import_polyfills629, PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
-      import_polyfills631 = __toESM(require_polyfills());
+      import_polyfills629 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46787,10 +46474,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
-  var import_polyfills632, PutPublicAccessBlockCommand;
+  var import_polyfills630, PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
-      import_polyfills632 = __toESM(require_polyfills());
+      import_polyfills630 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46814,10 +46501,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
-  var import_polyfills633, RenameObjectCommand;
+  var import_polyfills631, RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
-      import_polyfills633 = __toESM(require_polyfills());
+      import_polyfills631 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es39();
       init_dist_es20();
@@ -46838,10 +46525,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
-  var import_polyfills634, RestoreObjectCommand;
+  var import_polyfills632, RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
-      import_polyfills634 = __toESM(require_polyfills());
+      import_polyfills632 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es39();
@@ -46866,10 +46553,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
-  var import_polyfills635, SelectObjectContentCommand;
+  var import_polyfills633, SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
-      import_polyfills635 = __toESM(require_polyfills());
+      import_polyfills633 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -46895,10 +46582,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
-  var import_polyfills636, UpdateBucketMetadataInventoryTableConfigurationCommand;
+  var import_polyfills634, UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
-      import_polyfills636 = __toESM(require_polyfills());
+      import_polyfills634 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46922,10 +46609,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
-  var import_polyfills637, UpdateBucketMetadataJournalTableConfigurationCommand;
+  var import_polyfills635, UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
-      import_polyfills637 = __toESM(require_polyfills());
+      import_polyfills635 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es39();
       init_dist_es20();
@@ -46949,10 +46636,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
-  var import_polyfills638, UploadPartCommand;
+  var import_polyfills636, UploadPartCommand;
   var init_UploadPartCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
-      import_polyfills638 = __toESM(require_polyfills());
+      import_polyfills636 = __toESM(require_polyfills());
       init_dist_es25();
       init_dist_es30();
       init_dist_es56();
@@ -46980,10 +46667,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
-  var import_polyfills639, UploadPartCopyCommand;
+  var import_polyfills637, UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
-      import_polyfills639 = __toESM(require_polyfills());
+      import_polyfills637 = __toESM(require_polyfills());
       init_dist_es30();
       init_dist_es56();
       init_dist_es39();
@@ -47006,10 +46693,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
-  var import_polyfills640, WriteGetObjectResponseCommand;
+  var import_polyfills638, WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
-      import_polyfills640 = __toESM(require_polyfills());
+      import_polyfills638 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es20();
       init_EndpointParameters();
@@ -47025,10 +46712,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/S3.js
-  var import_polyfills641, commands, S3;
+  var import_polyfills639, commands, S3;
   var init_S3 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
-      import_polyfills641 = __toESM(require_polyfills());
+      import_polyfills639 = __toESM(require_polyfills());
       init_dist_es20();
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
@@ -47252,10 +46939,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
-  var import_polyfills642;
+  var import_polyfills640;
   var init_commands = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
-      import_polyfills642 = __toESM(require_polyfills());
+      import_polyfills640 = __toESM(require_polyfills());
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
       init_CopyObjectCommand();
@@ -47366,18 +47053,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
-  var import_polyfills643;
+  var import_polyfills641;
   var init_Interfaces = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
-      import_polyfills643 = __toESM(require_polyfills());
+      import_polyfills641 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
-  var import_polyfills644, paginateListBuckets;
+  var import_polyfills642, paginateListBuckets;
   var init_ListBucketsPaginator = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
-      import_polyfills644 = __toESM(require_polyfills());
+      import_polyfills642 = __toESM(require_polyfills());
       init_dist_es14();
       init_ListBucketsCommand();
       init_S3Client();
@@ -47386,10 +47073,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
-  var import_polyfills645, paginateListDirectoryBuckets;
+  var import_polyfills643, paginateListDirectoryBuckets;
   var init_ListDirectoryBucketsPaginator = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
-      import_polyfills645 = __toESM(require_polyfills());
+      import_polyfills643 = __toESM(require_polyfills());
       init_dist_es14();
       init_ListDirectoryBucketsCommand();
       init_S3Client();
@@ -47398,10 +47085,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
-  var import_polyfills646, paginateListObjectsV2;
+  var import_polyfills644, paginateListObjectsV2;
   var init_ListObjectsV2Paginator = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
-      import_polyfills646 = __toESM(require_polyfills());
+      import_polyfills644 = __toESM(require_polyfills());
       init_dist_es14();
       init_ListObjectsV2Command();
       init_S3Client();
@@ -47410,10 +47097,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
-  var import_polyfills647, paginateListParts;
+  var import_polyfills645, paginateListParts;
   var init_ListPartsPaginator = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
-      import_polyfills647 = __toESM(require_polyfills());
+      import_polyfills645 = __toESM(require_polyfills());
       init_dist_es14();
       init_ListPartsCommand();
       init_S3Client();
@@ -47422,10 +47109,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
-  var import_polyfills648;
+  var import_polyfills646;
   var init_pagination2 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
-      import_polyfills648 = __toESM(require_polyfills());
+      import_polyfills646 = __toESM(require_polyfills());
       init_Interfaces();
       init_ListBucketsPaginator();
       init_ListDirectoryBucketsPaginator();
@@ -47435,42 +47122,42 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
-  var import_polyfills649;
+  var import_polyfills647;
   var init_waitForBucketExists = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
-      import_polyfills649 = __toESM(require_polyfills());
+      import_polyfills647 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
-  var import_polyfills650;
+  var import_polyfills648;
   var init_waitForBucketNotExists = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
-      import_polyfills650 = __toESM(require_polyfills());
+      import_polyfills648 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
-  var import_polyfills651;
+  var import_polyfills649;
   var init_waitForObjectExists = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
-      import_polyfills651 = __toESM(require_polyfills());
+      import_polyfills649 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
-  var import_polyfills652;
+  var import_polyfills650;
   var init_waitForObjectNotExists = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
-      import_polyfills652 = __toESM(require_polyfills());
+      import_polyfills650 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
-  var import_polyfills653;
+  var import_polyfills651;
   var init_waiters = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
-      import_polyfills653 = __toESM(require_polyfills());
+      import_polyfills651 = __toESM(require_polyfills());
       init_waitForBucketExists();
       init_waitForBucketNotExists();
       init_waitForObjectExists();
@@ -47479,34 +47166,34 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
-  var import_polyfills654;
+  var import_polyfills652;
   var init_enums = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
-      import_polyfills654 = __toESM(require_polyfills());
+      import_polyfills652 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
-  var import_polyfills655;
+  var import_polyfills653;
   var init_models_0 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
-      import_polyfills655 = __toESM(require_polyfills());
+      import_polyfills653 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
-  var import_polyfills656;
+  var import_polyfills654;
   var init_models_1 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
-      import_polyfills656 = __toESM(require_polyfills());
+      import_polyfills654 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/index.js
-  var import_polyfills657;
+  var import_polyfills655;
   var init_dist_es58 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
-      import_polyfills657 = __toESM(require_polyfills());
+      import_polyfills655 = __toESM(require_polyfills());
       init_S3Client();
       init_S3();
       init_commands();
@@ -47523,7 +47210,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -47583,15 +47270,15 @@ ${toHex(hashedRequest)}`;
   var require_browser = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
         throw new Error("Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11");
       }
       var Buffer2 = require_safe_buffer().Buffer;
-      var crypto5 = window.crypto || window.msCrypto;
-      if (crypto5 && crypto5.getRandomValues) {
+      var crypto4 = window.crypto || window.msCrypto;
+      if (crypto4 && crypto4.getRandomValues) {
         module.exports = randomBytes2;
       } else {
         module.exports = oldBrowser;
@@ -47602,10 +47289,10 @@ ${toHex(hashedRequest)}`;
         if (size > 0) {
           if (size > MAX_BYTES) {
             for (var generated = 0; generated < size; generated += MAX_BYTES) {
-              crypto5.getRandomValues(bytes.slice(generated, generated + MAX_BYTES));
+              crypto4.getRandomValues(bytes.slice(generated, generated + MAX_BYTES));
             }
           } else {
-            crypto5.getRandomValues(bytes);
+            crypto4.getRandomValues(bytes);
           }
         }
         if (typeof cb2 === "function") {
@@ -47621,7 +47308,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -47655,7 +47342,7 @@ ${toHex(hashedRequest)}`;
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -47727,10 +47414,10 @@ ${toHex(hashedRequest)}`;
       EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter.prototype.emit = function emit(type2) {
+      EventEmitter.prototype.emit = function emit(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++) args.push(arguments[i2]);
-        var doError = type2 === "error";
+        var doError = type === "error";
         var events = this._events;
         if (events !== void 0)
           doError = doError && events.error === void 0;
@@ -47747,7 +47434,7 @@ ${toHex(hashedRequest)}`;
           err.context = er;
           throw err;
         }
-        var handler = events[type2];
+        var handler = events[type];
         if (handler === void 0)
           return false;
         if (typeof handler === "function") {
@@ -47760,7 +47447,7 @@ ${toHex(hashedRequest)}`;
         }
         return true;
       };
-      function _addListener(target, type2, listener, prepend) {
+      function _addListener(target, type, listener, prepend) {
         var m2;
         var events;
         var existing;
@@ -47773,19 +47460,19 @@ ${toHex(hashedRequest)}`;
           if (events.newListener !== void 0) {
             target.emit(
               "newListener",
-              type2,
+              type,
               listener.listener ? listener.listener : listener
             );
             events = target._events;
           }
-          existing = events[type2];
+          existing = events[type];
         }
         if (existing === void 0) {
-          existing = events[type2] = listener;
+          existing = events[type] = listener;
           ++target._eventsCount;
         } else {
           if (typeof existing === "function") {
-            existing = events[type2] = prepend ? [listener, existing] : [existing, listener];
+            existing = events[type] = prepend ? [listener, existing] : [existing, listener];
           } else if (prepend) {
             existing.unshift(listener);
           } else {
@@ -47794,22 +47481,22 @@ ${toHex(hashedRequest)}`;
           m2 = _getMaxListeners(target);
           if (m2 > 0 && existing.length > m2 && !existing.warned) {
             existing.warned = true;
-            var w2 = new Error("Possible EventEmitter memory leak detected. " + existing.length + " " + String(type2) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+            var w2 = new Error("Possible EventEmitter memory leak detected. " + existing.length + " " + String(type) + " listeners added. Use emitter.setMaxListeners() to increase limit");
             w2.name = "MaxListenersExceededWarning";
             w2.emitter = target;
-            w2.type = type2;
+            w2.type = type;
             w2.count = existing.length;
             ProcessEmitWarning(w2);
           }
         }
         return target;
       }
-      EventEmitter.prototype.addListener = function addListener(type2, listener) {
-        return _addListener(this, type2, listener, false);
+      EventEmitter.prototype.addListener = function addListener(type, listener) {
+        return _addListener(this, type, listener, false);
       };
       EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-      EventEmitter.prototype.prependListener = function prependListener(type2, listener) {
-        return _addListener(this, type2, listener, true);
+      EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+        return _addListener(this, type, listener, true);
       };
       function onceWrapper() {
         if (!this.fired) {
@@ -47820,39 +47507,39 @@ ${toHex(hashedRequest)}`;
           return this.listener.apply(this.target, arguments);
         }
       }
-      function _onceWrap(target, type2, listener) {
-        var state = { fired: false, wrapFn: void 0, target, type: type2, listener };
+      function _onceWrap(target, type, listener) {
+        var state = { fired: false, wrapFn: void 0, target, type, listener };
         var wrapped = onceWrapper.bind(state);
         wrapped.listener = listener;
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter.prototype.once = function once2(type2, listener) {
+      EventEmitter.prototype.once = function once2(type, listener) {
         checkListener(listener);
-        this.on(type2, _onceWrap(this, type2, listener));
+        this.on(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter.prototype.prependOnceListener = function prependOnceListener(type2, listener) {
+      EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
         checkListener(listener);
-        this.prependListener(type2, _onceWrap(this, type2, listener));
+        this.prependListener(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter.prototype.removeListener = function removeListener(type2, listener) {
+      EventEmitter.prototype.removeListener = function removeListener(type, listener) {
         var list, events, position, i2, originalListener;
         checkListener(listener);
         events = this._events;
         if (events === void 0)
           return this;
-        list = events[type2];
+        list = events[type];
         if (list === void 0)
           return this;
         if (list === listener || list.listener === listener) {
           if (--this._eventsCount === 0)
             this._events = /* @__PURE__ */ Object.create(null);
           else {
-            delete events[type2];
+            delete events[type];
             if (events.removeListener)
-              this.emit("removeListener", type2, list.listener || listener);
+              this.emit("removeListener", type, list.listener || listener);
           }
         } else if (typeof list !== "function") {
           position = -1;
@@ -47871,14 +47558,14 @@ ${toHex(hashedRequest)}`;
             spliceOne(list, position);
           }
           if (list.length === 1)
-            events[type2] = list[0];
+            events[type] = list[0];
           if (events.removeListener !== void 0)
-            this.emit("removeListener", type2, originalListener || listener);
+            this.emit("removeListener", type, originalListener || listener);
         }
         return this;
       };
       EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-      EventEmitter.prototype.removeAllListeners = function removeAllListeners(type2) {
+      EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
         var listeners, events, i2;
         events = this._events;
         if (events === void 0)
@@ -47887,11 +47574,11 @@ ${toHex(hashedRequest)}`;
           if (arguments.length === 0) {
             this._events = /* @__PURE__ */ Object.create(null);
             this._eventsCount = 0;
-          } else if (events[type2] !== void 0) {
+          } else if (events[type] !== void 0) {
             if (--this._eventsCount === 0)
               this._events = /* @__PURE__ */ Object.create(null);
             else
-              delete events[type2];
+              delete events[type];
           }
           return this;
         }
@@ -47908,45 +47595,45 @@ ${toHex(hashedRequest)}`;
           this._eventsCount = 0;
           return this;
         }
-        listeners = events[type2];
+        listeners = events[type];
         if (typeof listeners === "function") {
-          this.removeListener(type2, listeners);
+          this.removeListener(type, listeners);
         } else if (listeners !== void 0) {
           for (i2 = listeners.length - 1; i2 >= 0; i2--) {
-            this.removeListener(type2, listeners[i2]);
+            this.removeListener(type, listeners[i2]);
           }
         }
         return this;
       };
-      function _listeners(target, type2, unwrap2) {
+      function _listeners(target, type, unwrap) {
         var events = target._events;
         if (events === void 0)
           return [];
-        var evlistener = events[type2];
+        var evlistener = events[type];
         if (evlistener === void 0)
           return [];
         if (typeof evlistener === "function")
-          return unwrap2 ? [evlistener.listener || evlistener] : [evlistener];
-        return unwrap2 ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+          return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+        return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter.prototype.listeners = function listeners(type2) {
-        return _listeners(this, type2, true);
+      EventEmitter.prototype.listeners = function listeners(type) {
+        return _listeners(this, type, true);
       };
-      EventEmitter.prototype.rawListeners = function rawListeners(type2) {
-        return _listeners(this, type2, false);
+      EventEmitter.prototype.rawListeners = function rawListeners(type) {
+        return _listeners(this, type, false);
       };
-      EventEmitter.listenerCount = function(emitter, type2) {
+      EventEmitter.listenerCount = function(emitter, type) {
         if (typeof emitter.listenerCount === "function") {
-          return emitter.listenerCount(type2);
+          return emitter.listenerCount(type);
         } else {
-          return listenerCount.call(emitter, type2);
+          return listenerCount.call(emitter, type);
         }
       };
       EventEmitter.prototype.listenerCount = listenerCount;
-      function listenerCount(type2) {
+      function listenerCount(type) {
         var events = this._events;
         if (events !== void 0) {
-          var evlistener = events[type2];
+          var evlistener = events[type];
           if (typeof evlistener === "function") {
             return 1;
           } else if (evlistener !== void 0) {
@@ -48024,7 +47711,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -48033,7 +47720,7 @@ ${toHex(hashedRequest)}`;
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -48089,7 +47776,7 @@ ${toHex(hashedRequest)}`;
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -48101,7 +47788,7 @@ ${toHex(hashedRequest)}`;
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -48110,7 +47797,7 @@ ${toHex(hashedRequest)}`;
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -48119,7 +47806,7 @@ ${toHex(hashedRequest)}`;
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -48128,7 +47815,7 @@ ${toHex(hashedRequest)}`;
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -48137,7 +47824,7 @@ ${toHex(hashedRequest)}`;
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -48146,7 +47833,7 @@ ${toHex(hashedRequest)}`;
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -48155,7 +47842,7 @@ ${toHex(hashedRequest)}`;
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -48164,7 +47851,7 @@ ${toHex(hashedRequest)}`;
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -48173,7 +47860,7 @@ ${toHex(hashedRequest)}`;
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -48182,7 +47869,7 @@ ${toHex(hashedRequest)}`;
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -48191,7 +47878,7 @@ ${toHex(hashedRequest)}`;
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -48200,7 +47887,7 @@ ${toHex(hashedRequest)}`;
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -48209,7 +47896,7 @@ ${toHex(hashedRequest)}`;
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -48218,7 +47905,7 @@ ${toHex(hashedRequest)}`;
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -48227,7 +47914,7 @@ ${toHex(hashedRequest)}`;
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -48238,7 +47925,7 @@ ${toHex(hashedRequest)}`;
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -48253,7 +47940,7 @@ ${toHex(hashedRequest)}`;
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -48262,7 +47949,7 @@ ${toHex(hashedRequest)}`;
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -48279,7 +47966,7 @@ ${toHex(hashedRequest)}`;
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -48296,7 +47983,7 @@ ${toHex(hashedRequest)}`;
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -48321,7 +48008,7 @@ ${toHex(hashedRequest)}`;
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -48330,7 +48017,7 @@ ${toHex(hashedRequest)}`;
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -48340,7 +48027,7 @@ ${toHex(hashedRequest)}`;
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -48417,7 +48104,7 @@ ${toHex(hashedRequest)}`;
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -48427,7 +48114,7 @@ ${toHex(hashedRequest)}`;
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -48436,7 +48123,7 @@ ${toHex(hashedRequest)}`;
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -48445,7 +48132,7 @@ ${toHex(hashedRequest)}`;
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -48454,7 +48141,7 @@ ${toHex(hashedRequest)}`;
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -48467,7 +48154,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -48485,7 +48172,7 @@ ${toHex(hashedRequest)}`;
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -48517,7 +48204,7 @@ ${toHex(hashedRequest)}`;
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -48538,7 +48225,7 @@ ${toHex(hashedRequest)}`;
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -48550,7 +48237,7 @@ ${toHex(hashedRequest)}`;
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -48882,7 +48569,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -48906,7 +48593,7 @@ ${toHex(hashedRequest)}`;
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -48934,7 +48621,7 @@ ${toHex(hashedRequest)}`;
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -49004,7 +48691,7 @@ ${toHex(hashedRequest)}`;
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -49024,7 +48711,7 @@ ${toHex(hashedRequest)}`;
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -49038,7 +48725,7 @@ ${toHex(hashedRequest)}`;
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -49071,7 +48758,7 @@ ${toHex(hashedRequest)}`;
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -49190,7 +48877,7 @@ ${toHex(hashedRequest)}`;
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -49251,7 +48938,7 @@ ${toHex(hashedRequest)}`;
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -49273,7 +48960,7 @@ ${toHex(hashedRequest)}`;
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -49292,7 +48979,7 @@ ${toHex(hashedRequest)}`;
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -49341,7 +49028,7 @@ ${toHex(hashedRequest)}`;
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -49364,7 +49051,7 @@ ${toHex(hashedRequest)}`;
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -49418,7 +49105,7 @@ ${toHex(hashedRequest)}`;
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -49432,7 +49119,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -49458,7 +49145,7 @@ ${toHex(hashedRequest)}`;
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -49580,7 +49267,7 @@ ${toHex(hashedRequest)}`;
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -49592,7 +49279,7 @@ ${toHex(hashedRequest)}`;
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -49822,7 +49509,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -49832,7 +49519,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -50393,7 +50080,7 @@ ${toHex(hashedRequest)}`;
   var require_buffer_list = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -50514,7 +50201,7 @@ ${toHex(hashedRequest)}`;
           }
         }, {
           key: "join",
-          value: function join3(s2) {
+          value: function join(s2) {
             if (this.length === 0) return "";
             var p2 = this.head;
             var ret = "" + p2.data;
@@ -50636,7 +50323,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -50726,7 +50413,7 @@ ${toHex(hashedRequest)}`;
   var require_errors_browser = __commonJS({
     "node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -50806,8 +50493,8 @@ ${toHex(hashedRequest)}`;
         if (endsWith(name, " argument")) {
           msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         } else {
-          var type2 = includes(name, ".") ? "property" : "argument";
-          msg = 'The "'.concat(name, '" ').concat(type2, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
+          var type = includes(name, ".") ? "property" : "argument";
+          msg = 'The "'.concat(name, '" ').concat(type, " ").concat(determiner, " ").concat(oneOf(expected, "type"));
         }
         msg += ". Received type ".concat(typeof actual);
         return msg;
@@ -50836,7 +50523,7 @@ ${toHex(hashedRequest)}`;
   var require_state = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -50861,7 +50548,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util-deprecate/browser.js
   var require_browser2 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -50900,7 +50587,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -51151,9 +50838,9 @@ ${toHex(hashedRequest)}`;
         else stream._write(chunk, encoding, state.onwrite);
         state.sync = false;
       }
-      function onwriteError(stream, state, sync2, er, cb2) {
+      function onwriteError(stream, state, sync, er, cb2) {
         --state.pendingcb;
-        if (sync2) {
+        if (sync) {
           process.nextTick(cb2, er);
           process.nextTick(finishMaybe, stream, state);
           stream._writableState.errorEmitted = true;
@@ -51173,17 +50860,17 @@ ${toHex(hashedRequest)}`;
       }
       function onwrite(stream, er) {
         var state = stream._writableState;
-        var sync2 = state.sync;
+        var sync = state.sync;
         var cb2 = state.writecb;
         if (typeof cb2 !== "function") throw new ERR_MULTIPLE_CALLBACK();
         onwriteStateUpdate(state);
-        if (er) onwriteError(stream, state, sync2, er, cb2);
+        if (er) onwriteError(stream, state, sync, er, cb2);
         else {
           var finished = needFinish(state) || stream.destroyed;
           if (!finished && !state.corked && !state.bufferProcessing && state.bufferedRequest) {
             clearBuffer(stream, state);
           }
-          if (sync2) {
+          if (sync) {
             process.nextTick(afterWrite, stream, state, finished, cb2);
           } else {
             afterWrite(stream, state, finished, cb2);
@@ -51372,7 +51059,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -51466,7 +51153,7 @@ ${toHex(hashedRequest)}`;
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var isEncoding = Buffer2.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -51705,7 +51392,7 @@ ${toHex(hashedRequest)}`;
   var require_end_of_stream = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once(callback) {
         var called = false;
@@ -51795,7 +51482,7 @@ ${toHex(hashedRequest)}`;
   var require_async_iterator = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -51837,12 +51524,12 @@ ${toHex(hashedRequest)}`;
       function readAndResolve(iter) {
         var resolve = iter[kLastResolve];
         if (resolve !== null) {
-          var data2 = iter[kStream].read();
-          if (data2 !== null) {
+          var data = iter[kStream].read();
+          if (data !== null) {
             iter[kLastPromise] = null;
             iter[kLastResolve] = null;
             iter[kLastReject] = null;
-            resolve(createIterResult(data2, false));
+            resolve(createIterResult(data, false));
           }
         }
       }
@@ -51891,9 +51578,9 @@ ${toHex(hashedRequest)}`;
           if (lastPromise) {
             promise = new Promise(wrapForNext(lastPromise, this));
           } else {
-            var data2 = this[kStream].read();
-            if (data2 !== null) {
-              return Promise.resolve(createIterResult(data2, false));
+            var data = this[kStream].read();
+            if (data !== null) {
+              return Promise.resolve(createIterResult(data, false));
             }
             promise = new Promise(this[kHandlePromise]);
           }
@@ -51933,12 +51620,12 @@ ${toHex(hashedRequest)}`;
           writable: true
         }), _defineProperty(_Object$create, kHandlePromise, {
           value: function value(resolve, reject) {
-            var data2 = iterator[kStream].read();
-            if (data2) {
+            var data = iterator[kStream].read();
+            if (data) {
               iterator[kLastPromise] = null;
               iterator[kLastResolve] = null;
               iterator[kLastReject] = null;
-              resolve(createIterResult(data2, false));
+              resolve(createIterResult(data, false));
             } else {
               iterator[kLastResolve] = resolve;
               iterator[kLastReject] = reject;
@@ -51978,7 +51665,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -51989,13 +51676,13 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
       var EE = require_events().EventEmitter;
-      var EElistenerCount = function EElistenerCount2(emitter, type2) {
-        return emitter.listeners(type2).length;
+      var EElistenerCount = function EElistenerCount2(emitter, type) {
+        return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser();
       var Buffer2 = require_buffer().Buffer;
@@ -52723,7 +52410,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -52732,7 +52419,7 @@ ${toHex(hashedRequest)}`;
       var ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes.ERR_TRANSFORM_WITH_LENGTH_0;
       var Duplex = require_stream_duplex();
       require_inherits_browser()(Transform, Duplex);
-      function afterTransform(er, data2) {
+      function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
         var cb2 = ts.writecb;
@@ -52741,8 +52428,8 @@ ${toHex(hashedRequest)}`;
         }
         ts.writechunk = null;
         ts.writecb = null;
-        if (data2 != null)
-          this.push(data2);
+        if (data != null)
+          this.push(data);
         cb2(er);
         var rs = this._readableState;
         rs.reading = false;
@@ -52772,8 +52459,8 @@ ${toHex(hashedRequest)}`;
       function prefinish() {
         var _this = this;
         if (typeof this._flush === "function" && !this._readableState.destroyed) {
-          this._flush(function(er, data2) {
-            done(_this, er, data2);
+          this._flush(function(er, data) {
+            done(_this, er, data);
           });
         } else {
           done(this, null, null);
@@ -52810,10 +52497,10 @@ ${toHex(hashedRequest)}`;
           cb2(err2);
         });
       };
-      function done(stream, er, data2) {
+      function done(stream, er, data) {
         if (er) return stream.emit("error", er);
-        if (data2 != null)
-          stream.push(data2);
+        if (data != null)
+          stream.push(data);
         if (stream._writableState.length) throw new ERR_TRANSFORM_WITH_LENGTH_0();
         if (stream._transformState.transforming) throw new ERR_TRANSFORM_ALREADY_TRANSFORMING();
         return stream.push(null);
@@ -52825,7 +52512,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -52843,7 +52530,7 @@ ${toHex(hashedRequest)}`;
   var require_pipeline = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var eos;
       function once(callback) {
         var called = false;
@@ -52928,7 +52615,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -53007,7 +52694,7 @@ ${toHex(hashedRequest)}`;
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -53040,32 +52727,32 @@ ${toHex(hashedRequest)}`;
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer2.prototype instanceof Uint8Array || Buffer2.TYPED_ARRAY_SUPPORT);
-      function toBuffer(data2, encoding) {
-        if (data2 instanceof Buffer2) return data2;
-        if (typeof data2 === "string") return Buffer2.from(data2, encoding);
-        if (useArrayBuffer && ArrayBuffer.isView(data2)) {
-          if (data2.byteLength === 0) return Buffer2.alloc(0);
-          var res = Buffer2.from(data2.buffer, data2.byteOffset, data2.byteLength);
-          if (res.byteLength === data2.byteLength) return res;
+      function toBuffer(data, encoding) {
+        if (data instanceof Buffer2) return data;
+        if (typeof data === "string") return Buffer2.from(data, encoding);
+        if (useArrayBuffer && ArrayBuffer.isView(data)) {
+          if (data.byteLength === 0) return Buffer2.alloc(0);
+          var res = Buffer2.from(data.buffer, data.byteOffset, data.byteLength);
+          if (res.byteLength === data.byteLength) return res;
         }
-        if (useUint8Array && data2 instanceof Uint8Array) return Buffer2.from(data2);
-        if (Buffer2.isBuffer(data2) && data2.constructor && typeof data2.constructor.isBuffer === "function" && data2.constructor.isBuffer(data2)) {
-          return Buffer2.from(data2);
+        if (useUint8Array && data instanceof Uint8Array) return Buffer2.from(data);
+        if (Buffer2.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer2.from(data);
         }
         throw new TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
       }
-      HashBase.prototype.update = function(data2, encoding) {
+      HashBase.prototype.update = function(data, encoding) {
         if (this._finalized) throw new Error("Digest already called");
-        data2 = toBuffer(data2, encoding);
+        data = toBuffer(data, encoding);
         var block = this._block;
         var offset = 0;
-        while (this._blockOffset + data2.length - offset >= this._blockSize) {
-          for (var i2 = this._blockOffset; i2 < this._blockSize; ) block[i2++] = data2[offset++];
+        while (this._blockOffset + data.length - offset >= this._blockSize) {
+          for (var i2 = this._blockOffset; i2 < this._blockSize; ) block[i2++] = data[offset++];
           this._update();
           this._blockOffset = 0;
         }
-        while (offset < data2.length) block[this._blockOffset++] = data2[offset++];
-        for (var j2 = 0, carry = data2.length * 8; carry > 0; ++j2) {
+        while (offset < data.length) block[this._blockOffset++] = data[offset++];
+        for (var j2 = 0, carry = data.length * 8; carry > 0; ++j2) {
           this._length[j2] += carry;
           carry = this._length[j2] / 4294967296 | 0;
           if (carry > 0) this._length[j2] -= 4294967296 * carry;
@@ -53096,7 +52783,7 @@ ${toHex(hashedRequest)}`;
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -53225,7 +52912,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -53237,7 +52924,7 @@ ${toHex(hashedRequest)}`;
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -53255,7 +52942,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -53270,46 +52957,46 @@ ${toHex(hashedRequest)}`;
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined";
       var useFromArrayBuffer = useArrayBuffer && (Buffer2.prototype instanceof Uint8Array || Buffer2.TYPED_ARRAY_SUPPORT);
-      module.exports = function toBuffer(data2, encoding) {
-        if (Buffer2.isBuffer(data2)) {
-          if (data2.constructor && !("isBuffer" in data2)) {
-            return Buffer2.from(data2);
+      module.exports = function toBuffer(data, encoding) {
+        if (Buffer2.isBuffer(data)) {
+          if (data.constructor && !("isBuffer" in data)) {
+            return Buffer2.from(data);
           }
-          return data2;
+          return data;
         }
-        if (typeof data2 === "string") {
-          return Buffer2.from(data2, encoding);
+        if (typeof data === "string") {
+          return Buffer2.from(data, encoding);
         }
-        if (useArrayBuffer && isView(data2)) {
-          if (data2.byteLength === 0) {
+        if (useArrayBuffer && isView(data)) {
+          if (data.byteLength === 0) {
             return Buffer2.alloc(0);
           }
           if (useFromArrayBuffer) {
-            var res = Buffer2.from(data2.buffer, data2.byteOffset, data2.byteLength);
-            if (res.byteLength === data2.byteLength) {
+            var res = Buffer2.from(data.buffer, data.byteOffset, data.byteLength);
+            if (res.byteLength === data.byteLength) {
               return res;
             }
           }
-          var uint8 = data2 instanceof Uint8Array ? data2 : new Uint8Array(data2.buffer, data2.byteOffset, data2.byteLength);
+          var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
           var result = Buffer2.from(uint8);
-          if (result.length === data2.byteLength) {
+          if (result.length === data.byteLength) {
             return result;
           }
         }
-        if (useUint8Array && data2 instanceof Uint8Array) {
-          return Buffer2.from(data2);
+        if (useUint8Array && data instanceof Uint8Array) {
+          return Buffer2.from(data);
         }
-        var isArr = isArray(data2);
+        var isArr = isArray(data);
         if (isArr) {
-          for (var i2 = 0; i2 < data2.length; i2 += 1) {
-            var x2 = data2[i2];
+          for (var i2 = 0; i2 < data.length; i2 += 1) {
+            var x2 = data[i2];
             if (typeof x2 !== "number" || x2 < 0 || x2 > 255 || ~~x2 !== x2) {
               throw new RangeError("Array items must be numbers in the range 0-255.");
             }
           }
         }
-        if (isArr || Buffer2.isBuffer(data2) && data2.constructor && typeof data2.constructor.isBuffer === "function" && data2.constructor.isBuffer(data2)) {
-          return Buffer2.from(data2);
+        if (isArr || Buffer2.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer2.from(data);
         }
         throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
       };
@@ -53320,7 +53007,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -53339,7 +53026,7 @@ ${toHex(hashedRequest)}`;
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -53384,7 +53071,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/ripemd160/node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/ripemd160/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -53395,7 +53082,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -53403,7 +53090,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/ripemd160/node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -53461,7 +53148,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -53533,7 +53220,7 @@ ${toHex(hashedRequest)}`;
   var require_BufferList = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -53576,7 +53263,7 @@ ${toHex(hashedRequest)}`;
           this.head = this.tail = null;
           this.length = 0;
         };
-        BufferList.prototype.join = function join3(s2) {
+        BufferList.prototype.join = function join(s2) {
           if (this.length === 0) return "";
           var p2 = this.head;
           var ret = "" + p2.data;
@@ -53612,7 +53299,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -53682,7 +53369,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -53922,9 +53609,9 @@ ${toHex(hashedRequest)}`;
         else stream._write(chunk, encoding, state.onwrite);
         state.sync = false;
       }
-      function onwriteError(stream, state, sync2, er, cb2) {
+      function onwriteError(stream, state, sync, er, cb2) {
         --state.pendingcb;
-        if (sync2) {
+        if (sync) {
           pna.nextTick(cb2, er);
           pna.nextTick(finishMaybe, stream, state);
           stream._writableState.errorEmitted = true;
@@ -53944,16 +53631,16 @@ ${toHex(hashedRequest)}`;
       }
       function onwrite(stream, er) {
         var state = stream._writableState;
-        var sync2 = state.sync;
+        var sync = state.sync;
         var cb2 = state.writecb;
         onwriteStateUpdate(state);
-        if (er) onwriteError(stream, state, sync2, er, cb2);
+        if (er) onwriteError(stream, state, sync, er, cb2);
         else {
           var finished = needFinish(state);
           if (!finished && !state.corked && !state.bufferProcessing && state.bufferedRequest) {
             clearBuffer(stream, state);
           }
-          if (sync2) {
+          if (sync) {
             asyncWrite(afterWrite, stream, state, finished, cb2);
           } else {
             afterWrite(stream, state, finished, cb2);
@@ -54123,7 +53810,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -54200,7 +53887,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/ripemd160/node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/ripemd160/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -54259,7 +53946,7 @@ ${toHex(hashedRequest)}`;
   var require_string_decoder2 = __commonJS({
     "node_modules/ripemd160/node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer3().Buffer;
       var isEncoding = Buffer2.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -54498,15 +54185,15 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
       var Duplex;
       Readable.ReadableState = ReadableState;
       var EE = require_events().EventEmitter;
-      var EElistenerCount = function(emitter, type2) {
-        return emitter.listeners(type2).length;
+      var EElistenerCount = function(emitter, type) {
+        return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser2();
       var Buffer2 = require_safe_buffer2().Buffer;
@@ -55185,13 +54872,13 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
       util.inherits(Transform, Duplex);
-      function afterTransform(er, data2) {
+      function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
         var cb2 = ts.writecb;
@@ -55200,8 +54887,8 @@ ${toHex(hashedRequest)}`;
         }
         ts.writechunk = null;
         ts.writecb = null;
-        if (data2 != null)
-          this.push(data2);
+        if (data != null)
+          this.push(data);
         cb2(er);
         var rs = this._readableState;
         rs.reading = false;
@@ -55231,8 +54918,8 @@ ${toHex(hashedRequest)}`;
       function prefinish() {
         var _this = this;
         if (typeof this._flush === "function") {
-          this._flush(function(er, data2) {
-            done(_this, er, data2);
+          this._flush(function(er, data) {
+            done(_this, er, data);
           });
         } else {
           done(this, null, null);
@@ -55271,10 +54958,10 @@ ${toHex(hashedRequest)}`;
           _this2.emit("close");
         });
       };
-      function done(stream, er, data2) {
+      function done(stream, er, data) {
         if (er) return stream.emit("error", er);
-        if (data2 != null)
-          stream.push(data2);
+        if (data != null)
+          stream.push(data);
         if (stream._writableState.length) throw new Error("Calling transform done when ws.length != 0");
         if (stream._transformState.transforming) throw new Error("Calling transform done when still transforming");
         return stream.push(null);
@@ -55286,7 +54973,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough2 = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -55305,7 +54992,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/ripemd160/node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/ripemd160/node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -55320,7 +55007,7 @@ ${toHex(hashedRequest)}`;
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -55352,11 +55039,11 @@ ${toHex(hashedRequest)}`;
         }
         callback(error);
       };
-      HashBase.prototype.update = function(data2, encoding) {
+      HashBase.prototype.update = function(data, encoding) {
         if (this._finalized) {
           throw new Error("Digest already called");
         }
-        var dataBuffer = toBuffer(data2, encoding);
+        var dataBuffer = toBuffer(data, encoding);
         var block = this._block;
         var offset = 0;
         while (this._blockOffset + dataBuffer.length - offset >= this._blockSize) {
@@ -55412,7 +55099,7 @@ ${toHex(hashedRequest)}`;
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -55854,7 +55541,7 @@ ${toHex(hashedRequest)}`;
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -55863,17 +55550,17 @@ ${toHex(hashedRequest)}`;
         this._blockSize = blockSize;
         this._len = 0;
       }
-      Hash.prototype.update = function(data2, enc) {
-        data2 = toBuffer(data2, enc || "utf8");
+      Hash.prototype.update = function(data, enc) {
+        data = toBuffer(data, enc || "utf8");
         var block = this._block;
         var blockSize = this._blockSize;
-        var length = data2.length;
+        var length = data.length;
         var accum = this._len;
         for (var offset = 0; offset < length; ) {
           var assigned = accum % blockSize;
           var remainder = Math.min(length - offset, blockSize - assigned);
           for (var i2 = 0; i2 < remainder; i2++) {
-            block[assigned + i2] = data2[offset + i2];
+            block[assigned + i2] = data[offset + i2];
           }
           accum += remainder;
           offset += remainder;
@@ -55916,7 +55603,7 @@ ${toHex(hashedRequest)}`;
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -56001,7 +55688,7 @@ ${toHex(hashedRequest)}`;
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -56089,7 +55776,7 @@ ${toHex(hashedRequest)}`;
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -56252,7 +55939,7 @@ ${toHex(hashedRequest)}`;
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -56294,7 +55981,7 @@ ${toHex(hashedRequest)}`;
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -56638,7 +56325,7 @@ ${toHex(hashedRequest)}`;
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -56691,7 +56378,7 @@ ${toHex(hashedRequest)}`;
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -56713,7 +56400,7 @@ ${toHex(hashedRequest)}`;
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -56735,8 +56422,8 @@ ${toHex(hashedRequest)}`;
         this._encoding = null;
       }
       inherits(CipherBase, Transform);
-      CipherBase.prototype.update = function(data2, inputEnc, outputEnc) {
-        var bufferData = toBuffer(data2, inputEnc);
+      CipherBase.prototype.update = function(data, inputEnc, outputEnc) {
+        var bufferData = toBuffer(data, inputEnc);
         var outData = this._update(bufferData);
         if (this.hashMode) {
           return this;
@@ -56757,13 +56444,13 @@ ${toHex(hashedRequest)}`;
       CipherBase.prototype.setAAD = function() {
         throw new Error("trying to set aad in unsupported state");
       };
-      CipherBase.prototype._transform = function(data2, _, next) {
+      CipherBase.prototype._transform = function(data, _, next) {
         var err;
         try {
           if (this.hashMode) {
-            this._update(data2);
+            this._update(data);
           } else {
-            this.push(this._update(data2));
+            this.push(this._update(data));
           }
         } catch (e2) {
           err = e2;
@@ -56809,7 +56496,7 @@ ${toHex(hashedRequest)}`;
   var require_browser3 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -56820,13 +56507,13 @@ ${toHex(hashedRequest)}`;
         this._hash = hash;
       }
       inherits(Hash, Base);
-      Hash.prototype._update = function(data2) {
-        this._hash.update(data2);
+      Hash.prototype._update = function(data) {
+        this._hash.update(data);
       };
       Hash.prototype._final = function() {
         return this._hash.digest();
       };
-      module.exports = function createHash4(alg) {
+      module.exports = function createHash3(alg) {
         alg = alg.toLowerCase();
         if (alg === "md5") return new MD5();
         if (alg === "rmd160" || alg === "ripemd160") return new RIPEMD160();
@@ -56839,7 +56526,7 @@ ${toHex(hashedRequest)}`;
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer2 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -56866,8 +56553,8 @@ ${toHex(hashedRequest)}`;
         this._hash = [ipad];
       }
       inherits(Hmac, Base);
-      Hmac.prototype._update = function(data2) {
-        this._hash.push(data2);
+      Hmac.prototype._update = function(data) {
+        this._hash.push(data);
       };
       Hmac.prototype._final = function() {
         var h2 = this._alg(Buffer2.concat(this._hash));
@@ -56880,7 +56567,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -56892,7 +56579,7 @@ ${toHex(hashedRequest)}`;
   var require_browser4 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -56925,8 +56612,8 @@ ${toHex(hashedRequest)}`;
         this._hash.update(ipad);
       }
       inherits(Hmac, Base);
-      Hmac.prototype._update = function(data2) {
-        this._hash.update(data2);
+      Hmac.prototype._update = function(data) {
+        this._hash.update(data);
       };
       Hmac.prototype._final = function() {
         var h2 = this._hash.digest();
@@ -57108,7 +56795,7 @@ ${toHex(hashedRequest)}`;
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -57117,7 +56804,7 @@ ${toHex(hashedRequest)}`;
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -57141,7 +56828,7 @@ ${toHex(hashedRequest)}`;
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -57160,7 +56847,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -57179,7 +56866,7 @@ ${toHex(hashedRequest)}`;
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -57209,12 +56896,12 @@ ${toHex(hashedRequest)}`;
         "sha-512": "sha512",
         "ripemd-160": "ripemd160"
       };
-      function rmd160Func(data2) {
-        return new RIPEMD160().update(data2).digest();
+      function rmd160Func(data) {
+        return new RIPEMD160().update(data).digest();
       }
       function getDigest(alg) {
-        function shaFunc(data2) {
-          return sha(alg).update(data2).digest();
+        function shaFunc(data) {
+          return sha(alg).update(data).digest();
         }
         if (alg === "rmd160" || alg === "ripemd160") {
           return rmd160Func;
@@ -57248,8 +56935,8 @@ ${toHex(hashedRequest)}`;
         this.hash = hash;
         this.size = sizes[alg];
       }
-      Hmac.prototype.run = function(data2, ipad) {
-        data2.copy(ipad, this.blocksize);
+      Hmac.prototype.run = function(data, ipad) {
+        data.copy(ipad, this.blocksize);
         var h2 = this.hash(ipad);
         h2.copy(this.opad, this.blocksize);
         return this.hash(this.opad);
@@ -57294,11 +56981,11 @@ ${toHex(hashedRequest)}`;
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
-      var sync2 = require_sync_browser();
+      var sync = require_sync_browser();
       var toBuffer = require_to_buffer3();
       var ZERO_BUF;
       var subtle = window.crypto && window.crypto.subtle;
@@ -57394,7 +57081,7 @@ ${toHex(hashedRequest)}`;
           getNextTick()(function() {
             var out;
             try {
-              out = sync2(password, salt, iterations, keylen, digest);
+              out = sync(password, salt, iterations, keylen, digest);
             } catch (e2) {
               callback(e2);
               return;
@@ -57407,7 +57094,7 @@ ${toHex(hashedRequest)}`;
           if (resp) {
             return browserPbkdf2(password, salt, iterations, keylen, algo);
           }
-          return sync2(password, salt, iterations, keylen, digest);
+          return sync(password, salt, iterations, keylen, digest);
         }), callback);
       };
     }
@@ -57417,7 +57104,7 @@ ${toHex(hashedRequest)}`;
   var require_browser5 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -57427,7 +57114,7 @@ ${toHex(hashedRequest)}`;
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -58193,7 +57880,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -58210,7 +57897,7 @@ ${toHex(hashedRequest)}`;
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -58224,18 +57911,18 @@ ${toHex(hashedRequest)}`;
       module.exports = Cipher;
       Cipher.prototype._init = function _init() {
       };
-      Cipher.prototype.update = function update(data2) {
-        if (data2.length === 0)
+      Cipher.prototype.update = function update(data) {
+        if (data.length === 0)
           return [];
         if (this.type === "decrypt")
-          return this._updateDecrypt(data2);
+          return this._updateDecrypt(data);
         else
-          return this._updateEncrypt(data2);
+          return this._updateEncrypt(data);
       };
-      Cipher.prototype._buffer = function _buffer(data2, off) {
-        var min = Math.min(this.buffer.length - this.bufferOff, data2.length - off);
+      Cipher.prototype._buffer = function _buffer(data, off) {
+        var min = Math.min(this.buffer.length - this.bufferOff, data.length - off);
         for (var i2 = 0; i2 < min; i2++)
-          this.buffer[this.bufferOff + i2] = data2[off + i2];
+          this.buffer[this.bufferOff + i2] = data[off + i2];
         this.bufferOff += min;
         return min;
       };
@@ -58244,35 +57931,35 @@ ${toHex(hashedRequest)}`;
         this.bufferOff = 0;
         return this.blockSize;
       };
-      Cipher.prototype._updateEncrypt = function _updateEncrypt(data2) {
+      Cipher.prototype._updateEncrypt = function _updateEncrypt(data) {
         var inputOff = 0;
         var outputOff = 0;
-        var count = (this.bufferOff + data2.length) / this.blockSize | 0;
+        var count = (this.bufferOff + data.length) / this.blockSize | 0;
         var out = new Array(count * this.blockSize);
         if (this.bufferOff !== 0) {
-          inputOff += this._buffer(data2, inputOff);
+          inputOff += this._buffer(data, inputOff);
           if (this.bufferOff === this.buffer.length)
             outputOff += this._flushBuffer(out, outputOff);
         }
-        var max = data2.length - (data2.length - inputOff) % this.blockSize;
+        var max = data.length - (data.length - inputOff) % this.blockSize;
         for (; inputOff < max; inputOff += this.blockSize) {
-          this._update(data2, inputOff, out, outputOff);
+          this._update(data, inputOff, out, outputOff);
           outputOff += this.blockSize;
         }
-        for (; inputOff < data2.length; inputOff++, this.bufferOff++)
-          this.buffer[this.bufferOff] = data2[inputOff];
+        for (; inputOff < data.length; inputOff++, this.bufferOff++)
+          this.buffer[this.bufferOff] = data[inputOff];
         return out;
       };
-      Cipher.prototype._updateDecrypt = function _updateDecrypt(data2) {
+      Cipher.prototype._updateDecrypt = function _updateDecrypt(data) {
         var inputOff = 0;
         var outputOff = 0;
-        var count = Math.ceil((this.bufferOff + data2.length) / this.blockSize) - 1;
+        var count = Math.ceil((this.bufferOff + data.length) / this.blockSize) - 1;
         var out = new Array(count * this.blockSize);
         for (; count > 0; count--) {
-          inputOff += this._buffer(data2, inputOff);
+          inputOff += this._buffer(data, inputOff);
           outputOff += this._flushBuffer(out, outputOff);
         }
-        inputOff += this._buffer(data2, inputOff);
+        inputOff += this._buffer(data, inputOff);
         return out;
       };
       Cipher.prototype.final = function final(buffer) {
@@ -58319,7 +58006,7 @@ ${toHex(hashedRequest)}`;
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -58447,7 +58134,7 @@ ${toHex(hashedRequest)}`;
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -58503,17 +58190,17 @@ ${toHex(hashedRequest)}`;
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
       var DES = require_des();
-      function EDEState(type2, key) {
+      function EDEState(type, key) {
         assert.equal(key.length, 24, "Invalid key length");
         var k1 = key.slice(0, 8);
         var k2 = key.slice(8, 16);
         var k3 = key.slice(16, 24);
-        if (type2 === "encrypt") {
+        if (type === "encrypt") {
           this.ciphers = [
             DES.create({ type: "encrypt", key: k1 }),
             DES.create({ type: "decrypt", key: k2 }),
@@ -58552,7 +58239,7 @@ ${toHex(hashedRequest)}`;
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -58564,7 +58251,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -58585,11 +58272,11 @@ ${toHex(hashedRequest)}`;
         CipherBase.call(this);
         var modeName = opts.mode.toLowerCase();
         var mode = modes[modeName];
-        var type2;
+        var type;
         if (opts.decrypt) {
-          type2 = "decrypt";
+          type = "decrypt";
         } else {
-          type2 = "encrypt";
+          type = "encrypt";
         }
         var key = opts.key;
         if (!Buffer2.isBuffer(key)) {
@@ -58605,11 +58292,11 @@ ${toHex(hashedRequest)}`;
         this._des = mode.create({
           key,
           iv,
-          type: type2
+          type
         });
       }
-      DES.prototype._update = function(data2) {
-        return Buffer2.from(this._des.update(data2));
+      DES.prototype._update = function(data) {
+        return Buffer2.from(this._des.update(data));
       };
       DES.prototype._final = function() {
         return Buffer2.from(this._des.final());
@@ -58620,7 +58307,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -58633,7 +58320,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -58648,11 +58335,11 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
-        var data2 = xor(block, self2._prev);
-        self2._prev = self2._cipher.encryptBlock(data2);
+        var data = xor(block, self2._prev);
+        self2._prev = self2._cipher.encryptBlock(data);
         return self2._prev;
       };
       exports.decrypt = function(self2, block) {
@@ -58667,30 +58354,30 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
-      function encryptStart(self2, data2, decrypt) {
-        var len = data2.length;
-        var out = xor(data2, self2._cache);
+      function encryptStart(self2, data, decrypt) {
+        var len = data.length;
+        var out = xor(data, self2._cache);
         self2._cache = self2._cache.slice(len);
-        self2._prev = Buffer2.concat([self2._prev, decrypt ? data2 : out]);
+        self2._prev = Buffer2.concat([self2._prev, decrypt ? data : out]);
         return out;
       }
-      exports.encrypt = function(self2, data2, decrypt) {
+      exports.encrypt = function(self2, data, decrypt) {
         var out = Buffer2.allocUnsafe(0);
         var len;
-        while (data2.length) {
+        while (data.length) {
           if (self2._cache.length === 0) {
             self2._cache = self2._cipher.encryptBlock(self2._prev);
             self2._prev = Buffer2.allocUnsafe(0);
           }
-          if (self2._cache.length <= data2.length) {
+          if (self2._cache.length <= data.length) {
             len = self2._cache.length;
-            out = Buffer2.concat([out, encryptStart(self2, data2.slice(0, len), decrypt)]);
-            data2 = data2.slice(len);
+            out = Buffer2.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
+            data = data.slice(len);
           } else {
-            out = Buffer2.concat([out, encryptStart(self2, data2, decrypt)]);
+            out = Buffer2.concat([out, encryptStart(self2, data, decrypt)]);
             break;
           }
         }
@@ -58702,7 +58389,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -58728,7 +58415,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -58770,7 +58457,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -58790,7 +58477,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -58812,7 +58499,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer2 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -59044,7 +58731,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -59067,7 +58754,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer2.isBuffer(buf)) buf = Buffer2.from(buf);
@@ -59242,7 +58929,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var ZEROES = Buffer2.alloc(16, 0);
       function toArray(buf) {
@@ -59320,7 +59007,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -59423,7 +59110,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -59451,7 +59138,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -59494,7 +59181,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -59512,8 +59199,8 @@ ${toHex(hashedRequest)}`;
         this._autopadding = true;
       }
       inherits(Cipher, Transform);
-      Cipher.prototype._update = function(data2) {
-        this._cache.add(data2);
+      Cipher.prototype._update = function(data) {
+        this._cache.add(data);
         var chunk;
         var thing;
         var out = [];
@@ -59543,8 +59230,8 @@ ${toHex(hashedRequest)}`;
       function Splitter() {
         this.cache = Buffer2.allocUnsafe(0);
       }
-      Splitter.prototype.add = function(data2) {
-        this.cache = Buffer2.concat([this.cache, data2]);
+      Splitter.prototype.add = function(data) {
+        this.cache = Buffer2.concat([this.cache, data]);
       };
       Splitter.prototype.get = function() {
         if (this.cache.length > 15) {
@@ -59591,7 +59278,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer2 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -59610,8 +59297,8 @@ ${toHex(hashedRequest)}`;
         this._autopadding = true;
       }
       inherits(Decipher, Transform);
-      Decipher.prototype._update = function(data2) {
-        this._cache.add(data2);
+      Decipher.prototype._update = function(data) {
+        this._cache.add(data);
         var chunk;
         var thing;
         var out = [];
@@ -59636,8 +59323,8 @@ ${toHex(hashedRequest)}`;
       function Splitter() {
         this.cache = Buffer2.allocUnsafe(0);
       }
-      Splitter.prototype.add = function(data2) {
-        this.cache = Buffer2.concat([this.cache, data2]);
+      Splitter.prototype.add = function(data) {
+        this.cache = Buffer2.concat([this.cache, data]);
       };
       Splitter.prototype.get = function(autoPadding) {
         var out;
@@ -59701,7 +59388,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/browser.js
   var require_browser6 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -59719,7 +59406,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -59750,7 +59437,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-cipher/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser6();
       var aesModes = require_modes();
@@ -59812,7 +59499,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -62620,7 +62307,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -65428,7 +65115,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -65470,23 +65157,23 @@ ${toHex(hashedRequest)}`;
         }
       } else {
         try {
-          crypto5 = require_crypto_browserify();
-          if (typeof crypto5.randomBytes !== "function")
+          crypto4 = require_crypto_browserify();
+          if (typeof crypto4.randomBytes !== "function")
             throw new Error("Not supported");
           Rand.prototype._rand = function _rand(n2) {
-            return crypto5.randomBytes(n2);
+            return crypto4.randomBytes(n2);
           };
         } catch (e2) {
         }
       }
-      var crypto5;
+      var crypto4;
     }
   });
 
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -65578,7 +65265,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var randomBytes2 = require_browser();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -65715,7 +65402,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -65862,7 +65549,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/browser.js
   var require_browser8 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -65902,7 +65589,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-sign/node_modules/isarray/index.js
   var require_isarray3 = __commonJS({
     "node_modules/browserify-sign/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -65913,7 +65600,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -65921,7 +65608,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-sign/node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer4 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -65980,7 +65667,7 @@ ${toHex(hashedRequest)}`;
   var require_BufferList2 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -66023,7 +65710,7 @@ ${toHex(hashedRequest)}`;
           this.head = this.tail = null;
           this.length = 0;
         };
-        BufferList.prototype.join = function join3(s2) {
+        BufferList.prototype.join = function join(s2) {
           if (this.length === 0) return "";
           var p2 = this.head;
           var ret = "" + p2.data;
@@ -66059,7 +65746,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -66129,7 +65816,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -66369,9 +66056,9 @@ ${toHex(hashedRequest)}`;
         else stream._write(chunk, encoding, state.onwrite);
         state.sync = false;
       }
-      function onwriteError(stream, state, sync2, er, cb2) {
+      function onwriteError(stream, state, sync, er, cb2) {
         --state.pendingcb;
-        if (sync2) {
+        if (sync) {
           pna.nextTick(cb2, er);
           pna.nextTick(finishMaybe, stream, state);
           stream._writableState.errorEmitted = true;
@@ -66391,16 +66078,16 @@ ${toHex(hashedRequest)}`;
       }
       function onwrite(stream, er) {
         var state = stream._writableState;
-        var sync2 = state.sync;
+        var sync = state.sync;
         var cb2 = state.writecb;
         onwriteStateUpdate(state);
-        if (er) onwriteError(stream, state, sync2, er, cb2);
+        if (er) onwriteError(stream, state, sync, er, cb2);
         else {
           var finished = needFinish(state);
           if (!finished && !state.corked && !state.bufferProcessing && state.bufferedRequest) {
             clearBuffer(stream, state);
           }
-          if (sync2) {
+          if (sync) {
             asyncWrite(afterWrite, stream, state, finished, cb2);
           } else {
             afterWrite(stream, state, finished, cb2);
@@ -66570,7 +66257,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -66647,7 +66334,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-sign/node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer5 = __commonJS({
     "node_modules/browserify-sign/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -66706,7 +66393,7 @@ ${toHex(hashedRequest)}`;
   var require_string_decoder3 = __commonJS({
     "node_modules/browserify-sign/node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer5().Buffer;
       var isEncoding = Buffer2.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -66945,15 +66632,15 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray3();
       var Duplex;
       Readable.ReadableState = ReadableState;
       var EE = require_events().EventEmitter;
-      var EElistenerCount = function(emitter, type2) {
-        return emitter.listeners(type2).length;
+      var EElistenerCount = function(emitter, type) {
+        return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser3();
       var Buffer2 = require_safe_buffer4().Buffer;
@@ -67632,13 +67319,13 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex3();
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
       util.inherits(Transform, Duplex);
-      function afterTransform(er, data2) {
+      function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
         var cb2 = ts.writecb;
@@ -67647,8 +67334,8 @@ ${toHex(hashedRequest)}`;
         }
         ts.writechunk = null;
         ts.writecb = null;
-        if (data2 != null)
-          this.push(data2);
+        if (data != null)
+          this.push(data);
         cb2(er);
         var rs = this._readableState;
         rs.reading = false;
@@ -67678,8 +67365,8 @@ ${toHex(hashedRequest)}`;
       function prefinish() {
         var _this = this;
         if (typeof this._flush === "function") {
-          this._flush(function(er, data2) {
-            done(_this, er, data2);
+          this._flush(function(er, data) {
+            done(_this, er, data);
           });
         } else {
           done(this, null, null);
@@ -67718,10 +67405,10 @@ ${toHex(hashedRequest)}`;
           _this2.emit("close");
         });
       };
-      function done(stream, er, data2) {
+      function done(stream, er, data) {
         if (er) return stream.emit("error", er);
-        if (data2 != null)
-          stream.push(data2);
+        if (data != null)
+          stream.push(data);
         if (stream._writableState.length) throw new Error("Calling transform done when ws.length != 0");
         if (stream._transformState.transforming) throw new Error("Calling transform done when still transforming");
         return stream.push(null);
@@ -67733,7 +67420,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough3 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform3();
       var util = Object.create(require_util2());
@@ -67752,7 +67439,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-sign/node_modules/readable-stream/readable-browser.js
   var require_readable_browser2 = __commonJS({
     "node_modules/browserify-sign/node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable3();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -67766,7 +67453,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -70655,7 +70342,7 @@ ${toHex(hashedRequest)}`;
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser();
       var Buffer2 = require_safe_buffer().Buffer;
@@ -70756,7 +70443,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -73565,7 +73252,7 @@ ${toHex(hashedRequest)}`;
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -73625,7 +73312,7 @@ ${toHex(hashedRequest)}`;
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -73732,14 +73419,14 @@ ${toHex(hashedRequest)}`;
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
       var getJSF = utils.getJSF;
       var assert = utils.assert;
-      function BaseCurve(type2, conf) {
-        this.type = type2;
+      function BaseCurve(type, conf) {
+        this.type = type;
         this.p = new BN(conf.p, 16);
         this.red = conf.prime ? BN.red(conf.prime) : BN.mont(this.p);
         this.zero = new BN(0).toRed(this.red);
@@ -73946,9 +73633,9 @@ ${toHex(hashedRequest)}`;
         else
           return acc.toP();
       };
-      function BasePoint(curve, type2) {
+      function BasePoint(curve, type) {
         this.curve = curve;
-        this.type = type2;
+        this.type = type;
         this.precomputed = null;
       }
       BaseCurve.BasePoint = BasePoint;
@@ -74055,7 +73742,7 @@ ${toHex(hashedRequest)}`;
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -74754,7 +74441,7 @@ ${toHex(hashedRequest)}`;
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -74883,7 +74570,7 @@ ${toHex(hashedRequest)}`;
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75185,7 +74872,7 @@ ${toHex(hashedRequest)}`;
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -75198,7 +74885,7 @@ ${toHex(hashedRequest)}`;
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -75444,7 +75131,7 @@ ${toHex(hashedRequest)}`;
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -75524,7 +75211,7 @@ ${toHex(hashedRequest)}`;
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -75571,7 +75258,7 @@ ${toHex(hashedRequest)}`;
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -75644,7 +75331,7 @@ ${toHex(hashedRequest)}`;
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -75797,7 +75484,7 @@ ${toHex(hashedRequest)}`;
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -75834,7 +75521,7 @@ ${toHex(hashedRequest)}`;
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -76274,7 +75961,7 @@ ${toHex(hashedRequest)}`;
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -76319,7 +76006,7 @@ ${toHex(hashedRequest)}`;
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -76332,7 +76019,7 @@ ${toHex(hashedRequest)}`;
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -76774,7 +76461,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -76815,7 +76502,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -76834,7 +76521,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -77622,7 +77309,7 @@ ${toHex(hashedRequest)}`;
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -77799,7 +77486,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -77894,7 +77581,7 @@ ${toHex(hashedRequest)}`;
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -77989,7 +77676,7 @@ ${toHex(hashedRequest)}`;
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78045,45 +77732,45 @@ ${toHex(hashedRequest)}`;
         }
         return buf.slice(i2);
       }
-      Signature.prototype._importDER = function _importDER(data2, enc) {
-        data2 = utils.toArray(data2, enc);
+      Signature.prototype._importDER = function _importDER(data, enc) {
+        data = utils.toArray(data, enc);
         var p2 = new Position();
-        if (data2[p2.place++] !== 48) {
+        if (data[p2.place++] !== 48) {
           return false;
         }
-        var len = getLength(data2, p2);
+        var len = getLength(data, p2);
         if (len === false) {
           return false;
         }
-        if (len + p2.place !== data2.length) {
+        if (len + p2.place !== data.length) {
           return false;
         }
-        if (data2[p2.place++] !== 2) {
+        if (data[p2.place++] !== 2) {
           return false;
         }
-        var rlen = getLength(data2, p2);
+        var rlen = getLength(data, p2);
         if (rlen === false) {
           return false;
         }
-        if ((data2[p2.place] & 128) !== 0) {
+        if ((data[p2.place] & 128) !== 0) {
           return false;
         }
-        var r2 = data2.slice(p2.place, rlen + p2.place);
+        var r2 = data.slice(p2.place, rlen + p2.place);
         p2.place += rlen;
-        if (data2[p2.place++] !== 2) {
+        if (data[p2.place++] !== 2) {
           return false;
         }
-        var slen = getLength(data2, p2);
+        var slen = getLength(data, p2);
         if (slen === false) {
           return false;
         }
-        if (data2.length !== slen + p2.place) {
+        if (data.length !== slen + p2.place) {
           return false;
         }
-        if ((data2[p2.place] & 128) !== 0) {
+        if ((data[p2.place] & 128) !== 0) {
           return false;
         }
-        var s2 = data2.slice(p2.place, slen + p2.place);
+        var s2 = data.slice(p2.place, slen + p2.place);
         if (r2[0] === 0) {
           if (r2[1] & 128) {
             r2 = r2.slice(1);
@@ -78145,7 +77832,7 @@ ${toHex(hashedRequest)}`;
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -78353,7 +78040,7 @@ ${toHex(hashedRequest)}`;
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -78428,7 +78115,7 @@ ${toHex(hashedRequest)}`;
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78479,7 +78166,7 @@ ${toHex(hashedRequest)}`;
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -78568,7 +78255,7 @@ ${toHex(hashedRequest)}`;
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -78583,7 +78270,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -81391,7 +81078,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -81427,8 +81114,8 @@ ${toHex(hashedRequest)}`;
           this.decoders[enc] = this._createNamed(asn1.decoders[enc]);
         return this.decoders[enc];
       };
-      Entity.prototype.decode = function decode(data2, enc, options) {
-        return this._getDecoder(enc).decode(data2, options);
+      Entity.prototype.decode = function decode(data, enc, options) {
+        return this._getDecoder(enc).decode(data, options);
       };
       Entity.prototype._getEncoder = function _getEncoder(enc) {
         enc = enc || "der";
@@ -81436,8 +81123,8 @@ ${toHex(hashedRequest)}`;
           this.encoders[enc] = this._createNamed(asn1.encoders[enc]);
         return this.encoders[enc];
       };
-      Entity.prototype.encode = function encode(data2, enc, reporter) {
-        return this._getEncoder(enc).encode(data2, reporter);
+      Entity.prototype.encode = function encode(data, enc, reporter) {
+        return this._getEncoder(enc).encode(data, reporter);
       };
     }
   });
@@ -81445,7 +81132,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -81463,10 +81150,10 @@ ${toHex(hashedRequest)}`;
         var state = this._reporterState;
         return { obj: state.obj, pathLen: state.path.length };
       };
-      Reporter.prototype.restore = function restore(data2) {
+      Reporter.prototype.restore = function restore(data) {
         var state = this._reporterState;
-        state.obj = data2.obj;
-        state.path = state.path.slice(0, data2.pathLen);
+        state.obj = data.obj;
+        state.path = state.path.slice(0, data.pathLen);
       };
       Reporter.prototype.enterKey = function enterKey(key) {
         return this._reporterState.path.push(key);
@@ -81481,7 +81168,7 @@ ${toHex(hashedRequest)}`;
         if (state.obj !== null)
           state.obj[key] = value;
       };
-      Reporter.prototype.path = function path3() {
+      Reporter.prototype.path = function path() {
         return this._reporterState.path.join("/");
       };
       Reporter.prototype.enterObject = function enterObject() {
@@ -81522,8 +81209,8 @@ ${toHex(hashedRequest)}`;
           errors: state.errors
         };
       };
-      function ReporterError(path3, msg) {
-        this.path = path3;
+      function ReporterError(path, msg) {
+        this.path = path;
         this.rethrow(msg);
       }
       inherits(ReporterError, Error);
@@ -81546,7 +81233,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer2 = require_buffer().Buffer;
@@ -81620,7 +81307,7 @@ ${toHex(hashedRequest)}`;
         }
       }
       exports.EncoderBuffer = EncoderBuffer;
-      EncoderBuffer.prototype.join = function join3(out, offset) {
+      EncoderBuffer.prototype.join = function join(out, offset) {
         if (!out)
           out = new Buffer2(this.length);
         if (!offset)
@@ -81649,7 +81336,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -81768,7 +81455,7 @@ ${toHex(hashedRequest)}`;
         res._baseState = cstate;
         return res;
       };
-      Node2.prototype._wrap = function wrap2() {
+      Node2.prototype._wrap = function wrap() {
         var state = this._baseState;
         methods.forEach(function(method) {
           this[method] = function _wrappedMethod() {
@@ -81979,8 +81666,8 @@ ${toHex(hashedRequest)}`;
             });
           }
           if (state.contains && (state.tag === "octstr" || state.tag === "bitstr")) {
-            var data2 = new DecoderBuffer(result);
-            result = this._getUse(state.contains, input._reporterState.obj)._decode(data2, options);
+            var data = new DecoderBuffer(result);
+            result = this._getUse(state.contains, input._reporterState.obj)._decode(data, options);
           }
         }
         if (state.obj && present)
@@ -82053,51 +81740,51 @@ ${toHex(hashedRequest)}`;
           return input.error("Choice not matched");
         return result;
       };
-      Node2.prototype._createEncoderBuffer = function createEncoderBuffer(data2) {
-        return new EncoderBuffer(data2, this.reporter);
+      Node2.prototype._createEncoderBuffer = function createEncoderBuffer(data) {
+        return new EncoderBuffer(data, this.reporter);
       };
-      Node2.prototype._encode = function encode(data2, reporter, parent) {
+      Node2.prototype._encode = function encode(data, reporter, parent) {
         var state = this._baseState;
-        if (state["default"] !== null && state["default"] === data2)
+        if (state["default"] !== null && state["default"] === data)
           return;
-        var result = this._encodeValue(data2, reporter, parent);
+        var result = this._encodeValue(data, reporter, parent);
         if (result === void 0)
           return;
         if (this._skipDefault(result, reporter, parent))
           return;
         return result;
       };
-      Node2.prototype._encodeValue = function encode(data2, reporter, parent) {
+      Node2.prototype._encodeValue = function encode(data, reporter, parent) {
         var state = this._baseState;
         if (state.parent === null)
-          return state.children[0]._encode(data2, reporter || new Reporter());
+          return state.children[0]._encode(data, reporter || new Reporter());
         var result = null;
         this.reporter = reporter;
-        if (state.optional && data2 === void 0) {
+        if (state.optional && data === void 0) {
           if (state["default"] !== null)
-            data2 = state["default"];
+            data = state["default"];
           else
             return;
         }
         var content = null;
         var primitive = false;
         if (state.any) {
-          result = this._createEncoderBuffer(data2);
+          result = this._createEncoderBuffer(data);
         } else if (state.choice) {
-          result = this._encodeChoice(data2, reporter);
+          result = this._encodeChoice(data, reporter);
         } else if (state.contains) {
-          content = this._getUse(state.contains, parent)._encode(data2, reporter);
+          content = this._getUse(state.contains, parent)._encode(data, reporter);
           primitive = true;
         } else if (state.children) {
           content = state.children.map(function(child2) {
             if (child2._baseState.tag === "null_")
-              return child2._encode(null, reporter, data2);
+              return child2._encode(null, reporter, data);
             if (child2._baseState.key === null)
               return reporter.error("Child should have a key");
             var prevKey = reporter.enterKey(child2._baseState.key);
-            if (typeof data2 !== "object")
+            if (typeof data !== "object")
               return reporter.error("Child expected, but input is not object");
-            var res = child2._encode(data2[child2._baseState.key], reporter, data2);
+            var res = child2._encode(data[child2._baseState.key], reporter, data);
             reporter.leaveKey(prevKey);
             return res;
           }, this).filter(function(child2) {
@@ -82108,18 +81795,18 @@ ${toHex(hashedRequest)}`;
           if (state.tag === "seqof" || state.tag === "setof") {
             if (!(state.args && state.args.length === 1))
               return reporter.error("Too many args for : " + state.tag);
-            if (!Array.isArray(data2))
+            if (!Array.isArray(data))
               return reporter.error("seqof/setof, but data is not Array");
             var child = this.clone();
             child._baseState.implicit = null;
-            content = this._createEncoderBuffer(data2.map(function(item) {
+            content = this._createEncoderBuffer(data.map(function(item) {
               var state2 = this._baseState;
-              return this._getUse(state2.args[0], data2)._encode(item, reporter);
+              return this._getUse(state2.args[0], data)._encode(item, reporter);
             }, child));
           } else if (state.use !== null) {
-            result = this._getUse(state.use, parent)._encode(data2, reporter);
+            result = this._getUse(state.use, parent)._encode(data, reporter);
           } else {
-            content = this._encodePrimitive(state.tag, data2);
+            content = this._encodePrimitive(state.tag, data);
             primitive = true;
           }
         }
@@ -82139,35 +81826,35 @@ ${toHex(hashedRequest)}`;
           result = this._encodeComposite(state.explicit, false, "context", result);
         return result;
       };
-      Node2.prototype._encodeChoice = function encodeChoice(data2, reporter) {
+      Node2.prototype._encodeChoice = function encodeChoice(data, reporter) {
         var state = this._baseState;
-        var node = state.choice[data2.type];
+        var node = state.choice[data.type];
         if (!node) {
           assert(
             false,
-            data2.type + " not found in " + JSON.stringify(Object.keys(state.choice))
+            data.type + " not found in " + JSON.stringify(Object.keys(state.choice))
           );
         }
-        return node._encode(data2.value, reporter);
+        return node._encode(data.value, reporter);
       };
-      Node2.prototype._encodePrimitive = function encodePrimitive(tag, data2) {
+      Node2.prototype._encodePrimitive = function encodePrimitive(tag, data) {
         var state = this._baseState;
         if (/str$/.test(tag))
-          return this._encodeStr(data2, tag);
+          return this._encodeStr(data, tag);
         else if (tag === "objid" && state.args)
-          return this._encodeObjid(data2, state.reverseArgs[0], state.args[1]);
+          return this._encodeObjid(data, state.reverseArgs[0], state.args[1]);
         else if (tag === "objid")
-          return this._encodeObjid(data2, null, null);
+          return this._encodeObjid(data, null, null);
         else if (tag === "gentime" || tag === "utctime")
-          return this._encodeTime(data2, tag);
+          return this._encodeTime(data, tag);
         else if (tag === "null_")
           return this._encodeNull();
         else if (tag === "int" || tag === "enum")
-          return this._encodeInt(data2, state.args && state.reverseArgs[0]);
+          return this._encodeInt(data, state.args && state.reverseArgs[0]);
         else if (tag === "bool")
-          return this._encodeBool(data2);
+          return this._encodeBool(data);
         else if (tag === "objDesc")
-          return this._encodeStr(data2, tag);
+          return this._encodeStr(data, tag);
         else
           throw new Error("Unsupported tag: " + tag);
       };
@@ -82183,7 +81870,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -82195,7 +81882,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -82242,7 +81929,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -82261,7 +81948,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -82275,10 +81962,10 @@ ${toHex(hashedRequest)}`;
         this.tree._init(entity.body);
       }
       module.exports = DERDecoder;
-      DERDecoder.prototype.decode = function decode(data2, options) {
-        if (!(data2 instanceof base.DecoderBuffer))
-          data2 = new base.DecoderBuffer(data2, options);
-        return this.tree._decode(data2, options);
+      DERDecoder.prototype.decode = function decode(data, options) {
+        if (!(data instanceof base.DecoderBuffer))
+          data = new base.DecoderBuffer(data, options);
+        return this.tree._decode(data, options);
       };
       function DERNode(parent) {
         base.Node.call(this, "der", parent);
@@ -82525,7 +82212,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer2 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -82535,8 +82222,8 @@ ${toHex(hashedRequest)}`;
       }
       inherits(PEMDecoder, DERDecoder);
       module.exports = PEMDecoder;
-      PEMDecoder.prototype.decode = function decode(data2, options) {
-        var lines = data2.toString().split(/[\r\n]+/g);
+      PEMDecoder.prototype.decode = function decode(data, options) {
+        var lines = data.toString().split(/[\r\n]+/g);
         var label = options.label.toUpperCase();
         var re = /^-----(BEGIN|END) ([^-]+)-----$/;
         var start = -1;
@@ -82571,7 +82258,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -82581,7 +82268,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer2 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -82595,8 +82282,8 @@ ${toHex(hashedRequest)}`;
         this.tree._init(entity.body);
       }
       module.exports = DEREncoder;
-      DEREncoder.prototype.encode = function encode(data2, reporter) {
-        return this.tree._encode(data2, reporter).join();
+      DEREncoder.prototype.encode = function encode(data, reporter) {
+        return this.tree._encode(data, reporter).join();
       };
       function DERNode(parent) {
         base.Node.call(this, "der", parent);
@@ -82693,25 +82380,25 @@ ${toHex(hashedRequest)}`;
       }
       DERNode.prototype._encodeTime = function encodeTime(time2, tag) {
         var str;
-        var date3 = new Date(time2);
+        var date2 = new Date(time2);
         if (tag === "gentime") {
           str = [
-            two(date3.getFullYear()),
-            two(date3.getUTCMonth() + 1),
-            two(date3.getUTCDate()),
-            two(date3.getUTCHours()),
-            two(date3.getUTCMinutes()),
-            two(date3.getUTCSeconds()),
+            two(date2.getFullYear()),
+            two(date2.getUTCMonth() + 1),
+            two(date2.getUTCDate()),
+            two(date2.getUTCHours()),
+            two(date2.getUTCMinutes()),
+            two(date2.getUTCSeconds()),
             "Z"
           ].join("");
         } else if (tag === "utctime") {
           str = [
-            two(date3.getFullYear() % 100),
-            two(date3.getUTCMonth() + 1),
-            two(date3.getUTCDate()),
-            two(date3.getUTCHours()),
-            two(date3.getUTCMinutes()),
-            two(date3.getUTCSeconds()),
+            two(date2.getFullYear() % 100),
+            two(date2.getUTCMonth() + 1),
+            two(date2.getUTCDate()),
+            two(date2.getUTCHours()),
+            two(date2.getUTCMinutes()),
+            two(date2.getUTCSeconds()),
             "Z"
           ].join("");
         } else {
@@ -82778,13 +82465,13 @@ ${toHex(hashedRequest)}`;
         var i2;
         if (state["default"] === null)
           return false;
-        var data2 = dataBuffer.join();
+        var data = dataBuffer.join();
         if (state.defaultBuffer === void 0)
           state.defaultBuffer = this._encodeValue(state["default"], reporter, parent).join();
-        if (data2.length !== state.defaultBuffer.length)
+        if (data.length !== state.defaultBuffer.length)
           return false;
-        for (i2 = 0; i2 < data2.length; i2++)
-          if (data2[i2] !== state.defaultBuffer[i2])
+        for (i2 = 0; i2 < data.length; i2++)
+          if (data[i2] !== state.defaultBuffer[i2])
             return false;
         return true;
       };
@@ -82813,7 +82500,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -82822,8 +82509,8 @@ ${toHex(hashedRequest)}`;
       }
       inherits(PEMEncoder, DEREncoder);
       module.exports = PEMEncoder;
-      PEMEncoder.prototype.encode = function encode(data2, options) {
-        var buf = DEREncoder.prototype.encode.call(this, data2);
+      PEMEncoder.prototype.encode = function encode(data, options) {
+        var buf = DEREncoder.prototype.encode.call(this, data);
         var p2 = buf.toString("base64");
         var out = ["-----BEGIN " + options.label + "-----"];
         for (var i2 = 0; i2 < p2.length; i2 += 64)
@@ -82837,7 +82524,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -82847,7 +82534,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -82862,7 +82549,7 @@ ${toHex(hashedRequest)}`;
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -82942,7 +82629,7 @@ ${toHex(hashedRequest)}`;
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -83076,7 +82763,7 @@ ${toHex(hashedRequest)}`;
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -83114,19 +82801,19 @@ ${toHex(hashedRequest)}`;
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
       var ciphers = require_browser6();
       var pbkdf2Sync2 = require_browser5().pbkdf2Sync;
       var Buffer2 = require_safe_buffer().Buffer;
-      function decrypt(data2, password) {
-        var salt = data2.algorithm.decrypt.kde.kdeparams.salt;
-        var iters = parseInt(data2.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
-        var algo = aesid[data2.algorithm.decrypt.cipher.algo.join(".")];
-        var iv = data2.algorithm.decrypt.cipher.iv;
-        var cipherText = data2.subjectPrivateKey;
+      function decrypt(data, password) {
+        var salt = data.algorithm.decrypt.kde.kdeparams.salt;
+        var iters = parseInt(data.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
+        var algo = aesid[data.algorithm.decrypt.cipher.algo.join(".")];
+        var iv = data.algorithm.decrypt.cipher.iv;
+        var cipherText = data.subjectPrivateKey;
         var keylen = parseInt(algo.split("-")[1], 10) / 8;
         var key = pbkdf2Sync2(password, salt, iters, keylen, "sha1");
         var cipher = ciphers.createDecipheriv(algo, key, iv);
@@ -83145,16 +82832,16 @@ ${toHex(hashedRequest)}`;
           buffer = Buffer2.from(buffer);
         }
         var stripped = fixProc(buffer, password);
-        var type2 = stripped.tag;
-        var data2 = stripped.data;
+        var type = stripped.tag;
+        var data = stripped.data;
         var subtype, ndata;
-        switch (type2) {
+        switch (type) {
           case "CERTIFICATE":
-            ndata = asn1.certificate.decode(data2, "der").tbsCertificate.subjectPublicKeyInfo;
+            ndata = asn1.certificate.decode(data, "der").tbsCertificate.subjectPublicKeyInfo;
           // falls through
           case "PUBLIC KEY":
             if (!ndata) {
-              ndata = asn1.PublicKey.decode(data2, "der");
+              ndata = asn1.PublicKey.decode(data, "der");
             }
             subtype = ndata.algorithm.algorithm.join(".");
             switch (subtype) {
@@ -83177,11 +82864,11 @@ ${toHex(hashedRequest)}`;
             }
           // throw new Error('unknown key type ' + type)
           case "ENCRYPTED PRIVATE KEY":
-            data2 = asn1.EncryptedPrivateKey.decode(data2, "der");
-            data2 = decrypt(data2, password);
+            data = asn1.EncryptedPrivateKey.decode(data, "der");
+            data = decrypt(data, password);
           // falls through
           case "PRIVATE KEY":
-            ndata = asn1.PrivateKey.decode(data2, "der");
+            ndata = asn1.PrivateKey.decode(data, "der");
             subtype = ndata.algorithm.algorithm.join(".");
             switch (subtype) {
               case "1.2.840.113549.1.1.1":
@@ -83202,22 +82889,22 @@ ${toHex(hashedRequest)}`;
             }
           // throw new Error('unknown key type ' + type)
           case "RSA PUBLIC KEY":
-            return asn1.RSAPublicKey.decode(data2, "der");
+            return asn1.RSAPublicKey.decode(data, "der");
           case "RSA PRIVATE KEY":
-            return asn1.RSAPrivateKey.decode(data2, "der");
+            return asn1.RSAPrivateKey.decode(data, "der");
           case "DSA PRIVATE KEY":
             return {
               type: "dsa",
-              params: asn1.DSAPrivateKey.decode(data2, "der")
+              params: asn1.DSAPrivateKey.decode(data, "der")
             };
           case "EC PRIVATE KEY":
-            data2 = asn1.ECPrivateKey.decode(data2, "der");
+            data = asn1.ECPrivateKey.decode(data, "der");
             return {
-              curve: data2.parameters.value,
-              privateKey: data2.privateKey
+              curve: data.parameters.value,
+              privateKey: data.privateKey
             };
           default:
-            throw new Error("unknown key type " + type2);
+            throw new Error("unknown key type " + type);
         }
       }
       parseKeys.signature = asn1.signature;
@@ -83243,7 +82930,7 @@ ${toHex(hashedRequest)}`;
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var createHmac = require_browser4();
       var crt = require_browserify_rsa();
@@ -83398,7 +83085,7 @@ ${toHex(hashedRequest)}`;
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -83489,9 +83176,9 @@ ${toHex(hashedRequest)}`;
   var require_browser9 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
-      var createHash4 = require_browser3();
+      var createHash3 = require_browser3();
       var stream = require_readable_browser2();
       var inherits = require_inherits_browser();
       var sign = require_sign2();
@@ -83503,22 +83190,22 @@ ${toHex(hashedRequest)}`;
       });
       function Sign(algorithm) {
         stream.Writable.call(this);
-        var data2 = algorithms[algorithm];
-        if (!data2) {
+        var data = algorithms[algorithm];
+        if (!data) {
           throw new Error("Unknown message digest");
         }
-        this._hashType = data2.hash;
-        this._hash = createHash4(data2.hash);
-        this._tag = data2.id;
-        this._signType = data2.sign;
+        this._hashType = data.hash;
+        this._hash = createHash3(data.hash);
+        this._tag = data.id;
+        this._signType = data.sign;
       }
       inherits(Sign, stream.Writable);
-      Sign.prototype._write = function _write(data2, _, done) {
-        this._hash.update(data2);
+      Sign.prototype._write = function _write(data, _, done) {
+        this._hash.update(data);
         done();
       };
-      Sign.prototype.update = function update(data2, enc) {
-        this._hash.update(typeof data2 === "string" ? Buffer2.from(data2, enc) : data2);
+      Sign.prototype.update = function update(data, enc) {
+        this._hash.update(typeof data === "string" ? Buffer2.from(data, enc) : data);
         return this;
       };
       Sign.prototype.sign = function signMethod(key, enc) {
@@ -83529,21 +83216,21 @@ ${toHex(hashedRequest)}`;
       };
       function Verify(algorithm) {
         stream.Writable.call(this);
-        var data2 = algorithms[algorithm];
-        if (!data2) {
+        var data = algorithms[algorithm];
+        if (!data) {
           throw new Error("Unknown message digest");
         }
-        this._hash = createHash4(data2.hash);
-        this._tag = data2.id;
-        this._signType = data2.sign;
+        this._hash = createHash3(data.hash);
+        this._tag = data.id;
+        this._signType = data.sign;
       }
       inherits(Verify, stream.Writable);
-      Verify.prototype._write = function _write(data2, _, done) {
-        this._hash.update(data2);
+      Verify.prototype._write = function _write(data, _, done) {
+        this._hash.update(data);
         done();
       };
-      Verify.prototype.update = function update(data2, enc) {
-        this._hash.update(typeof data2 === "string" ? Buffer2.from(data2, enc) : data2);
+      Verify.prototype.update = function update(data, enc) {
+        this._hash.update(typeof data === "string" ? Buffer2.from(data, enc) : data);
         return this;
       };
       Verify.prototype.verify = function verifyMethod(key, sig, enc) {
@@ -83570,7 +83257,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -86378,7 +86065,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-ecdh/browser.js
   var require_browser10 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -86497,8 +86184,8 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
-      var createHash4 = require_browser3();
+      var import_polyfills660 = __toESM(require_polyfills());
+      var createHash3 = require_browser3();
       var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
         var t8 = Buffer2.alloc(0);
@@ -86506,7 +86193,7 @@ ${toHex(hashedRequest)}`;
         var c2;
         while (t8.length < len) {
           c2 = i2ops(i2++);
-          t8 = Buffer2.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
+          t8 = Buffer2.concat([t8, createHash3("sha1").update(seed).update(c2).digest()]);
         }
         return t8.slice(0, len);
       };
@@ -86521,7 +86208,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -86536,7 +86223,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -89344,7 +89031,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer2 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -89357,10 +89044,10 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser();
-      var createHash4 = require_browser3();
+      var createHash3 = require_browser3();
       var mgf = require_mgf();
       var xor = require_xor();
       var BN = require_bn7();
@@ -89399,7 +89086,7 @@ ${toHex(hashedRequest)}`;
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
         var mLen = msg.length;
-        var iHash = createHash4("sha1").update(Buffer2.alloc(0)).digest();
+        var iHash = createHash3("sha1").update(Buffer2.alloc(0)).digest();
         var hLen = iHash.length;
         var hLen2 = 2 * hLen;
         if (mLen > k2 - hLen2 - 2) {
@@ -89450,13 +89137,13 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
       var BN = require_bn7();
       var crt = require_browserify_rsa();
-      var createHash4 = require_browser3();
+      var createHash3 = require_browser3();
       var withPublic = require_withPublic();
       var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function privateDecrypt(privateKey, enc, reverse) {
@@ -89493,7 +89180,7 @@ ${toHex(hashedRequest)}`;
       };
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
-        var iHash = createHash4("sha1").update(Buffer2.alloc(0)).digest();
+        var iHash = createHash3("sha1").update(Buffer2.alloc(0)).digest();
         var hLen = iHash.length;
         if (msg[0] !== 0) {
           throw new Error("decryption error");
@@ -89501,18 +89188,18 @@ ${toHex(hashedRequest)}`;
         var maskedSeed = msg.slice(1, hLen + 1);
         var maskedDb = msg.slice(hLen + 1);
         var seed = xor(maskedSeed, mgf(maskedDb, hLen));
-        var db2 = xor(maskedDb, mgf(seed, k2 - hLen - 1));
-        if (compare(iHash, db2.slice(0, hLen))) {
+        var db = xor(maskedDb, mgf(seed, k2 - hLen - 1));
+        if (compare(iHash, db.slice(0, hLen))) {
           throw new Error("decryption error");
         }
         var i2 = hLen;
-        while (db2[i2] === 0) {
+        while (db[i2] === 0) {
           i2++;
         }
-        if (db2[i2++] !== 1) {
+        if (db[i2++] !== 1) {
           throw new Error("decryption error");
         }
-        return db2.slice(i2);
+        return db.slice(i2);
       }
       function pkcs1(key, msg, reverse) {
         var p1 = msg.slice(0, 2);
@@ -89557,7 +89244,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/browser.js
   var require_browser11 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -89573,7 +89260,7 @@ ${toHex(hashedRequest)}`;
   var require_browser12 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -89581,7 +89268,7 @@ ${toHex(hashedRequest)}`;
       var randombytes = require_browser();
       var Buffer2 = safeBuffer.Buffer;
       var kBufferMaxLength = safeBuffer.kMaxLength;
-      var crypto5 = window.crypto || window.msCrypto;
+      var crypto4 = window.crypto || window.msCrypto;
       var kMaxUint32 = Math.pow(2, 32) - 1;
       function assertOffset(offset, length) {
         if (typeof offset !== "number" || offset !== offset) {
@@ -89605,7 +89292,7 @@ ${toHex(hashedRequest)}`;
           throw new RangeError("buffer too small");
         }
       }
-      if (crypto5 && crypto5.getRandomValues || !process.browser) {
+      if (crypto4 && crypto4.getRandomValues || !process.browser) {
         exports.randomFill = randomFill;
         exports.randomFillSync = randomFillSync;
       } else {
@@ -89634,7 +89321,7 @@ ${toHex(hashedRequest)}`;
         if (process.browser) {
           var ourBuf = buf.buffer;
           var uint = new Uint8Array(ourBuf, offset, size);
-          crypto5.getRandomValues(uint);
+          crypto4.getRandomValues(uint);
           if (cb2) {
             process.nextTick(function() {
               cb2(null, buf);
@@ -89676,7 +89363,7 @@ ${toHex(hashedRequest)}`;
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser();
       exports.createHash = exports.Hash = require_browser3();
       exports.createHmac = exports.Hmac = require_browser4();
@@ -89752,40 +89439,41 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/adapters/S3RemoteAdapter.ts
-  var import_polyfills658, crypto2, S3RemoteAdapter;
+  var import_polyfills656, crypto2, S3RemoteAdapter;
   var init_S3RemoteAdapter = __esm({
     "src/adapters/S3RemoteAdapter.ts"() {
       "use strict";
-      import_polyfills658 = __toESM(require_polyfills());
+      import_polyfills656 = __toESM(require_polyfills());
       init_dist_es58();
       crypto2 = __toESM(require_crypto_browserify());
       S3RemoteAdapter = class {
         constructor(config, paths) {
           this.client = new S3Client({
             region: config.region,
-            endpoint: config.endpoint,
+            endpoint: config.endpoint || void 0,
             credentials: config.credentials,
-            forcePathStyle: config.forcePathStyle
+            forcePathStyle: true,
+            // Always use path style to avoid ListBucket calls for bucket resolution
+            apiVersion: "2006-03-01"
           });
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
         }
-        async uploadFile(path3, data2) {
-          const key = this.getKey(path3);
+        async uploadFile(path, data, providedHash) {
+          const key = this.getKey(path);
           console.log(`[S3] Uploading to key: ${key}`);
-          const hash = crypto2.createHash("sha256").update(data2).digest("hex");
+          const hash = providedHash || crypto2.createHash("sha256").update(data).digest("hex");
           await this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
-            Body: data2,
+            Body: data,
             Metadata: {
               "hash": hash
             }
           }));
         }
-        async downloadFile(path3) {
-          const key = this.getKey(path3);
-          console.log(`[S3] Downloading key: ${key}`);
+        async downloadFile(path) {
+          const key = this.getKey(path);
           try {
             const response = await this.client.send(new GetObjectCommand({
               Bucket: this.bucket,
@@ -89794,590 +89482,249 @@ ${toHex(hashedRequest)}`;
             if (!response.Body) return null;
             return await response.Body.transformToByteArray();
           } catch (e2) {
-            if (e2.name === "NoSuchKey" || e2.$metadata?.httpStatusCode === 404) return null;
+            const statusCode = e2.$metadata?.httpStatusCode;
+            if (statusCode === 403) {
+              console.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
+              return null;
+            }
+            if (e2.name === "NoSuchKey" || statusCode === 404) {
+              return null;
+            }
             throw e2;
           }
         }
-        async getFileHash(path3) {
-          const key = this.getKey(path3);
+        async getFileHash(path) {
+          const key = this.getKey(path);
           try {
             const response = await this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
             }));
-            return response.Metadata?.hash || null;
+            const hash = response.Metadata?.hash || null;
+            if (!hash) console.warn(`[S3] File ${key} exists but is missing 'hash' metadata. Check CORS 'ExposeHeaders'.`);
+            return hash;
           } catch (e2) {
-            if (e2.name === "NoSuchKey" || e2.$metadata?.httpStatusCode === 404) return null;
+            const statusCode = e2.$metadata?.httpStatusCode;
+            if (statusCode === 403 || e2.name === "NoSuchKey" || statusCode === 404) {
+              return null;
+            }
             throw e2;
           }
         }
-        getKey(path3) {
-          return `${this.prefix}${path3}`;
+        getKey(path) {
+          return `${this.prefix}${path}`;
         }
       };
     }
   });
 
-  // node_modules/path-browserify/index.js
-  var require_path_browserify = __commonJS({
-    "node_modules/path-browserify/index.js"(exports, module) {
+  // src/adapters/IndexedDBStorage.ts
+  var import_polyfills657, IndexedDBStorage;
+  var init_IndexedDBStorage = __esm({
+    "src/adapters/IndexedDBStorage.ts"() {
       "use strict";
-      var import_polyfills662 = __toESM(require_polyfills());
-      function assertPath(path3) {
-        if (typeof path3 !== "string") {
-          throw new TypeError("Path must be a string. Received " + JSON.stringify(path3));
-        }
-      }
-      function normalizeStringPosix(path3, allowAboveRoot) {
-        var res = "";
-        var lastSegmentLength = 0;
-        var lastSlash = -1;
-        var dots = 0;
-        var code;
-        for (var i2 = 0; i2 <= path3.length; ++i2) {
-          if (i2 < path3.length)
-            code = path3.charCodeAt(i2);
-          else if (code === 47)
-            break;
-          else
-            code = 47;
-          if (code === 47) {
-            if (lastSlash === i2 - 1 || dots === 1) {
-            } else if (lastSlash !== i2 - 1 && dots === 2) {
-              if (res.length < 2 || lastSegmentLength !== 2 || res.charCodeAt(res.length - 1) !== 46 || res.charCodeAt(res.length - 2) !== 46) {
-                if (res.length > 2) {
-                  var lastSlashIndex = res.lastIndexOf("/");
-                  if (lastSlashIndex !== res.length - 1) {
-                    if (lastSlashIndex === -1) {
-                      res = "";
-                      lastSegmentLength = 0;
-                    } else {
-                      res = res.slice(0, lastSlashIndex);
-                      lastSegmentLength = res.length - 1 - res.lastIndexOf("/");
-                    }
-                    lastSlash = i2;
-                    dots = 0;
-                    continue;
-                  }
-                } else if (res.length === 2 || res.length === 1) {
-                  res = "";
-                  lastSegmentLength = 0;
-                  lastSlash = i2;
-                  dots = 0;
-                  continue;
-                }
-              }
-              if (allowAboveRoot) {
-                if (res.length > 0)
-                  res += "/..";
-                else
-                  res = "..";
-                lastSegmentLength = 2;
-              }
-            } else {
-              if (res.length > 0)
-                res += "/" + path3.slice(lastSlash + 1, i2);
-              else
-                res = path3.slice(lastSlash + 1, i2);
-              lastSegmentLength = i2 - lastSlash - 1;
-            }
-            lastSlash = i2;
-            dots = 0;
-          } else if (code === 46 && dots !== -1) {
-            ++dots;
-          } else {
-            dots = -1;
-          }
-        }
-        return res;
-      }
-      function _format(sep, pathObject) {
-        var dir2 = pathObject.dir || pathObject.root;
-        var base = pathObject.base || (pathObject.name || "") + (pathObject.ext || "");
-        if (!dir2) {
-          return base;
-        }
-        if (dir2 === pathObject.root) {
-          return dir2 + base;
-        }
-        return dir2 + sep + base;
-      }
-      var posix = {
-        // path.resolve([from ...], to)
-        resolve: function resolve() {
-          var resolvedPath = "";
-          var resolvedAbsolute = false;
-          var cwd;
-          for (var i2 = arguments.length - 1; i2 >= -1 && !resolvedAbsolute; i2--) {
-            var path3;
-            if (i2 >= 0)
-              path3 = arguments[i2];
-            else {
-              if (cwd === void 0)
-                cwd = process.cwd();
-              path3 = cwd;
-            }
-            assertPath(path3);
-            if (path3.length === 0) {
-              continue;
-            }
-            resolvedPath = path3 + "/" + resolvedPath;
-            resolvedAbsolute = path3.charCodeAt(0) === 47;
-          }
-          resolvedPath = normalizeStringPosix(resolvedPath, !resolvedAbsolute);
-          if (resolvedAbsolute) {
-            if (resolvedPath.length > 0)
-              return "/" + resolvedPath;
-            else
-              return "/";
-          } else if (resolvedPath.length > 0) {
-            return resolvedPath;
-          } else {
-            return ".";
-          }
-        },
-        normalize: function normalize(path3) {
-          assertPath(path3);
-          if (path3.length === 0) return ".";
-          var isAbsolute = path3.charCodeAt(0) === 47;
-          var trailingSeparator = path3.charCodeAt(path3.length - 1) === 47;
-          path3 = normalizeStringPosix(path3, !isAbsolute);
-          if (path3.length === 0 && !isAbsolute) path3 = ".";
-          if (path3.length > 0 && trailingSeparator) path3 += "/";
-          if (isAbsolute) return "/" + path3;
-          return path3;
-        },
-        isAbsolute: function isAbsolute(path3) {
-          assertPath(path3);
-          return path3.length > 0 && path3.charCodeAt(0) === 47;
-        },
-        join: function join3() {
-          if (arguments.length === 0)
-            return ".";
-          var joined;
-          for (var i2 = 0; i2 < arguments.length; ++i2) {
-            var arg = arguments[i2];
-            assertPath(arg);
-            if (arg.length > 0) {
-              if (joined === void 0)
-                joined = arg;
-              else
-                joined += "/" + arg;
-            }
-          }
-          if (joined === void 0)
-            return ".";
-          return posix.normalize(joined);
-        },
-        relative: function relative(from, to) {
-          assertPath(from);
-          assertPath(to);
-          if (from === to) return "";
-          from = posix.resolve(from);
-          to = posix.resolve(to);
-          if (from === to) return "";
-          var fromStart = 1;
-          for (; fromStart < from.length; ++fromStart) {
-            if (from.charCodeAt(fromStart) !== 47)
-              break;
-          }
-          var fromEnd = from.length;
-          var fromLen = fromEnd - fromStart;
-          var toStart = 1;
-          for (; toStart < to.length; ++toStart) {
-            if (to.charCodeAt(toStart) !== 47)
-              break;
-          }
-          var toEnd = to.length;
-          var toLen = toEnd - toStart;
-          var length = fromLen < toLen ? fromLen : toLen;
-          var lastCommonSep = -1;
-          var i2 = 0;
-          for (; i2 <= length; ++i2) {
-            if (i2 === length) {
-              if (toLen > length) {
-                if (to.charCodeAt(toStart + i2) === 47) {
-                  return to.slice(toStart + i2 + 1);
-                } else if (i2 === 0) {
-                  return to.slice(toStart + i2);
-                }
-              } else if (fromLen > length) {
-                if (from.charCodeAt(fromStart + i2) === 47) {
-                  lastCommonSep = i2;
-                } else if (i2 === 0) {
-                  lastCommonSep = 0;
-                }
-              }
-              break;
-            }
-            var fromCode = from.charCodeAt(fromStart + i2);
-            var toCode = to.charCodeAt(toStart + i2);
-            if (fromCode !== toCode)
-              break;
-            else if (fromCode === 47)
-              lastCommonSep = i2;
-          }
-          var out = "";
-          for (i2 = fromStart + lastCommonSep + 1; i2 <= fromEnd; ++i2) {
-            if (i2 === fromEnd || from.charCodeAt(i2) === 47) {
-              if (out.length === 0)
-                out += "..";
-              else
-                out += "/..";
-            }
-          }
-          if (out.length > 0)
-            return out + to.slice(toStart + lastCommonSep);
-          else {
-            toStart += lastCommonSep;
-            if (to.charCodeAt(toStart) === 47)
-              ++toStart;
-            return to.slice(toStart);
-          }
-        },
-        _makeLong: function _makeLong(path3) {
-          return path3;
-        },
-        dirname: function dirname2(path3) {
-          assertPath(path3);
-          if (path3.length === 0) return ".";
-          var code = path3.charCodeAt(0);
-          var hasRoot = code === 47;
-          var end = -1;
-          var matchedSlash = true;
-          for (var i2 = path3.length - 1; i2 >= 1; --i2) {
-            code = path3.charCodeAt(i2);
-            if (code === 47) {
-              if (!matchedSlash) {
-                end = i2;
-                break;
-              }
-            } else {
-              matchedSlash = false;
-            }
-          }
-          if (end === -1) return hasRoot ? "/" : ".";
-          if (hasRoot && end === 1) return "//";
-          return path3.slice(0, end);
-        },
-        basename: function basename(path3, ext) {
-          if (ext !== void 0 && typeof ext !== "string") throw new TypeError('"ext" argument must be a string');
-          assertPath(path3);
-          var start = 0;
-          var end = -1;
-          var matchedSlash = true;
-          var i2;
-          if (ext !== void 0 && ext.length > 0 && ext.length <= path3.length) {
-            if (ext.length === path3.length && ext === path3) return "";
-            var extIdx = ext.length - 1;
-            var firstNonSlashEnd = -1;
-            for (i2 = path3.length - 1; i2 >= 0; --i2) {
-              var code = path3.charCodeAt(i2);
-              if (code === 47) {
-                if (!matchedSlash) {
-                  start = i2 + 1;
-                  break;
-                }
-              } else {
-                if (firstNonSlashEnd === -1) {
-                  matchedSlash = false;
-                  firstNonSlashEnd = i2 + 1;
-                }
-                if (extIdx >= 0) {
-                  if (code === ext.charCodeAt(extIdx)) {
-                    if (--extIdx === -1) {
-                      end = i2;
-                    }
-                  } else {
-                    extIdx = -1;
-                    end = firstNonSlashEnd;
-                  }
-                }
-              }
-            }
-            if (start === end) end = firstNonSlashEnd;
-            else if (end === -1) end = path3.length;
-            return path3.slice(start, end);
-          } else {
-            for (i2 = path3.length - 1; i2 >= 0; --i2) {
-              if (path3.charCodeAt(i2) === 47) {
-                if (!matchedSlash) {
-                  start = i2 + 1;
-                  break;
-                }
-              } else if (end === -1) {
-                matchedSlash = false;
-                end = i2 + 1;
-              }
-            }
-            if (end === -1) return "";
-            return path3.slice(start, end);
-          }
-        },
-        extname: function extname(path3) {
-          assertPath(path3);
-          var startDot = -1;
-          var startPart = 0;
-          var end = -1;
-          var matchedSlash = true;
-          var preDotState = 0;
-          for (var i2 = path3.length - 1; i2 >= 0; --i2) {
-            var code = path3.charCodeAt(i2);
-            if (code === 47) {
-              if (!matchedSlash) {
-                startPart = i2 + 1;
-                break;
-              }
-              continue;
-            }
-            if (end === -1) {
-              matchedSlash = false;
-              end = i2 + 1;
-            }
-            if (code === 46) {
-              if (startDot === -1)
-                startDot = i2;
-              else if (preDotState !== 1)
-                preDotState = 1;
-            } else if (startDot !== -1) {
-              preDotState = -1;
-            }
-          }
-          if (startDot === -1 || end === -1 || // We saw a non-dot character immediately before the dot
-          preDotState === 0 || // The (right-most) trimmed path component is exactly '..'
-          preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-            return "";
-          }
-          return path3.slice(startDot, end);
-        },
-        format: function format2(pathObject) {
-          if (pathObject === null || typeof pathObject !== "object") {
-            throw new TypeError('The "pathObject" argument must be of type Object. Received type ' + typeof pathObject);
-          }
-          return _format("/", pathObject);
-        },
-        parse: function parse(path3) {
-          assertPath(path3);
-          var ret = { root: "", dir: "", base: "", ext: "", name: "" };
-          if (path3.length === 0) return ret;
-          var code = path3.charCodeAt(0);
-          var isAbsolute = code === 47;
-          var start;
-          if (isAbsolute) {
-            ret.root = "/";
-            start = 1;
-          } else {
-            start = 0;
-          }
-          var startDot = -1;
-          var startPart = 0;
-          var end = -1;
-          var matchedSlash = true;
-          var i2 = path3.length - 1;
-          var preDotState = 0;
-          for (; i2 >= start; --i2) {
-            code = path3.charCodeAt(i2);
-            if (code === 47) {
-              if (!matchedSlash) {
-                startPart = i2 + 1;
-                break;
-              }
-              continue;
-            }
-            if (end === -1) {
-              matchedSlash = false;
-              end = i2 + 1;
-            }
-            if (code === 46) {
-              if (startDot === -1) startDot = i2;
-              else if (preDotState !== 1) preDotState = 1;
-            } else if (startDot !== -1) {
-              preDotState = -1;
-            }
-          }
-          if (startDot === -1 || end === -1 || // We saw a non-dot character immediately before the dot
-          preDotState === 0 || // The (right-most) trimmed path component is exactly '..'
-          preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
-            if (end !== -1) {
-              if (startPart === 0 && isAbsolute) ret.base = ret.name = path3.slice(1, end);
-              else ret.base = ret.name = path3.slice(startPart, end);
-            }
-          } else {
-            if (startPart === 0 && isAbsolute) {
-              ret.name = path3.slice(1, startDot);
-              ret.base = path3.slice(1, end);
-            } else {
-              ret.name = path3.slice(startPart, startDot);
-              ret.base = path3.slice(startPart, end);
-            }
-            ret.ext = path3.slice(startDot, end);
-          }
-          if (startPart > 0) ret.dir = path3.slice(0, startPart - 1);
-          else if (isAbsolute) ret.dir = "/";
-          return ret;
-        },
-        sep: "/",
-        delimiter: ":",
-        win32: null,
-        posix: null
-      };
-      posix.posix = posix;
-      module.exports = posix;
-    }
-  });
-
-  // src/adapters/FilesystemStorage.ts
-  var FilesystemStorage_exports = {};
-  __export(FilesystemStorage_exports, {
-    FilesystemStorage: () => FilesystemStorage
-  });
-  var import_polyfills659, fs, path, crypto3, FilesystemStorage;
-  var init_FilesystemStorage = __esm({
-    "src/adapters/FilesystemStorage.ts"() {
-      "use strict";
-      import_polyfills659 = __toESM(require_polyfills());
-      fs = __toESM(__require("fs-extra"));
-      path = __toESM(require_path_browserify());
-      crypto3 = __toESM(require_crypto_browserify());
-      FilesystemStorage = class {
-        constructor(basePath) {
-          this.metaCache = { lastSyncDate: null, remoteHashes: {}, following: {} };
-          this.rootDir = basePath;
-          this.metaFile = path.join(this.rootDir, "sovereign_meta.json");
+      import_polyfills657 = __toESM(require_polyfills());
+      IndexedDBStorage = class {
+        constructor(dbName = "sovereign_s3nc") {
+          this.db = null;
+          this.dbName = dbName;
         }
         async init() {
-          await fs.ensureDir(this.rootDir);
-          await fs.ensureDir(path.join(this.rootDir, "private"));
-          await fs.ensureDir(path.join(this.rootDir, "public"));
-          if (await fs.pathExists(this.metaFile)) {
-            try {
-              this.metaCache = await fs.readJSON(this.metaFile);
-            } catch (e2) {
-              console.warn("Failed to read meta file, resetting cache", e2);
-              this.metaCache = { lastSyncDate: null, remoteHashes: {}, following: {} };
-            }
-          }
+          console.log(`[IDB] Initializing ${this.dbName}...`);
+          return new Promise((resolve, reject) => {
+            const request = indexedDB.open(this.dbName, 1);
+            request.onerror = (event) => {
+              console.error("[IDB] Error opening database:", request.error);
+              reject(request.error);
+            };
+            request.onsuccess = (event) => {
+              this.db = event.target.result;
+              console.log("[IDB] Database opened successfully");
+              resolve();
+            };
+            request.onupgradeneeded = (event) => {
+              console.log("[IDB] Upgrading database...");
+              const db = event.target.result;
+              if (!db.objectStoreNames.contains("files")) {
+                db.createObjectStore("files");
+                console.log('[IDB] Created "files" store');
+              }
+              if (!db.objectStoreNames.contains("metadata")) {
+                db.createObjectStore("metadata");
+                console.log('[IDB] Created "metadata" store');
+              }
+            };
+            request.onblocked = () => {
+              console.warn("[IDB] Database opening blocked. Please close other tabs of this app.");
+            };
+          });
         }
-        async getDailyDb(date3, type2) {
-          const filePath = this.getFilePath(date3, type2);
-          if (await fs.pathExists(filePath)) {
-            return await fs.readFile(filePath);
-          }
-          return null;
+        async getStore(name, mode = "readonly") {
+          if (!this.db) throw new Error("Database not initialized");
+          const tx = this.db.transaction(name, mode);
+          return tx.objectStore(name);
         }
-        async saveDailyDb(date3, type2, data2) {
-          const filePath = this.getFilePath(date3, type2);
-          await fs.ensureDir(path.dirname(filePath));
-          await fs.writeFile(filePath, data2);
+        async getDailyDb(date2, type) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get(`${type}/${date2}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
         }
-        async getDailyDbHash(date3, type2) {
-          const data2 = await this.getDailyDb(date3, type2);
-          if (!data2) return null;
-          return crypto3.createHash("sha256").update(data2).digest("hex");
+        async saveDailyDb(date2, type, data) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, `${type}/${date2}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
+        }
+        async getDailyDbHash(date2, type) {
+          const data = await this.getDailyDb(date2, type);
+          if (!data) return null;
+          return this.hash(data);
         }
         async getPublicUserFile() {
-          const filePath = path.join(this.rootDir, "public", "user.json");
-          if (await fs.pathExists(filePath)) return await fs.readFile(filePath);
-          return null;
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get("public/user.json");
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
         }
-        async savePublicUserFile(data2) {
-          const filePath = path.join(this.rootDir, "public", "user.json");
-          await fs.ensureDir(path.dirname(filePath));
-          await fs.writeFile(filePath, data2);
+        async savePublicUserFile(data) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, "public/user.json");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
         }
-        async getRemoteHashCache(date3, type2) {
-          const key = `${date3}-${type2}`;
-          return this.metaCache.remoteHashes[key] || null;
+        async getRemoteHashCache(date2, type) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get(`hash:${date2}-${type}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
         }
-        async setRemoteHashCache(date3, type2, hash) {
-          const key = `${date3}-${type2}`;
-          this.metaCache.remoteHashes[key] = hash;
-          await this.saveMeta();
+        async setRemoteHashCache(date2, type, hash) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(hash, `hash:${date2}-${type}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
         }
         async getLastSyncDate() {
-          return this.metaCache.lastSyncDate;
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("lastSyncDate");
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
         }
-        async setLastSyncDate(date3) {
-          this.metaCache.lastSyncDate = date3;
-          await this.saveMeta();
+        async setLastSyncDate(date2) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(date2, "lastSyncDate");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
         }
-        async saveFollowedDb(userId, date3, data2) {
-          const filePath = this.getFollowedPath(userId, date3);
-          await fs.ensureDir(path.dirname(filePath));
-          await fs.writeFile(filePath, data2);
+        async saveFollowedDb(userId, date2, data) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, `followed/${userId}/${date2}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
         }
-        async getFollowedDbHash(userId, date3) {
-          const filePath = this.getFollowedPath(userId, date3);
-          if (await fs.pathExists(filePath)) {
-            const data2 = await fs.readFile(filePath);
-            return crypto3.createHash("sha256").update(data2).digest("hex");
-          }
-          return null;
-        }
-        getFollowedPath(userId, date3) {
-          return path.join(this.rootDir, "followed", userId, "public", `${date3}.db`);
+        async getFollowedDbHash(userId, date2) {
+          const data = await new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get(`followed/${userId}/${date2}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
+          return data ? this.hash(data) : null;
         }
         async getFollowing() {
-          if (!this.metaCache.following || Array.isArray(this.metaCache.following)) {
-            return [];
-          }
-          return Object.entries(this.metaCache.following).map(([userId, info]) => ({
+          const followingMap = await new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("following");
+            request.onsuccess = () => resolve(request.result || {});
+            request.onerror = () => reject(request.error);
+          });
+          return Object.entries(followingMap).map(([userId, info]) => ({
             userId,
             lastSync: info.lastSync,
             publicKey: info.publicKey
           }));
         }
         async followUser(userId, lastSync, publicKey) {
-          if (!this.metaCache.following || Array.isArray(this.metaCache.following)) this.metaCache.following = {};
-          if (!this.metaCache.following[userId]) {
-            this.metaCache.following[userId] = { lastSync, publicKey };
-            await this.saveMeta();
+          const following = await this.getFollowingMap();
+          if (!following[userId]) {
+            following[userId] = { lastSync, publicKey };
+            await this.saveFollowingMap(following);
           }
         }
-        async updateFollowedUserSync(userId, date3) {
-          if (!this.metaCache.following || Array.isArray(this.metaCache.following)) return;
-          if (this.metaCache.following[userId]) {
-            this.metaCache.following[userId].lastSync = date3;
-            await this.saveMeta();
+        async updateFollowedUserSync(userId, date2) {
+          const following = await this.getFollowingMap();
+          if (following[userId]) {
+            following[userId].lastSync = date2;
+            await this.saveFollowingMap(following);
           }
         }
-        getFilePath(date3, type2) {
-          if (type2 === "followed") {
-            return path.join(this.rootDir, "followed", `${date3}.db`);
-          }
-          return path.join(this.rootDir, type2, `${date3}.db`);
+        async getFollowingMap() {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("following");
+            request.onsuccess = () => resolve(request.result || {});
+            request.onerror = () => reject(request.error);
+          });
         }
-        async saveMeta() {
-          await fs.writeJSON(this.metaFile, this.metaCache);
+        async saveFollowingMap(map) {
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(map, "following");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+          });
+        }
+        async hash(data) {
+          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+          return Array.from(new Uint8Array(hashBuffer)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
         }
       };
     }
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills660, crypto4, SovereignS3nc;
+  var import_polyfills658, crypto3, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
-      import_polyfills660 = __toESM(require_polyfills());
-      init_IndexedDBStorage();
+      import_polyfills658 = __toESM(require_polyfills());
       init_S3RemoteAdapter();
-      crypto4 = __toESM(require_crypto_browserify());
-      SovereignS3nc = class {
+      init_IndexedDBStorage();
+      crypto3 = __toESM(require_crypto_browserify());
+      SovereignS3nc = class _SovereignS3nc {
         constructor(config, remote, remoteFactory, keys) {
+          this.isSyncing = false;
           this.config = config;
           this.remoteFactory = remoteFactory;
           if (keys) {
             this.config.encryptionKey = keys.privateKey;
             this.config.publicEncryptionKey = keys.publicKey;
           }
-          const isBrowser2 = typeof window !== "undefined" && typeof window.indexedDB !== "undefined";
-          if (isBrowser2) {
-            this.storage = new IndexedDBStorage();
+          const isBrowser = typeof globalThis !== "undefined" && typeof globalThis.indexedDB !== "undefined";
+          if (isBrowser) {
+            const dbName = `sov_${config.paths.appId}_${config.paths.userId}`;
+            this.storage = new IndexedDBStorage(dbName);
           } else {
-            const { FilesystemStorage: FSStorage } = (init_FilesystemStorage(), __toCommonJS(FilesystemStorage_exports));
-            const localPath = config.localPersistencePath || "./data";
-            this.storage = new FSStorage(localPath);
+            throw new Error("IndexedDBStorage requested but not in a browser environment.");
           }
           if (remote) {
             this.remote = remote;
@@ -90389,28 +89736,37 @@ ${toHex(hashedRequest)}`;
               userId: config.paths.userId,
               storeId: config.paths.storeId
             });
-            this.remote = this.publicRemote;
             this.globalRemote = new S3RemoteAdapter(config.s3, {
               appId: config.paths.appId,
               userId: "global",
-              storeId: "registry"
+              storeId: "users"
             });
+            this.remote = this.publicRemote;
           } else {
             throw new Error("S3 configuration required for this version");
           }
         }
+        static {
+          this.VERSION = "1.1.0";
+        }
         async init() {
+          console.log(`[Sovereign] v${_SovereignS3nc.VERSION} Initializing storage...`);
           await this.storage.init();
           if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
+            console.log("[Sovereign] Initializing keys...");
             await this.initKeys();
           }
+          if (this.config.publicEncryptionKey) {
+            await this.ensureGlobalRegistration();
+          }
+          console.log("[Sovereign] Initialization complete.");
         }
         async initKeys() {
           const password = this.config.password;
           const publicUserId = this.config.paths.userId;
           const appId = this.config.paths.appId;
-          const masterKey = crypto4.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
-          const privateId = crypto4.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
+          const masterKey = crypto3.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
+          const privateId = crypto3.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
           console.log(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
           if (!this.remoteFactory && this.config.s3) {
             this.remote = new S3RemoteAdapter(this.config.s3, {
@@ -90439,12 +89795,14 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 throw new Error(`Failed to decrypt remote keys: ${e2.message}. Incorrect password?`);
               }
+            } else {
+              console.log("[Keys] No remote keys found.");
             }
           }
           if (!keyInfo) {
             console.log("[Keys] Generating new persistent key pair.");
-            const privateKey = crypto4.randomBytes(32).toString("hex");
-            const publicKey = crypto4.randomBytes(32).toString("hex");
+            const privateKey = crypto3.randomBytes(32).toString("hex");
+            const publicKey = crypto3.randomBytes(32).toString("hex");
             keyInfo = { privateKey, publicKey };
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
@@ -90454,34 +89812,43 @@ ${toHex(hashedRequest)}`;
           this.config.publicEncryptionKey = keyInfo.publicKey;
         }
         async sync() {
-          const lastSync = await this.storage.getLastSyncDate();
-          const today = this.getDateStr(/* @__PURE__ */ new Date());
-          let currentDate;
-          if (lastSync) {
-            currentDate = new Date(lastSync);
-          } else {
-            currentDate = /* @__PURE__ */ new Date();
+          if (this.isSyncing) {
+            console.log("[Sovereign] Sync already in progress, skipping...");
+            return;
           }
-          const end = /* @__PURE__ */ new Date();
-          currentDate.setUTCHours(0, 0, 0, 0);
-          end.setUTCHours(0, 0, 0, 0);
-          const syncDates = /* @__PURE__ */ new Set();
-          syncDates.add(today);
-          let iterDate = new Date(currentDate);
-          while (iterDate <= end) {
-            syncDates.add(this.getDateStr(iterDate));
-            iterDate.setUTCDate(iterDate.getUTCDate() + 1);
+          this.isSyncing = true;
+          try {
+            const lastSync = await this.storage.getLastSyncDate();
+            const today = _SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
+            let currentDate;
+            if (lastSync) {
+              currentDate = new Date(lastSync);
+            } else {
+              currentDate = /* @__PURE__ */ new Date();
+            }
+            const end = /* @__PURE__ */ new Date();
+            currentDate.setUTCHours(0, 0, 0, 0);
+            end.setUTCHours(0, 0, 0, 0);
+            const syncDates = /* @__PURE__ */ new Set();
+            syncDates.add(today);
+            let iterDate = new Date(currentDate);
+            while (iterDate <= end) {
+              syncDates.add(_SovereignS3nc.getDateStr(iterDate));
+              iterDate.setUTCDate(iterDate.getUTCDate() + 1);
+            }
+            const sortedDates = Array.from(syncDates).sort();
+            for (const dateStr of sortedDates) {
+              await this.syncDay(dateStr, "private", void 0, this.remote);
+              await this.syncDay(dateStr, "public", void 0, this.publicRemote);
+            }
+            await this.syncUserFile();
+            await this.ensureGlobalRegistration();
+            await this.discoverAndFollowUsers(today);
+            await this.syncFollowedUsers(today);
+            await this.storage.setLastSyncDate(today);
+          } finally {
+            this.isSyncing = false;
           }
-          const sortedDates = Array.from(syncDates).sort();
-          for (const dateStr of sortedDates) {
-            await this.syncDay(dateStr, "private", void 0, this.remote);
-            await this.syncDay(dateStr, "public", void 0, this.publicRemote);
-          }
-          await this.syncUserFile();
-          await this.ensureGlobalRegistration();
-          await this.discoverAndFollowUsers(today);
-          await this.syncFollowedUsers(today);
-          await this.storage.setLastSyncDate(today);
         }
         async ensureGlobalRegistration() {
           const remotePath = "users.json";
@@ -90492,7 +89859,7 @@ ${toHex(hashedRequest)}`;
           const remoteData = await this.globalRemote.downloadFile(remotePath);
           if (remoteData) {
             try {
-              userList = JSON.parse(remoteData.toString());
+              userList = JSON.parse(new TextDecoder().decode(remoteData));
             } catch (e2) {
               console.warn("[Sync] Global user registry corrupted. Resetting.");
               userList = [];
@@ -90514,30 +89881,59 @@ ${toHex(hashedRequest)}`;
           const remotePath = "users.json";
           const remoteData = await this.globalRemote.downloadFile(remotePath);
           if (remoteData) {
-            const userList = JSON.parse(remoteData.toString());
+            const userList = JSON.parse(new TextDecoder().decode(remoteData));
             const user = userList.find((u2) => u2.userId === userId);
             if (user) {
               const startDate = /* @__PURE__ */ new Date();
               startDate.setUTCDate(startDate.getUTCDate() - 7);
-              await this.storage.followUser(userId, this.getDateStr(startDate), user.publicKey);
+              await this.storage.followUser(userId, _SovereignS3nc.getDateStr(startDate), user.publicKey);
               return;
             }
           }
           throw new Error("User not found in registry");
+        }
+        async getFollowing() {
+          return this.storage.getFollowing();
+        }
+        async testPermissions() {
+          console.log("[Sovereign] Testing permissions for other user paths...");
+          const registry = await this.getPublicRegistry();
+          for (const user of registry) {
+            if (user.userId === this.config.paths.userId) continue;
+            const remote = this.createRemote(user.userId);
+            const path = "public/user.json";
+            try {
+              const hash = await remote.getFileHash(path);
+              console.log(`[Sovereign] Success reading ${user.userId}: Hash=${hash}`);
+            } catch (e2) {
+              console.error(`[Sovereign] Permission denied for ${user.userId}: ${e2.message}`);
+            }
+          }
+        }
+        async getPublicRegistry() {
+          console.log("[Sovereign] Fetching public registry...");
+          const remotePath = "users.json";
+          const remoteData = await this.globalRemote.downloadFile(remotePath);
+          if (!remoteData) return [];
+          try {
+            return JSON.parse(new TextDecoder().decode(remoteData));
+          } catch (e2) {
+            return [];
+          }
         }
         async discoverAndFollowUsers(today) {
           const remotePath = "users.json";
           const remoteData = await this.globalRemote.downloadFile(remotePath);
           if (!remoteData) return;
           try {
-            const userList = JSON.parse(remoteData.toString());
+            const userList = JSON.parse(new TextDecoder().decode(remoteData));
             const following = await this.storage.getFollowing();
             const followingIds = following.map((u2) => u2.userId);
             for (const user of userList) {
               if (user.userId !== this.config.paths.userId && !followingIds.includes(user.userId)) {
                 const startDate = /* @__PURE__ */ new Date();
                 startDate.setUTCDate(startDate.getUTCDate() - 7);
-                const lastSyncStr = this.getDateStr(startDate);
+                const lastSyncStr = _SovereignS3nc.getDateStr(startDate);
                 console.log(`[Sync] Discovered new user ${user.userId}, starting from ${lastSyncStr}`);
                 await this.storage.followUser(user.userId, lastSyncStr, user.publicKey);
               }
@@ -90555,7 +89951,7 @@ ${toHex(hashedRequest)}`;
             iter.setUTCHours(0, 0, 0, 0);
             endDate.setUTCHours(0, 0, 0, 0);
             while (iter <= endDate) {
-              const dateStr = this.getDateStr(iter);
+              const dateStr = _SovereignS3nc.getDateStr(iter);
               await this.pullUserDay(user.userId, dateStr, user.publicKey);
               iter.setUTCDate(iter.getUTCDate() + 1);
             }
@@ -90576,59 +89972,63 @@ ${toHex(hashedRequest)}`;
           }
           throw new Error("Remote configuration missing");
         }
-        async pullUserDay(userId, date3, publicKey) {
+        async pullUserDay(userId, date2, publicKey) {
           const userRemote = this.createRemote(userId);
-          const filePath = `public/${date3}.db`;
+          const filePath = `public/${date2}.db`;
           const remoteHash = await userRemote.getFileHash(filePath);
           if (remoteHash) {
-            const localData = await this.storage.getDailyDb(`${userId}/${date3}`, "followed");
+            console.log(`[Sync] Remote hash for ${userId}/${date2}: ${remoteHash}`);
+            const localData = await this.storage.getDailyDb(`${userId}/${date2}`, "followed");
             if (localData) {
               const localHashedWithKey = this.calculateHashedContent(localData, publicKey);
+              console.log(`[Sync] Local hash for ${userId}/${date2}: ${localHashedWithKey}`);
               if (localHashedWithKey === remoteHash) {
+                console.log(`[Sync] Skipping download for ${userId}/${date2}, hashes match.`);
                 return;
               }
             }
-            let data2 = await userRemote.downloadFile(filePath);
-            if (data2) {
+            console.log(`[Sync] Hashes mismatch or missing local. Downloading ${userId}/${date2}...`);
+            let data = await userRemote.downloadFile(filePath);
+            if (data) {
               try {
-                data2 = await this.decrypt(data2, publicKey);
-                await this.storage.saveDailyDb(`${userId}/${date3}`, "followed", data2);
+                data = await this.decrypt(data, publicKey);
+                await this.storage.saveDailyDb(`${userId}/${date2}`, "followed", data);
                 console.log(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
               } catch (e2) {
-                console.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date3}). Error: ${e2.message}`);
+                console.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
             }
           }
         }
-        getDateStr(date3) {
-          const year2 = date3.getUTCFullYear();
-          const month = String(date3.getUTCMonth() + 1).padStart(2, "0");
-          const day = String(date3.getUTCDate()).padStart(2, "0");
+        static getDateStr(date2) {
+          const year2 = date2.getUTCFullYear();
+          const month = String(date2.getUTCMonth() + 1).padStart(2, "0");
+          const day = String(date2.getUTCDate()).padStart(2, "0");
           return `${year2}-${month}-${day}`;
         }
-        async syncDay(date3, type2, localPublicKey, remoteOverride) {
-          const remotePath = `${type2}/${date3}.db`;
+        async syncDay(date2, type, localPublicKey, remoteOverride) {
+          const remotePath = `${type}/${date2}.db`;
           const activeRemote = remoteOverride || this.remote;
-          let localData = await this.storage.getDailyDb(date3, type2);
+          let localData = await this.storage.getDailyDb(date2, type);
           const remoteHash = await activeRemote.getFileHash(remotePath);
-          const currentKey = type2 === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
+          const currentKey = type === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
           if (!localData) {
             if (remoteHash) {
               console.log(`[Sync] Downloading ${remotePath}`);
-              let data2 = await activeRemote.downloadFile(remotePath);
-              if (data2) {
+              let data = await activeRemote.downloadFile(remotePath);
+              if (data) {
                 if (currentKey) {
-                  data2 = await this.decrypt(data2, currentKey);
+                  data = await this.decrypt(data, currentKey);
                 }
-                await this.storage.saveDailyDb(date3, type2, data2);
-                const newHash = this.calculateHashedContent(data2, currentKey);
-                await this.storage.setRemoteHashCache(date3, type2, newHash);
+                await this.storage.saveDailyDb(date2, type, data);
+                const newHash = this.calculateHashedContent(data, currentKey);
+                await this.storage.setRemoteHashCache(date2, type, newHash);
               }
             }
           } else {
             const localHash = this.calculateHashedContent(localData, currentKey);
             if (localHash === remoteHash) {
-              await this.storage.setRemoteHashCache(date3, type2, localHash);
+              await this.storage.setRemoteHashCache(date2, type, localHash);
               return;
             }
             console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
@@ -90636,30 +90036,30 @@ ${toHex(hashedRequest)}`;
             if (currentKey) {
               uploadData = await this.encrypt(localData, currentKey);
             }
-            await activeRemote.uploadFile(remotePath, uploadData);
-            await this.storage.setRemoteHashCache(date3, type2, localHash);
+            await activeRemote.uploadFile(remotePath, uploadData, localHash);
+            await this.storage.setRemoteHashCache(date2, type, localHash);
           }
         }
-        calculateHashedContent(data2, key) {
-          const hasher = crypto4.createHash("sha256").update(data2);
+        calculateHashedContent(data, key) {
+          const hasher = crypto3.createHash("sha256").update(data);
           if (key) hasher.update(key);
           return hasher.digest("hex");
         }
-        async encrypt(data2, key) {
-          const iv = crypto4.randomBytes(12);
+        async encrypt(data, key) {
+          const iv = crypto3.randomBytes(12);
           const keyBuffer = Buffer.from(key, "hex");
-          const cipher = crypto4.createCipheriv("aes-256-gcm", keyBuffer, iv);
-          const encrypted = Buffer.concat([cipher.update(data2), cipher.final()]);
+          const cipher = crypto3.createCipheriv("aes-256-gcm", keyBuffer, iv);
+          const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
           const tag = cipher.getAuthTag();
           return Buffer.concat([iv, tag, encrypted]);
         }
-        async decrypt(data2, key) {
+        async decrypt(data, key) {
           try {
-            const iv = data2.slice(0, 12);
-            const tag = data2.slice(12, 28);
-            const encrypted = data2.slice(28);
+            const iv = data.slice(0, 12);
+            const tag = data.slice(12, 28);
+            const encrypted = data.slice(28);
             const keyBuffer = Buffer.from(key, "hex");
-            const decipher = crypto4.createDecipheriv("aes-256-gcm", keyBuffer, iv);
+            const decipher = crypto3.createDecipheriv("aes-256-gcm", keyBuffer, iv);
             decipher.setAuthTag(tag);
             return Buffer.concat([decipher.update(encrypted), decipher.final()]);
           } catch (e2) {
@@ -90673,10 +90073,10 @@ ${toHex(hashedRequest)}`;
           const key = this.config.publicEncryptionKey;
           if (!localData) {
             if (remoteHash) {
-              let data2 = await this.publicRemote.downloadFile(remotePath);
-              if (data2) {
-                if (key) data2 = await this.decrypt(data2, key);
-                await this.storage.savePublicUserFile(data2);
+              let data = await this.publicRemote.downloadFile(remotePath);
+              if (data) {
+                if (key) data = await this.decrypt(data, key);
+                await this.storage.savePublicUserFile(data);
               }
             }
           } else {
@@ -90687,7 +90087,7 @@ ${toHex(hashedRequest)}`;
             console.log(`[Sync] Uploading ${remotePath}`);
             let uploadData = localData;
             if (key) uploadData = await this.encrypt(localData, key);
-            await this.publicRemote.uploadFile(remotePath, uploadData);
+            await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
           }
         }
       };
@@ -90695,39 +90095,30 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Social.ts
-  var import_polyfills661, fs2, path2, SocialManager;
+  var import_polyfills659, SocialManager;
   var init_Social = __esm({
     "src/modules/Social.ts"() {
       "use strict";
-      import_polyfills661 = __toESM(require_polyfills());
-      fs2 = __toESM(__require("fs-extra"));
-      path2 = __toESM(require_path_browserify());
+      import_polyfills659 = __toESM(require_polyfills());
       SocialManager = class {
-        constructor(db2, localPath, sqliteProvider) {
-          this.db = db2;
+        constructor(db, localPath, sqliteProvider) {
+          this.db = db;
           this.localPath = localPath;
           this.sqliteProvider = sqliteProvider;
           this.sqliteInstance = null;
         }
-        async getDb(date, type) {
-          const isBrowser = typeof window !== "undefined";
-          const datePath = type === "followed" ? date : `${type}/${date}`;
-          const data = await this.db.storage.getDailyDb(date, type);
-          let db;
-          if (isBrowser) {
-            const initSqlJs = window.initSqlJs;
-            if (!this.sqliteInstance) {
-              this.sqliteInstance = await initSqlJs();
-            }
-            db = new this.sqliteInstance.Database(data || void 0);
-          } else {
-            const Database = eval("require")("better-sqlite3");
-            const dir = path2.join(this.localPath, type === "followed" ? "followed" : type);
-            await fs2.ensureDir(dir);
-            const dbPath = path2.join(dir, type === "followed" ? `${date}.db` : `${date}.db`);
-            db = new Database(dbPath);
+        async getDb(date2, type) {
+          const data = await this.db.storage.getDailyDb(date2, type);
+          console.log(`[Social] getDb: ${type}/${date2} (found locally: ${!!data})`);
+          const initSqlJs = globalThis.initSqlJs;
+          if (!initSqlJs) {
+            throw new Error("sql.js not found. Ensure it is loaded in the environment.");
           }
-          db.run(`
+          if (!this.sqliteInstance) {
+            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          }
+          const db = new this.sqliteInstance.Database(data || void 0);
+          db.exec(`
             CREATE TABLE IF NOT EXISTS posts (
                 id TEXT PRIMARY KEY,
                 content TEXT,
@@ -90738,59 +90129,69 @@ ${toHex(hashedRequest)}`;
                 parentUserId TEXT
             );
         `);
+          try {
+            db.exec("ALTER TABLE posts ADD COLUMN image TEXT;");
+          } catch (e2) {
+          }
+          try {
+            db.exec("ALTER TABLE posts ADD COLUMN parentId TEXT;");
+            db.exec("ALTER TABLE posts ADD COLUMN parentUserId TEXT;");
+          } catch (e2) {
+          }
           return db;
         }
         async post(content, isPublic = true, image, parentId, parentUserId) {
-          const date3 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type2 = isPublic ? "public" : "private";
-          const db2 = await this.getDb(date3, type2);
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
           const id = Math.random().toString(36).substring(7);
           const timestamp = Date.now();
           const userId = this.db.config.paths.userId;
+          console.log(`[Social] Creating post. Image size: ${image ? Math.round(image.length / 1024) : 0} KB`);
           const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId) VALUES (?, ?, ?, ?, ?, ?, ?)";
           const params = [id, content, timestamp, userId, image || null, parentId || null, parentUserId || null];
-          if (typeof db2.prepare === "function") {
-            db2.prepare(sql).run(...params);
-          } else {
-            db2.run(sql, params);
-          }
-          if (typeof window !== "undefined") {
-            await this.db.storage.saveDailyDb(date3, type2, db2.export());
-          }
-          if (db2.close) db2.close();
+          db.run(sql, params);
+          const binary = db.export();
+          await this.db.storage.saveDailyDb(date2, type, binary);
+          db.close();
         }
         async comment(parentId, parentUserId, content, image) {
           await this.post(content, true, image, parentId, parentUserId);
         }
         async updateProfile(name, bio, avatar) {
           const profile = { name, bio, avatar, updatedAt: Date.now() };
-          const data2 = new TextEncoder().encode(JSON.stringify(profile));
-          await this.db.storage.savePublicUserFile(data2);
+          const data = new TextEncoder().encode(JSON.stringify(profile));
+          await this.db.storage.savePublicUserFile(data);
         }
         async getProfile(userId) {
           if (!userId || userId === this.db.config.paths.userId) {
-            const data2 = await this.db.storage.getPublicUserFile();
-            return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
+            const data = await this.db.storage.getPublicUserFile();
+            return data ? JSON.parse(new TextDecoder().decode(data)) : null;
           }
           return null;
         }
-        async getPosts(date3, type2) {
-          const db2 = await this.getDb(date3, type2);
+        async getPosts(date2, type) {
+          const db = await this.getDb(date2, type);
           let posts = [];
-          if (typeof db2.prepare === "function") {
-            posts = db2.prepare("SELECT * FROM posts ORDER BY timestamp DESC").all();
-          } else {
-            const res = db2.exec("SELECT * FROM posts ORDER BY timestamp DESC");
-            if (res.length > 0) {
+          try {
+            const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
+            if (res && res.length > 0) {
               const columns = res[0].columns;
               posts = res[0].values.map((row) => {
                 const post = {};
                 columns.forEach((col, i2) => post[col] = row[i2]);
+                if (!post.userId && type === "followed") {
+                  post.userId = date2.split("/")[0];
+                }
                 return post;
               });
             }
+          } catch (e2) {
+            console.warn(`[Social] Query failed for ${type}/${date2}: ${e2.message}`);
+            posts = [];
           }
-          if (db2.close) db2.close();
+          db.close();
+          console.log(`[Social] Found ${posts.length} posts in ${type}/${date2}`);
           return posts;
         }
       };
@@ -90800,14 +90201,17 @@ ${toHex(hashedRequest)}`;
   // demo/web/src/App.tsx
   var require_App = __commonJS({
     "demo/web/src/App.tsx"() {
-      var import_polyfills662 = __toESM(require_polyfills());
+      var import_polyfills660 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
       init_Social();
+      var import_crypto = __toESM(require_crypto_browserify());
+      var import_buffer = __toESM(require_buffer());
       var App = () => {
+        console.log("Sovereign Social Demo starting...");
         const [config, setConfig] = (0, import_react.useState)({
-          region: "us-east-1",
+          region: "ap-southeast-1",
           endpoint: "",
           accessKeyId: "",
           secretAccessKey: "",
@@ -90820,33 +90224,125 @@ ${toHex(hashedRequest)}`;
         const [sov, setSov] = (0, import_react.useState)(null);
         const [social, setSocial] = (0, import_react.useState)(null);
         const [posts, setPosts] = (0, import_react.useState)([]);
+        const [following, setFollowing] = (0, import_react.useState)([]);
+        const [allUsers, setAllUsers] = (0, import_react.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react.useState)(null);
         const [newPost, setNewPost] = (0, import_react.useState)("");
         const [newImage, setNewPostImage] = (0, import_react.useState)(null);
         const [profile, setProfile] = (0, import_react.useState)(null);
         const [isEditingProfile, setIsEditingProfile] = (0, import_react.useState)(false);
         const [syncing, setSyncing] = (0, import_react.useState)(false);
+        const [savedAccounts, setSavedAccounts] = (0, import_react.useState)([]);
+        (0, import_react.useEffect)(() => {
+          const accounts = JSON.parse(localStorage.getItem("sov_saved_accounts") || "[]");
+          setSavedAccounts(accounts);
+          fetch("config.json").then((res) => res.json()).then((data) => {
+            setConfig((prev) => ({
+              ...prev,
+              endpoint: data.endpoint || prev.endpoint,
+              region: data.region || prev.region,
+              accessKeyId: data.accessKeyId || prev.accessKeyId,
+              secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
+              bucketName: data.bucketName || prev.bucketName
+            }));
+          }).catch(() => console.log("No pre-populated config found."));
+        }, []);
+        const encryptConfig = async (configData, pass) => {
+          const data = new TextEncoder().encode(JSON.stringify(configData));
+          const salt = new TextEncoder().encode(configData.userId);
+          const masterKeyBuffer = import_crypto.default.pbkdf2Sync(pass, salt, 1e3, 32, "sha256");
+          const iv = import_crypto.default.randomBytes(12);
+          const cipher = import_crypto.default.createCipheriv("aes-256-gcm", masterKeyBuffer, iv);
+          const encrypted = import_buffer.Buffer.concat([cipher.update(data), cipher.final()]);
+          const tag = cipher.getAuthTag();
+          return import_buffer.Buffer.concat([iv, tag, encrypted]).toString("base64");
+        };
+        const decryptConfig = async (encryptedBase64, pass, userId) => {
+          const data = import_buffer.Buffer.from(encryptedBase64, "base64");
+          const salt = new TextEncoder().encode(userId);
+          const masterKeyBuffer = import_crypto.default.pbkdf2Sync(pass, salt, 1e3, 32, "sha256");
+          const iv = data.slice(0, 12);
+          const tag = data.slice(12, 28);
+          const encrypted = data.slice(28);
+          const decipher = import_crypto.default.createDecipheriv("aes-256-gcm", masterKeyBuffer, iv);
+          decipher.setAuthTag(tag);
+          const decrypted = import_buffer.Buffer.concat([decipher.update(encrypted), decipher.final()]);
+          return JSON.parse(new TextDecoder().decode(decrypted));
+        };
         const login = async () => {
-          const s3Config = {
-            region: config.region,
-            endpoint: config.endpoint,
-            credentials: {
-              accessKeyId: config.accessKeyId,
-              secretAccessKey: config.secretAccessKey
-            },
-            bucketName: config.bucketName,
-            forcePathStyle: true
-          };
-          const instance = new SovereignS3nc({
-            s3: s3Config,
-            paths: { appId: config.appId, userId: config.userId, storeId: "main" },
-            password: config.password
-          });
-          await instance.init();
-          setSov(instance);
-          const sm = new SocialManager(instance, "");
-          setSocial(sm);
-          setProfile(await sm.getProfile());
-          setIsLoggedIn(true);
+          try {
+            const s3Config = {
+              region: config.region,
+              endpoint: config.endpoint,
+              credentials: {
+                accessKeyId: config.accessKeyId,
+                secretAccessKey: config.secretAccessKey
+              },
+              bucketName: config.bucketName,
+              forcePathStyle: true
+            };
+            const instance = new SovereignS3nc({
+              s3: s3Config,
+              paths: { appId: config.appId, userId: config.userId, storeId: "main" },
+              password: config.password
+            });
+            await instance.init();
+            const encrypted = await encryptConfig(config, config.password);
+            localStorage.setItem(`sov_acc_${config.userId}`, encrypted);
+            if (!savedAccounts.includes(config.userId)) {
+              const newAccs = [...savedAccounts, config.userId];
+              setSavedAccounts(newAccs);
+              localStorage.setItem("sov_saved_accounts", JSON.stringify(newAccs));
+            }
+            setSov(instance);
+            const sm = new SocialManager(instance, "");
+            setSocial(sm);
+            setProfile(await sm.getProfile());
+            setIsLoggedIn(true);
+            setTimeout(() => {
+              instance.sync().then(() => {
+                console.log("Initial sync complete");
+                loadPosts();
+              });
+            }, 100);
+          } catch (e2) {
+            console.error("[Login] Error:", e2);
+            alert("Initialization failed: " + e2.message);
+          }
+        };
+        const unlockAccount = async (userId) => {
+          const pass = prompt(`Enter password for ${userId}:`);
+          if (!pass) return;
+          try {
+            const encrypted = localStorage.getItem(`sov_acc_${userId}`);
+            if (!encrypted) return;
+            const decryptedConfig = await decryptConfig(encrypted, pass, userId);
+            decryptedConfig.password = pass;
+            setConfig(decryptedConfig);
+            const s3Config = {
+              region: decryptedConfig.region,
+              endpoint: decryptedConfig.endpoint,
+              credentials: {
+                accessKeyId: decryptedConfig.accessKeyId,
+                secretAccessKey: decryptedConfig.secretAccessKey
+              },
+              bucketName: decryptedConfig.bucketName,
+              forcePathStyle: true
+            };
+            const instance = new SovereignS3nc({
+              s3: s3Config,
+              paths: { appId: decryptedConfig.appId, userId: decryptedConfig.userId, storeId: "main" },
+              password: pass
+            });
+            await instance.init();
+            setSov(instance);
+            const sm = new SocialManager(instance, "");
+            setSocial(sm);
+            setProfile(await sm.getProfile());
+            setIsLoggedIn(true);
+          } catch (e2) {
+            alert("Invalid password or corrupted data");
+          }
         };
         const compressImage = async (file) => {
           return new Promise((resolve) => {
@@ -90875,10 +90371,12 @@ ${toHex(hashedRequest)}`;
                 ctx.drawImage(img, 0, 0, width, height);
                 let quality = 0.9;
                 let dataUrl = canvas.toDataURL("image/jpeg", quality);
+                console.log(`[Demo] Initial compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB`);
                 while (dataUrl.length * 0.75 > 102400 && quality > 0.1) {
                   quality -= 0.1;
                   dataUrl = canvas.toDataURL("image/jpeg", quality);
                 }
+                console.log(`[Demo] Final compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB at quality ${quality.toFixed(1)}`);
                 resolve(dataUrl);
               };
             };
@@ -90895,6 +90393,9 @@ ${toHex(hashedRequest)}`;
           await social.updateProfile(profile.name, profile.bio, profile.avatar);
           setIsEditingProfile(false);
         };
+        (0, import_react.useEffect)(() => {
+          if (isLoggedIn) loadPosts();
+        }, [isLoggedIn]);
         const handlePost = async () => {
           if (!social || !newPost) return;
           await social.post(newPost, true, newImage || void 0);
@@ -90908,8 +90409,64 @@ ${toHex(hashedRequest)}`;
           await social.comment(parent.id, parent.userId, content);
           await loadPosts();
         };
+        const sync = async () => {
+          if (!sov) return;
+          setSyncing(true);
+          try {
+            await sov.sync();
+            setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
+            await loadPosts();
+          } finally {
+            setSyncing(false);
+          }
+        };
+        const handleFollow = async () => {
+          const id = prompt("Enter User ID to follow (exactly as it appears in their registry):");
+          if (!id || !sov) return;
+          try {
+            await sov.follow(id);
+            alert(`Now following ${id}. Please click Sync to pull their latest data.`);
+            await loadPosts();
+          } catch (e2) {
+            alert(`Error: ${e2.message}`);
+          }
+        };
+        const loadPosts = async () => {
+          if (!social || !sov) return;
+          console.log("[Demo] Refreshing feed...");
+          const registry = await sov.getPublicRegistry();
+          setAllUsers(registry);
+          const dates = [];
+          for (let i2 = 0; i2 < 7; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(SovereignS3nc.getDateStr(d2));
+          }
+          let allPosts = [];
+          for (const date2 of dates) {
+            const myDayPosts = await social.getPosts(date2, "public");
+            allPosts = [...allPosts, ...myDayPosts];
+          }
+          const followingList = await sov.getFollowing();
+          setFollowing(followingList);
+          for (const user of followingList) {
+            for (const date2 of dates) {
+              const userPosts = await social.getPosts(`${user.userId}/${date2}`, "followed");
+              allPosts = [...allPosts, ...userPosts];
+            }
+          }
+          allPosts.sort((a2, b2) => b2.timestamp - a2.timestamp);
+          console.log(`[Demo] Total feed items: ${allPosts.length}`);
+          setPosts(allPosts);
+        };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "SovereignS3nc Login"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100", onClick: login }, "Enter Workspace")));
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "SovereignS3nc Login"), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-2 mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "Region", value: config.region, onChange: (e2) => setConfig({ ...config, region: e2.target.value }) }))), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: login }, "Enter Workspace"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger btn-sm w-100", onClick: () => {
+            if (confirm("Clear all local data?")) {
+              indexedDB.deleteDatabase("sovereign_s3nc");
+              localStorage.clear();
+              window.location.reload();
+            }
+          } }, "Reset Local Database & Accounts"), savedAccounts.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-4" }, /* @__PURE__ */ import_react.default.createElement("h6", null, "Saved Accounts"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, savedAccounts.map((acc) => /* @__PURE__ */ import_react.default.createElement("button", { key: acc, className: "list-group-item list-group-item-action d-flex justify-content-between align-items-center", onClick: () => unlockAccount(acc) }, acc, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-primary rounded-pill" }, "Unlock")))))));
         }
         return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-3 sidebar p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar && /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, className: "profile-img mb-2" }), /* @__PURE__ */ import_react.default.createElement("h4", null, profile?.name || config.userId), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-link", onClick: () => setIsEditingProfile(true) }, "Edit Profile")), isEditingProfile && /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-3 border-primary" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Display Name", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "Bio", value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control mb-2", onChange: async (e2) => {
           const file = e2.target.files?.[0];
@@ -90917,7 +90474,10 @@ ${toHex(hashedRequest)}`;
             const compressed = await compressImage(file);
             setProfile({ ...profile, avatar: compressed });
           }
-        } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm", onClick: saveProfile }, "Save")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100 mb-3", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : "Sync Everything"), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Following"), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small" }, "Automatic discovery via global registry.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }), newImage && /* @__PURE__ */ import_react.default.createElement("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", onClick: handlePost }, "Post"))), posts.map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: "card post-card p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary" }, p2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 text-muted small" }, new Date(p2.timestamp).toLocaleString())), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, p2.content), p2.image && /* @__PURE__ */ import_react.default.createElement("img", { src: p2.image, className: "img-fluid rounded mb-2" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light", onClick: () => handleComment(p2) }, "Reply")))))));
+        } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm", onClick: saveProfile }, "Save")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100 mb-2", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : "Sync Everything"), lastSyncTime && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center small text-success mb-2" }, "Last Sync: ", lastSyncTime), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-info w-100 mb-2", onClick: loadPosts }, "Refresh Feed"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-outline-warning w-100 mb-3", onClick: () => sov?.testPermissions() }, "Test Permissions"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-3", onClick: handleFollow }, "Follow User"), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Following (", following.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, following.map((f2) => /* @__PURE__ */ import_react.default.createElement("div", { key: f2.userId, className: "list-group-item bg-transparent px-0 border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, f2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, "Last sync: ", f2.lastSync))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small" }, "No users followed yet.")), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Global Registry (", allUsers.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, allUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: "list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small" }, u2.userId), !following.find((f2) => f2.userId === u2.userId) && u2.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-link p-0", onClick: async () => {
+          await sov.follow(u2.userId);
+          loadPosts();
+        } }, "Follow")))), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small border-top pt-2" }, "Zero Knowledge Sync Active")), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }), newImage && /* @__PURE__ */ import_react.default.createElement("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", onClick: handlePost }, "Post"))), posts.map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: "card post-card p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary" }, p2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 text-muted small" }, new Date(p2.timestamp).toLocaleString())), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, p2.content), p2.image && /* @__PURE__ */ import_react.default.createElement("img", { src: p2.image, className: "img-fluid rounded mb-2" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light", onClick: () => handleComment(p2) }, "Reply")))))));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
       root.render(/* @__PURE__ */ import_react.default.createElement(App, null));

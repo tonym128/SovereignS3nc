@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { SocialManager, Post } from '../../../src/modules/Social';
+import crypto from 'crypto';
+import { Buffer } from 'buffer';
 
 const App = () => {
+    console.log('Sovereign Social Demo starting...');
     const [config, setConfig] = useState({
-        region: 'us-east-1',
+        region: 'ap-southeast-1',
         endpoint: '',
         accessKeyId: '',
         secretAccessKey: '',
@@ -19,36 +22,145 @@ const App = () => {
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [social, setSocial] = useState<SocialManager | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
+    const [following, setFollowing] = useState<any[]>([]);
+    const [allUsers, setAllUsers] = useState<any[]>([]);
+    const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
     const [newPost, setNewPost] = useState('');
     const [newImage, setNewPostImage] = useState<string | null>(null);
     const [profile, setProfile] = useState<any>(null);
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [syncing, setSyncing] = useState(false);
+    const [savedAccounts, setSavedAccounts] = useState<string[]>([]);
+
+    useEffect(() => {
+        const accounts = JSON.parse(localStorage.getItem('sov_saved_accounts') || '[]');
+        setSavedAccounts(accounts);
+
+        // Load config.json if available
+        fetch('config.json')
+            .then(res => res.json())
+            .then(data => {
+                setConfig(prev => ({
+                    ...prev,
+                    endpoint: data.endpoint || prev.endpoint,
+                    region: data.region || prev.region,
+                    accessKeyId: data.accessKeyId || prev.accessKeyId,
+                    secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
+                    bucketName: data.bucketName || prev.bucketName
+                }));
+            })
+            .catch(() => console.log('No pre-populated config found.'));
+    }, []);
+
+    const encryptConfig = async (configData: any, pass: string) => {
+        const data = new TextEncoder().encode(JSON.stringify(configData));
+        const salt = new TextEncoder().encode(configData.userId);
+        const masterKeyBuffer = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha256');
+        
+        const iv = crypto.randomBytes(12);
+        const cipher = crypto.createCipheriv('aes-256-gcm', masterKeyBuffer, iv);
+        const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
+        const tag = cipher.getAuthTag();
+        return Buffer.concat([iv, tag, encrypted]).toString('base64');
+    };
+
+    const decryptConfig = async (encryptedBase64: string, pass: string, userId: string) => {
+        const data = Buffer.from(encryptedBase64, 'base64');
+        const salt = new TextEncoder().encode(userId);
+        const masterKeyBuffer = crypto.pbkdf2Sync(pass, salt, 1000, 32, 'sha256');
+
+        const iv = data.slice(0, 12);
+        const tag = data.slice(12, 28);
+        const encrypted = data.slice(28);
+        const decipher = crypto.createDecipheriv('aes-256-gcm', masterKeyBuffer, iv);
+        decipher.setAuthTag(tag);
+        const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+        return JSON.parse(new TextDecoder().decode(decrypted));
+    };
 
     const login = async () => {
-        const s3Config = {
-            region: config.region,
-            endpoint: config.endpoint,
-            credentials: {
-                accessKeyId: config.accessKeyId,
-                secretAccessKey: config.secretAccessKey
-            },
-            bucketName: config.bucketName,
-            forcePathStyle: true
-        };
+        try {
+            const s3Config = {
+                region: config.region,
+                endpoint: config.endpoint,
+                credentials: {
+                    accessKeyId: config.accessKeyId,
+                    secretAccessKey: config.secretAccessKey
+                },
+                bucketName: config.bucketName,
+                forcePathStyle: true
+            };
 
-        const instance = new SovereignS3nc({
-            s3: s3Config,
-            paths: { appId: config.appId, userId: config.userId, storeId: 'main' },
-            password: config.password
-        });
+            const instance = new SovereignS3nc({
+                s3: s3Config,
+                paths: { appId: config.appId, userId: config.userId, storeId: 'main' },
+                password: config.password
+            });
 
-        await instance.init();
-        setSov(instance);
-        const sm = new SocialManager(instance, '');
-        setSocial(sm);
-        setProfile(await sm.getProfile());
-        setIsLoggedIn(true);
+            await instance.init();
+            
+            // Remember Account
+            const encrypted = await encryptConfig(config, config.password);
+            localStorage.setItem(`sov_acc_${config.userId}`, encrypted);
+            if (!savedAccounts.includes(config.userId)) {
+                const newAccs = [...savedAccounts, config.userId];
+                setSavedAccounts(newAccs);
+                localStorage.setItem('sov_saved_accounts', JSON.stringify(newAccs));
+            }
+
+            setSov(instance);
+            const sm = new SocialManager(instance, '');
+            setSocial(sm);
+            setProfile(await sm.getProfile());
+            setIsLoggedIn(true);
+            
+            // Trigger initial sync for discovery
+            setTimeout(() => {
+                instance.sync().then(() => {
+                    console.log('Initial sync complete');
+                    loadPosts();
+                });
+            }, 100);
+        } catch (e: any) {
+            console.error('[Login] Error:', e);
+            alert('Initialization failed: ' + e.message);
+        }
+    };
+
+    const unlockAccount = async (userId: string) => {
+        const pass = prompt(`Enter password for ${userId}:`);
+        if (!pass) return;
+        try {
+            const encrypted = localStorage.getItem(`sov_acc_${userId}`);
+            if (!encrypted) return;
+            const decryptedConfig = await decryptConfig(encrypted, pass, userId);
+            decryptedConfig.password = pass; // Restore password for instance init
+            setConfig(decryptedConfig);
+            // Auto-login with decrypted config
+            const s3Config = {
+                region: decryptedConfig.region,
+                endpoint: decryptedConfig.endpoint,
+                credentials: {
+                    accessKeyId: decryptedConfig.accessKeyId,
+                    secretAccessKey: decryptedConfig.secretAccessKey
+                },
+                bucketName: decryptedConfig.bucketName,
+                forcePathStyle: true
+            };
+            const instance = new SovereignS3nc({
+                s3: s3Config,
+                paths: { appId: decryptedConfig.appId, userId: decryptedConfig.userId, storeId: 'main' },
+                password: pass
+            });
+            await instance.init();
+            setSov(instance);
+            const sm = new SocialManager(instance, '');
+            setSocial(sm);
+            setProfile(await sm.getProfile());
+            setIsLoggedIn(true);
+        } catch (e) {
+            alert('Invalid password or corrupted data');
+        }
     };
 
     const compressImage = async (file: File): Promise<string> => {
@@ -84,12 +196,15 @@ const App = () => {
                     let quality = 0.9;
                     let dataUrl = canvas.toDataURL('image/jpeg', quality);
                     
+                    console.log(`[Demo] Initial compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB`);
+
                     // Rough check: base64 string length * 0.75 = approximate byte size
                     while (dataUrl.length * 0.75 > 102400 && quality > 0.1) {
                         quality -= 0.1;
                         dataUrl = canvas.toDataURL('image/jpeg', quality);
                     }
                     
+                    console.log(`[Demo] Final compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB at quality ${quality.toFixed(1)}`);
                     resolve(dataUrl);
                 };
             };
@@ -109,6 +224,10 @@ const App = () => {
         setIsEditingProfile(false);
     };
 
+    useEffect(() => {
+        if (isLoggedIn) loadPosts();
+    }, [isLoggedIn]);
+
     const handlePost = async () => {
         if (!social || !newPost) return;
         await social.post(newPost, true, newImage || undefined);
@@ -124,19 +243,112 @@ const App = () => {
         await loadPosts();
     };
 
+    const sync = async () => {
+        if (!sov) return;
+        setSyncing(true);
+        try {
+            await sov.sync();
+            setLastSyncTime(new Date().toLocaleTimeString());
+            await loadPosts();
+        } finally {
+            setSyncing(false);
+        }
+    };
+
+    const handleFollow = async () => {
+        const id = prompt('Enter User ID to follow (exactly as it appears in their registry):');
+        if (!id || !sov) return;
+        try {
+            await sov.follow(id);
+            alert(`Now following ${id}. Please click Sync to pull their latest data.`);
+            await loadPosts();
+        } catch (e: any) {
+            alert(`Error: ${e.message}`);
+        }
+    };
+
+    const loadPosts = async () => {
+        if (!social || !sov) return;
+        console.log('[Demo] Refreshing feed...');
+        
+        // 1. Get registry for sidebar
+        const registry = await sov.getPublicRegistry();
+        setAllUsers(registry);
+
+        // 2. Generate dates for last 7 days
+        const dates: string[] = [];
+        for (let i = 0; i < 7; i++) {
+            const d = new Date();
+            d.setUTCDate(d.getUTCDate() - i);
+            dates.push(SovereignS3nc.getDateStr(d));
+        }
+
+        let allPosts: Post[] = [];
+
+        // 3. Get my own posts
+        for (const date of dates) {
+            const myDayPosts = await social.getPosts(date, 'public');
+            allPosts = [...allPosts, ...myDayPosts];
+        }
+        
+        // 4. Get following list and their posts
+        const followingList = await sov.getFollowing();
+        setFollowing(followingList);
+
+        for (const user of followingList) {
+            for (const date of dates) {
+                const userPosts = await social.getPosts(`${user.userId}/${date}`, 'followed');
+                allPosts = [...allPosts, ...userPosts];
+            }
+        }
+
+        // 5. Sort by timestamp descending
+        allPosts.sort((a, b) => b.timestamp - a.timestamp);
+        console.log(`[Demo] Total feed items: ${allPosts.length}`);
+        setPosts(allPosts);
+    };
+
     if (!isLoggedIn) {
         return (
             <div className="container mt-5" style={{maxWidth: '500px'}}>
                 <div className="card p-4">
                     <h3>SovereignS3nc Login</h3>
-                    <input className="form-control mb-2" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                    <div className="row g-2 mb-2">
+                        <div className="col-8">
+                            <input className="form-control" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                        </div>
+                        <div className="col-4">
+                            <input className="form-control" placeholder="Region" value={config.region} onChange={e => setConfig({...config, region: e.target.value})} />
+                        </div>
+                    </div>
                     <input className="form-control mb-2" placeholder="Access Key" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
                     <input className="form-control mb-2" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
                     <input className="form-control mb-2" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
                     <hr/>
                     <input className="form-control mb-2" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
                     <input className="form-control mb-2" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
-                    <button className="btn btn-primary w-100" onClick={login}>Enter Workspace</button>
+                    <button className="btn btn-primary w-100 mb-2" onClick={login}>Enter Workspace</button>
+                    <button className="btn btn-outline-danger btn-sm w-100" onClick={() => {
+                        if(confirm('Clear all local data?')) {
+                            indexedDB.deleteDatabase('sovereign_s3nc');
+                            localStorage.clear();
+                            window.location.reload();
+                        }
+                    }}>Reset Local Database & Accounts</button>
+
+                    {savedAccounts.length > 0 && (
+                        <div className="mt-4">
+                            <h6>Saved Accounts</h6>
+                            <div className="list-group">
+                                {savedAccounts.map(acc => (
+                                    <button key={acc} className="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onClick={() => unlockAccount(acc)}>
+                                        {acc}
+                                        <span className="badge bg-primary rounded-pill">Unlock</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -167,12 +379,47 @@ const App = () => {
                         </div>
                     )}
 
-                    <button className="btn btn-outline-primary w-100 mb-3" onClick={sync} disabled={syncing}>
+                    <button className="btn btn-outline-primary w-100 mb-2" onClick={sync} disabled={syncing}>
                         {syncing ? 'Syncing...' : 'Sync Everything'}
                     </button>
+                    {lastSyncTime && <div className="text-center small text-success mb-2">Last Sync: {lastSyncTime}</div>}
+                    <button className="btn btn-sm btn-outline-info w-100 mb-2" onClick={loadPosts}>
+                        Refresh Feed
+                    </button>
+                    <button className="btn btn-xs btn-outline-warning w-100 mb-3" onClick={() => sov?.testPermissions()}>
+                        Test Permissions
+                    </button>
+                    <button className="btn btn-outline-secondary w-100 mb-3" onClick={handleFollow}>
+                        Follow User
+                    </button>
                     <hr/>
-                    <h6>Following</h6>
-                    <p className="text-muted small">Automatic discovery via global registry.</p>
+                    <h6>Following ({following.length})</h6>
+                    <div className="list-group list-group-flush mb-3" style={{maxHeight: '200px', overflowY: 'auto'}}>
+                        {following.map(f => (
+                            <div key={f.userId} className="list-group-item bg-transparent px-0 border-0">
+                                <div className="fw-bold small">{f.userId}</div>
+                                <div className="text-muted" style={{fontSize: '0.7rem'}}>Last sync: {f.lastSync}</div>
+                            </div>
+                        ))}
+                        {following.length === 0 && <p className="text-muted small">No users followed yet.</p>}
+                    </div>
+
+                    <hr/>
+                    <h6>Global Registry ({allUsers.length})</h6>
+                    <div className="list-group list-group-flush mb-3" style={{maxHeight: '200px', overflowY: 'auto'}}>
+                        {allUsers.map(u => (
+                            <div key={u.userId} className="list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center">
+                                <span className="small">{u.userId}</span>
+                                {!following.find(f => f.userId === u.userId) && u.userId !== config.userId && (
+                                    <button className="btn btn-xs btn-link p-0" onClick={async () => {
+                                        await sov.follow(u.userId);
+                                        loadPosts();
+                                    }}>Follow</button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-muted small border-top pt-2">Zero Knowledge Sync Active</p>
                 </div>
                 <div className="col-md-6 p-4">
                     <div className="card p-3 mb-4">

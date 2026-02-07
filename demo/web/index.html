@@ -13,8 +13,21 @@
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div class="container mt-5 text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Initializing Sovereign Social...</p>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script>
+        // Pre-configure SQL.js wasm location
+        window.SQL_CONFIG = {
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        };
+    </script>
     <script src="bundle.js"></script>
 </body>
 </html>

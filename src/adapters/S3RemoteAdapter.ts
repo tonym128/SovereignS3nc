@@ -11,18 +11,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     this.client = new S3Client({
       region: config.region,
-      endpoint: config.endpoint,
+      endpoint: config.endpoint || undefined,
       credentials: config.credentials,
-      forcePathStyle: config.forcePathStyle
+      forcePathStyle: true, // Always use path style to avoid ListBucket calls for bucket resolution
+      apiVersion: '2006-03-01'
     });
     this.bucket = config.bucketName;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
   }
 
-  async uploadFile(path: string, data: Uint8Array): Promise<void> {
+  async uploadFile(path: string, data: Uint8Array, providedHash?: string): Promise<void> {
     const key = this.getKey(path);
     console.log(`[S3] Uploading to key: ${key}`);
-    const hash = crypto.createHash('sha256').update(data).digest('hex');
+    const hash = providedHash || crypto.createHash('sha256').update(data).digest('hex');
     
     await this.client.send(new PutObjectCommand({
       Bucket: this.bucket,
@@ -36,7 +37,6 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async downloadFile(path: string): Promise<Uint8Array | null> {
     const key = this.getKey(path);
-    console.log(`[S3] Downloading key: ${key}`);
     try {
         const response = await this.client.send(new GetObjectCommand({
             Bucket: this.bucket,
@@ -45,7 +45,15 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         if (!response.Body) return null;
         return await response.Body.transformToByteArray();
     } catch (e: any) {
-        if (e.name === 'NoSuchKey' || e.$metadata?.httpStatusCode === 404) return null;
+        const statusCode = e.$metadata?.httpStatusCode;
+        
+        if (statusCode === 403) {
+            console.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
+            return null;
+        }
+        if (e.name === 'NoSuchKey' || statusCode === 404) {
+            return null;
+        }
         throw e;
     }
   }
@@ -57,9 +65,14 @@ export class S3RemoteAdapter implements IRemoteAdapter {
              Bucket: this.bucket,
              Key: key
          }));
-         return response.Metadata?.hash || null;
+         const hash = response.Metadata?.hash || null;
+         if (!hash) console.warn(`[S3] File ${key} exists but is missing 'hash' metadata. Check CORS 'ExposeHeaders'.`);
+         return hash;
      } catch (e: any) {
-         if (e.name === 'NoSuchKey' || e.$metadata?.httpStatusCode === 404) return null;
+         const statusCode = e.$metadata?.httpStatusCode;
+         if (statusCode === 403 || e.name === 'NoSuchKey' || statusCode === 404) {
+             return null;
+         }
          throw e;
      }
   }

@@ -1,19 +1,20 @@
 import { SovereignConfig } from './types';
 import { IStorage } from './interfaces/IStorage';
-import { FilesystemStorage } from './adapters/FilesystemStorage';
-import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
+import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import * as crypto from 'crypto';
 import * as path from 'path';
 
 export class SovereignS3nc {
+    public static readonly VERSION = '1.1.0';
     private storage: IStorage;
     private remote: IRemoteAdapter; // Private Remote
     private publicRemote: IRemoteAdapter;
     private globalRemote: IRemoteAdapter;
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
+    private isSyncing: boolean = false;
 
     constructor(
         config: SovereignConfig, 
@@ -30,17 +31,15 @@ export class SovereignS3nc {
         }
 
         // Auto-detect environment for storage
-        const isBrowser = typeof window !== 'undefined' && typeof window.indexedDB !== 'undefined';
+        const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';
         if (isBrowser) {
-            this.storage = new IndexedDBStorage();
+            const dbName = `sov_${config.paths.appId}_${config.paths.userId}`;
+            this.storage = new IndexedDBStorage(dbName);
         } else {
-            // We use a dynamic require or avoid direct reference to keep bundlers happy
-            const { FilesystemStorage: FSStorage } = require('./adapters/FilesystemStorage');
-            const localPath = config.localPersistencePath || './data';
-            this.storage = new FSStorage(localPath);
+            throw new Error('IndexedDBStorage requested but not in a browser environment.');
         }
         
-        // Initialize Remotes (Placeholder, will be finalized in initKeys)
+        // Initialize Remotes
         if (remote) {
             this.remote = remote;
             this.publicRemote = remote;
@@ -53,25 +52,35 @@ export class SovereignS3nc {
                 storeId: config.paths.storeId
             });
 
-            // Private Remote - placeholder until initKeys derives the private GUID
-            this.remote = this.publicRemote; 
-
-            // Global Remote
+            // Global Remote - Simplified path
             this.globalRemote = new S3RemoteAdapter(config.s3, {
                 appId: config.paths.appId,
                 userId: 'global',
-                storeId: 'registry'
+                storeId: 'users'
             });
+
+            // Private Remote - Initialize with a dummy or same as public for now, 
+            // but it will be replaced in initKeys with the proper Private GUID.
+            this.remote = this.publicRemote;
         } else {
             throw new Error('S3 configuration required for this version');
         }
     }
 
     async init() {
+        console.log(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
         await this.storage.init();
         if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
+            console.log('[Sovereign] Initializing keys...');
             await this.initKeys();
         }
+        
+        // Ensure we are in the global registry even before the first sync
+        if (this.config.publicEncryptionKey) {
+            await this.ensureGlobalRegistration();
+        }
+
+        console.log('[Sovereign] Initialization complete.');
     }
 
     private async initKeys() {
@@ -120,6 +129,8 @@ export class SovereignS3nc {
                 } catch (e: any) {
                     throw new Error(`Failed to decrypt remote keys: ${e.message}. Incorrect password?`);
                 }
+            } else {
+                console.log('[Keys] No remote keys found.');
             }
         }
 
@@ -140,50 +151,59 @@ export class SovereignS3nc {
     }
 
     async sync() {
-        // 1. Sync My Data (Private & Public)
-        const lastSync = await this.storage.getLastSyncDate();
-        const today = this.getDateStr(new Date()); // Now UTC
-        
-        let currentDate: Date;
-        if (lastSync) {
-            currentDate = new Date(lastSync);
-        } else {
-            currentDate = new Date();
+        if (this.isSyncing) {
+            console.log('[Sovereign] Sync already in progress, skipping...');
+            return;
         }
+        this.isSyncing = true;
+        try {
+            // 1. Sync My Data (Private & Public)
+            const lastSync = await this.storage.getLastSyncDate();
+            const today = SovereignS3nc.getDateStr(new Date()); // Now UTC
+            
+            let currentDate: Date;
+            if (lastSync) {
+                currentDate = new Date(lastSync);
+            } else {
+                currentDate = new Date();
+            }
 
-        const end = new Date();
-        // Normalize to UTC midnight
-        currentDate.setUTCHours(0, 0, 0, 0);
-        end.setUTCHours(0, 0, 0, 0);
-        
-        const syncDates = new Set<string>();
-        syncDates.add(today);
+            const end = new Date();
+            // Normalize to UTC midnight
+            currentDate.setUTCHours(0, 0, 0, 0);
+            end.setUTCHours(0, 0, 0, 0);
+            
+            const syncDates = new Set<string>();
+            syncDates.add(today);
 
-        // We use a temp date for iteration
-        let iterDate = new Date(currentDate);
-        while (iterDate <= end) {
-            syncDates.add(this.getDateStr(iterDate));
-            iterDate.setUTCDate(iterDate.getUTCDate() + 1);
+            // We use a temp date for iteration
+            let iterDate = new Date(currentDate);
+            while (iterDate <= end) {
+                syncDates.add(SovereignS3nc.getDateStr(iterDate));
+                iterDate.setUTCDate(iterDate.getUTCDate() + 1);
+            }
+            
+            const sortedDates = Array.from(syncDates).sort();
+            for (const dateStr of sortedDates) {
+                // Private data goes to PRIVATE remote (this.remote)
+                await this.syncDay(dateStr, 'private', undefined, this.remote);
+                // Public data goes to PUBLIC remote
+                await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
+            }
+            
+            await this.syncUserFile();
+
+            // 2. Global Discovery & Auto-Follow
+            await this.ensureGlobalRegistration();
+            await this.discoverAndFollowUsers(today);
+
+            // 3. Sync Followed Users (Per-User Logic)
+            await this.syncFollowedUsers(today);
+
+            await this.storage.setLastSyncDate(today);
+        } finally {
+            this.isSyncing = false;
         }
-        
-        const sortedDates = Array.from(syncDates).sort();
-        for (const dateStr of sortedDates) {
-            // Private data goes to PRIVATE remote (this.remote)
-            await this.syncDay(dateStr, 'private', undefined, this.remote);
-            // Public data goes to PUBLIC remote
-            await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
-        }
-        
-        await this.syncUserFile();
-
-        // 2. Global Discovery & Auto-Follow
-        await this.ensureGlobalRegistration();
-        await this.discoverAndFollowUsers(today);
-
-        // 3. Sync Followed Users (Per-User Logic)
-        await this.syncFollowedUsers(today);
-
-        await this.storage.setLastSyncDate(today);
     }
 
     private async ensureGlobalRegistration() {
@@ -197,7 +217,7 @@ export class SovereignS3nc {
         
         if (remoteData) {
             try {
-                userList = JSON.parse(remoteData.toString());
+                userList = JSON.parse(new TextDecoder().decode(remoteData));
             } catch (e) {
                 console.warn('[Sync] Global user registry corrupted. Resetting.');
                 userList = [];
@@ -223,16 +243,48 @@ export class SovereignS3nc {
         const remotePath = 'users.json';
         const remoteData = await this.globalRemote.downloadFile(remotePath);
         if (remoteData) {
-            const userList: { userId: string, publicKey: string }[] = JSON.parse(remoteData.toString());
+            const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(remoteData));
             const user = userList.find(u => u.userId === userId);
             if (user) {
                 const startDate = new Date();
                 startDate.setUTCDate(startDate.getUTCDate() - 7);
-                await this.storage.followUser(userId, this.getDateStr(startDate), user.publicKey);
+                await this.storage.followUser(userId, SovereignS3nc.getDateStr(startDate), user.publicKey);
                 return;
             }
         }
         throw new Error('User not found in registry');
+    }
+
+    async getFollowing() {
+        return this.storage.getFollowing();
+    }
+
+    async testPermissions() {
+        console.log('[Sovereign] Testing permissions for other user paths...');
+        const registry = await this.getPublicRegistry();
+        for (const user of registry) {
+            if (user.userId === this.config.paths.userId) continue;
+            const remote = this.createRemote(user.userId);
+            const path = 'public/user.json';
+            try {
+                const hash = await remote.getFileHash(path);
+                console.log(`[Sovereign] Success reading ${user.userId}: Hash=${hash}`);
+            } catch (e: any) {
+                console.error(`[Sovereign] Permission denied for ${user.userId}: ${e.message}`);
+            }
+        }
+    }
+
+    async getPublicRegistry(): Promise<{userId: string, publicKey: string}[]> {
+        console.log('[Sovereign] Fetching public registry...');
+        const remotePath = 'users.json';
+        const remoteData = await this.globalRemote.downloadFile(remotePath);
+        if (!remoteData) return [];
+        try {
+            return JSON.parse(new TextDecoder().decode(remoteData));
+        } catch (e) {
+            return [];
+        }
     }
 
     private async discoverAndFollowUsers(today: string) {
@@ -241,7 +293,7 @@ export class SovereignS3nc {
         if (!remoteData) return;
 
         try {
-            const userList: { userId: string, publicKey: string }[] = JSON.parse(remoteData.toString());
+            const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(remoteData));
             const following = await this.storage.getFollowing();
             const followingIds = following.map(u => u.userId);
 
@@ -250,7 +302,7 @@ export class SovereignS3nc {
                     // New user discovered! Set lastSync to 7 days ago
                     const startDate = new Date();
                     startDate.setUTCDate(startDate.getUTCDate() - 7);
-                    const lastSyncStr = this.getDateStr(startDate);
+                    const lastSyncStr = SovereignS3nc.getDateStr(startDate);
                     
                     console.log(`[Sync] Discovered new user ${user.userId}, starting from ${lastSyncStr}`);
                     await this.storage.followUser(user.userId, lastSyncStr, user.publicKey);
@@ -272,7 +324,7 @@ export class SovereignS3nc {
             endDate.setUTCHours(0, 0, 0, 0);
 
             while (iter <= endDate) {
-                const dateStr = this.getDateStr(iter);
+                const dateStr = SovereignS3nc.getDateStr(iter);
                 await this.pullUserDay(user.userId, dateStr, user.publicKey);
                 iter.setUTCDate(iter.getUTCDate() + 1);
             }
@@ -305,16 +357,20 @@ export class SovereignS3nc {
         const remoteHash = await userRemote.getFileHash(filePath);
         
         if (remoteHash) {
+             console.log(`[Sync] Remote hash for ${userId}/${date}: ${remoteHash}`);
              // Check if we have this locally in the followed folder
              const localData = await this.storage.getDailyDb(`${userId}/${date}`, 'followed' as any);
              
              if (localData) {
                  const localHashedWithKey = this.calculateHashedContent(localData, publicKey);
+                 console.log(`[Sync] Local hash for ${userId}/${date}: ${localHashedWithKey}`);
                  if (localHashedWithKey === remoteHash) {
+                     console.log(`[Sync] Skipping download for ${userId}/${date}, hashes match.`);
                      return; // Already have the latest version
                  }
              }
 
+             console.log(`[Sync] Hashes mismatch or missing local. Downloading ${userId}/${date}...`);
              let data = await userRemote.downloadFile(filePath);
              if (data) {
                  try {
@@ -328,7 +384,7 @@ export class SovereignS3nc {
         }
     }
 
-    private getDateStr(date: Date): string {
+    public static getDateStr(date: Date): string {
         const year = date.getUTCFullYear();
         const month = String(date.getUTCMonth() + 1).padStart(2, '0');
         const day = String(date.getUTCDate()).padStart(2, '0');
@@ -372,7 +428,7 @@ export class SovereignS3nc {
             if (currentKey) {
                 uploadData = await this.encrypt(localData, currentKey);
             }
-            await activeRemote.uploadFile(remotePath, uploadData);
+            await activeRemote.uploadFile(remotePath, uploadData, localHash);
             await this.storage.setRemoteHashCache(date, type, localHash);
         }
     }
@@ -428,7 +484,7 @@ export class SovereignS3nc {
             console.log(`[Sync] Uploading ${remotePath}`);
             let uploadData = localData;
             if (key) uploadData = await this.encrypt(localData, key);
-            await this.publicRemote.uploadFile(remotePath, uploadData);
+            await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
         }
     }
 }
