@@ -1,8 +1,10 @@
+import * as nacl from 'tweetnacl';
 import { SovereignConfig } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from './adapters/IndexedDBStorage';
+import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
 import * as path from 'path';
 
@@ -14,6 +16,7 @@ export class SovereignS3nc {
     private globalRemote: IRemoteAdapter;
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
+    private registeredModules: string[] = ['social'];
     private isSyncing: boolean = false;
 
     constructor(
@@ -24,6 +27,10 @@ export class SovereignS3nc {
     ) {
         this.config = config;
         this.remoteFactory = remoteFactory;
+
+        // Initialize Logger
+        Logger.setLevel(config.debug ? LogLevel.DEBUG : LogLevel.WARN);
+        Logger.setPrefix(`[Sovereign:${config.paths.userId}]`);
         
         if (keys) {
             this.config.encryptionKey = keys.privateKey;
@@ -67,11 +74,40 @@ export class SovereignS3nc {
         }
     }
 
+    public getStorage(): IStorage {
+        return this.storage;
+    }
+
+    public getConfig(): SovereignConfig {
+        return this.config;
+    }
+
+    /**
+     * Helper to ensure modules use namespaced paths to avoid collisions with core files.
+     * returns a path like "public/modules/social/my-file.db"
+     */
+    public getModulePath(moduleName: string, subPath: string, type: 'private' | 'public' | 'followed'): string {
+        const cleanModule = moduleName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (type === 'followed') {
+            // Path is expected to be "userId/subPath"
+            const parts = subPath.split('/');
+            const userId = parts.shift();
+            return `followed/${userId}/modules/${cleanModule}/${parts.join('/')}`;
+        }
+        return `${type}/modules/${cleanModule}/${subPath}`;
+    }
+
+    public registerModule(name: string) {
+        if (!this.registeredModules.includes(name)) {
+            this.registeredModules.push(name);
+        }
+    }
+
     async init() {
-        console.log(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
+        Logger.info(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
         await this.storage.init();
         if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
-            console.log('[Sovereign] Initializing keys...');
+            Logger.info('[Sovereign] Initializing keys...');
             await this.initKeys();
         }
         
@@ -80,7 +116,7 @@ export class SovereignS3nc {
             await this.ensureGlobalRegistration();
         }
 
-        console.log('[Sovereign] Initialization complete.');
+        Logger.info('[Sovereign] Initialization complete.');
     }
 
     private async initKeys() {
@@ -88,7 +124,7 @@ export class SovereignS3nc {
         const publicUserId = this.config.paths.userId;
         const appId = this.config.paths.appId;
         
-        console.log('[Keys] Step 1: Deriving secrets from password...');
+        Logger.info('[Keys] Step 1: Deriving secrets from password...');
         // 1. Derive Deterministic Secrets from password
         // Master Key for encrypting the key-file
         let masterKey: string;
@@ -98,14 +134,14 @@ export class SovereignS3nc {
             masterKey = crypto.pbkdf2Sync(password, publicUserId + '-master', 1000, 32, 'sha256').toString('hex');
             privateId = crypto.pbkdf2Sync(password, publicUserId + '-private-id', 1000, 32, 'sha256').toString('hex');
         } catch (e: any) {
-            console.error('[Keys] PBKDF2 failed. This usually means crypto-browserify is not working correctly.');
+            Logger.error('[Keys] PBKDF2 failed. This usually means crypto-browserify is not working correctly.');
             throw new Error(`Secret derivation failed: ${e.message}`);
         }
         
-        console.log(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0,8)}...`);
+        Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0,8)}...`);
 
         // 2. Initialize the Private Remote with the secret GUID
-        console.log('[Keys] Step 2: Initializing Private Remote...');
+        Logger.info('[Keys] Step 2: Initializing Private Remote...');
         try {
             if (!this.remoteFactory && this.config.s3) {
                 this.remote = new S3RemoteAdapter(this.config.s3, {
@@ -117,65 +153,67 @@ export class SovereignS3nc {
                 this.remote = this.remoteFactory(privateId);
             }
         } catch (e: any) {
-            console.error('[Keys] Remote initialization failed:', e.message);
+            Logger.error('[Keys] Remote initialization failed:', e.message);
             throw e;
         }
 
         // 3. Try to load keys from local private storage
-        console.log('[Keys] Step 3: Checking local storage for keys...');
+        Logger.info('[Keys] Step 3: Checking local storage for keys...');
         let keyInfo: { privateKey: string, publicKey: string } | null = null;
         let localKeyData: Uint8Array | null = null;
         try {
             localKeyData = await this.storage.getDailyDb('_keys', 'private'); 
-            console.log(`[Keys] Local key data search complete. Found: ${!!localKeyData}`);
+            Logger.info(`[Keys] Local key data search complete. Found: ${!!localKeyData}`);
         } catch (e: any) {
-            console.error(`[Keys] Error reading local keys: ${e.message}`);
+            Logger.error(`[Keys] Error reading local keys: ${e.message}`);
         }
         
         if (localKeyData) {
-            console.log('[Keys] Decrypting local keys...');
+            Logger.info('[Keys] Decrypting local keys...');
             try {
                 const decrypted = await this.decrypt(localKeyData, masterKey);
                 keyInfo = JSON.parse(decrypted.toString());
-                console.log('[Keys] Local keys decrypted successfully.');
+                Logger.info('[Keys] Local keys decrypted successfully.');
             } catch (e: any) {
-                console.warn(`[Keys] Failed to decrypt local keys: ${e.message}`);
+                Logger.warn(`[Keys] Failed to decrypt local keys: ${e.message}`);
             }
         }
 
         // 4. If not found locally, try remote (at the Private GUID path)
         if (!keyInfo) {
-            console.log('[Keys] Step 4: Trying to download keys from remote...');
+            Logger.info('[Keys] Step 4: Trying to download keys from remote...');
             const result = await this.remote.downloadFile('_keys.json');
-            console.log(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
+            Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
             if (result && result.data) {
                 try {
-                    console.log('[Keys] Decrypting remote keys...');
+                    Logger.info('[Keys] Decrypting remote keys...');
                     const decrypted = await this.decrypt(result.data, masterKey);
                     keyInfo = JSON.parse(decrypted.toString());
                     await this.storage.saveDailyDb('_keys', 'private', result.data);
-                    console.log('[Keys] Remote keys decrypted and saved locally.');
+                    Logger.info('[Keys] Remote keys decrypted and saved locally.');
                 } catch (e: any) {
                     throw new Error(`Failed to decrypt remote keys: ${e.message}. Incorrect password?`);
                 }
             } else {
-                console.log('[Keys] No remote keys found.');
+                Logger.info('[Keys] No remote keys found.');
             }
         }
 
         // 5. Generate new keys if still not found
         if (!keyInfo) {
-            console.log('[Keys] Step 5: Generating new persistent key pair.');
-            const privateKey = crypto.randomBytes(32).toString('hex');
-            const publicKey = crypto.randomBytes(32).toString('hex');
-            keyInfo = { privateKey, publicKey };
+            Logger.info('[Keys] Step 5: Generating new persistent E2EE key pair.');
+            const pair = nacl.box.keyPair();
+            keyInfo = { 
+                privateKey: Buffer.from(pair.secretKey).toString('hex'), 
+                publicKey: Buffer.from(pair.publicKey).toString('hex') 
+            };
 
-            console.log('[Keys] Encrypting new keys for storage...');
+            Logger.info('[Keys] Encrypting new keys for storage...');
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb('_keys', 'private', encrypted);
-            console.log('[Keys] Uploading new keys to remote...');
+            Logger.info('[Keys] Uploading new keys to remote...');
             await this.remote.uploadFile('_keys.json', encrypted);
-            console.log('[Keys] New keys generated, saved and uploaded.');
+            Logger.info('[Keys] New keys generated, saved and uploaded.');
         }
 
         this.config.encryptionKey = keyInfo.privateKey;
@@ -184,7 +222,7 @@ export class SovereignS3nc {
 
     async sync() {
         if (this.isSyncing) {
-            console.log('[Sovereign] Sync already in progress, skipping...');
+            Logger.info('[Sovereign] Sync already in progress, skipping...');
             return;
         }
         this.isSyncing = true;
@@ -235,8 +273,10 @@ export class SovereignS3nc {
             // 4. Sync Blobs and other files
             await this.syncGenericFiles('public/blobs/');
             await this.syncGenericFiles('public/dms/');
+            await this.syncGenericFiles('public/modules/');
             await this.syncGenericFiles('private/blobs/');
             await this.syncGenericFiles('private/dms/');
+            await this.syncGenericFiles('private/modules/');
 
             await this.storage.setLastSyncDate(today);
         } finally {
@@ -285,7 +325,7 @@ export class SovereignS3nc {
             const expectedHash = path.split('/').pop();
             const actualHash = this.calculateHashedContent(data);
             if (expectedHash !== actualHash) {
-                console.warn(`[Blob] Hash mismatch for ${path}. Expected ${expectedHash}, got ${actualHash}`);
+                Logger.warn(`[Blob] Hash mismatch for ${path}. Expected ${expectedHash}, got ${actualHash}`);
             }
 
             await this.storage.saveFile(`followed/${userId}/${path}`, data);
@@ -313,7 +353,7 @@ export class SovereignS3nc {
                 const remoteHash = await activeRemote.getFileHash(filePath);
 
                 if (localHash !== remoteHash) {
-                    console.log(`[Sync] Uploading generic file: ${filePath}`);
+                    Logger.info(`[Sync] Uploading generic file: ${filePath}`);
                     let uploadData = localData;
                     if (key) {
                         uploadData = await this.encrypt(localData, key);
@@ -327,7 +367,7 @@ export class SovereignS3nc {
                 }
             }
         } catch (e: any) {
-            console.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e.message}`);
+            Logger.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e.message}`);
         }
     }
 
@@ -336,15 +376,15 @@ export class SovereignS3nc {
         const myUserId = this.config.paths.userId;
         const myPublicKey = this.config.publicEncryptionKey!;
         
-        console.log(`[Sync] Checking global registry at ${remotePath}`);
+        Logger.info(`[Sync] Checking global registry at ${remotePath}`);
         let userList: { userId: string, publicKey: string }[] = [];
         let remoteData: Uint8Array | null = null;
         
         try {
-            const result = await this.globalRemote.downloadFile(remotePath);
+            const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
             if (result && result.data) remoteData = result.data;
         } catch (e: any) {
-            console.warn(`[Sync] Could not reach global registry (offline?): ${e.message}`);
+            Logger.warn(`[Sync] Could not reach global registry (offline?): ${e.message}`);
             return; // We are likely offline, skip registration for now
         }
         
@@ -352,13 +392,13 @@ export class SovereignS3nc {
             try {
                 userList = JSON.parse(new TextDecoder().decode(remoteData));
             } catch (e) {
-                console.warn('[Sync] Global user registry corrupted. Resetting.');
+                Logger.warn('[Sync] Global user registry corrupted. Resetting.');
                 userList = [];
             }
         }
         
         if (!userList.find(u => u.userId === myUserId) || userList.find(u => u.userId === myUserId)?.publicKey !== myPublicKey) {
-            console.log(`[Sync] Registering/Updating user ${myUserId} in global registry.`);
+            Logger.info(`[Sync] Registering/Updating user ${myUserId} in global registry.`);
             const existing = userList.find(u => u.userId === myUserId);
             if (existing) {
                 existing.publicKey = myPublicKey;
@@ -369,7 +409,7 @@ export class SovereignS3nc {
             try {
                 await this.globalRemote.uploadFile(remotePath, newData);
             } catch (e: any) {
-                console.warn(`[Sync] Failed to update global registry: ${e.message}`);
+                Logger.warn(`[Sync] Failed to update global registry: ${e.message}`);
             }
         }
     }
@@ -401,7 +441,7 @@ export class SovereignS3nc {
     }
 
     async testPermissions() {
-        console.log('[Sovereign] Testing permissions for other user paths...');
+        Logger.info('[Sovereign] Testing permissions for other user paths...');
         const registry = await this.getPublicRegistry();
         for (const user of registry) {
             if (user.userId === this.config.paths.userId) continue;
@@ -409,17 +449,17 @@ export class SovereignS3nc {
             const path = 'public/user.json';
             try {
                 const hash = await remote.getFileHash(path);
-                console.log(`[Sovereign] Success reading ${user.userId}: Hash=${hash}`);
+                Logger.info(`[Sovereign] Success reading ${user.userId}: Hash=${hash}`);
             } catch (e: any) {
-                console.error(`[Sovereign] Permission denied for ${user.userId}: ${e.message}`);
+                Logger.error(`[Sovereign] Permission denied for ${user.userId}: ${e.message}`);
             }
         }
     }
 
     async getPublicRegistry(): Promise<{userId: string, publicKey: string}[]> {
-        console.log('[Sovereign] Fetching public registry...');
+        Logger.info('[Sovereign] Fetching public registry...');
         const remotePath = 'users.json';
-        const result = await this.globalRemote.downloadFile(remotePath);
+        const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
         if (!result || !result.data) return [];
         try {
             return JSON.parse(new TextDecoder().decode(result.data));
@@ -432,10 +472,10 @@ export class SovereignS3nc {
         const remotePath = 'users.json';
         let remoteData: Uint8Array | null = null;
         try {
-            const result = await this.globalRemote.downloadFile(remotePath);
+            const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
             if (result && result.data) remoteData = result.data;
         } catch (e: any) {
-            console.warn('[Sync] Failed to download global registry (offline?)', e.message);
+            Logger.warn('[Sync] Failed to download global registry (offline?)', e.message);
             return;
         }
         
@@ -453,12 +493,12 @@ export class SovereignS3nc {
                     startDate.setUTCDate(startDate.getUTCDate() - 7);
                     const lastSyncStr = SovereignS3nc.getDateStr(startDate);
                     
-                    console.log(`[Sync] Discovered new user ${user.userId}, starting from ${lastSyncStr}`);
+                    Logger.info(`[Sync] Discovered new user ${user.userId}, starting from ${lastSyncStr}`);
                     await this.storage.followUser(user.userId, lastSyncStr, user.publicKey);
                 }
             }
         } catch (e) {
-            console.warn('[Sync] Failed to discover users', e);
+            Logger.warn('[Sync] Failed to discover users', e);
         }
     }
 
@@ -476,12 +516,19 @@ export class SovereignS3nc {
                 const dateStr = SovereignS3nc.getDateStr(iter);
                 await this.pullUserDay(user.userId, dateStr, user.publicKey);
                 
-                // Also pull DMs from this user to me
+                // Pull namespaced Social DMs
                 const myId = this.config.paths.userId;
-                const dmPath = `public/dms/${myId}/${dateStr}.db`;
-                // Public DM databases are NOT file-level encrypted (their rows are)
-                await this.pullUserFile(user.userId, dmPath, user.publicKey, `followed/${user.userId}/dms/${dateStr}.db`, false);
+                const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public'); // Remote path on followed user side
+                // Wait, getModulePath('social', ..., 'public') returns 'public/modules/social/dms/...'
+                await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed'), false);
                 
+                // Pull Module Data
+                for (const moduleName of this.registeredModules) {
+                    const remotePath = this.getModulePath(moduleName, `days/${dateStr}.db`, 'public');
+                    const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
+                    await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                }
+
                 iter.setUTCDate(iter.getUTCDate() + 1);
             }
             
@@ -491,7 +538,7 @@ export class SovereignS3nc {
 
     private createRemote(userId: string): IRemoteAdapter {
         if (this.remoteFactory) {
-            console.log(`[Sync] Creating remote for ${userId} using factory.`);
+            Logger.info(`[Sync] Creating remote for ${userId} using factory.`);
             return this.remoteFactory(userId);
         }
         
@@ -510,7 +557,7 @@ export class SovereignS3nc {
             const userRemote = this.createRemote(userId);
             const cachedEtag = await this.storage.getGenericRemoteHashCache(`${userId}:${remotePath}`);
             
-            console.log(`[Sync] Downloading ${userId}/${remotePath}...`);
+            Logger.info(`[Sync] Downloading ${userId}/${remotePath}...`);
             const result = await userRemote.downloadFile(remotePath, cachedEtag || undefined);
             
             if (result && !result.notModified && result.data) {
@@ -522,11 +569,11 @@ export class SovereignS3nc {
                     await this.storage.saveFile(localPath, data);
                     if (result.etag) await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, result.etag);
                 } catch (e: any) {
-                    console.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e.message}`);
+                    Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e.message}`);
                 }
             }
         } catch (e: any) {
-            console.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e.message}`);
+            Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e.message}`);
         }
     }
 
@@ -537,7 +584,7 @@ export class SovereignS3nc {
             const filePath = `public/${date}.db`;
             const cachedEtag = await this.storage.getRemoteHashCache(`${userId}:${date}`, 'followed' as any);
 
-            console.log(`[Sync] Downloading ${userId}/${date}...`);
+            Logger.info(`[Sync] Downloading ${userId}/${date}...`);
             const result = await userRemote.downloadFile(filePath, cachedEtag || undefined);
 
             if (result && !result.notModified && result.data) {
@@ -546,15 +593,15 @@ export class SovereignS3nc {
                     data = await this.decrypt(data, publicKey);
                     await this.storage.saveDailyDb(`${userId}/${date}`, 'followed' as any, data);
                     if (result.etag) await this.storage.setRemoteHashCache(`${userId}:${date}`, 'followed' as any, result.etag);
-                    console.log(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
+                    Logger.info(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
                 } catch (e: any) {
-                    console.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date}). Error: ${e.message}`);
+                    Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date}). Error: ${e.message}`);
                 }
             } else if (result?.notModified) {
-                console.log(`[Sync] Skipping download for ${userId}/${date}, etags match.`);
+                Logger.info(`[Sync] Skipping download for ${userId}/${date}, etags match.`);
             }
         } catch (e: any) {
-            console.warn(`[Sync] pullUserDay failed for ${userId}/${date}: ${e.message}`);
+            Logger.warn(`[Sync] pullUserDay failed for ${userId}/${date}: ${e.message}`);
         }
     }
 
@@ -576,7 +623,7 @@ export class SovereignS3nc {
             const cachedEtag = await this.storage.getRemoteHashCache(date, type);
 
             if (!localData) {
-                console.log(`[Sync] Downloading ${remotePath}`);
+                Logger.info(`[Sync] Downloading ${remotePath}`);
                 const result = await activeRemote.downloadFile(remotePath);
                 if (result && result.data) {
                     let data = result.data;
@@ -599,7 +646,7 @@ export class SovereignS3nc {
                     return;
                 }
 
-                console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
+                Logger.info(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
                 let uploadData = localData;
                 if (currentKey) {
                     uploadData = await this.encrypt(localData, currentKey);
@@ -608,7 +655,7 @@ export class SovereignS3nc {
                 if (etag) await this.storage.setRemoteHashCache(date, type, etag);
             }
         } catch (e: any) {
-            console.warn(`[Sync] syncDay failed for ${date}/${type}: ${e.message}`);
+            Logger.warn(`[Sync] syncDay failed for ${date}/${type}: ${e.message}`);
         }
     }
 
@@ -618,21 +665,21 @@ export class SovereignS3nc {
         return hasher.digest('hex');
     }
 
-    private async encrypt(data: Uint8Array, key: string): Promise<Uint8Array> {
+    public async encrypt(data: Uint8Array, key: string): Promise<Uint8Array> {
         const iv = crypto.randomBytes(12);
-        const keyBuffer = Buffer.from(key, 'hex');
+        const keyBuffer = Buffer.from(key, 'hex').slice(0, 32);
         const cipher = crypto.createCipheriv('aes-256-gcm', keyBuffer, iv);
         const encrypted = Buffer.concat([cipher.update(data), cipher.final()]);
         const tag = cipher.getAuthTag();
         return Buffer.concat([iv, tag, encrypted]);
     }
 
-    private async decrypt(data: Uint8Array, key: string): Promise<Uint8Array> {
+    public async decrypt(data: Uint8Array, key: string): Promise<Uint8Array> {
         try {
             const iv = data.slice(0, 12);
             const tag = data.slice(12, 28);
             const encrypted = data.slice(28);
-            const keyBuffer = Buffer.from(key, 'hex');
+            const keyBuffer = Buffer.from(key, 'hex').slice(0, 32);
             const decipher = crypto.createDecipheriv('aes-256-gcm', keyBuffer, iv);
             decipher.setAuthTag(tag);
             return Buffer.concat([decipher.update(encrypted), decipher.final()]);
@@ -640,40 +687,75 @@ export class SovereignS3nc {
             throw new Error(`Decryption failed (key: ${key.substring(0,6)}...): ${e.message}`);
         }
     }
+
+    /**
+     * Derives a shared secret for E2EE DMs between two users.
+     */
+    public deriveSharedSecret(otherPublicKey: string): string {
+        if (!this.config.encryptionKey) throw new Error('Identity key not initialized');
+        
+        const mySecretKey = Buffer.from(this.config.encryptionKey, 'hex');
+        const theirPublicKey = Buffer.from(otherPublicKey, 'hex');
+        
+        const shared = nacl.box.before(theirPublicKey, mySecretKey);
+        return Buffer.from(shared).toString('hex');
+    }
     
     private async syncUserFile() {
         try {
             const remotePath = 'public/user.json';
-            const localData = await this.storage.getPublicUserFile();
+            let localData = await this.storage.getPublicUserFile();
             const key = this.config.publicEncryptionKey;
             const cachedEtag = await this.storage.getGenericRemoteHashCache(remotePath);
 
-            if (!localData) {
-                 const result = await this.publicRemote.downloadFile(remotePath);
-                 if (result && result.data) {
-                    let data = result.data;
-                    if (key) data = await this.decrypt(data, key);
-                    await this.storage.savePublicUserFile(data);
+            const result = await this.publicRemote.downloadFile(remotePath, cachedEtag || undefined);
+            
+            if (result && !result.notModified && result.data) {
+                // Downloaded a newer or changed remote file
+                let remoteDecrypted = result.data;
+                try {
+                    if (key) remoteDecrypted = await this.decrypt(result.data, key);
+                } catch (e) {
+                    Logger.warn('[Sync] Failed to decrypt remote user.json. Overwriting with local if possible.');
+                }
+
+                // If we have local data, we should compare timestamps to avoid overwriting a local change
+                let shouldKeepLocal = false;
+                if (localData) {
+                    try {
+                        const localObj = JSON.parse(new TextDecoder().decode(localData));
+                        const remoteObj = JSON.parse(new TextDecoder().decode(remoteDecrypted));
+                        if (localObj.updatedAt && remoteObj.updatedAt && localObj.updatedAt > remoteObj.updatedAt) {
+                            shouldKeepLocal = true;
+                        }
+                    } catch (e) {}
+                }
+
+                if (!shouldKeepLocal) {
+                    localData = remoteDecrypted;
+                    await this.storage.savePublicUserFile(localData);
                     if (result.etag) await this.storage.setGenericRemoteHashCache(remotePath, result.etag);
-                 }
-            } else {
+                }
+            }
+
+            // After potentially updating localData, ensure remote matches local if we kept local
+            if (localData) {
                 const remoteHash = await this.publicRemote.getFileHash(remotePath);
                 const localHash = this.calculateHashedContent(localData, key);
-                if (localHash === remoteHash) {
-                    if (!cachedEtag) {
-                        const remoteEtag = await this.publicRemote.getFileEtag(remotePath);
-                        if (remoteEtag) await this.storage.setGenericRemoteHashCache(remotePath, remoteEtag);
-                    }
-                    return;
+                
+                if (localHash !== remoteHash) {
+                    Logger.info(`[Sync] Uploading ${remotePath}`);
+                    let uploadData = localData;
+                    if (key) uploadData = await this.encrypt(localData, key);
+                    const etag = await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
+                    if (etag) await this.storage.setGenericRemoteHashCache(remotePath, etag);
+                } else if (!cachedEtag && remoteHash) {
+                    const remoteEtag = await this.publicRemote.getFileEtag(remotePath);
+                    if (remoteEtag) await this.storage.setGenericRemoteHashCache(remotePath, remoteEtag);
                 }
-                console.log(`[Sync] Uploading ${remotePath}`);
-                let uploadData = localData;
-                if (key) uploadData = await this.encrypt(localData, key);
-                const etag = await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
-                if (etag) await this.storage.setGenericRemoteHashCache(remotePath, etag);
             }
         } catch (e: any) {
-            console.warn(`[Sync] syncUserFile failed: ${e.message}`);
+            Logger.warn(`[Sync] syncUserFile failed: ${e.message}`);
         }
     }
 }

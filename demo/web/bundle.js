@@ -89448,22 +89448,38 @@ ${toHex(hashedRequest)}`;
       crypto2 = __toESM(require_crypto_browserify());
       S3RemoteAdapter = class {
         constructor(config, paths) {
+          console.log(`[S3] Initializing adapter for ${paths.userId}...`);
+          this.endpoint = config.endpoint || "";
           this.client = new S3Client({
             region: config.region,
             endpoint: config.endpoint || void 0,
             credentials: config.credentials,
             forcePathStyle: true,
-            // Always use path style to avoid ListBucket calls for bucket resolution
-            apiVersion: "2006-03-01"
+            apiVersion: "2006-03-01",
+            requestHandler: {
+              requestTimeout: 1e4
+            }
           });
+          console.log(`[S3] Client created for ${paths.userId}`);
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
         }
         async uploadFile(path, data, providedHash) {
           const key = this.getKey(path);
           console.log(`[S3] Uploading to key: ${key}`);
-          const hash = providedHash || crypto2.createHash("sha256").update(data).digest("hex");
-          await this.client.send(new PutObjectCommand({
+          let hash = providedHash;
+          if (!hash) {
+            const browserCrypto = typeof globalThis !== "undefined" ? globalThis.crypto : null;
+            if (browserCrypto && browserCrypto.subtle) {
+              console.log("[S3] Using SubtleCrypto for hashing");
+              const hashBuffer = await browserCrypto.subtle.digest("SHA-256", data);
+              hash = Array.from(new Uint8Array(hashBuffer)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
+            } else {
+              console.log("[S3] Using crypto-browserify for hashing");
+              hash = crypto2.createHash("sha256").update(data).digest("hex");
+            }
+          }
+          const response = await this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
             Body: data,
@@ -89471,18 +89487,42 @@ ${toHex(hashedRequest)}`;
               "hash": hash
             }
           }));
+          return response.ETag || null;
         }
-        async downloadFile(path) {
+        async downloadFile(path, ifNoneMatch) {
           const key = this.getKey(path);
+          console.log(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"})`);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 15e3);
           try {
-            const response = await this.client.send(new GetObjectCommand({
+            console.log(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
+            const command = new GetObjectCommand({
               Bucket: this.bucket,
-              Key: key
-            }));
-            if (!response.Body) return null;
-            return await response.Body.transformToByteArray();
+              Key: key,
+              IfNoneMatch: ifNoneMatch
+            });
+            console.log(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
+            const response = await this.client.send(command, { abortSignal: controller.signal });
+            console.log(`[S3] Step 4.3: Response received for ${key}.`);
+            if (!response.Body) {
+              return { data: null, etag: response.ETag || null };
+            }
+            console.log(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
+            const data = await response.Body.transformToByteArray();
+            console.log(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
+            return { data, etag: response.ETag || null };
           } catch (e2) {
+            clearTimeout(timeoutId);
             const statusCode = e2.$metadata?.httpStatusCode;
+            if (statusCode === 304) {
+              console.log(`[S3] File ${key} not modified (304).`);
+              return { data: null, etag: ifNoneMatch || null, notModified: true };
+            }
+            if (e2.name === "AbortError") {
+              console.error(`[S3] Step 4.6: Request timed out for ${key}`);
+              throw new Error(`S3 Download Timeout for ${key}`);
+            }
+            console.log(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e2.name} - ${e2.message}`);
             if (statusCode === 403) {
               console.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
               return null;
@@ -89511,6 +89551,22 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
+        async getFileEtag(path) {
+          const key = this.getKey(path);
+          try {
+            const response = await this.client.send(new HeadObjectCommand({
+              Bucket: this.bucket,
+              Key: key
+            }));
+            return response.ETag || null;
+          } catch (e2) {
+            const statusCode = e2.$metadata?.httpStatusCode;
+            if (statusCode === 403 || e2.name === "NoSuchKey" || statusCode === 404) {
+              return null;
+            }
+            throw e2;
+          }
+        }
         getKey(path) {
           return `${this.prefix}${path}`;
         }
@@ -89530,54 +89586,67 @@ ${toHex(hashedRequest)}`;
           this.dbName = dbName;
         }
         async init() {
+          if (this.db) return;
           console.log(`[IDB] Initializing ${this.dbName}...`);
           return new Promise((resolve, reject) => {
-            const request = indexedDB.open(this.dbName, 1);
-            request.onerror = (event) => {
-              console.error("[IDB] Error opening database:", request.error);
-              reject(request.error);
-            };
-            request.onsuccess = (event) => {
-              this.db = event.target.result;
-              console.log("[IDB] Database opened successfully");
-              resolve();
-            };
-            request.onupgradeneeded = (event) => {
-              console.log("[IDB] Upgrading database...");
-              const db = event.target.result;
-              if (!db.objectStoreNames.contains("files")) {
-                db.createObjectStore("files");
-                console.log('[IDB] Created "files" store');
-              }
-              if (!db.objectStoreNames.contains("metadata")) {
-                db.createObjectStore("metadata");
-                console.log('[IDB] Created "metadata" store');
-              }
-            };
-            request.onblocked = () => {
-              console.warn("[IDB] Database opening blocked. Please close other tabs of this app.");
-            };
+            try {
+              const request = indexedDB.open(this.dbName, 1);
+              request.onerror = (event) => {
+                console.error("[IDB] Error opening database:", request.error);
+                reject(request.error);
+              };
+              request.onsuccess = (event) => {
+                this.db = event.target.result;
+                console.log("[IDB] Database opened successfully");
+                resolve();
+              };
+              request.onupgradeneeded = (event) => {
+                console.log("[IDB] Upgrading database...");
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains("files")) {
+                  db.createObjectStore("files");
+                  console.log('[IDB] Created "files" store');
+                }
+                if (!db.objectStoreNames.contains("metadata")) {
+                  db.createObjectStore("metadata");
+                  console.log('[IDB] Created "metadata" store');
+                }
+              };
+              request.onblocked = () => {
+                console.warn("[IDB] Database opening blocked. Please close other tabs of this app.");
+              };
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
-        async getStore(name, mode = "readonly") {
+        getStore(name, mode = "readonly") {
           if (!this.db) throw new Error("Database not initialized");
           const tx = this.db.transaction(name, mode);
           return tx.objectStore(name);
         }
         async getDailyDb(date2, type) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files");
-            const request = store.get(`${type}/${date2}`);
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files");
+              const request = store.get(`${type}/${date2}`);
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async saveDailyDb(date2, type, data) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files", "readwrite");
-            const request = store.put(data, `${type}/${date2}`);
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.put(data, `${type}/${date2}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async getDailyDbHash(date2, type) {
@@ -89586,87 +89655,193 @@ ${toHex(hashedRequest)}`;
           return this.hash(data);
         }
         async getPublicUserFile() {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files");
-            const request = store.get("public/user.json");
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files");
+              const request = store.get("public/user.json");
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async savePublicUserFile(data) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files", "readwrite");
-            const request = store.put(data, "public/user.json");
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.put(data, "public/user.json");
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async getFile(path) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files");
+              const request = store.get(path);
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async saveFile(path, data) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.put(data, path);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async listFiles(prefix) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files");
+              const request = store.getAllKeys();
+              request.onsuccess = () => {
+                const allKeys = request.result;
+                resolve(allKeys.filter((k2) => k2.startsWith(prefix)));
+              };
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async getGenericRemoteHashCache(path) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata");
+              const request = store.get(`hash_generic:${path}`);
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async setGenericRemoteHashCache(path, hash) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata", "readwrite");
+              const request = store.put(hash, `hash_generic:${path}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async getRemoteHashCache(date2, type) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata");
-            const request = store.get(`hash:${date2}-${type}`);
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata");
+              const request = store.get(`hash:${date2}-${type}`);
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async setRemoteHashCache(date2, type, hash) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata", "readwrite");
-            const request = store.put(hash, `hash:${date2}-${type}`);
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata", "readwrite");
+              const request = store.put(hash, `hash:${date2}-${type}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async getLastSyncDate() {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata");
-            const request = store.get("lastSyncDate");
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata");
+              const request = store.get("lastSyncDate");
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async setLastSyncDate(date2) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata", "readwrite");
-            const request = store.put(date2, "lastSyncDate");
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata", "readwrite");
+              const request = store.put(date2, "lastSyncDate");
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async saveFollowedDb(userId, date2, data) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files", "readwrite");
-            const request = store.put(data, `followed/${userId}/${date2}`);
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.put(data, `followed/${userId}/${date2}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async getFollowedDbHash(userId, date2) {
-          const data = await new Promise(async (resolve, reject) => {
-            const store = await this.getStore("files");
-            const request = store.get(`followed/${userId}/${date2}`);
-            request.onsuccess = () => resolve(request.result || null);
-            request.onerror = () => reject(request.error);
-          });
-          return data ? this.hash(data) : null;
+          try {
+            const data = await new Promise((resolve, reject) => {
+              const store = this.getStore("files");
+              const request = store.get(`followed/${userId}/${date2}`);
+              request.onsuccess = () => resolve(request.result || null);
+              request.onerror = () => reject(request.error);
+            });
+            return data ? this.hash(data) : null;
+          } catch (e2) {
+            return null;
+          }
         }
         async getFollowing() {
-          const followingMap = await new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata");
-            const request = store.get("following");
-            request.onsuccess = () => resolve(request.result || {});
-            request.onerror = () => reject(request.error);
-          });
-          return Object.entries(followingMap).map(([userId, info]) => ({
-            userId,
-            lastSync: info.lastSync,
-            publicKey: info.publicKey
-          }));
+          try {
+            const followingMap = await new Promise((resolve, reject) => {
+              const store = this.getStore("metadata");
+              const request = store.get("following");
+              request.onsuccess = () => resolve(request.result || {});
+              request.onerror = () => reject(request.error);
+            });
+            return Object.entries(followingMap).map(([userId, info]) => ({
+              userId,
+              lastSync: info.lastSync,
+              publicKey: info.publicKey
+            }));
+          } catch (e2) {
+            return [];
+          }
         }
         async followUser(userId, lastSync, publicKey) {
           const following = await this.getFollowingMap();
           if (!following[userId]) {
             following[userId] = { lastSync, publicKey };
+            await this.saveFollowingMap(following);
+          }
+        }
+        async unfollowUser(userId) {
+          const following = await this.getFollowingMap();
+          if (following[userId]) {
+            delete following[userId];
             await this.saveFollowingMap(following);
           }
         }
@@ -89678,19 +89853,27 @@ ${toHex(hashedRequest)}`;
           }
         }
         async getFollowingMap() {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata");
-            const request = store.get("following");
-            request.onsuccess = () => resolve(request.result || {});
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata");
+              const request = store.get("following");
+              request.onsuccess = () => resolve(request.result || {});
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async saveFollowingMap(map) {
-          return new Promise(async (resolve, reject) => {
-            const store = await this.getStore("metadata", "readwrite");
-            const request = store.put(map, "following");
-            request.onsuccess = () => resolve();
-            request.onerror = () => reject(request.error);
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata", "readwrite");
+              const request = store.put(map, "following");
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
           });
         }
         async hash(data) {
@@ -89765,33 +89948,62 @@ ${toHex(hashedRequest)}`;
           const password = this.config.password;
           const publicUserId = this.config.paths.userId;
           const appId = this.config.paths.appId;
-          const masterKey = crypto3.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
-          const privateId = crypto3.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
-          console.log(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
-          if (!this.remoteFactory && this.config.s3) {
-            this.remote = new S3RemoteAdapter(this.config.s3, {
-              appId,
-              userId: privateId,
-              storeId: this.config.paths.storeId
-            });
-          } else if (this.remoteFactory) {
-            this.remote = this.remoteFactory(privateId);
+          console.log("[Keys] Step 1: Deriving secrets from password...");
+          let masterKey;
+          let privateId;
+          try {
+            masterKey = crypto3.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
+            privateId = crypto3.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
+          } catch (e2) {
+            console.error("[Keys] PBKDF2 failed. This usually means crypto-browserify is not working correctly.");
+            throw new Error(`Secret derivation failed: ${e2.message}`);
           }
+          console.log(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
+          console.log("[Keys] Step 2: Initializing Private Remote...");
+          try {
+            if (!this.remoteFactory && this.config.s3) {
+              this.remote = new S3RemoteAdapter(this.config.s3, {
+                appId,
+                userId: privateId,
+                storeId: this.config.paths.storeId
+              });
+            } else if (this.remoteFactory) {
+              this.remote = this.remoteFactory(privateId);
+            }
+          } catch (e2) {
+            console.error("[Keys] Remote initialization failed:", e2.message);
+            throw e2;
+          }
+          console.log("[Keys] Step 3: Checking local storage for keys...");
           let keyInfo = null;
-          const localKeyData = await this.storage.getDailyDb("_keys", "private");
+          let localKeyData = null;
+          try {
+            localKeyData = await this.storage.getDailyDb("_keys", "private");
+            console.log(`[Keys] Local key data search complete. Found: ${!!localKeyData}`);
+          } catch (e2) {
+            console.error(`[Keys] Error reading local keys: ${e2.message}`);
+          }
           if (localKeyData) {
+            console.log("[Keys] Decrypting local keys...");
             try {
-              keyInfo = JSON.parse((await this.decrypt(localKeyData, masterKey)).toString());
+              const decrypted = await this.decrypt(localKeyData, masterKey);
+              keyInfo = JSON.parse(decrypted.toString());
+              console.log("[Keys] Local keys decrypted successfully.");
             } catch (e2) {
               console.warn(`[Keys] Failed to decrypt local keys: ${e2.message}`);
             }
           }
           if (!keyInfo) {
-            const remoteKeyData = await this.remote.downloadFile("_keys.json");
-            if (remoteKeyData) {
+            console.log("[Keys] Step 4: Trying to download keys from remote...");
+            const result = await this.remote.downloadFile("_keys.json");
+            console.log(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
+            if (result && result.data) {
               try {
-                keyInfo = JSON.parse((await this.decrypt(remoteKeyData, masterKey)).toString());
-                await this.storage.saveDailyDb("_keys", "private", remoteKeyData);
+                console.log("[Keys] Decrypting remote keys...");
+                const decrypted = await this.decrypt(result.data, masterKey);
+                keyInfo = JSON.parse(decrypted.toString());
+                await this.storage.saveDailyDb("_keys", "private", result.data);
+                console.log("[Keys] Remote keys decrypted and saved locally.");
               } catch (e2) {
                 throw new Error(`Failed to decrypt remote keys: ${e2.message}. Incorrect password?`);
               }
@@ -89800,13 +90012,16 @@ ${toHex(hashedRequest)}`;
             }
           }
           if (!keyInfo) {
-            console.log("[Keys] Generating new persistent key pair.");
+            console.log("[Keys] Step 5: Generating new persistent key pair.");
             const privateKey = crypto3.randomBytes(32).toString("hex");
             const publicKey = crypto3.randomBytes(32).toString("hex");
             keyInfo = { privateKey, publicKey };
+            console.log("[Keys] Encrypting new keys for storage...");
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
+            console.log("[Keys] Uploading new keys to remote...");
             await this.remote.uploadFile("_keys.json", encrypted);
+            console.log("[Keys] New keys generated, saved and uploaded.");
           }
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
@@ -89845,9 +90060,84 @@ ${toHex(hashedRequest)}`;
             await this.ensureGlobalRegistration();
             await this.discoverAndFollowUsers(today);
             await this.syncFollowedUsers(today);
+            await this.syncGenericFiles("public/blobs/");
+            await this.syncGenericFiles("public/dms/");
+            await this.syncGenericFiles("private/blobs/");
+            await this.syncGenericFiles("private/dms/");
             await this.storage.setLastSyncDate(today);
           } finally {
             this.isSyncing = false;
+          }
+        }
+        async saveBlob(data, isPublic = true) {
+          const hash = this.calculateHashedContent(data);
+          const type = isPublic ? "public" : "private";
+          const path = `${type}/blobs/${hash}`;
+          await this.storage.saveFile(path, data);
+          return path;
+        }
+        async getBlob(path, userId) {
+          const myId = this.config.paths.userId;
+          if (!userId || userId === myId) {
+            let data = await this.storage.getFile(path);
+            if (!data) {
+              const activeRemote = path.startsWith("public/") ? this.publicRemote : this.remote;
+              const key = path.startsWith("public/") ? void 0 : this.config.encryptionKey;
+              const result2 = await activeRemote.downloadFile(path);
+              if (result2 && result2.data) {
+                data = result2.data;
+                if (key) {
+                  data = await this.decrypt(data, key);
+                }
+                await this.storage.saveFile(path, data);
+              }
+            }
+            return data;
+          }
+          if (!path.startsWith("public/")) {
+            throw new Error("Only public blobs can be fetched from other users");
+          }
+          const userRemote = this.createRemote(userId);
+          const result = await userRemote.downloadFile(path);
+          if (result && result.data) {
+            const data = result.data;
+            const expectedHash = path.split("/").pop();
+            const actualHash = this.calculateHashedContent(data);
+            if (expectedHash !== actualHash) {
+              console.warn(`[Blob] Hash mismatch for ${path}. Expected ${expectedHash}, got ${actualHash}`);
+            }
+            await this.storage.saveFile(`followed/${userId}/${path}`, data);
+            return data;
+          }
+          return null;
+        }
+        async syncGenericFiles(prefix) {
+          try {
+            const files = await this.storage.listFiles(prefix);
+            const isPublic = prefix.startsWith("public/");
+            const activeRemote = isPublic ? this.publicRemote : this.remote;
+            const key = isPublic ? void 0 : this.config.encryptionKey;
+            for (const filePath of files) {
+              const localData = await this.storage.getFile(filePath);
+              if (!localData) continue;
+              const localHash = this.calculateHashedContent(localData, key);
+              const cachedEtag = await this.storage.getGenericRemoteHashCache(filePath);
+              const remoteHash = await activeRemote.getFileHash(filePath);
+              if (localHash !== remoteHash) {
+                console.log(`[Sync] Uploading generic file: ${filePath}`);
+                let uploadData = localData;
+                if (key) {
+                  uploadData = await this.encrypt(localData, key);
+                }
+                const etag = await activeRemote.uploadFile(filePath, uploadData, localHash);
+                if (etag) await this.storage.setGenericRemoteHashCache(filePath, etag);
+              } else if (!cachedEtag) {
+                const remoteEtag = await activeRemote.getFileEtag(filePath);
+                if (remoteEtag) await this.storage.setGenericRemoteHashCache(filePath, remoteEtag);
+              }
+            }
+          } catch (e2) {
+            console.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e2.message}`);
           }
         }
         async ensureGlobalRegistration() {
@@ -89856,7 +90146,14 @@ ${toHex(hashedRequest)}`;
           const myPublicKey = this.config.publicEncryptionKey;
           console.log(`[Sync] Checking global registry at ${remotePath}`);
           let userList = [];
-          const remoteData = await this.globalRemote.downloadFile(remotePath);
+          let remoteData = null;
+          try {
+            const result = await this.globalRemote.downloadFile(remotePath);
+            if (result && result.data) remoteData = result.data;
+          } catch (e2) {
+            console.warn(`[Sync] Could not reach global registry (offline?): ${e2.message}`);
+            return;
+          }
           if (remoteData) {
             try {
               userList = JSON.parse(new TextDecoder().decode(remoteData));
@@ -89874,14 +90171,18 @@ ${toHex(hashedRequest)}`;
               userList.push({ userId: myUserId, publicKey: myPublicKey });
             }
             const newData = new TextEncoder().encode(JSON.stringify(userList));
-            await this.globalRemote.uploadFile(remotePath, newData);
+            try {
+              await this.globalRemote.uploadFile(remotePath, newData);
+            } catch (e2) {
+              console.warn(`[Sync] Failed to update global registry: ${e2.message}`);
+            }
           }
         }
         async follow(userId) {
           const remotePath = "users.json";
-          const remoteData = await this.globalRemote.downloadFile(remotePath);
-          if (remoteData) {
-            const userList = JSON.parse(new TextDecoder().decode(remoteData));
+          const result = await this.globalRemote.downloadFile(remotePath);
+          if (result && result.data) {
+            const userList = JSON.parse(new TextDecoder().decode(result.data));
             const user = userList.find((u2) => u2.userId === userId);
             if (user) {
               const startDate = /* @__PURE__ */ new Date();
@@ -89891,6 +90192,9 @@ ${toHex(hashedRequest)}`;
             }
           }
           throw new Error("User not found in registry");
+        }
+        async unfollow(userId) {
+          await this.storage.unfollowUser(userId);
         }
         async getFollowing() {
           return this.storage.getFollowing();
@@ -89913,17 +90217,24 @@ ${toHex(hashedRequest)}`;
         async getPublicRegistry() {
           console.log("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
-          const remoteData = await this.globalRemote.downloadFile(remotePath);
-          if (!remoteData) return [];
+          const result = await this.globalRemote.downloadFile(remotePath);
+          if (!result || !result.data) return [];
           try {
-            return JSON.parse(new TextDecoder().decode(remoteData));
+            return JSON.parse(new TextDecoder().decode(result.data));
           } catch (e2) {
             return [];
           }
         }
         async discoverAndFollowUsers(today) {
           const remotePath = "users.json";
-          const remoteData = await this.globalRemote.downloadFile(remotePath);
+          let remoteData = null;
+          try {
+            const result = await this.globalRemote.downloadFile(remotePath);
+            if (result && result.data) remoteData = result.data;
+          } catch (e2) {
+            console.warn("[Sync] Failed to download global registry (offline?)", e2.message);
+            return;
+          }
           if (!remoteData) return;
           try {
             const userList = JSON.parse(new TextDecoder().decode(remoteData));
@@ -89953,6 +90264,9 @@ ${toHex(hashedRequest)}`;
             while (iter <= endDate) {
               const dateStr = _SovereignS3nc.getDateStr(iter);
               await this.pullUserDay(user.userId, dateStr, user.publicKey);
+              const myId = this.config.paths.userId;
+              const dmPath = `public/dms/${myId}/${dateStr}.db`;
+              await this.pullUserFile(user.userId, dmPath, user.publicKey, `followed/${user.userId}/dms/${dateStr}.db`, false);
               iter.setUTCDate(iter.getUTCDate() + 1);
             }
             await this.storage.updateFollowedUserSync(user.userId, today);
@@ -89972,32 +90286,50 @@ ${toHex(hashedRequest)}`;
           }
           throw new Error("Remote configuration missing");
         }
-        async pullUserDay(userId, date2, publicKey) {
-          const userRemote = this.createRemote(userId);
-          const filePath = `public/${date2}.db`;
-          const remoteHash = await userRemote.getFileHash(filePath);
-          if (remoteHash) {
-            console.log(`[Sync] Remote hash for ${userId}/${date2}: ${remoteHash}`);
-            const localData = await this.storage.getDailyDb(`${userId}/${date2}`, "followed");
-            if (localData) {
-              const localHashedWithKey = this.calculateHashedContent(localData, publicKey);
-              console.log(`[Sync] Local hash for ${userId}/${date2}: ${localHashedWithKey}`);
-              if (localHashedWithKey === remoteHash) {
-                console.log(`[Sync] Skipping download for ${userId}/${date2}, hashes match.`);
-                return;
+        async pullUserFile(userId, remotePath, publicKey, localPath, expectEncrypted = true) {
+          try {
+            const userRemote = this.createRemote(userId);
+            const cachedEtag = await this.storage.getGenericRemoteHashCache(`${userId}:${remotePath}`);
+            console.log(`[Sync] Downloading ${userId}/${remotePath}...`);
+            const result = await userRemote.downloadFile(remotePath, cachedEtag || void 0);
+            if (result && !result.notModified && result.data) {
+              let data = result.data;
+              try {
+                if (expectEncrypted) {
+                  data = await this.decrypt(data, publicKey);
+                }
+                await this.storage.saveFile(localPath, data);
+                if (result.etag) await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, result.etag);
+              } catch (e2) {
+                console.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e2.message}`);
               }
             }
-            console.log(`[Sync] Hashes mismatch or missing local. Downloading ${userId}/${date2}...`);
-            let data = await userRemote.downloadFile(filePath);
-            if (data) {
+          } catch (e2) {
+            console.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e2.message}`);
+          }
+        }
+        async pullUserDay(userId, date2, publicKey) {
+          try {
+            const userRemote = this.createRemote(userId);
+            const filePath = `public/${date2}.db`;
+            const cachedEtag = await this.storage.getRemoteHashCache(`${userId}:${date2}`, "followed");
+            console.log(`[Sync] Downloading ${userId}/${date2}...`);
+            const result = await userRemote.downloadFile(filePath, cachedEtag || void 0);
+            if (result && !result.notModified && result.data) {
+              let data = result.data;
               try {
                 data = await this.decrypt(data, publicKey);
                 await this.storage.saveDailyDb(`${userId}/${date2}`, "followed", data);
+                if (result.etag) await this.storage.setRemoteHashCache(`${userId}:${date2}`, "followed", result.etag);
                 console.log(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
               } catch (e2) {
                 console.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
+            } else if (result?.notModified) {
+              console.log(`[Sync] Skipping download for ${userId}/${date2}, etags match.`);
             }
+          } catch (e2) {
+            console.warn(`[Sync] pullUserDay failed for ${userId}/${date2}: ${e2.message}`);
           }
         }
         static getDateStr(date2) {
@@ -90007,37 +90339,43 @@ ${toHex(hashedRequest)}`;
           return `${year2}-${month}-${day}`;
         }
         async syncDay(date2, type, localPublicKey, remoteOverride) {
-          const remotePath = `${type}/${date2}.db`;
-          const activeRemote = remoteOverride || this.remote;
-          let localData = await this.storage.getDailyDb(date2, type);
-          const remoteHash = await activeRemote.getFileHash(remotePath);
-          const currentKey = type === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
-          if (!localData) {
-            if (remoteHash) {
+          try {
+            const remotePath = `${type}/${date2}.db`;
+            const activeRemote = remoteOverride || this.remote;
+            let localData = await this.storage.getDailyDb(date2, type);
+            const currentKey = type === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
+            const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
+            if (!localData) {
               console.log(`[Sync] Downloading ${remotePath}`);
-              let data = await activeRemote.downloadFile(remotePath);
-              if (data) {
+              const result = await activeRemote.downloadFile(remotePath);
+              if (result && result.data) {
+                let data = result.data;
                 if (currentKey) {
                   data = await this.decrypt(data, currentKey);
                 }
                 await this.storage.saveDailyDb(date2, type, data);
-                const newHash = this.calculateHashedContent(data, currentKey);
-                await this.storage.setRemoteHashCache(date2, type, newHash);
+                if (result.etag) await this.storage.setRemoteHashCache(date2, type, result.etag);
               }
+            } else {
+              const localHash = this.calculateHashedContent(localData, currentKey);
+              const remoteHash = await activeRemote.getFileHash(remotePath);
+              if (localHash === remoteHash) {
+                if (!cachedEtag) {
+                  const remoteEtag = await activeRemote.getFileEtag(remotePath);
+                  if (remoteEtag) await this.storage.setRemoteHashCache(date2, type, remoteEtag);
+                }
+                return;
+              }
+              console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
+              let uploadData = localData;
+              if (currentKey) {
+                uploadData = await this.encrypt(localData, currentKey);
+              }
+              const etag = await activeRemote.uploadFile(remotePath, uploadData, localHash);
+              if (etag) await this.storage.setRemoteHashCache(date2, type, etag);
             }
-          } else {
-            const localHash = this.calculateHashedContent(localData, currentKey);
-            if (localHash === remoteHash) {
-              await this.storage.setRemoteHashCache(date2, type, localHash);
-              return;
-            }
-            console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
-            let uploadData = localData;
-            if (currentKey) {
-              uploadData = await this.encrypt(localData, currentKey);
-            }
-            await activeRemote.uploadFile(remotePath, uploadData, localHash);
-            await this.storage.setRemoteHashCache(date2, type, localHash);
+          } catch (e2) {
+            console.warn(`[Sync] syncDay failed for ${date2}/${type}: ${e2.message}`);
           }
         }
         calculateHashedContent(data, key) {
@@ -90067,27 +90405,37 @@ ${toHex(hashedRequest)}`;
           }
         }
         async syncUserFile() {
-          const remotePath = "public/user.json";
-          const localData = await this.storage.getPublicUserFile();
-          const remoteHash = await this.publicRemote.getFileHash(remotePath);
-          const key = this.config.publicEncryptionKey;
-          if (!localData) {
-            if (remoteHash) {
-              let data = await this.publicRemote.downloadFile(remotePath);
-              if (data) {
+          try {
+            const remotePath = "public/user.json";
+            const localData = await this.storage.getPublicUserFile();
+            const key = this.config.publicEncryptionKey;
+            const cachedEtag = await this.storage.getGenericRemoteHashCache(remotePath);
+            if (!localData) {
+              const result = await this.publicRemote.downloadFile(remotePath);
+              if (result && result.data) {
+                let data = result.data;
                 if (key) data = await this.decrypt(data, key);
                 await this.storage.savePublicUserFile(data);
+                if (result.etag) await this.storage.setGenericRemoteHashCache(remotePath, result.etag);
               }
+            } else {
+              const remoteHash = await this.publicRemote.getFileHash(remotePath);
+              const localHash = this.calculateHashedContent(localData, key);
+              if (localHash === remoteHash) {
+                if (!cachedEtag) {
+                  const remoteEtag = await this.publicRemote.getFileEtag(remotePath);
+                  if (remoteEtag) await this.storage.setGenericRemoteHashCache(remotePath, remoteEtag);
+                }
+                return;
+              }
+              console.log(`[Sync] Uploading ${remotePath}`);
+              let uploadData = localData;
+              if (key) uploadData = await this.encrypt(localData, key);
+              const etag = await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
+              if (etag) await this.storage.setGenericRemoteHashCache(remotePath, etag);
             }
-          } else {
-            const localHash = this.calculateHashedContent(localData, key);
-            if (localHash === remoteHash) {
-              return;
-            }
-            console.log(`[Sync] Uploading ${remotePath}`);
-            let uploadData = localData;
-            if (key) uploadData = await this.encrypt(localData, key);
-            await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
+          } catch (e2) {
+            console.warn(`[Sync] syncUserFile failed: ${e2.message}`);
           }
         }
       };
@@ -90100,7 +90448,8 @@ ${toHex(hashedRequest)}`;
     "src/modules/Social.ts"() {
       "use strict";
       import_polyfills659 = __toESM(require_polyfills());
-      SocialManager = class {
+      init_SovereignS3nc();
+      SocialManager = class _SocialManager {
         constructor(db, localPath, sqliteProvider) {
           this.db = db;
           this.localPath = localPath;
@@ -90128,6 +90477,12 @@ ${toHex(hashedRequest)}`;
                 parentId TEXT,
                 parentUserId TEXT
             );
+            CREATE TABLE IF NOT EXISTS likes (
+                postId TEXT,
+                userId TEXT,
+                timestamp INTEGER,
+                PRIMARY KEY (postId, userId)
+            );
         `);
           try {
             db.exec("ALTER TABLE posts ADD COLUMN image TEXT;");
@@ -90138,7 +90493,22 @@ ${toHex(hashedRequest)}`;
             db.exec("ALTER TABLE posts ADD COLUMN parentUserId TEXT;");
           } catch (e2) {
           }
+          try {
+            db.exec("CREATE TABLE IF NOT EXISTS likes (postId TEXT, userId TEXT, timestamp INTEGER, PRIMARY KEY (postId, userId));");
+          } catch (e2) {
+          }
           return db;
+        }
+        async like(postId, isPublic = true) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
+          const userId = this.db.config.paths.userId;
+          const timestamp = Date.now();
+          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
+          const binary = db.export();
+          await this.db.storage.saveDailyDb(date2, type, binary);
+          db.close();
         }
         async post(content, isPublic = true, image, parentId, parentUserId) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
@@ -90147,21 +90517,208 @@ ${toHex(hashedRequest)}`;
           const id = Math.random().toString(36).substring(7);
           const timestamp = Date.now();
           const userId = this.db.config.paths.userId;
-          console.log(`[Social] Creating post. Image size: ${image ? Math.round(image.length / 1024) : 0} KB`);
+          let imagePath = null;
+          if (image) {
+            console.log(`[Social] Saving image blob... Size: ${Math.round(image.length / 1024)} KB`);
+            imagePath = await this.db.saveBlob(image, isPublic);
+          }
           const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId) VALUES (?, ?, ?, ?, ?, ?, ?)";
-          const params = [id, content, timestamp, userId, image || null, parentId || null, parentUserId || null];
+          const params = [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null];
           db.run(sql, params);
           const binary = db.export();
           await this.db.storage.saveDailyDb(date2, type, binary);
           db.close();
         }
+        async getMessageDb(date2, type) {
+          const path = `private/dms/${type}/${date2}`;
+          const data = await this.db.storage.getFile(path);
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) {
+            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          }
+          const db = new this.sqliteInstance.Database(data || void 0);
+          db.exec(`
+            CREATE TABLE IF NOT EXISTS messages (
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                senderId TEXT,
+                recipientId TEXT,
+                image TEXT
+            );
+        `);
+          return db;
+        }
+        async sendDirectMessage(recipientId, content, image) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const outboxDb = await this.getMessageDb(date2, "outbox");
+          const id = Math.random().toString(36).substring(7);
+          const timestamp = Date.now();
+          const senderId = this.db.config.paths.userId;
+          let imagePath = null;
+          if (image) {
+            imagePath = await this.db.saveBlob(image, false);
+          }
+          outboxDb.run(
+            "INSERT INTO messages (id, content, timestamp, senderId, recipientId, image) VALUES (?, ?, ?, ?, ?, ?)",
+            [id, content, timestamp, senderId, recipientId, imagePath]
+          );
+          await this.db.storage.saveFile(`private/dms/outbox/${date2}`, outboxDb.export());
+          outboxDb.close();
+          const publicDmPath = `public/dms/${recipientId}/${date2}.db`;
+          const publicDmData = await this.db.storage.getFile(publicDmPath);
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const publicDb = new this.sqliteInstance.Database(publicDmData || void 0);
+          publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
+          const message = { id, content, timestamp, senderId, recipientId, imagePath };
+          const recipient = (await this.db.getPublicRegistry()).find((u2) => u2.userId === recipientId);
+          if (!recipient) throw new Error("Recipient not found in registry");
+          const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), recipient.publicKey);
+          publicDb.run("INSERT INTO messages (id, encrypted_data) VALUES (?, ?)", [id, encrypted]);
+          await this.db.storage.saveFile(publicDmPath, publicDb.export());
+          publicDb.close();
+          console.log(`[Social] DM sent and added to daily public DB for ${recipientId}`);
+        }
+        async sync() {
+          await this.db.sync();
+          await this.syncDirectMessages();
+        }
+        async syncDirectMessages() {
+          console.log("[Social] Syncing DMs...");
+          const myId = this.db.config.paths.userId;
+          const following = await this.db.getFollowing();
+          for (const user of following) {
+            const userRemote = this.db.createRemote(user.userId);
+          }
+        }
         async comment(parentId, parentUserId, content, image) {
           await this.post(content, true, image, parentId, parentUserId);
         }
+        async getInboxMessages(days = 5) {
+          const myId = this.db.config.paths.userId;
+          const messages = [];
+          const following = await this.db.getFollowing();
+          const dates = [];
+          for (let i2 = 0; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(d2.toISOString().split("T")[0]);
+          }
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          for (const user of following) {
+            for (const date2 of dates) {
+              const localPath = `followed/${user.userId}/dms/${date2}.db`;
+              const data = await this.db.storage.getFile(localPath);
+              if (data) {
+                const db = new this.sqliteInstance.Database(data);
+                try {
+                  const res = db.exec("SELECT encrypted_data FROM messages");
+                  if (res && res.length > 0) {
+                    for (const row of res[0].values) {
+                      let decrypted = null;
+                      try {
+                        decrypted = await this.db.decrypt(row[0], this.db.config.encryptionKey);
+                      } catch (e2) {
+                        try {
+                          decrypted = await this.db.decrypt(row[0], this.db.config.publicEncryptionKey);
+                        } catch (e22) {
+                        }
+                      }
+                      if (decrypted) {
+                        const parsed = JSON.parse(new TextDecoder().decode(decrypted));
+                        messages.push(parsed);
+                      }
+                    }
+                  }
+                } catch (e2) {
+                }
+                db.close();
+              }
+            }
+          }
+          for (const date2 of dates) {
+            const outboxPath = `private/dms/outbox/${date2}`;
+            const data = await this.db.storage.getFile(outboxPath);
+            if (data) {
+              const db = new this.sqliteInstance.Database(data);
+              try {
+                const res = db.exec("SELECT * FROM messages");
+                if (res && res.length > 0) {
+                  const columns = res[0].columns;
+                  const myMsgs = res[0].values.map((row) => {
+                    const msg = {};
+                    columns.forEach((col, i2) => msg[col] = row[i2]);
+                    return msg;
+                  });
+                  messages.push(...myMsgs);
+                }
+              } catch (e2) {
+              }
+              db.close();
+            }
+          }
+          messages.sort((a2, b2) => b2.timestamp - a2.timestamp);
+          return messages;
+        }
         async updateProfile(name, bio, avatar) {
-          const profile = { name, bio, avatar, updatedAt: Date.now(), userId: this.db.config.paths.userId };
+          let finalAvatar = avatar;
+          if (avatar && avatar.startsWith("data:image")) {
+            try {
+              finalAvatar = await _SocialManager.compressImage(avatar, 200 * 1024);
+              console.log(`[Social] Profile avatar compressed. Length: ${finalAvatar.length}`);
+            } catch (e2) {
+              console.warn(`[Social] Failed to compress avatar: ${e2.message}`);
+            }
+          }
+          const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.config.paths.userId };
           const data = new TextEncoder().encode(JSON.stringify(profile));
           await this.db.storage.savePublicUserFile(data);
+        }
+        /**
+         * Utility to compress a base64 image (data URL) to a target size in bytes.
+         */
+        static async compressImage(dataUrl, targetSizeBytes) {
+          if (typeof document === "undefined") return dataUrl;
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = dataUrl;
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              let width = img.width;
+              let height = img.height;
+              const MAX_DIM = 1024;
+              if (width > MAX_DIM || height > MAX_DIM) {
+                if (width > height) {
+                  height = height / width * MAX_DIM;
+                  width = MAX_DIM;
+                } else {
+                  width = width / height * MAX_DIM;
+                  height = MAX_DIM;
+                }
+              }
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return reject(new Error("Canvas context failed"));
+              ctx.drawImage(img, 0, 0, width, height);
+              let quality = 0.9;
+              let result = dataUrl;
+              const attempt = () => {
+                result = canvas.toDataURL("image/jpeg", quality);
+                const estimatedSize = result.length * 0.75;
+                if (estimatedSize > targetSizeBytes && quality > 0.1) {
+                  quality -= 0.1;
+                  attempt();
+                } else {
+                  resolve(result);
+                }
+              };
+              attempt();
+            };
+            img.onerror = (e2) => reject(e2);
+          });
         }
         async getProfile(userId) {
           const myId = this.db.config.paths.userId;
@@ -90182,11 +90739,22 @@ ${toHex(hashedRequest)}`;
           for (const user of following) {
             const userRemote = this.db.createRemote(user.userId);
             try {
-              const data = await userRemote.downloadFile("public/user.json");
-              if (data) {
-                const decrypted = await this.db.decrypt(data, user.publicKey);
-                await this.db.storage.saveDailyDb(`${user.userId}/profile`, "followed", decrypted);
-                console.log(`[Social] Synced and decrypted profile for ${user.userId}`);
+              const result = await userRemote.downloadFile("public/user.json");
+              if (result && result.data) {
+                const data = result.data;
+                let finalData = data;
+                try {
+                  JSON.parse(new TextDecoder().decode(data));
+                } catch (e2) {
+                  try {
+                    finalData = await this.db.decrypt(data, user.publicKey);
+                  } catch (de) {
+                    console.warn(`[Social] Could not parse or decrypt profile for ${user.userId}`);
+                    continue;
+                  }
+                }
+                await this.db.storage.saveDailyDb(`${user.userId}/profile`, "followed", finalData);
+                console.log(`[Social] Synced profile for ${user.userId}`);
               } else {
                 console.log(`[Social] No profile file found for ${user.userId}`);
               }
@@ -90218,6 +90786,62 @@ ${toHex(hashedRequest)}`;
           db.close();
           console.log(`[Social] Found ${posts.length} posts in ${type}/${date2}`);
           return posts;
+        }
+        async enrichLikes(posts, days = 5) {
+          if (posts.length === 0) return;
+          const postMap = /* @__PURE__ */ new Map();
+          posts.forEach((p2) => {
+            p2.likesCount = 0;
+            p2.likedByMe = false;
+            postMap.set(p2.id, p2);
+          });
+          const myId = this.db.config.paths.userId;
+          const following = await this.db.getFollowing();
+          const dates = [];
+          for (let i2 = 0; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(SovereignS3nc.getDateStr(d2));
+          }
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const processDb = async (date2, type) => {
+            const data = await this.db.storage.getDailyDb(date2, type);
+            if (!data) return;
+            const db = new this.sqliteInstance.Database(data);
+            try {
+              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
+              if (tableCheck.length === 0) {
+                db.close();
+                return;
+              }
+              const res = db.exec("SELECT postId, userId FROM likes");
+              if (res && res.length > 0) {
+                for (const row of res[0].values) {
+                  const postId = row[0];
+                  const likerId = row[1];
+                  const post = postMap.get(postId);
+                  if (post) {
+                    post.likesCount = (post.likesCount || 0) + 1;
+                    if (likerId === myId) {
+                      post.likedByMe = true;
+                    }
+                  }
+                }
+              }
+            } catch (e2) {
+              console.warn(`[Social] Failed to process likes in ${type}/${date2}:`, e2);
+            }
+            db.close();
+          };
+          for (const date2 of dates) {
+            await processDb(date2, "public");
+          }
+          for (const user of following) {
+            for (const date2 of dates) {
+              await processDb(`${user.userId}/${date2}`, "followed");
+            }
+          }
         }
       };
     }

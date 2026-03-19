@@ -1,4 +1,5 @@
 import { IStorage, FollowedUser } from '../interfaces/IStorage';
+import { Logger } from '../utils/Logger';
 
 export class IndexedDBStorage implements IStorage {
     private db: IDBDatabase | null = null;
@@ -10,7 +11,7 @@ export class IndexedDBStorage implements IStorage {
 
     async init(): Promise<void> {
         if (this.db) return;
-        console.log(`[IDB] Initializing ${this.dbName}...`);
+        Logger.debug(`[IDB] Initializing ${this.dbName}...`);
         return new Promise((resolve, reject) => {
             try {
                 const request = indexedDB.open(this.dbName, 1);
@@ -22,25 +23,25 @@ export class IndexedDBStorage implements IStorage {
 
                 request.onsuccess = (event) => {
                     this.db = (event.target as IDBOpenDBRequest).result;
-                    console.log('[IDB] Database opened successfully');
+                    Logger.debug('[IDB] Database opened successfully');
                     resolve();
                 };
 
                 request.onupgradeneeded = (event) => {
-                    console.log('[IDB] Upgrading database...');
+                    Logger.debug('[IDB] Upgrading database...');
                     const db = (event.target as IDBOpenDBRequest).result;
                     if (!db.objectStoreNames.contains('files')) {
                         db.createObjectStore('files');
-                        console.log('[IDB] Created "files" store');
+                        Logger.debug('[IDB] Created "files" store');
                     }
                     if (!db.objectStoreNames.contains('metadata')) {
                         db.createObjectStore('metadata');
-                        console.log('[IDB] Created "metadata" store');
+                        Logger.debug('[IDB] Created "metadata" store');
                     }
                 };
 
                 request.onblocked = () => {
-                    console.warn('[IDB] Database opening blocked. Please close other tabs of this app.');
+                    Logger.warn('[IDB] Database opening blocked. Please close other tabs of this app.');
                 };
             } catch (e) {
                 reject(e);

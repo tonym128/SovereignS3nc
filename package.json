@@ -1,6 +1,6 @@
 {
   "name": "sovereigns3nc",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/sovereigns3nc.esm.js",
@@ -8,12 +8,14 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
+    "test:integration": "jest -c jest.integration.config.js",
     "test:docker": "jest -c jest.integration.config.js",
     "setup:test-env": "bash scripts/setup-garage.sh",
     "test:demo": "jest -c jest.demo.config.js",
     "test:shopping": "jest -c jest.shopping.config.js",
-    "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm",
-    "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign",
+    "test:browser": "npx playwright test",
+    "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser",
+    "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser",
     "build:social": "node demo/social/build.js",
     "build": "tsc && npm run build:esm && npm run build:global",
     "prepublishOnly": "npm run build"
@@ -39,11 +41,13 @@
     "react-dom": "^19.2.4",
     "sql.js": "^1.13.0",
     "stream-browserify": "^3.0.0",
+    "tweetnacl": "^1.0.3",
     "typescript": "^5.9.3",
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.13",

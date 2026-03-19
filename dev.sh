@@ -16,11 +16,7 @@ LOG_FILE="garage.log"
 
 function dev() {
     echo "--- Cleaning up previous runs ---"
-    pkill -9 garage 2>/dev/null || true
-    pkill -f "python3 -m http.server 127.0.0.1 8888" 2>/dev/null || true
-    pkill -f "python3 -m http.server 8888" 2>/dev/null || true
-    pkill -f "node scripts/proxy.js" 2>/dev/null || true
-    rm -f .garage.pid .web.pid .proxy.pid
+    stop
     sleep 1
 
     echo "--- Preparing Local Environment ---"

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
-import { SocialManager, Post } from '../../../src/modules/Social';
+import { SocialManager, Post, Message } from '../../../src/modules/Social';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
+
+const DEBUG = false;
 
 const App = () => {
     const [config, setConfig] = useState({
@@ -32,6 +34,13 @@ const App = () => {
     const [newPost, setNewPost] = useState('');
     const [newImage, setNewPostImage] = useState<Uint8Array | null>(null);
     const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
+    
+    const [msgImage, setMsgImage] = useState<Uint8Array | null>(null);
+    const [msgImagePreview, setMsgImagePreview] = useState<string | null>(null);
+
+    const postFileRef = useRef<HTMLInputElement>(null);
+    const msgFileRef = useRef<HTMLInputElement>(null);
+
     const [profile, setProfile] = useState<any>(null);
     const [profileCache, setProfileCache] = useState<Record<string, any>>(() => {
         const saved = localStorage.getItem('sov_profile_cache');
@@ -51,10 +60,62 @@ const App = () => {
     }, [blobCache]);
     const [syncing, setSyncing] = useState(false);
     const [currentTab, setCurrentTab] = useState<'feed' | 'friends' | 'messages' | 'profile'>('feed');
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [msgInput, setMsgInput] = useState('');
     const [selectedUser, setSelectedUser] = useState<string | null>(null);
     const [lookbackDays, setLookbackDays] = useState(5);
+    const [isConnected, setIsConnected] = useState(true);
+    const [manualDisconnect, setManualDisconnect] = useState(false);
+    const [reconnectDelay, setReconnectDelay] = useState(1000);
+
+    const checkConnectivity = async (silent = false) => {
+        if (!config.endpoint) return false;
+        try {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 3000);
+            const res = await fetch(`${config.endpoint}/_ping`, { signal: controller.signal });
+            clearTimeout(id);
+            if (res.ok) {
+                if (!silent && !isConnected) if (DEBUG) console.log("[Connectivity] Back online");
+                setIsConnected(true);
+                setReconnectDelay(1000); 
+                return true;
+            }
+        } catch (e) {}
+        if (!silent && isConnected) if (DEBUG) console.log("[Connectivity] Went offline");
+        setIsConnected(false);
+        return false;
+    };
+
+    useEffect(() => {
+        let interval: any;
+        if (isLoggedIn) {
+            interval = setInterval(async () => {
+                if (manualDisconnect) return;
+                
+                if (!isConnected) {
+                    const success = await checkConnectivity();
+                    if (!success) {
+                        setReconnectDelay(prev => Math.min(prev * 2, 30000)); 
+                    }
+                } else {
+                    await checkConnectivity(true);
+                }
+            }, isConnected ? 10000 : reconnectDelay);
+        }
+        return () => clearInterval(interval);
+    }, [isLoggedIn, isConnected, manualDisconnect, reconnectDelay, config.endpoint]);
+
+    const toggleConnection = async () => {
+        if (manualDisconnect) {
+            setManualDisconnect(false);
+            setReconnectDelay(1000);
+            await checkConnectivity();
+        } else {
+            setManualDisconnect(true);
+            setIsConnected(false);
+        }
+    };
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -117,21 +178,6 @@ const App = () => {
     const performLogin = async (currentConfig: any) => {
         try {
             setConfig(currentConfig);
-            console.log(`[Login] Testing connection to proxy: ${currentConfig.endpoint}/_ping`);
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 5000);
-            try {
-                const testRes = await fetch(`${currentConfig.endpoint}/_ping`, { 
-                    method: 'GET',
-                    signal: controller.signal
-                });
-                clearTimeout(id);
-                console.log(`[Login] Proxy connection test status: ${testRes.status}`);
-            } catch (e: any) {
-                clearTimeout(id);
-                console.warn(`[Login] Proxy connection test failed: ${e.message}. This might be a network issue or the proxy is not running.`);
-            }
-
             const s3Config = {
                 region: currentConfig.region,
                 endpoint: currentConfig.endpoint,
@@ -146,7 +192,8 @@ const App = () => {
             const instance = new SovereignS3nc({
                 s3: s3Config,
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
-                password: currentConfig.password
+                password: currentConfig.password,
+                debug: DEBUG
             });
 
             await instance.init();
@@ -161,10 +208,8 @@ const App = () => {
             localStorage.setItem('sov_social_config', JSON.stringify(currentConfig));
             localStorage.setItem('sov_auto_login', autoLogin.toString());
 
-            // Load cached data immediately using the local instances
             await loadData(sm, instance);
 
-            // Add to remembered users
             const newUser = { userId: currentConfig.userId, name: profileData?.name || currentConfig.userId, avatar: profileData?.avatar, config: currentConfig };
             setRememberedUsers(prev => {
                 const updated = [newUser, ...prev.filter(u => u.userId !== currentConfig.userId)];
@@ -176,7 +221,6 @@ const App = () => {
                 instance.sync().then(() => {
                     loadData();
                 }).catch(e => {
-                    console.warn("Initial sync failed, operating in offline mode.", e);
                     loadData(); 
                 });
             }, 100);
@@ -195,6 +239,17 @@ const App = () => {
         setPosts([]);
         setFollowing([]);
         setMessages([]);
+    };
+
+    const resetLocalData = async () => {
+        if (confirm('Clear all local data? This will forget your account and settings.')) {
+            localStorage.clear();
+            const dbs = await indexedDB.databases();
+            for (const db of dbs) {
+                if (db.name) indexedDB.deleteDatabase(db.name);
+            }
+            window.location.reload();
+        }
     };
 
     const compressImage = async (file: File): Promise<Uint8Array> => {
@@ -220,7 +275,6 @@ const App = () => {
                     ctx.drawImage(img, 0, 0, width, height);
 
                     let quality = 0.8;
-                    let blob: any;
                     const check = () => {
                         canvas.toBlob((b) => {
                             if (b && b.size > 200 * 1024 && quality > 0.1) {
@@ -237,23 +291,31 @@ const App = () => {
         });
     };
 
-    const handleImageChange = async (e: any) => {
+    const handleImageChange = async (e: any, isMessage: boolean = false) => {
         const file = e.target.files[0];
         if (!file) return;
         const compressed = await compressImage(file);
-        setNewPostImage(compressed);
-        const reader = new FileReader();
-        reader.onload = (ev) => setNewImagePreview(ev.target?.result as string);
-        reader.readAsDataURL(new Blob([compressed]));
+        if (isMessage) {
+            setMsgImage(compressed);
+            const reader = new FileReader();
+            reader.onload = (ev) => setMsgImagePreview(ev.target?.result as string);
+            reader.readAsDataURL(new Blob([compressed]));
+        } else {
+            setNewPostImage(compressed);
+            const reader = new FileReader();
+            reader.onload = (ev) => setNewImagePreview(ev.target?.result as string);
+            reader.readAsDataURL(new Blob([compressed]));
+        }
     };
 
     const handlePost = async () => {
-        if (!social || !newPost) return;
+        if (!social || (!newPost && !newImage)) return;
         await social.post(newPost, true, newImage || undefined);
         setNewPost('');
         setNewPostImage(null);
         setNewImagePreview(null);
-        await sync(); // Sync immediately after posting
+        if (postFileRef.current) postFileRef.current.value = '';
+        await sync(); 
     };
 
     const handleLike = async (postId: string) => {
@@ -265,8 +327,27 @@ const App = () => {
     const handleComment = async (post: Post) => {
         if (!social) return;
         const content = prompt(`Replying to ${post.userId}:`);
-        if (content) {
+        if (content !== null) {
             await social.comment(post.id, post.userId, content);
+            await sync();
+        }
+    };
+
+    const handleEditPost = async (post: Post) => {
+        if (!social) return;
+        const newContent = prompt('Edit your post:', post.content);
+        if (newContent !== null && newContent !== post.content) {
+            const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
+            await social.editPost(post.id, dateStr, newContent);
+            await sync();
+        }
+    };
+
+    const handleDeletePost = async (post: Post) => {
+        if (!social) return;
+        if (confirm('Delete this post? Data will be removed but a placeholder will remain.')) {
+            const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
+            await social.deletePost(post.id, dateStr);
             await sync();
         }
     };
@@ -282,7 +363,7 @@ const App = () => {
     };
 
     const sync = async () => {
-        if (!sov || !social || syncing) return;
+        if (!sov || !social || syncing || !isConnected) return;
         setSyncing(true);
         try {
             await sov.sync();
@@ -290,20 +371,15 @@ const App = () => {
             setLastSyncTime(new Date().toLocaleTimeString());
             await loadData();
         } catch (e) {
-            console.warn("Sync failed", e);
         } finally {
             setSyncing(false);
         }
     };
 
-    // Auto-sync and badge clearing on tab change
     useEffect(() => {
         if (isLoggedIn) {
             sync();
-            
             if (currentTab === 'feed' || currentTab === 'friends') {
-                // When entering these tabs, the PREVIOUS lastViewed becomes the highlight threshold
-                // and lastViewed itself moves to NOW to clear the badge.
                 setHighlights(prev => ({ ...prev, [currentTab]: lastViewed[currentTab] || 0 }));
                 setLastViewed(prev => ({ ...prev, [currentTab]: Date.now() }));
             }
@@ -312,7 +388,6 @@ const App = () => {
 
     useEffect(() => {
         if (currentTab === 'messages' && selectedUser) {
-            // Update per-user message viewed timestamp
             setLastViewed(prev => ({
                 ...prev,
                 chat: { ...(prev.chat || {}), [selectedUser]: Date.now() }
@@ -321,7 +396,6 @@ const App = () => {
         }
     }, [selectedUser, currentTab]);
 
-    // Poll sync every 15 seconds
     useEffect(() => {
         if (!isLoggedIn || !sov || !social) return;
         const interval = setInterval(() => {
@@ -338,7 +412,6 @@ const App = () => {
         const registry = await v.getPublicRegistry();
         setAllUsers(registry);
 
-        // Update discovery map for new users
         const now = Date.now();
         const newDiscoveryMap = { ...discoveryMap };
         let discoveryChanged = false;
@@ -375,10 +448,8 @@ const App = () => {
         const newMessages = await s.getInboxMessages(lookbackDays);
         setMessages(newMessages);
 
-        // Calculate unread counts
         const feedUnread = allPosts.filter(p => p.timestamp > lastViewed.feed && p.userId !== config.userId).length;
         
-        // Per-chat unread counting
         const userMsgUnreads: Record<string, number> = {};
         let totalMsgUnread = 0;
         newMessages.forEach(m => {
@@ -391,7 +462,6 @@ const App = () => {
             }
         });
 
-        // Friends bubble: any new users in registry since last viewed friends
         const friendsUnread = registry.filter(u => (discoveryMap[u.userId] || 0) > lastViewed.friends && u.userId !== config.userId).length;
 
         setUnreadCounts({
@@ -403,16 +473,43 @@ const App = () => {
     };
 
     const handleSendMessage = async () => {
-        if (!social || !selectedUser || !msgInput) return;
-        await social.sendDirectMessage(selectedUser, msgInput);
+        if (!social || !selectedUser || (!msgInput && !msgImage)) return;
+        await social.sendDirectMessage(selectedUser, msgInput, msgImage || undefined);
         setMsgInput('');
-        await sync(); // Sync immediately after sending
+        setMsgImage(null);
+        setMsgImagePreview(null);
+        if (msgFileRef.current) msgFileRef.current.value = '';
+        await sync(); 
     };
 
+    const handleEditMessage = async (m: Message) => {
+        if (!social) return;
+        const newContent = prompt('Edit your message:', m.content);
+        if (newContent !== null && newContent !== m.content) {
+            const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
+            const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
+            await social.editMessage(otherUser, m.id, dateStr, newContent);
+            await sync();
+        }
+    };
+
+    const handleDeleteMessage = async (m: Message) => {
+        if (!social) return;
+        if (confirm('Delete this message for everyone?')) {
+            const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
+            const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
+            await social.deleteMessage(otherUser, m.id, dateStr);
+            await sync();
+        }
+    };
+
+    const handleNewChat = () => {
+        const userId = prompt('Enter User ID to chat with:');
+        if (userId) setSelectedUser(userId);
+    };
 
     const BlobImage = ({ path, userId }: { path: string, userId: string }) => {
         const [src, setSrc] = useState<string | null>(blobCache[path]);
-
         useEffect(() => {
             if (!src && sov) {
                 sov.getBlob(path, userId).then(data => {
@@ -435,18 +532,16 @@ const App = () => {
 
     const UserAvatar = ({ userId, size = 40 }: { userId: string, size?: number }) => {
         const [userData, setUserData] = useState<any>(profileCache[userId]);
-
         useEffect(() => {
-            if (!userData && social) {
+            if (social) {
                 social.getProfile(userId).then(p => {
-                    if (p) {
+                    if (p && (!userData || p.updatedAt > (userData.updatedAt || 0) || p.name !== userData.name || p.avatar !== userData.avatar)) {
                         setUserData(p);
                         setProfileCache(prev => ({ ...prev, [userId]: p }));
                     }
                 });
             }
-        }, [userId, social, userData]);
-
+        }, [userId, social, lastSyncTime]);
         const p = userData || { name: userId };
         return (
             <div className="d-flex align-items-center">
@@ -464,18 +559,16 @@ const App = () => {
 
     const UserName = ({ userId, className }: { userId: string, className?: string }) => {
         const [userData, setUserData] = useState<any>(profileCache[userId]);
-
         useEffect(() => {
-            if (!userData && social) {
+            if (social) {
                 social.getProfile(userId).then(p => {
-                    if (p) {
+                    if (p && (!userData || p.updatedAt > (userData.updatedAt || 0) || p.name !== userData.name)) {
                         setUserData(p);
                         setProfileCache(prev => ({ ...prev, [userId]: p }));
                     }
                 });
             }
-        }, [userId, social, userData]);
-
+        }, [userId, social, lastSyncTime]);
         return <span className={className || 'fw-bold'}>{userData?.name || userId}</span>;
     };
 
@@ -488,9 +581,10 @@ const App = () => {
                 <div key={post.id} className={`card post-card p-3 ${isNew ? 'border-primary shadow-sm' : ''}`} style={isNew ? {borderWidth: '2px', backgroundColor: '#f0f7ff'} : {}}>
                     <div className="d-flex align-items-center mb-3">
                         <UserAvatar userId={post.userId} />
-                        <div className="ms-2">
+                        <div className="ms-2 flex-grow-1">
                             <div className="text-muted x-small">
                                 {new Date(post.timestamp).toLocaleString()}
+                                {post.isEdited && <span className="ms-1 badge bg-light text-muted fw-normal">Edited</span>}
                                 {post.parentUserId && (
                                     <span className="ms-1">
                                         replied to <UserName userId={post.parentUserId} className="fw-normal text-primary" />
@@ -498,18 +592,34 @@ const App = () => {
                                 )}
                             </div>
                         </div>
+                        {post.userId === config.userId && !post.isDeleted && (
+                            <div className="dropdown">
+                                <button className="btn btn-sm btn-light rounded-circle" data-bs-toggle="dropdown">⋮</button>
+                                <ul className="dropdown-menu dropdown-menu-end">
+                                    <li><button className="dropdown-item" onClick={() => handleEditPost(post)}>Edit</button></li>
+                                    <li><button className="dropdown-item text-danger" onClick={() => handleDeletePost(post)}>Delete</button></li>
+                                </ul>
+                            </div>
+                        )}
                     </div>
-                    <div className="mb-3">{post.content}</div>
-                    {post.image && <BlobImage path={post.image} userId={post.userId} />}
+                    <div className="mb-3">
+                        {post.isDeleted ? (
+                            <i className="text-muted small">This post was deleted</i>
+                        ) : (
+                            post.content
+                        )}
+                    </div>
+                    {post.image && !post.isDeleted && <BlobImage path={post.image} userId={post.userId} />}
                     <div className="border-top mt-3 pt-2 d-flex justify-content-around">
                         <button 
                             className={`btn btn-link text-decoration-none ${post.likedByMe ? 'text-primary fw-bold' : 'text-muted'}`} 
                             onClick={() => handleLike(post.id)}
+                            disabled={post.isDeleted}
                         >
                             Like {post.likesCount ? `(${post.likesCount})` : ''}
                         </button>
-                        <button className="btn btn-link text-muted text-decoration-none" onClick={() => handleComment(post)}>Comment</button>
-                        <button className="btn btn-link text-muted text-decoration-none" onClick={() => handleShare(post)}>Share</button>
+                        <button className="btn btn-link text-muted text-decoration-none" onClick={() => handleComment(post)} disabled={post.isDeleted}>Comment</button>
+                        <button className="btn btn-link text-muted text-decoration-none" onClick={() => handleShare(post)} disabled={post.isDeleted}>Share</button>
                     </div>
                 </div>
                 {replies.sort((a,b) => a.timestamp - b.timestamp).map(reply => (
@@ -564,41 +674,15 @@ const App = () => {
                     <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
                     
                     <div className="form-check mb-4">
-                        <input 
-                            className="form-check-input" 
-                            type="checkbox" 
-                            id="autoLogin" 
-                            checked={autoLogin} 
-                            onChange={e => {
-                                setAutoLogin(e.target.checked);
-                                localStorage.setItem('sov_auto_login', e.target.checked.toString());
-                            }} 
-                        />
-                        <label className="form-check-label small" htmlFor="autoLogin">
-                            Auto-login next time
-                        </label>
+                        <input className="form-check-input" type="checkbox" id="autoLogin" checked={autoLogin} onChange={e => { setAutoLogin(e.target.checked); localStorage.setItem('sov_auto_login', e.target.checked.toString()); }} />
+                        <label className="form-check-label small" htmlFor="autoLogin">Auto-login next time</label>
                     </div>
 
-                    <button className="btn btn-fb w-100 py-2 fs-5 mb-3" onClick={login}>Log In</button>
-
-                    <button 
-                        className="btn btn-outline-danger w-100 py-2 btn-sm" 
-                        onClick={async () => {
-                            if (confirm('Are you sure? This will delete all local databases and settings.')) {
-                                localStorage.clear();
-                                const dbs = await window.indexedDB.databases();
-                                dbs.forEach(db => {
-                                    if (db.name?.startsWith('sov_') || db.name?.startsWith('test_db_')) {
-                                        window.indexedDB.deleteDatabase(db.name);
-                                    }
-                                });
-                                alert('All local data cleared. The page will now reload.');
-                                window.location.reload();
-                            }
-                        }}
-                    >
-                        Reset All Local Data
-                    </button>
+                    <button className="btn btn-sov w-100 py-2 fs-5 mb-3" onClick={login}>Log In</button>
+                    
+                    <div className="text-center mt-3">
+                        <button className="btn btn-link btn-sm text-danger text-decoration-none" onClick={resetLocalData}>Reset Local Data</button>
+                    </div>
                 </div>
             </div>
         );
@@ -609,30 +693,34 @@ const App = () => {
             <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3">
                 <a className="navbar-brand text-primary fw-bold fs-3" href="#">sov</a>
                 <div className="mx-auto d-flex align-items-center">
-                    <button className={`btn mx-2 position-relative ${currentTab === 'feed' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('feed')}>
+                    <button data-testid="nav-home" className={`btn mx-2 position-relative ${currentTab === 'feed' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('feed')}>
                         Home
                         {unreadCounts.feed > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.feed}</span>}
                     </button>
-                    <button className={`btn mx-2 position-relative ${currentTab === 'friends' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('friends')}>
+                    <button data-testid="nav-friends" className={`btn mx-2 position-relative ${currentTab === 'friends' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('friends')}>
                         Friends
                         {unreadCounts.friends > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.friends}</span>}
                     </button>
-                    <button className={`btn mx-2 position-relative ${currentTab === 'messages' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('messages')}>
+                    <button data-testid="nav-messages" className={`btn mx-2 position-relative ${currentTab === 'messages' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('messages')}>
                         Messages
-                        {unreadCounts.messages > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.messages}</span>}
+                        {unreadCounts.messages > 0 && <span data-testid="unread-badge" className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.messages}</span>}
                     </button>
-                    <button className={`btn mx-2 ${currentTab === 'profile' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('profile')}>
+                    <button data-testid="nav-profile" className={`btn mx-2 ${currentTab === 'profile' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('profile')}>
                         Profile
                     </button>
                 </div>
                 <div className="d-flex align-items-center">
+                    <button 
+                        className={`btn btn-link px-2 me-2 ${isConnected ? 'text-success' : 'text-danger'}`} 
+                        onClick={toggleConnection}
+                    >
+                        <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
+                    </button>
                     <UserAvatar userId={config.userId} size={32} />
                     <button className="btn btn-sm btn-outline-secondary ms-3" onClick={sync} disabled={syncing}>
                         {syncing ? '...' : 'Sync'}
                     </button>
-                    <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>
-                        Logout
-                    </button>
+                    <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
                 </div>
             </nav>
 
@@ -644,13 +732,13 @@ const App = () => {
                                 <div className="d-flex mb-3">
                                     <UserAvatar userId={config.userId} />
                                     <div className="ms-2 flex-grow-1">
-                                        <textarea className="post-input w-100" rows={1} placeholder={`What's on your mind, ${profile?.name || config.userId}?`} value={newPost} onChange={e => setNewPost(e.target.value)} />
+                                        <textarea className="post-input w-100" rows={1} placeholder={`What's on your mind?`} value={newPost} onChange={e => setNewPost(e.target.value)} />
                                     </div>
                                 </div>
                                 {newImagePreview && <img src={newImagePreview} className="img-fluid rounded mb-2" style={{maxHeight: '300px'}} />}
                                 <div className="d-flex justify-content-between border-top pt-2">
-                                    <input type="file" className="form-control form-control-sm border-0 w-auto" onChange={handleImageChange} />
-                                    <button className="btn btn-fb px-4" onClick={handlePost}>Post</button>
+                                    <input type="file" ref={postFileRef} className="form-control form-control-sm border-0 w-auto" onChange={(e) => handleImageChange(e, false)} />
+                                    <button className="btn btn-sov px-4" onClick={handlePost}>Post</button>
                                 </div>
                             </div>
 
@@ -662,9 +750,7 @@ const App = () => {
                             }
 
                             <div className="text-center mt-4 mb-5">
-                                <button className="btn btn-outline-secondary" onClick={handleLoadMore}>
-                                    Load more history ({lookbackDays} days shown)
-                                </button>
+                                <button className="btn btn-outline-secondary" onClick={handleLoadMore}>Load more history</button>
                             </div>
                         </div>
                     )}
@@ -687,79 +773,6 @@ const App = () => {
                                             </div>
                                         );
                                     })}
-                                    {allUsers.length <= 1 && <div className="text-center py-5 text-muted">No other users found yet.</div>}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {currentTab === 'profile' && (
-                        <div className="col-md-6">
-                            <div className="card p-4 shadow-sm border-0">
-                                <h4 className="mb-4 fw-bold">Edit Profile</h4>
-                                <div className="text-center mb-4">
-                                    <div className="position-relative d-inline-block">
-                                        {profile?.avatar ? (
-                                            <img src={profile.avatar} style={{width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover'}} className="border shadow-sm" />
-                                        ) : (
-                                            <div className="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center border shadow-sm" style={{width: '120px', height: '120px', fontSize: '3rem'}}>
-                                                {config.userId[0].toUpperCase()}
-                                            </div>
-                                        )}
-                                        <label className="btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle" style={{width: '32px', height: '32px', padding: '4px'}}>
-                                            ✎
-                                            <input type="file" className="d-none" accept="image/*" onChange={async (e) => {
-                                                const file = e.target.files?.[0];
-                                                if (file) {
-                                                    const reader = new FileReader();
-                                                    reader.onload = async (ev) => {
-                                                        const base64 = ev.target?.result as string;
-                                                        await social?.updateProfile(profile?.name || config.userId, profile?.bio || '', base64);
-                                                        setProfile(prev => ({ ...prev, avatar: base64 }));
-                                                        await sync();
-                                                    };
-                                                    reader.readAsDataURL(file);
-                                                }
-                                            }} />
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div className="mb-3">
-                                    <label className="form-label small fw-bold text-muted text-uppercase">Display Name</label>
-                                    <input 
-                                        className="form-control" 
-                                        value={profile?.name || ''} 
-                                        onChange={e => setProfile({...profile, name: e.target.value})} 
-                                        placeholder="Your Name"
-                                    />
-                                </div>
-
-                                <div className="mb-4">
-                                    <label className="form-label small fw-bold text-muted text-uppercase">Bio</label>
-                                    <textarea 
-                                        className="form-control" 
-                                        rows={3} 
-                                        value={profile?.bio || ''} 
-                                        onChange={e => setProfile({...profile, bio: e.target.value})} 
-                                        placeholder="Tell us about yourself..."
-                                    />
-                                </div>
-
-                                <button 
-                                    className="btn btn-primary w-100 py-2 fw-bold" 
-                                    onClick={async () => {
-                                        await social?.updateProfile(profile?.name || config.userId, profile?.bio || '', profile?.avatar);
-                                        await sync();
-                                        alert('Profile updated and synced!');
-                                    }}
-                                >
-                                    Save Changes
-                                </button>
-                                
-                                <div className="mt-4 pt-3 border-top text-center">
-                                    <div className="small text-muted mb-1">User ID</div>
-                                    <code>{config.userId}</code>
                                 </div>
                             </div>
                         </div>
@@ -770,19 +783,17 @@ const App = () => {
                             <div className="card shadow-sm border-0" style={{height: '70vh'}}>
                                 <div className="row g-0 h-100">
                                     <div className="col-4 border-end overflow-y-auto">
-                                        <div className="p-3 border-bottom bg-light">
+                                        <div className="p-3 border-bottom bg-light d-flex justify-content-between align-items-center">
                                             <h5 className="mb-0">Chats</h5>
+                                            <button className="btn btn-sm btn-outline-primary rounded-circle" onClick={handleNewChat} style={{display:'none'}}>+</button>
                                         </div>
                                         <div className="list-group list-group-flush">
                                             {following.map(user => (
                                                 <button key={user.userId} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? 'bg-light' : ''}`} onClick={() => setSelectedUser(user.userId)}>
                                                     <UserAvatar userId={user.userId} />
-                                                    {userUnreadCounts[user.userId] > 0 && (
-                                                        <span className="badge rounded-pill bg-primary">{userUnreadCounts[user.userId]}</span>
-                                                    )}
+                                                    {userUnreadCounts[user.userId] > 0 && <span className="badge rounded-pill bg-primary">{userUnreadCounts[user.userId]}</span>}
                                                 </button>
                                             ))}
-                                            {following.length === 0 && <div className="p-3 text-center text-muted small">Follow users to chat</div>}
                                         </div>
                                     </div>
                                     <div className="col-8 d-flex flex-column">
@@ -793,60 +804,97 @@ const App = () => {
                                                 </div>
                                                 <div className="flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse">
                                                     <div>
-                                                        {(() => {
-                                                            const chatMessages = messages
-                                                                .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
-                                                                .sort((a,b) => a.timestamp - b.timestamp);
-                                                            
-                                                            const userLastViewed = (lastViewed.chat || {})[selectedUser!] || 0;
-                                                            let dividerShown = false;
-
-                                                            return chatMessages.map((m, index) => {
-                                                                const isNew = m.senderId !== config.userId && m.timestamp > userLastViewed;
-                                                                const showDivider = isNew && !dividerShown;
-                                                                if (showDivider) dividerShown = true;
-
-                                                                return (
-                                                                    <React.Fragment key={m.id}>
-                                                                        {showDivider && (
-                                                                            <div className="d-flex align-items-center my-3">
-                                                                                <div className="flex-grow-1 border-bottom border-primary opacity-25"></div>
-                                                                                <div className="mx-3 small text-primary fw-bold">Messages from this point are new</div>
-                                                                                <div className="flex-grow-1 border-bottom border-primary opacity-25"></div>
-                                                                            </div>
+                                                        {messages
+                                                            .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
+                                                            .sort((a,b) => a.timestamp - b.timestamp)
+                                                            .map((m) => (
+                                                                <div key={m.id} className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
+                                                                    <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{maxWidth: '75%'}}>
+                                                                        {m.isDeleted ? (
+                                                                            <i className="small opacity-75">Message deleted</i>
+                                                                        ) : (
+                                                                            <>
+                                                                                {m.image && <BlobImage path={m.image} userId={m.senderId} />}
+                                                                                <div>{m.content}</div>
+                                                                            </>
                                                                         )}
-                                                                        <div className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
-                                                                            <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light text-dark'} ${isNew ? 'border border-primary' : ''}`} style={{maxWidth: '75%'}}>
-                                                                                {m.content}
-                                                                                <div style={{fontSize: '0.6rem'}} className="mt-1 opacity-75">{new Date(m.timestamp).toLocaleTimeString()}</div>
-                                                                            </div>
+                                                                        <div style={{fontSize: '0.6rem'}} className="mt-1 opacity-75 d-flex justify-content-between">
+                                                                            <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
+                                                                            {m.senderId === config.userId && !m.isDeleted && (
+                                                                                <span className="ms-2">
+                                                                                    <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
+                                                                                    <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
+                                                                                </span>
+                                                                            )}
                                                                         </div>
-                                                                    </React.Fragment>
-                                                                );
-                                                            });
-                                                        })()}
-                                                        
-                                                        <div className="text-center mt-3">
-                                                            <button className="btn btn-sm btn-link text-muted" onClick={handleLoadMore}>
-                                                                Load older messages ({lookbackDays} days shown)
-                                                            </button>
-                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div className="p-3 border-top bg-light">
+                                                    {msgImagePreview && <div className="mb-2"><img src={msgImagePreview} style={{maxHeight:'100px'}} className="rounded" /></div>}
                                                     <div className="input-group">
+                                                        <input type="file" ref={msgFileRef} className="d-none" id="msgFile" onChange={(e)=>handleImageChange(e, true)} />
+                                                        <label htmlFor="msgFile" className="btn btn-outline-secondary rounded-pill me-2">📷</label>
                                                         <input className="form-control rounded-pill" placeholder="Type a message..." value={msgInput} onChange={e => setMsgInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSendMessage()} />
                                                         <button className="btn btn-primary rounded-pill ms-2" onClick={handleSendMessage}>Send</button>
                                                     </div>
                                                 </div>
                                             </>
                                         ) : (
-                                            <div className="flex-grow-1 d-flex align-items-center justify-content-center text-muted">
-                                                Select a friend to start chatting
-                                            </div>
+                                            <div className="flex-grow-1 d-flex align-items-center justify-content-center text-muted">Select a friend to start chatting</div>
                                         )}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {currentTab === 'profile' && (
+                        <div className="col-md-6">
+                            <div className="card p-4 shadow-sm border-0">
+                                <h4 className="mb-4 fw-bold">Edit Profile</h4>
+                                
+                                <div className="text-center mb-4">
+                                    {profile?.avatar ? (
+                                        <img src={profile.avatar} style={{width: '120px', height: '120px', borderRadius: '50%', objectFit: 'cover'}} className="mb-2 shadow-sm" />
+                                    ) : (
+                                        <div className="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm" style={{width: '120px', height: '120px', fontSize: '3rem'}}>
+                                            {config.userId[0].toUpperCase()}
+                                        </div>
+                                    )}
+                                    <div>
+                                        <label className="btn btn-sm btn-outline-primary rounded-pill">
+                                            Change Avatar
+                                            <input type="file" className="d-none" accept="image/*" onChange={async (e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = (ev) => {
+                                                        setProfile({ ...profile, avatar: ev.target?.result as string });
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            }} />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="form-label small fw-bold text-muted text-uppercase">Display Name</label>
+                                    <input className="form-control" value={profile?.name || ''} onChange={e => setProfile({...profile, name: e.target.value})} placeholder="Your Name" />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="form-label small fw-bold text-muted text-uppercase">Bio</label>
+                                    <textarea className="form-control" rows={3} value={profile?.bio || ''} onChange={e => setProfile({...profile, bio: e.target.value})} placeholder="Tell us about yourself..." />
+                                </div>
+                                <button className="btn btn-primary w-100 py-2 fw-bold" onClick={async () => {
+                                    await social?.updateProfile(profile?.name || config.userId, profile?.bio || '', profile?.avatar);
+                                    await sync();
+                                    alert('Profile updated!');
+                                }}>Save Changes</button>
                             </div>
                         </div>
                     )}

@@ -142,6 +142,6 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         const msg = inbox.find(m => m.senderId === sender.userId && m.content === messageText);
         
         expect(msg).toBeDefined();
-        expect(msg.recipientId).toBe(receiver.userId);
+        expect(msg!.recipientId).toBe(receiver.userId);
     }, 60000);
 });

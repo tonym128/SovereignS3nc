@@ -6,3 +6,5 @@ coverage
 demo/web/config.json
 garage_data/
 *.pid
+test-results/
+garage_local.toml

@@ -12,25 +12,31 @@ import initSqlJs from 'sql.js';
 (global as any).TextDecoder = TextDecoder;
 (global as any).initSqlJs = initSqlJs;
 
-class MockRemote implements IRemoteAdapter {
-    files: Map<string, {data: Uint8Array, hash: string}> = new Map();
+class MockRemote {
+    files: Map<string, {data: Uint8Array, hash: string, etag: string}> = new Map();
 
-    async uploadFile(path: string, data: Uint8Array): Promise<void> {
-        // We simulate the lib's internal hashing if we were to check it manually,
-        // but the lib will provide the correct hash when it uploads.
-        const hash = 'mock-hash'; 
-        this.files.set(path, { data, hash });
+    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+        const h = hash || 'mock-hash';
+        const etag = `"${Math.random().toString(36).substring(7)}"`;
+        this.files.set(path, { data, hash: h, etag });
+        return etag;
     }
 
-    async uploadFileWithHash(path: string, data: Uint8Array, hash: string) {
-        this.files.set(path, { data, hash });
+    async downloadFile(path: string, ifNoneMatch?: string): Promise<any | null> {
+        const entry = this.files.get(path);
+        if (!entry) return null;
+        if (ifNoneMatch && ifNoneMatch === entry.etag) {
+            return { data: null, etag: entry.etag, notModified: true };
+        }
+        return { data: entry.data, etag: entry.etag };
     }
 
-    async downloadFile(path: string): Promise<Uint8Array | null> {
-        return this.files.get(path)?.data || null;
-    }
     async getFileHash(path: string): Promise<string | null> {
         return this.files.get(path)?.hash || null;
+    }
+
+    async getFileEtag(path: string): Promise<string | null> {
+        return this.files.get(path)?.etag || null;
     }
 }
 
@@ -51,16 +57,14 @@ describe('Browser-based Social Sync', () => {
         const factory = (uid: string) => {
             const prefix = uid === 'global' ? 'test-app/global/users' : `test-app/${uid}/main`;
             return {
-                uploadFile: async (p: string, d: Uint8Array) => {
-                    // Lib calculates hash with key, we just extract it for the mock
-                    // or let the mock set a dummy. In real sync, the lib expects remote hash to match local.
-                    const hasher = crypto.createHash('sha256').update(d);
-                    // We don't have the key easily here, so we just set remote hash to whatever lib calculates
-                    // This is done inside SovereignS3nc.syncDay
-                    await mockS3.uploadFile(`${prefix}/${p}`, d);
+                uploadFile: async (p: string, d: Uint8Array, h?: string) => {
+                    return mockS3.uploadFile(`${prefix}/${p}`, d, h);
                 },
-                downloadFile: (p: string) => mockS3.downloadFile(`${prefix}/${p}`),
-                getFileHash: (p: string) => mockS3.getFileHash(`${prefix}/${p}`)
+                downloadFile: async (p: string, etag?: string) => {
+                    return mockS3.downloadFile(`${prefix}/${p}`, etag);
+                },
+                getFileHash: (p: string) => mockS3.getFileHash(`${prefix}/${p}`),
+                getFileEtag: (p: string) => mockS3.getFileEtag(`${prefix}/${p}`)
             } as IRemoteAdapter;
         };
 

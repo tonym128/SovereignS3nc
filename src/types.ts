@@ -29,6 +29,7 @@ export interface SovereignConfig {
   publicEncryptionKey?: string; // Public key (Runtime)
   password?: string; // Used to decrypt the stored private key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
+  debug?: boolean; // Enable verbose logging
 }
 
 export interface SovereignAddress {

@@ -12,24 +12,36 @@ import initSqlJs from 'sql.js';
 (global as any).TextDecoder = TextDecoder;
 (global as any).initSqlJs = initSqlJs;
 
-class MockRemote implements IRemoteAdapter {
-    files: Map<string, {data: Uint8Array, hash: string}> = new Map();
+class MockRemote {
+    files: Map<string, {data: Uint8Array, hash: string, etag: string}> = new Map();
     isOffline: boolean = false;
 
-    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<void> {
+    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
         if (this.isOffline) throw new Error('Network Error');
         const h = hash || crypto.createHash('sha256').update(data).digest('hex');
-        this.files.set(path, { data, hash: h });
+        const etag = `"${Math.random().toString(36).substring(7)}"`;
+        this.files.set(path, { data, hash: h, etag });
+        return etag;
     }
 
-    async downloadFile(path: string): Promise<Uint8Array | null> {
+    async downloadFile(path: string, ifNoneMatch?: string): Promise<any | null> {
         if (this.isOffline) throw new Error('Network Error');
-        return this.files.get(path)?.data || null;
+        const entry = this.files.get(path);
+        if (!entry) return null;
+        if (ifNoneMatch && ifNoneMatch === entry.etag) {
+            return { data: null, etag: entry.etag, notModified: true };
+        }
+        return { data: entry.data, etag: entry.etag };
     }
 
     async getFileHash(path: string): Promise<string | null> {
         if (this.isOffline) throw new Error('Network Error');
         return this.files.get(path)?.hash || null;
+    }
+
+    async getFileEtag(path: string): Promise<string | null> {
+        if (this.isOffline) throw new Error('Network Error');
+        return this.files.get(path)?.etag || null;
     }
 }
 
@@ -51,8 +63,9 @@ describe('Social Demo Full Functionality', () => {
             const prefix = uid === 'global' ? 'social-app/global/users' : `social-app/${uid}/main`;
             return {
                 uploadFile: (p: string, d: Uint8Array, h?: string) => mockS3.uploadFile(`${prefix}/${p}`, d, h),
-                downloadFile: (p: string) => mockS3.downloadFile(`${prefix}/${p}`),
-                getFileHash: (p: string) => mockS3.getFileHash(`${prefix}/${p}`)
+                downloadFile: (p: string, etag?: string) => mockS3.downloadFile(`${prefix}/${p}`, etag),
+                getFileHash: (p: string) => mockS3.getFileHash(`${prefix}/${p}`),
+                getFileEtag: (p: string) => mockS3.getFileEtag(`${prefix}/${p}`)
             } as IRemoteAdapter;
         };
 

@@ -1,0 +1,47 @@
+TODO
+- Add a multi-user integration test for messaging
+- Allow previously logged in user to login in offline mode, and create posts, dm's, profile updates, etc and sync once they are online
+- Decrease amount of information console by SovereignS3nc library and by Social Demo application, add debug flags for any messages that will make sense while debugging issues and default to off for builds
+- Make sure if a user logs in using the wrong password that it fails to login (might have to check the public profiles and verify that that user profile exists when - Add a way for users to change their password, by entering their existing password and new password and verifying the new password, it can initiate a copy of all data from the one profile to another, then delete all the old profile files and folders (without using listing command), keep the same public key's as it will be needed for future posts and keeping the profile intact
+logging in with the private uuid)
+- Make sure the website is mobile friendly and adjusts views to make sure functionality is present, user friendly and accesible on a mobile
+- Create a PWA for installation locally
+- Use background workers for data fetch to make the library more performant and decrease ui stutter
+- Create a User CLI which can do all website actions via simple commands
+    - Create account
+    - Update Profile
+    - Login
+    - Logout
+    - Fetch new messages
+    - Fetch all messages
+    - Create, Read, Comment, Delete posts, Mark read
+    - Create DM's, Read, Delete and see others messages
+    - The CLI should keep a local copy of data that it can reference as required with user profiles
+        - User profiles should store all information required to relogin
+        - Cache messages and posts
+        - Retrieve new messages and posts
+        - Reply to new messages and posts
+- Create a Read Only version of the Website which will show all users and public posts, but not allow any actions
+    - It will also only have the ability to read data, no listing, no writing
+    - Export all data to a static html file
+- Create an Admin CLI
+    - It will have access to list commands to view all files and folders as well as read and write
+    - This will have the ability to read and write data and reset passwords on user profiles
+    - I believe they won't be able to decrypt previous data, so the profile would be moved to a new profile and the old one deleted, keeping their public id and messages if possible
+    - Backup database
+    - Restore database
+    - Clear database
+- Look at request and data usage optimisation and make reccomendations
+- Look at library performance characteristics and make reccomendations
+- Write a skill for AI Agents to use the CLI
+- Update the README.md appropriately
+- Update GEMENI.md with all the new features
+
+DONE
+- Remove FB Clone, metions of Facebook or other Facebook related text
+- Show a connected / disconnected icon in the top right, back-off reattempts to connect, and it should connect or disconnect on click. If manual disconnection, don't reconnect till pressed again.
+- Allow users to edit messages and posts, flag message or post as edited and update time
+- Allow users to send images in messages
+- Allow users to delete posts and messages, flag the message as deleted and remove the associated personal data from the item, but keep it visible to show it was deleted.
+- Allow a user to send an image without text in posts and messages
+- Reset the selected file after posting, messaging
