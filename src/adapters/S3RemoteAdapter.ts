@@ -1,216 +1,153 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { S3Config, SyncDocument, RemoteChange, AdapterMetrics } from '../types';
-import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
-
-interface ManifestEntry {
-  id: string;
-  collection?: string;
-  updatedAt: number;
-  etag?: string;
-}
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
+import { S3Config } from '../types';
+import { IRemoteAdapter, DownloadResult } from '../interfaces/IRemoteAdapter';
+import * as crypto from 'crypto';
 
 export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
   private bucket: string;
   private prefix: string;
-  private metrics: AdapterMetrics = {
-    requests: { get: 0, put: 0, list: 0, delete: 0, head: 0, total: 0 },
-    bytes: { tx: 0, rx: 0, total: 0 }
-  };
+  private endpoint: string;
 
-  constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }, useManifest: boolean = true) {
+  constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
+    console.log(`[S3] Initializing adapter for ${paths.userId}...`);
+    this.endpoint = config.endpoint || '';
     this.client = new S3Client({
       region: config.region,
-      endpoint: config.endpoint,
+      endpoint: config.endpoint || undefined,
       credentials: config.credentials,
-      forcePathStyle: config.forcePathStyle
+      forcePathStyle: true,
+      apiVersion: '2006-03-01',
+      requestHandler: {
+        requestTimeout: 10000 
+      }
     });
+    console.log(`[S3] Client created for ${paths.userId}`);
     this.bucket = config.bucketName;
     this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
   }
 
-  public getMetrics(): AdapterMetrics {
-      return this.metrics;
-  }
-
-  private trackRequest(type: keyof AdapterMetrics['requests'], bytes: number = 0, direction: 'tx' | 'rx' = 'tx') {
-      this.metrics.requests[type]++;
-      this.metrics.requests.total++;
-      if (bytes > 0) {
-          this.metrics.bytes[direction] += bytes;
-          this.metrics.bytes.total += bytes;
-      }
-  }
-
-  private getKey(id: string, collection?: string): string {
-    if (collection) {
-      return `${this.prefix}${collection}/${id}.json`;
-    }
-    return `${this.prefix}${id}.json`;
-  }
-
-  private getManifestKey(collection?: string): string {
-    if (collection === 'public' || this.prefix.includes('/public/')) {
-        // Public manifest
-        return `${this.prefix}public/manifest.json`;
-    }
-    // Private manifest
-    return `${this.prefix}_manifest.json`;
-  }
-
-  async put(doc: SyncDocument, collection?: string): Promise<string | undefined> {
-    const key = this.getKey(doc._id, collection);
-    const body = JSON.stringify(doc);
+  async uploadFile(path: string, data: Uint8Array, providedHash?: string): Promise<string | null> {
+    const key = this.getKey(path);
+    console.log(`[S3] Uploading to key: ${key}`);
     
-    const command = new PutObjectCommand({
+    let hash = providedHash;
+    if (!hash) {
+        const browserCrypto = typeof globalThis !== 'undefined' ? (globalThis as any).crypto : null;
+        if (browserCrypto && browserCrypto.subtle) {
+            console.log('[S3] Using SubtleCrypto for hashing');
+            const hashBuffer = await browserCrypto.subtle.digest('SHA-256', data);
+            hash = Array.from(new Uint8Array(hashBuffer))
+                .map((b: number) => b.toString(16).padStart(2, '0'))
+                .join('');
+        } else {
+            console.log('[S3] Using crypto-browserify for hashing');
+            hash = crypto.createHash('sha256').update(data).digest('hex');
+        }
+    }
+    
+    const response = await this.client.send(new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
-      Body: body,
-      ContentType: 'application/json',
+      Body: data,
       Metadata: {
-        updatedAt: doc._updatedAt.toString()
+          'hash': hash
       }
-    });
-    
-    this.trackRequest('put', body.length, 'tx');
-    const response = await this.client.send(command);
-    const etag = response.ETag ? response.ETag.replace(/"/g, '') : undefined;
-
-    if (!doc._id.startsWith('public/manifest.json') && doc._id !== '_manifest.json') {
-      await this.updateManifest(doc, etag);
-    }
-
-    return etag;
+    }));
+    return response.ETag || null;
   }
 
-  private async updateManifest(doc: SyncDocument, etag?: string): Promise<void> {
-    const manifestKey = this.getManifestKey(doc.collection);
-    
-    // 1. Get existing
-    let entries: Record<string, ManifestEntry> = {};
+  async downloadFile(path: string, ifNoneMatch?: string): Promise<DownloadResult | null> {
+    const key = this.getKey(path);
+    console.log(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || 'none'})`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
     try {
-        const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
-        this.trackRequest('get', 0, 'rx'); // Track request start
+        console.log(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
         
-        const res = await this.client.send(getCmd);
-        if (res.Body) {
-            const str = await res.Body.transformToString();
-            this.metrics.bytes.rx += str.length; // Approximate bytes
-            this.metrics.bytes.total += str.length;
-            entries = JSON.parse(str);
+        const command = new GetObjectCommand({
+            Bucket: this.bucket,
+            Key: key,
+            IfNoneMatch: ifNoneMatch
+        });
+        
+        console.log(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
+        const response = await this.client.send(command, { abortSignal: controller.signal as any });
+        
+        console.log(`[S3] Step 4.3: Response received for ${key}.`);
+        if (!response.Body) {
+            return { data: null, etag: response.ETag || null };
         }
-    } catch (e) {
-        // Ignore not found
-    }
+        
+        console.log(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
+        const data = await response.Body.transformToByteArray();
+        console.log(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
+        return { data, etag: response.ETag || null };
+    } catch (e: any) {
+        clearTimeout(timeoutId);
+        
+        const statusCode = e.$metadata?.httpStatusCode;
 
-    // 2. Update
-    // Composite key to avoid collisions if multiple collections share one manifest
-    const entryKey = doc.collection ? `${doc.collection}::${doc._id}` : doc._id;
-    
-    if (doc._deleted) {
-        delete entries[entryKey];
-    } else {
-        entries[entryKey] = {
-            id: doc._id,
-            collection: doc.collection,
-            updatedAt: doc._updatedAt,
-            etag: etag
-        };
-    }
+        if (statusCode === 304) {
+            console.log(`[S3] File ${key} not modified (304).`);
+            return { data: null, etag: ifNoneMatch || null, notModified: true };
+        }
 
-    // 3. Save
-    const body = JSON.stringify(entries);
-    const putCmd = new PutObjectCommand({
-        Bucket: this.bucket,
-        Key: manifestKey,
-        Body: body,
-        ContentType: 'application/json'
-    });
-    this.trackRequest('put', body.length, 'tx');
-    await this.client.send(putCmd);
-  }
-
-  async get(id: string, collection?: string): Promise<SyncDocument | null> {
-    const key = this.getKey(id, collection);
-    try {
-      const command = new GetObjectCommand({
-        Bucket: this.bucket,
-        Key: key
-      });
-      
-      this.trackRequest('get', 0, 'rx');
-      const response = await this.client.send(command);
-      if (!response.Body) return null;
-      
-      const str = await response.Body.transformToString();
-      this.metrics.bytes.rx += str.length;
-      this.metrics.bytes.total += str.length;
-
-      const doc = JSON.parse(str);
-      
-      if (response.ETag) {
-        doc._etag = response.ETag.replace(/"/g, '');
-      }
-      return doc;
-    } catch (error: any) {
-      if (error.name === 'NoSuchKey' || error.$metadata?.httpStatusCode === 404) {
-        return null;
-      }
-      throw error;
+        if (e.name === 'AbortError') {
+            console.error(`[S3] Step 4.6: Request timed out for ${key}`);
+            throw new Error(`S3 Download Timeout for ${key}`);
+        }
+        console.log(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e.name} - ${e.message}`);
+        
+        if (statusCode === 403) {
+            console.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
+            return null;
+        }
+        if (e.name === 'NoSuchKey' || statusCode === 404) {
+            return null;
+        }
+        throw e;
     }
   }
 
-  async listChanges(since: Date, collection?: string): Promise<RemoteChange[]> {
-    return this.listChangesFromManifest(since, collection);
+  async getFileHash(path: string): Promise<string | null> {
+     const key = this.getKey(path);
+     try {
+         const response = await this.client.send(new HeadObjectCommand({
+             Bucket: this.bucket,
+             Key: key
+         }));
+         const hash = response.Metadata?.hash || null;
+         if (!hash) console.warn(`[S3] File ${key} exists but is missing 'hash' metadata. Check CORS 'ExposeHeaders'.`);
+         return hash;
+     } catch (e: any) {
+         const statusCode = e.$metadata?.httpStatusCode;
+         if (statusCode === 403 || e.name === 'NoSuchKey' || statusCode === 404) {
+             return null;
+         }
+         throw e;
+     }
   }
 
-  private async listChangesFromManifest(since: Date, collection?: string): Promise<RemoteChange[]> {
-      const manifestKey = this.getManifestKey(collection);
-      let entries: Record<string, ManifestEntry> = {};
-      
+  async getFileEtag(path: string): Promise<string | null> {
+      const key = this.getKey(path);
       try {
-        const getCmd = new GetObjectCommand({ Bucket: this.bucket, Key: manifestKey });
-        this.trackRequest('get', 0, 'rx');
-        
-        const res = await this.client.send(getCmd);
-        if (res.Body) {
-            const str = await res.Body.transformToString();
-            this.metrics.bytes.rx += str.length;
-            this.metrics.bytes.total += str.length;
-            entries = JSON.parse(str);
-        }
-      } catch (e) {
-          return []; // No manifest, no changes
-      }
-
-      const changes: RemoteChange[] = [];
-      const sinceTime = since.getTime();
-
-      for (const entry of Object.values(entries)) {
-          if (entry.updatedAt > sinceTime) {
-              if (collection && entry.collection !== collection) continue;
-              
-              changes.push({
-                  id: entry.id,
-                  collection: entry.collection,
-                  key: this.getKey(entry.id, entry.collection),
-                  etag: entry.etag,
-                  lastModified: new Date(entry.updatedAt)
-              });
+          const response = await this.client.send(new HeadObjectCommand({
+              Bucket: this.bucket,
+              Key: key
+          }));
+          return response.ETag || null;
+      } catch (e: any) {
+          const statusCode = e.$metadata?.httpStatusCode;
+          if (statusCode === 403 || e.name === 'NoSuchKey' || statusCode === 404) {
+              return null;
           }
+          throw e;
       }
-      return changes;
   }
 
-  async delete(id: string, collection?: string): Promise<void> {
-    const key = this.getKey(id, collection);
-    const command = new DeleteObjectCommand({
-      Bucket: this.bucket,
-      Key: key
-    });
-    this.trackRequest('delete');
-    await this.client.send(command);
-
-    await this.updateManifest({ _id: id, collection, _updatedAt: Date.now(), _deleted: true } as any);
+  private getKey(path: string): string {
+      return `${this.prefix}${path}`;
   }
 }

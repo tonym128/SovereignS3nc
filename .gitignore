@@ -3,3 +3,6 @@ dist
 .DS_Store
 *.log
 coverage
+demo/web/config.json
+garage_data/
+*.pid

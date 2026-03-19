@@ -25,49 +25,10 @@ export interface SovereignConfig {
       publicPassphrase?: string;
       publicSalt?: string;
   };
-  encryptionKey?: string; // Legacy: Explicit key
+  encryptionKey?: string; // Private key (Runtime)
+  publicEncryptionKey?: string; // Public key (Runtime)
+  password?: string; // Used to decrypt the stored private key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
-}
-
-export interface SyncDocument<T = any> {
-  _id: string;
-  _rev?: string; // Revision ID for conflict resolution (simple implementation)
-  _updatedAt: number;
-  _deleted?: boolean;
-  _etag?: string; // S3 ETag for optimization
-  collection?: string; // Optional: Namespace/Collection for the document
-  data: T;
-}
-
-export interface RemoteChange {
-  id: string; // The extracted document ID
-  collection?: string; // The extracted collection
-  key: string; // The full S3 key
-  etag?: string;
-  lastModified?: Date;
-}
-
-export interface AdapterMetrics {
-  requests: {
-    get: number;
-    put: number;
-    list: number;
-    delete: number;
-    head: number;
-    total: number;
-  };
-  bytes: {
-    tx: number; // Transmitted (Upload)
-    rx: number; // Received (Download)
-    total: number;
-  };
-}
-
-export interface SyncStats {
-  pushed: number;
-  pulled: number;
-  errors: number;
-  metrics?: AdapterMetrics;
 }
 
 export interface SovereignAddress {
@@ -80,13 +41,3 @@ export interface SovereignAddress {
   publicSalt?: string;
 }
 
-export interface BlobMetadata {
-  _id: string;
-  name: string;
-  size: number;
-  contentType: string;
-  hash?: string;
-  createdAt: number;
-  isEncrypted: boolean;
-  isPublic?: boolean;
-}

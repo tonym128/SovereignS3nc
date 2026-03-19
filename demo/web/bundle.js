@@ -1818,178 +1818,28 @@
     }
   });
 
-  // node_modules/process/browser.js
-  var require_browser = __commonJS({
-    "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills660 = __toESM(require_polyfills());
-      var process2 = module.exports = {};
-      var cachedSetTimeout;
-      var cachedClearTimeout;
-      function defaultSetTimout() {
-        throw new Error("setTimeout has not been defined");
-      }
-      function defaultClearTimeout() {
-        throw new Error("clearTimeout has not been defined");
-      }
-      (function() {
-        try {
-          if (typeof setTimeout === "function") {
-            cachedSetTimeout = setTimeout;
-          } else {
-            cachedSetTimeout = defaultSetTimout;
-          }
-        } catch (e2) {
-          cachedSetTimeout = defaultSetTimout;
-        }
-        try {
-          if (typeof clearTimeout === "function") {
-            cachedClearTimeout = clearTimeout;
-          } else {
-            cachedClearTimeout = defaultClearTimeout;
-          }
-        } catch (e2) {
-          cachedClearTimeout = defaultClearTimeout;
-        }
-      })();
-      function runTimeout(fun) {
-        if (cachedSetTimeout === setTimeout) {
-          return setTimeout(fun, 0);
-        }
-        if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-          cachedSetTimeout = setTimeout;
-          return setTimeout(fun, 0);
-        }
-        try {
-          return cachedSetTimeout(fun, 0);
-        } catch (e2) {
-          try {
-            return cachedSetTimeout.call(null, fun, 0);
-          } catch (e3) {
-            return cachedSetTimeout.call(this, fun, 0);
-          }
-        }
-      }
-      function runClearTimeout(marker) {
-        if (cachedClearTimeout === clearTimeout) {
-          return clearTimeout(marker);
-        }
-        if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-          cachedClearTimeout = clearTimeout;
-          return clearTimeout(marker);
-        }
-        try {
-          return cachedClearTimeout(marker);
-        } catch (e2) {
-          try {
-            return cachedClearTimeout.call(null, marker);
-          } catch (e3) {
-            return cachedClearTimeout.call(this, marker);
-          }
-        }
-      }
-      var queue = [];
-      var draining = false;
-      var currentQueue;
-      var queueIndex = -1;
-      function cleanUpNextTick() {
-        if (!draining || !currentQueue) {
-          return;
-        }
-        draining = false;
-        if (currentQueue.length) {
-          queue = currentQueue.concat(queue);
-        } else {
-          queueIndex = -1;
-        }
-        if (queue.length) {
-          drainQueue();
-        }
-      }
-      function drainQueue() {
-        if (draining) {
-          return;
-        }
-        var timeout = runTimeout(cleanUpNextTick);
-        draining = true;
-        var len = queue.length;
-        while (len) {
-          currentQueue = queue;
-          queue = [];
-          while (++queueIndex < len) {
-            if (currentQueue) {
-              currentQueue[queueIndex].run();
-            }
-          }
-          queueIndex = -1;
-          len = queue.length;
-        }
-        currentQueue = null;
-        draining = false;
-        runClearTimeout(timeout);
-      }
-      process2.nextTick = function(fun) {
-        var args = new Array(arguments.length - 1);
-        if (arguments.length > 1) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            args[i2 - 1] = arguments[i2];
-          }
-        }
-        queue.push(new Item(fun, args));
-        if (queue.length === 1 && !draining) {
-          runTimeout(drainQueue);
-        }
-      };
-      function Item(fun, array) {
-        this.fun = fun;
-        this.array = array;
-      }
-      Item.prototype.run = function() {
-        this.fun.apply(null, this.array);
-      };
-      process2.title = "browser";
-      process2.browser = true;
-      process2.env = {};
-      process2.argv = [];
-      process2.version = "";
-      process2.versions = {};
-      function noop() {
-      }
-      process2.on = noop;
-      process2.addListener = noop;
-      process2.once = noop;
-      process2.off = noop;
-      process2.removeListener = noop;
-      process2.removeAllListeners = noop;
-      process2.emit = noop;
-      process2.prependListener = noop;
-      process2.prependOnceListener = noop;
-      process2.listeners = function(name) {
-        return [];
-      };
-      process2.binding = function(name) {
-        throw new Error("process.binding is not supported");
-      };
-      process2.cwd = function() {
-        return "/";
-      };
-      process2.chdir = function(dir) {
-        throw new Error("process.chdir is not supported");
-      };
-      process2.umask = function() {
-        return 0;
-      };
-    }
-  });
-
-  // demo/social/src/polyfills.js
+  // demo/web/src/polyfills.js
   var require_polyfills = __commonJS({
-    "demo/social/src/polyfills.js"() {
+    "demo/web/src/polyfills.js"() {
       "use strict";
       var import_buffer = __toESM(require_buffer());
-      var import_process = __toESM(require_browser());
       window.Buffer = import_buffer.Buffer;
-      window.process = import_process.default;
       window.global = window;
+      window.process = {
+        env: { NODE_ENV: "development" },
+        nextTick: (fn) => setTimeout(fn, 0),
+        version: "v18.0.0",
+        versions: {},
+        browser: true
+      };
+      window.require = (name) => {
+        console.warn(`Browser: dynamic require of "${name}" suppressed.`);
+        return {};
+      };
+      window.addEventListener("error", (e2) => {
+        console.error("GLOBAL ERROR:", e2.error);
+        document.body.innerHTML += `<div class="alert alert-danger">Runtime Error: ${e2.message}</div>`;
+      });
     }
   });
 
@@ -47417,7 +47267,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/randombytes/browser.js
-  var require_browser2 = __commonJS({
+  var require_browser = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
@@ -50696,7 +50546,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/util-deprecate/browser.js
-  var require_browser3 = __commonJS({
+  var require_browser2 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
       var import_polyfills660 = __toESM(require_polyfills());
       module.exports = deprecate;
@@ -50750,7 +50600,7 @@ ${toHex(hashedRequest)}`;
       var Duplex;
       Writable.WritableState = WritableState;
       var internalUtil = {
-        deprecate: require_browser3()
+        deprecate: require_browser2()
       };
       var Stream = require_stream_browser();
       var Buffer2 = require_buffer().Buffer;
@@ -53536,7 +53386,7 @@ ${toHex(hashedRequest)}`;
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
       var internalUtil = {
-        deprecate: require_browser3()
+        deprecate: require_browser2()
       };
       var Stream = require_stream_browser2();
       var Buffer2 = require_safe_buffer2().Buffer;
@@ -56643,7 +56493,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/create-hash/browser.js
-  var require_browser4 = __commonJS({
+  var require_browser3 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
@@ -56726,7 +56576,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/create-hmac/browser.js
-  var require_browser5 = __commonJS({
+  var require_browser4 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
@@ -57251,7 +57101,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/pbkdf2/browser.js
-  var require_browser6 = __commonJS({
+  var require_browser5 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
@@ -59536,7 +59386,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/browserify-aes/browser.js
-  var require_browser7 = __commonJS({
+  var require_browser6 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
       var import_polyfills660 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
@@ -59585,11 +59435,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/browserify-cipher/browser.js
-  var require_browser8 = __commonJS({
+  var require_browser7 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
       var import_polyfills660 = __toESM(require_polyfills());
       var DES = require_browserify_des();
-      var aes = require_browser7();
+      var aes = require_browser6();
       var aesModes = require_modes();
       var desModes = require_modes2();
       var ebtk = require_evp_bytestokey();
@@ -65416,7 +65266,7 @@ ${toHex(hashedRequest)}`;
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
       var import_polyfills660 = __toESM(require_polyfills());
-      var randomBytes2 = require_browser2();
+      var randomBytes2 = require_browser();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
       findPrime.fermatTest = fermatTest;
@@ -65562,7 +65412,7 @@ ${toHex(hashedRequest)}`;
       var THREE = new BN(3);
       var SEVEN = new BN(7);
       var primes = require_generatePrime();
-      var randomBytes2 = require_browser2();
+      var randomBytes2 = require_browser();
       module.exports = DH;
       function setPublicKey(pub, enc) {
         enc = enc || "utf8";
@@ -65697,7 +65547,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/diffie-hellman/browser.js
-  var require_browser9 = __commonJS({
+  var require_browser8 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
       var import_polyfills660 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
@@ -65983,7 +65833,7 @@ ${toHex(hashedRequest)}`;
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
       var internalUtil = {
-        deprecate: require_browser3()
+        deprecate: require_browser2()
       };
       var Stream = require_stream_browser3();
       var Buffer2 = require_safe_buffer4().Buffer;
@@ -70494,7 +70344,7 @@ ${toHex(hashedRequest)}`;
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
       var BN = require_bn3();
-      var randomBytes2 = require_browser2();
+      var randomBytes2 = require_browser();
       var Buffer2 = require_safe_buffer().Buffer;
       function getr(priv) {
         var len = priv.modulus.byteLength();
@@ -82918,7 +82768,7 @@ ${toHex(hashedRequest)}`;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
       var evp = require_evp_bytestokey();
-      var ciphers = require_browser7();
+      var ciphers = require_browser6();
       var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function(okey, password) {
         var key = okey.toString();
@@ -82955,8 +82805,8 @@ ${toHex(hashedRequest)}`;
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
-      var ciphers = require_browser7();
-      var pbkdf2Sync2 = require_browser6().pbkdf2Sync;
+      var ciphers = require_browser6();
+      var pbkdf2Sync2 = require_browser5().pbkdf2Sync;
       var Buffer2 = require_safe_buffer().Buffer;
       function decrypt(data, password) {
         var salt = data.algorithm.decrypt.kde.kdeparams.salt;
@@ -83082,7 +82932,7 @@ ${toHex(hashedRequest)}`;
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
-      var createHmac = require_browser5();
+      var createHmac = require_browser4();
       var crt = require_browserify_rsa();
       var EC = require_elliptic().ec;
       var BN = require_bn3();
@@ -83323,12 +83173,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/browserify-sign/browser/index.js
-  var require_browser10 = __commonJS({
+  var require_browser9 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
       var Buffer2 = require_safe_buffer().Buffer;
-      var createHash3 = require_browser4();
+      var createHash3 = require_browser3();
       var stream = require_readable_browser2();
       var inherits = require_inherits_browser();
       var sign = require_sign2();
@@ -86213,7 +86063,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/create-ecdh/browser.js
-  var require_browser11 = __commonJS({
+  var require_browser10 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
       var import_polyfills660 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
@@ -86335,7 +86185,7 @@ ${toHex(hashedRequest)}`;
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
       var import_polyfills660 = __toESM(require_polyfills());
-      var createHash3 = require_browser4();
+      var createHash3 = require_browser3();
       var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
         var t8 = Buffer2.alloc(0);
@@ -89196,8 +89046,8 @@ ${toHex(hashedRequest)}`;
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
       var import_polyfills660 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
-      var randomBytes2 = require_browser2();
-      var createHash3 = require_browser4();
+      var randomBytes2 = require_browser();
+      var createHash3 = require_browser3();
       var mgf = require_mgf();
       var xor = require_xor();
       var BN = require_bn7();
@@ -89293,7 +89143,7 @@ ${toHex(hashedRequest)}`;
       var xor = require_xor();
       var BN = require_bn7();
       var crt = require_browserify_rsa();
-      var createHash3 = require_browser4();
+      var createHash3 = require_browser3();
       var withPublic = require_withPublic();
       var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function privateDecrypt(privateKey, enc, reverse) {
@@ -89392,7 +89242,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/public-encrypt/browser.js
-  var require_browser12 = __commonJS({
+  var require_browser11 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
       var import_polyfills660 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
@@ -89407,7 +89257,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/randomfill/browser.js
-  var require_browser13 = __commonJS({
+  var require_browser12 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
@@ -89415,7 +89265,7 @@ ${toHex(hashedRequest)}`;
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
       var safeBuffer = require_safe_buffer();
-      var randombytes = require_browser2();
+      var randombytes = require_browser();
       var Buffer2 = safeBuffer.Buffer;
       var kBufferMaxLength = safeBuffer.kMaxLength;
       var crypto4 = window.crypto || window.msCrypto;
@@ -89514,9 +89364,9 @@ ${toHex(hashedRequest)}`;
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
       var import_polyfills660 = __toESM(require_polyfills());
-      exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
-      exports.createHash = exports.Hash = require_browser4();
-      exports.createHmac = exports.Hmac = require_browser5();
+      exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser();
+      exports.createHash = exports.Hash = require_browser3();
+      exports.createHmac = exports.Hmac = require_browser4();
       var algos = require_algos();
       var algoKeys = Object.keys(algos);
       var hashes = [
@@ -89531,10 +89381,10 @@ ${toHex(hashedRequest)}`;
       exports.getHashes = function() {
         return hashes;
       };
-      var p2 = require_browser6();
+      var p2 = require_browser5();
       exports.pbkdf2 = p2.pbkdf2;
       exports.pbkdf2Sync = p2.pbkdf2Sync;
-      var aes = require_browser8();
+      var aes = require_browser7();
       exports.Cipher = aes.Cipher;
       exports.createCipher = aes.createCipher;
       exports.Cipheriv = aes.Cipheriv;
@@ -89545,24 +89395,24 @@ ${toHex(hashedRequest)}`;
       exports.createDecipheriv = aes.createDecipheriv;
       exports.getCiphers = aes.getCiphers;
       exports.listCiphers = aes.listCiphers;
-      var dh = require_browser9();
+      var dh = require_browser8();
       exports.DiffieHellmanGroup = dh.DiffieHellmanGroup;
       exports.createDiffieHellmanGroup = dh.createDiffieHellmanGroup;
       exports.getDiffieHellman = dh.getDiffieHellman;
       exports.createDiffieHellman = dh.createDiffieHellman;
       exports.DiffieHellman = dh.DiffieHellman;
-      var sign = require_browser10();
+      var sign = require_browser9();
       exports.createSign = sign.createSign;
       exports.Sign = sign.Sign;
       exports.createVerify = sign.createVerify;
       exports.Verify = sign.Verify;
-      exports.createECDH = require_browser11();
-      var publicEncrypt = require_browser12();
+      exports.createECDH = require_browser10();
+      var publicEncrypt = require_browser11();
       exports.publicEncrypt = publicEncrypt.publicEncrypt;
       exports.privateEncrypt = publicEncrypt.privateEncrypt;
       exports.publicDecrypt = publicEncrypt.publicDecrypt;
       exports.privateDecrypt = publicEncrypt.privateDecrypt;
-      var rf = require_browser13();
+      var rf = require_browser12();
       exports.randomFill = rf.randomFill;
       exports.randomFillSync = rf.randomFillSync;
       exports.createCredentials = function() {
@@ -89598,38 +89448,22 @@ ${toHex(hashedRequest)}`;
       crypto2 = __toESM(require_crypto_browserify());
       S3RemoteAdapter = class {
         constructor(config, paths) {
-          console.log(`[S3] Initializing adapter for ${paths.userId}...`);
-          this.endpoint = config.endpoint || "";
           this.client = new S3Client({
             region: config.region,
             endpoint: config.endpoint || void 0,
             credentials: config.credentials,
             forcePathStyle: true,
-            apiVersion: "2006-03-01",
-            requestHandler: {
-              requestTimeout: 1e4
-            }
+            // Always use path style to avoid ListBucket calls for bucket resolution
+            apiVersion: "2006-03-01"
           });
-          console.log(`[S3] Client created for ${paths.userId}`);
           this.bucket = config.bucketName;
           this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
         }
         async uploadFile(path, data, providedHash) {
           const key = this.getKey(path);
           console.log(`[S3] Uploading to key: ${key}`);
-          let hash = providedHash;
-          if (!hash) {
-            const browserCrypto = typeof globalThis !== "undefined" ? globalThis.crypto : null;
-            if (browserCrypto && browserCrypto.subtle) {
-              console.log("[S3] Using SubtleCrypto for hashing");
-              const hashBuffer = await browserCrypto.subtle.digest("SHA-256", data);
-              hash = Array.from(new Uint8Array(hashBuffer)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
-            } else {
-              console.log("[S3] Using crypto-browserify for hashing");
-              hash = crypto2.createHash("sha256").update(data).digest("hex");
-            }
-          }
-          const response = await this.client.send(new PutObjectCommand({
+          const hash = providedHash || crypto2.createHash("sha256").update(data).digest("hex");
+          await this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
             Body: data,
@@ -89637,42 +89471,18 @@ ${toHex(hashedRequest)}`;
               "hash": hash
             }
           }));
-          return response.ETag || null;
         }
-        async downloadFile(path, ifNoneMatch) {
+        async downloadFile(path) {
           const key = this.getKey(path);
-          console.log(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"})`);
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 15e3);
           try {
-            console.log(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
-            const command = new GetObjectCommand({
+            const response = await this.client.send(new GetObjectCommand({
               Bucket: this.bucket,
-              Key: key,
-              IfNoneMatch: ifNoneMatch
-            });
-            console.log(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
-            const response = await this.client.send(command, { abortSignal: controller.signal });
-            console.log(`[S3] Step 4.3: Response received for ${key}.`);
-            if (!response.Body) {
-              return { data: null, etag: response.ETag || null };
-            }
-            console.log(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
-            const data = await response.Body.transformToByteArray();
-            console.log(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
-            return { data, etag: response.ETag || null };
+              Key: key
+            }));
+            if (!response.Body) return null;
+            return await response.Body.transformToByteArray();
           } catch (e2) {
-            clearTimeout(timeoutId);
             const statusCode = e2.$metadata?.httpStatusCode;
-            if (statusCode === 304) {
-              console.log(`[S3] File ${key} not modified (304).`);
-              return { data: null, etag: ifNoneMatch || null, notModified: true };
-            }
-            if (e2.name === "AbortError") {
-              console.error(`[S3] Step 4.6: Request timed out for ${key}`);
-              throw new Error(`S3 Download Timeout for ${key}`);
-            }
-            console.log(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e2.name} - ${e2.message}`);
             if (statusCode === 403) {
               console.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
               return null;
@@ -89701,22 +89511,6 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
-        async getFileEtag(path) {
-          const key = this.getKey(path);
-          try {
-            const response = await this.client.send(new HeadObjectCommand({
-              Bucket: this.bucket,
-              Key: key
-            }));
-            return response.ETag || null;
-          } catch (e2) {
-            const statusCode = e2.$metadata?.httpStatusCode;
-            if (statusCode === 403 || e2.name === "NoSuchKey" || statusCode === 404) {
-              return null;
-            }
-            throw e2;
-          }
-        }
         getKey(path) {
           return `${this.prefix}${path}`;
         }
@@ -89736,67 +89530,54 @@ ${toHex(hashedRequest)}`;
           this.dbName = dbName;
         }
         async init() {
-          if (this.db) return;
           console.log(`[IDB] Initializing ${this.dbName}...`);
           return new Promise((resolve, reject) => {
-            try {
-              const request = indexedDB.open(this.dbName, 1);
-              request.onerror = (event) => {
-                console.error("[IDB] Error opening database:", request.error);
-                reject(request.error);
-              };
-              request.onsuccess = (event) => {
-                this.db = event.target.result;
-                console.log("[IDB] Database opened successfully");
-                resolve();
-              };
-              request.onupgradeneeded = (event) => {
-                console.log("[IDB] Upgrading database...");
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains("files")) {
-                  db.createObjectStore("files");
-                  console.log('[IDB] Created "files" store');
-                }
-                if (!db.objectStoreNames.contains("metadata")) {
-                  db.createObjectStore("metadata");
-                  console.log('[IDB] Created "metadata" store');
-                }
-              };
-              request.onblocked = () => {
-                console.warn("[IDB] Database opening blocked. Please close other tabs of this app.");
-              };
-            } catch (e2) {
-              reject(e2);
-            }
+            const request = indexedDB.open(this.dbName, 1);
+            request.onerror = (event) => {
+              console.error("[IDB] Error opening database:", request.error);
+              reject(request.error);
+            };
+            request.onsuccess = (event) => {
+              this.db = event.target.result;
+              console.log("[IDB] Database opened successfully");
+              resolve();
+            };
+            request.onupgradeneeded = (event) => {
+              console.log("[IDB] Upgrading database...");
+              const db = event.target.result;
+              if (!db.objectStoreNames.contains("files")) {
+                db.createObjectStore("files");
+                console.log('[IDB] Created "files" store');
+              }
+              if (!db.objectStoreNames.contains("metadata")) {
+                db.createObjectStore("metadata");
+                console.log('[IDB] Created "metadata" store');
+              }
+            };
+            request.onblocked = () => {
+              console.warn("[IDB] Database opening blocked. Please close other tabs of this app.");
+            };
           });
         }
-        getStore(name, mode = "readonly") {
+        async getStore(name, mode = "readonly") {
           if (!this.db) throw new Error("Database not initialized");
           const tx = this.db.transaction(name, mode);
           return tx.objectStore(name);
         }
         async getDailyDb(date2, type) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files");
-              const request = store.get(`${type}/${date2}`);
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get(`${type}/${date2}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
           });
         }
         async saveDailyDb(date2, type, data) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, `${type}/${date2}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, `${type}/${date2}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async getDailyDbHash(date2, type) {
@@ -89805,193 +89586,87 @@ ${toHex(hashedRequest)}`;
           return this.hash(data);
         }
         async getPublicUserFile() {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files");
-              const request = store.get("public/user.json");
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get("public/user.json");
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
           });
         }
         async savePublicUserFile(data) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, "public/user.json");
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
-        }
-        async getFile(path) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files");
-              const request = store.get(path);
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
-        }
-        async saveFile(path, data) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, path);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
-        }
-        async listFiles(prefix) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files");
-              const request = store.getAllKeys();
-              request.onsuccess = () => {
-                const allKeys = request.result;
-                resolve(allKeys.filter((k2) => k2.startsWith(prefix)));
-              };
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
-        }
-        async getGenericRemoteHashCache(path) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata");
-              const request = store.get(`hash_generic:${path}`);
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
-        }
-        async setGenericRemoteHashCache(path, hash) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata", "readwrite");
-              const request = store.put(hash, `hash_generic:${path}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, "public/user.json");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async getRemoteHashCache(date2, type) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata");
-              const request = store.get(`hash:${date2}-${type}`);
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get(`hash:${date2}-${type}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
           });
         }
         async setRemoteHashCache(date2, type, hash) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata", "readwrite");
-              const request = store.put(hash, `hash:${date2}-${type}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(hash, `hash:${date2}-${type}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async getLastSyncDate() {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata");
-              const request = store.get("lastSyncDate");
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("lastSyncDate");
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
           });
         }
         async setLastSyncDate(date2) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata", "readwrite");
-              const request = store.put(date2, "lastSyncDate");
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(date2, "lastSyncDate");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async saveFollowedDb(userId, date2, data) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, `followed/${userId}/${date2}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files", "readwrite");
+            const request = store.put(data, `followed/${userId}/${date2}`);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async getFollowedDbHash(userId, date2) {
-          try {
-            const data = await new Promise((resolve, reject) => {
-              const store = this.getStore("files");
-              const request = store.get(`followed/${userId}/${date2}`);
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            });
-            return data ? this.hash(data) : null;
-          } catch (e2) {
-            return null;
-          }
+          const data = await new Promise(async (resolve, reject) => {
+            const store = await this.getStore("files");
+            const request = store.get(`followed/${userId}/${date2}`);
+            request.onsuccess = () => resolve(request.result || null);
+            request.onerror = () => reject(request.error);
+          });
+          return data ? this.hash(data) : null;
         }
         async getFollowing() {
-          try {
-            const followingMap = await new Promise((resolve, reject) => {
-              const store = this.getStore("metadata");
-              const request = store.get("following");
-              request.onsuccess = () => resolve(request.result || {});
-              request.onerror = () => reject(request.error);
-            });
-            return Object.entries(followingMap).map(([userId, info]) => ({
-              userId,
-              lastSync: info.lastSync,
-              publicKey: info.publicKey
-            }));
-          } catch (e2) {
-            return [];
-          }
+          const followingMap = await new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("following");
+            request.onsuccess = () => resolve(request.result || {});
+            request.onerror = () => reject(request.error);
+          });
+          return Object.entries(followingMap).map(([userId, info]) => ({
+            userId,
+            lastSync: info.lastSync,
+            publicKey: info.publicKey
+          }));
         }
         async followUser(userId, lastSync, publicKey) {
           const following = await this.getFollowingMap();
           if (!following[userId]) {
             following[userId] = { lastSync, publicKey };
-            await this.saveFollowingMap(following);
-          }
-        }
-        async unfollowUser(userId) {
-          const following = await this.getFollowingMap();
-          if (following[userId]) {
-            delete following[userId];
             await this.saveFollowingMap(following);
           }
         }
@@ -90003,27 +89678,19 @@ ${toHex(hashedRequest)}`;
           }
         }
         async getFollowingMap() {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata");
-              const request = store.get("following");
-              request.onsuccess = () => resolve(request.result || {});
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata");
+            const request = store.get("following");
+            request.onsuccess = () => resolve(request.result || {});
+            request.onerror = () => reject(request.error);
           });
         }
         async saveFollowingMap(map) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("metadata", "readwrite");
-              const request = store.put(map, "following");
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
+          return new Promise(async (resolve, reject) => {
+            const store = await this.getStore("metadata", "readwrite");
+            const request = store.put(map, "following");
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
           });
         }
         async hash(data) {
@@ -90098,62 +89765,33 @@ ${toHex(hashedRequest)}`;
           const password = this.config.password;
           const publicUserId = this.config.paths.userId;
           const appId = this.config.paths.appId;
-          console.log("[Keys] Step 1: Deriving secrets from password...");
-          let masterKey;
-          let privateId;
-          try {
-            masterKey = crypto3.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
-            privateId = crypto3.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
-          } catch (e2) {
-            console.error("[Keys] PBKDF2 failed. This usually means crypto-browserify is not working correctly.");
-            throw new Error(`Secret derivation failed: ${e2.message}`);
-          }
+          const masterKey = crypto3.pbkdf2Sync(password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
+          const privateId = crypto3.pbkdf2Sync(password, publicUserId + "-private-id", 1e3, 32, "sha256").toString("hex");
           console.log(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
-          console.log("[Keys] Step 2: Initializing Private Remote...");
-          try {
-            if (!this.remoteFactory && this.config.s3) {
-              this.remote = new S3RemoteAdapter(this.config.s3, {
-                appId,
-                userId: privateId,
-                storeId: this.config.paths.storeId
-              });
-            } else if (this.remoteFactory) {
-              this.remote = this.remoteFactory(privateId);
-            }
-          } catch (e2) {
-            console.error("[Keys] Remote initialization failed:", e2.message);
-            throw e2;
+          if (!this.remoteFactory && this.config.s3) {
+            this.remote = new S3RemoteAdapter(this.config.s3, {
+              appId,
+              userId: privateId,
+              storeId: this.config.paths.storeId
+            });
+          } else if (this.remoteFactory) {
+            this.remote = this.remoteFactory(privateId);
           }
-          console.log("[Keys] Step 3: Checking local storage for keys...");
           let keyInfo = null;
-          let localKeyData = null;
-          try {
-            localKeyData = await this.storage.getDailyDb("_keys", "private");
-            console.log(`[Keys] Local key data search complete. Found: ${!!localKeyData}`);
-          } catch (e2) {
-            console.error(`[Keys] Error reading local keys: ${e2.message}`);
-          }
+          const localKeyData = await this.storage.getDailyDb("_keys", "private");
           if (localKeyData) {
-            console.log("[Keys] Decrypting local keys...");
             try {
-              const decrypted = await this.decrypt(localKeyData, masterKey);
-              keyInfo = JSON.parse(decrypted.toString());
-              console.log("[Keys] Local keys decrypted successfully.");
+              keyInfo = JSON.parse((await this.decrypt(localKeyData, masterKey)).toString());
             } catch (e2) {
               console.warn(`[Keys] Failed to decrypt local keys: ${e2.message}`);
             }
           }
           if (!keyInfo) {
-            console.log("[Keys] Step 4: Trying to download keys from remote...");
-            const result = await this.remote.downloadFile("_keys.json");
-            console.log(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
-            if (result && result.data) {
+            const remoteKeyData = await this.remote.downloadFile("_keys.json");
+            if (remoteKeyData) {
               try {
-                console.log("[Keys] Decrypting remote keys...");
-                const decrypted = await this.decrypt(result.data, masterKey);
-                keyInfo = JSON.parse(decrypted.toString());
-                await this.storage.saveDailyDb("_keys", "private", result.data);
-                console.log("[Keys] Remote keys decrypted and saved locally.");
+                keyInfo = JSON.parse((await this.decrypt(remoteKeyData, masterKey)).toString());
+                await this.storage.saveDailyDb("_keys", "private", remoteKeyData);
               } catch (e2) {
                 throw new Error(`Failed to decrypt remote keys: ${e2.message}. Incorrect password?`);
               }
@@ -90162,16 +89800,13 @@ ${toHex(hashedRequest)}`;
             }
           }
           if (!keyInfo) {
-            console.log("[Keys] Step 5: Generating new persistent key pair.");
+            console.log("[Keys] Generating new persistent key pair.");
             const privateKey = crypto3.randomBytes(32).toString("hex");
             const publicKey = crypto3.randomBytes(32).toString("hex");
             keyInfo = { privateKey, publicKey };
-            console.log("[Keys] Encrypting new keys for storage...");
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
-            console.log("[Keys] Uploading new keys to remote...");
             await this.remote.uploadFile("_keys.json", encrypted);
-            console.log("[Keys] New keys generated, saved and uploaded.");
           }
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
@@ -90210,84 +89845,9 @@ ${toHex(hashedRequest)}`;
             await this.ensureGlobalRegistration();
             await this.discoverAndFollowUsers(today);
             await this.syncFollowedUsers(today);
-            await this.syncGenericFiles("public/blobs/");
-            await this.syncGenericFiles("public/dms/");
-            await this.syncGenericFiles("private/blobs/");
-            await this.syncGenericFiles("private/dms/");
             await this.storage.setLastSyncDate(today);
           } finally {
             this.isSyncing = false;
-          }
-        }
-        async saveBlob(data, isPublic = true) {
-          const hash = this.calculateHashedContent(data);
-          const type = isPublic ? "public" : "private";
-          const path = `${type}/blobs/${hash}`;
-          await this.storage.saveFile(path, data);
-          return path;
-        }
-        async getBlob(path, userId) {
-          const myId = this.config.paths.userId;
-          if (!userId || userId === myId) {
-            let data = await this.storage.getFile(path);
-            if (!data) {
-              const activeRemote = path.startsWith("public/") ? this.publicRemote : this.remote;
-              const key = path.startsWith("public/") ? void 0 : this.config.encryptionKey;
-              const result2 = await activeRemote.downloadFile(path);
-              if (result2 && result2.data) {
-                data = result2.data;
-                if (key) {
-                  data = await this.decrypt(data, key);
-                }
-                await this.storage.saveFile(path, data);
-              }
-            }
-            return data;
-          }
-          if (!path.startsWith("public/")) {
-            throw new Error("Only public blobs can be fetched from other users");
-          }
-          const userRemote = this.createRemote(userId);
-          const result = await userRemote.downloadFile(path);
-          if (result && result.data) {
-            const data = result.data;
-            const expectedHash = path.split("/").pop();
-            const actualHash = this.calculateHashedContent(data);
-            if (expectedHash !== actualHash) {
-              console.warn(`[Blob] Hash mismatch for ${path}. Expected ${expectedHash}, got ${actualHash}`);
-            }
-            await this.storage.saveFile(`followed/${userId}/${path}`, data);
-            return data;
-          }
-          return null;
-        }
-        async syncGenericFiles(prefix) {
-          try {
-            const files = await this.storage.listFiles(prefix);
-            const isPublic = prefix.startsWith("public/");
-            const activeRemote = isPublic ? this.publicRemote : this.remote;
-            const key = isPublic ? void 0 : this.config.encryptionKey;
-            for (const filePath of files) {
-              const localData = await this.storage.getFile(filePath);
-              if (!localData) continue;
-              const localHash = this.calculateHashedContent(localData, key);
-              const cachedEtag = await this.storage.getGenericRemoteHashCache(filePath);
-              const remoteHash = await activeRemote.getFileHash(filePath);
-              if (localHash !== remoteHash) {
-                console.log(`[Sync] Uploading generic file: ${filePath}`);
-                let uploadData = localData;
-                if (key) {
-                  uploadData = await this.encrypt(localData, key);
-                }
-                const etag = await activeRemote.uploadFile(filePath, uploadData, localHash);
-                if (etag) await this.storage.setGenericRemoteHashCache(filePath, etag);
-              } else if (!cachedEtag) {
-                const remoteEtag = await activeRemote.getFileEtag(filePath);
-                if (remoteEtag) await this.storage.setGenericRemoteHashCache(filePath, remoteEtag);
-              }
-            }
-          } catch (e2) {
-            console.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e2.message}`);
           }
         }
         async ensureGlobalRegistration() {
@@ -90296,14 +89856,7 @@ ${toHex(hashedRequest)}`;
           const myPublicKey = this.config.publicEncryptionKey;
           console.log(`[Sync] Checking global registry at ${remotePath}`);
           let userList = [];
-          let remoteData = null;
-          try {
-            const result = await this.globalRemote.downloadFile(remotePath);
-            if (result && result.data) remoteData = result.data;
-          } catch (e2) {
-            console.warn(`[Sync] Could not reach global registry (offline?): ${e2.message}`);
-            return;
-          }
+          const remoteData = await this.globalRemote.downloadFile(remotePath);
           if (remoteData) {
             try {
               userList = JSON.parse(new TextDecoder().decode(remoteData));
@@ -90321,18 +89874,14 @@ ${toHex(hashedRequest)}`;
               userList.push({ userId: myUserId, publicKey: myPublicKey });
             }
             const newData = new TextEncoder().encode(JSON.stringify(userList));
-            try {
-              await this.globalRemote.uploadFile(remotePath, newData);
-            } catch (e2) {
-              console.warn(`[Sync] Failed to update global registry: ${e2.message}`);
-            }
+            await this.globalRemote.uploadFile(remotePath, newData);
           }
         }
         async follow(userId) {
           const remotePath = "users.json";
-          const result = await this.globalRemote.downloadFile(remotePath);
-          if (result && result.data) {
-            const userList = JSON.parse(new TextDecoder().decode(result.data));
+          const remoteData = await this.globalRemote.downloadFile(remotePath);
+          if (remoteData) {
+            const userList = JSON.parse(new TextDecoder().decode(remoteData));
             const user = userList.find((u2) => u2.userId === userId);
             if (user) {
               const startDate = /* @__PURE__ */ new Date();
@@ -90342,9 +89891,6 @@ ${toHex(hashedRequest)}`;
             }
           }
           throw new Error("User not found in registry");
-        }
-        async unfollow(userId) {
-          await this.storage.unfollowUser(userId);
         }
         async getFollowing() {
           return this.storage.getFollowing();
@@ -90367,24 +89913,17 @@ ${toHex(hashedRequest)}`;
         async getPublicRegistry() {
           console.log("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
-          const result = await this.globalRemote.downloadFile(remotePath);
-          if (!result || !result.data) return [];
+          const remoteData = await this.globalRemote.downloadFile(remotePath);
+          if (!remoteData) return [];
           try {
-            return JSON.parse(new TextDecoder().decode(result.data));
+            return JSON.parse(new TextDecoder().decode(remoteData));
           } catch (e2) {
             return [];
           }
         }
         async discoverAndFollowUsers(today) {
           const remotePath = "users.json";
-          let remoteData = null;
-          try {
-            const result = await this.globalRemote.downloadFile(remotePath);
-            if (result && result.data) remoteData = result.data;
-          } catch (e2) {
-            console.warn("[Sync] Failed to download global registry (offline?)", e2.message);
-            return;
-          }
+          const remoteData = await this.globalRemote.downloadFile(remotePath);
           if (!remoteData) return;
           try {
             const userList = JSON.parse(new TextDecoder().decode(remoteData));
@@ -90414,9 +89953,6 @@ ${toHex(hashedRequest)}`;
             while (iter <= endDate) {
               const dateStr = _SovereignS3nc.getDateStr(iter);
               await this.pullUserDay(user.userId, dateStr, user.publicKey);
-              const myId = this.config.paths.userId;
-              const dmPath = `public/dms/${myId}/${dateStr}.db`;
-              await this.pullUserFile(user.userId, dmPath, user.publicKey, `followed/${user.userId}/dms/${dateStr}.db`, false);
               iter.setUTCDate(iter.getUTCDate() + 1);
             }
             await this.storage.updateFollowedUserSync(user.userId, today);
@@ -90436,50 +89972,32 @@ ${toHex(hashedRequest)}`;
           }
           throw new Error("Remote configuration missing");
         }
-        async pullUserFile(userId, remotePath, publicKey, localPath, expectEncrypted = true) {
-          try {
-            const userRemote = this.createRemote(userId);
-            const cachedEtag = await this.storage.getGenericRemoteHashCache(`${userId}:${remotePath}`);
-            console.log(`[Sync] Downloading ${userId}/${remotePath}...`);
-            const result = await userRemote.downloadFile(remotePath, cachedEtag || void 0);
-            if (result && !result.notModified && result.data) {
-              let data = result.data;
-              try {
-                if (expectEncrypted) {
-                  data = await this.decrypt(data, publicKey);
-                }
-                await this.storage.saveFile(localPath, data);
-                if (result.etag) await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, result.etag);
-              } catch (e2) {
-                console.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e2.message}`);
+        async pullUserDay(userId, date2, publicKey) {
+          const userRemote = this.createRemote(userId);
+          const filePath = `public/${date2}.db`;
+          const remoteHash = await userRemote.getFileHash(filePath);
+          if (remoteHash) {
+            console.log(`[Sync] Remote hash for ${userId}/${date2}: ${remoteHash}`);
+            const localData = await this.storage.getDailyDb(`${userId}/${date2}`, "followed");
+            if (localData) {
+              const localHashedWithKey = this.calculateHashedContent(localData, publicKey);
+              console.log(`[Sync] Local hash for ${userId}/${date2}: ${localHashedWithKey}`);
+              if (localHashedWithKey === remoteHash) {
+                console.log(`[Sync] Skipping download for ${userId}/${date2}, hashes match.`);
+                return;
               }
             }
-          } catch (e2) {
-            console.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e2.message}`);
-          }
-        }
-        async pullUserDay(userId, date2, publicKey) {
-          try {
-            const userRemote = this.createRemote(userId);
-            const filePath = `public/${date2}.db`;
-            const cachedEtag = await this.storage.getRemoteHashCache(`${userId}:${date2}`, "followed");
-            console.log(`[Sync] Downloading ${userId}/${date2}...`);
-            const result = await userRemote.downloadFile(filePath, cachedEtag || void 0);
-            if (result && !result.notModified && result.data) {
-              let data = result.data;
+            console.log(`[Sync] Hashes mismatch or missing local. Downloading ${userId}/${date2}...`);
+            let data = await userRemote.downloadFile(filePath);
+            if (data) {
               try {
                 data = await this.decrypt(data, publicKey);
                 await this.storage.saveDailyDb(`${userId}/${date2}`, "followed", data);
-                if (result.etag) await this.storage.setRemoteHashCache(`${userId}:${date2}`, "followed", result.etag);
                 console.log(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
               } catch (e2) {
                 console.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
-            } else if (result?.notModified) {
-              console.log(`[Sync] Skipping download for ${userId}/${date2}, etags match.`);
             }
-          } catch (e2) {
-            console.warn(`[Sync] pullUserDay failed for ${userId}/${date2}: ${e2.message}`);
           }
         }
         static getDateStr(date2) {
@@ -90489,43 +90007,37 @@ ${toHex(hashedRequest)}`;
           return `${year2}-${month}-${day}`;
         }
         async syncDay(date2, type, localPublicKey, remoteOverride) {
-          try {
-            const remotePath = `${type}/${date2}.db`;
-            const activeRemote = remoteOverride || this.remote;
-            let localData = await this.storage.getDailyDb(date2, type);
-            const currentKey = type === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
-            const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
-            if (!localData) {
+          const remotePath = `${type}/${date2}.db`;
+          const activeRemote = remoteOverride || this.remote;
+          let localData = await this.storage.getDailyDb(date2, type);
+          const remoteHash = await activeRemote.getFileHash(remotePath);
+          const currentKey = type === "private" ? this.config.encryptionKey : localPublicKey || this.config.publicEncryptionKey;
+          if (!localData) {
+            if (remoteHash) {
               console.log(`[Sync] Downloading ${remotePath}`);
-              const result = await activeRemote.downloadFile(remotePath);
-              if (result && result.data) {
-                let data = result.data;
+              let data = await activeRemote.downloadFile(remotePath);
+              if (data) {
                 if (currentKey) {
                   data = await this.decrypt(data, currentKey);
                 }
                 await this.storage.saveDailyDb(date2, type, data);
-                if (result.etag) await this.storage.setRemoteHashCache(date2, type, result.etag);
+                const newHash = this.calculateHashedContent(data, currentKey);
+                await this.storage.setRemoteHashCache(date2, type, newHash);
               }
-            } else {
-              const localHash = this.calculateHashedContent(localData, currentKey);
-              const remoteHash = await activeRemote.getFileHash(remotePath);
-              if (localHash === remoteHash) {
-                if (!cachedEtag) {
-                  const remoteEtag = await activeRemote.getFileEtag(remotePath);
-                  if (remoteEtag) await this.storage.setRemoteHashCache(date2, type, remoteEtag);
-                }
-                return;
-              }
-              console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
-              let uploadData = localData;
-              if (currentKey) {
-                uploadData = await this.encrypt(localData, currentKey);
-              }
-              const etag = await activeRemote.uploadFile(remotePath, uploadData, localHash);
-              if (etag) await this.storage.setRemoteHashCache(date2, type, etag);
             }
-          } catch (e2) {
-            console.warn(`[Sync] syncDay failed for ${date2}/${type}: ${e2.message}`);
+          } else {
+            const localHash = this.calculateHashedContent(localData, currentKey);
+            if (localHash === remoteHash) {
+              await this.storage.setRemoteHashCache(date2, type, localHash);
+              return;
+            }
+            console.log(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
+            let uploadData = localData;
+            if (currentKey) {
+              uploadData = await this.encrypt(localData, currentKey);
+            }
+            await activeRemote.uploadFile(remotePath, uploadData, localHash);
+            await this.storage.setRemoteHashCache(date2, type, localHash);
           }
         }
         calculateHashedContent(data, key) {
@@ -90555,37 +90067,27 @@ ${toHex(hashedRequest)}`;
           }
         }
         async syncUserFile() {
-          try {
-            const remotePath = "public/user.json";
-            const localData = await this.storage.getPublicUserFile();
-            const key = this.config.publicEncryptionKey;
-            const cachedEtag = await this.storage.getGenericRemoteHashCache(remotePath);
-            if (!localData) {
-              const result = await this.publicRemote.downloadFile(remotePath);
-              if (result && result.data) {
-                let data = result.data;
+          const remotePath = "public/user.json";
+          const localData = await this.storage.getPublicUserFile();
+          const remoteHash = await this.publicRemote.getFileHash(remotePath);
+          const key = this.config.publicEncryptionKey;
+          if (!localData) {
+            if (remoteHash) {
+              let data = await this.publicRemote.downloadFile(remotePath);
+              if (data) {
                 if (key) data = await this.decrypt(data, key);
                 await this.storage.savePublicUserFile(data);
-                if (result.etag) await this.storage.setGenericRemoteHashCache(remotePath, result.etag);
               }
-            } else {
-              const remoteHash = await this.publicRemote.getFileHash(remotePath);
-              const localHash = this.calculateHashedContent(localData, key);
-              if (localHash === remoteHash) {
-                if (!cachedEtag) {
-                  const remoteEtag = await this.publicRemote.getFileEtag(remotePath);
-                  if (remoteEtag) await this.storage.setGenericRemoteHashCache(remotePath, remoteEtag);
-                }
-                return;
-              }
-              console.log(`[Sync] Uploading ${remotePath}`);
-              let uploadData = localData;
-              if (key) uploadData = await this.encrypt(localData, key);
-              const etag = await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
-              if (etag) await this.storage.setGenericRemoteHashCache(remotePath, etag);
             }
-          } catch (e2) {
-            console.warn(`[Sync] syncUserFile failed: ${e2.message}`);
+          } else {
+            const localHash = this.calculateHashedContent(localData, key);
+            if (localHash === remoteHash) {
+              return;
+            }
+            console.log(`[Sync] Uploading ${remotePath}`);
+            let uploadData = localData;
+            if (key) uploadData = await this.encrypt(localData, key);
+            await this.publicRemote.uploadFile(remotePath, uploadData, localHash);
           }
         }
       };
@@ -90598,8 +90100,7 @@ ${toHex(hashedRequest)}`;
     "src/modules/Social.ts"() {
       "use strict";
       import_polyfills659 = __toESM(require_polyfills());
-      init_SovereignS3nc();
-      SocialManager = class _SocialManager {
+      SocialManager = class {
         constructor(db, localPath, sqliteProvider) {
           this.db = db;
           this.localPath = localPath;
@@ -90627,12 +90128,6 @@ ${toHex(hashedRequest)}`;
                 parentId TEXT,
                 parentUserId TEXT
             );
-            CREATE TABLE IF NOT EXISTS likes (
-                postId TEXT,
-                userId TEXT,
-                timestamp INTEGER,
-                PRIMARY KEY (postId, userId)
-            );
         `);
           try {
             db.exec("ALTER TABLE posts ADD COLUMN image TEXT;");
@@ -90643,22 +90138,7 @@ ${toHex(hashedRequest)}`;
             db.exec("ALTER TABLE posts ADD COLUMN parentUserId TEXT;");
           } catch (e2) {
           }
-          try {
-            db.exec("CREATE TABLE IF NOT EXISTS likes (postId TEXT, userId TEXT, timestamp INTEGER, PRIMARY KEY (postId, userId));");
-          } catch (e2) {
-          }
           return db;
-        }
-        async like(postId, isPublic = true) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          const userId = this.db.config.paths.userId;
-          const timestamp = Date.now();
-          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
-          const binary = db.export();
-          await this.db.storage.saveDailyDb(date2, type, binary);
-          db.close();
         }
         async post(content, isPublic = true, image, parentId, parentUserId) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
@@ -90667,208 +90147,21 @@ ${toHex(hashedRequest)}`;
           const id = Math.random().toString(36).substring(7);
           const timestamp = Date.now();
           const userId = this.db.config.paths.userId;
-          let imagePath = null;
-          if (image) {
-            console.log(`[Social] Saving image blob... Size: ${Math.round(image.length / 1024)} KB`);
-            imagePath = await this.db.saveBlob(image, isPublic);
-          }
+          console.log(`[Social] Creating post. Image size: ${image ? Math.round(image.length / 1024) : 0} KB`);
           const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId) VALUES (?, ?, ?, ?, ?, ?, ?)";
-          const params = [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null];
+          const params = [id, content, timestamp, userId, image || null, parentId || null, parentUserId || null];
           db.run(sql, params);
           const binary = db.export();
           await this.db.storage.saveDailyDb(date2, type, binary);
           db.close();
         }
-        async getMessageDb(date2, type) {
-          const path = `private/dms/${type}/${date2}`;
-          const data = await this.db.storage.getFile(path);
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) {
-            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          }
-          const db = new this.sqliteInstance.Database(data || void 0);
-          db.exec(`
-            CREATE TABLE IF NOT EXISTS messages (
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                senderId TEXT,
-                recipientId TEXT,
-                image TEXT
-            );
-        `);
-          return db;
-        }
-        async sendDirectMessage(recipientId, content, image) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const outboxDb = await this.getMessageDb(date2, "outbox");
-          const id = Math.random().toString(36).substring(7);
-          const timestamp = Date.now();
-          const senderId = this.db.config.paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, false);
-          }
-          outboxDb.run(
-            "INSERT INTO messages (id, content, timestamp, senderId, recipientId, image) VALUES (?, ?, ?, ?, ?, ?)",
-            [id, content, timestamp, senderId, recipientId, imagePath]
-          );
-          await this.db.storage.saveFile(`private/dms/outbox/${date2}`, outboxDb.export());
-          outboxDb.close();
-          const publicDmPath = `public/dms/${recipientId}/${date2}.db`;
-          const publicDmData = await this.db.storage.getFile(publicDmPath);
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const publicDb = new this.sqliteInstance.Database(publicDmData || void 0);
-          publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
-          const message = { id, content, timestamp, senderId, recipientId, imagePath };
-          const recipient = (await this.db.getPublicRegistry()).find((u2) => u2.userId === recipientId);
-          if (!recipient) throw new Error("Recipient not found in registry");
-          const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), recipient.publicKey);
-          publicDb.run("INSERT INTO messages (id, encrypted_data) VALUES (?, ?)", [id, encrypted]);
-          await this.db.storage.saveFile(publicDmPath, publicDb.export());
-          publicDb.close();
-          console.log(`[Social] DM sent and added to daily public DB for ${recipientId}`);
-        }
-        async sync() {
-          await this.db.sync();
-          await this.syncDirectMessages();
-        }
-        async syncDirectMessages() {
-          console.log("[Social] Syncing DMs...");
-          const myId = this.db.config.paths.userId;
-          const following = await this.db.getFollowing();
-          for (const user of following) {
-            const userRemote = this.db.createRemote(user.userId);
-          }
-        }
         async comment(parentId, parentUserId, content, image) {
           await this.post(content, true, image, parentId, parentUserId);
         }
-        async getInboxMessages(days = 5) {
-          const myId = this.db.config.paths.userId;
-          const messages = [];
-          const following = await this.db.getFollowing();
-          const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(d2.toISOString().split("T")[0]);
-          }
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          for (const user of following) {
-            for (const date2 of dates) {
-              const localPath = `followed/${user.userId}/dms/${date2}.db`;
-              const data = await this.db.storage.getFile(localPath);
-              if (data) {
-                const db = new this.sqliteInstance.Database(data);
-                try {
-                  const res = db.exec("SELECT encrypted_data FROM messages");
-                  if (res && res.length > 0) {
-                    for (const row of res[0].values) {
-                      let decrypted = null;
-                      try {
-                        decrypted = await this.db.decrypt(row[0], this.db.config.encryptionKey);
-                      } catch (e2) {
-                        try {
-                          decrypted = await this.db.decrypt(row[0], this.db.config.publicEncryptionKey);
-                        } catch (e22) {
-                        }
-                      }
-                      if (decrypted) {
-                        const parsed = JSON.parse(new TextDecoder().decode(decrypted));
-                        messages.push(parsed);
-                      }
-                    }
-                  }
-                } catch (e2) {
-                }
-                db.close();
-              }
-            }
-          }
-          for (const date2 of dates) {
-            const outboxPath = `private/dms/outbox/${date2}`;
-            const data = await this.db.storage.getFile(outboxPath);
-            if (data) {
-              const db = new this.sqliteInstance.Database(data);
-              try {
-                const res = db.exec("SELECT * FROM messages");
-                if (res && res.length > 0) {
-                  const columns = res[0].columns;
-                  const myMsgs = res[0].values.map((row) => {
-                    const msg = {};
-                    columns.forEach((col, i2) => msg[col] = row[i2]);
-                    return msg;
-                  });
-                  messages.push(...myMsgs);
-                }
-              } catch (e2) {
-              }
-              db.close();
-            }
-          }
-          messages.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          return messages;
-        }
         async updateProfile(name, bio, avatar) {
-          let finalAvatar = avatar;
-          if (avatar && avatar.startsWith("data:image")) {
-            try {
-              finalAvatar = await _SocialManager.compressImage(avatar, 200 * 1024);
-              console.log(`[Social] Profile avatar compressed. Length: ${finalAvatar.length}`);
-            } catch (e2) {
-              console.warn(`[Social] Failed to compress avatar: ${e2.message}`);
-            }
-          }
-          const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.config.paths.userId };
+          const profile = { name, bio, avatar, updatedAt: Date.now(), userId: this.db.config.paths.userId };
           const data = new TextEncoder().encode(JSON.stringify(profile));
           await this.db.storage.savePublicUserFile(data);
-        }
-        /**
-         * Utility to compress a base64 image (data URL) to a target size in bytes.
-         */
-        static async compressImage(dataUrl, targetSizeBytes) {
-          if (typeof document === "undefined") return dataUrl;
-          return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.src = dataUrl;
-            img.onload = () => {
-              const canvas = document.createElement("canvas");
-              let width = img.width;
-              let height = img.height;
-              const MAX_DIM = 1024;
-              if (width > MAX_DIM || height > MAX_DIM) {
-                if (width > height) {
-                  height = height / width * MAX_DIM;
-                  width = MAX_DIM;
-                } else {
-                  width = width / height * MAX_DIM;
-                  height = MAX_DIM;
-                }
-              }
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              if (!ctx) return reject(new Error("Canvas context failed"));
-              ctx.drawImage(img, 0, 0, width, height);
-              let quality = 0.9;
-              let result = dataUrl;
-              const attempt = () => {
-                result = canvas.toDataURL("image/jpeg", quality);
-                const estimatedSize = result.length * 0.75;
-                if (estimatedSize > targetSizeBytes && quality > 0.1) {
-                  quality -= 0.1;
-                  attempt();
-                } else {
-                  resolve(result);
-                }
-              };
-              attempt();
-            };
-            img.onerror = (e2) => reject(e2);
-          });
         }
         async getProfile(userId) {
           const myId = this.db.config.paths.userId;
@@ -90889,22 +90182,11 @@ ${toHex(hashedRequest)}`;
           for (const user of following) {
             const userRemote = this.db.createRemote(user.userId);
             try {
-              const result = await userRemote.downloadFile("public/user.json");
-              if (result && result.data) {
-                const data = result.data;
-                let finalData = data;
-                try {
-                  JSON.parse(new TextDecoder().decode(data));
-                } catch (e2) {
-                  try {
-                    finalData = await this.db.decrypt(data, user.publicKey);
-                  } catch (de) {
-                    console.warn(`[Social] Could not parse or decrypt profile for ${user.userId}`);
-                    continue;
-                  }
-                }
-                await this.db.storage.saveDailyDb(`${user.userId}/profile`, "followed", finalData);
-                console.log(`[Social] Synced profile for ${user.userId}`);
+              const data = await userRemote.downloadFile("public/user.json");
+              if (data) {
+                const decrypted = await this.db.decrypt(data, user.publicKey);
+                await this.db.storage.saveDailyDb(`${user.userId}/profile`, "followed", decrypted);
+                console.log(`[Social] Synced and decrypted profile for ${user.userId}`);
               } else {
                 console.log(`[Social] No profile file found for ${user.userId}`);
               }
@@ -90937,91 +90219,33 @@ ${toHex(hashedRequest)}`;
           console.log(`[Social] Found ${posts.length} posts in ${type}/${date2}`);
           return posts;
         }
-        async enrichLikes(posts, days = 5) {
-          if (posts.length === 0) return;
-          const postMap = /* @__PURE__ */ new Map();
-          posts.forEach((p2) => {
-            p2.likesCount = 0;
-            p2.likedByMe = false;
-            postMap.set(p2.id, p2);
-          });
-          const myId = this.db.config.paths.userId;
-          const following = await this.db.getFollowing();
-          const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(SovereignS3nc.getDateStr(d2));
-          }
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const processDb = async (date2, type) => {
-            const data = await this.db.storage.getDailyDb(date2, type);
-            if (!data) return;
-            const db = new this.sqliteInstance.Database(data);
-            try {
-              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
-              if (tableCheck.length === 0) {
-                db.close();
-                return;
-              }
-              const res = db.exec("SELECT postId, userId FROM likes");
-              if (res && res.length > 0) {
-                for (const row of res[0].values) {
-                  const postId = row[0];
-                  const likerId = row[1];
-                  const post = postMap.get(postId);
-                  if (post) {
-                    post.likesCount = (post.likesCount || 0) + 1;
-                    if (likerId === myId) {
-                      post.likedByMe = true;
-                    }
-                  }
-                }
-              }
-            } catch (e2) {
-              console.warn(`[Social] Failed to process likes in ${type}/${date2}:`, e2);
-            }
-            db.close();
-          };
-          for (const date2 of dates) {
-            await processDb(date2, "public");
-          }
-          for (const user of following) {
-            for (const date2 of dates) {
-              await processDb(`${user.userId}/${date2}`, "followed");
-            }
-          }
-        }
       };
     }
   });
 
-  // demo/social/src/App.tsx
+  // demo/web/src/App.tsx
   var require_App = __commonJS({
-    "demo/social/src/App.tsx"() {
+    "demo/web/src/App.tsx"() {
       var import_polyfills660 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
       init_Social();
+      var import_crypto = __toESM(require_crypto_browserify());
+      var import_buffer = __toESM(require_buffer());
       var App = () => {
+        console.log("Sovereign Social Demo starting...");
         const [config, setConfig] = (0, import_react.useState)({
           region: "ap-southeast-1",
           endpoint: "",
           accessKeyId: "",
           secretAccessKey: "",
           bucketName: "",
-          appId: "sov-social",
+          appId: "demo-app",
           userId: "user-" + Math.random().toString(36).substring(7),
           password: "password123"
         });
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
-        const [autoLogin, setAutoLogin] = (0, import_react.useState)(localStorage.getItem("sov_auto_login") === "true");
-        const [rememberedUsers, setRememberedUsers] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_remembered_users");
-          return saved ? JSON.parse(saved) : [];
-        });
         const [sov, setSov] = (0, import_react.useState)(null);
         const [social, setSocial] = (0, import_react.useState)(null);
         const [posts, setPosts] = (0, import_react.useState)([]);
@@ -91030,147 +90254,121 @@ ${toHex(hashedRequest)}`;
         const [lastSyncTime, setLastSyncTime] = (0, import_react.useState)(null);
         const [newPost, setNewPost] = (0, import_react.useState)("");
         const [newImage, setNewPostImage] = (0, import_react.useState)(null);
-        const [newImagePreview, setNewImagePreview] = (0, import_react.useState)(null);
         const [profile, setProfile] = (0, import_react.useState)(null);
-        const [profileCache, setProfileCache] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_profile_cache");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_profile_cache", JSON.stringify(profileCache));
-        }, [profileCache]);
-        const [blobCache, setBlobCache] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_blob_cache");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_blob_cache", JSON.stringify(blobCache));
-        }, [blobCache]);
+        const [profileCache, setProfileCache] = (0, import_react.useState)({});
+        const [isEditingProfile, setIsEditingProfile] = (0, import_react.useState)(false);
         const [syncing, setSyncing] = (0, import_react.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react.useState)("feed");
-        const [messages, setMessages] = (0, import_react.useState)([]);
-        const [msgInput, setMsgInput] = (0, import_react.useState)("");
-        const [selectedUser, setSelectedUser] = (0, import_react.useState)(null);
-        const [lookbackDays, setLookbackDays] = (0, import_react.useState)(5);
+        const [savedAccounts, setSavedAccounts] = (0, import_react.useState)([]);
         (0, import_react.useEffect)(() => {
-          if (isLoggedIn) {
-            loadData();
-          }
-        }, [lookbackDays]);
-        const handleLoadMore = () => {
-          setLookbackDays((prev) => prev + 5);
-        };
-        const [lastViewed, setLastViewed] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_last_viewed_v2");
-          if (saved) return JSON.parse(saved);
-          const old = localStorage.getItem("sov_last_viewed");
-          const base = old ? JSON.parse(old) : { feed: Date.now(), friends: Date.now(), messages: Date.now() };
-          return { ...base, chat: {} };
-        });
-        const [highlights, setHighlights] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_highlights");
-          return saved ? JSON.parse(saved) : { feed: 0, friends: 0 };
-        });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_discovery_map");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_discovery_map", JSON.stringify(discoveryMap));
-        }, [discoveryMap]);
-        const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0 });
-        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_last_viewed_v2", JSON.stringify(lastViewed));
-        }, [lastViewed]);
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_highlights", JSON.stringify(highlights));
-        }, [highlights]);
-        (0, import_react.useEffect)(() => {
-          const savedConfig = localStorage.getItem("sov_social_config");
-          if (savedConfig && autoLogin) {
-            try {
-              const parsed = JSON.parse(savedConfig);
-              setConfig(parsed);
-              performLogin(parsed);
-              return;
-            } catch (e2) {
-            }
-          }
+          const accounts = JSON.parse(localStorage.getItem("sov_saved_accounts") || "[]");
+          setSavedAccounts(accounts);
           fetch("config.json").then((res) => res.json()).then((data) => {
-            setConfig((prev) => ({ ...prev, ...data }));
-          }).catch(() => {
-          });
+            setConfig((prev) => ({
+              ...prev,
+              endpoint: data.endpoint || prev.endpoint,
+              region: data.region || prev.region,
+              accessKeyId: data.accessKeyId || prev.accessKeyId,
+              secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
+              bucketName: data.bucketName || prev.bucketName
+            }));
+          }).catch(() => console.log("No pre-populated config found."));
         }, []);
-        const performLogin = async (currentConfig) => {
+        const encryptConfig = async (configData, pass) => {
+          const data = new TextEncoder().encode(JSON.stringify(configData));
+          const salt = new TextEncoder().encode(configData.userId);
+          const masterKeyBuffer = import_crypto.default.pbkdf2Sync(pass, salt, 1e3, 32, "sha256");
+          const iv = import_crypto.default.randomBytes(12);
+          const cipher = import_crypto.default.createCipheriv("aes-256-gcm", masterKeyBuffer, iv);
+          const encrypted = import_buffer.Buffer.concat([cipher.update(data), cipher.final()]);
+          const tag = cipher.getAuthTag();
+          return import_buffer.Buffer.concat([iv, tag, encrypted]).toString("base64");
+        };
+        const decryptConfig = async (encryptedBase64, pass, userId) => {
+          const data = import_buffer.Buffer.from(encryptedBase64, "base64");
+          const salt = new TextEncoder().encode(userId);
+          const masterKeyBuffer = import_crypto.default.pbkdf2Sync(pass, salt, 1e3, 32, "sha256");
+          const iv = data.slice(0, 12);
+          const tag = data.slice(12, 28);
+          const encrypted = data.slice(28);
+          const decipher = import_crypto.default.createDecipheriv("aes-256-gcm", masterKeyBuffer, iv);
+          decipher.setAuthTag(tag);
+          const decrypted = import_buffer.Buffer.concat([decipher.update(encrypted), decipher.final()]);
+          return JSON.parse(new TextDecoder().decode(decrypted));
+        };
+        const login = async () => {
           try {
-            setConfig(currentConfig);
-            console.log(`[Login] Testing connection to proxy: ${currentConfig.endpoint}/_ping`);
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 5e3);
-            try {
-              const testRes = await fetch(`${currentConfig.endpoint}/_ping`, {
-                method: "GET",
-                signal: controller.signal
-              });
-              clearTimeout(id);
-              console.log(`[Login] Proxy connection test status: ${testRes.status}`);
-            } catch (e2) {
-              clearTimeout(id);
-              console.warn(`[Login] Proxy connection test failed: ${e2.message}. This might be a network issue or the proxy is not running.`);
-            }
             const s3Config = {
-              region: currentConfig.region,
-              endpoint: currentConfig.endpoint,
+              region: config.region,
+              endpoint: config.endpoint,
               credentials: {
-                accessKeyId: currentConfig.accessKeyId,
-                secretAccessKey: currentConfig.secretAccessKey
+                accessKeyId: config.accessKeyId,
+                secretAccessKey: config.secretAccessKey
               },
-              bucketName: currentConfig.bucketName,
+              bucketName: config.bucketName,
               forcePathStyle: true
             };
             const instance = new SovereignS3nc({
               s3: s3Config,
-              paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: "social" },
-              password: currentConfig.password
+              paths: { appId: config.appId, userId: config.userId, storeId: "main" },
+              password: config.password
+            });
+            await instance.init();
+            const encrypted = await encryptConfig(config, config.password);
+            localStorage.setItem(`sov_acc_${config.userId}`, encrypted);
+            if (!savedAccounts.includes(config.userId)) {
+              const newAccs = [...savedAccounts, config.userId];
+              setSavedAccounts(newAccs);
+              localStorage.setItem("sov_saved_accounts", JSON.stringify(newAccs));
+            }
+            setSov(instance);
+            const sm = new SocialManager(instance, "");
+            setSocial(sm);
+            setProfile(await sm.getProfile());
+            setIsLoggedIn(true);
+            setTimeout(() => {
+              instance.sync().then(() => {
+                console.log("Initial sync complete");
+                loadPosts();
+              });
+            }, 100);
+          } catch (e2) {
+            console.error("[Login] Error:", e2);
+            alert("Initialization failed: " + e2.message);
+          }
+        };
+        const unlockAccount = async (userId) => {
+          const pass = prompt(`Enter password for ${userId}:`);
+          if (!pass) return;
+          try {
+            const encrypted = localStorage.getItem(`sov_acc_${userId}`);
+            if (!encrypted) return;
+            const decryptedConfig = await decryptConfig(encrypted, pass, userId);
+            decryptedConfig.password = pass;
+            setConfig(decryptedConfig);
+            const s3Config = {
+              region: decryptedConfig.region,
+              endpoint: decryptedConfig.endpoint,
+              credentials: {
+                accessKeyId: decryptedConfig.accessKeyId,
+                secretAccessKey: decryptedConfig.secretAccessKey
+              },
+              bucketName: decryptedConfig.bucketName,
+              forcePathStyle: true
+            };
+            const instance = new SovereignS3nc({
+              s3: s3Config,
+              paths: { appId: decryptedConfig.appId, userId: decryptedConfig.userId, storeId: "main" },
+              password: pass
             });
             await instance.init();
             setSov(instance);
             const sm = new SocialManager(instance, "");
             setSocial(sm);
-            const profileData = await sm.getProfile();
-            setProfile(profileData);
+            setProfile(await sm.getProfile());
             setIsLoggedIn(true);
-            localStorage.setItem("sov_social_config", JSON.stringify(currentConfig));
-            localStorage.setItem("sov_auto_login", autoLogin.toString());
-            await loadData(sm, instance);
-            const newUser = { userId: currentConfig.userId, name: profileData?.name || currentConfig.userId, avatar: profileData?.avatar, config: currentConfig };
-            setRememberedUsers((prev) => {
-              const updated = [newUser, ...prev.filter((u2) => u2.userId !== currentConfig.userId)];
-              localStorage.setItem("sov_remembered_users", JSON.stringify(updated));
-              return updated;
-            });
-            setTimeout(() => {
-              instance.sync().then(() => {
-                loadData();
-              }).catch((e2) => {
-                console.warn("Initial sync failed, operating in offline mode.", e2);
-                loadData();
-              });
-            }, 100);
           } catch (e2) {
-            alert("Login initialization failed: " + e2.message);
+            alert("Invalid password or corrupted data");
           }
-        };
-        const login = () => performLogin(config);
-        const logout = () => {
-          localStorage.removeItem("sov_social_config");
-          setIsLoggedIn(false);
-          setSov(null);
-          setSocial(null);
-          setPosts([]);
-          setFollowing([]);
-          setMessages([]);
         };
         const compressImage = async (file) => {
           return new Promise((resolve) => {
@@ -91183,29 +90381,26 @@ ${toHex(hashedRequest)}`;
                 const canvas = document.createElement("canvas");
                 let width = img.width;
                 let height = img.height;
-                const MAX_DIM = 1200;
+                const MAX_DIM = 1920;
+                let scale = 1;
                 if (width > MAX_DIM || height > MAX_DIM) {
-                  const scale = Math.min(MAX_DIM / width, MAX_DIM / height);
-                  width *= scale;
-                  height *= scale;
+                  scale = Math.min(MAX_DIM / width, MAX_DIM / height);
                 }
-                canvas.width = width;
-                canvas.height = height;
+                const targetWidth = width * scale;
+                const targetHeight = height * scale;
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
                 const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
-                let quality = 0.8;
-                let blob;
-                const check = () => {
-                  canvas.toBlob((b2) => {
-                    if (b2 && b2.size > 200 * 1024 && quality > 0.1) {
-                      quality -= 0.1;
-                      check();
-                    } else {
-                      b2?.arrayBuffer().then((ab2) => resolve(new Uint8Array(ab2)));
-                    }
-                  }, "image/jpeg", quality);
-                };
-                check();
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                let quality = 0.9;
+                let dataUrl = canvas.toDataURL("image/jpeg", quality);
+                console.log(`[Demo] Initial compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB`);
+                while (dataUrl.length * 0.75 > 102400 && quality > 0.1) {
+                  quality -= 0.1;
+                  dataUrl = canvas.toDataURL("image/jpeg", quality);
+                }
+                console.log(`[Demo] Final compression size: ${Math.round(dataUrl.length * 0.75 / 1024)} KB at quality ${quality.toFixed(1)}`);
+                resolve(dataUrl);
               };
             };
           });
@@ -91215,301 +90410,131 @@ ${toHex(hashedRequest)}`;
           if (!file) return;
           const compressed = await compressImage(file);
           setNewPostImage(compressed);
-          const reader = new FileReader();
-          reader.onload = (ev) => setNewImagePreview(ev.target?.result);
-          reader.readAsDataURL(new Blob([compressed]));
         };
+        const saveProfile = async () => {
+          if (!social || !profile) return;
+          await social.updateProfile(profile.name, profile.bio, profile.avatar);
+          setIsEditingProfile(false);
+        };
+        (0, import_react.useEffect)(() => {
+          if (isLoggedIn) loadPosts();
+        }, [isLoggedIn]);
         const handlePost = async () => {
           if (!social || !newPost) return;
           await social.post(newPost, true, newImage || void 0);
           setNewPost("");
           setNewPostImage(null);
-          setNewImagePreview(null);
-          await sync();
+          await loadPosts();
         };
-        const handleLike = async (postId) => {
-          if (!social) return;
-          await social.like(postId);
-          await loadData();
-        };
-        const handleComment = async (post) => {
-          if (!social) return;
-          const content = prompt(`Replying to ${post.userId}:`);
-          if (content) {
-            await social.comment(post.id, post.userId, content);
-            await sync();
-          }
-        };
-        const handleShare = async (post) => {
-          const text = `Post by ${post.userId}: ${post.content}`;
-          try {
-            await navigator.clipboard.writeText(text);
-            alert("Post content copied to clipboard!");
-          } catch (e2) {
-            alert(text);
-          }
+        const handleComment = async (parent) => {
+          const content = prompt("Your comment:");
+          if (!content || !social) return;
+          await social.comment(parent.id, parent.userId, content);
+          await loadPosts();
         };
         const sync = async () => {
-          if (!sov || !social || syncing) return;
+          if (!sov || !social) return;
           setSyncing(true);
           try {
             await sov.sync();
             await social.syncOtherProfiles();
             setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
-            await loadData();
-          } catch (e2) {
-            console.warn("Sync failed", e2);
+            await loadPosts();
           } finally {
             setSyncing(false);
           }
         };
-        (0, import_react.useEffect)(() => {
-          if (isLoggedIn) {
-            sync();
-            if (currentTab === "feed" || currentTab === "friends") {
-              setHighlights((prev) => ({ ...prev, [currentTab]: lastViewed[currentTab] || 0 }));
-              setLastViewed((prev) => ({ ...prev, [currentTab]: Date.now() }));
-            }
+        const handleFollow = async () => {
+          const id = prompt("Enter User ID to follow (exactly as it appears in their registry):");
+          if (!id || !sov) return;
+          try {
+            await sov.follow(id);
+            alert(`Now following ${id}. Please click Sync to pull their latest data.`);
+            await loadPosts();
+          } catch (e2) {
+            alert(`Error: ${e2.message}`);
           }
-        }, [currentTab]);
-        (0, import_react.useEffect)(() => {
-          if (currentTab === "messages" && selectedUser) {
-            setLastViewed((prev) => ({
-              ...prev,
-              chat: { ...prev.chat || {}, [selectedUser]: Date.now() }
-            }));
-            setUserUnreadCounts((prev) => ({ ...prev, [selectedUser]: 0 }));
-          }
-        }, [selectedUser, currentTab]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn || !sov || !social) return;
-          const interval = setInterval(() => {
-            sync();
-          }, 15e3);
-          return () => clearInterval(interval);
-        }, [isLoggedIn, sov, social]);
-        const loadData = async (activeSocial, activeSov) => {
-          const s2 = activeSocial || social;
-          const v2 = activeSov || sov;
-          if (!s2 || !v2) return;
-          const registry = await v2.getPublicRegistry();
+        };
+        const loadPosts = async () => {
+          if (!social || !sov) return;
+          console.log("[Demo] Refreshing feed...");
+          const registry = await sov.getPublicRegistry();
           setAllUsers(registry);
-          const now = Date.now();
-          const newDiscoveryMap = { ...discoveryMap };
-          let discoveryChanged = false;
-          registry.forEach((u2) => {
-            if (!newDiscoveryMap[u2.userId]) {
-              newDiscoveryMap[u2.userId] = now;
-              discoveryChanged = true;
-            }
-          });
-          if (discoveryChanged) setDiscoveryMap(newDiscoveryMap);
-          const followingList = await v2.getFollowing();
-          setFollowing(followingList);
           const dates = [];
-          for (let i2 = 0; i2 < lookbackDays; i2++) {
+          for (let i2 = 0; i2 < 7; i2++) {
             const d2 = /* @__PURE__ */ new Date();
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(SovereignS3nc.getDateStr(d2));
           }
           let allPosts = [];
           for (const date2 of dates) {
-            allPosts = [...allPosts, ...await s2.getPosts(date2, "public")];
-            for (const user of followingList) {
-              allPosts = [...allPosts, ...await s2.getPosts(`${user.userId}/${date2}`, "followed")];
+            const myDayPosts = await social.getPosts(date2, "public");
+            allPosts = [...allPosts, ...myDayPosts];
+          }
+          const followingList = await sov.getFollowing();
+          setFollowing(followingList);
+          for (const user of followingList) {
+            for (const date2 of dates) {
+              const userPosts = await social.getPosts(`${user.userId}/${date2}`, "followed");
+              allPosts = [...allPosts, ...userPosts];
             }
           }
           allPosts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          await s2.enrichLikes(allPosts, lookbackDays);
+          console.log(`[Demo] Total feed items: ${allPosts.length}`);
           setPosts(allPosts);
-          const newMessages = await s2.getInboxMessages(lookbackDays);
-          setMessages(newMessages);
-          const feedUnread = allPosts.filter((p2) => p2.timestamp > lastViewed.feed && p2.userId !== config.userId).length;
-          const userMsgUnreads = {};
-          let totalMsgUnread = 0;
-          newMessages.forEach((m2) => {
-            if (m2.senderId !== config.userId) {
-              const userLastViewed = (lastViewed.chat || {})[m2.senderId] || 0;
-              if (m2.timestamp > userLastViewed) {
-                userMsgUnreads[m2.senderId] = (userMsgUnreads[m2.senderId] || 0) + 1;
-                totalMsgUnread++;
-              }
-            }
-          });
-          const friendsUnread = registry.filter((u2) => (discoveryMap[u2.userId] || 0) > lastViewed.friends && u2.userId !== config.userId).length;
-          setUnreadCounts({
-            feed: feedUnread,
-            messages: totalMsgUnread,
-            friends: friendsUnread
-          });
-          setUserUnreadCounts(userMsgUnreads);
         };
-        const handleSendMessage = async () => {
-          if (!social || !selectedUser || !msgInput) return;
-          await social.sendDirectMessage(selectedUser, msgInput);
-          setMsgInput("");
-          await sync();
-        };
-        const BlobImage = ({ path, userId }) => {
-          const [src, setSrc] = (0, import_react.useState)(blobCache[path]);
-          (0, import_react.useEffect)(() => {
-            if (!src && sov) {
-              sov.getBlob(path, userId).then((data) => {
-                if (data) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    const base64data = reader.result;
-                    setSrc(base64data);
-                    setBlobCache((prev) => ({ ...prev, [path]: base64data }));
-                  };
-                  reader.readAsDataURL(new Blob([data]));
-                }
-              });
-            }
-          }, [path, userId, sov]);
-          if (!src) return /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light p-5 text-center text-muted" }, "Loading image...");
-          return /* @__PURE__ */ import_react.default.createElement("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
-        };
-        const UserAvatar = ({ userId, size = 40 }) => {
+        const UserAvatar = ({ userId }) => {
+          const [isHovered, setIsHovered] = (0, import_react.useState)(false);
           const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
           (0, import_react.useEffect)(() => {
             if (!userData && social) {
+              console.log(`[UI] Fetching profile for ${userId}...`);
               social.getProfile(userId).then((p3) => {
                 if (p3) {
+                  console.log(`[UI] Found profile for ${userId}:`, p3.name);
                   setUserData(p3);
                   setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
+                } else {
+                  console.log(`[UI] No local profile for ${userId}`);
                 }
               });
             }
           }, [userId, social, userData]);
           const p2 = userData || { name: userId };
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" } }, userId[0].toUpperCase()), size > 30 && /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold" }, p2.name || userId));
-        };
-        const UserName = ({ userId, className }) => {
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
-            if (!userData && social) {
-              social.getProfile(userId).then((p2) => {
-                if (p2) {
-                  setUserData(p2);
-                  setProfileCache((prev) => ({ ...prev, [userId]: p2 }));
-                }
-              });
-            }
-          }, [userId, social, userData]);
-          return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
-        };
-        const PostItem = ({ post, allPosts, depth = 0 }) => {
-          const replies = allPosts.filter((p2) => p2.parentId === post.id);
-          const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isNew ? "border-primary shadow-sm" : ""}`, style: isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" }))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.content), post.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
-            "button",
+          return /* @__PURE__ */ import_react.default.createElement(
+            "div",
             {
-              className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
-              onClick: () => handleLike(post.id)
+              className: "position-relative d-inline-block",
+              onMouseEnter: () => setIsHovered(true),
+              onMouseLeave: () => setIsHovered(false)
             },
-            "Like ",
-            post.likesCount ? `(${post.likesCount})` : ""
-          ), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleComment(post) }, "Comment"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleShare(post) }, "Share"))), replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: reply.id, post: reply, allPosts, depth: depth + 1 })));
+            /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center cursor-pointer" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, className: "profile-img-sm me-2", style: { width: "32px", height: "32px", borderRadius: "50%" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px", fontSize: "0.8rem" } }, userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold text-primary" }, p2.name || userId)),
+            isHovered && /* @__PURE__ */ import_react.default.createElement("div", { className: "card position-absolute shadow-lg p-3", style: { zIndex: 1e3, width: "250px", top: "100%", left: 0, backgroundColor: "white", border: "1px solid #007bff" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-2" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, className: "profile-img mb-2", style: { width: "80px", height: "80px", objectFit: "cover", borderRadius: "50%" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2", style: { width: "80px", height: "80px", fontSize: "2rem" } }, userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0 text-dark" }, p2.name || userId), /* @__PURE__ */ import_react.default.createElement("small", { className: "text-muted" }, "@", userId)), p2.bio && /* @__PURE__ */ import_react.default.createElement("p", { className: "small mb-0 mt-2 border-top pt-2 text-dark" }, p2.bio), !userData && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "spinner-border spinner-border-sm" })))
+          );
+        };
+        const renderPost = (post, depth = 0) => {
+          const replies = posts.filter((p2) => p2.parentId === post.id);
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `post-wrapper ${depth > 0 ? "ms-4 border-start ps-3" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 text-muted small" }, new Date(post.timestamp).toLocaleString())), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, post.content), post.image && /* @__PURE__ */ import_react.default.createElement("div", { className: "post-image-container mb-2 text-center bg-light rounded", style: { minHeight: "100px" } }, /* @__PURE__ */ import_react.default.createElement("img", { src: post.image, className: "img-fluid rounded", style: { maxHeight: "800px", objectFit: "contain" } })), /* @__PURE__ */ import_react.default.createElement("div", { className: "pt-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-link text-decoration-none p-0", onClick: () => handleComment(post) }, "Reply"))), replies.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "replies-container mt-2" }, replies.map((reply) => renderPost(reply, depth + 1))));
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "text-primary text-center fw-bold mb-4" }, "Sovereign Social"), rememberedUsers.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Switch Account"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, rememberedUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement(
-            "button",
-            {
-              key: u2.userId,
-              className: "list-group-item list-group-item-action d-flex align-items-center py-2",
-              onClick: () => performLogin(u2.config)
-            },
-            u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
-            /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
-            /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement(
-            "input",
-            {
-              className: "form-check-input",
-              type: "checkbox",
-              id: "autoLogin",
-              checked: autoLogin,
-              onChange: (e2) => {
-                setAutoLogin(e2.target.checked);
-                localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-              }
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "SovereignS3nc Login"), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-2 mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: "Region", value: config.region, onChange: (e2) => setConfig({ ...config, region: e2.target.value }) }))), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: login }, "Enter Workspace"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger btn-sm w-100", onClick: () => {
+            if (confirm("Clear all local data?")) {
+              indexedDB.deleteDatabase("sovereign_s3nc");
+              localStorage.clear();
+              window.location.reload();
             }
-          ), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-fb w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement(
-            "button",
-            {
-              className: "btn btn-outline-danger w-100 py-2 btn-sm",
-              onClick: async () => {
-                if (confirm("Are you sure? This will delete all local databases and settings.")) {
-                  localStorage.clear();
-                  const dbs = await window.indexedDB.databases();
-                  dbs.forEach((db) => {
-                    if (db.name?.startsWith("sov_") || db.name?.startsWith("test_db_")) {
-                      window.indexedDB.deleteDatabase(db.name);
-                    }
-                  });
-                  alert("All local data cleared. The page will now reload.");
-                  window.location.reload();
-                }
-              }
-            },
-            "Reset All Local Data"
-          )));
+          } }, "Reset Local Database & Accounts"), savedAccounts.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-4" }, /* @__PURE__ */ import_react.default.createElement("h6", null, "Saved Accounts"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, savedAccounts.map((acc) => /* @__PURE__ */ import_react.default.createElement("button", { key: acc, className: "list-group-item list-group-item-action d-flex justify-content-between align-items-center", onClick: () => unlockAccount(acc) }, acc, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-primary rounded-pill" }, "Unlock")))))));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind, ${profile?.name || config.userId}?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value) }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm border-0 w-auto", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-fb px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history (", lookbackDays, " days shown)"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
-          const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        }), allUsers.length <= 1 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-5 text-muted" }, "No other users found yet.")))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "position-relative d-inline-block" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "border shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center border shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle", style: { width: "32px", height: "32px", padding: "4px" } }, "\u270E", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-3 sidebar p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar && /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, className: "profile-img mb-2" }), /* @__PURE__ */ import_react.default.createElement("h4", null, profile?.name || config.userId), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-link", onClick: () => setIsEditingProfile(true) }, "Edit Profile")), isEditingProfile && /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-3 border-primary" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Display Name", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "Bio", value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control mb-2", onChange: async (e2) => {
           const file = e2.target.files?.[0];
           if (file) {
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-              const base64 = ev.target?.result;
-              await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", base64);
-              setProfile((prev) => ({ ...prev, avatar: base64 }));
-              await sync();
-            };
-            reader.readAsDataURL(file);
+            const compressed = await compressImage(file);
+            setProfile({ ...profile, avatar: compressed });
           }
-        } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement(
-          "input",
-          {
-            className: "form-control",
-            value: profile?.name || "",
-            onChange: (e2) => setProfile({ ...profile, name: e2.target.value }),
-            placeholder: "Your Name"
-          }
-        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement(
-          "textarea",
-          {
-            className: "form-control",
-            rows: 3,
-            value: profile?.bio || "",
-            onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }),
-            placeholder: "Tell us about yourself..."
-          }
-        )), /* @__PURE__ */ import_react.default.createElement(
-          "button",
-          {
-            className: "btn btn-primary w-100 py-2 fw-bold",
-            onClick: async () => {
-              await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
-              await sync();
-              alert("Profile updated and synced!");
-            }
-          },
-          "Save Changes"
-        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-4 pt-3 border-top text-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mb-1" }, "User ID"), /* @__PURE__ */ import_react.default.createElement("code", null, config.userId)))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 text-center text-muted small" }, "Follow users to chat"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", null, (() => {
-          const chatMessages = messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp);
-          const userLastViewed = (lastViewed.chat || {})[selectedUser] || 0;
-          let dividerShown = false;
-          return chatMessages.map((m2, index) => {
-            const isNew = m2.senderId !== config.userId && m2.timestamp > userLastViewed;
-            const showDivider = isNew && !dividerShown;
-            if (showDivider) dividerShown = true;
-            return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, { key: m2.id }, showDivider && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center my-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 border-bottom border-primary opacity-25" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-3 small text-primary fw-bold" }, "Messages from this point are new"), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 border-bottom border-primary opacity-25" })), /* @__PURE__ */ import_react.default.createElement("div", { className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"} ${isNew ? "border border-primary" : ""}`, style: { maxWidth: "75%" } }, m2.content, /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75" }, new Date(m2.timestamp).toLocaleTimeString()))));
-          });
-        })(), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-link text-muted", onClick: handleLoadMore }, "Load older messages (", lookbackDays, " days shown)")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))))));
+        } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm", onClick: saveProfile }, "Save")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100 mb-2", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : "Sync Everything"), lastSyncTime && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center small text-success mb-2" }, "Last Sync: ", lastSyncTime), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-info w-100 mb-2", onClick: loadPosts }, "Refresh Feed"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-outline-warning w-100 mb-3", onClick: () => sov?.testPermissions() }, "Test Permissions"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-3", onClick: handleFollow }, "Follow User"), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Following (", following.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, following.map((f2) => /* @__PURE__ */ import_react.default.createElement("div", { key: f2.userId, className: "list-group-item bg-transparent px-0 border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, f2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, "Last sync: ", f2.lastSync))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small" }, "No users followed yet.")), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h6", null, "Global Registry (", allUsers.length, ")"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" } }, allUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: "list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small" }, u2.userId), !following.find((f2) => f2.userId === u2.userId) && u2.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-xs btn-link p-0", onClick: async () => {
+          await sov.follow(u2.userId);
+          loadPosts();
+        } }, "Follow")))), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small border-top pt-2" }, "Zero Knowledge Sync Active")), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 p-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }), newImage && /* @__PURE__ */ import_react.default.createElement("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", onClick: handlePost }, "Post"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, posts.filter((p2) => !p2.parentId).map((p2) => renderPost(p2)), posts.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center text-muted mt-5" }, "Your feed is empty. Post something or sync to discover others!")))));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
       root.render(/* @__PURE__ */ import_react.default.createElement(App, null));

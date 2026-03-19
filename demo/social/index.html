@@ -3,268 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Social</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%232563eb%22/><text y=%22.7em%22 x=%2250%25%22 font-size=%2270%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>S</text></svg>">
+    <title>Sovereign Social (FB Clone)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --text: #1e293b;
-            --border: #e2e8f0;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            line-height: 1.5;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .card {
-            background: var(--surface);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid var(--border);
-        }
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        .btn:hover { opacity: 0.9; }
-        .input {
-            width: 100%;
-            padding: 8px 12px;
-            margin: 8px 0;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-        .nav {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-        .nav a {
-            cursor: pointer;
-            padding: 5px 10px;
-            text-decoration: none;
-            color: var(--text);
-            font-weight: bold;
-        }
-        .nav a.active { color: var(--primary); }
-        
-        /* Post Styles */
-        .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .avatar { width: 40px; height: 40px; border-radius: 50%; background: #ccc; object-fit: cover; }
-        .post-img { width: 100%; border-radius: 8px; margin-top: 10px; }
-        .timestamp { font-size: 0.8em; color: #64748b; }
-        
-        /* Comment Styles */
-        .comments-section { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px; }
-        .comment { font-size: 0.9em; margin-bottom: 8px; padding-left: 10px; border-left: 2px solid var(--border); }
-
-        .hidden { display: none; }
-        #loading { position: fixed; top: 10px; right: 10px; background: yellow; padding: 5px; display: none; }
-        
-        /* Toast Styles */
-        #toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            background: #333;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            min-width: 250px;
-            animation: slideIn 0.3s ease-out;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        .toast.info { background: #3b82f6; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
+        body { background: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .post-card { margin-bottom: 1rem; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); background: white; }
+        .sidebar { background: white; border-right: 1px solid #dee2e6; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
+        .profile-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .feed-container { max-width: 680px; margin: 0 auto; }
+        .nav-link { color: #050505; font-weight: 500; }
+        .nav-link:hover { background: #f2f2f2; border-radius: 8px; }
+        .btn-fb { background-color: #1877f2; color: white; border: none; font-weight: 600; }
+        .btn-fb:hover { background-color: #166fe5; color: white; }
+        .post-input { background: #f0f2f5; border-radius: 20px; border: none; padding: 10px 15px; cursor: pointer; }
+        .post-input:hover { background: #e4e6e9; }
+        .online-dot { width: 12px; height: 12px; background: #31a24c; border-radius: 50%; border: 2px solid white; display: inline-block; }
     </style>
 </head>
 <body>
-    <div id="loading">Syncing...</div>
-    <div id="toast-container"></div>
-
-    <!-- User Profile Header -->
-    <div id="user-profile-header" class="hidden" style="position: fixed; top: 10px; right: 10px; display: flex; align-items: center; gap: 10px; z-index: 100;">
-        <div id="user-profile-info" style="display: flex; align-items: center; gap: 8px; background: var(--surface); padding: 8px 12px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid var(--border);">
-            <img id="header-avatar" class="avatar" style="width: 30px; height: 30px;">
-            <span id="header-display-name" style="font-weight: 500; color: var(--text);"></span>
-        </div>
-        <button id="btn-logout" class="btn" style="background: #ef4444; padding: 8px 12px; border-radius: 20px;">Logout</button>
-    </div>
-
-    <div class="container">
-        <h1>Sovereign Social</h1>
-        
-        <!-- Auth / Config View -->
-        <div id="view-auth" class="card">
-            
-            <div id="saved-sessions-area" class="hidden" style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
-                <h3>Reconnect</h3>
-                <div id="saved-sessions-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
-                <div style="text-align: center; margin-top: 15px;">
-                    <button id="btn-show-new-login" class="btn" style="background: #64748b; font-size: 0.9em;">Connect with different details</button>
-                </div>
+    <div id="root">
+        <div class="container mt-5 text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-
-            <div id="new-login-area">
-                <h2>Connect</h2>
-            
-            <div style="margin-bottom: 15px;">
-                <label><input type="radio" name="auth-mode" value="oci" checked> OCI PAR</label>
-                <label><input type="radio" name="auth-mode" value="s3"> S3 Compatible (Garage, MinIO, AWS)</label>
-            </div>
-
-            <div id="auth-oci">
-                <p>Enter your OCI Pre-Authenticated Request (PAR) URL to start.</p>
-                <input type="text" id="oci-url" class="input" placeholder="https://objectstorage... (PAR URL)">
-            </div>
-
-            <div id="auth-s3" class="hidden">
-                <p>Enter your S3 compatible storage details.</p>
-                <input type="text" id="s3-endpoint" class="input" placeholder="Endpoint (e.g. http://localhost:3900)">
-                <input type="text" id="s3-bucket" class="input" placeholder="Bucket Name">
-                <input type="text" id="s3-region" class="input" placeholder="Region (default: us-east-1)" value="us-east-1">
-                <input type="text" id="s3-access-key" class="input" placeholder="Access Key ID">
-                <input type="password" id="s3-secret-key" class="input" placeholder="Secret Access Key">
-            </div>
-
-            <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
-            
-            <input type="text" id="app-id" class="input" placeholder="App ID (e.g. social-app)" value="social-app">
-            <input type="text" id="user-id" class="input" placeholder="User ID (Leave empty to generate new)">
-            
-            <div style="margin-top: 10px; padding: 10px; background: #e0e7ff; border-radius: 8px;">
-                <label style="font-weight:bold; color:#3730a3;">Zero Knowledge Security</label>
-                <input type="password" id="private-passphrase" class="input" placeholder="Private Passphrase (for your eyes only)">
-                <input type="text" id="public-passphrase" class="input" placeholder="Public Passphrase (share with followers)">
-                <small style="color:#666;">These keys never leave your device.</small>
-            </div>
-
-            <button id="btn-connect" class="btn" style="margin-top:10px;">Connect</button>
-            </div>
-        </div>
-
-        <!-- Main App Area -->
-        <div id="app-area" class="hidden">
-            <div class="nav">
-                <a id="nav-feed" class="active">Feed</a>
-                <a id="nav-profile">Profile</a>
-                <a id="nav-network">Network</a>
-            </div>
-
-            <!-- Feed View -->
-            <div id="view-feed">
-                <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
-                    <button id="btn-refresh" class="btn" style="background:#64748b;">Refresh Feed</button>
-                </div>
-                <div class="card">
-                    <textarea id="post-text" class="input" rows="3" placeholder="What's on your mind?"></textarea>
-                    <input type="file" id="post-image" accept="image/*">
-                    <button id="btn-post" class="btn" style="margin-top: 10px;">Post</button>
-                </div>
-                <div id="feed-list"></div>
-            </div>
-
-            <!-- Profile View -->
-            <div id="view-profile" class="hidden">
-                <div class="card">
-                    <h3>My Identity</h3>
-                    <label>Public ID (Share this)</label>
-                    <input type="text" id="profile-public-id" class="input" readonly style="background: #f1f5f9;">
-                    
-                    <label>Private Access Key (Keep Secret)</label>
-                    <div style="display: flex; gap: 5px;">
-                        <input type="password" id="profile-private-id" class="input" readonly style="background: #f1f5f9; margin:0;">
-                        <button id="btn-show-key" class="btn" style="background: #64748b; padding: 0 10px;">👁️</button>
-                    </div>
-
-                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
-                    
-                    <h3>Magic Invite</h3>
-                    <p style="font-size:0.9em; color:#64748b;">Generate a secure link to help friends connect and follow you instantly.</p>
-                    <button id="btn-generate-invite" class="btn" style="width:100%; margin-bottom:10px;">Generate Invite Link</button>
-                    <div id="invite-area" class="hidden">
-                        <textarea id="invite-link" class="input" readonly onclick="this.select()" rows="3" style="font-family:monospace; font-size:0.8em;"></textarea>
-                        <p style="font-size:0.8em; color:green;">Link copied to clipboard!</p>
-                    </div>
-
-                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
-
-                    <h3>Edit Profile</h3>
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <img id="profile-avatar-preview" class="avatar" style="width: 100px; height: 100px;">
-                    </div>
-                    <label>Avatar</label>
-                    <input type="file" id="profile-avatar-input" class="input">
-                    <label>Display Name</label>
-                    <input type="text" id="profile-name" class="input">
-                    <label>Bio</label>
-                    <textarea id="profile-bio" class="input"></textarea>
-                    <button id="btn-save-profile" class="btn">Save Profile</button>
-                </div>
-            </div>
-
-            <!-- Network View -->
-            <div id="view-network" class="hidden">
-                <div class="card" style="background:#e0f2fe; border-color:#bae6fd;">
-                    <h3>My Sovereign Address</h3>
-                    <p style="font-size:0.9em; color:#0369a1;">Share this with friends so they can follow you.</p>
-                    <input type="text" id="my-address" class="input" readonly onclick="this.select()">
-                </div>
-
-                <div class="card">
-                    <h3>Following</h3>
-                    <input type="text" id="follow-address" class="input" placeholder="Address (OCI URL or s3://...)">
-                    <button id="btn-follow" class="btn">Follow User</button>
-                    <ul id="following-list" style="margin-top: 15px; padding-left: 20px;"></ul>
-                </div>
-
-                <div class="card">
-                    <h3>Global Directory (Same Bucket)</h3>
-                    <p style="font-size:0.8em; color:#64748b;">Users discovered in this bucket (requires list permissions).</p>
-                    <ul id="directory-list" style="margin-top: 15px; padding-left: 20px;">
-                        <li><small>Scanning...</small></li>
-                    </ul>
-                </div>
-            </div>
+            <p>Initializing Sovereign Social...</p>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script>
+        window.SQL_CONFIG = {
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        };
+    </script>
     <script src="bundle.js"></script>
 </body>
 </html>
