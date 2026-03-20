@@ -2,13 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { SocialManager, Post, Message } from '../../../src/modules/Social';
+import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
+import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
 
 const DEBUG = false;
 
+// Proxy adapter to simulate S3 path isolation for WebRTC
+class PrefixProxyAdapter implements IRemoteAdapter {
+    constructor(private baseAdapter: WebRTCRemoteAdapter, private prefix: string) {}
+    private getKey(path: string) { return `${this.prefix}/${path}`; }
+    uploadFile(path: string, data: Uint8Array, hash?: string) { return this.baseAdapter.uploadFile(this.getKey(path), data, hash); }
+    downloadFile(path: string, ifNoneMatch?: string, timeout?: number) { return this.baseAdapter.downloadFile(this.getKey(path), ifNoneMatch, timeout); }
+    getFileHash(path: string) { return this.baseAdapter.getFileHash(this.getKey(path)); }
+    getFileEtag(path: string) { return this.baseAdapter.getFileEtag(this.getKey(path)); }
+}
+
 const App = () => {
     const [config, setConfig] = useState({
+        syncMode: 's3',
         region: 'ap-southeast-1',
         endpoint: '',
         accessKeyId: '',
@@ -189,12 +202,29 @@ const App = () => {
                 forcePathStyle: true
             };
 
+            let remoteAdapter;
+            let factory;
+
+            if (currentConfig.syncMode === 'webrtc') {
+                const adapter = new WebRTCRemoteAdapter(currentConfig.userId);
+                const bc = new BroadcastChannel('sov-webrtc-mesh');
+                const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
+                bc.onmessage = (e) => peer.receive(e.data);
+
+                const getPrefix = (uid: string, sid: string) => `${currentConfig.appId}/${uid}/${sid}`;
+                remoteAdapter = new PrefixProxyAdapter(adapter, getPrefix(currentConfig.userId, 'social'));
+                factory = (uid: string) => {
+                    if (uid === 'global') return new PrefixProxyAdapter(adapter, getPrefix('global', 'users'));
+                    return new PrefixProxyAdapter(adapter, getPrefix(uid, 'social'));
+                };
+            }
+
             const instance = new SovereignS3nc({
-                s3: s3Config,
+                s3: currentConfig.syncMode === 's3' || !currentConfig.syncMode ? s3Config : undefined,
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
                 password: currentConfig.password,
                 debug: DEBUG
-            });
+            }, remoteAdapter, factory);
 
             await instance.init();
             setSov(instance);
@@ -653,7 +683,14 @@ const App = () => {
                                             </div>
                                         )}
                                         <div className="flex-grow-1 overflow-hidden">
-                                            <div className="fw-bold text-truncate">{u.name}</div>
+                                            <div className="fw-bold text-truncate">
+                                                {u.name}
+                                                {u.config?.syncMode === 'webrtc' ? (
+                                                    <span className="badge bg-info ms-2 fw-normal" title="WebRTC Mesh (Local)">P2P</span>
+                                                ) : (
+                                                    <span className="badge bg-secondary ms-2 fw-normal" title="S3 Cloud">S3</span>
+                                                )}
+                                            </div>
                                             <div className="x-small text-muted text-truncate">{u.userId}</div>
                                         </div>
                                         <span className="text-primary small">Login →</span>
@@ -663,11 +700,24 @@ const App = () => {
                         </div>
                     )}
 
-                    <label className="form-label small fw-bold text-muted text-uppercase">Connection Settings</label>
-                    <input className="form-control mb-2" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
-                    <input className="form-control mb-2" placeholder="Access Key" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
-                    <input className="form-control mb-2" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
-                    <input className="form-control mb-4" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
+                    <label className="form-label small fw-bold text-muted text-uppercase">Sync Mode</label>
+                    <div className="btn-group w-100 mb-4">
+                        <input type="radio" className="btn-check" name="syncMode" id="modeS3" autoComplete="off" checked={config.syncMode === 's3'} onChange={() => setConfig({...config, syncMode: 's3'})} />
+                        <label className="btn btn-outline-primary" htmlFor="modeS3">S3 Cloud</label>
+                        
+                        <input type="radio" className="btn-check" name="syncMode" id="modeWebrtc" autoComplete="off" checked={config.syncMode === 'webrtc'} onChange={() => setConfig({...config, syncMode: 'webrtc'})} />
+                        <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh (Local)</label>
+                    </div>
+
+                    {config.syncMode === 's3' && (
+                        <>
+                            <label className="form-label small fw-bold text-muted text-uppercase">Connection Settings</label>
+                            <input className="form-control mb-2" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                            <input className="form-control mb-2" placeholder="Access Key" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
+                            <input className="form-control mb-2" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
+                            <input className="form-control mb-4" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
+                        </>
+                    )}
                     
                     <label className="form-label small fw-bold text-muted text-uppercase">Account Credentials</label>
                     <input className="form-control mb-2" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
@@ -691,7 +741,14 @@ const App = () => {
     return (
         <div className="container-fluid p-0">
             <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3">
-                <a className="navbar-brand text-primary fw-bold fs-3" href="#">sov</a>
+                <a className="navbar-brand text-primary fw-bold fs-3" href="#">
+                    sov
+                    {config.syncMode === 'webrtc' ? (
+                        <span className="badge bg-info ms-2 fs-6 align-middle fw-normal" title="WebRTC Mesh (Local)">P2P</span>
+                    ) : (
+                        <span className="badge bg-secondary ms-2 fs-6 align-middle fw-normal" title="S3 Cloud">S3</span>
+                    )}
+                </a>
                 <div className="mx-auto d-flex align-items-center">
                     <button data-testid="nav-home" className={`btn mx-2 position-relative ${currentTab === 'feed' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('feed')}>
                         Home
