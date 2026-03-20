@@ -98388,6 +98388,22 @@ ${toHex(hashedRequest)}`;
         const [reconnectDelay, setReconnectDelay] = (0, import_react.useState)(1e3);
         const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0 });
         const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
+        const lastViewedRef = (0, import_react.useRef)(lastViewed);
+        const discoveryMapRef = (0, import_react.useRef)(discoveryMap);
+        const currentTabRef = (0, import_react.useRef)(currentTab);
+        const selectedUserRef = (0, import_react.useRef)(selectedUser);
+        (0, import_react.useEffect)(() => {
+          lastViewedRef.current = lastViewed;
+        }, [lastViewed]);
+        (0, import_react.useEffect)(() => {
+          discoveryMapRef.current = discoveryMap;
+        }, [discoveryMap]);
+        (0, import_react.useEffect)(() => {
+          currentTabRef.current = currentTab;
+        }, [currentTab]);
+        (0, import_react.useEffect)(() => {
+          selectedUserRef.current = selectedUser;
+        }, [selectedUser]);
         const [dialog, setDialog] = (0, import_react.useState)(null);
         const showAlert = (message, title = "Notice") => {
           setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
@@ -98755,19 +98771,24 @@ ${toHex(hashedRequest)}`;
           }, 15e3);
           return () => clearInterval(interval);
         }, [isLoggedIn, sov, social]);
+        const lookbackDaysRef = (0, import_react.useRef)(lookbackDays);
+        (0, import_react.useEffect)(() => {
+          lookbackDaysRef.current = lookbackDays;
+        }, [lookbackDays]);
         const loadData = async (activeSocial, activeSov) => {
           const s2 = activeSocial || social;
           const v2 = activeSov || sov;
           if (!s2 || !v2) return;
           const registry = await v2.getPublicRegistry();
-          Object.keys(discoveryMap).forEach((uid) => {
+          Object.keys(discoveryMapRef.current).forEach((uid) => {
             if (!registry.find((u2) => u2.userId === uid)) {
               registry.push({ userId: uid, publicKey: "" });
             }
           });
           setAllUsers(registry);
           const now = Date.now();
-          const newDiscoveryMap = { ...discoveryMap };
+          const curDiscoveryMap = discoveryMapRef.current;
+          const newDiscoveryMap = { ...curDiscoveryMap };
           let discoveryChanged = false;
           registry.forEach((u2) => {
             if (!newDiscoveryMap[u2.userId]) {
@@ -98775,11 +98796,15 @@ ${toHex(hashedRequest)}`;
               discoveryChanged = true;
             }
           });
-          if (discoveryChanged) setDiscoveryMap(newDiscoveryMap);
+          if (discoveryChanged) {
+            setDiscoveryMap(newDiscoveryMap);
+            discoveryMapRef.current = newDiscoveryMap;
+          }
           const followingList = await v2.getFollowing();
           setFollowing(followingList);
           const dates = [];
-          for (let i2 = 0; i2 < lookbackDays; i2++) {
+          const currentLookbackDays = lookbackDaysRef.current;
+          for (let i2 = 0; i2 < currentLookbackDays; i2++) {
             const d2 = /* @__PURE__ */ new Date();
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(SovereignS3nc.getDateStr(d2));
@@ -98792,23 +98817,54 @@ ${toHex(hashedRequest)}`;
             }
           }
           allPosts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          await s2.enrichLikes(allPosts, lookbackDays);
+          await s2.enrichLikes(allPosts, currentLookbackDays);
           setPosts(allPosts);
-          const newMessages = await s2.getInboxMessages(lookbackDays);
+          const newMessages = await s2.getInboxMessages(currentLookbackDays);
           setMessages(newMessages);
-          const feedUnread = allPosts.filter((p2) => p2.timestamp > lastViewed.feed && p2.userId !== config.userId).length;
+          const curLv = lastViewedRef.current;
+          const curTab = currentTabRef.current;
+          const curUser = selectedUserRef.current;
+          let feedUnread = allPosts.filter((p2) => p2.timestamp > curLv.feed && p2.userId !== config.userId).length;
+          if (curTab === "feed") {
+            feedUnread = 0;
+            setLastViewed((prev) => {
+              const next = { ...prev, feed: Date.now() };
+              lastViewedRef.current = next;
+              return next;
+            });
+          }
           const userMsgUnreads = {};
           let totalMsgUnread = 0;
           newMessages.forEach((m2) => {
             if (m2.senderId !== config.userId) {
-              const userLastViewed = (lastViewed.chat || {})[m2.senderId] || 0;
+              const userLastViewed = (curLv.chat || {})[m2.senderId] || 0;
               if (m2.timestamp > userLastViewed) {
                 userMsgUnreads[m2.senderId] = (userMsgUnreads[m2.senderId] || 0) + 1;
                 totalMsgUnread++;
               }
             }
           });
-          const friendsUnread = registry.filter((u2) => (discoveryMap[u2.userId] || 0) > lastViewed.friends && u2.userId !== config.userId).length;
+          if (curTab === "messages" && curUser) {
+            totalMsgUnread -= userMsgUnreads[curUser] || 0;
+            userMsgUnreads[curUser] = 0;
+            setLastViewed((prev) => {
+              const next = {
+                ...prev,
+                chat: { ...prev.chat || {}, [curUser]: Date.now() }
+              };
+              lastViewedRef.current = next;
+              return next;
+            });
+          }
+          let friendsUnread = registry.filter((u2) => (newDiscoveryMap[u2.userId] || 0) > curLv.friends && u2.userId !== config.userId).length;
+          if (curTab === "friends") {
+            friendsUnread = 0;
+            setLastViewed((prev) => {
+              const next = { ...prev, friends: Date.now() };
+              lastViewedRef.current = next;
+              return next;
+            });
+          }
           setUnreadCounts({
             feed: feedUnread,
             messages: totalMsgUnread,

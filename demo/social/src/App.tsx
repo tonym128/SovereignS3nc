@@ -75,6 +75,16 @@ const App = () => {
     const [unreadCounts, setUnreadCounts] = useState({ feed: 0, friends: 0, messages: 0 });
     const [userUnreadCounts, setUserUnreadCounts] = useState<Record<string, number>>({});
 
+    const lastViewedRef = useRef(lastViewed);
+    const discoveryMapRef = useRef(discoveryMap);
+    const currentTabRef = useRef(currentTab);
+    const selectedUserRef = useRef(selectedUser);
+
+    useEffect(() => { lastViewedRef.current = lastViewed; }, [lastViewed]);
+    useEffect(() => { discoveryMapRef.current = discoveryMap; }, [discoveryMap]);
+    useEffect(() => { currentTabRef.current = currentTab; }, [currentTab]);
+    useEffect(() => { selectedUserRef.current = selectedUser; }, [selectedUser]);
+
     const [dialog, setDialog] = useState<{
         title: string;
         message: string;
@@ -505,6 +515,9 @@ const App = () => {
         return () => clearInterval(interval);
     }, [isLoggedIn, sov, social]);
 
+    const lookbackDaysRef = useRef(lookbackDays);
+    useEffect(() => { lookbackDaysRef.current = lookbackDays; }, [lookbackDays]);
+
     const loadData = async (activeSocial?: SocialManager, activeSov?: SovereignS3nc) => {
         const s = activeSocial || social;
         const v = activeSov || sov;
@@ -514,7 +527,7 @@ const App = () => {
         
         // In P2P mode, the global registry might be fragmented. 
         // We inject manually discovered users into the list so they can be followed.
-        Object.keys(discoveryMap).forEach(uid => {
+        Object.keys(discoveryMapRef.current).forEach(uid => {
             if (!registry.find(u => u.userId === uid)) {
                 // We don't have their public key yet, but adding them to the UI allows us to try following
                 registry.push({ userId: uid, publicKey: '' });
@@ -524,7 +537,8 @@ const App = () => {
         setAllUsers(registry);
 
         const now = Date.now();
-        const newDiscoveryMap = { ...discoveryMap };
+        const curDiscoveryMap = discoveryMapRef.current;
+        const newDiscoveryMap = { ...curDiscoveryMap };
         let discoveryChanged = false;
         registry.forEach(u => {
             if (!newDiscoveryMap[u.userId]) {
@@ -532,13 +546,17 @@ const App = () => {
                 discoveryChanged = true;
             }
         });
-        if (discoveryChanged) setDiscoveryMap(newDiscoveryMap);
+        if (discoveryChanged) {
+            setDiscoveryMap(newDiscoveryMap);
+            discoveryMapRef.current = newDiscoveryMap;
+        }
 
         const followingList = await v.getFollowing();
         setFollowing(followingList);
 
         const dates: string[] = [];
-        for (let i = 0; i < lookbackDays; i++) {
+        const currentLookbackDays = lookbackDaysRef.current;
+        for (let i = 0; i < currentLookbackDays; i++) {
             const d = new Date();
             d.setUTCDate(d.getUTCDate() - i);
             dates.push(SovereignS3nc.getDateStr(d));
@@ -553,19 +571,31 @@ const App = () => {
         }
 
         allPosts.sort((a, b) => b.timestamp - a.timestamp);
-        await s.enrichLikes(allPosts, lookbackDays);
+        await s.enrichLikes(allPosts, currentLookbackDays);
         setPosts(allPosts);
 
-        const newMessages = await s.getInboxMessages(lookbackDays);
+        const newMessages = await s.getInboxMessages(currentLookbackDays);
         setMessages(newMessages);
 
-        const feedUnread = allPosts.filter(p => p.timestamp > lastViewed.feed && p.userId !== config.userId).length;
+        const curLv = lastViewedRef.current;
+        const curTab = currentTabRef.current;
+        const curUser = selectedUserRef.current;
+
+        let feedUnread = allPosts.filter(p => p.timestamp > curLv.feed && p.userId !== config.userId).length;
+        if (curTab === 'feed') {
+            feedUnread = 0;
+            setLastViewed(prev => {
+                const next = { ...prev, feed: Date.now() };
+                lastViewedRef.current = next;
+                return next;
+            });
+        }
         
         const userMsgUnreads: Record<string, number> = {};
         let totalMsgUnread = 0;
         newMessages.forEach(m => {
             if (m.senderId !== config.userId) {
-                const userLastViewed = (lastViewed.chat || {})[m.senderId] || 0;
+                const userLastViewed = (curLv.chat || {})[m.senderId] || 0;
                 if (m.timestamp > userLastViewed) {
                     userMsgUnreads[m.senderId] = (userMsgUnreads[m.senderId] || 0) + 1;
                     totalMsgUnread++;
@@ -573,7 +603,28 @@ const App = () => {
             }
         });
 
-        const friendsUnread = registry.filter(u => (discoveryMap[u.userId] || 0) > lastViewed.friends && u.userId !== config.userId).length;
+        if (curTab === 'messages' && curUser) {
+            totalMsgUnread -= (userMsgUnreads[curUser] || 0);
+            userMsgUnreads[curUser] = 0;
+            setLastViewed(prev => {
+                const next = {
+                    ...prev,
+                    chat: { ...(prev.chat || {}), [curUser]: Date.now() }
+                };
+                lastViewedRef.current = next;
+                return next;
+            });
+        }
+
+        let friendsUnread = registry.filter(u => (newDiscoveryMap[u.userId] || 0) > curLv.friends && u.userId !== config.userId).length;
+        if (curTab === 'friends') {
+            friendsUnread = 0;
+            setLastViewed(prev => {
+                const next = { ...prev, friends: Date.now() };
+                lastViewedRef.current = next;
+                return next;
+            });
+        }
 
         setUnreadCounts({
             feed: feedUnread,
