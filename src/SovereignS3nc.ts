@@ -4,6 +4,7 @@ import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from './adapters/IndexedDBStorage';
+import { NodeStorage } from './adapters/NodeStorage';
 import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
 import * as path from 'path';
@@ -23,7 +24,8 @@ export class SovereignS3nc {
         config: SovereignConfig, 
         remote?: IRemoteAdapter, 
         remoteFactory?: (userId: string) => IRemoteAdapter,
-        keys?: { privateKey: string, publicKey: string }
+        keys?: { privateKey: string, publicKey: string },
+        storage?: IStorage
     ) {
         this.config = config;
         this.remoteFactory = remoteFactory;
@@ -38,12 +40,19 @@ export class SovereignS3nc {
         }
 
         // Auto-detect environment for storage
-        const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';
-        if (isBrowser) {
-            const dbName = `sov_${config.paths.appId}_${config.paths.userId}`;
-            this.storage = new IndexedDBStorage(dbName);
+        if (storage) {
+            this.storage = storage;
         } else {
-            throw new Error('IndexedDBStorage requested but not in a browser environment.');
+            const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';
+            if (isBrowser) {
+                const dbName = `sov_${config.paths.appId}_${config.paths.userId}`;
+                this.storage = new IndexedDBStorage(dbName);
+            } else {
+                // Default to NodeStorage in Node environment if no storage provided
+                const homeDir = process.env.HOME || process.env.USERPROFILE || '.';
+                const baseDir = path.join(homeDir, '.sovereigns3nc', config.paths.appId, config.paths.userId);
+                this.storage = new NodeStorage(baseDir);
+            }
         }
         
         // Initialize Remotes

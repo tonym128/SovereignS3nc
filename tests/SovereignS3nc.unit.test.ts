@@ -1,6 +1,7 @@
 import { SovereignS3nc } from '../src/SovereignS3nc';
 import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import { SovereignConfig } from '../src/types';
+import { NodeStorage } from '../src/adapters/NodeStorage';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
 
@@ -58,10 +59,11 @@ describe('SovereignS3nc Unit Tests', () => {
     });
 
     describe('Constructor & Initialization', () => {
-        test('should throw if indexedDB is not available', () => {
+        test('should fallback to NodeStorage if indexedDB is not available', () => {
             const originalIDB = (global as any).indexedDB;
             delete (global as any).indexedDB;
-            expect(() => new SovereignS3nc(config, mockRemote)).toThrow('IndexedDBStorage requested but not in a browser environment.');
+            const sov = new SovereignS3nc(config, mockRemote);
+            expect(sov.getStorage()).toBeInstanceOf(NodeStorage);
             (global as any).indexedDB = originalIDB;
         });
 

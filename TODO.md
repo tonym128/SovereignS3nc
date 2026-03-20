@@ -7,20 +7,6 @@ logging in with the private uuid)
 - Make sure the website is mobile friendly and adjusts views to make sure functionality is present, user friendly and accesible on a mobile
 - Create a PWA for installation locally
 - Use background workers for data fetch to make the library more performant and decrease ui stutter
-- Create a User CLI which can do all website actions via simple commands
-    - Create account
-    - Update Profile
-    - Login
-    - Logout
-    - Fetch new messages
-    - Fetch all messages
-    - Create, Read, Comment, Delete posts, Mark read
-    - Create DM's, Read, Delete and see others messages
-    - The CLI should keep a local copy of data that it can reference as required with user profiles
-        - User profiles should store all information required to relogin
-        - Cache messages and posts
-        - Retrieve new messages and posts
-        - Reply to new messages and posts
 - Create a Read Only version of the Website which will show all users and public posts, but not allow any actions
     - It will also only have the ability to read data, no listing, no writing
     - Export all data to a static html file
@@ -46,3 +32,17 @@ DONE
 - Update the README.md appropriately
 - Update GEMENI.md with all the new features
 - Decrease amount of information console by SovereignS3nc library and by Social Demo application, add debug flags for any messages that will make sense while debugging issues and default to off for builds
+- Create a User CLI which can do all website actions via simple commands
+    - Create account
+    - Update Profile
+    - Login
+    - Logout
+    - Fetch new messages
+    - Fetch all messages
+    - Create, Read, Comment, Delete posts, Mark read and upload with images
+    - Create DM's, Read, Delete and see others messages and upload images
+    - The CLI should keep a local copy of data that it can reference as required with user profiles
+        - User profiles should store all information required to relogin
+        - Cache messages and posts
+        - Retrieve new messages and posts
+        - Reply to new messages and posts
