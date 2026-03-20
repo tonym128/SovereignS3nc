@@ -59,7 +59,7 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             db.close();
 
             // Verify file exists in namespaced path
-            const expectedPath = sov.getModulePath('social', `days/${today}.db`, 'public');
+            const expectedPath = sov.getModulePath('social', `${today}.db`, 'public');
             const data = await sov.getStorage().getFile(expectedPath);
             expect(data).toBeDefined();
         });

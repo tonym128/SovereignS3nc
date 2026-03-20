@@ -4,10 +4,8 @@ import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from './adapters/IndexedDBStorage';
-import { NodeStorage } from './adapters/NodeStorage';
 import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
-import * as path from 'path';
 
 export class SovereignS3nc {
     public static readonly VERSION = '1.1.0';
@@ -39,21 +37,9 @@ export class SovereignS3nc {
             this.config.publicEncryptionKey = keys.publicKey;
         }
 
-        // Auto-detect environment for storage
-        if (storage) {
-            this.storage = storage;
-        } else {
-            const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';
-            if (isBrowser) {
-                const dbName = `sov_${config.paths.appId}_${config.paths.userId}`;
-                this.storage = new IndexedDBStorage(dbName);
-            } else {
-                // Default to NodeStorage in Node environment if no storage provided
-                const homeDir = process.env.HOME || process.env.USERPROFILE || '.';
-                const baseDir = path.join(homeDir, '.sovereigns3nc', config.paths.appId, config.paths.userId);
-                this.storage = new NodeStorage(baseDir);
-            }
-        }
+        // We will initialize storage in init() because NodeStorage requires dynamic import
+        // which is async. For now we set a dummy.
+        this.storage = storage || (null as any);
         
         // Initialize Remotes
         if (remote) {
@@ -84,6 +70,7 @@ export class SovereignS3nc {
     }
 
     public getStorage(): IStorage {
+        if (!this.storage) throw new Error('Storage not initialized. Call init() first.');
         return this.storage;
     }
 
@@ -113,6 +100,25 @@ export class SovereignS3nc {
     }
 
     async init() {
+        if (!this.storage) {
+            const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';
+            if (isBrowser) {
+                const dbName = `sov_${this.config.paths.appId}_${this.config.paths.userId}`;
+                this.storage = new IndexedDBStorage(dbName);
+            } else {
+                // Default to NodeStorage in Node environment if no storage provided
+                try {
+                    const { NodeStorage } = await import('./adapters/NodeStorage');
+                    const path = await import('path');
+                    const homeDir = process.env.HOME || process.env.USERPROFILE || '.';
+                    const baseDir = path.join(homeDir, '.sovereigns3nc', this.config.paths.appId, this.config.paths.userId);
+                    this.storage = new NodeStorage(baseDir);
+                } catch (e: any) {
+                    throw new Error(`Failed to load NodeStorage: ${e.message}. If you are in a browser, ensure indexedDB is available.`);
+                }
+            }
+        }
+
         Logger.info(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
         await this.storage.init();
         if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
@@ -345,36 +351,36 @@ export class SovereignS3nc {
 
     private async syncGenericFiles(prefix: string) {
         try {
-            const files = await this.storage.listFiles(prefix);
             const isPublic = prefix.startsWith('public/');
             const activeRemote = isPublic ? this.publicRemote : this.remote;
-            // Public blobs are NOT encrypted for easy sharing
             const key = isPublic ? undefined : this.config.encryptionKey;
 
-            for (const filePath of files) {
+            // 1. Sync Local -> Remote (Upload new files)
+            const localFiles = await this.storage.listFiles(prefix);
+            for (const filePath of localFiles) {
                 const localData = await this.storage.getFile(filePath);
                 if (!localData) continue;
 
                 const localHash = this.calculateHashedContent(localData, key);
                 const cachedEtag = await this.storage.getGenericRemoteHashCache(filePath);
-                
-                // First check by hash (already an optimization)
                 const remoteHash = await activeRemote.getFileHash(filePath);
 
                 if (localHash !== remoteHash) {
                     Logger.info(`[Sync] Uploading generic file: ${filePath}`);
                     let uploadData = localData;
-                    if (key) {
-                        uploadData = await this.encrypt(localData, key);
-                    }
+                    if (key) uploadData = await this.encrypt(localData, key);
                     const etag = await activeRemote.uploadFile(filePath, uploadData, localHash);
                     if (etag) await this.storage.setGenericRemoteHashCache(filePath, etag);
                 } else if (!cachedEtag) {
-                    // Even if hashes match, we might want to cache the ETag if we don't have it
                     const remoteEtag = await activeRemote.getFileEtag(filePath);
                     if (remoteEtag) await this.storage.setGenericRemoteHashCache(filePath, remoteEtag);
                 }
             }
+
+            // 2. Sync Remote -> Local (Download missing files)
+            // Note: This requires the remote to support listing, or us to have a manifest.
+            // S3RemoteAdapter doesn't currently expose listFiles. 
+            // For now, Social module handles its own daily DB pulls via syncFollowedUsers.
         } catch (e: any) {
             Logger.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e.message}`);
         }
@@ -535,7 +541,7 @@ export class SovereignS3nc {
                 
                 // Pull Module Data
                 for (const moduleName of this.registeredModules) {
-                    const remotePath = this.getModulePath(moduleName, `days/${dateStr}.db`, 'public');
+                    const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
                     const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
                     await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
                 }
@@ -629,8 +635,8 @@ export class SovereignS3nc {
             const activeRemote = remoteOverride || this.remote;
             
             let localData = await this.storage.getDailyDb(date, type);
-            // Use provided public key if it's a followed user sync, otherwise use config
-            const currentKey = type === 'private' ? this.config.encryptionKey : (localPublicKey || this.config.publicEncryptionKey);
+            // ONLY encrypt/decrypt private data. Public data is open for sharing.
+            const currentKey = type === 'private' ? this.config.encryptionKey : undefined;
             const cachedEtag = await this.storage.getRemoteHashCache(date, type);
 
             if (!localData) {

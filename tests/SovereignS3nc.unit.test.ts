@@ -59,10 +59,11 @@ describe('SovereignS3nc Unit Tests', () => {
     });
 
     describe('Constructor & Initialization', () => {
-        test('should fallback to NodeStorage if indexedDB is not available', () => {
+        test('should fallback to NodeStorage if indexedDB is not available', async () => {
             const originalIDB = (global as any).indexedDB;
             delete (global as any).indexedDB;
             const sov = new SovereignS3nc(config, mockRemote);
+            await sov.init();
             expect(sov.getStorage()).toBeInstanceOf(NodeStorage);
             (global as any).indexedDB = originalIDB;
         });

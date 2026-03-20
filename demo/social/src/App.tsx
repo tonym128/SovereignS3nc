@@ -231,9 +231,9 @@ const App = () => {
                                         }
                                         
                                         const today = SovereignS3nc.getDateStr(new Date());
-                                        const publicDb = await instance.getStorage().getFile(instance.getModulePath('social', `days/${today}.db`, 'public'));
+                                        const publicDb = await instance.getStorage().getFile(instance.getModulePath('social', `${today}.db`, 'public'));
                                         if (publicDb) {
-                                            adapter.uploadFile(`${getPrefix(currentConfig.userId, 'social')}/public/modules/social/days/${today}.db`, publicDb);
+                                            adapter.uploadFile(`${getPrefix(currentConfig.userId, 'social')}/public/modules/social/${today}.db`, publicDb);
                                         }
                                     } catch (e) {}
                                 }

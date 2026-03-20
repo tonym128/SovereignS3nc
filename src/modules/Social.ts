@@ -37,7 +37,7 @@ export class SocialManager {
     private async getDb(date: string, type: 'private' | 'public' | 'followed'): Promise<any> {
         const dbPath = type === 'followed' 
             ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
-            : this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+            : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
             
         const data = await this.db.getStorage().getFile(dbPath);
         
@@ -95,7 +95,7 @@ export class SocialManager {
         db.run('INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)', [postId, userId, timestamp]);
 
         const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
     }
@@ -120,7 +120,7 @@ export class SocialManager {
         db.run(sql, params);
 
         const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
     }
@@ -132,7 +132,7 @@ export class SocialManager {
         db.run('UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?', [newContent, Date.now(), postId]);
 
         const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
     }
@@ -145,13 +145,13 @@ export class SocialManager {
         db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
 
         const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
     }
 
     async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
-        const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}`, 'private');
+        const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}.db`, 'private');
         const data = await this.db.getStorage().getFile(path);
         
         const initSqlJs = (globalThis as any).initSqlJs;
@@ -201,7 +201,7 @@ export class SocialManager {
         outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
             [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0]);
 
-        const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}`, 'private');
+        const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
         outboxDb.close();
 
@@ -343,7 +343,7 @@ export class SocialManager {
 
         // Also check my own outbox
         for (const date of dates) {
-            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}`, 'private');
+            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
             const data = await this.db.getStorage().getFile(outboxPath);
             if (data) {
                 const db = new this.sqliteInstance.Database(data);
@@ -533,7 +533,7 @@ export class SocialManager {
         const processDb = async (date: string, type: 'public' | 'followed') => {
             const dbPath = type === 'followed' 
                 ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
-                : this.db.getModulePath(this.MODULE_NAME, `days/${date}.db`, type);
+                : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
             const data = await this.db.getStorage().getFile(dbPath);
             if (!data) return;
             const db = new this.sqliteInstance.Database(data);
