@@ -1,37 +1,37 @@
 # SovereignS3nc Project Context for Gemini
 
 ## Project Overview
-**SovereignS3nc** is a generic, offline-first data storage library written in TypeScript. It is designed to sync JSON-serializable data with any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, Garage, etc.).
+**SovereignS3nc** is a generic, offline-first data storage library written in TypeScript. It is designed to sync JSON-serializable data, media blobs, and localized SQLite databases with any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, Garage, etc.).
 
 ### Key Features
-- **Offline-First**: Operates on local storage (In-Memory, File-based, or IndexedDB) and syncs when connectivity is available.
-- **S3 Synchronization**: Two-way sync with conflict resolution (Last-Write-Wins strategy by default).
-- **Encryption**: Optional transparent client-side AES-256-GCM encryption.
-- **Sharing**: Supports private and public sharing of documents via specific S3 paths.
-- **Pluggable Architecture**: Uses adapters for storage, cryptography, and remote communication.
+- **Offline-First**: Operates on local storage (`IndexedDB` in the browser) and syncs asynchronously when connectivity is available.
+- **S3 Synchronization**: Two-way sync with conflict resolution (Last-Write-Wins and Timestamp checks).
+- **End-to-End Encryption (E2EE)**: True asymmetric E2EE using `tweetnacl` (X25519 identity keys) combined with AES-256-GCM for payload encryption.
+- **Pluggable Module Architecture**: Uses a generic module registration system so sub-apps (like `SocialManager`) can be built cleanly with auto-namespaced paths (`public/modules/social/`).
+- **Social Graph & Discovery**: Follow users via a global registry (`users.json`), allowing background syncing of their public profiles, modules, and DMs.
 
 ## Architecture
 
 ### Core Components
-- **`SovereignS3nc` Class** (`src/SovereignS3nc.ts`): The main entry point and facade. Manages the orchestration between local storage, remote storage, and synchronization logic.
+- **`SovereignS3nc` Class** (`src/SovereignS3nc.ts`): The main entry point and facade. Manages the orchestration between local storage, remote storage, global discovery, and synchronization logic.
+- **Module API**: Public methods like `getModulePath`, `getStorage`, `getConfig`, `encrypt`, `decrypt`, and `deriveSharedSecret` let Modules directly interact with the secure sync engine.
 - **Adapters**:
-    - **Storage**: `IStorage` interface. Implementations include `InMemoryStorage` (Node/Testing), `IndexedDBStorage` (Browser).
-    - **Remote**: `IRemoteAdapter` interface. `S3RemoteAdapter` handles S3 interactions.
-    - **Crypto**: `ICryptoAdapter` interface. `AESCryptoAdapter` (Node) and `WebCryptoAdapter` (Browser).
+    - **Storage**: `IStorage` interface. Implementations include `IndexedDBStorage` (Browser).
+    - **Remote**: `IRemoteAdapter` interface. `S3RemoteAdapter` handles S3 interactions, with caching and intelligent ETags.
 
 ### Data Flow
-1.  **Local Write**: Data is written to the local adapter immediately.
+1.  **Local Write**: Data is written to the local adapter via namespaced paths immediately.
 2.  **Sync**:
-    -   **Push**: Local changes are pushed to S3.
-    -   **Pull**: Remote changes (identified by ETags/Timestamps) are downloaded and merged.
-3.  **Conflict Resolution**: Defaults to Last-Write-Wins (LWW) or Deep Merge based on configuration.
+    -   **Push**: Local changes are pushed to S3 if their SHA-256 hash or timestamps differ.
+    -   **Pull**: Remote changes (identified by ETags/Timestamps/Hashes) are downloaded and merged.
+    -   **Discovery**: Updates followed users' remote states automatically.
 
 ### Security Model
-- **Isolation**: Users are isolated by path prefixes: `${appId}/${userId}/${storeId}/`.
-- **Encryption**: Data is encrypted *before* leaving the client. Keys are never stored in S3.
-- **Sharing**:
-    -   **Private**: Copies to `${appId}/shared/shared/private/...`
-    -   **Public**: Metadata published to `${appId}/shared/shared/public/...` with unique keys.
+- **Isolation**: Users are isolated by path prefixes: `${appId}/${userId}/${storeId}/` for public sharing, and a derived deterministic **Private GUID** for private files.
+- **End-to-End Encryption**: 
+    - Files stored privately are encrypted symmetrically.
+    - Direct Messages use `tweetnacl` Diffie-Hellman Key Exchange to derive a shared secret, securely encrypting the payload so only the recipient can read it.
+- **Media Transports**: Images and large blobs can be shared securely by encrypting the blob reference and placing the raw encrypted data in public blob containers.
 
 ## Development & Build
 
@@ -39,30 +39,31 @@
 - **Language**: TypeScript (Strict mode).
 - **Runtime**: Node.js (Dev/Build), Browser/Node.js (Usage).
 - **Bundler**: `esbuild` for ESM and Browser IIFE bundles.
-- **Testing**: `jest` with `ts-jest`.
+- **Cryptography**: Node native `crypto` combined with `tweetnacl`.
 
 ### Scripts
 - `npm run build`: Runs `tsc` (CommonJS), `build:esm` (ES Modules), and `build:global` (Browser Global).
-- `npm test`: Runs Jest tests.
+- `npm run build:social`: Rebuilds the social demo application.
+- `npm test`: Runs Jest unit tests.
+- `npm run test:integration`: Runs live Garage S3-backed integration tests.
+- `npm run test:browser`: Runs Playwright multi-user browser tests.
 
 ### Directory Structure
-- `src/`: Source code.
-    - `adapters/`: Concrete implementations of interfaces.
-    - `interfaces/`: Core contracts (`IStorage`, `IRemoteAdapter`, etc.).
-    - `modules/`: Feature-specific logic (e.g., `Boards`, `Social`).
-    - `stubs/`: Browser/Node compatibility stubs.
-- `dist/`: Compiled output.
-- `tests/`: Unit and integration tests.
-- `demo/`: Browser-based demo application.
+- `src/`: Core library code.
+    - `adapters/`: S3 and IndexedDB logic.
+    - `interfaces/`: Core contracts.
+    - `modules/`: Reference applications like `Social.ts`.
+- `dist/`: Compiled outputs.
+- `tests/`: Extensive unit, integration, and browser testing.
+- `demo/social/`: Fully featured React application demonstrating the library.
+
+## Demo App (Social) Capabilities
+- **Messaging**: End-to-end encrypted direct messaging with image support. Can edit and delete messages.
+- **Feeds**: Public posting with nested comments, likes, and image attachments. Can edit and delete posts.
+- **Profiles**: Profile picture (avatar) uploads with automatic compression (<100KB) and ETag-based syncing.
+- **State Management**: Includes an exhaustive local reset capability.
 
 ## Coding Conventions
 - **Asynchronous**: Most storage/network operations return `Promise`.
-- **Typing**: Use explicit types. Avoid `any`.
-- **Browser Compatibility**: Ensure code interacting with Node-specific APIs (like `crypto` or `fs`) uses the appropriate abstraction/adapter to remain browser-compatible.
-- **Testing**: Write tests for new features. Mocks are often used for S3 calls.
-
-## Key Files to Know
-- `src/SovereignS3nc.ts`: Main logic.
-- `src/index.ts`: Entry point exports.
-- `package.json`: Dependencies and build scripts.
-- `README.md`: Usage documentation.
+- **Browser Compatibility**: Polyfills like `path-browserify` and `crypto-browserify` are strictly used in `esbuild` so the library natively targets the browser.
+- **Testing**: Tests must cover local mocks (`fake-indexeddb`) as well as live S3 integrations and Playwright browsers.

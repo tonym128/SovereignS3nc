@@ -34,8 +34,6 @@ logging in with the private uuid)
 - Look at request and data usage optimisation and make reccomendations
 - Look at library performance characteristics and make reccomendations
 - Write a skill for AI Agents to use the CLI
-- Update the README.md appropriately
-- Update GEMENI.md with all the new features
 
 DONE
 - Remove FB Clone, metions of Facebook or other Facebook related text
@@ -45,3 +43,5 @@ DONE
 - Allow users to delete posts and messages, flag the message as deleted and remove the associated personal data from the item, but keep it visible to show it was deleted.
 - Allow a user to send an image without text in posts and messages
 - Reset the selected file after posting, messaging
+- Update the README.md appropriately
+- Update GEMENI.md with all the new features
