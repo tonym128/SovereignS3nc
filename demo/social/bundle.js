@@ -98352,11 +98352,17 @@ ${toHex(hashedRequest)}`;
           password: "password123"
         });
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
+        const getStorageKey = (key) => `sov_${config.userId}_${key}`;
         const [autoLogin, setAutoLogin] = (0, import_react.useState)(localStorage.getItem("sov_auto_login") === "true");
         const [rememberedUsers, setRememberedUsers] = (0, import_react.useState)(() => {
           const saved = localStorage.getItem("sov_remembered_users");
           return saved ? JSON.parse(saved) : [];
         });
+        const [profileCache, setProfileCache] = (0, import_react.useState)({});
+        const [blobCache, setBlobCache] = (0, import_react.useState)({});
+        const [lastViewed, setLastViewed] = (0, import_react.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} });
+        const [highlights, setHighlights] = (0, import_react.useState)({ feed: 0, friends: 0 });
+        const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)({});
         const [sov, setSov] = (0, import_react.useState)(null);
         const [social, setSocial] = (0, import_react.useState)(null);
         const [posts, setPosts] = (0, import_react.useState)([]);
@@ -98371,20 +98377,6 @@ ${toHex(hashedRequest)}`;
         const postFileRef = (0, import_react.useRef)(null);
         const msgFileRef = (0, import_react.useRef)(null);
         const [profile, setProfile] = (0, import_react.useState)(null);
-        const [profileCache, setProfileCache] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_profile_cache");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_profile_cache", JSON.stringify(profileCache));
-        }, [profileCache]);
-        const [blobCache, setBlobCache] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_blob_cache");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_blob_cache", JSON.stringify(blobCache));
-        }, [blobCache]);
         const [syncing, setSyncing] = (0, import_react.useState)(false);
         const [currentTab, setCurrentTab] = (0, import_react.useState)("feed");
         const [messages, setMessages] = (0, import_react.useState)([]);
@@ -98394,98 +98386,60 @@ ${toHex(hashedRequest)}`;
         const [isConnected, setIsConnected] = (0, import_react.useState)(true);
         const [manualDisconnect, setManualDisconnect] = (0, import_react.useState)(false);
         const [reconnectDelay, setReconnectDelay] = (0, import_react.useState)(1e3);
-        const checkConnectivity = async (silent = false) => {
-          if (config.syncMode === "webrtc" || config.syncMode === "peerjs") {
-            const isOnline = navigator.onLine;
-            if (isOnline !== isConnected) {
-              setIsConnected(isOnline);
-              if (!silent && DEBUG) console.log(`[Connectivity] ${isOnline ? "Back online" : "Went offline"}`);
-            }
-            return isOnline;
-          }
-          if (!config.endpoint) return false;
-          try {
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 3e3);
-            const res = await fetch(`${config.endpoint}/_ping`, { signal: controller.signal });
-            clearTimeout(id);
-            if (res.ok) {
-              if (!silent && !isConnected) {
-                if (DEBUG) console.log("[Connectivity] Back online");
-              }
-              setIsConnected(true);
-              setReconnectDelay(1e3);
-              return true;
-            }
-          } catch (e2) {
-          }
-          if (!silent && isConnected) {
-            if (DEBUG) console.log("[Connectivity] Went offline");
-          }
-          setIsConnected(false);
-          return false;
-        };
-        (0, import_react.useEffect)(() => {
-          let interval;
-          if (isLoggedIn) {
-            interval = setInterval(async () => {
-              if (manualDisconnect) return;
-              if (!isConnected) {
-                const success = await checkConnectivity();
-                if (!success) {
-                  setReconnectDelay((prev) => Math.min(prev * 2, 3e4));
-                }
-              } else {
-                await checkConnectivity(true);
-              }
-            }, isConnected ? 1e4 : reconnectDelay);
-          }
-          return () => clearInterval(interval);
-        }, [isLoggedIn, isConnected, manualDisconnect, reconnectDelay, config.endpoint]);
-        const toggleConnection = async () => {
-          if (manualDisconnect) {
-            setManualDisconnect(false);
-            setReconnectDelay(1e3);
-            await checkConnectivity();
-          } else {
-            setManualDisconnect(true);
-            setIsConnected(false);
-          }
-        };
-        (0, import_react.useEffect)(() => {
-          if (isLoggedIn) {
-            loadData();
-          }
-        }, [lookbackDays]);
-        const handleLoadMore = () => {
-          setLookbackDays((prev) => prev + 5);
-        };
-        const [lastViewed, setLastViewed] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_last_viewed_v2");
-          if (saved) return JSON.parse(saved);
-          const old = localStorage.getItem("sov_last_viewed");
-          const base = old ? JSON.parse(old) : { feed: Date.now(), friends: Date.now(), messages: Date.now() };
-          return { ...base, chat: {} };
-        });
-        const [highlights, setHighlights] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_highlights");
-          return saved ? JSON.parse(saved) : { feed: 0, friends: 0 };
-        });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_discovery_map");
-          return saved ? JSON.parse(saved) : {};
-        });
-        (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_discovery_map", JSON.stringify(discoveryMap));
-        }, [discoveryMap]);
         const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0 });
         const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
+        const [dialog, setDialog] = (0, import_react.useState)(null);
+        const showAlert = (message, title = "Notice") => {
+          setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
+        };
+        const showConfirm = (message, onConfirm, title = "Confirm") => {
+          setDialog({
+            title,
+            message,
+            type: "confirm",
+            onConfirm: async () => {
+              await onConfirm();
+              setDialog(null);
+            },
+            onCancel: () => setDialog(null)
+          });
+        };
+        const showPrompt = (message, onConfirm, defaultValue = "", title = "Input") => {
+          setDialog({
+            title,
+            message,
+            type: "prompt",
+            defaultValue,
+            onConfirm: async (val) => {
+              if (val !== void 0) await onConfirm(val || "");
+              setDialog(null);
+            },
+            onCancel: () => setDialog(null)
+          });
+        };
+        const toggleConnection = () => {
+          setIsConnected((prev) => !prev);
+        };
         (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_last_viewed_v2", JSON.stringify(lastViewed));
-        }, [lastViewed]);
+          if (!isLoggedIn) return;
+          localStorage.setItem(getStorageKey("profile_cache"), JSON.stringify(profileCache));
+        }, [profileCache, isLoggedIn]);
         (0, import_react.useEffect)(() => {
-          localStorage.setItem("sov_highlights", JSON.stringify(highlights));
-        }, [highlights]);
+          if (!isLoggedIn) return;
+          localStorage.setItem(getStorageKey("blob_cache"), JSON.stringify(blobCache));
+        }, [blobCache, isLoggedIn]);
+        (0, import_react.useEffect)(() => {
+          if (!isLoggedIn) return;
+          localStorage.setItem(getStorageKey("discovery_map"), JSON.stringify(discoveryMap));
+        }, [discoveryMap, isLoggedIn]);
+        (0, import_react.useEffect)(() => {
+          if (!isLoggedIn) return;
+          localStorage.setItem(getStorageKey("last_viewed_v2"), JSON.stringify(lastViewed));
+        }, [lastViewed, isLoggedIn]);
+        (0, import_react.useEffect)(() => {
+          if (!isLoggedIn) return;
+          localStorage.setItem(getStorageKey("highlights"), JSON.stringify(highlights));
+        }, [highlights, isLoggedIn]);
         (0, import_react.useEffect)(() => {
           const savedConfig = localStorage.getItem("sov_social_config");
           if (savedConfig && autoLogin) {
@@ -98608,6 +98562,15 @@ ${toHex(hashedRequest)}`;
             setSov(instance);
             const sm = new SocialManager(instance, "");
             setSocial(sm);
+            const loadCache = (key, defaultVal) => {
+              const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
+              return s2 ? JSON.parse(s2) : defaultVal;
+            };
+            setProfileCache(loadCache("profile_cache", {}));
+            setBlobCache(loadCache("blob_cache", {}));
+            setDiscoveryMap(loadCache("discovery_map", {}));
+            setHighlights(loadCache("highlights", { feed: 0, friends: 0 }));
+            setLastViewed(loadCache("last_viewed_v2", { feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} }));
             const profileData = await sm.getProfile();
             setProfile(profileData);
             setIsLoggedIn(true);
@@ -98628,7 +98591,7 @@ ${toHex(hashedRequest)}`;
               });
             }, 100);
           } catch (e2) {
-            alert("Login initialization failed: " + e2.message);
+            showAlert("Login initialization failed: " + e2.message, "Login Error");
           }
         };
         const login = () => performLogin(config);
@@ -98642,14 +98605,14 @@ ${toHex(hashedRequest)}`;
           setMessages([]);
         };
         const resetLocalData = async () => {
-          if (confirm("Clear all local data? This will forget your account and settings.")) {
+          showConfirm("Clear all local data? This will forget your account and settings.", async () => {
             localStorage.clear();
             const dbs = await indexedDB.databases();
             for (const db of dbs) {
               if (db.name) indexedDB.deleteDatabase(db.name);
             }
             window.location.reload();
-          }
+          });
         };
         const compressImage = async (file) => {
           return new Promise((resolve) => {
@@ -98720,36 +98683,38 @@ ${toHex(hashedRequest)}`;
         };
         const handleComment = async (post) => {
           if (!social) return;
-          const content = prompt(`Replying to ${post.userId}:`);
-          if (content !== null) {
-            await social.comment(post.id, post.userId, content);
-            await sync();
-          }
+          showPrompt(`Replying to ${post.userId}:`, async (content) => {
+            if (content) {
+              await social.comment(post.id, post.userId, content);
+              await sync();
+            }
+          });
         };
         const handleEditPost = async (post) => {
           if (!social) return;
-          const newContent = prompt("Edit your post:", post.content);
-          if (newContent !== null && newContent !== post.content) {
-            const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
-            await social.editPost(post.id, dateStr, newContent);
-            await sync();
-          }
+          showPrompt("Edit your post:", async (newContent) => {
+            if (newContent !== null && newContent !== post.content) {
+              const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
+              await social.editPost(post.id, dateStr, newContent);
+              await sync();
+            }
+          }, post.content);
         };
         const handleDeletePost = async (post) => {
           if (!social) return;
-          if (confirm("Delete this post? Data will be removed but a placeholder will remain.")) {
+          showConfirm("Delete this post? Data will be removed but a placeholder will remain.", async () => {
             const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
             await social.deletePost(post.id, dateStr);
             await sync();
-          }
+          });
         };
         const handleShare = async (post) => {
           const text = `Post by ${post.userId}: ${post.content}`;
           try {
             await navigator.clipboard.writeText(text);
-            alert("Post content copied to clipboard!");
+            showAlert("Post content copied to clipboard!", "Success");
           } catch (e2) {
-            alert(text);
+            showAlert(text, "Post Content");
           }
         };
         const sync = async () => {
@@ -98860,28 +98825,36 @@ ${toHex(hashedRequest)}`;
           if (msgFileRef.current) msgFileRef.current.value = "";
           await sync();
         };
+        const handleLoadMore = () => {
+          setLookbackDays((prev) => prev + 5);
+        };
+        (0, import_react.useEffect)(() => {
+          if (isLoggedIn) loadData();
+        }, [lookbackDays]);
         const handleEditMessage = async (m2) => {
           if (!social) return;
-          const newContent = prompt("Edit your message:", m2.content);
-          if (newContent !== null && newContent !== m2.content) {
-            const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
-            const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-            await social.editMessage(otherUser, m2.id, dateStr, newContent);
-            await sync();
-          }
+          showPrompt("Edit your message:", async (newContent) => {
+            if (newContent !== null && newContent !== m2.content) {
+              const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
+              const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
+              await social.editMessage(otherUser, m2.id, dateStr, newContent);
+              await sync();
+            }
+          }, m2.content);
         };
         const handleDeleteMessage = async (m2) => {
           if (!social) return;
-          if (confirm("Delete this message for everyone?")) {
+          showConfirm("Delete this message for everyone?", async () => {
             const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
             const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
             await social.deleteMessage(otherUser, m2.id, dateStr);
             await sync();
-          }
+          });
         };
         const handleNewChat = () => {
-          const userId = prompt("Enter User ID to chat with:");
-          if (userId) setSelectedUser(userId);
+          showPrompt("Enter User ID to chat with:", (userId) => {
+            if (userId) setSelectedUser(userId);
+          });
         };
         const BlobImage = ({ path, userId }) => {
           const [src, setSrc] = (0, import_react.useState)(blobCache[path]);
@@ -98957,10 +98930,10 @@ ${toHex(hashedRequest)}`;
             u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
             /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
             /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh (Local)"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modePeerjs", autoComplete: "off", checked: config.syncMode === "peerjs", onChange: () => setConfig({ ...config, syncMode: "peerjs" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modePeerjs" }, "PeerJS (Global P2P)")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh (Local)"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modePeerjs", autoComplete: "off", checked: config.syncMode === "peerjs", onChange: () => setConfig({ ...config, syncMode: "peerjs" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modePeerjs" }, "PeerJS (Global P2P) ", /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-warning text-dark ms-1" }, "Alpha"))), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
             setAutoLogin(e2.target.checked);
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))));
+          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
         }
         return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(
           "button",
@@ -98970,18 +98943,19 @@ ${toHex(hashedRequest)}`;
           },
           /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
         ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value) }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
-          const uid = prompt("Enter exact User ID to discover:");
-          if (uid) {
-            setDiscoveryMap((prev) => {
-              const next = { ...prev, [uid]: Date.now() };
-              setTimeout(() => loadData(), 500);
-              return next;
-            });
-          }
+          showPrompt("Enter exact User ID to discover:", (uid) => {
+            if (uid) {
+              setDiscoveryMap((prev) => {
+                const next = { ...prev, [uid]: Date.now() };
+                setTimeout(() => loadData(), 500);
+                return next;
+              });
+            }
+          });
         } }, "+ Add by ID")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
           const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
           return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", null, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}")))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
+        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
           const file = e2.target.files?.[0];
           if (file) {
             const reader = new FileReader();
@@ -98992,15 +98966,32 @@ ${toHex(hashedRequest)}`;
           }
         } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "User ID (Share this for P2P)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: () => {
           navigator.clipboard.writeText(config.userId);
-          alert("User ID copied!");
+          showAlert("User ID copied!", "Clipboard");
         } }, "Copy"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
           await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
-          alert("Profile updated!");
-        } }, "Save Changes"))))));
+          showAlert("Profile updated!", "Success");
+        } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
       root.render(/* @__PURE__ */ import_react.default.createElement(App, null));
+      var Dialog = ({ dialog, setDialog }) => {
+        const [inputValue, setInputValue] = (0, import_react.useState)(dialog?.defaultValue || "");
+        (0, import_react.useEffect)(() => {
+          setInputValue(dialog?.defaultValue || "");
+        }, [dialog]);
+        if (!dialog) return null;
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.title), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: dialog.onCancel })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react.default.createElement(
+          "input",
+          {
+            autoFocus: true,
+            className: "form-control rounded-pill px-3 shadow-sm",
+            value: inputValue,
+            onChange: (e2) => setInputValue(e2.target.value),
+            onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
+          }
+        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(inputValue) }, dialog.type === "alert" ? "OK" : "Confirm")))));
+      };
     }
   });
   require_App();

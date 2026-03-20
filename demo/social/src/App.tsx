@@ -34,11 +34,21 @@ const App = () => {
     });
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const getStorageKey = (key: string) => `sov_${config.userId}_${key}`;
+
     const [autoLogin, setAutoLogin] = useState(localStorage.getItem('sov_auto_login') === 'true');
     const [rememberedUsers, setRememberedUsers] = useState<any[]>(() => {
         const saved = localStorage.getItem('sov_remembered_users');
         return saved ? JSON.parse(saved) : [];
     });
+    
+    // We don't initialize these until we know the userId
+    const [profileCache, setProfileCache] = useState<Record<string, any>>({});
+    const [blobCache, setBlobCache] = useState<Record<string, string>>({});
+    const [lastViewed, setLastViewed] = useState<Record<string, any>>({ feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} });
+    const [highlights, setHighlights] = useState<Record<string, number>>({ feed: 0, friends: 0 });
+    const [discoveryMap, setDiscoveryMap] = useState<Record<string, number>>({});
+
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [social, setSocial] = useState<SocialManager | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
@@ -48,30 +58,11 @@ const App = () => {
     const [newPost, setNewPost] = useState('');
     const [newImage, setNewPostImage] = useState<Uint8Array | null>(null);
     const [newImagePreview, setNewImagePreview] = useState<string | null>(null);
-    
     const [msgImage, setMsgImage] = useState<Uint8Array | null>(null);
     const [msgImagePreview, setMsgImagePreview] = useState<string | null>(null);
-
     const postFileRef = useRef<HTMLInputElement>(null);
     const msgFileRef = useRef<HTMLInputElement>(null);
-
     const [profile, setProfile] = useState<any>(null);
-    const [profileCache, setProfileCache] = useState<Record<string, any>>(() => {
-        const saved = localStorage.getItem('sov_profile_cache');
-        return saved ? JSON.parse(saved) : {};
-    });
-
-    useEffect(() => {
-        localStorage.setItem('sov_profile_cache', JSON.stringify(profileCache));
-    }, [profileCache]);
-    const [blobCache, setBlobCache] = useState<Record<string, string>>(() => {
-        const saved = localStorage.getItem('sov_blob_cache');
-        return saved ? JSON.parse(saved) : {};
-    });
-
-    useEffect(() => {
-        localStorage.setItem('sov_blob_cache', JSON.stringify(blobCache));
-    }, [blobCache]);
     const [syncing, setSyncing] = useState(false);
     const [currentTab, setCurrentTab] = useState<'feed' | 'friends' | 'messages' | 'profile'>('feed');
     const [messages, setMessages] = useState<Message[]>([]);
@@ -81,103 +72,75 @@ const App = () => {
     const [isConnected, setIsConnected] = useState(true);
     const [manualDisconnect, setManualDisconnect] = useState(false);
     const [reconnectDelay, setReconnectDelay] = useState(1000);
-
-    const checkConnectivity = async (silent = false) => {
-        if (config.syncMode === 'webrtc' || config.syncMode === 'peerjs') {
-            const isOnline = navigator.onLine;
-            if (isOnline !== isConnected) {
-                setIsConnected(isOnline);
-                if (!silent && DEBUG) console.log(`[Connectivity] ${isOnline ? 'Back online' : 'Went offline'}`);
-            }
-            return isOnline;
-        }
-
-        if (!config.endpoint) return false;
-        try {
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 3000);
-            const res = await fetch(`${config.endpoint}/_ping`, { signal: controller.signal });
-            clearTimeout(id);
-            if (res.ok) {
-                if (!silent && !isConnected) if (DEBUG) console.log("[Connectivity] Back online");
-                setIsConnected(true);
-                setReconnectDelay(1000); 
-                return true;
-            }
-        } catch (e) {}
-        if (!silent && isConnected) if (DEBUG) console.log("[Connectivity] Went offline");
-        setIsConnected(false);
-        return false;
-    };
-
-    useEffect(() => {
-        let interval: any;
-        if (isLoggedIn) {
-            interval = setInterval(async () => {
-                if (manualDisconnect) return;
-                
-                if (!isConnected) {
-                    const success = await checkConnectivity();
-                    if (!success) {
-                        setReconnectDelay(prev => Math.min(prev * 2, 30000)); 
-                    }
-                } else {
-                    await checkConnectivity(true);
-                }
-            }, isConnected ? 10000 : reconnectDelay);
-        }
-        return () => clearInterval(interval);
-    }, [isLoggedIn, isConnected, manualDisconnect, reconnectDelay, config.endpoint]);
-
-    const toggleConnection = async () => {
-        if (manualDisconnect) {
-            setManualDisconnect(false);
-            setReconnectDelay(1000);
-            await checkConnectivity();
-        } else {
-            setManualDisconnect(true);
-            setIsConnected(false);
-        }
-    };
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            loadData();
-        }
-    }, [lookbackDays]);
-
-    const handleLoadMore = () => {
-        setLookbackDays(prev => prev + 5);
-    };
-    const [lastViewed, setLastViewed] = useState<Record<string, any>>(() => {
-        const saved = localStorage.getItem('sov_last_viewed_v2');
-        if (saved) return JSON.parse(saved);
-        const old = localStorage.getItem('sov_last_viewed');
-        const base = old ? JSON.parse(old) : { feed: Date.now(), friends: Date.now(), messages: Date.now() };
-        return { ...base, chat: {} };
-    });
-    const [highlights, setHighlights] = useState<Record<string, number>>(() => {
-        const saved = localStorage.getItem('sov_highlights');
-        return saved ? JSON.parse(saved) : { feed: 0, friends: 0 };
-    });
-    const [discoveryMap, setDiscoveryMap] = useState<Record<string, number>>(() => {
-        const saved = localStorage.getItem('sov_discovery_map');
-        return saved ? JSON.parse(saved) : {};
-    });
-
-    useEffect(() => {
-        localStorage.setItem('sov_discovery_map', JSON.stringify(discoveryMap));
-    }, [discoveryMap]);
     const [unreadCounts, setUnreadCounts] = useState({ feed: 0, friends: 0, messages: 0 });
     const [userUnreadCounts, setUserUnreadCounts] = useState<Record<string, number>>({});
 
-    useEffect(() => {
-        localStorage.setItem('sov_last_viewed_v2', JSON.stringify(lastViewed));
-    }, [lastViewed]);
+    const [dialog, setDialog] = useState<{
+        title: string;
+        message: string;
+        type: 'alert' | 'confirm' | 'prompt';
+        defaultValue?: string;
+        onConfirm: (value?: string) => void;
+        onCancel: () => void;
+    } | null>(null);
+
+    const showAlert = (message: string, title: string = 'Notice') => {
+        setDialog({ title, message, type: 'alert', onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
+    };
+    const showConfirm = (message: string, onConfirm: () => void | Promise<void>, title: string = 'Confirm') => {
+        setDialog({ 
+            title, 
+            message, 
+            type: 'confirm', 
+            onConfirm: async () => { 
+                await onConfirm(); 
+                setDialog(null); 
+            }, 
+            onCancel: () => setDialog(null) 
+        });
+    };
+    const showPrompt = (message: string, onConfirm: (val: string) => void | Promise<void>, defaultValue: string = '', title: string = 'Input') => {
+        setDialog({ 
+            title, 
+            message, 
+            type: 'prompt', 
+            defaultValue, 
+            onConfirm: async (val) => { 
+                if (val !== undefined) await onConfirm(val || ''); 
+                setDialog(null); 
+            }, 
+            onCancel: () => setDialog(null) 
+        });
+    };
+
+    const toggleConnection = () => {
+        setIsConnected(prev => !prev);
+    };
 
     useEffect(() => {
-        localStorage.setItem('sov_highlights', JSON.stringify(highlights));
-    }, [highlights]);
+        if (!isLoggedIn) return;
+        localStorage.setItem(getStorageKey('profile_cache'), JSON.stringify(profileCache));
+    }, [profileCache, isLoggedIn]);
+
+    useEffect(() => {
+        if (!isLoggedIn) return;
+        localStorage.setItem(getStorageKey('blob_cache'), JSON.stringify(blobCache));
+    }, [blobCache, isLoggedIn]);
+
+    useEffect(() => {
+        if (!isLoggedIn) return;
+        localStorage.setItem(getStorageKey('discovery_map'), JSON.stringify(discoveryMap));
+    }, [discoveryMap, isLoggedIn]);
+
+    useEffect(() => {
+        if (!isLoggedIn) return;
+        localStorage.setItem(getStorageKey('last_viewed_v2'), JSON.stringify(lastViewed));
+    }, [lastViewed, isLoggedIn]);
+
+    useEffect(() => {
+        if (!isLoggedIn) return;
+        localStorage.setItem(getStorageKey('highlights'), JSON.stringify(highlights));
+    }, [highlights, isLoggedIn]);
 
     useEffect(() => {
         const savedConfig = localStorage.getItem('sov_social_config');
@@ -324,6 +287,18 @@ const App = () => {
             setSov(instance);
             const sm = new SocialManager(instance, '');
             setSocial(sm);
+
+            // Load user-scoped caches
+            const loadCache = (key: string, defaultVal: any) => {
+                const s = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
+                return s ? JSON.parse(s) : defaultVal;
+            };
+
+            setProfileCache(loadCache('profile_cache', {}));
+            setBlobCache(loadCache('blob_cache', {}));
+            setDiscoveryMap(loadCache('discovery_map', {}));
+            setHighlights(loadCache('highlights', { feed: 0, friends: 0 }));
+            setLastViewed(loadCache('last_viewed_v2', { feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} }));
             
             const profileData = await sm.getProfile();
             setProfile(profileData);
@@ -349,7 +324,7 @@ const App = () => {
                 });
             }, 100);
         } catch (e: any) {
-            alert('Login initialization failed: ' + e.message);
+            showAlert('Login initialization failed: ' + e.message, 'Login Error');
         }
     };
 
@@ -366,14 +341,14 @@ const App = () => {
     };
 
     const resetLocalData = async () => {
-        if (confirm('Clear all local data? This will forget your account and settings.')) {
+        showConfirm('Clear all local data? This will forget your account and settings.', async () => {
             localStorage.clear();
             const dbs = await indexedDB.databases();
             for (const db of dbs) {
                 if (db.name) indexedDB.deleteDatabase(db.name);
             }
             window.location.reload();
-        }
+        });
     };
 
     const compressImage = async (file: File): Promise<Uint8Array> => {
@@ -450,39 +425,41 @@ const App = () => {
 
     const handleComment = async (post: Post) => {
         if (!social) return;
-        const content = prompt(`Replying to ${post.userId}:`);
-        if (content !== null) {
-            await social.comment(post.id, post.userId, content);
-            await sync();
-        }
+        showPrompt(`Replying to ${post.userId}:`, async (content) => {
+            if (content) {
+                await social.comment(post.id, post.userId, content);
+                await sync();
+            }
+        });
     };
 
     const handleEditPost = async (post: Post) => {
         if (!social) return;
-        const newContent = prompt('Edit your post:', post.content);
-        if (newContent !== null && newContent !== post.content) {
-            const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
-            await social.editPost(post.id, dateStr, newContent);
-            await sync();
-        }
+        showPrompt('Edit your post:', async (newContent) => {
+            if (newContent !== null && newContent !== post.content) {
+                const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
+                await social.editPost(post.id, dateStr, newContent);
+                await sync();
+            }
+        }, post.content);
     };
 
     const handleDeletePost = async (post: Post) => {
         if (!social) return;
-        if (confirm('Delete this post? Data will be removed but a placeholder will remain.')) {
+        showConfirm('Delete this post? Data will be removed but a placeholder will remain.', async () => {
             const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
             await social.deletePost(post.id, dateStr);
             await sync();
-        }
+        });
     };
 
     const handleShare = async (post: Post) => {
         const text = `Post by ${post.userId}: ${post.content}`;
         try {
             await navigator.clipboard.writeText(text);
-            alert('Post content copied to clipboard!');
+            showAlert('Post content copied to clipboard!', 'Success');
         } catch (e) {
-            alert(text);
+            showAlert(text, 'Post Content');
         }
     };
 
@@ -616,30 +593,40 @@ const App = () => {
         await sync(); 
     };
 
+    const handleLoadMore = () => {
+        setLookbackDays(prev => prev + 5);
+    };
+
+    useEffect(() => {
+        if (isLoggedIn) loadData();
+    }, [lookbackDays]);
+
     const handleEditMessage = async (m: Message) => {
         if (!social) return;
-        const newContent = prompt('Edit your message:', m.content);
-        if (newContent !== null && newContent !== m.content) {
-            const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
-            const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
-            await social.editMessage(otherUser, m.id, dateStr, newContent);
-            await sync();
-        }
+        showPrompt('Edit your message:', async (newContent) => {
+            if (newContent !== null && newContent !== m.content) {
+                const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
+                const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
+                await social.editMessage(otherUser, m.id, dateStr, newContent);
+                await sync();
+            }
+        }, m.content);
     };
 
     const handleDeleteMessage = async (m: Message) => {
         if (!social) return;
-        if (confirm('Delete this message for everyone?')) {
+        showConfirm('Delete this message for everyone?', async () => {
             const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
             const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
             await social.deleteMessage(otherUser, m.id, dateStr);
             await sync();
-        }
+        });
     };
 
     const handleNewChat = () => {
-        const userId = prompt('Enter User ID to chat with:');
-        if (userId) setSelectedUser(userId);
+        showPrompt('Enter User ID to chat with:', (userId) => {
+            if (userId) setSelectedUser(userId);
+        });
     };
 
     const BlobImage = ({ path, userId }: { path: string, userId: string }) => {
@@ -815,7 +802,7 @@ const App = () => {
                         <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh (Local)</label>
 
                         <input type="radio" className="btn-check" name="syncMode" id="modePeerjs" autoComplete="off" checked={config.syncMode === 'peerjs'} onChange={() => setConfig({...config, syncMode: 'peerjs'})} />
-                        <label className="btn btn-outline-primary" htmlFor="modePeerjs">PeerJS (Global P2P)</label>
+                        <label className="btn btn-outline-primary" htmlFor="modePeerjs">PeerJS (Global P2P) <span className="badge bg-warning text-dark ms-1">Alpha</span></label>
                     </div>
 
                     {config.syncMode === 's3' && (
@@ -843,6 +830,7 @@ const App = () => {
                         <button className="btn btn-link btn-sm text-danger text-decoration-none" onClick={resetLocalData}>Reset Local Data</button>
                     </div>
                 </div>
+                <Dialog dialog={dialog} setDialog={setDialog} />
             </div>
         );
     }
@@ -929,15 +917,16 @@ const App = () => {
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <h5 className="fw-bold mb-0">Discover People</h5>
                                     <button className="btn btn-sm btn-outline-primary rounded-pill" onClick={() => {
-                                        const uid = prompt('Enter exact User ID to discover:');
-                                        if (uid) {
-                                            setDiscoveryMap(prev => {
-                                                const next = {...prev, [uid]: Date.now()};
-                                                // Trigger a sync shortly after adding them to discovery map
-                                                setTimeout(() => loadData(), 500);
-                                                return next;
-                                            });
-                                        }
+                                        showPrompt('Enter exact User ID to discover:', (uid) => {
+                                            if (uid) {
+                                                setDiscoveryMap(prev => {
+                                                    const next = {...prev, [uid]: Date.now()};
+                                                    // Trigger a sync shortly after adding them to discovery map
+                                                    setTimeout(() => loadData(), 500);
+                                                    return next;
+                                                });
+                                            }
+                                        });
                                     }}>+ Add by ID</button>
                                 </div>
                                 <div className="list-group list-group-flush">
@@ -977,42 +966,40 @@ const App = () => {
                                             ))}
                                         </div>
                                     </div>
-                                    <div className="col-8 d-flex flex-column">
+                                    <div className="col-8 d-flex flex-column h-100 overflow-hidden">
                                         {selectedUser ? (
                                             <>
                                                 <div className="p-3 border-bottom bg-light d-flex align-items-center">
                                                     <UserAvatar userId={selectedUser} />
                                                 </div>
                                                 <div className="flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse">
-                                                    <div>
-                                                        {messages
-                                                            .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
-                                                            .sort((a,b) => a.timestamp - b.timestamp)
-                                                            .map((m) => (
-                                                                <div key={m.id} className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
-                                                                    <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{maxWidth: '75%'}}>
-                                                                        {m.isDeleted ? (
-                                                                            <i className="small opacity-75">Message deleted</i>
-                                                                        ) : (
-                                                                            <>
-                                                                                {m.image && <BlobImage path={m.image} userId={m.senderId} />}
-                                                                                <div>{m.content}</div>
-                                                                            </>
+                                                    {messages
+                                                        .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
+                                                        .sort((a,b) => b.timestamp - a.timestamp)
+                                                        .map((m) => (
+                                                            <div key={m.id} className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
+                                                                <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{maxWidth: '75%'}}>
+                                                                    {m.isDeleted ? (
+                                                                        <i className="small opacity-75">Message deleted</i>
+                                                                    ) : (
+                                                                        <>
+                                                                            {m.image && <BlobImage path={m.image} userId={m.senderId} />}
+                                                                            <div>{m.content}</div>
+                                                                        </>
+                                                                    )}
+                                                                    <div style={{fontSize: '0.6rem'}} className="mt-1 opacity-75 d-flex justify-content-between">
+                                                                        <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
+                                                                        {m.senderId === config.userId && !m.isDeleted && (
+                                                                            <span className="ms-2">
+                                                                                <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
+                                                                                <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
+                                                                            </span>
                                                                         )}
-                                                                        <div style={{fontSize: '0.6rem'}} className="mt-1 opacity-75 d-flex justify-content-between">
-                                                                            <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
-                                                                            {m.senderId === config.userId && !m.isDeleted && (
-                                                                                <span className="ms-2">
-                                                                                    <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
-                                                                                    <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
-                                                                                </span>
-                                                                            )}
-                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            ))
-                                                        }
-                                                    </div>
+                                                            </div>
+                                                        ))
+                                                    }
                                                 </div>
                                                 <div className="p-3 border-top bg-light">
                                                     {msgImagePreview && <div className="mb-2"><img src={msgImagePreview} style={{maxHeight:'100px'}} className="rounded" /></div>}
@@ -1073,7 +1060,7 @@ const App = () => {
                                         <input type="text" className="form-control bg-light" value={config.userId} readOnly />
                                         <button className="btn btn-outline-secondary" onClick={() => {
                                             navigator.clipboard.writeText(config.userId);
-                                            alert('User ID copied!');
+                                            showAlert('User ID copied!', 'Clipboard');
                                         }}>Copy</button>
                                     </div>
                                 </div>
@@ -1084,16 +1071,60 @@ const App = () => {
                                 <button className="btn btn-primary w-100 py-2 fw-bold" onClick={async () => {
                                     await social?.updateProfile(profile?.name || config.userId, profile?.bio || '', profile?.avatar);
                                     await sync();
-                                    alert('Profile updated!');
+                                    showAlert('Profile updated!', 'Success');
                                 }}>Save Changes</button>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
+            <Dialog dialog={dialog} setDialog={setDialog} />
         </div>
     );
 };
 
 const root = createRoot(document.getElementById('root')!);
 root.render(<App />);
+
+const Dialog = ({ dialog, setDialog }: { dialog: any, setDialog: any }) => {
+    const [inputValue, setInputValue] = useState(dialog?.defaultValue || '');
+    
+    useEffect(() => {
+        setInputValue(dialog?.defaultValue || '');
+    }, [dialog]);
+
+    if (!dialog) return null;
+
+    return (
+        <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 2000 }}>
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content shadow-lg border-0 rounded-4">
+                    <div className="modal-header border-0 pb-0">
+                        <h5 className="modal-title fw-bold text-primary">{dialog.title}</h5>
+                        <button type="button" className="btn-close" onClick={dialog.onCancel}></button>
+                    </div>
+                    <div className="modal-body py-4">
+                        <p className="mb-3 text-secondary">{dialog.message}</p>
+                        {dialog.type === 'prompt' && (
+                            <input 
+                                autoFocus
+                                className="form-control rounded-pill px-3 shadow-sm" 
+                                value={inputValue} 
+                                onChange={e => setInputValue(e.target.value)}
+                                onKeyDown={e => e.key === 'Enter' && dialog.onConfirm(inputValue)}
+                            />
+                        )}
+                    </div>
+                    <div className="modal-footer border-0 pt-0">
+                        {dialog.type !== 'alert' && (
+                            <button type="button" className="btn btn-light rounded-pill px-4" onClick={dialog.onCancel}>Cancel</button>
+                        )}
+                        <button type="button" className="btn btn-primary rounded-pill px-4 shadow-sm" onClick={() => dialog.onConfirm(inputValue)}>
+                            {dialog.type === 'alert' ? 'OK' : 'Confirm'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};

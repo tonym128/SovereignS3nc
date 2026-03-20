@@ -1,8 +1,8 @@
 TODO
 - Add a multi-user integration test for messaging
 - Allow previously logged in user to login in offline mode, and create posts, dm's, profile updates, etc and sync once they are online
-- Decrease amount of information console by SovereignS3nc library and by Social Demo application, add debug flags for any messages that will make sense while debugging issues and default to off for builds
-- Make sure if a user logs in using the wrong password that it fails to login (might have to check the public profiles and verify that that user profile exists when - Add a way for users to change their password, by entering their existing password and new password and verifying the new password, it can initiate a copy of all data from the one profile to another, then delete all the old profile files and folders (without using listing command), keep the same public key's as it will be needed for future posts and keeping the profile intact
+- Make sure if a user logs in using the wrong password that it fails to login (might have to check the public profiles and verify that that user profile exists when 
+- Add a way for users to change their password, by entering their existing password and new password and verifying the new password, it can initiate a copy of all data from the one profile to another, then delete all the old profile files and folders (without using listing command), keep the same public key's as it will be needed for future posts and keeping the profile intact
 logging in with the private uuid)
 - Make sure the website is mobile friendly and adjusts views to make sure functionality is present, user friendly and accesible on a mobile
 - Create a PWA for installation locally
@@ -45,3 +45,4 @@ DONE
 - Reset the selected file after posting, messaging
 - Update the README.md appropriately
 - Update GEMENI.md with all the new features
+- Decrease amount of information console by SovereignS3nc library and by Social Demo application, add debug flags for any messages that will make sense while debugging issues and default to off for builds
