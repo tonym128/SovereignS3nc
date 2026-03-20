@@ -244,8 +244,14 @@ const App = () => {
                             // Re-broadcast our known state to the new peer so they catch up
                             setTimeout(async () => {
                                 if (instance && instance.getStorage()) {
-                                    // Hacky but effective: tell the new peer about our profile and latest DBs
+                                    // Hacky but effective: tell the new peer about our profile, registry, and latest DBs
                                     try {
+                                        const globalRemotePath = `${getPrefix('global', 'users')}/users.json`;
+                                        const registry = await instance.getPublicRegistry();
+                                        if (registry.length > 0) {
+                                            adapter.uploadFile(globalRemotePath, new TextEncoder().encode(JSON.stringify(registry)));
+                                        }
+
                                         const publicProfile = await instance.getStorage().getPublicUserFile();
                                         if (publicProfile) {
                                             adapter.uploadFile(`${getPrefix(currentConfig.userId, 'social')}/public/user.json`, publicProfile);
@@ -528,6 +534,16 @@ const App = () => {
         if (!s || !v) return;
 
         const registry = await v.getPublicRegistry();
+        
+        // In P2P mode, the global registry might be fragmented. 
+        // We inject manually discovered users into the list so they can be followed.
+        Object.keys(discoveryMap).forEach(uid => {
+            if (!registry.find(u => u.userId === uid)) {
+                // We don't have their public key yet, but adding them to the UI allows us to try following
+                registry.push({ userId: uid, publicKey: '' });
+            }
+        });
+
         setAllUsers(registry);
 
         const now = Date.now();
@@ -910,7 +926,20 @@ const App = () => {
                     {currentTab === 'friends' && (
                         <div className="col-md-8">
                             <div className="card p-3 mb-4 shadow-sm border-0">
-                                <h5 className="fw-bold mb-3">Discover People</h5>
+                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 className="fw-bold mb-0">Discover People</h5>
+                                    <button className="btn btn-sm btn-outline-primary rounded-pill" onClick={() => {
+                                        const uid = prompt('Enter exact User ID to discover:');
+                                        if (uid) {
+                                            setDiscoveryMap(prev => {
+                                                const next = {...prev, [uid]: Date.now()};
+                                                // Trigger a sync shortly after adding them to discovery map
+                                                setTimeout(() => loadData(), 500);
+                                                return next;
+                                            });
+                                        }
+                                    }}>+ Add by ID</button>
+                                </div>
                                 <div className="list-group list-group-flush">
                                     {allUsers.filter(u => u.userId !== config.userId).map(u => {
                                         const isNew = (discoveryMap[u.userId] || 0) > highlights.friends;

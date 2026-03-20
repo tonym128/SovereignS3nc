@@ -415,21 +415,23 @@ export class SovereignS3nc {
     }
 
     async follow(userId: string) {
-        // Note: For explicit follow we need the public key too. 
-        // We'll try to find it in the global registry
+        // We'll try to find their public key in the global registry first
         const remotePath = 'users.json';
-        const result = await this.globalRemote.downloadFile(remotePath);
-        if (result && result.data) {
-            const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
-            const user = userList.find(u => u.userId === userId);
-            if (user) {
-                const startDate = new Date();
-                startDate.setUTCDate(startDate.getUTCDate() - 7);
-                await this.storage.followUser(userId, SovereignS3nc.getDateStr(startDate), user.publicKey);
-                return;
+        let publicKey = '';
+        try {
+            const result = await this.globalRemote.downloadFile(remotePath);
+            if (result && result.data) {
+                const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
+                const user = userList.find(u => u.userId === userId);
+                if (user) publicKey = user.publicKey;
             }
-        }
-        throw new Error('User not found in registry');
+        } catch (e) {}
+
+        const startDate = new Date();
+        startDate.setUTCDate(startDate.getUTCDate() - 7);
+        // We allow following without a public key (it will just fail to decrypt private DMs until the key is synced later)
+        await this.storage.followUser(userId, SovereignS3nc.getDateStr(startDate), publicKey);
+        Logger.info(`[Sovereign] Followed ${userId}.`);
     }
 
     async unfollow(userId: string) {
@@ -713,10 +715,16 @@ export class SovereignS3nc {
             if (result && !result.notModified && result.data) {
                 // Downloaded a newer or changed remote file
                 let remoteDecrypted = result.data;
+                
                 try {
-                    if (key) remoteDecrypted = await this.decrypt(result.data, key);
+                    JSON.parse(new TextDecoder().decode(result.data));
+                    // It's plain JSON, no decryption needed
                 } catch (e) {
-                    Logger.warn('[Sync] Failed to decrypt remote user.json. Overwriting with local if possible.');
+                    try {
+                        if (key) remoteDecrypted = await this.decrypt(result.data, key);
+                    } catch (de) {
+                        Logger.warn('[Sync] Failed to decrypt remote user.json. Overwriting with local if possible.');
+                    }
                 }
 
                 // If we have local data, we should compare timestamps to avoid overwriting a local change

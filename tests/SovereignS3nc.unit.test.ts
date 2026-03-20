@@ -255,10 +255,12 @@ describe('SovereignS3nc Unit Tests', () => {
             expect(following.map(u => u.userId)).not.toContain('bob');
         });
 
-        test('should throw error if user not in registry', async () => {
+        test('should allow following even if user not in registry (P2P mode support)', async () => {
             const sov = new SovereignS3nc(config, mockRemote);
             await sov.init();
-            await expect(sov.follow('non-existent')).rejects.toThrow('User not found in registry');
+            await sov.follow('non-existent');
+            const following = await sov.getFollowing();
+            expect(following.map(u => u.userId)).toContain('non-existent');
         });
     });
 
