@@ -6,6 +6,7 @@ import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
+import Peer from 'peerjs';
 
 const DEBUG = false;
 
@@ -82,6 +83,15 @@ const App = () => {
     const [reconnectDelay, setReconnectDelay] = useState(1000);
 
     const checkConnectivity = async (silent = false) => {
+        if (config.syncMode === 'webrtc' || config.syncMode === 'peerjs') {
+            const isOnline = navigator.onLine;
+            if (isOnline !== isConnected) {
+                setIsConnected(isOnline);
+                if (!silent && DEBUG) console.log(`[Connectivity] ${isOnline ? 'Back online' : 'Went offline'}`);
+            }
+            return isOnline;
+        }
+
         if (!config.endpoint) return false;
         try {
             const controller = new AbortController();
@@ -205,11 +215,51 @@ const App = () => {
             let remoteAdapter;
             let factory;
 
-            if (currentConfig.syncMode === 'webrtc') {
+            if (currentConfig.syncMode === 'webrtc' || currentConfig.syncMode === 'peerjs') {
                 const adapter = new WebRTCRemoteAdapter(currentConfig.userId);
-                const bc = new BroadcastChannel('sov-webrtc-mesh');
-                const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
-                bc.onmessage = (e) => peer.receive(e.data);
+                
+                if (currentConfig.syncMode === 'webrtc') {
+                    const bc = new BroadcastChannel('sov-webrtc-mesh');
+                    const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
+                    bc.onmessage = (e) => peer.receive(e.data);
+                } else if (currentConfig.syncMode === 'peerjs') {
+                    // Start PeerJS connection to public free cloud
+                    const peerId = `${currentConfig.appId}-${currentConfig.userId}`;
+                    const peer = new Peer(peerId);
+                    
+                    const activeConnections = new Set<string>();
+
+                    const setupConnection = (conn: any) => {
+                        if (activeConnections.has(conn.peer)) return;
+                        conn.on('open', () => {
+                            activeConnections.add(conn.peer);
+                            const peerInterface = adapter.connectPeer((msg) => conn.send(msg));
+                            conn.on('data', (data: any) => peerInterface.receive(data as string));
+                            conn.on('close', () => activeConnections.delete(conn.peer));
+                        });
+                    };
+
+                    peer.on('connection', setupConnection);
+
+                    // Auto-connect to other peers periodically
+                    setInterval(() => {
+                        try {
+                            const knownUsers = JSON.parse(localStorage.getItem('sov_remembered_users') || '[]');
+                            const discovery = JSON.parse(localStorage.getItem('sov_discovery_map') || '{}');
+                            
+                            const peersToConnect = new Set<string>();
+                            knownUsers.forEach((u: any) => peersToConnect.add(`${currentConfig.appId}-${u.userId}`));
+                            Object.keys(discovery).forEach((uid: string) => peersToConnect.add(`${currentConfig.appId}-${uid}`));
+
+                            peersToConnect.forEach(targetPeerId => {
+                                if (targetPeerId !== peerId && !activeConnections.has(targetPeerId)) {
+                                    const conn = peer.connect(targetPeerId);
+                                    setupConnection(conn);
+                                }
+                            });
+                        } catch (e) {}
+                    }, 10000);
+                }
 
                 const getPrefix = (uid: string, sid: string) => `${currentConfig.appId}/${uid}/${sid}`;
                 remoteAdapter = new PrefixProxyAdapter(adapter, getPrefix(currentConfig.userId, 'social'));
@@ -686,7 +736,9 @@ const App = () => {
                                             <div className="fw-bold text-truncate">
                                                 {u.name}
                                                 {u.config?.syncMode === 'webrtc' ? (
-                                                    <span className="badge bg-info ms-2 fw-normal" title="WebRTC Mesh (Local)">P2P</span>
+                                                    <span className="badge bg-info ms-2 fw-normal" title="WebRTC Mesh (Local)">P2P Local</span>
+                                                ) : u.config?.syncMode === 'peerjs' ? (
+                                                    <span className="badge bg-success ms-2 fw-normal" title="PeerJS (Global)">P2P Global</span>
                                                 ) : (
                                                     <span className="badge bg-secondary ms-2 fw-normal" title="S3 Cloud">S3</span>
                                                 )}
@@ -701,12 +753,15 @@ const App = () => {
                     )}
 
                     <label className="form-label small fw-bold text-muted text-uppercase">Sync Mode</label>
-                    <div className="btn-group w-100 mb-4">
+                    <div className="btn-group w-100 mb-4 flex-wrap">
                         <input type="radio" className="btn-check" name="syncMode" id="modeS3" autoComplete="off" checked={config.syncMode === 's3'} onChange={() => setConfig({...config, syncMode: 's3'})} />
                         <label className="btn btn-outline-primary" htmlFor="modeS3">S3 Cloud</label>
                         
                         <input type="radio" className="btn-check" name="syncMode" id="modeWebrtc" autoComplete="off" checked={config.syncMode === 'webrtc'} onChange={() => setConfig({...config, syncMode: 'webrtc'})} />
                         <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh (Local)</label>
+
+                        <input type="radio" className="btn-check" name="syncMode" id="modePeerjs" autoComplete="off" checked={config.syncMode === 'peerjs'} onChange={() => setConfig({...config, syncMode: 'peerjs'})} />
+                        <label className="btn btn-outline-primary" htmlFor="modePeerjs">PeerJS (Global P2P)</label>
                     </div>
 
                     {config.syncMode === 's3' && (
@@ -744,7 +799,9 @@ const App = () => {
                 <a className="navbar-brand text-primary fw-bold fs-3" href="#">
                     sov
                     {config.syncMode === 'webrtc' ? (
-                        <span className="badge bg-info ms-2 fs-6 align-middle fw-normal" title="WebRTC Mesh (Local)">P2P</span>
+                        <span className="badge bg-info ms-2 fs-6 align-middle fw-normal" title="WebRTC Mesh (Local)">P2P Local</span>
+                    ) : config.syncMode === 'peerjs' ? (
+                        <span className="badge bg-success ms-2 fs-6 align-middle fw-normal" title="PeerJS (Global)">P2P Global</span>
                     ) : (
                         <span className="badge bg-secondary ms-2 fs-6 align-middle fw-normal" title="S3 Cloud">S3</span>
                     )}
