@@ -231,15 +231,53 @@ const App = () => {
 
                     const setupConnection = (conn: any) => {
                         if (activeConnections.has(conn.peer)) return;
+                        activeConnections.add(conn.peer);
+                        
+                        let peerInterface: any = null;
+                        
                         conn.on('open', () => {
-                            activeConnections.add(conn.peer);
-                            const peerInterface = adapter.connectPeer((msg) => conn.send(msg));
-                            conn.on('data', (data: any) => peerInterface.receive(data as string));
-                            conn.on('close', () => activeConnections.delete(conn.peer));
+                            if (DEBUG) console.log(`[PeerJS] Connected to ${conn.peer}`);
+                            peerInterface = adapter.connectPeer((msg) => {
+                                if (conn.open) conn.send(msg);
+                            });
+                            
+                            // Re-broadcast our known state to the new peer so they catch up
+                            setTimeout(async () => {
+                                if (instance && instance.getStorage()) {
+                                    // Hacky but effective: tell the new peer about our profile and latest DBs
+                                    try {
+                                        const publicProfile = await instance.getStorage().getPublicUserFile();
+                                        if (publicProfile) {
+                                            adapter.uploadFile(`${getPrefix(currentConfig.userId, 'social')}/public/user.json`, publicProfile);
+                                        }
+                                        
+                                        const today = SovereignS3nc.getDateStr(new Date());
+                                        const publicDb = await instance.getStorage().getFile(instance.getModulePath('social', `days/${today}.db`, 'public'));
+                                        if (publicDb) {
+                                            adapter.uploadFile(`${getPrefix(currentConfig.userId, 'social')}/public/modules/social/days/${today}.db`, publicDb);
+                                        }
+                                    } catch (e) {}
+                                }
+                            }, 1000);
+                        });
+                        conn.on('data', (data: any) => {
+                            if (peerInterface) peerInterface.receive(data as string);
+                        });
+                        conn.on('close', () => {
+                            if (DEBUG) console.log(`[PeerJS] Connection closed: ${conn.peer}`);
+                            activeConnections.delete(conn.peer);
+                        });
+                        conn.on('error', (err: any) => {
+                            if (DEBUG) console.warn(`[PeerJS] Connection error with ${conn.peer}:`, err);
+                            activeConnections.delete(conn.peer);
                         });
                     };
 
                     peer.on('connection', setupConnection);
+                    
+                    peer.on('error', (err: any) => {
+                        if (DEBUG) console.warn(`[PeerJS] Global Peer Error:`, err);
+                    });
 
                     // Auto-connect to other peers periodically
                     setInterval(() => {
@@ -258,7 +296,7 @@ const App = () => {
                                 }
                             });
                         } catch (e) {}
-                    }, 10000);
+                    }, 5000);
                 }
 
                 const getPrefix = (uid: string, sid: string) => `${currentConfig.appId}/${uid}/${sid}`;

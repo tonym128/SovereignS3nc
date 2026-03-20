@@ -98516,14 +98516,46 @@ ${toHex(hashedRequest)}`;
                 const activeConnections = /* @__PURE__ */ new Set();
                 const setupConnection = (conn) => {
                   if (activeConnections.has(conn.peer)) return;
+                  activeConnections.add(conn.peer);
+                  let peerInterface = null;
                   conn.on("open", () => {
-                    activeConnections.add(conn.peer);
-                    const peerInterface = adapter2.connectPeer((msg) => conn.send(msg));
-                    conn.on("data", (data) => peerInterface.receive(data));
-                    conn.on("close", () => activeConnections.delete(conn.peer));
+                    if (DEBUG) console.log(`[PeerJS] Connected to ${conn.peer}`);
+                    peerInterface = adapter2.connectPeer((msg) => {
+                      if (conn.open) conn.send(msg);
+                    });
+                    setTimeout(async () => {
+                      if (instance && instance.getStorage()) {
+                        try {
+                          const publicProfile = await instance.getStorage().getPublicUserFile();
+                          if (publicProfile) {
+                            adapter2.uploadFile(`${getPrefix(currentConfig.userId, "social")}/public/user.json`, publicProfile);
+                          }
+                          const today = SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
+                          const publicDb = await instance.getStorage().getFile(instance.getModulePath("social", `days/${today}.db`, "public"));
+                          if (publicDb) {
+                            adapter2.uploadFile(`${getPrefix(currentConfig.userId, "social")}/public/modules/social/days/${today}.db`, publicDb);
+                          }
+                        } catch (e2) {
+                        }
+                      }
+                    }, 1e3);
+                  });
+                  conn.on("data", (data) => {
+                    if (peerInterface) peerInterface.receive(data);
+                  });
+                  conn.on("close", () => {
+                    if (DEBUG) console.log(`[PeerJS] Connection closed: ${conn.peer}`);
+                    activeConnections.delete(conn.peer);
+                  });
+                  conn.on("error", (err) => {
+                    if (DEBUG) console.warn(`[PeerJS] Connection error with ${conn.peer}:`, err);
+                    activeConnections.delete(conn.peer);
                   });
                 };
                 peer.on("connection", setupConnection);
+                peer.on("error", (err) => {
+                  if (DEBUG) console.warn(`[PeerJS] Global Peer Error:`, err);
+                });
                 setInterval(() => {
                   try {
                     const knownUsers = JSON.parse(localStorage.getItem("sov_remembered_users") || "[]");
@@ -98539,7 +98571,7 @@ ${toHex(hashedRequest)}`;
                     });
                   } catch (e2) {
                   }
-                }, 1e4);
+                }, 5e3);
               }
               const getPrefix = (uid, sid) => `${currentConfig.appId}/${uid}/${sid}`;
               remoteAdapter = new PrefixProxyAdapter(adapter2, getPrefix(currentConfig.userId, "social"));
