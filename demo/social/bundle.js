@@ -93105,8 +93105,15 @@ ${toHex(hashedRequest)}`;
           const publicDb = new this.sqliteInstance.Database(publicDmData || void 0);
           publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
           const registry = await this.db.getPublicRegistry();
-          const recipient = registry.find((u2) => u2.userId === recipientId);
-          if (!recipient) throw new Error("Recipient not found in registry");
+          let recipient = registry.find((u2) => u2.userId === recipientId);
+          if (!recipient) {
+            const following = await this.db.getFollowing();
+            const f2 = following.find((u2) => u2.userId === recipientId);
+            if (f2 && f2.publicKey) {
+              recipient = { userId: f2.userId, publicKey: f2.publicKey };
+            }
+          }
+          if (!recipient || !recipient.publicKey) throw new Error("Recipient public key not found (Try syncing or re-adding friend)");
           const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
           const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
           publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)", [message.id, encrypted]);
@@ -98983,7 +98990,10 @@ ${toHex(hashedRequest)}`;
             };
             reader.readAsDataURL(file);
           }
-        } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
+        } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "User ID (Share this for P2P)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: () => {
+          navigator.clipboard.writeText(config.userId);
+          alert("User ID copied!");
+        } }, "Copy"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
           await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           alert("Profile updated!");

@@ -1067,6 +1067,16 @@ const App = () => {
                                     <label className="form-label small fw-bold text-muted text-uppercase">Display Name</label>
                                     <input className="form-control" value={profile?.name || ''} onChange={e => setProfile({...profile, name: e.target.value})} placeholder="Your Name" />
                                 </div>
+                                <div className="mb-3">
+                                    <label className="form-label small fw-bold text-muted text-uppercase">User ID (Share this for P2P)</label>
+                                    <div className="input-group">
+                                        <input type="text" className="form-control bg-light" value={config.userId} readOnly />
+                                        <button className="btn btn-outline-secondary" onClick={() => {
+                                            navigator.clipboard.writeText(config.userId);
+                                            alert('User ID copied!');
+                                        }}>Copy</button>
+                                    </div>
+                                </div>
                                 <div className="mb-4">
                                     <label className="form-label small fw-bold text-muted text-uppercase">Bio</label>
                                     <textarea className="form-control" rows={3} value={profile?.bio || ''} onChange={e => setProfile({...profile, bio: e.target.value})} placeholder="Tell us about yourself..." />

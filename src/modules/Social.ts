@@ -215,8 +215,18 @@ export class SocialManager {
         publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
 
         const registry = await this.db.getPublicRegistry();
-        const recipient = registry.find(u => u.userId === recipientId);
-        if (!recipient) throw new Error('Recipient not found in registry');
+        let recipient = registry.find(u => u.userId === recipientId);
+        
+        if (!recipient) {
+            // Fallback to following list in case of fragmented P2P network
+            const following = await this.db.getFollowing();
+            const f = following.find(u => u.userId === recipientId);
+            if (f && f.publicKey) {
+                recipient = { userId: f.userId, publicKey: f.publicKey };
+            }
+        }
+
+        if (!recipient || !recipient.publicKey) throw new Error('Recipient public key not found (Try syncing or re-adding friend)');
 
         // E2EE: Derive shared secret from my Private Key + their Public Key
         const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
