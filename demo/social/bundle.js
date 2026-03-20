@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,7 +229,7 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1997,7 +1997,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -2970,7 +2970,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2983,7 +2983,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3243,7 +3243,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3256,7 +3256,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3501,7 +3501,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3515,7 +3515,7 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -23415,7 +23415,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23428,7 +23428,7 @@
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -23488,7 +23488,7 @@
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -23526,7 +23526,7 @@
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -23560,7 +23560,7 @@
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -23926,10 +23926,10 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -23938,7 +23938,7 @@
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -23994,7 +23994,7 @@
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -24006,7 +24006,7 @@
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -24015,7 +24015,7 @@
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -24024,7 +24024,7 @@
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -24033,7 +24033,7 @@
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -24042,7 +24042,7 @@
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -24051,7 +24051,7 @@
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -24060,7 +24060,7 @@
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -24069,7 +24069,7 @@
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -24078,7 +24078,7 @@
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -24087,7 +24087,7 @@
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -24096,7 +24096,7 @@
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -24105,7 +24105,7 @@
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -24114,7 +24114,7 @@
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -24123,7 +24123,7 @@
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -24132,7 +24132,7 @@
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -24143,7 +24143,7 @@
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -24158,7 +24158,7 @@
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -24167,7 +24167,7 @@
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -24184,7 +24184,7 @@
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -24201,7 +24201,7 @@
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -24226,7 +24226,7 @@
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -24235,7 +24235,7 @@
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -24245,7 +24245,7 @@
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -24322,7 +24322,7 @@
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -24332,7 +24332,7 @@
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -24341,7 +24341,7 @@
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -24350,7 +24350,7 @@
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -24359,7 +24359,7 @@
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -24372,7 +24372,7 @@
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -24390,7 +24390,7 @@
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -24422,7 +24422,7 @@
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -24443,7 +24443,7 @@
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -24455,7 +24455,7 @@
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -24787,7 +24787,7 @@
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -24811,7 +24811,7 @@
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -24839,7 +24839,7 @@
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -24909,7 +24909,7 @@
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -24929,7 +24929,7 @@
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -24943,7 +24943,7 @@
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -24976,7 +24976,7 @@
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -25095,7 +25095,7 @@
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25156,7 +25156,7 @@
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -25178,7 +25178,7 @@
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -25197,7 +25197,7 @@
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -25246,7 +25246,7 @@
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -25269,7 +25269,7 @@
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -25323,7 +25323,7 @@
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -25337,7 +25337,7 @@
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -25363,7 +25363,7 @@
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -25485,7 +25485,7 @@
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -25497,7 +25497,7 @@
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -25727,7 +25727,7 @@
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -25737,7 +25737,7 @@
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -26294,11 +26294,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/buffer_list.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
   var require_buffer_list = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -26537,11 +26537,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/destroy.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -26627,11 +26627,11 @@
     }
   });
 
-  // node_modules/readable-stream/errors-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
   var require_errors_browser = __commonJS({
-    "node_modules/readable-stream/errors-browser.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -26737,11 +26737,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/state.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
   var require_state = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -26766,7 +26766,7 @@
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -26801,11 +26801,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_writable.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable = __commonJS({
-    "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -27273,11 +27273,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_duplex.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex = __commonJS({
-    "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -27367,12 +27367,70 @@
     }
   });
 
+  // node_modules/string_decoder/node_modules/safe-buffer/index.js
+  var require_safe_buffer2 = __commonJS({
+    "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
+      var buffer = require_buffer();
+      var Buffer3 = buffer.Buffer;
+      function copyProps(src, dst) {
+        for (var key in src) {
+          dst[key] = src[key];
+        }
+      }
+      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+        module.exports = buffer;
+      } else {
+        copyProps(buffer, exports);
+        exports.Buffer = SafeBuffer;
+      }
+      function SafeBuffer(arg, encodingOrOffset, length) {
+        return Buffer3(arg, encodingOrOffset, length);
+      }
+      copyProps(Buffer3, SafeBuffer);
+      SafeBuffer.from = function(arg, encodingOrOffset, length) {
+        if (typeof arg === "number") {
+          throw new TypeError("Argument must not be a number");
+        }
+        return Buffer3(arg, encodingOrOffset, length);
+      };
+      SafeBuffer.alloc = function(size, fill, encoding) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        var buf = Buffer3(size);
+        if (fill !== void 0) {
+          if (typeof encoding === "string") {
+            buf.fill(fill, encoding);
+          } else {
+            buf.fill(fill);
+          }
+        } else {
+          buf.fill(0);
+        }
+        return buf;
+      };
+      SafeBuffer.allocUnsafe = function(size) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        return Buffer3(size);
+      };
+      SafeBuffer.allocUnsafeSlow = function(size) {
+        if (typeof size !== "number") {
+          throw new TypeError("Argument must be a number");
+        }
+        return buffer.SlowBuffer(size);
+      };
+    }
+  });
+
   // node_modules/string_decoder/lib/string_decoder.js
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills687 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer3.isEncoding || function(encoding) {
         encoding = "" + encoding;
         switch (encoding && encoding.toLowerCase()) {
@@ -27606,11 +27664,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/end-of-stream.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
   var require_end_of_stream = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once2(callback) {
         var called = false;
@@ -27696,11 +27754,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/async_iterator.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
   var require_async_iterator = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -27880,21 +27938,21 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/from-browser.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_readable.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable = __commonJS({
-    "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -28624,11 +28682,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_transform.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform = __commonJS({
-    "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -28726,11 +28784,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_passthrough.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough = __commonJS({
-    "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -28744,11 +28802,11 @@
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/pipeline.js
+  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
   var require_pipeline = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
+    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var eos;
       function once2(callback) {
         var called = false;
@@ -28833,7 +28891,7 @@
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -28912,7 +28970,7 @@
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -29001,7 +29059,7 @@
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -29127,10 +29185,10 @@
     }
   });
 
-  // node_modules/isarray/index.js
+  // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
-    "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29142,7 +29200,7 @@
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -29160,7 +29218,7 @@
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -29225,7 +29283,7 @@
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -29244,7 +29302,7 @@
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -29286,10 +29344,10 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/isarray/index.js
+  // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
-    "node_modules/ripemd160/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29297,18 +29355,18 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/node_modules/safe-buffer/index.js
-  var require_safe_buffer2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+  // node_modules/readable-stream/node_modules/safe-buffer/index.js
+  var require_safe_buffer3 = __commonJS({
+    "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -29366,7 +29424,7 @@
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -29434,17 +29492,17 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/BufferList.js
+  // node_modules/readable-stream/lib/internal/streams/BufferList.js
   var require_BufferList = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
+    "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
         }
       }
-      var Buffer3 = require_safe_buffer2().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var util = require_util();
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
@@ -29513,11 +29571,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/destroy.js
+  // node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -29583,11 +29641,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/_stream_writable.js
+  // node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -29607,7 +29665,7 @@
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer2().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
@@ -30024,11 +30082,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/_stream_duplex.js
+  // node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -30102,308 +30160,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/string_decoder/node_modules/safe-buffer/index.js
-  var require_safe_buffer3 = __commonJS({
-    "node_modules/ripemd160/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
-      function copyProps(src, dst) {
-        for (var key in src) {
-          dst[key] = src[key];
-        }
-      }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
-        module.exports = buffer;
-      } else {
-        copyProps(buffer, exports);
-        exports.Buffer = SafeBuffer;
-      }
-      function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
-      }
-      copyProps(Buffer3, SafeBuffer);
-      SafeBuffer.from = function(arg, encodingOrOffset, length) {
-        if (typeof arg === "number") {
-          throw new TypeError("Argument must not be a number");
-        }
-        return Buffer3(arg, encodingOrOffset, length);
-      };
-      SafeBuffer.alloc = function(size, fill, encoding) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        var buf = Buffer3(size);
-        if (fill !== void 0) {
-          if (typeof encoding === "string") {
-            buf.fill(fill, encoding);
-          } else {
-            buf.fill(fill);
-          }
-        } else {
-          buf.fill(0);
-        }
-        return buf;
-      };
-      SafeBuffer.allocUnsafe = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return Buffer3(size);
-      };
-      SafeBuffer.allocUnsafeSlow = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return buffer.SlowBuffer(size);
-      };
-    }
-  });
-
-  // node_modules/ripemd160/node_modules/string_decoder/lib/string_decoder.js
-  var require_string_decoder2 = __commonJS({
-    "node_modules/ripemd160/node_modules/string_decoder/lib/string_decoder.js"(exports) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer3().Buffer;
-      var isEncoding = Buffer3.isEncoding || function(encoding) {
-        encoding = "" + encoding;
-        switch (encoding && encoding.toLowerCase()) {
-          case "hex":
-          case "utf8":
-          case "utf-8":
-          case "ascii":
-          case "binary":
-          case "base64":
-          case "ucs2":
-          case "ucs-2":
-          case "utf16le":
-          case "utf-16le":
-          case "raw":
-            return true;
-          default:
-            return false;
-        }
-      };
-      function _normalizeEncoding(enc) {
-        if (!enc) return "utf8";
-        var retried;
-        while (true) {
-          switch (enc) {
-            case "utf8":
-            case "utf-8":
-              return "utf8";
-            case "ucs2":
-            case "ucs-2":
-            case "utf16le":
-            case "utf-16le":
-              return "utf16le";
-            case "latin1":
-            case "binary":
-              return "latin1";
-            case "base64":
-            case "ascii":
-            case "hex":
-              return enc;
-            default:
-              if (retried) return;
-              enc = ("" + enc).toLowerCase();
-              retried = true;
-          }
-        }
-      }
-      function normalizeEncoding(enc) {
-        var nenc = _normalizeEncoding(enc);
-        if (typeof nenc !== "string" && (Buffer3.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
-        return nenc || enc;
-      }
-      exports.StringDecoder = StringDecoder;
-      function StringDecoder(encoding) {
-        this.encoding = normalizeEncoding(encoding);
-        var nb;
-        switch (this.encoding) {
-          case "utf16le":
-            this.text = utf16Text;
-            this.end = utf16End;
-            nb = 4;
-            break;
-          case "utf8":
-            this.fillLast = utf8FillLast;
-            nb = 4;
-            break;
-          case "base64":
-            this.text = base64Text;
-            this.end = base64End;
-            nb = 3;
-            break;
-          default:
-            this.write = simpleWrite;
-            this.end = simpleEnd;
-            return;
-        }
-        this.lastNeed = 0;
-        this.lastTotal = 0;
-        this.lastChar = Buffer3.allocUnsafe(nb);
-      }
-      StringDecoder.prototype.write = function(buf) {
-        if (buf.length === 0) return "";
-        var r2;
-        var i2;
-        if (this.lastNeed) {
-          r2 = this.fillLast(buf);
-          if (r2 === void 0) return "";
-          i2 = this.lastNeed;
-          this.lastNeed = 0;
-        } else {
-          i2 = 0;
-        }
-        if (i2 < buf.length) return r2 ? r2 + this.text(buf, i2) : this.text(buf, i2);
-        return r2 || "";
-      };
-      StringDecoder.prototype.end = utf8End;
-      StringDecoder.prototype.text = utf8Text;
-      StringDecoder.prototype.fillLast = function(buf) {
-        if (this.lastNeed <= buf.length) {
-          buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
-          return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-        }
-        buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
-        this.lastNeed -= buf.length;
-      };
-      function utf8CheckByte(byte) {
-        if (byte <= 127) return 0;
-        else if (byte >> 5 === 6) return 2;
-        else if (byte >> 4 === 14) return 3;
-        else if (byte >> 3 === 30) return 4;
-        return byte >> 6 === 2 ? -1 : -2;
-      }
-      function utf8CheckIncomplete(self2, buf, i2) {
-        var j2 = buf.length - 1;
-        if (j2 < i2) return 0;
-        var nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) self2.lastNeed = nb - 1;
-          return nb;
-        }
-        if (--j2 < i2 || nb === -2) return 0;
-        nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) self2.lastNeed = nb - 2;
-          return nb;
-        }
-        if (--j2 < i2 || nb === -2) return 0;
-        nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) {
-            if (nb === 2) nb = 0;
-            else self2.lastNeed = nb - 3;
-          }
-          return nb;
-        }
-        return 0;
-      }
-      function utf8CheckExtraBytes(self2, buf, p2) {
-        if ((buf[0] & 192) !== 128) {
-          self2.lastNeed = 0;
-          return "\uFFFD";
-        }
-        if (self2.lastNeed > 1 && buf.length > 1) {
-          if ((buf[1] & 192) !== 128) {
-            self2.lastNeed = 1;
-            return "\uFFFD";
-          }
-          if (self2.lastNeed > 2 && buf.length > 2) {
-            if ((buf[2] & 192) !== 128) {
-              self2.lastNeed = 2;
-              return "\uFFFD";
-            }
-          }
-        }
-      }
-      function utf8FillLast(buf) {
-        var p2 = this.lastTotal - this.lastNeed;
-        var r2 = utf8CheckExtraBytes(this, buf, p2);
-        if (r2 !== void 0) return r2;
-        if (this.lastNeed <= buf.length) {
-          buf.copy(this.lastChar, p2, 0, this.lastNeed);
-          return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-        }
-        buf.copy(this.lastChar, p2, 0, buf.length);
-        this.lastNeed -= buf.length;
-      }
-      function utf8Text(buf, i2) {
-        var total = utf8CheckIncomplete(this, buf, i2);
-        if (!this.lastNeed) return buf.toString("utf8", i2);
-        this.lastTotal = total;
-        var end = buf.length - (total - this.lastNeed);
-        buf.copy(this.lastChar, 0, end);
-        return buf.toString("utf8", i2, end);
-      }
-      function utf8End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) return r2 + "\uFFFD";
-        return r2;
-      }
-      function utf16Text(buf, i2) {
-        if ((buf.length - i2) % 2 === 0) {
-          var r2 = buf.toString("utf16le", i2);
-          if (r2) {
-            var c2 = r2.charCodeAt(r2.length - 1);
-            if (c2 >= 55296 && c2 <= 56319) {
-              this.lastNeed = 2;
-              this.lastTotal = 4;
-              this.lastChar[0] = buf[buf.length - 2];
-              this.lastChar[1] = buf[buf.length - 1];
-              return r2.slice(0, -1);
-            }
-          }
-          return r2;
-        }
-        this.lastNeed = 1;
-        this.lastTotal = 2;
-        this.lastChar[0] = buf[buf.length - 1];
-        return buf.toString("utf16le", i2, buf.length - 1);
-      }
-      function utf16End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) {
-          var end = this.lastTotal - this.lastNeed;
-          return r2 + this.lastChar.toString("utf16le", 0, end);
-        }
-        return r2;
-      }
-      function base64Text(buf, i2) {
-        var n2 = (buf.length - i2) % 3;
-        if (n2 === 0) return buf.toString("base64", i2);
-        this.lastNeed = 3 - n2;
-        this.lastTotal = 3;
-        if (n2 === 1) {
-          this.lastChar[0] = buf[buf.length - 1];
-        } else {
-          this.lastChar[0] = buf[buf.length - 2];
-          this.lastChar[1] = buf[buf.length - 1];
-        }
-        return buf.toString("base64", i2, buf.length - n2);
-      }
-      function base64End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) return r2 + this.lastChar.toString("base64", 0, 3 - this.lastNeed);
-        return r2;
-      }
-      function simpleWrite(buf) {
-        return buf.toString(this.encoding);
-      }
-      function simpleEnd(buf) {
-        return buf && buf.length ? this.write(buf) : "";
-      }
-    }
-  });
-
-  // node_modules/ripemd160/node_modules/readable-stream/lib/_stream_readable.js
+  // node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -30414,7 +30175,7 @@
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer2().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
@@ -30477,7 +30238,7 @@
         this.decoder = null;
         this.encoding = null;
         if (options.encoding) {
-          if (!StringDecoder) StringDecoder = require_string_decoder2().StringDecoder;
+          if (!StringDecoder) StringDecoder = require_string_decoder().StringDecoder;
           this.decoder = new StringDecoder(options.encoding);
           this.encoding = options.encoding;
         }
@@ -30594,7 +30355,7 @@
         return this._readableState.flowing === false;
       };
       Readable.prototype.setEncoding = function(enc) {
-        if (!StringDecoder) StringDecoder = require_string_decoder2().StringDecoder;
+        if (!StringDecoder) StringDecoder = require_string_decoder().StringDecoder;
         this._readableState.decoder = new StringDecoder(enc);
         this._readableState.encoding = enc;
         return this;
@@ -31086,11 +30847,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/_stream_transform.js
+  // node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -31187,11 +30948,11 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/lib/_stream_passthrough.js
+  // node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough2 = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -31207,10 +30968,10 @@
     }
   });
 
-  // node_modules/ripemd160/node_modules/readable-stream/readable-browser.js
+  // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
-    "node_modules/ripemd160/node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+    "node_modules/readable-stream/readable-browser.js"(exports, module) {
+      var import_polyfills687 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -31225,7 +30986,7 @@
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -31317,7 +31078,7 @@
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -31759,7 +31520,7 @@
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -31821,7 +31582,7 @@
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -31906,7 +31667,7 @@
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -31994,7 +31755,7 @@
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -32157,7 +31918,7 @@
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -32199,7 +31960,7 @@
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -32543,7 +32304,7 @@
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -32596,7 +32357,7 @@
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -32618,7 +32379,7 @@
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -32714,7 +32475,7 @@
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -32744,7 +32505,7 @@
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -32785,7 +32546,7 @@
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -32797,7 +32558,7 @@
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -33013,7 +32774,7 @@
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -33022,7 +32783,7 @@
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -33046,7 +32807,7 @@
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -33065,7 +32826,7 @@
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -33084,7 +32845,7 @@
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -33199,7 +32960,7 @@
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -33322,7 +33083,7 @@
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -33332,7 +33093,7 @@
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -34098,7 +33859,7 @@
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -34115,7 +33876,7 @@
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -34224,7 +33985,7 @@
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -34352,7 +34113,7 @@
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -34408,7 +34169,7 @@
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -34457,7 +34218,7 @@
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -34469,7 +34230,7 @@
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -34525,7 +34286,7 @@
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -34538,7 +34299,7 @@
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -34553,7 +34314,7 @@
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -34572,7 +34333,7 @@
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -34607,7 +34368,7 @@
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -34633,7 +34394,7 @@
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -34675,7 +34436,7 @@
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -34695,7 +34456,7 @@
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -34717,7 +34478,7 @@
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer3 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -34949,7 +34710,7 @@
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -34972,7 +34733,7 @@
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
@@ -35147,7 +34908,7 @@
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var ZEROES = Buffer3.alloc(16, 0);
       function toArray(buf) {
@@ -35225,7 +34986,7 @@
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35328,7 +35089,7 @@
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35356,7 +35117,7 @@
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -35399,7 +35160,7 @@
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -35496,7 +35257,7 @@
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -35606,7 +35367,7 @@
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -35624,7 +35385,7 @@
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -35655,7 +35416,7 @@
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -35717,7 +35478,7 @@
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -37511,6 +37272,10 @@
           if (r2 !== 0) {
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
+          }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
           }
           return this.strip();
         };
@@ -38525,7 +38290,7 @@
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -40320,6 +40085,10 @@
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
           }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
+          }
           return this.strip();
         };
         BN.prototype.maskn = function maskn(bits) {
@@ -41333,7 +41102,7 @@
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -41391,7 +41160,7 @@
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -41483,7 +41252,7 @@
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var randomBytes2 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -41620,7 +41389,7 @@
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -41767,7 +41536,7 @@
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -41804,1874 +41573,10 @@
     }
   });
 
-  // node_modules/browserify-sign/node_modules/isarray/index.js
-  var require_isarray3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      var toString = {}.toString;
-      module.exports = Array.isArray || function(arr) {
-        return toString.call(arr) == "[object Array]";
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/stream-browser.js
-  var require_stream_browser3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      module.exports = require_events().EventEmitter;
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/node_modules/safe-buffer/index.js
-  var require_safe_buffer4 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
-      function copyProps(src, dst) {
-        for (var key in src) {
-          dst[key] = src[key];
-        }
-      }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
-        module.exports = buffer;
-      } else {
-        copyProps(buffer, exports);
-        exports.Buffer = SafeBuffer;
-      }
-      function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
-      }
-      copyProps(Buffer3, SafeBuffer);
-      SafeBuffer.from = function(arg, encodingOrOffset, length) {
-        if (typeof arg === "number") {
-          throw new TypeError("Argument must not be a number");
-        }
-        return Buffer3(arg, encodingOrOffset, length);
-      };
-      SafeBuffer.alloc = function(size, fill, encoding) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        var buf = Buffer3(size);
-        if (fill !== void 0) {
-          if (typeof encoding === "string") {
-            buf.fill(fill, encoding);
-          } else {
-            buf.fill(fill);
-          }
-        } else {
-          buf.fill(0);
-        }
-        return buf;
-      };
-      SafeBuffer.allocUnsafe = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return Buffer3(size);
-      };
-      SafeBuffer.allocUnsafeSlow = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return buffer.SlowBuffer(size);
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/BufferList.js
-  var require_BufferList2 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      function _classCallCheck(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      var Buffer3 = require_safe_buffer4().Buffer;
-      var util = require_util();
-      function copyBuffer(src, target, offset) {
-        src.copy(target, offset);
-      }
-      module.exports = (function() {
-        function BufferList() {
-          _classCallCheck(this, BufferList);
-          this.head = null;
-          this.tail = null;
-          this.length = 0;
-        }
-        BufferList.prototype.push = function push(v2) {
-          var entry = { data: v2, next: null };
-          if (this.length > 0) this.tail.next = entry;
-          else this.head = entry;
-          this.tail = entry;
-          ++this.length;
-        };
-        BufferList.prototype.unshift = function unshift(v2) {
-          var entry = { data: v2, next: this.head };
-          if (this.length === 0) this.tail = entry;
-          this.head = entry;
-          ++this.length;
-        };
-        BufferList.prototype.shift = function shift() {
-          if (this.length === 0) return;
-          var ret = this.head.data;
-          if (this.length === 1) this.head = this.tail = null;
-          else this.head = this.head.next;
-          --this.length;
-          return ret;
-        };
-        BufferList.prototype.clear = function clear() {
-          this.head = this.tail = null;
-          this.length = 0;
-        };
-        BufferList.prototype.join = function join2(s2) {
-          if (this.length === 0) return "";
-          var p2 = this.head;
-          var ret = "" + p2.data;
-          while (p2 = p2.next) {
-            ret += s2 + p2.data;
-          }
-          return ret;
-        };
-        BufferList.prototype.concat = function concat(n2) {
-          if (this.length === 0) return Buffer3.alloc(0);
-          var ret = Buffer3.allocUnsafe(n2 >>> 0);
-          var p2 = this.head;
-          var i2 = 0;
-          while (p2) {
-            copyBuffer(p2.data, ret, i2);
-            i2 += p2.data.length;
-            p2 = p2.next;
-          }
-          return ret;
-        };
-        return BufferList;
-      })();
-      if (util && util.inspect && util.inspect.custom) {
-        module.exports.prototype[util.inspect.custom] = function() {
-          var obj = util.inspect({ length: this.length });
-          return this.constructor.name + " " + obj;
-        };
-      }
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/destroy.js
-  var require_destroy3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var pna = require_process_nextick_args();
-      function destroy(err, cb2) {
-        var _this = this;
-        var readableDestroyed = this._readableState && this._readableState.destroyed;
-        var writableDestroyed = this._writableState && this._writableState.destroyed;
-        if (readableDestroyed || writableDestroyed) {
-          if (cb2) {
-            cb2(err);
-          } else if (err) {
-            if (!this._writableState) {
-              pna.nextTick(emitErrorNT, this, err);
-            } else if (!this._writableState.errorEmitted) {
-              this._writableState.errorEmitted = true;
-              pna.nextTick(emitErrorNT, this, err);
-            }
-          }
-          return this;
-        }
-        if (this._readableState) {
-          this._readableState.destroyed = true;
-        }
-        if (this._writableState) {
-          this._writableState.destroyed = true;
-        }
-        this._destroy(err || null, function(err2) {
-          if (!cb2 && err2) {
-            if (!_this._writableState) {
-              pna.nextTick(emitErrorNT, _this, err2);
-            } else if (!_this._writableState.errorEmitted) {
-              _this._writableState.errorEmitted = true;
-              pna.nextTick(emitErrorNT, _this, err2);
-            }
-          } else if (cb2) {
-            cb2(err2);
-          }
-        });
-        return this;
-      }
-      function undestroy() {
-        if (this._readableState) {
-          this._readableState.destroyed = false;
-          this._readableState.reading = false;
-          this._readableState.ended = false;
-          this._readableState.endEmitted = false;
-        }
-        if (this._writableState) {
-          this._writableState.destroyed = false;
-          this._writableState.ended = false;
-          this._writableState.ending = false;
-          this._writableState.finalCalled = false;
-          this._writableState.prefinished = false;
-          this._writableState.finished = false;
-          this._writableState.errorEmitted = false;
-        }
-      }
-      function emitErrorNT(self2, err) {
-        self2.emit("error", err);
-      }
-      module.exports = {
-        destroy,
-        undestroy
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_writable.js
-  var require_stream_writable3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var pna = require_process_nextick_args();
-      module.exports = Writable;
-      function CorkedRequest(state) {
-        var _this = this;
-        this.next = null;
-        this.entry = null;
-        this.finish = function() {
-          onCorkedFinish(_this, state);
-        };
-      }
-      var asyncWrite = !process.browser && ["v0.10", "v0.9."].indexOf("v18.0.0".slice(0, 5)) > -1 ? setImmediate : pna.nextTick;
-      var Duplex;
-      Writable.WritableState = WritableState;
-      var util = Object.create(require_util2());
-      util.inherits = require_inherits_browser();
-      var internalUtil = {
-        deprecate: require_browser3()
-      };
-      var Stream = require_stream_browser3();
-      var Buffer3 = require_safe_buffer4().Buffer;
-      var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
-      };
-      function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
-      }
-      function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
-      }
-      var destroyImpl = require_destroy3();
-      util.inherits(Writable, Stream);
-      function nop() {
-      }
-      function WritableState(options, stream) {
-        Duplex = Duplex || require_stream_duplex3();
-        options = options || {};
-        var isDuplex = stream instanceof Duplex;
-        this.objectMode = !!options.objectMode;
-        if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
-        var hwm = options.highWaterMark;
-        var writableHwm = options.writableHighWaterMark;
-        var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-        if (hwm || hwm === 0) this.highWaterMark = hwm;
-        else if (isDuplex && (writableHwm || writableHwm === 0)) this.highWaterMark = writableHwm;
-        else this.highWaterMark = defaultHwm;
-        this.highWaterMark = Math.floor(this.highWaterMark);
-        this.finalCalled = false;
-        this.needDrain = false;
-        this.ending = false;
-        this.ended = false;
-        this.finished = false;
-        this.destroyed = false;
-        var noDecode = options.decodeStrings === false;
-        this.decodeStrings = !noDecode;
-        this.defaultEncoding = options.defaultEncoding || "utf8";
-        this.length = 0;
-        this.writing = false;
-        this.corked = 0;
-        this.sync = true;
-        this.bufferProcessing = false;
-        this.onwrite = function(er) {
-          onwrite(stream, er);
-        };
-        this.writecb = null;
-        this.writelen = 0;
-        this.bufferedRequest = null;
-        this.lastBufferedRequest = null;
-        this.pendingcb = 0;
-        this.prefinished = false;
-        this.errorEmitted = false;
-        this.bufferedRequestCount = 0;
-        this.corkedRequestsFree = new CorkedRequest(this);
-      }
-      WritableState.prototype.getBuffer = function getBuffer() {
-        var current = this.bufferedRequest;
-        var out = [];
-        while (current) {
-          out.push(current);
-          current = current.next;
-        }
-        return out;
-      };
-      (function() {
-        try {
-          Object.defineProperty(WritableState.prototype, "buffer", {
-            get: internalUtil.deprecate(function() {
-              return this.getBuffer();
-            }, "_writableState.buffer is deprecated. Use _writableState.getBuffer instead.", "DEP0003")
-          });
-        } catch (_) {
-        }
-      })();
-      var realHasInstance;
-      if (typeof Symbol === "function" && Symbol.hasInstance && typeof Function.prototype[Symbol.hasInstance] === "function") {
-        realHasInstance = Function.prototype[Symbol.hasInstance];
-        Object.defineProperty(Writable, Symbol.hasInstance, {
-          value: function(object) {
-            if (realHasInstance.call(this, object)) return true;
-            if (this !== Writable) return false;
-            return object && object._writableState instanceof WritableState;
-          }
-        });
-      } else {
-        realHasInstance = function(object) {
-          return object instanceof this;
-        };
-      }
-      function Writable(options) {
-        Duplex = Duplex || require_stream_duplex3();
-        if (!realHasInstance.call(Writable, this) && !(this instanceof Duplex)) {
-          return new Writable(options);
-        }
-        this._writableState = new WritableState(options, this);
-        this.writable = true;
-        if (options) {
-          if (typeof options.write === "function") this._write = options.write;
-          if (typeof options.writev === "function") this._writev = options.writev;
-          if (typeof options.destroy === "function") this._destroy = options.destroy;
-          if (typeof options.final === "function") this._final = options.final;
-        }
-        Stream.call(this);
-      }
-      Writable.prototype.pipe = function() {
-        this.emit("error", new Error("Cannot pipe, not readable"));
-      };
-      function writeAfterEnd(stream, cb2) {
-        var er = new Error("write after end");
-        stream.emit("error", er);
-        pna.nextTick(cb2, er);
-      }
-      function validChunk(stream, state, chunk, cb2) {
-        var valid = true;
-        var er = false;
-        if (chunk === null) {
-          er = new TypeError("May not write null values to stream");
-        } else if (typeof chunk !== "string" && chunk !== void 0 && !state.objectMode) {
-          er = new TypeError("Invalid non-string/buffer chunk");
-        }
-        if (er) {
-          stream.emit("error", er);
-          pna.nextTick(cb2, er);
-          valid = false;
-        }
-        return valid;
-      }
-      Writable.prototype.write = function(chunk, encoding, cb2) {
-        var state = this._writableState;
-        var ret = false;
-        var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer3.isBuffer(chunk)) {
-          chunk = _uint8ArrayToBuffer(chunk);
-        }
-        if (typeof encoding === "function") {
-          cb2 = encoding;
-          encoding = null;
-        }
-        if (isBuf) encoding = "buffer";
-        else if (!encoding) encoding = state.defaultEncoding;
-        if (typeof cb2 !== "function") cb2 = nop;
-        if (state.ended) writeAfterEnd(this, cb2);
-        else if (isBuf || validChunk(this, state, chunk, cb2)) {
-          state.pendingcb++;
-          ret = writeOrBuffer(this, state, isBuf, chunk, encoding, cb2);
-        }
-        return ret;
-      };
-      Writable.prototype.cork = function() {
-        var state = this._writableState;
-        state.corked++;
-      };
-      Writable.prototype.uncork = function() {
-        var state = this._writableState;
-        if (state.corked) {
-          state.corked--;
-          if (!state.writing && !state.corked && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
-        }
-      };
-      Writable.prototype.setDefaultEncoding = function setDefaultEncoding(encoding) {
-        if (typeof encoding === "string") encoding = encoding.toLowerCase();
-        if (!(["hex", "utf8", "utf-8", "ascii", "binary", "base64", "ucs2", "ucs-2", "utf16le", "utf-16le", "raw"].indexOf((encoding + "").toLowerCase()) > -1)) throw new TypeError("Unknown encoding: " + encoding);
-        this._writableState.defaultEncoding = encoding;
-        return this;
-      };
-      function decodeChunk(state, chunk, encoding) {
-        if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer3.from(chunk, encoding);
-        }
-        return chunk;
-      }
-      Object.defineProperty(Writable.prototype, "writableHighWaterMark", {
-        // making it explicit this property is not enumerable
-        // because otherwise some prototype manipulation in
-        // userland will fail
-        enumerable: false,
-        get: function() {
-          return this._writableState.highWaterMark;
-        }
-      });
-      function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb2) {
-        if (!isBuf) {
-          var newChunk = decodeChunk(state, chunk, encoding);
-          if (chunk !== newChunk) {
-            isBuf = true;
-            encoding = "buffer";
-            chunk = newChunk;
-          }
-        }
-        var len = state.objectMode ? 1 : chunk.length;
-        state.length += len;
-        var ret = state.length < state.highWaterMark;
-        if (!ret) state.needDrain = true;
-        if (state.writing || state.corked) {
-          var last = state.lastBufferedRequest;
-          state.lastBufferedRequest = {
-            chunk,
-            encoding,
-            isBuf,
-            callback: cb2,
-            next: null
-          };
-          if (last) {
-            last.next = state.lastBufferedRequest;
-          } else {
-            state.bufferedRequest = state.lastBufferedRequest;
-          }
-          state.bufferedRequestCount += 1;
-        } else {
-          doWrite(stream, state, false, len, chunk, encoding, cb2);
-        }
-        return ret;
-      }
-      function doWrite(stream, state, writev, len, chunk, encoding, cb2) {
-        state.writelen = len;
-        state.writecb = cb2;
-        state.writing = true;
-        state.sync = true;
-        if (writev) stream._writev(chunk, state.onwrite);
-        else stream._write(chunk, encoding, state.onwrite);
-        state.sync = false;
-      }
-      function onwriteError(stream, state, sync, er, cb2) {
-        --state.pendingcb;
-        if (sync) {
-          pna.nextTick(cb2, er);
-          pna.nextTick(finishMaybe, stream, state);
-          stream._writableState.errorEmitted = true;
-          stream.emit("error", er);
-        } else {
-          cb2(er);
-          stream._writableState.errorEmitted = true;
-          stream.emit("error", er);
-          finishMaybe(stream, state);
-        }
-      }
-      function onwriteStateUpdate(state) {
-        state.writing = false;
-        state.writecb = null;
-        state.length -= state.writelen;
-        state.writelen = 0;
-      }
-      function onwrite(stream, er) {
-        var state = stream._writableState;
-        var sync = state.sync;
-        var cb2 = state.writecb;
-        onwriteStateUpdate(state);
-        if (er) onwriteError(stream, state, sync, er, cb2);
-        else {
-          var finished = needFinish(state);
-          if (!finished && !state.corked && !state.bufferProcessing && state.bufferedRequest) {
-            clearBuffer(stream, state);
-          }
-          if (sync) {
-            asyncWrite(afterWrite, stream, state, finished, cb2);
-          } else {
-            afterWrite(stream, state, finished, cb2);
-          }
-        }
-      }
-      function afterWrite(stream, state, finished, cb2) {
-        if (!finished) onwriteDrain(stream, state);
-        state.pendingcb--;
-        cb2();
-        finishMaybe(stream, state);
-      }
-      function onwriteDrain(stream, state) {
-        if (state.length === 0 && state.needDrain) {
-          state.needDrain = false;
-          stream.emit("drain");
-        }
-      }
-      function clearBuffer(stream, state) {
-        state.bufferProcessing = true;
-        var entry = state.bufferedRequest;
-        if (stream._writev && entry && entry.next) {
-          var l2 = state.bufferedRequestCount;
-          var buffer = new Array(l2);
-          var holder = state.corkedRequestsFree;
-          holder.entry = entry;
-          var count = 0;
-          var allBuffers = true;
-          while (entry) {
-            buffer[count] = entry;
-            if (!entry.isBuf) allBuffers = false;
-            entry = entry.next;
-            count += 1;
-          }
-          buffer.allBuffers = allBuffers;
-          doWrite(stream, state, true, state.length, buffer, "", holder.finish);
-          state.pendingcb++;
-          state.lastBufferedRequest = null;
-          if (holder.next) {
-            state.corkedRequestsFree = holder.next;
-            holder.next = null;
-          } else {
-            state.corkedRequestsFree = new CorkedRequest(state);
-          }
-          state.bufferedRequestCount = 0;
-        } else {
-          while (entry) {
-            var chunk = entry.chunk;
-            var encoding = entry.encoding;
-            var cb2 = entry.callback;
-            var len = state.objectMode ? 1 : chunk.length;
-            doWrite(stream, state, false, len, chunk, encoding, cb2);
-            entry = entry.next;
-            state.bufferedRequestCount--;
-            if (state.writing) {
-              break;
-            }
-          }
-          if (entry === null) state.lastBufferedRequest = null;
-        }
-        state.bufferedRequest = entry;
-        state.bufferProcessing = false;
-      }
-      Writable.prototype._write = function(chunk, encoding, cb2) {
-        cb2(new Error("_write() is not implemented"));
-      };
-      Writable.prototype._writev = null;
-      Writable.prototype.end = function(chunk, encoding, cb2) {
-        var state = this._writableState;
-        if (typeof chunk === "function") {
-          cb2 = chunk;
-          chunk = null;
-          encoding = null;
-        } else if (typeof encoding === "function") {
-          cb2 = encoding;
-          encoding = null;
-        }
-        if (chunk !== null && chunk !== void 0) this.write(chunk, encoding);
-        if (state.corked) {
-          state.corked = 1;
-          this.uncork();
-        }
-        if (!state.ending) endWritable(this, state, cb2);
-      };
-      function needFinish(state) {
-        return state.ending && state.length === 0 && state.bufferedRequest === null && !state.finished && !state.writing;
-      }
-      function callFinal(stream, state) {
-        stream._final(function(err) {
-          state.pendingcb--;
-          if (err) {
-            stream.emit("error", err);
-          }
-          state.prefinished = true;
-          stream.emit("prefinish");
-          finishMaybe(stream, state);
-        });
-      }
-      function prefinish(stream, state) {
-        if (!state.prefinished && !state.finalCalled) {
-          if (typeof stream._final === "function") {
-            state.pendingcb++;
-            state.finalCalled = true;
-            pna.nextTick(callFinal, stream, state);
-          } else {
-            state.prefinished = true;
-            stream.emit("prefinish");
-          }
-        }
-      }
-      function finishMaybe(stream, state) {
-        var need = needFinish(state);
-        if (need) {
-          prefinish(stream, state);
-          if (state.pendingcb === 0) {
-            state.finished = true;
-            stream.emit("finish");
-          }
-        }
-        return need;
-      }
-      function endWritable(stream, state, cb2) {
-        state.ending = true;
-        finishMaybe(stream, state);
-        if (cb2) {
-          if (state.finished) pna.nextTick(cb2);
-          else stream.once("finish", cb2);
-        }
-        state.ended = true;
-        stream.writable = false;
-      }
-      function onCorkedFinish(corkReq, state, err) {
-        var entry = corkReq.entry;
-        corkReq.entry = null;
-        while (entry) {
-          var cb2 = entry.callback;
-          state.pendingcb--;
-          cb2(err);
-          entry = entry.next;
-        }
-        state.corkedRequestsFree.next = corkReq;
-      }
-      Object.defineProperty(Writable.prototype, "destroyed", {
-        get: function() {
-          if (this._writableState === void 0) {
-            return false;
-          }
-          return this._writableState.destroyed;
-        },
-        set: function(value) {
-          if (!this._writableState) {
-            return;
-          }
-          this._writableState.destroyed = value;
-        }
-      });
-      Writable.prototype.destroy = destroyImpl.destroy;
-      Writable.prototype._undestroy = destroyImpl.undestroy;
-      Writable.prototype._destroy = function(err, cb2) {
-        this.end();
-        cb2(err);
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_duplex.js
-  var require_stream_duplex3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var pna = require_process_nextick_args();
-      var objectKeys = Object.keys || function(obj) {
-        var keys2 = [];
-        for (var key in obj) {
-          keys2.push(key);
-        }
-        return keys2;
-      };
-      module.exports = Duplex;
-      var util = Object.create(require_util2());
-      util.inherits = require_inherits_browser();
-      var Readable = require_stream_readable3();
-      var Writable = require_stream_writable3();
-      util.inherits(Duplex, Readable);
-      {
-        keys = objectKeys(Writable.prototype);
-        for (v2 = 0; v2 < keys.length; v2++) {
-          method = keys[v2];
-          if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
-        }
-      }
-      var keys;
-      var method;
-      var v2;
-      function Duplex(options) {
-        if (!(this instanceof Duplex)) return new Duplex(options);
-        Readable.call(this, options);
-        Writable.call(this, options);
-        if (options && options.readable === false) this.readable = false;
-        if (options && options.writable === false) this.writable = false;
-        this.allowHalfOpen = true;
-        if (options && options.allowHalfOpen === false) this.allowHalfOpen = false;
-        this.once("end", onend);
-      }
-      Object.defineProperty(Duplex.prototype, "writableHighWaterMark", {
-        // making it explicit this property is not enumerable
-        // because otherwise some prototype manipulation in
-        // userland will fail
-        enumerable: false,
-        get: function() {
-          return this._writableState.highWaterMark;
-        }
-      });
-      function onend() {
-        if (this.allowHalfOpen || this._writableState.ended) return;
-        pna.nextTick(onEndNT, this);
-      }
-      function onEndNT(self2) {
-        self2.end();
-      }
-      Object.defineProperty(Duplex.prototype, "destroyed", {
-        get: function() {
-          if (this._readableState === void 0 || this._writableState === void 0) {
-            return false;
-          }
-          return this._readableState.destroyed && this._writableState.destroyed;
-        },
-        set: function(value) {
-          if (this._readableState === void 0 || this._writableState === void 0) {
-            return;
-          }
-          this._readableState.destroyed = value;
-          this._writableState.destroyed = value;
-        }
-      });
-      Duplex.prototype._destroy = function(err, cb2) {
-        this.push(null);
-        this.end();
-        pna.nextTick(cb2, err);
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/string_decoder/node_modules/safe-buffer/index.js
-  var require_safe_buffer5 = __commonJS({
-    "node_modules/browserify-sign/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
-      function copyProps(src, dst) {
-        for (var key in src) {
-          dst[key] = src[key];
-        }
-      }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
-        module.exports = buffer;
-      } else {
-        copyProps(buffer, exports);
-        exports.Buffer = SafeBuffer;
-      }
-      function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
-      }
-      copyProps(Buffer3, SafeBuffer);
-      SafeBuffer.from = function(arg, encodingOrOffset, length) {
-        if (typeof arg === "number") {
-          throw new TypeError("Argument must not be a number");
-        }
-        return Buffer3(arg, encodingOrOffset, length);
-      };
-      SafeBuffer.alloc = function(size, fill, encoding) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        var buf = Buffer3(size);
-        if (fill !== void 0) {
-          if (typeof encoding === "string") {
-            buf.fill(fill, encoding);
-          } else {
-            buf.fill(fill);
-          }
-        } else {
-          buf.fill(0);
-        }
-        return buf;
-      };
-      SafeBuffer.allocUnsafe = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return Buffer3(size);
-      };
-      SafeBuffer.allocUnsafeSlow = function(size) {
-        if (typeof size !== "number") {
-          throw new TypeError("Argument must be a number");
-        }
-        return buffer.SlowBuffer(size);
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/string_decoder/lib/string_decoder.js
-  var require_string_decoder3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/string_decoder/lib/string_decoder.js"(exports) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer5().Buffer;
-      var isEncoding = Buffer3.isEncoding || function(encoding) {
-        encoding = "" + encoding;
-        switch (encoding && encoding.toLowerCase()) {
-          case "hex":
-          case "utf8":
-          case "utf-8":
-          case "ascii":
-          case "binary":
-          case "base64":
-          case "ucs2":
-          case "ucs-2":
-          case "utf16le":
-          case "utf-16le":
-          case "raw":
-            return true;
-          default:
-            return false;
-        }
-      };
-      function _normalizeEncoding(enc) {
-        if (!enc) return "utf8";
-        var retried;
-        while (true) {
-          switch (enc) {
-            case "utf8":
-            case "utf-8":
-              return "utf8";
-            case "ucs2":
-            case "ucs-2":
-            case "utf16le":
-            case "utf-16le":
-              return "utf16le";
-            case "latin1":
-            case "binary":
-              return "latin1";
-            case "base64":
-            case "ascii":
-            case "hex":
-              return enc;
-            default:
-              if (retried) return;
-              enc = ("" + enc).toLowerCase();
-              retried = true;
-          }
-        }
-      }
-      function normalizeEncoding(enc) {
-        var nenc = _normalizeEncoding(enc);
-        if (typeof nenc !== "string" && (Buffer3.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
-        return nenc || enc;
-      }
-      exports.StringDecoder = StringDecoder;
-      function StringDecoder(encoding) {
-        this.encoding = normalizeEncoding(encoding);
-        var nb;
-        switch (this.encoding) {
-          case "utf16le":
-            this.text = utf16Text;
-            this.end = utf16End;
-            nb = 4;
-            break;
-          case "utf8":
-            this.fillLast = utf8FillLast;
-            nb = 4;
-            break;
-          case "base64":
-            this.text = base64Text;
-            this.end = base64End;
-            nb = 3;
-            break;
-          default:
-            this.write = simpleWrite;
-            this.end = simpleEnd;
-            return;
-        }
-        this.lastNeed = 0;
-        this.lastTotal = 0;
-        this.lastChar = Buffer3.allocUnsafe(nb);
-      }
-      StringDecoder.prototype.write = function(buf) {
-        if (buf.length === 0) return "";
-        var r2;
-        var i2;
-        if (this.lastNeed) {
-          r2 = this.fillLast(buf);
-          if (r2 === void 0) return "";
-          i2 = this.lastNeed;
-          this.lastNeed = 0;
-        } else {
-          i2 = 0;
-        }
-        if (i2 < buf.length) return r2 ? r2 + this.text(buf, i2) : this.text(buf, i2);
-        return r2 || "";
-      };
-      StringDecoder.prototype.end = utf8End;
-      StringDecoder.prototype.text = utf8Text;
-      StringDecoder.prototype.fillLast = function(buf) {
-        if (this.lastNeed <= buf.length) {
-          buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed);
-          return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-        }
-        buf.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, buf.length);
-        this.lastNeed -= buf.length;
-      };
-      function utf8CheckByte(byte) {
-        if (byte <= 127) return 0;
-        else if (byte >> 5 === 6) return 2;
-        else if (byte >> 4 === 14) return 3;
-        else if (byte >> 3 === 30) return 4;
-        return byte >> 6 === 2 ? -1 : -2;
-      }
-      function utf8CheckIncomplete(self2, buf, i2) {
-        var j2 = buf.length - 1;
-        if (j2 < i2) return 0;
-        var nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) self2.lastNeed = nb - 1;
-          return nb;
-        }
-        if (--j2 < i2 || nb === -2) return 0;
-        nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) self2.lastNeed = nb - 2;
-          return nb;
-        }
-        if (--j2 < i2 || nb === -2) return 0;
-        nb = utf8CheckByte(buf[j2]);
-        if (nb >= 0) {
-          if (nb > 0) {
-            if (nb === 2) nb = 0;
-            else self2.lastNeed = nb - 3;
-          }
-          return nb;
-        }
-        return 0;
-      }
-      function utf8CheckExtraBytes(self2, buf, p2) {
-        if ((buf[0] & 192) !== 128) {
-          self2.lastNeed = 0;
-          return "\uFFFD";
-        }
-        if (self2.lastNeed > 1 && buf.length > 1) {
-          if ((buf[1] & 192) !== 128) {
-            self2.lastNeed = 1;
-            return "\uFFFD";
-          }
-          if (self2.lastNeed > 2 && buf.length > 2) {
-            if ((buf[2] & 192) !== 128) {
-              self2.lastNeed = 2;
-              return "\uFFFD";
-            }
-          }
-        }
-      }
-      function utf8FillLast(buf) {
-        var p2 = this.lastTotal - this.lastNeed;
-        var r2 = utf8CheckExtraBytes(this, buf, p2);
-        if (r2 !== void 0) return r2;
-        if (this.lastNeed <= buf.length) {
-          buf.copy(this.lastChar, p2, 0, this.lastNeed);
-          return this.lastChar.toString(this.encoding, 0, this.lastTotal);
-        }
-        buf.copy(this.lastChar, p2, 0, buf.length);
-        this.lastNeed -= buf.length;
-      }
-      function utf8Text(buf, i2) {
-        var total = utf8CheckIncomplete(this, buf, i2);
-        if (!this.lastNeed) return buf.toString("utf8", i2);
-        this.lastTotal = total;
-        var end = buf.length - (total - this.lastNeed);
-        buf.copy(this.lastChar, 0, end);
-        return buf.toString("utf8", i2, end);
-      }
-      function utf8End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) return r2 + "\uFFFD";
-        return r2;
-      }
-      function utf16Text(buf, i2) {
-        if ((buf.length - i2) % 2 === 0) {
-          var r2 = buf.toString("utf16le", i2);
-          if (r2) {
-            var c2 = r2.charCodeAt(r2.length - 1);
-            if (c2 >= 55296 && c2 <= 56319) {
-              this.lastNeed = 2;
-              this.lastTotal = 4;
-              this.lastChar[0] = buf[buf.length - 2];
-              this.lastChar[1] = buf[buf.length - 1];
-              return r2.slice(0, -1);
-            }
-          }
-          return r2;
-        }
-        this.lastNeed = 1;
-        this.lastTotal = 2;
-        this.lastChar[0] = buf[buf.length - 1];
-        return buf.toString("utf16le", i2, buf.length - 1);
-      }
-      function utf16End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) {
-          var end = this.lastTotal - this.lastNeed;
-          return r2 + this.lastChar.toString("utf16le", 0, end);
-        }
-        return r2;
-      }
-      function base64Text(buf, i2) {
-        var n2 = (buf.length - i2) % 3;
-        if (n2 === 0) return buf.toString("base64", i2);
-        this.lastNeed = 3 - n2;
-        this.lastTotal = 3;
-        if (n2 === 1) {
-          this.lastChar[0] = buf[buf.length - 1];
-        } else {
-          this.lastChar[0] = buf[buf.length - 2];
-          this.lastChar[1] = buf[buf.length - 1];
-        }
-        return buf.toString("base64", i2, buf.length - n2);
-      }
-      function base64End(buf) {
-        var r2 = buf && buf.length ? this.write(buf) : "";
-        if (this.lastNeed) return r2 + this.lastChar.toString("base64", 0, 3 - this.lastNeed);
-        return r2;
-      }
-      function simpleWrite(buf) {
-        return buf.toString(this.encoding);
-      }
-      function simpleEnd(buf) {
-        return buf && buf.length ? this.write(buf) : "";
-      }
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_readable.js
-  var require_stream_readable3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      var pna = require_process_nextick_args();
-      module.exports = Readable;
-      var isArray = require_isarray3();
-      var Duplex;
-      Readable.ReadableState = ReadableState;
-      var EE = require_events().EventEmitter;
-      var EElistenerCount = function(emitter, type) {
-        return emitter.listeners(type).length;
-      };
-      var Stream = require_stream_browser3();
-      var Buffer3 = require_safe_buffer4().Buffer;
-      var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
-      };
-      function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
-      }
-      function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
-      }
-      var util = Object.create(require_util2());
-      util.inherits = require_inherits_browser();
-      var debugUtil = require_util();
-      var debug = void 0;
-      if (debugUtil && debugUtil.debuglog) {
-        debug = debugUtil.debuglog("stream");
-      } else {
-        debug = function() {
-        };
-      }
-      var BufferList = require_BufferList2();
-      var destroyImpl = require_destroy3();
-      var StringDecoder;
-      util.inherits(Readable, Stream);
-      var kProxyEvents = ["error", "close", "destroy", "pause", "resume"];
-      function prependListener(emitter, event, fn) {
-        if (typeof emitter.prependListener === "function") return emitter.prependListener(event, fn);
-        if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);
-        else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);
-        else emitter._events[event] = [fn, emitter._events[event]];
-      }
-      function ReadableState(options, stream) {
-        Duplex = Duplex || require_stream_duplex3();
-        options = options || {};
-        var isDuplex = stream instanceof Duplex;
-        this.objectMode = !!options.objectMode;
-        if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
-        var hwm = options.highWaterMark;
-        var readableHwm = options.readableHighWaterMark;
-        var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-        if (hwm || hwm === 0) this.highWaterMark = hwm;
-        else if (isDuplex && (readableHwm || readableHwm === 0)) this.highWaterMark = readableHwm;
-        else this.highWaterMark = defaultHwm;
-        this.highWaterMark = Math.floor(this.highWaterMark);
-        this.buffer = new BufferList();
-        this.length = 0;
-        this.pipes = null;
-        this.pipesCount = 0;
-        this.flowing = null;
-        this.ended = false;
-        this.endEmitted = false;
-        this.reading = false;
-        this.sync = true;
-        this.needReadable = false;
-        this.emittedReadable = false;
-        this.readableListening = false;
-        this.resumeScheduled = false;
-        this.destroyed = false;
-        this.defaultEncoding = options.defaultEncoding || "utf8";
-        this.awaitDrain = 0;
-        this.readingMore = false;
-        this.decoder = null;
-        this.encoding = null;
-        if (options.encoding) {
-          if (!StringDecoder) StringDecoder = require_string_decoder3().StringDecoder;
-          this.decoder = new StringDecoder(options.encoding);
-          this.encoding = options.encoding;
-        }
-      }
-      function Readable(options) {
-        Duplex = Duplex || require_stream_duplex3();
-        if (!(this instanceof Readable)) return new Readable(options);
-        this._readableState = new ReadableState(options, this);
-        this.readable = true;
-        if (options) {
-          if (typeof options.read === "function") this._read = options.read;
-          if (typeof options.destroy === "function") this._destroy = options.destroy;
-        }
-        Stream.call(this);
-      }
-      Object.defineProperty(Readable.prototype, "destroyed", {
-        get: function() {
-          if (this._readableState === void 0) {
-            return false;
-          }
-          return this._readableState.destroyed;
-        },
-        set: function(value) {
-          if (!this._readableState) {
-            return;
-          }
-          this._readableState.destroyed = value;
-        }
-      });
-      Readable.prototype.destroy = destroyImpl.destroy;
-      Readable.prototype._undestroy = destroyImpl.undestroy;
-      Readable.prototype._destroy = function(err, cb2) {
-        this.push(null);
-        cb2(err);
-      };
-      Readable.prototype.push = function(chunk, encoding) {
-        var state = this._readableState;
-        var skipChunkCheck;
-        if (!state.objectMode) {
-          if (typeof chunk === "string") {
-            encoding = encoding || state.defaultEncoding;
-            if (encoding !== state.encoding) {
-              chunk = Buffer3.from(chunk, encoding);
-              encoding = "";
-            }
-            skipChunkCheck = true;
-          }
-        } else {
-          skipChunkCheck = true;
-        }
-        return readableAddChunk(this, chunk, encoding, false, skipChunkCheck);
-      };
-      Readable.prototype.unshift = function(chunk) {
-        return readableAddChunk(this, chunk, null, true, false);
-      };
-      function readableAddChunk(stream, chunk, encoding, addToFront, skipChunkCheck) {
-        var state = stream._readableState;
-        if (chunk === null) {
-          state.reading = false;
-          onEofChunk(stream, state);
-        } else {
-          var er;
-          if (!skipChunkCheck) er = chunkInvalid(state, chunk);
-          if (er) {
-            stream.emit("error", er);
-          } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
-              chunk = _uint8ArrayToBuffer(chunk);
-            }
-            if (addToFront) {
-              if (state.endEmitted) stream.emit("error", new Error("stream.unshift() after end event"));
-              else addChunk(stream, state, chunk, true);
-            } else if (state.ended) {
-              stream.emit("error", new Error("stream.push() after EOF"));
-            } else {
-              state.reading = false;
-              if (state.decoder && !encoding) {
-                chunk = state.decoder.write(chunk);
-                if (state.objectMode || chunk.length !== 0) addChunk(stream, state, chunk, false);
-                else maybeReadMore(stream, state);
-              } else {
-                addChunk(stream, state, chunk, false);
-              }
-            }
-          } else if (!addToFront) {
-            state.reading = false;
-          }
-        }
-        return needMoreData(state);
-      }
-      function addChunk(stream, state, chunk, addToFront) {
-        if (state.flowing && state.length === 0 && !state.sync) {
-          stream.emit("data", chunk);
-          stream.read(0);
-        } else {
-          state.length += state.objectMode ? 1 : chunk.length;
-          if (addToFront) state.buffer.unshift(chunk);
-          else state.buffer.push(chunk);
-          if (state.needReadable) emitReadable(stream);
-        }
-        maybeReadMore(stream, state);
-      }
-      function chunkInvalid(state, chunk) {
-        var er;
-        if (!_isUint8Array(chunk) && typeof chunk !== "string" && chunk !== void 0 && !state.objectMode) {
-          er = new TypeError("Invalid non-string/buffer chunk");
-        }
-        return er;
-      }
-      function needMoreData(state) {
-        return !state.ended && (state.needReadable || state.length < state.highWaterMark || state.length === 0);
-      }
-      Readable.prototype.isPaused = function() {
-        return this._readableState.flowing === false;
-      };
-      Readable.prototype.setEncoding = function(enc) {
-        if (!StringDecoder) StringDecoder = require_string_decoder3().StringDecoder;
-        this._readableState.decoder = new StringDecoder(enc);
-        this._readableState.encoding = enc;
-        return this;
-      };
-      var MAX_HWM = 8388608;
-      function computeNewHighWaterMark(n2) {
-        if (n2 >= MAX_HWM) {
-          n2 = MAX_HWM;
-        } else {
-          n2--;
-          n2 |= n2 >>> 1;
-          n2 |= n2 >>> 2;
-          n2 |= n2 >>> 4;
-          n2 |= n2 >>> 8;
-          n2 |= n2 >>> 16;
-          n2++;
-        }
-        return n2;
-      }
-      function howMuchToRead(n2, state) {
-        if (n2 <= 0 || state.length === 0 && state.ended) return 0;
-        if (state.objectMode) return 1;
-        if (n2 !== n2) {
-          if (state.flowing && state.length) return state.buffer.head.data.length;
-          else return state.length;
-        }
-        if (n2 > state.highWaterMark) state.highWaterMark = computeNewHighWaterMark(n2);
-        if (n2 <= state.length) return n2;
-        if (!state.ended) {
-          state.needReadable = true;
-          return 0;
-        }
-        return state.length;
-      }
-      Readable.prototype.read = function(n2) {
-        debug("read", n2);
-        n2 = parseInt(n2, 10);
-        var state = this._readableState;
-        var nOrig = n2;
-        if (n2 !== 0) state.emittedReadable = false;
-        if (n2 === 0 && state.needReadable && (state.length >= state.highWaterMark || state.ended)) {
-          debug("read: emitReadable", state.length, state.ended);
-          if (state.length === 0 && state.ended) endReadable(this);
-          else emitReadable(this);
-          return null;
-        }
-        n2 = howMuchToRead(n2, state);
-        if (n2 === 0 && state.ended) {
-          if (state.length === 0) endReadable(this);
-          return null;
-        }
-        var doRead = state.needReadable;
-        debug("need readable", doRead);
-        if (state.length === 0 || state.length - n2 < state.highWaterMark) {
-          doRead = true;
-          debug("length less than watermark", doRead);
-        }
-        if (state.ended || state.reading) {
-          doRead = false;
-          debug("reading or ended", doRead);
-        } else if (doRead) {
-          debug("do read");
-          state.reading = true;
-          state.sync = true;
-          if (state.length === 0) state.needReadable = true;
-          this._read(state.highWaterMark);
-          state.sync = false;
-          if (!state.reading) n2 = howMuchToRead(nOrig, state);
-        }
-        var ret;
-        if (n2 > 0) ret = fromList(n2, state);
-        else ret = null;
-        if (ret === null) {
-          state.needReadable = true;
-          n2 = 0;
-        } else {
-          state.length -= n2;
-        }
-        if (state.length === 0) {
-          if (!state.ended) state.needReadable = true;
-          if (nOrig !== n2 && state.ended) endReadable(this);
-        }
-        if (ret !== null) this.emit("data", ret);
-        return ret;
-      };
-      function onEofChunk(stream, state) {
-        if (state.ended) return;
-        if (state.decoder) {
-          var chunk = state.decoder.end();
-          if (chunk && chunk.length) {
-            state.buffer.push(chunk);
-            state.length += state.objectMode ? 1 : chunk.length;
-          }
-        }
-        state.ended = true;
-        emitReadable(stream);
-      }
-      function emitReadable(stream) {
-        var state = stream._readableState;
-        state.needReadable = false;
-        if (!state.emittedReadable) {
-          debug("emitReadable", state.flowing);
-          state.emittedReadable = true;
-          if (state.sync) pna.nextTick(emitReadable_, stream);
-          else emitReadable_(stream);
-        }
-      }
-      function emitReadable_(stream) {
-        debug("emit readable");
-        stream.emit("readable");
-        flow(stream);
-      }
-      function maybeReadMore(stream, state) {
-        if (!state.readingMore) {
-          state.readingMore = true;
-          pna.nextTick(maybeReadMore_, stream, state);
-        }
-      }
-      function maybeReadMore_(stream, state) {
-        var len = state.length;
-        while (!state.reading && !state.flowing && !state.ended && state.length < state.highWaterMark) {
-          debug("maybeReadMore read 0");
-          stream.read(0);
-          if (len === state.length)
-            break;
-          else len = state.length;
-        }
-        state.readingMore = false;
-      }
-      Readable.prototype._read = function(n2) {
-        this.emit("error", new Error("_read() is not implemented"));
-      };
-      Readable.prototype.pipe = function(dest, pipeOpts) {
-        var src = this;
-        var state = this._readableState;
-        switch (state.pipesCount) {
-          case 0:
-            state.pipes = dest;
-            break;
-          case 1:
-            state.pipes = [state.pipes, dest];
-            break;
-          default:
-            state.pipes.push(dest);
-            break;
-        }
-        state.pipesCount += 1;
-        debug("pipe count=%d opts=%j", state.pipesCount, pipeOpts);
-        var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
-        var endFn = doEnd ? onend : unpipe;
-        if (state.endEmitted) pna.nextTick(endFn);
-        else src.once("end", endFn);
-        dest.on("unpipe", onunpipe);
-        function onunpipe(readable, unpipeInfo) {
-          debug("onunpipe");
-          if (readable === src) {
-            if (unpipeInfo && unpipeInfo.hasUnpiped === false) {
-              unpipeInfo.hasUnpiped = true;
-              cleanup();
-            }
-          }
-        }
-        function onend() {
-          debug("onend");
-          dest.end();
-        }
-        var ondrain = pipeOnDrain(src);
-        dest.on("drain", ondrain);
-        var cleanedUp = false;
-        function cleanup() {
-          debug("cleanup");
-          dest.removeListener("close", onclose);
-          dest.removeListener("finish", onfinish);
-          dest.removeListener("drain", ondrain);
-          dest.removeListener("error", onerror);
-          dest.removeListener("unpipe", onunpipe);
-          src.removeListener("end", onend);
-          src.removeListener("end", unpipe);
-          src.removeListener("data", ondata);
-          cleanedUp = true;
-          if (state.awaitDrain && (!dest._writableState || dest._writableState.needDrain)) ondrain();
-        }
-        var increasedAwaitDrain = false;
-        src.on("data", ondata);
-        function ondata(chunk) {
-          debug("ondata");
-          increasedAwaitDrain = false;
-          var ret = dest.write(chunk);
-          if (false === ret && !increasedAwaitDrain) {
-            if ((state.pipesCount === 1 && state.pipes === dest || state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1) && !cleanedUp) {
-              debug("false write response, pause", state.awaitDrain);
-              state.awaitDrain++;
-              increasedAwaitDrain = true;
-            }
-            src.pause();
-          }
-        }
-        function onerror(er) {
-          debug("onerror", er);
-          unpipe();
-          dest.removeListener("error", onerror);
-          if (EElistenerCount(dest, "error") === 0) dest.emit("error", er);
-        }
-        prependListener(dest, "error", onerror);
-        function onclose() {
-          dest.removeListener("finish", onfinish);
-          unpipe();
-        }
-        dest.once("close", onclose);
-        function onfinish() {
-          debug("onfinish");
-          dest.removeListener("close", onclose);
-          unpipe();
-        }
-        dest.once("finish", onfinish);
-        function unpipe() {
-          debug("unpipe");
-          src.unpipe(dest);
-        }
-        dest.emit("pipe", src);
-        if (!state.flowing) {
-          debug("pipe resume");
-          src.resume();
-        }
-        return dest;
-      };
-      function pipeOnDrain(src) {
-        return function() {
-          var state = src._readableState;
-          debug("pipeOnDrain", state.awaitDrain);
-          if (state.awaitDrain) state.awaitDrain--;
-          if (state.awaitDrain === 0 && EElistenerCount(src, "data")) {
-            state.flowing = true;
-            flow(src);
-          }
-        };
-      }
-      Readable.prototype.unpipe = function(dest) {
-        var state = this._readableState;
-        var unpipeInfo = { hasUnpiped: false };
-        if (state.pipesCount === 0) return this;
-        if (state.pipesCount === 1) {
-          if (dest && dest !== state.pipes) return this;
-          if (!dest) dest = state.pipes;
-          state.pipes = null;
-          state.pipesCount = 0;
-          state.flowing = false;
-          if (dest) dest.emit("unpipe", this, unpipeInfo);
-          return this;
-        }
-        if (!dest) {
-          var dests = state.pipes;
-          var len = state.pipesCount;
-          state.pipes = null;
-          state.pipesCount = 0;
-          state.flowing = false;
-          for (var i2 = 0; i2 < len; i2++) {
-            dests[i2].emit("unpipe", this, { hasUnpiped: false });
-          }
-          return this;
-        }
-        var index = indexOf(state.pipes, dest);
-        if (index === -1) return this;
-        state.pipes.splice(index, 1);
-        state.pipesCount -= 1;
-        if (state.pipesCount === 1) state.pipes = state.pipes[0];
-        dest.emit("unpipe", this, unpipeInfo);
-        return this;
-      };
-      Readable.prototype.on = function(ev, fn) {
-        var res = Stream.prototype.on.call(this, ev, fn);
-        if (ev === "data") {
-          if (this._readableState.flowing !== false) this.resume();
-        } else if (ev === "readable") {
-          var state = this._readableState;
-          if (!state.endEmitted && !state.readableListening) {
-            state.readableListening = state.needReadable = true;
-            state.emittedReadable = false;
-            if (!state.reading) {
-              pna.nextTick(nReadingNextTick, this);
-            } else if (state.length) {
-              emitReadable(this);
-            }
-          }
-        }
-        return res;
-      };
-      Readable.prototype.addListener = Readable.prototype.on;
-      function nReadingNextTick(self2) {
-        debug("readable nexttick read 0");
-        self2.read(0);
-      }
-      Readable.prototype.resume = function() {
-        var state = this._readableState;
-        if (!state.flowing) {
-          debug("resume");
-          state.flowing = true;
-          resume(this, state);
-        }
-        return this;
-      };
-      function resume(stream, state) {
-        if (!state.resumeScheduled) {
-          state.resumeScheduled = true;
-          pna.nextTick(resume_, stream, state);
-        }
-      }
-      function resume_(stream, state) {
-        if (!state.reading) {
-          debug("resume read 0");
-          stream.read(0);
-        }
-        state.resumeScheduled = false;
-        state.awaitDrain = 0;
-        stream.emit("resume");
-        flow(stream);
-        if (state.flowing && !state.reading) stream.read(0);
-      }
-      Readable.prototype.pause = function() {
-        debug("call pause flowing=%j", this._readableState.flowing);
-        if (false !== this._readableState.flowing) {
-          debug("pause");
-          this._readableState.flowing = false;
-          this.emit("pause");
-        }
-        return this;
-      };
-      function flow(stream) {
-        var state = stream._readableState;
-        debug("flow", state.flowing);
-        while (state.flowing && stream.read() !== null) {
-        }
-      }
-      Readable.prototype.wrap = function(stream) {
-        var _this = this;
-        var state = this._readableState;
-        var paused = false;
-        stream.on("end", function() {
-          debug("wrapped end");
-          if (state.decoder && !state.ended) {
-            var chunk = state.decoder.end();
-            if (chunk && chunk.length) _this.push(chunk);
-          }
-          _this.push(null);
-        });
-        stream.on("data", function(chunk) {
-          debug("wrapped data");
-          if (state.decoder) chunk = state.decoder.write(chunk);
-          if (state.objectMode && (chunk === null || chunk === void 0)) return;
-          else if (!state.objectMode && (!chunk || !chunk.length)) return;
-          var ret = _this.push(chunk);
-          if (!ret) {
-            paused = true;
-            stream.pause();
-          }
-        });
-        for (var i2 in stream) {
-          if (this[i2] === void 0 && typeof stream[i2] === "function") {
-            this[i2] = /* @__PURE__ */ (function(method) {
-              return function() {
-                return stream[method].apply(stream, arguments);
-              };
-            })(i2);
-          }
-        }
-        for (var n2 = 0; n2 < kProxyEvents.length; n2++) {
-          stream.on(kProxyEvents[n2], this.emit.bind(this, kProxyEvents[n2]));
-        }
-        this._read = function(n3) {
-          debug("wrapped _read", n3);
-          if (paused) {
-            paused = false;
-            stream.resume();
-          }
-        };
-        return this;
-      };
-      Object.defineProperty(Readable.prototype, "readableHighWaterMark", {
-        // making it explicit this property is not enumerable
-        // because otherwise some prototype manipulation in
-        // userland will fail
-        enumerable: false,
-        get: function() {
-          return this._readableState.highWaterMark;
-        }
-      });
-      Readable._fromList = fromList;
-      function fromList(n2, state) {
-        if (state.length === 0) return null;
-        var ret;
-        if (state.objectMode) ret = state.buffer.shift();
-        else if (!n2 || n2 >= state.length) {
-          if (state.decoder) ret = state.buffer.join("");
-          else if (state.buffer.length === 1) ret = state.buffer.head.data;
-          else ret = state.buffer.concat(state.length);
-          state.buffer.clear();
-        } else {
-          ret = fromListPartial(n2, state.buffer, state.decoder);
-        }
-        return ret;
-      }
-      function fromListPartial(n2, list, hasStrings) {
-        var ret;
-        if (n2 < list.head.data.length) {
-          ret = list.head.data.slice(0, n2);
-          list.head.data = list.head.data.slice(n2);
-        } else if (n2 === list.head.data.length) {
-          ret = list.shift();
-        } else {
-          ret = hasStrings ? copyFromBufferString(n2, list) : copyFromBuffer(n2, list);
-        }
-        return ret;
-      }
-      function copyFromBufferString(n2, list) {
-        var p2 = list.head;
-        var c2 = 1;
-        var ret = p2.data;
-        n2 -= ret.length;
-        while (p2 = p2.next) {
-          var str = p2.data;
-          var nb = n2 > str.length ? str.length : n2;
-          if (nb === str.length) ret += str;
-          else ret += str.slice(0, n2);
-          n2 -= nb;
-          if (n2 === 0) {
-            if (nb === str.length) {
-              ++c2;
-              if (p2.next) list.head = p2.next;
-              else list.head = list.tail = null;
-            } else {
-              list.head = p2;
-              p2.data = str.slice(nb);
-            }
-            break;
-          }
-          ++c2;
-        }
-        list.length -= c2;
-        return ret;
-      }
-      function copyFromBuffer(n2, list) {
-        var ret = Buffer3.allocUnsafe(n2);
-        var p2 = list.head;
-        var c2 = 1;
-        p2.data.copy(ret);
-        n2 -= p2.data.length;
-        while (p2 = p2.next) {
-          var buf = p2.data;
-          var nb = n2 > buf.length ? buf.length : n2;
-          buf.copy(ret, ret.length - n2, 0, nb);
-          n2 -= nb;
-          if (n2 === 0) {
-            if (nb === buf.length) {
-              ++c2;
-              if (p2.next) list.head = p2.next;
-              else list.head = list.tail = null;
-            } else {
-              list.head = p2;
-              p2.data = buf.slice(nb);
-            }
-            break;
-          }
-          ++c2;
-        }
-        list.length -= c2;
-        return ret;
-      }
-      function endReadable(stream) {
-        var state = stream._readableState;
-        if (state.length > 0) throw new Error('"endReadable()" called on non-empty stream');
-        if (!state.endEmitted) {
-          state.ended = true;
-          pna.nextTick(endReadableNT, state, stream);
-        }
-      }
-      function endReadableNT(state, stream) {
-        if (!state.endEmitted && state.length === 0) {
-          state.endEmitted = true;
-          stream.readable = false;
-          stream.emit("end");
-        }
-      }
-      function indexOf(xs, x2) {
-        for (var i2 = 0, l2 = xs.length; i2 < l2; i2++) {
-          if (xs[i2] === x2) return i2;
-        }
-        return -1;
-      }
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_transform.js
-  var require_stream_transform3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      module.exports = Transform;
-      var Duplex = require_stream_duplex3();
-      var util = Object.create(require_util2());
-      util.inherits = require_inherits_browser();
-      util.inherits(Transform, Duplex);
-      function afterTransform(er, data) {
-        var ts = this._transformState;
-        ts.transforming = false;
-        var cb2 = ts.writecb;
-        if (!cb2) {
-          return this.emit("error", new Error("write callback called multiple times"));
-        }
-        ts.writechunk = null;
-        ts.writecb = null;
-        if (data != null)
-          this.push(data);
-        cb2(er);
-        var rs = this._readableState;
-        rs.reading = false;
-        if (rs.needReadable || rs.length < rs.highWaterMark) {
-          this._read(rs.highWaterMark);
-        }
-      }
-      function Transform(options) {
-        if (!(this instanceof Transform)) return new Transform(options);
-        Duplex.call(this, options);
-        this._transformState = {
-          afterTransform: afterTransform.bind(this),
-          needTransform: false,
-          transforming: false,
-          writecb: null,
-          writechunk: null,
-          writeencoding: null
-        };
-        this._readableState.needReadable = true;
-        this._readableState.sync = false;
-        if (options) {
-          if (typeof options.transform === "function") this._transform = options.transform;
-          if (typeof options.flush === "function") this._flush = options.flush;
-        }
-        this.on("prefinish", prefinish);
-      }
-      function prefinish() {
-        var _this = this;
-        if (typeof this._flush === "function") {
-          this._flush(function(er, data) {
-            done(_this, er, data);
-          });
-        } else {
-          done(this, null, null);
-        }
-      }
-      Transform.prototype.push = function(chunk, encoding) {
-        this._transformState.needTransform = false;
-        return Duplex.prototype.push.call(this, chunk, encoding);
-      };
-      Transform.prototype._transform = function(chunk, encoding, cb2) {
-        throw new Error("_transform() is not implemented");
-      };
-      Transform.prototype._write = function(chunk, encoding, cb2) {
-        var ts = this._transformState;
-        ts.writecb = cb2;
-        ts.writechunk = chunk;
-        ts.writeencoding = encoding;
-        if (!ts.transforming) {
-          var rs = this._readableState;
-          if (ts.needTransform || rs.needReadable || rs.length < rs.highWaterMark) this._read(rs.highWaterMark);
-        }
-      };
-      Transform.prototype._read = function(n2) {
-        var ts = this._transformState;
-        if (ts.writechunk !== null && ts.writecb && !ts.transforming) {
-          ts.transforming = true;
-          this._transform(ts.writechunk, ts.writeencoding, ts.afterTransform);
-        } else {
-          ts.needTransform = true;
-        }
-      };
-      Transform.prototype._destroy = function(err, cb2) {
-        var _this2 = this;
-        Duplex.prototype._destroy.call(this, err, function(err2) {
-          cb2(err2);
-          _this2.emit("close");
-        });
-      };
-      function done(stream, er, data) {
-        if (er) return stream.emit("error", er);
-        if (data != null)
-          stream.push(data);
-        if (stream._writableState.length) throw new Error("Calling transform done when ws.length != 0");
-        if (stream._transformState.transforming) throw new Error("Calling transform done when still transforming");
-        return stream.push(null);
-      }
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_passthrough.js
-  var require_stream_passthrough3 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
-      "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
-      module.exports = PassThrough;
-      var Transform = require_stream_transform3();
-      var util = Object.create(require_util2());
-      util.inherits = require_inherits_browser();
-      util.inherits(PassThrough, Transform);
-      function PassThrough(options) {
-        if (!(this instanceof PassThrough)) return new PassThrough(options);
-        Transform.call(this, options);
-      }
-      PassThrough.prototype._transform = function(chunk, encoding, cb2) {
-        cb2(null, chunk);
-      };
-    }
-  });
-
-  // node_modules/browserify-sign/node_modules/readable-stream/readable-browser.js
-  var require_readable_browser2 = __commonJS({
-    "node_modules/browserify-sign/node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
-      exports = module.exports = require_stream_readable3();
-      exports.Stream = exports;
-      exports.Readable = exports;
-      exports.Writable = require_stream_writable3();
-      exports.Duplex = require_stream_duplex3();
-      exports.Transform = require_stream_transform3();
-      exports.PassThrough = require_stream_passthrough3();
-    }
-  });
-
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -45537,6 +43442,10 @@
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
           }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
+          }
           return this._strip();
         };
         BN.prototype.maskn = function maskn(bits) {
@@ -46560,7 +44469,7 @@
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser2();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -46661,7 +44570,7 @@
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -48455,6 +46364,10 @@
           if (r2 !== 0) {
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
+          }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
           }
           return this.strip();
         };
@@ -49470,7 +47383,7 @@
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -49530,7 +47443,7 @@
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -49637,7 +47550,7 @@
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -49960,7 +47873,7 @@
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -50659,7 +48572,7 @@
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -50788,7 +48701,7 @@
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -51090,7 +49003,7 @@
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -51103,7 +49016,7 @@
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -51349,7 +49262,7 @@
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -51429,7 +49342,7 @@
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -51476,7 +49389,7 @@
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -51549,7 +49462,7 @@
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -51702,7 +49615,7 @@
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -51739,7 +49652,7 @@
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -52179,7 +50092,7 @@
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -52224,7 +50137,7 @@
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -52237,7 +50150,7 @@
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -52679,7 +50592,7 @@
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -52720,7 +50633,7 @@
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -52739,7 +50652,7 @@
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -53527,7 +51440,7 @@
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -53704,7 +51617,7 @@
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -53799,7 +51712,7 @@
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -53894,7 +51807,7 @@
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -54050,7 +51963,7 @@
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -54258,7 +52171,7 @@
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -54333,7 +52246,7 @@
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -54384,7 +52297,7 @@
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -54473,7 +52386,7 @@
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -54488,7 +52401,7 @@
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -56282,6 +54195,10 @@
           if (r2 !== 0) {
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
+          }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
           }
           return this.strip();
         };
@@ -57296,7 +55213,7 @@
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -57350,7 +55267,7 @@
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -57451,7 +55368,7 @@
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer3 = require_buffer().Buffer;
@@ -57554,7 +55471,7 @@
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -58088,7 +56005,7 @@
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -58100,7 +56017,7 @@
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -58147,7 +56064,7 @@
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -58166,7 +56083,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -58430,7 +56347,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -58476,7 +56393,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -58486,7 +56403,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -58718,7 +56635,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -58742,7 +56659,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -58752,7 +56669,7 @@
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -58767,7 +56684,7 @@
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -58847,7 +56764,7 @@
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -58981,7 +56898,7 @@
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -59019,7 +56936,7 @@
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -59148,7 +57065,7 @@
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
@@ -59303,7 +57220,7 @@
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -59394,10 +57311,10 @@
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
-      var stream = require_readable_browser2();
+      var stream = require_readable_browser();
       var inherits = require_inherits_browser();
       var sign = require_sign2();
       var verify = require_verify();
@@ -59475,7 +57392,7 @@
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -61269,6 +59186,10 @@
           if (r2 !== 0) {
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
+          }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
           }
           return this.strip();
         };
@@ -62283,7 +60204,7 @@
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -62402,7 +60323,7 @@
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
@@ -62426,7 +60347,7 @@
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -62441,7 +60362,7 @@
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -64236,6 +62157,10 @@
             var mask = 67108863 ^ 67108863 >>> r2 << r2;
             this.words[this.length - 1] &= mask;
           }
+          if (this.length === 0) {
+            this.words[0] = 0;
+            this.length = 1;
+          }
           return this.strip();
         };
         BN.prototype.maskn = function maskn(bits) {
@@ -65249,7 +63174,7 @@
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer3 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -65262,7 +63187,7 @@
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser2();
       var createHash4 = require_browser4();
@@ -65355,7 +63280,7 @@
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -65462,7 +63387,7 @@
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -65478,7 +63403,7 @@
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -65581,7 +63506,7 @@
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -65659,7 +63584,7 @@
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -69157,69 +67082,19 @@
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
   var import_polyfills101;
-  var init_deserializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+  var init_getHttpAuthSchemePlugin = __esm({
+    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
       import_polyfills101 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
-  var import_polyfills102;
-  var init_serializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
-      import_polyfills102 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
-  var import_polyfills103, serializerMiddlewareOption;
-  var init_serdePlugin = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
-      import_polyfills103 = __toESM(require_polyfills());
-      serializerMiddlewareOption = {
-        name: "serializerMiddleware",
-        step: "serialize",
-        tags: ["SERIALIZER"],
-        override: true
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-serde/dist-es/index.js
-  var import_polyfills104;
-  var init_dist_es5 = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
-      import_polyfills104 = __toESM(require_polyfills());
-      init_deserializerMiddleware();
-      init_serdePlugin();
-      init_serializerMiddleware();
-    }
-  });
-
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
-  var import_polyfills105, httpAuthSchemeMiddlewareOptions;
-  var init_getHttpAuthSchemePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
-      import_polyfills105 = __toESM(require_polyfills());
-      init_dist_es5();
-      httpAuthSchemeMiddlewareOptions = {
-        step: "serialize",
-        tags: ["HTTP_AUTH_SCHEME"],
-        name: "httpAuthSchemeMiddleware",
-        override: true,
-        relation: "before",
-        toMiddleware: serializerMiddlewareOption.name
-      };
-    }
-  });
-
   // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
-  var import_polyfills106;
+  var import_polyfills102;
   var init_middleware_http_auth_scheme = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
-      import_polyfills106 = __toESM(require_polyfills());
+      import_polyfills102 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       init_getHttpAuthSchemeEndpointRuleSetPlugin();
       init_getHttpAuthSchemePlugin();
@@ -69227,10 +67102,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
-  var import_polyfills107, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
+  var import_polyfills103, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
-      import_polyfills107 = __toESM(require_polyfills());
+      import_polyfills103 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
       defaultErrorHandler = (signingProperties) => (error) => {
@@ -69259,10 +67134,10 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
-  var import_polyfills108, httpSigningMiddlewareOptions, getHttpSigningPlugin;
+  var import_polyfills104, httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
-      import_polyfills108 = __toESM(require_polyfills());
+      import_polyfills104 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       httpSigningMiddlewareOptions = {
         step: "finalizeRequest",
@@ -69282,20 +67157,20 @@
   });
 
   // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
-  var import_polyfills109;
+  var import_polyfills105;
   var init_middleware_http_signing = __esm({
     "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
-      import_polyfills109 = __toESM(require_polyfills());
+      import_polyfills105 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       init_getHttpSigningMiddleware();
     }
   });
 
   // node_modules/@smithy/core/dist-es/normalizeProvider.js
-  var import_polyfills110, normalizeProvider2;
+  var import_polyfills106, normalizeProvider2;
   var init_normalizeProvider2 = __esm({
     "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
-      import_polyfills110 = __toESM(require_polyfills());
+      import_polyfills106 = __toESM(require_polyfills());
       normalizeProvider2 = (input) => {
         if (typeof input === "function")
           return input;
@@ -69330,10 +67205,10 @@
       return void 0;
     };
   }
-  var import_polyfills111, makePagedClientRequest, get;
+  var import_polyfills107, makePagedClientRequest, get;
   var init_createPaginator = __esm({
     "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
-      import_polyfills111 = __toESM(require_polyfills());
+      import_polyfills107 = __toESM(require_polyfills());
       makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
         let command = new CommandCtor(input);
         command = withCommand(command) ?? command;
@@ -69354,10 +67229,10 @@
   });
 
   // node_modules/@smithy/util-base64/dist-es/constants.browser.js
-  var import_polyfills112, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
+  var import_polyfills108, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
-      import_polyfills112 = __toESM(require_polyfills());
+      import_polyfills108 = __toESM(require_polyfills());
       chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
       alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
         acc[c2] = Number(i2);
@@ -69371,10 +67246,10 @@
   });
 
   // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
-  var import_polyfills113, fromBase64;
+  var import_polyfills109, fromBase64;
   var init_fromBase64_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
-      import_polyfills113 = __toESM(require_polyfills());
+      import_polyfills109 = __toESM(require_polyfills());
       init_constants_browser();
       fromBase64 = (input) => {
         let totalByteLength = input.length / 4 * 3;
@@ -69413,19 +67288,19 @@
   });
 
   // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-  var import_polyfills114, fromUtf8;
+  var import_polyfills110, fromUtf8;
   var init_fromUtf8_browser = __esm({
     "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-      import_polyfills114 = __toESM(require_polyfills());
+      import_polyfills110 = __toESM(require_polyfills());
       fromUtf8 = (input) => new TextEncoder().encode(input);
     }
   });
 
   // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-  var import_polyfills115, toUint8Array;
+  var import_polyfills111, toUint8Array;
   var init_toUint8Array = __esm({
     "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-      import_polyfills115 = __toESM(require_polyfills());
+      import_polyfills111 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       toUint8Array = (data) => {
         if (typeof data === "string") {
@@ -69440,10 +67315,10 @@
   });
 
   // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-  var import_polyfills116, toUtf8;
+  var import_polyfills112, toUtf8;
   var init_toUtf8_browser = __esm({
     "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-      import_polyfills116 = __toESM(require_polyfills());
+      import_polyfills112 = __toESM(require_polyfills());
       toUtf8 = (input) => {
         if (typeof input === "string") {
           return input;
@@ -69457,10 +67332,10 @@
   });
 
   // node_modules/@smithy/util-utf8/dist-es/index.js
-  var import_polyfills117;
-  var init_dist_es6 = __esm({
+  var import_polyfills113;
+  var init_dist_es5 = __esm({
     "node_modules/@smithy/util-utf8/dist-es/index.js"() {
-      import_polyfills117 = __toESM(require_polyfills());
+      import_polyfills113 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       init_toUint8Array();
       init_toUtf8_browser();
@@ -69498,32 +67373,32 @@
     }
     return str;
   }
-  var import_polyfills118;
+  var import_polyfills114;
   var init_toBase64_browser = __esm({
     "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
-      import_polyfills118 = __toESM(require_polyfills());
-      init_dist_es6();
+      import_polyfills114 = __toESM(require_polyfills());
+      init_dist_es5();
       init_constants_browser();
     }
   });
 
   // node_modules/@smithy/util-base64/dist-es/index.js
-  var import_polyfills119;
-  var init_dist_es7 = __esm({
+  var import_polyfills115;
+  var init_dist_es6 = __esm({
     "node_modules/@smithy/util-base64/dist-es/index.js"() {
-      import_polyfills119 = __toESM(require_polyfills());
+      import_polyfills115 = __toESM(require_polyfills());
       init_fromBase64_browser();
       init_toBase64_browser();
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
-  var import_polyfills120, Uint8ArrayBlobAdapter;
+  var import_polyfills116, Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
     "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
-      import_polyfills120 = __toESM(require_polyfills());
-      init_dist_es7();
+      import_polyfills116 = __toESM(require_polyfills());
       init_dist_es6();
+      init_dist_es5();
       Uint8ArrayBlobAdapter = class _Uint8ArrayBlobAdapter extends Uint8Array {
         static fromString(source, encoding = "utf-8") {
           if (typeof source === "string") {
@@ -69549,10 +67424,10 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
-  var import_polyfills121, ReadableStreamRef, ChecksumStream;
+  var import_polyfills117, ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
-      import_polyfills121 = __toESM(require_polyfills());
+      import_polyfills117 = __toESM(require_polyfills());
       ReadableStreamRef = typeof ReadableStream === "function" ? ReadableStream : function() {
       };
       ChecksumStream = class extends ReadableStreamRef {
@@ -69561,20 +67436,20 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
-  var import_polyfills122, isReadableStream;
+  var import_polyfills118, isReadableStream;
   var init_stream_type_check = __esm({
     "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
-      import_polyfills122 = __toESM(require_polyfills());
+      import_polyfills118 = __toESM(require_polyfills());
       isReadableStream = (stream) => typeof ReadableStream === "function" && (stream?.constructor?.name === ReadableStream.name || stream instanceof ReadableStream);
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
-  var import_polyfills123, createChecksumStream;
+  var import_polyfills119, createChecksumStream;
   var init_createChecksumStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
-      import_polyfills123 = __toESM(require_polyfills());
-      init_dist_es7();
+      import_polyfills119 = __toESM(require_polyfills());
+      init_dist_es6();
       init_stream_type_check();
       init_ChecksumStream_browser();
       createChecksumStream = ({ expectedChecksum, checksum, source, checksumSourceLocation, base64Encoder }) => {
@@ -69612,10 +67487,10 @@
   });
 
   // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
-  var import_polyfills124, ByteArrayCollector;
+  var import_polyfills120, ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
     "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
-      import_polyfills124 = __toESM(require_polyfills());
+      import_polyfills120 = __toESM(require_polyfills());
       ByteArrayCollector = class {
         allocByteArray;
         byteLength = 0;
@@ -69742,20 +67617,20 @@
     }
     return -1;
   }
-  var import_polyfills125, createBufferedReadable;
+  var import_polyfills121, createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
     "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
-      import_polyfills125 = __toESM(require_polyfills());
+      import_polyfills121 = __toESM(require_polyfills());
       init_ByteArrayCollector();
       createBufferedReadable = createBufferedReadableStream;
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
-  var import_polyfills126, getAwsChunkedEncodingStream;
+  var import_polyfills122, getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
-      import_polyfills126 = __toESM(require_polyfills());
+      import_polyfills122 = __toESM(require_polyfills());
       getAwsChunkedEncodingStream = (readableStream, options) => {
         const { base64Encoder, bodyLengthChecker, checksumAlgorithmFn, checksumLocationName, streamHasher } = options;
         const checksumRequired = base64Encoder !== void 0 && bodyLengthChecker !== void 0 && checksumAlgorithmFn !== void 0 && checksumLocationName !== void 0 && streamHasher !== void 0;
@@ -69817,36 +67692,36 @@ ${value}\r
     }
     return collected;
   }
-  var import_polyfills127;
+  var import_polyfills123;
   var init_headStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
-      import_polyfills127 = __toESM(require_polyfills());
+      import_polyfills123 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
-  var import_polyfills128, escapeUri, hexEncode;
+  var import_polyfills124, escapeUri, hexEncode;
   var init_escape_uri = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
-      import_polyfills128 = __toESM(require_polyfills());
+      import_polyfills124 = __toESM(require_polyfills());
       escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
       hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
-  var import_polyfills129;
+  var import_polyfills125;
   var init_escape_uri_path = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
-      import_polyfills129 = __toESM(require_polyfills());
+      import_polyfills125 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-uri-escape/dist-es/index.js
-  var import_polyfills130;
-  var init_dist_es8 = __esm({
+  var import_polyfills126;
+  var init_dist_es7 = __esm({
     "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
-      import_polyfills130 = __toESM(require_polyfills());
+      import_polyfills126 = __toESM(require_polyfills());
       init_escape_uri();
       init_escape_uri_path();
     }
@@ -69872,11 +67747,11 @@ ${value}\r
     }
     return parts.join("&");
   }
-  var import_polyfills131;
-  var init_dist_es9 = __esm({
+  var import_polyfills127;
+  var init_dist_es8 = __esm({
     "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
-      import_polyfills131 = __toESM(require_polyfills());
-      init_dist_es8();
+      import_polyfills127 = __toESM(require_polyfills());
+      init_dist_es7();
     }
   });
 
@@ -69884,10 +67759,10 @@ ${value}\r
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
-  var import_polyfills132;
+  var import_polyfills128;
   var init_create_request = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
-      import_polyfills132 = __toESM(require_polyfills());
+      import_polyfills128 = __toESM(require_polyfills());
     }
   });
 
@@ -69903,20 +67778,37 @@ ${value}\r
       }
     });
   }
-  var import_polyfills133;
+  var import_polyfills129;
   var init_request_timeout = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
-      import_polyfills133 = __toESM(require_polyfills());
+      import_polyfills129 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
-  var import_polyfills134, keepAliveSupport, FetchHttpHandler;
+  function buildAbortError(abortSignal) {
+    const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
+    if (reason) {
+      if (reason instanceof Error) {
+        const abortError3 = new Error("Request aborted");
+        abortError3.name = "AbortError";
+        abortError3.cause = reason;
+        return abortError3;
+      }
+      const abortError2 = new Error(String(reason));
+      abortError2.name = "AbortError";
+      return abortError2;
+    }
+    const abortError = new Error("Request aborted");
+    abortError.name = "AbortError";
+    return abortError;
+  }
+  var import_polyfills130, keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
-      import_polyfills134 = __toESM(require_polyfills());
+      import_polyfills130 = __toESM(require_polyfills());
       init_dist_es2();
-      init_dist_es9();
+      init_dist_es8();
       init_create_request();
       init_request_timeout();
       keepAliveSupport = {
@@ -69952,8 +67844,7 @@ ${value}\r
           const keepAlive = this.config.keepAlive === true;
           const credentials = this.config.credentials;
           if (abortSignal?.aborted) {
-            const abortError = new Error("Request aborted");
-            abortError.name = "AbortError";
+            const abortError = buildAbortError(abortSignal);
             return Promise.reject(abortError);
           }
           let path2 = request.path;
@@ -70029,8 +67920,7 @@ ${value}\r
           if (abortSignal) {
             raceOfPromises.push(new Promise((resolve, reject) => {
               const onAbort = () => {
-                const abortError = new Error("Request aborted");
-                abortError.name = "AbortError";
+                const abortError = buildAbortError(abortSignal);
                 reject(abortError);
               };
               if (typeof abortSignal.addEventListener === "function") {
@@ -70102,11 +67992,11 @@ ${value}\r
       reader.readAsDataURL(blob);
     });
   }
-  var import_polyfills135, streamCollector;
+  var import_polyfills131, streamCollector;
   var init_stream_collector = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
-      import_polyfills135 = __toESM(require_polyfills());
-      init_dist_es7();
+      import_polyfills131 = __toESM(require_polyfills());
+      init_dist_es6();
       streamCollector = async (stream) => {
         if (typeof Blob === "function" && stream instanceof Blob || stream.constructor?.name === "Blob") {
           if (Blob.prototype.arrayBuffer !== void 0) {
@@ -70120,10 +68010,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/fetch-http-handler/dist-es/index.js
-  var import_polyfills136;
-  var init_dist_es10 = __esm({
+  var import_polyfills132;
+  var init_dist_es9 = __esm({
     "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
-      import_polyfills136 = __toESM(require_polyfills());
+      import_polyfills132 = __toESM(require_polyfills());
       init_fetch_http_handler();
       init_stream_collector();
     }
@@ -70152,10 +68042,10 @@ ${value}\r
     }
     return out;
   }
-  var import_polyfills137, SHORT_TO_HEX, HEX_TO_SHORT;
-  var init_dist_es11 = __esm({
+  var import_polyfills133, SHORT_TO_HEX, HEX_TO_SHORT;
+  var init_dist_es10 = __esm({
     "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
-      import_polyfills137 = __toESM(require_polyfills());
+      import_polyfills133 = __toESM(require_polyfills());
       SHORT_TO_HEX = {};
       HEX_TO_SHORT = {};
       for (let i2 = 0; i2 < 256; i2++) {
@@ -70170,14 +68060,14 @@ ${value}\r
   });
 
   // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
-  var import_polyfills138, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
+  var import_polyfills134, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
-      import_polyfills138 = __toESM(require_polyfills());
-      init_dist_es10();
-      init_dist_es7();
-      init_dist_es11();
+      import_polyfills134 = __toESM(require_polyfills());
+      init_dist_es9();
       init_dist_es6();
+      init_dist_es10();
+      init_dist_es5();
       init_stream_type_check();
       ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED = "The stream has already been transformed.";
       sdkStreamMixin = (stream) => {
@@ -70242,18 +68132,18 @@ ${value}\r
     const readableStream = stream;
     return readableStream.tee();
   }
-  var import_polyfills139;
+  var import_polyfills135;
   var init_splitStream_browser = __esm({
     "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
-      import_polyfills139 = __toESM(require_polyfills());
+      import_polyfills135 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-stream/dist-es/index.js
-  var import_polyfills140;
-  var init_dist_es12 = __esm({
+  var import_polyfills136;
+  var init_dist_es11 = __esm({
     "node_modules/@smithy/util-stream/dist-es/index.js"() {
-      import_polyfills140 = __toESM(require_polyfills());
+      import_polyfills136 = __toESM(require_polyfills());
       init_Uint8ArrayBlobAdapter();
       init_ChecksumStream_browser();
       init_createChecksumStream_browser();
@@ -70266,11 +68156,11 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
-  var import_polyfills141, collectBody;
+  var import_polyfills137, collectBody;
   var init_collect_stream_body = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
-      import_polyfills141 = __toESM(require_polyfills());
-      init_dist_es12();
+      import_polyfills137 = __toESM(require_polyfills());
+      init_dist_es11();
       collectBody = async (streamBody = new Uint8Array(), context) => {
         if (streamBody instanceof Uint8Array) {
           return Uint8ArrayBlobAdapter.mutate(streamBody);
@@ -70290,18 +68180,18 @@ ${value}\r
       return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
     });
   }
-  var import_polyfills142;
+  var import_polyfills138;
   var init_extended_encode_uri_component = __esm({
     "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
-      import_polyfills142 = __toESM(require_polyfills());
+      import_polyfills138 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
-  var import_polyfills143, deref;
+  var import_polyfills139, deref;
   var init_deref = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
-      import_polyfills143 = __toESM(require_polyfills());
+      import_polyfills139 = __toESM(require_polyfills());
       deref = (schemaRef) => {
         if (typeof schemaRef === "function") {
           return schemaRef();
@@ -70312,10 +68202,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
-  var import_polyfills144, operation;
+  var import_polyfills140, operation;
   var init_operation = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
-      import_polyfills144 = __toESM(require_polyfills());
+      import_polyfills140 = __toESM(require_polyfills());
       operation = (namespace, name, traits, input, output) => ({
         name,
         namespace,
@@ -70327,10 +68217,10 @@ ${value}\r
   });
 
   // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
-  var import_polyfills145, schemaDeserializationMiddleware, findHeader;
+  var import_polyfills141, schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
-      import_polyfills145 = __toESM(require_polyfills());
+      import_polyfills141 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
       init_operation();
@@ -70395,17 +68285,107 @@ ${value}\r
     }
   });
 
+  // node_modules/@smithy/querystring-parser/dist-es/index.js
+  function parseQueryString(querystring) {
+    const query = {};
+    querystring = querystring.replace(/^\?/, "");
+    if (querystring) {
+      for (const pair of querystring.split("&")) {
+        let [key, value = null] = pair.split("=");
+        key = decodeURIComponent(key);
+        if (value) {
+          value = decodeURIComponent(value);
+        }
+        if (!(key in query)) {
+          query[key] = value;
+        } else if (Array.isArray(query[key])) {
+          query[key].push(value);
+        } else {
+          query[key] = [query[key], value];
+        }
+      }
+    }
+    return query;
+  }
+  var import_polyfills142;
+  var init_dist_es12 = __esm({
+    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
+      import_polyfills142 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/url-parser/dist-es/index.js
+  var import_polyfills143, parseUrl;
+  var init_dist_es13 = __esm({
+    "node_modules/@smithy/url-parser/dist-es/index.js"() {
+      import_polyfills143 = __toESM(require_polyfills());
+      init_dist_es12();
+      parseUrl = (url) => {
+        if (typeof url === "string") {
+          return parseUrl(new URL(url));
+        }
+        const { hostname, pathname, port, protocol, search } = url;
+        let query;
+        if (search) {
+          query = parseQueryString(search);
+        }
+        return {
+          hostname,
+          port: port ? parseInt(port) : void 0,
+          protocol,
+          path: pathname,
+          query
+        };
+      };
+    }
+  });
+
+  // node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
+  var import_polyfills144, toEndpointV1;
+  var init_toEndpointV1 = __esm({
+    "node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
+      import_polyfills144 = __toESM(require_polyfills());
+      init_dist_es13();
+      toEndpointV1 = (endpoint) => {
+        if (typeof endpoint === "object") {
+          if ("url" in endpoint) {
+            const v1Endpoint = parseUrl(endpoint.url);
+            if (endpoint.headers) {
+              v1Endpoint.headers = {};
+              for (const [name, values] of Object.entries(endpoint.headers)) {
+                v1Endpoint.headers[name.toLowerCase()] = values.join(", ");
+              }
+            }
+            return v1Endpoint;
+          }
+          return endpoint;
+        }
+        return parseUrl(endpoint);
+      };
+    }
+  });
+
+  // node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
+  var import_polyfills145;
+  var init_endpoints2 = __esm({
+    "node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
+      import_polyfills145 = __toESM(require_polyfills());
+      init_toEndpointV1();
+    }
+  });
+
   // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
   var import_polyfills146, schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
       import_polyfills146 = __toESM(require_polyfills());
+      init_endpoints2();
       init_dist_es4();
       init_operation();
       schemaSerializationMiddleware = (config) => (next, context) => async (args) => {
         const { operationSchema } = getSmithyContext(context);
         const [, ns, n2, t8, i2, o2] = operationSchema ?? [];
-        const endpoint = context.endpointV2?.url && config.urlParser ? async () => config.urlParser(context.endpointV2.url) : config.endpoint;
+        const endpoint = context.endpointV2 ? async () => toEndpointV1(context.endpointV2) : config.endpoint;
         const request = await config.protocol.serializeRequest(operation(ns, n2, t8, i2, o2), args.input, {
           ...config,
           ...context,
@@ -70423,13 +68403,13 @@ ${value}\r
   function getSchemaSerdePlugin(config) {
     return {
       applyToStack: (commandStack) => {
-        commandStack.add(schemaSerializationMiddleware(config), serializerMiddlewareOption2);
+        commandStack.add(schemaSerializationMiddleware(config), serializerMiddlewareOption);
         commandStack.add(schemaDeserializationMiddleware(config), deserializerMiddlewareOption);
         config.protocol.setSerdeContext(config);
       }
     };
   }
-  var import_polyfills147, deserializerMiddlewareOption, serializerMiddlewareOption2;
+  var import_polyfills147, deserializerMiddlewareOption, serializerMiddlewareOption;
   var init_getSchemaSerdePlugin = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
       import_polyfills147 = __toESM(require_polyfills());
@@ -70441,7 +68421,7 @@ ${value}\r
         tags: ["DESERIALIZER"],
         override: true
       };
-      serializerMiddlewareOption2 = {
+      serializerMiddlewareOption = {
         name: "serializerMiddleware",
         step: "serialize",
         tags: ["SERIALIZER"],
@@ -70504,6 +68484,9 @@ ${value}\r
       return indicator;
     }
     indicator = indicator | 0;
+    if (traitsCache[indicator]) {
+      return traitsCache[indicator];
+    }
     const traits = {};
     let i2 = 0;
     for (const trait of [
@@ -70519,12 +68502,13 @@ ${value}\r
         traits[trait] = 1;
       }
     }
-    return traits;
+    return traitsCache[indicator] = traits;
   }
-  var import_polyfills154;
+  var import_polyfills154, traitsCache;
   var init_translateTraits = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
       import_polyfills154 = __toESM(require_polyfills());
+      traitsCache = [];
     }
   });
 
@@ -70539,12 +68523,18 @@ ${value}\r
     const internalCtorAccess = NormalizedSchema;
     return new internalCtorAccess(memberSchema, memberName);
   }
-  var import_polyfills155, NormalizedSchema, isMemberSchema, isStaticSchema;
+  var import_polyfills155, anno, simpleSchemaCacheN, simpleSchemaCacheS, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
     "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
       import_polyfills155 = __toESM(require_polyfills());
       init_deref();
       init_translateTraits();
+      anno = {
+        it: /* @__PURE__ */ Symbol.for("@smithy/nor-struct-it"),
+        ns: /* @__PURE__ */ Symbol.for("@smithy/ns")
+      };
+      simpleSchemaCacheN = [];
+      simpleSchemaCacheS = {};
       NormalizedSchema = class _NormalizedSchema {
         ref;
         memberName;
@@ -70607,23 +68597,47 @@ ${value}\r
           return isPrototype;
         }
         static of(ref) {
+          const keyAble = typeof ref === "function" || typeof ref === "object" && ref !== null;
+          if (typeof ref === "number") {
+            if (simpleSchemaCacheN[ref]) {
+              return simpleSchemaCacheN[ref];
+            }
+          } else if (typeof ref === "string") {
+            if (simpleSchemaCacheS[ref]) {
+              return simpleSchemaCacheS[ref];
+            }
+          } else if (keyAble) {
+            if (ref[anno.ns]) {
+              return ref[anno.ns];
+            }
+          }
           const sc = deref(ref);
           if (sc instanceof _NormalizedSchema) {
             return sc;
           }
           if (isMemberSchema(sc)) {
-            const [ns, traits] = sc;
-            if (ns instanceof _NormalizedSchema) {
-              Object.assign(ns.getMergedTraits(), translateTraits(traits));
-              return ns;
+            const [ns2, traits] = sc;
+            if (ns2 instanceof _NormalizedSchema) {
+              Object.assign(ns2.getMergedTraits(), translateTraits(traits));
+              return ns2;
             }
             throw new Error(`@smithy/core/schema - may not init unwrapped member schema=${JSON.stringify(ref, null, 2)}.`);
           }
-          return new _NormalizedSchema(sc);
+          const ns = new _NormalizedSchema(sc);
+          if (keyAble) {
+            return ref[anno.ns] = ns;
+          }
+          if (typeof sc === "string") {
+            return simpleSchemaCacheS[sc] = ns;
+          }
+          if (typeof sc === "number") {
+            return simpleSchemaCacheN[sc] = ns;
+          }
+          return ns;
         }
         getSchema() {
           const sc = this.schema;
-          if (sc[0] === 0) {
+          if (Array.isArray(sc) && sc[0] === 0) {
             return sc[4];
           }
           return sc;
@@ -70649,11 +68663,17 @@ ${value}\r
         }
         isStructSchema() {
           const sc = this.getSchema();
+          if (typeof sc !== "object") {
+            return false;
+          }
           const id = sc[0];
           return id === 3 || id === -3 || id === 4;
         }
         isUnionSchema() {
           const sc = this.getSchema();
+          if (typeof sc !== "object") {
+            return false;
+          }
           return sc[0] === 4;
         }
         isBlobSchema() {
@@ -70690,9 +68710,7 @@ ${value}\r
           return !!streaming || this.getSchema() === 42;
         }
         isIdempotencyToken() {
-          const match = (traits2) => (traits2 & 4) === 4 || !!traits2?.idempotencyToken;
-          const { normalizedTraits, traits, memberTraits } = this;
-          return match(normalizedTraits) || match(traits) || match(memberTraits);
+          return !!this.getMergedTraits().idempotencyToken;
         }
         getMergedTraits() {
           return this.normalizedTraits ?? (this.normalizedTraits = {
@@ -70734,7 +68752,7 @@ ${value}\r
           if (this.isDocumentSchema()) {
             return member([15, 0], memberName);
           }
-          throw new Error(`@smithy/core/schema - ${this.getName(true)} has no no member=${memberName}.`);
+          throw new Error(`@smithy/core/schema - ${this.getName(true)} has no member=${memberName}.`);
         }
         getMemberSchemas() {
           const buffer = {};
@@ -70764,9 +68782,19 @@ ${value}\r
             throw new Error("@smithy/core/schema - cannot iterate non-struct schema.");
           }
           const struct = this.getSchema();
-          for (let i2 = 0; i2 < struct[4].length; ++i2) {
-            yield [struct[4][i2], member([struct[5][i2], 0], struct[4][i2])];
+          const z2 = struct[4].length;
+          let it = struct[anno.it];
+          if (it && z2 === it.length) {
+            yield* it;
+            return;
           }
+          it = Array(z2);
+          for (let i2 = 0; i2 < z2; ++i2) {
+            const k2 = struct[4][i2];
+            const v2 = member([struct[5][i2], 0], k2);
+            yield it[i2] = [k2, v2];
+          }
+          struct[anno.it] = it;
         }
       };
       isMemberSchema = (sc) => Array.isArray(sc) && sc.length === 2;
@@ -70811,10 +68839,24 @@ ${value}\r
           }
           return _TypeRegistry.registries.get(namespace);
         }
+        copyFrom(other) {
+          const { schemas, exceptions } = this;
+          for (const [k2, v2] of other.schemas) {
+            if (!schemas.has(k2)) {
+              schemas.set(k2, v2);
+            }
+          }
+          for (const [k2, v2] of other.exceptions) {
+            if (!exceptions.has(k2)) {
+              exceptions.set(k2, v2);
+            }
+          }
+        }
         register(shapeId, schema) {
           const qualifiedName = this.normalizeShapeId(shapeId);
-          const registry = _TypeRegistry.for(qualifiedName.split("#")[0]);
-          registry.schemas.set(qualifiedName, schema);
+          for (const r2 of [this, _TypeRegistry.for(qualifiedName.split("#")[0])]) {
+            r2.schemas.set(qualifiedName, schema);
+          }
         }
         getSchema(shapeId) {
           const id = this.normalizeShapeId(shapeId);
@@ -70825,12 +68867,17 @@ ${value}\r
         }
         registerError(es, ctor) {
           const $error = es;
-          const registry = _TypeRegistry.for($error[1]);
-          registry.schemas.set($error[1] + "#" + $error[2], $error);
-          registry.exceptions.set($error, ctor);
+          const ns = $error[1];
+          for (const r2 of [this, _TypeRegistry.for(ns)]) {
+            r2.schemas.set(ns + "#" + $error[2], $error);
+            r2.exceptions.set($error, ctor);
+          }
         }
         getErrorCtor(es) {
           const $error = es;
+          if (this.exceptions.has($error)) {
+            return this.exceptions.get($error);
+          }
           const registry = _TypeRegistry.for($error[1]);
           return registry.exceptions.get($error);
         }
@@ -71142,7 +69189,7 @@ ${value}\r
 
   // node_modules/@smithy/uuid/dist-es/index.js
   var import_polyfills165;
-  var init_dist_es13 = __esm({
+  var init_dist_es14 = __esm({
     "node_modules/@smithy/uuid/dist-es/index.js"() {
       import_polyfills165 = __toESM(require_polyfills());
       init_v4();
@@ -71154,7 +69201,7 @@ ${value}\r
   var init_generateIdempotencyToken = __esm({
     "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
       import_polyfills166 = __toESM(require_polyfills());
-      init_dist_es13();
+      init_dist_es14();
     }
   });
 
@@ -71454,7 +69501,7 @@ ${value}\r
   var init_EventStreamSerde = __esm({
     "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
       import_polyfills175 = __toESM(require_polyfills());
-      init_dist_es6();
+      init_dist_es5();
       EventStreamSerde = class {
         marshaller;
         serializer;
@@ -71573,6 +69620,11 @@ ${value}\r
                     [unionMember]: out
                   };
                 }
+                if (body.byteLength === 0) {
+                  return {
+                    [unionMember]: {}
+                  };
+                }
               }
               return {
                 [unionMember]: await this.deserializer.read(eventStreamSchema, body)
@@ -71668,11 +69720,13 @@ ${value}\r
               } else {
                 serializer.write(eventSchema, event[unionMember]);
               }
+            } else if (eventSchema.isUnitSchema()) {
+              serializer.write(eventSchema, {});
             } else {
               throw new Error("@smithy/core/event-streams - non-struct member not supported in event stream union.");
             }
           }
-          const messageSerialization = serializer.flush();
+          const messageSerialization = serializer.flush() ?? new Uint8Array();
           const body = typeof messageSerialization === "string" ? (this.serdeContext?.utf8Decoder ?? fromUtf8)(messageSerialization) : messageSerialization;
           return {
             body,
@@ -71708,9 +69762,14 @@ ${value}\r
       init_SerdeContext();
       HttpProtocol = class extends SerdeContext {
         options;
+        compositeErrorRegistry;
         constructor(options) {
           super();
           this.options = options;
+          this.compositeErrorRegistry = TypeRegistry.for(options.defaultNamespace);
+          for (const etr of options.errorTypeRegistries ?? []) {
+            this.compositeErrorRegistry.copyFrom(etr);
+          }
         }
         getRequestType() {
           return HttpRequest;
@@ -71741,6 +69800,11 @@ ${value}\r
             for (const [k2, v2] of endpoint.url.searchParams.entries()) {
               request.query[k2] = v2;
             }
+            if (endpoint.headers) {
+              for (const [name, values] of Object.entries(endpoint.headers)) {
+                request.headers[name] = values.join(", ");
+              }
+            }
             return request;
           } else {
             request.protocol = endpoint.protocol;
@@ -71750,6 +69814,11 @@ ${value}\r
             request.query = {
               ...endpoint.query
             };
+            if (endpoint.headers) {
+              for (const [name, value] of Object.entries(endpoint.headers)) {
+                request.headers[name] = value;
+              }
+            }
             return request;
           }
         }
@@ -71838,7 +69907,7 @@ ${value}\r
       init_schema2();
       init_serde2();
       init_dist_es2();
-      init_dist_es12();
+      init_dist_es11();
       init_collect_stream_body();
       init_extended_encode_uri_component();
       init_HttpProtocol();
@@ -71852,7 +69921,8 @@ ${value}\r
           const headers = {};
           const endpoint = await context.endpoint();
           const ns = NormalizedSchema.of(operationSchema?.input);
-          const schema = ns.getSchema();
+          const payloadMemberNames = [];
+          const payloadMemberSchemas = [];
           let hasNonHttpBindingMember = false;
           let payload;
           const request = new HttpRequest({
@@ -71885,6 +69955,11 @@ ${value}\r
             const memberTraits = memberNs.getMergedTraits() ?? {};
             const inputMemberValue = input[memberName];
             if (inputMemberValue == null && !memberNs.isIdempotencyToken()) {
+              if (memberTraits.httpLabel) {
+                if (request.path.includes(`{${memberName}+}`) || request.path.includes(`{${memberName}}`)) {
+                  throw new Error(`No value provided for input HTTP label: ${memberName}.`);
+                }
+              }
               continue;
             }
             if (memberTraits.httpPayload) {
@@ -71931,10 +70006,28 @@ ${value}\r
               delete input[memberName];
             } else {
               hasNonHttpBindingMember = true;
+              payloadMemberNames.push(memberName);
+              payloadMemberSchemas.push(memberNs);
             }
           }
           if (hasNonHttpBindingMember && input) {
-            serializer.write(schema, input);
+            const [namespace, name] = (ns.getName(true) ?? "#Unknown").split("#");
+            const requiredMembers = ns.getSchema()[6];
+            const payloadSchema = [
+              3,
+              namespace,
+              name,
+              ns.getMergedTraits(),
+              payloadMemberNames,
+              payloadMemberSchemas,
+              void 0
+            ];
+            if (requiredMembers) {
+              payloadSchema[6] = requiredMembers;
+            } else {
+              payloadSchema.pop();
+            }
+            serializer.write(payloadSchema, input);
             payload = serializer.flush();
           }
           request.headers = headers;
@@ -71998,7 +70091,9 @@ ${value}\r
             if (bytes.byteLength > 0) {
               const dataFromBody = await deserializer.read(ns, bytes);
               for (const member2 of nonHttpBindingMembers) {
-                dataObject[member2] = dataFromBody[member2];
+                if (dataFromBody[member2] != null) {
+                  dataObject[member2] = dataFromBody[member2];
+                }
               }
             }
           } else if (nonHttpBindingMembers.discardResponseBody) {
@@ -72132,8 +70227,8 @@ ${value}\r
       import_polyfills183 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
-      init_dist_es7();
       init_dist_es6();
+      init_dist_es5();
       init_SerdeContext();
       init_determineTimestampFormat();
       FromStringShapeDeserializer = class extends SerdeContext {
@@ -72205,7 +70300,7 @@ ${value}\r
     "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
       import_polyfills184 = __toESM(require_polyfills());
       init_schema2();
-      init_dist_es6();
+      init_dist_es5();
       init_SerdeContext();
       init_FromStringShapeDeserializer();
       HttpInterceptingShapeDeserializer = class extends SerdeContext {
@@ -72255,7 +70350,7 @@ ${value}\r
       import_polyfills185 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
-      init_dist_es7();
+      init_dist_es6();
       init_SerdeContext();
       init_determineTimestampFormat();
       ToStringShapeSerializer = class extends SerdeContext {
@@ -72565,7 +70660,7 @@ ${value}\r
 
   // node_modules/@smithy/core/dist-es/index.js
   var import_polyfills197;
-  var init_dist_es14 = __esm({
+  var init_dist_es15 = __esm({
     "node_modules/@smithy/core/dist-es/index.js"() {
       import_polyfills197 = __toESM(require_polyfills());
       init_getSmithyContext();
@@ -72673,7 +70768,7 @@ ${value}\r
 
   // node_modules/@smithy/property-provider/dist-es/index.js
   var import_polyfills204;
-  var init_dist_es15 = __esm({
+  var init_dist_es16 = __esm({
     "node_modules/@smithy/property-provider/dist-es/index.js"() {
       import_polyfills204 = __toESM(require_polyfills());
       init_CredentialsProviderError();
@@ -72690,7 +70785,7 @@ ${value}\r
   var init_resolveAwsSdkSigV4AConfig = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
       import_polyfills205 = __toESM(require_polyfills());
-      init_dist_es14();
+      init_dist_es15();
       resolveAwsSdkSigV4AConfig = (config) => {
         config.sigv4aSigningRegionSet = normalizeProvider2(config.sigv4aSigningRegionSet);
         return config;
@@ -72750,8 +70845,8 @@ ${value}\r
   var init_credentialDerivation = __esm({
     "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
       import_polyfills207 = __toESM(require_polyfills());
-      init_dist_es11();
-      init_dist_es6();
+      init_dist_es10();
+      init_dist_es5();
       init_constants2();
       signingKeyCache = {};
       cacheQueue = [];
@@ -72807,7 +70902,7 @@ ${value}\r
 
   // node_modules/@smithy/is-array-buffer/dist-es/index.js
   var import_polyfills209, isArrayBuffer;
-  var init_dist_es16 = __esm({
+  var init_dist_es17 = __esm({
     "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
       import_polyfills209 = __toESM(require_polyfills());
       isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
@@ -72819,9 +70914,9 @@ ${value}\r
   var init_getPayloadHash = __esm({
     "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
       import_polyfills210 = __toESM(require_polyfills());
-      init_dist_es16();
-      init_dist_es11();
-      init_dist_es6();
+      init_dist_es17();
+      init_dist_es10();
+      init_dist_es5();
       init_constants2();
       getPayloadHash = async ({ headers, body }, hashConstructor) => {
         for (const headerName of Object.keys(headers)) {
@@ -72856,8 +70951,8 @@ ${value}\r
   var init_HeaderFormatter = __esm({
     "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
       import_polyfills211 = __toESM(require_polyfills());
-      init_dist_es11();
-      init_dist_es6();
+      init_dist_es10();
+      init_dist_es5();
       HeaderFormatter = class {
         format(headers) {
           const chunks = [];
@@ -73039,7 +71134,7 @@ ${value}\r
   var init_getCanonicalQuery = __esm({
     "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
       import_polyfills215 = __toESM(require_polyfills());
-      init_dist_es8();
+      init_dist_es7();
       init_constants2();
       getCanonicalQuery = ({ query = {} }) => {
         const keys = [];
@@ -73088,10 +71183,10 @@ ${value}\r
   var init_SignatureV4Base = __esm({
     "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
       import_polyfills217 = __toESM(require_polyfills());
-      init_dist_es11();
+      init_dist_es10();
       init_dist_es4();
-      init_dist_es8();
-      init_dist_es6();
+      init_dist_es7();
+      init_dist_es5();
       init_getCanonicalQuery();
       init_utilDate();
       SignatureV4Base = class {
@@ -73172,8 +71267,8 @@ ${toHex(hashedRequest)}`;
   var init_SignatureV4 = __esm({
     "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
       import_polyfills218 = __toESM(require_polyfills());
-      init_dist_es11();
-      init_dist_es6();
+      init_dist_es10();
+      init_dist_es5();
       init_constants2();
       init_credentialDerivation();
       init_getCanonicalHeaders();
@@ -73316,7 +71411,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@smithy/signature-v4/dist-es/index.js
   var import_polyfills220;
-  var init_dist_es17 = __esm({
+  var init_dist_es18 = __esm({
     "node_modules/@smithy/signature-v4/dist-es/index.js"() {
       import_polyfills220 = __toESM(require_polyfills());
       init_SignatureV4();
@@ -73363,8 +71458,8 @@ ${toHex(hashedRequest)}`;
     "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
       import_polyfills221 = __toESM(require_polyfills());
       init_client2();
-      init_dist_es14();
-      init_dist_es17();
+      init_dist_es15();
+      init_dist_es18();
       resolveAwsSdkSigV4Config = (config) => {
         let inputCredentials = config.credentials;
         let isUserSupplied = !!config.credentials;
@@ -73521,7 +71616,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@smithy/util-body-length-browser/dist-es/index.js
   var import_polyfills225;
-  var init_dist_es18 = __esm({
+  var init_dist_es19 = __esm({
     "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
       import_polyfills225 = __toESM(require_polyfills());
       init_calculateBodyLength();
@@ -73801,7 +71896,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@smithy/middleware-stack/dist-es/index.js
   var import_polyfills227;
-  var init_dist_es19 = __esm({
+  var init_dist_es20 = __esm({
     "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
       import_polyfills227 = __toESM(require_polyfills());
       init_MiddlewareStack();
@@ -73813,7 +71908,7 @@ ${toHex(hashedRequest)}`;
   var init_client3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/client.js"() {
       import_polyfills228 = __toESM(require_polyfills());
-      init_dist_es19();
+      init_dist_es20();
       Client = class {
         config;
         middlewareStack = constructStack();
@@ -73916,7 +72011,7 @@ ${toHex(hashedRequest)}`;
   var init_command2 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/command.js"() {
       import_polyfills231 = __toESM(require_polyfills());
-      init_dist_es19();
+      init_dist_es20();
       init_dist_es();
       init_schemaLogFilter();
       Command = class {
@@ -74057,9 +72152,8 @@ ${toHex(hashedRequest)}`;
   var init_create_aggregated_client = __esm({
     "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
       import_polyfills233 = __toESM(require_polyfills());
-      createAggregatedClient = (commands2, Client2) => {
-        for (const command of Object.keys(commands2)) {
-          const CommandCtor = commands2[command];
+      createAggregatedClient = (commands2, Client2, options) => {
+        for (const [command, CommandCtor] of Object.entries(commands2)) {
           const methodImpl = async function(args, optionsOrCb, cb2) {
             const command2 = new CommandCtor(args);
             if (typeof optionsOrCb === "function") {
@@ -74074,6 +72168,33 @@ ${toHex(hashedRequest)}`;
           };
           const methodName = (command[0].toLowerCase() + command.slice(1)).replace(/Command$/, "");
           Client2.prototype[methodName] = methodImpl;
+        }
+        const { paginators: paginators2 = {}, waiters: waiters2 = {} } = options ?? {};
+        for (const [paginatorName, paginatorFn] of Object.entries(paginators2)) {
+          if (Client2.prototype[paginatorName] === void 0) {
+            Client2.prototype[paginatorName] = function(commandInput = {}, paginationConfiguration, ...rest) {
+              return paginatorFn({
+                ...paginationConfiguration,
+                client: this
+              }, commandInput, ...rest);
+            };
+          }
+        }
+        for (const [waiterName, waiterFn] of Object.entries(waiters2)) {
+          if (Client2.prototype[waiterName] === void 0) {
+            Client2.prototype[waiterName] = async function(commandInput = {}, waiterConfiguration, ...rest) {
+              let config = waiterConfiguration;
+              if (typeof waiterConfiguration === "number") {
+                config = {
+                  maxWaitTime: waiterConfiguration
+                };
+              }
+              return waiterFn({
+                ...config,
+                client: this
+              }, commandInput, ...rest);
+            };
+          }
         }
       };
     }
@@ -74191,11 +72312,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
-  var import_polyfills239, getChecksumConfiguration, resolveChecksumRuntimeConfig;
+  var import_polyfills239, knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
       import_polyfills239 = __toESM(require_polyfills());
       init_dist_es();
+      knownAlgorithms = Object.values(AlgorithmId);
       getChecksumConfiguration = (runtimeConfig) => {
         const checksumAlgorithms = [];
         for (const id in AlgorithmId) {
@@ -74208,8 +72330,22 @@ ${toHex(hashedRequest)}`;
             checksumConstructor: () => runtimeConfig[algorithmId]
           });
         }
+        for (const [id, ChecksumCtor] of Object.entries(runtimeConfig.checksumAlgorithms ?? {})) {
+          checksumAlgorithms.push({
+            algorithmId: () => id,
+            checksumConstructor: () => ChecksumCtor
+          });
+        }
         return {
           addChecksumAlgorithm(algo) {
+            runtimeConfig.checksumAlgorithms = runtimeConfig.checksumAlgorithms ?? {};
+            const id = algo.algorithmId();
+            const ctor = algo.checksumConstructor();
+            if (knownAlgorithms.includes(id)) {
+              runtimeConfig.checksumAlgorithms[id.toUpperCase()] = ctor;
+            } else {
+              runtimeConfig.checksumAlgorithms[id] = ctor;
+            }
             checksumAlgorithms.push(algo);
           },
           checksumAlgorithms() {
@@ -74220,7 +72356,10 @@ ${toHex(hashedRequest)}`;
       resolveChecksumRuntimeConfig = (clientConfig) => {
         const runtimeConfig = {};
         clientConfig.checksumAlgorithms().forEach((checksumAlgorithm) => {
-          runtimeConfig[checksumAlgorithm.algorithmId()] = checksumAlgorithm.checksumConstructor();
+          const id = checksumAlgorithm.algorithmId();
+          if (knownAlgorithms.includes(id)) {
+            runtimeConfig[id] = checksumAlgorithm.checksumConstructor();
+          }
         });
         return runtimeConfig;
       };
@@ -74364,7 +72503,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@smithy/smithy-client/dist-es/index.js
   var import_polyfills251;
-  var init_dist_es20 = __esm({
+  var init_dist_es21 = __esm({
     "node_modules/@smithy/smithy-client/dist-es/index.js"() {
       import_polyfills251 = __toESM(require_polyfills());
       init_client3();
@@ -74396,7 +72535,7 @@ ${toHex(hashedRequest)}`;
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
       import_polyfills252 = __toESM(require_polyfills());
       init_schema2();
-      init_dist_es20();
+      init_dist_es21();
       ProtocolLib = class {
         queryCompat;
         constructor(queryCompat = false) {
@@ -74463,9 +72602,9 @@ ${toHex(hashedRequest)}`;
             }
             error.Error = {
               ...error.Error,
-              Type: error.Error.Type,
-              Code: error.Error.Code,
-              Message: error.Error.message ?? error.Error.Message ?? msg
+              Type: error.Error?.Type,
+              Code: error.Error?.Code,
+              Message: error.Error?.message ?? error.Error?.Message ?? msg
             };
             const reqId = error.$metadata.requestId;
             if (reqId) {
@@ -74544,35 +72683,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/structIterator.js
-  function* serializingStructIterator(ns, sourceObject) {
-    if (ns.isUnitSchema()) {
-      return;
-    }
-    const struct = ns.getSchema();
-    for (let i2 = 0; i2 < struct[4].length; ++i2) {
-      const key = struct[4][i2];
-      const memberSchema = struct[5][i2];
-      const memberNs = new NormalizedSchema([memberSchema, 0], key);
-      if (!(key in sourceObject) && !memberNs.isIdempotencyToken()) {
-        continue;
-      }
-      yield [key, memberNs];
-    }
-  }
-  var import_polyfills256;
-  var init_structIterator = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/structIterator.js"() {
-      import_polyfills256 = __toESM(require_polyfills());
-      init_schema2();
-    }
-  });
-
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
-  var import_polyfills257, UnionSerde;
+  var import_polyfills256, UnionSerde;
   var init_UnionSerde = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
-      import_polyfills257 = __toESM(require_polyfills());
+      import_polyfills256 = __toESM(require_polyfills());
       UnionSerde = class {
         from;
         to;
@@ -74600,104 +72715,123 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
-  var import_polyfills258;
+  var import_polyfills257;
   var init_parseJsonBody = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
-      import_polyfills258 = __toESM(require_polyfills());
+      import_polyfills257 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
-  var import_polyfills259;
+  var import_polyfills258;
   var init_JsonShapeDeserializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
-      import_polyfills259 = __toESM(require_polyfills());
+      import_polyfills258 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
-  var import_polyfills260;
+  var import_polyfills259;
   var init_JsonShapeSerializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
-      import_polyfills260 = __toESM(require_polyfills());
+      import_polyfills259 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
-  var import_polyfills261;
+  var import_polyfills260;
   var init_JsonCodec = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
-      import_polyfills261 = __toESM(require_polyfills());
+      import_polyfills260 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
-  var import_polyfills262;
+  var import_polyfills261;
   var init_AwsJsonRpcProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
-      import_polyfills262 = __toESM(require_polyfills());
+      import_polyfills261 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
-  var import_polyfills263;
+  var import_polyfills262;
   var init_AwsJson1_0Protocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
-      import_polyfills263 = __toESM(require_polyfills());
+      import_polyfills262 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
-  var import_polyfills264;
+  var import_polyfills263;
   var init_AwsJson1_1Protocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
-      import_polyfills264 = __toESM(require_polyfills());
+      import_polyfills263 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
-  var import_polyfills265;
+  var import_polyfills264;
   var init_AwsRestJsonProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
-      import_polyfills265 = __toESM(require_polyfills());
+      import_polyfills264 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
-  var import_polyfills266;
+  var import_polyfills265;
   var init_awsExpectUnion = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
-      import_polyfills266 = __toESM(require_polyfills());
+      import_polyfills265 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
   function escapeAttribute(value) {
-    return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return value.replace(ATTR_ESCAPE_RE, (ch2) => ATTR_ESCAPE_MAP[ch2]);
   }
-  var import_polyfills267;
+  var import_polyfills266, ATTR_ESCAPE_RE, ATTR_ESCAPE_MAP;
   var init_escape_attribute = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
-      import_polyfills267 = __toESM(require_polyfills());
+      import_polyfills266 = __toESM(require_polyfills());
+      ATTR_ESCAPE_RE = /[&<>"]/g;
+      ATTR_ESCAPE_MAP = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;"
+      };
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
   function escapeElement(value) {
-    return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r/g, "&#x0D;").replace(/\n/g, "&#x0A;").replace(/\u0085/g, "&#x85;").replace(/\u2028/, "&#x2028;");
+    return value.replace(ELEMENT_ESCAPE_RE, (ch2) => ELEMENT_ESCAPE_MAP[ch2]);
   }
-  var import_polyfills268;
+  var import_polyfills267, ELEMENT_ESCAPE_RE, ELEMENT_ESCAPE_MAP;
   var init_escape_element = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
-      import_polyfills268 = __toESM(require_polyfills());
+      import_polyfills267 = __toESM(require_polyfills());
+      ELEMENT_ESCAPE_RE = /[&"'<>\r\n\u0085\u2028]/g;
+      ELEMENT_ESCAPE_MAP = {
+        "&": "&amp;",
+        '"': "&quot;",
+        "'": "&apos;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\r": "&#x0D;",
+        "\n": "&#x0A;",
+        "\x85": "&#x85;",
+        "\u2028": "&#x2028;"
+      };
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
-  var import_polyfills269, XmlText;
+  var import_polyfills268, XmlText;
   var init_XmlText = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
-      import_polyfills269 = __toESM(require_polyfills());
+      import_polyfills268 = __toESM(require_polyfills());
       init_escape_element();
       XmlText = class {
         value;
@@ -74712,10 +72846,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
-  var import_polyfills270, XmlNode;
+  var import_polyfills269, XmlNode;
   var init_XmlNode = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
-      import_polyfills270 = __toESM(require_polyfills());
+      import_polyfills269 = __toESM(require_polyfills());
       init_escape_attribute();
       init_XmlText();
       XmlNode = class _XmlNode {
@@ -74861,18 +72995,18 @@ ${toHex(hashedRequest)}`;
       [xmlDocument.documentElement.nodeName]: xmlToObj(xmlDocument.documentElement)
     };
   }
-  var import_polyfills271, parser;
+  var import_polyfills270, parser;
   var init_xml_parser_browser = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
-      import_polyfills271 = __toESM(require_polyfills());
+      import_polyfills270 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/xml-builder/dist-es/index.js
-  var import_polyfills272;
-  var init_dist_es21 = __esm({
+  var import_polyfills271;
+  var init_dist_es22 = __esm({
     "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
-      import_polyfills272 = __toESM(require_polyfills());
+      import_polyfills271 = __toESM(require_polyfills());
       init_XmlNode();
       init_XmlText();
       init_xml_parser_browser();
@@ -74880,15 +73014,15 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
-  var import_polyfills273, XmlShapeDeserializer;
+  var import_polyfills272, XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
-      import_polyfills273 = __toESM(require_polyfills());
-      init_dist_es21();
+      import_polyfills272 = __toESM(require_polyfills());
+      init_dist_es22();
       init_protocols();
       init_schema2();
-      init_dist_es20();
-      init_dist_es6();
+      init_dist_es21();
+      init_dist_es5();
       init_ConfigurableSerdeContext();
       init_UnionSerde();
       XmlShapeDeserializer = class extends SerdeContextConfig {
@@ -74937,18 +73071,18 @@ ${toHex(hashedRequest)}`;
             return value;
           }
           if (typeof value === "object") {
-            const sparse = !!traits.sparse;
             const flat = !!traits.xmlFlattened;
             if (ns.isListSchema()) {
               const listValue = ns.getValueSchema();
               const buffer2 = [];
               const sourceKey = listValue.getMergedTraits().xmlName ?? "member";
               const source = flat ? value : (value[0] ?? value)[sourceKey];
+              if (source == null) {
+                return buffer2;
+              }
               const sourceArray = Array.isArray(source) ? source : [source];
               for (const v2 of sourceArray) {
-                if (v2 != null || sparse) {
-                  buffer2.push(this.readSchema(listValue, v2));
-                }
+                buffer2.push(this.readSchema(listValue, v2));
               }
               return buffer2;
             }
@@ -74967,9 +73101,7 @@ ${toHex(hashedRequest)}`;
               for (const entry of entries) {
                 const key = entry[keyProperty];
                 const value2 = entry[valueProperty];
-                if (value2 != null || sparse) {
-                  buffer[key] = this.readSchema(memberNs, value2);
-                }
+                buffer[key] = this.readSchema(memberNs, value2);
               }
               return buffer;
             }
@@ -75035,6 +73167,14 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
+  var import_polyfills273;
+  var init_QueryShapeSerializer = __esm({
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
+      import_polyfills273 = __toESM(require_polyfills());
+    }
+  });
+
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
   var import_polyfills274;
   var init_AwsQueryProtocol = __esm({
@@ -75051,11 +73191,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
+  var import_polyfills276;
+  var init_QuerySerializerSettings = __esm({
+    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
+      import_polyfills276 = __toESM(require_polyfills());
+    }
+  });
+
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
-  var import_polyfills276, loadRestXmlErrorCode;
+  var import_polyfills277, loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
-      import_polyfills276 = __toESM(require_polyfills());
+      import_polyfills277 = __toESM(require_polyfills());
       loadRestXmlErrorCode = (output, data) => {
         if (data?.Error?.Code !== void 0) {
           return data.Error.Code;
@@ -75071,18 +73219,17 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
-  var import_polyfills277, XmlShapeSerializer;
+  var import_polyfills278, XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
-      import_polyfills277 = __toESM(require_polyfills());
-      init_dist_es21();
+      import_polyfills278 = __toESM(require_polyfills());
+      init_dist_es22();
       init_protocols();
       init_schema2();
       init_serde2();
-      init_dist_es20();
-      init_dist_es7();
+      init_dist_es21();
+      init_dist_es6();
       init_ConfigurableSerdeContext();
-      init_structIterator();
       XmlShapeSerializer = class extends SerdeContextConfig {
         settings;
         stringBuffer;
@@ -75134,7 +73281,7 @@ ${toHex(hashedRequest)}`;
           }
           const structXmlNode = XmlNode.of(name);
           const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
-          for (const [memberName, memberSchema] of serializingStructIterator(ns, value)) {
+          for (const [memberName, memberSchema] of ns.structIterator()) {
             const val = value[memberName];
             if (val != null || memberSchema.isIdempotencyToken()) {
               if (memberSchema.getMergedTraits().xmlAttribute) {
@@ -75350,10 +73497,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
-  var import_polyfills278, XmlCodec;
+  var import_polyfills279, XmlCodec;
   var init_XmlCodec = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
-      import_polyfills278 = __toESM(require_polyfills());
+      import_polyfills279 = __toESM(require_polyfills());
       init_ConfigurableSerdeContext();
       init_XmlShapeDeserializer();
       init_XmlShapeSerializer();
@@ -75378,10 +73525,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
-  var import_polyfills279, AwsRestXmlProtocol;
+  var import_polyfills280, AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
-      import_polyfills279 = __toESM(require_polyfills());
+      import_polyfills280 = __toESM(require_polyfills());
       init_protocols();
       init_schema2();
       init_ProtocolLib();
@@ -75432,6 +73579,17 @@ ${toHex(hashedRequest)}`;
         }
         async handleError(operationSchema, context, response, dataObject, metadata) {
           const errorIdentifier = loadRestXmlErrorCode(response, dataObject) ?? "Unknown";
+          if (dataObject.Error && typeof dataObject.Error === "object") {
+            for (const key of Object.keys(dataObject.Error)) {
+              dataObject[key] = dataObject.Error[key];
+              if (key.toLowerCase() === "message") {
+                dataObject.message = dataObject.Error[key];
+              }
+            }
+          }
+          if (dataObject.RequestId && !metadata.requestId) {
+            metadata.requestId = dataObject.RequestId;
+          }
           const { errorSchema, errorMetadata } = await this.mixin.getErrorSchemaOrThrowBaseException(errorIdentifier, this.options.defaultNamespace, response, dataObject, metadata);
           const ns = NormalizedSchema.of(errorSchema);
           const message = dataObject.Error?.message ?? dataObject.Error?.Message ?? dataObject.message ?? dataObject.Message ?? "Unknown";
@@ -75465,10 +73623,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
-  var import_polyfills280;
+  var import_polyfills281;
   var init_protocols2 = __esm({
     "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
-      import_polyfills280 = __toESM(require_polyfills());
+      import_polyfills281 = __toESM(require_polyfills());
       init_AwsSmithyRpcV2CborProtocol();
       init_coercing_serializers();
       init_AwsJson1_0Protocol();
@@ -75482,6 +73640,8 @@ ${toHex(hashedRequest)}`;
       init_parseJsonBody();
       init_AwsEc2QueryProtocol();
       init_AwsQueryProtocol();
+      init_QuerySerializerSettings();
+      init_QueryShapeSerializer();
       init_AwsRestXmlProtocol();
       init_XmlCodec();
       init_XmlShapeDeserializer();
@@ -75491,36 +73651,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/core/dist-es/index.js
-  var import_polyfills281;
-  var init_dist_es22 = __esm({
+  var import_polyfills282;
+  var init_dist_es23 = __esm({
     "node_modules/@aws-sdk/core/dist-es/index.js"() {
-      import_polyfills281 = __toESM(require_polyfills());
+      import_polyfills282 = __toESM(require_polyfills());
       init_client2();
       init_httpAuthSchemes2();
       init_protocols2();
-    }
-  });
-
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
-  var import_polyfills282, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
-  var init_types2 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
-      import_polyfills282 = __toESM(require_polyfills());
-      init_constants();
-      CLIENT_SUPPORTED_ALGORITHMS = [
-        ChecksumAlgorithm.CRC32,
-        ChecksumAlgorithm.CRC32C,
-        ChecksumAlgorithm.CRC64NVME,
-        ChecksumAlgorithm.SHA1,
-        ChecksumAlgorithm.SHA256
-      ];
-      PRIORITY_ORDER_ALGORITHMS = [
-        ChecksumAlgorithm.SHA256,
-        ChecksumAlgorithm.SHA1,
-        ChecksumAlgorithm.CRC32,
-        ChecksumAlgorithm.CRC32C,
-        ChecksumAlgorithm.CRC64NVME
-      ];
     }
   });
 
@@ -75530,7 +73667,6 @@ ${toHex(hashedRequest)}`;
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
       import_polyfills283 = __toESM(require_polyfills());
       init_constants();
-      init_types2();
       getChecksumAlgorithmForRequest = (input, { requestChecksumRequired, requestAlgorithmMember, requestChecksumCalculation }) => {
         if (!requestAlgorithmMember) {
           return requestChecksumCalculation === RequestChecksumCalculation.WHEN_SUPPORTED || requestChecksumRequired ? DEFAULT_CHECKSUM_ALGORITHM : void 0;
@@ -75539,9 +73675,6 @@ ${toHex(hashedRequest)}`;
           return void 0;
         }
         const checksumAlgorithm = input[requestAlgorithmMember];
-        if (!CLIENT_SUPPORTED_ALGORITHMS.includes(checksumAlgorithm)) {
-          throw new Error(`The checksum algorithm "${checksumAlgorithm}" is not supported by the client. Select one of ${CLIENT_SUPPORTED_ALGORITHMS}.`);
-        }
         return checksumAlgorithm;
       };
     }
@@ -75596,7 +73729,7 @@ ${toHex(hashedRequest)}`;
   var init_isStreaming = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
       import_polyfills287 = __toESM(require_polyfills());
-      init_dist_es16();
+      init_dist_es17();
       isStreaming = (body) => body !== void 0 && typeof body !== "string" && !ArrayBuffer.isView(body) && !isArrayBuffer(body);
     }
   });
@@ -75744,7 +73877,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills292;
-  var init_dist_es23 = __esm({
+  var init_dist_es24 = __esm({
     "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills292 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
@@ -75769,7 +73902,7 @@ ${toHex(hashedRequest)}`;
   var init_convertToBuffer = __esm({
     "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
       import_polyfills293 = __toESM(require_polyfills());
-      init_dist_es23();
+      init_dist_es24();
       fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
         return Buffer.from(input, "utf8");
       } : fromUtf82;
@@ -76270,7 +74403,7 @@ ${toHex(hashedRequest)}`;
 
   // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
   var import_polyfills302;
-  var init_dist_es24 = __esm({
+  var init_dist_es25 = __esm({
     "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
       import_polyfills302 = __toESM(require_polyfills());
       init_Crc64Nvme();
@@ -76619,45 +74752,73 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
+  var import_polyfills306, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
+  var init_types2 = __esm({
+    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
+      import_polyfills306 = __toESM(require_polyfills());
+      init_constants();
+      CLIENT_SUPPORTED_ALGORITHMS = [
+        ChecksumAlgorithm.CRC32,
+        ChecksumAlgorithm.CRC32C,
+        ChecksumAlgorithm.CRC64NVME,
+        ChecksumAlgorithm.SHA1,
+        ChecksumAlgorithm.SHA256
+      ];
+      PRIORITY_ORDER_ALGORITHMS = [
+        ChecksumAlgorithm.SHA256,
+        ChecksumAlgorithm.SHA1,
+        ChecksumAlgorithm.CRC32,
+        ChecksumAlgorithm.CRC32C,
+        ChecksumAlgorithm.CRC64NVME
+      ];
+    }
+  });
+
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
-  var import_polyfills306, selectChecksumAlgorithmFunction;
+  var import_polyfills307, selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
-      import_polyfills306 = __toESM(require_polyfills());
+      import_polyfills307 = __toESM(require_polyfills());
       init_module2();
-      init_dist_es24();
+      init_dist_es25();
       init_constants();
       init_getCrc32ChecksumAlgorithmFunction_browser();
+      init_types2();
       selectChecksumAlgorithmFunction = (checksumAlgorithm, config) => {
+        const { checksumAlgorithms = {} } = config;
         switch (checksumAlgorithm) {
           case ChecksumAlgorithm.MD5:
-            return config.md5;
+            return checksumAlgorithms?.MD5 ?? config.md5;
           case ChecksumAlgorithm.CRC32:
-            return getCrc32ChecksumAlgorithmFunction();
+            return checksumAlgorithms?.CRC32 ?? getCrc32ChecksumAlgorithmFunction();
           case ChecksumAlgorithm.CRC32C:
-            return AwsCrc32c;
+            return checksumAlgorithms?.CRC32C ?? AwsCrc32c;
           case ChecksumAlgorithm.CRC64NVME:
             if (typeof crc64NvmeCrtContainer.CrtCrc64Nvme !== "function") {
-              return Crc64Nvme;
+              return checksumAlgorithms?.CRC64NVME ?? Crc64Nvme;
             }
-            return crc64NvmeCrtContainer.CrtCrc64Nvme;
+            return checksumAlgorithms?.CRC64NVME ?? crc64NvmeCrtContainer.CrtCrc64Nvme;
           case ChecksumAlgorithm.SHA1:
-            return config.sha1;
+            return checksumAlgorithms?.SHA1 ?? config.sha1;
           case ChecksumAlgorithm.SHA256:
-            return config.sha256;
+            return checksumAlgorithms?.SHA256 ?? config.sha256;
           default:
-            throw new Error(`Unsupported checksum algorithm: ${checksumAlgorithm}`);
+            if (checksumAlgorithms?.[checksumAlgorithm]) {
+              return checksumAlgorithms[checksumAlgorithm];
+            }
+            throw new Error(`The checksum algorithm "${checksumAlgorithm}" is not supported by the client. Select one of ${CLIENT_SUPPORTED_ALGORITHMS}, or provide an implementation to  the client constructor checksums field.`);
         }
       };
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
-  var import_polyfills307, stringHasher;
+  var import_polyfills308, stringHasher;
   var init_stringHasher = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
-      import_polyfills307 = __toESM(require_polyfills());
-      init_dist_es6();
+      import_polyfills308 = __toESM(require_polyfills());
+      init_dist_es5();
       stringHasher = (checksumAlgorithmFn, body) => {
         const hash = new checksumAlgorithmFn();
         hash.update(toUint8Array(body || ""));
@@ -76667,13 +74828,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
-  var import_polyfills308, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
+  var import_polyfills309, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
-      import_polyfills308 = __toESM(require_polyfills());
-      init_dist_es22();
+      import_polyfills309 = __toESM(require_polyfills());
+      init_dist_es23();
       init_dist_es2();
-      init_dist_es12();
+      init_dist_es11();
       init_constants();
       init_getChecksumAlgorithmForRequest();
       init_getChecksumLocationName();
@@ -76790,11 +74951,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
-  var import_polyfills309, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
+  var import_polyfills310, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
-      import_polyfills309 = __toESM(require_polyfills());
-      init_dist_es22();
+      import_polyfills310 = __toESM(require_polyfills());
+      init_dist_es23();
       init_constants();
       flexibleChecksumsInputMiddlewareOptions = {
         name: "flexibleChecksumsInputMiddleware",
@@ -76835,29 +74996,32 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
-  var import_polyfills310, getChecksumAlgorithmListForResponse;
+  var import_polyfills311, getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
-      import_polyfills310 = __toESM(require_polyfills());
+      import_polyfills311 = __toESM(require_polyfills());
       init_types2();
       getChecksumAlgorithmListForResponse = (responseAlgorithms = []) => {
         const validChecksumAlgorithms = [];
-        for (const algorithm of PRIORITY_ORDER_ALGORITHMS) {
-          if (!responseAlgorithms.includes(algorithm) || !CLIENT_SUPPORTED_ALGORITHMS.includes(algorithm)) {
-            continue;
+        let i2 = PRIORITY_ORDER_ALGORITHMS.length;
+        for (const algorithm of responseAlgorithms) {
+          const priority = PRIORITY_ORDER_ALGORITHMS.indexOf(algorithm);
+          if (priority !== -1) {
+            validChecksumAlgorithms[priority] = algorithm;
+          } else {
+            validChecksumAlgorithms[i2++] = algorithm;
           }
-          validChecksumAlgorithms.push(algorithm);
         }
-        return validChecksumAlgorithms;
+        return validChecksumAlgorithms.filter(Boolean);
       };
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
-  var import_polyfills311, isChecksumWithPartNumber;
+  var import_polyfills312, isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
-      import_polyfills311 = __toESM(require_polyfills());
+      import_polyfills312 = __toESM(require_polyfills());
       isChecksumWithPartNumber = (checksum) => {
         const lastHyphenIndex = checksum.lastIndexOf("-");
         if (lastHyphenIndex !== -1) {
@@ -76875,21 +75039,21 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
-  var import_polyfills312, getChecksum;
+  var import_polyfills313, getChecksum;
   var init_getChecksum = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
-      import_polyfills312 = __toESM(require_polyfills());
+      import_polyfills313 = __toESM(require_polyfills());
       init_stringHasher();
       getChecksum = async (body, { checksumAlgorithmFn, base64Encoder }) => base64Encoder(await stringHasher(checksumAlgorithmFn, body));
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
-  var import_polyfills313, validateChecksumFromResponse;
+  var import_polyfills314, validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
-      import_polyfills313 = __toESM(require_polyfills());
-      init_dist_es12();
+      import_polyfills314 = __toESM(require_polyfills());
+      init_dist_es11();
       init_constants();
       init_getChecksum();
       init_getChecksumAlgorithmListForResponse();
@@ -76936,10 +75100,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
-  var import_polyfills314, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
+  var import_polyfills315, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
-      import_polyfills314 = __toESM(require_polyfills());
+      import_polyfills315 = __toESM(require_polyfills());
       init_dist_es2();
       init_getChecksumAlgorithmListForResponse();
       init_getChecksumLocationName();
@@ -76962,7 +75126,15 @@ ${toHex(hashedRequest)}`;
         const { requestValidationModeMember, responseAlgorithms } = middlewareConfig;
         if (requestValidationModeMember && input[requestValidationModeMember] === "ENABLED") {
           const { clientName, commandName } = context;
-          const isS3WholeObjectMultipartGetResponseChecksum = clientName === "S3Client" && commandName === "GetObjectCommand" && getChecksumAlgorithmListForResponse(responseAlgorithms).every((algorithm) => {
+          const customChecksumAlgorithms = Object.keys(config.checksumAlgorithms ?? {}).filter((algorithm) => {
+            const responseHeader = getChecksumLocationName(algorithm);
+            return response.headers[responseHeader] !== void 0;
+          });
+          const algoList = getChecksumAlgorithmListForResponse([
+            ...responseAlgorithms ?? [],
+            ...customChecksumAlgorithms
+          ]);
+          const isS3WholeObjectMultipartGetResponseChecksum = clientName === "S3Client" && commandName === "GetObjectCommand" && algoList.every((algorithm) => {
             const responseHeader = getChecksumLocationName(algorithm);
             const checksumFromResponse = response.headers[responseHeader];
             return !checksumFromResponse || isChecksumWithPartNumber(checksumFromResponse);
@@ -76972,7 +75144,7 @@ ${toHex(hashedRequest)}`;
           }
           await validateChecksumFromResponse(response, {
             config,
-            responseAlgorithms,
+            responseAlgorithms: algoList,
             logger: context.logger
           });
         }
@@ -76982,10 +75154,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
-  var import_polyfills315, getFlexibleChecksumsPlugin;
+  var import_polyfills316, getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
-      import_polyfills315 = __toESM(require_polyfills());
+      import_polyfills316 = __toESM(require_polyfills());
       init_flexibleChecksumsInputMiddleware();
       init_flexibleChecksumsMiddleware();
       init_flexibleChecksumsResponseMiddleware();
@@ -77000,10 +75172,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
-  var import_polyfills316, resolveFlexibleChecksumsConfig;
+  var import_polyfills317, resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
-      import_polyfills316 = __toESM(require_polyfills());
+      import_polyfills317 = __toESM(require_polyfills());
       init_dist_es4();
       init_constants();
       resolveFlexibleChecksumsConfig = (input) => {
@@ -77011,17 +75183,18 @@ ${toHex(hashedRequest)}`;
         return Object.assign(input, {
           requestChecksumCalculation: normalizeProvider(requestChecksumCalculation ?? DEFAULT_REQUEST_CHECKSUM_CALCULATION),
           responseChecksumValidation: normalizeProvider(responseChecksumValidation ?? DEFAULT_RESPONSE_CHECKSUM_VALIDATION),
-          requestStreamBufferSize: Number(requestStreamBufferSize ?? 0)
+          requestStreamBufferSize: Number(requestStreamBufferSize ?? 0),
+          checksumAlgorithms: input.checksumAlgorithms ?? {}
         });
       };
     }
   });
 
   // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
-  var import_polyfills317;
-  var init_dist_es25 = __esm({
+  var import_polyfills318;
+  var init_dist_es26 = __esm({
     "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
-      import_polyfills317 = __toESM(require_polyfills());
+      import_polyfills318 = __toESM(require_polyfills());
       init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS();
       init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS();
       init_constants();
@@ -77035,10 +75208,10 @@ ${toHex(hashedRequest)}`;
   function resolveHostHeaderConfig(input) {
     return input;
   }
-  var import_polyfills318, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
-  var init_dist_es26 = __esm({
+  var import_polyfills319, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
+  var init_dist_es27 = __esm({
     "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
-      import_polyfills318 = __toESM(require_polyfills());
+      import_polyfills319 = __toESM(require_polyfills());
       init_dist_es2();
       hostHeaderMiddleware = (options) => (next) => async (args) => {
         if (!HttpRequest.isInstance(args.request))
@@ -77072,10 +75245,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
-  var import_polyfills319, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
+  var import_polyfills320, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
-      import_polyfills319 = __toESM(require_polyfills());
+      import_polyfills320 = __toESM(require_polyfills());
       loggerMiddleware = () => (next, context) => async (args) => {
         try {
           const response = await next(args);
@@ -77121,19 +75294,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
-  var import_polyfills320;
-  var init_dist_es27 = __esm({
+  var import_polyfills321;
+  var init_dist_es28 = __esm({
     "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
-      import_polyfills320 = __toESM(require_polyfills());
+      import_polyfills321 = __toESM(require_polyfills());
       init_loggerMiddleware();
     }
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
-  var import_polyfills321, recursionDetectionMiddlewareOptions;
+  var import_polyfills322, recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
-      import_polyfills321 = __toESM(require_polyfills());
+      import_polyfills322 = __toESM(require_polyfills());
       recursionDetectionMiddlewareOptions = {
         step: "build",
         tags: ["RECURSION_DETECTION"],
@@ -77145,19 +75318,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
-  var import_polyfills322, recursionDetectionMiddleware;
+  var import_polyfills323, recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
-      import_polyfills322 = __toESM(require_polyfills());
+      import_polyfills323 = __toESM(require_polyfills());
       recursionDetectionMiddleware = () => (next) => async (args) => next(args);
     }
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
-  var import_polyfills323, getRecursionDetectionPlugin;
+  var import_polyfills324, getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
-      import_polyfills323 = __toESM(require_polyfills());
+      import_polyfills324 = __toESM(require_polyfills());
       init_configuration();
       init_recursionDetectionMiddleware_browser();
       getRecursionDetectionPlugin = (options) => ({
@@ -77169,10 +75342,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
-  var import_polyfills324;
-  var init_dist_es28 = __esm({
+  var import_polyfills325;
+  var init_dist_es29 = __esm({
     "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
-      import_polyfills324 = __toESM(require_polyfills());
+      import_polyfills325 = __toESM(require_polyfills());
       init_getRecursionDetectionPlugin();
       init_recursionDetectionMiddleware_browser();
     }
@@ -77195,12 +75368,12 @@ ${toHex(hashedRequest)}`;
       return next({ ...args });
     };
   }
-  var import_polyfills325, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
+  var import_polyfills326, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
-      import_polyfills325 = __toESM(require_polyfills());
+      import_polyfills326 = __toESM(require_polyfills());
       init_dist_es2();
-      init_dist_es20();
+      init_dist_es21();
       CONTENT_LENGTH_HEADER = "content-length";
       DECODED_CONTENT_LENGTH_HEADER = "x-amz-decoded-content-length";
       checkContentLengthHeaderMiddlewareOptions = {
@@ -77218,10 +75391,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
-  var import_polyfills326, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
+  var import_polyfills327, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
-      import_polyfills326 = __toESM(require_polyfills());
+      import_polyfills327 = __toESM(require_polyfills());
       regionRedirectEndpointMiddleware = (config) => {
         return (next, context) => async (args) => {
           const originalRegion = await config.region();
@@ -77293,10 +75466,10 @@ ${toHex(hashedRequest)}`;
       }
     };
   }
-  var import_polyfills327, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
+  var import_polyfills328, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
-      import_polyfills327 = __toESM(require_polyfills());
+      import_polyfills328 = __toESM(require_polyfills());
       init_region_redirect_endpoint_middleware();
       regionRedirectMiddlewareOptions = {
         step: "initialize",
@@ -77314,12 +75487,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
-  var import_polyfills328, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
+  var import_polyfills329, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
-      import_polyfills328 = __toESM(require_polyfills());
+      import_polyfills329 = __toESM(require_polyfills());
       init_dist_es2();
-      init_dist_es20();
+      init_dist_es21();
       s3ExpiresMiddleware = (config) => {
         return (next, context) => async (args) => {
           const result = await next(args);
@@ -77354,10 +75527,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
-  var import_polyfills329, S3ExpressIdentityCache;
+  var import_polyfills330, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
-      import_polyfills329 = __toESM(require_polyfills());
+      import_polyfills330 = __toESM(require_polyfills());
       S3ExpressIdentityCache = class _S3ExpressIdentityCache {
         data;
         lastPurgeTime = Date.now();
@@ -77401,10 +75574,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
-  var import_polyfills330, S3ExpressIdentityCacheEntry;
+  var import_polyfills331, S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
-      import_polyfills330 = __toESM(require_polyfills());
+      import_polyfills331 = __toESM(require_polyfills());
       S3ExpressIdentityCacheEntry = class {
         _identity;
         isRefreshing;
@@ -77423,10 +75596,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
-  var import_polyfills331, S3ExpressIdentityProviderImpl;
+  var import_polyfills332, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
-      import_polyfills331 = __toESM(require_polyfills());
+      import_polyfills332 = __toESM(require_polyfills());
       init_S3ExpressIdentityCache();
       init_S3ExpressIdentityCacheEntry();
       S3ExpressIdentityProviderImpl = class _S3ExpressIdentityProviderImpl {
@@ -77480,10 +75653,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
-  var import_polyfills332, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
+  var import_polyfills333, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants4 = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
-      import_polyfills332 = __toESM(require_polyfills());
+      import_polyfills333 = __toESM(require_polyfills());
       S3_EXPRESS_BUCKET_TYPE = "Directory";
       S3_EXPRESS_BACKEND = "S3Express";
       S3_EXPRESS_AUTH_SCHEME = "sigv4-s3express";
@@ -77513,11 +75686,11 @@ ${toHex(hashedRequest)}`;
     };
     privateAccess.credentialProvider = overrideCredentialsProviderOnce;
   }
-  var import_polyfills333, SignatureV4S3Express;
+  var import_polyfills334, SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
-      import_polyfills333 = __toESM(require_polyfills());
-      init_dist_es17();
+      import_polyfills334 = __toESM(require_polyfills());
+      init_dist_es18();
       init_constants4();
       SignatureV4S3Express = class extends SignatureV4 {
         async signWithCredentials(requestToSign, credentials, options) {
@@ -77542,11 +75715,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
-  var import_polyfills334, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
+  var import_polyfills335, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
-      import_polyfills334 = __toESM(require_polyfills());
-      init_dist_es22();
+      import_polyfills335 = __toESM(require_polyfills());
+      init_dist_es23();
       init_dist_es2();
       init_constants4();
       s3ExpressMiddleware = (options) => {
@@ -77590,10 +75763,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
-  var import_polyfills335, signS3Express;
+  var import_polyfills336, signS3Express;
   var init_signS3Express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
-      import_polyfills335 = __toESM(require_polyfills());
+      import_polyfills336 = __toESM(require_polyfills());
       signS3Express = async (s3ExpressIdentity, signingOptions, request, sigV4MultiRegionSigner) => {
         const signedRequest = await sigV4MultiRegionSigner.signWithCredentials(request, s3ExpressIdentity, {});
         if (signedRequest.headers["X-Amz-Security-Token"] || signedRequest.headers["x-amz-security-token"]) {
@@ -77605,11 +75778,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
-  var import_polyfills336, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
+  var import_polyfills337, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
-      import_polyfills336 = __toESM(require_polyfills());
-      init_dist_es14();
+      import_polyfills337 = __toESM(require_polyfills());
+      init_dist_es15();
       init_dist_es2();
       init_dist_es4();
       init_signS3Express();
@@ -77650,10 +75823,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
-  var import_polyfills337;
+  var import_polyfills338;
   var init_s3_express = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
-      import_polyfills337 = __toESM(require_polyfills());
+      import_polyfills338 = __toESM(require_polyfills());
       init_S3ExpressIdentityProviderImpl();
       init_SignatureV4S3Express();
       init_s3ExpressMiddleware();
@@ -77662,10 +75835,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
-  var import_polyfills338, resolveS3Config;
+  var import_polyfills339, resolveS3Config;
   var init_s3Configuration = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
-      import_polyfills338 = __toESM(require_polyfills());
+      import_polyfills339 = __toESM(require_polyfills());
       init_s3_express();
       resolveS3Config = (input, { session }) => {
         const [s3ClientProvider, CreateSessionCommandCtor] = session;
@@ -77686,12 +75859,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
-  var import_polyfills339, THROW_IF_EMPTY_BODY, MAX_BYTES_TO_INSPECT, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
+  var import_polyfills340, THROW_IF_EMPTY_BODY, MAX_BYTES_TO_INSPECT, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
-      import_polyfills339 = __toESM(require_polyfills());
+      import_polyfills340 = __toESM(require_polyfills());
       init_dist_es2();
-      init_dist_es12();
+      init_dist_es11();
       THROW_IF_EMPTY_BODY = {
         CopyObjectCommand: true,
         UploadPartCopyCommand: true,
@@ -77759,10 +75932,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
-  var import_polyfills340, validate;
-  var init_dist_es29 = __esm({
+  var import_polyfills341, validate;
+  var init_dist_es30 = __esm({
     "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
-      import_polyfills340 = __toESM(require_polyfills());
+      import_polyfills341 = __toESM(require_polyfills());
       validate = (str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6;
     }
   });
@@ -77796,10 +75969,10 @@ ${toHex(hashedRequest)}`;
       return next(args);
     };
   }
-  var import_polyfills341, bucketEndpointMiddlewareOptions;
+  var import_polyfills342, bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
-      import_polyfills341 = __toESM(require_polyfills());
+      import_polyfills342 = __toESM(require_polyfills());
       bucketEndpointMiddlewareOptions = {
         name: "bucketEndpointMiddleware",
         override: true,
@@ -77821,11 +75994,11 @@ ${toHex(hashedRequest)}`;
       return next({ ...args });
     };
   }
-  var import_polyfills342, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
+  var import_polyfills343, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
-      import_polyfills342 = __toESM(require_polyfills());
-      init_dist_es29();
+      import_polyfills343 = __toESM(require_polyfills());
+      init_dist_es30();
       init_bucket_endpoint_middleware();
       validateBucketNameMiddlewareOptions = {
         step: "initialize",
@@ -77843,10 +76016,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
-  var import_polyfills343;
-  var init_dist_es30 = __esm({
+  var import_polyfills344;
+  var init_dist_es31 = __esm({
     "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
-      import_polyfills343 = __toESM(require_polyfills());
+      import_polyfills344 = __toESM(require_polyfills());
       init_check_content_length_header();
       init_region_redirect_endpoint_middleware();
       init_region_redirect_middleware();
@@ -77884,20 +76057,20 @@ ${toHex(hashedRequest)}`;
       }
     });
   }
-  var import_polyfills344, DEFAULT_UA_APP_ID;
+  var import_polyfills345, DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
     "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
-      import_polyfills344 = __toESM(require_polyfills());
-      init_dist_es14();
+      import_polyfills345 = __toESM(require_polyfills());
+      init_dist_es15();
       DEFAULT_UA_APP_ID = void 0;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
-  var import_polyfills345, EndpointCache;
+  var import_polyfills346, EndpointCache;
   var init_EndpointCache = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
-      import_polyfills345 = __toESM(require_polyfills());
+      import_polyfills346 = __toESM(require_polyfills());
       EndpointCache = class {
         capacity;
         data = /* @__PURE__ */ new Map();
@@ -77952,20 +76125,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
-  var import_polyfills346, IP_V4_REGEX, isIpAddress;
+  var import_polyfills347, IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
-      import_polyfills346 = __toESM(require_polyfills());
+      import_polyfills347 = __toESM(require_polyfills());
       IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
       isIpAddress = (value) => IP_V4_REGEX.test(value) || value.startsWith("[") && value.endsWith("]");
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
-  var import_polyfills347, VALID_HOST_LABEL_REGEX, isValidHostLabel;
+  var import_polyfills348, VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
-      import_polyfills347 = __toESM(require_polyfills());
+      import_polyfills348 = __toESM(require_polyfills());
       VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
       isValidHostLabel = (value, allowSubDomains = false) => {
         if (!allowSubDomains) {
@@ -77983,19 +76156,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
-  var import_polyfills348, customEndpointFunctions;
+  var import_polyfills349, customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
-      import_polyfills348 = __toESM(require_polyfills());
+      import_polyfills349 = __toESM(require_polyfills());
       customEndpointFunctions = {};
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
-  var import_polyfills349, debugId;
+  var import_polyfills350, debugId;
   var init_debugId = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
-      import_polyfills349 = __toESM(require_polyfills());
+      import_polyfills350 = __toESM(require_polyfills());
       debugId = "endpoints";
     }
   });
@@ -78013,28 +76186,28 @@ ${toHex(hashedRequest)}`;
     }
     return JSON.stringify(input, null, 2);
   }
-  var import_polyfills350;
+  var import_polyfills351;
   var init_toDebugString = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
-      import_polyfills350 = __toESM(require_polyfills());
+      import_polyfills351 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
-  var import_polyfills351;
+  var import_polyfills352;
   var init_debug = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
-      import_polyfills351 = __toESM(require_polyfills());
+      import_polyfills352 = __toESM(require_polyfills());
       init_debugId();
       init_toDebugString();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
-  var import_polyfills352, EndpointError;
+  var import_polyfills353, EndpointError;
   var init_EndpointError = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
-      import_polyfills352 = __toESM(require_polyfills());
+      import_polyfills353 = __toESM(require_polyfills());
       EndpointError = class extends Error {
         constructor(message) {
           super(message);
@@ -78045,58 +76218,58 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
-  var import_polyfills353;
+  var import_polyfills354;
   var init_EndpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
-      import_polyfills353 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
-  var import_polyfills354;
-  var init_EndpointRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills354 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
   var import_polyfills355;
-  var init_ErrorRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+  var init_EndpointRuleObject2 = __esm({
+    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills355 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
   var import_polyfills356;
-  var init_RuleSetObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
+  var init_ErrorRuleObject2 = __esm({
+    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       import_polyfills356 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
   var import_polyfills357;
-  var init_TreeRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+  var init_RuleSetObject2 = __esm({
+    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
       import_polyfills357 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
   var import_polyfills358;
-  var init_shared2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+  var init_TreeRuleObject2 = __esm({
+    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       import_polyfills358 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
   var import_polyfills359;
+  var init_shared2 = __esm({
+    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+      import_polyfills359 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  var import_polyfills360;
   var init_types3 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
-      import_polyfills359 = __toESM(require_polyfills());
+      import_polyfills360 = __toESM(require_polyfills());
       init_EndpointError();
       init_EndpointFunctions();
       init_EndpointRuleObject2();
@@ -78108,19 +76281,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
-  var import_polyfills360, booleanEquals;
+  var import_polyfills361, booleanEquals;
   var init_booleanEquals = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
-      import_polyfills360 = __toESM(require_polyfills());
+      import_polyfills361 = __toESM(require_polyfills());
       booleanEquals = (value1, value2) => value1 === value2;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
-  var import_polyfills361, getAttrPathList;
+  var import_polyfills362, getAttrPathList;
   var init_getAttrPathList = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
-      import_polyfills361 = __toESM(require_polyfills());
+      import_polyfills362 = __toESM(require_polyfills());
       init_types3();
       getAttrPathList = (path2) => {
         const parts = path2.split(".");
@@ -78149,10 +76322,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
-  var import_polyfills362, getAttr;
+  var import_polyfills363, getAttr;
   var init_getAttr = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
-      import_polyfills362 = __toESM(require_polyfills());
+      import_polyfills363 = __toESM(require_polyfills());
       init_types3();
       init_getAttrPathList();
       getAttr = (value, path2) => getAttrPathList(path2).reduce((acc, index) => {
@@ -78167,28 +76340,28 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
-  var import_polyfills363, isSet;
+  var import_polyfills364, isSet;
   var init_isSet = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
-      import_polyfills363 = __toESM(require_polyfills());
+      import_polyfills364 = __toESM(require_polyfills());
       isSet = (value) => value != null;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
-  var import_polyfills364, not;
+  var import_polyfills365, not;
   var init_not = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
-      import_polyfills364 = __toESM(require_polyfills());
+      import_polyfills365 = __toESM(require_polyfills());
       not = (value) => !value;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
-  var import_polyfills365, DEFAULT_PORTS, parseURL;
+  var import_polyfills366, DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
-      import_polyfills365 = __toESM(require_polyfills());
+      import_polyfills366 = __toESM(require_polyfills());
       init_dist_es();
       init_isIpAddress();
       DEFAULT_PORTS = {
@@ -78240,21 +76413,21 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
-  var import_polyfills366, stringEquals;
+  var import_polyfills367, stringEquals;
   var init_stringEquals = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
-      import_polyfills366 = __toESM(require_polyfills());
+      import_polyfills367 = __toESM(require_polyfills());
       stringEquals = (value1, value2) => value1 === value2;
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
-  var import_polyfills367, substring;
+  var import_polyfills368, substring;
   var init_substring = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
-      import_polyfills367 = __toESM(require_polyfills());
+      import_polyfills368 = __toESM(require_polyfills());
       substring = (input, start, stop, reverse) => {
-        if (start >= stop || input.length < stop) {
+        if (start >= stop || input.length < stop || /[^\u0000-\u007f]/.test(input)) {
           return null;
         }
         if (!reverse) {
@@ -78266,19 +76439,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
-  var import_polyfills368, uriEncode;
+  var import_polyfills369, uriEncode;
   var init_uriEncode = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
-      import_polyfills368 = __toESM(require_polyfills());
+      import_polyfills369 = __toESM(require_polyfills());
       uriEncode = (value) => encodeURIComponent(value).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
-  var import_polyfills369;
+  var import_polyfills370;
   var init_lib = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
-      import_polyfills369 = __toESM(require_polyfills());
+      import_polyfills370 = __toESM(require_polyfills());
       init_booleanEquals();
       init_getAttr();
       init_isSet();
@@ -78292,10 +76465,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
-  var import_polyfills370, endpointFunctions;
+  var import_polyfills371, endpointFunctions;
   var init_endpointFunctions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
-      import_polyfills370 = __toESM(require_polyfills());
+      import_polyfills371 = __toESM(require_polyfills());
       init_lib();
       endpointFunctions = {
         booleanEquals,
@@ -78312,10 +76485,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
-  var import_polyfills371, evaluateTemplate;
+  var import_polyfills372, evaluateTemplate;
   var init_evaluateTemplate = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
-      import_polyfills371 = __toESM(require_polyfills());
+      import_polyfills372 = __toESM(require_polyfills());
       init_lib();
       evaluateTemplate = (template, options) => {
         const evaluatedTemplateArr = [];
@@ -78355,10 +76528,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
-  var import_polyfills372, getReferenceValue;
+  var import_polyfills373, getReferenceValue;
   var init_getReferenceValue = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
-      import_polyfills372 = __toESM(require_polyfills());
+      import_polyfills373 = __toESM(require_polyfills());
       getReferenceValue = ({ ref }, options) => {
         const referenceRecord = {
           ...options.endpointParams,
@@ -78370,10 +76543,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
-  var import_polyfills373, evaluateExpression, callFunction, group;
+  var import_polyfills374, evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
-      import_polyfills373 = __toESM(require_polyfills());
+      import_polyfills374 = __toESM(require_polyfills());
       init_types3();
       init_customEndpointFunctions();
       init_endpointFunctions();
@@ -78405,19 +76578,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
-  var import_polyfills374;
+  var import_polyfills375;
   var init_callFunction = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
-      import_polyfills374 = __toESM(require_polyfills());
+      import_polyfills375 = __toESM(require_polyfills());
       init_evaluateExpression();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
-  var import_polyfills375, evaluateCondition;
+  var import_polyfills376, evaluateCondition;
   var init_evaluateCondition = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
-      import_polyfills375 = __toESM(require_polyfills());
+      import_polyfills376 = __toESM(require_polyfills());
       init_debug();
       init_types3();
       init_callFunction();
@@ -78436,10 +76609,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js
-  var import_polyfills376, evaluateConditions;
+  var import_polyfills377, evaluateConditions;
   var init_evaluateConditions = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateConditions.js"() {
-      import_polyfills376 = __toESM(require_polyfills());
+      import_polyfills377 = __toESM(require_polyfills());
       init_debug();
       init_evaluateCondition();
       evaluateConditions = (conditions = [], options) => {
@@ -78466,10 +76639,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
-  var import_polyfills377, getEndpointHeaders;
+  var import_polyfills378, getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
-      import_polyfills377 = __toESM(require_polyfills());
+      import_polyfills378 = __toESM(require_polyfills());
       init_types3();
       init_evaluateExpression();
       getEndpointHeaders = (headers, options) => Object.entries(headers).reduce((acc, [headerKey, headerVal]) => ({
@@ -78486,10 +76659,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
-  var import_polyfills378, getEndpointProperties, getEndpointProperty, group2;
+  var import_polyfills379, getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
-      import_polyfills378 = __toESM(require_polyfills());
+      import_polyfills379 = __toESM(require_polyfills());
       init_types3();
       init_evaluateTemplate();
       getEndpointProperties = (properties, options) => Object.entries(properties).reduce((acc, [propertyKey, propertyVal]) => ({
@@ -78522,10 +76695,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
-  var import_polyfills379, getEndpointUrl;
+  var import_polyfills380, getEndpointUrl;
   var init_getEndpointUrl = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
-      import_polyfills379 = __toESM(require_polyfills());
+      import_polyfills380 = __toESM(require_polyfills());
       init_types3();
       init_evaluateExpression();
       getEndpointUrl = (endpointUrl, options) => {
@@ -78544,10 +76717,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js
-  var import_polyfills380, evaluateEndpointRule;
+  var import_polyfills381, evaluateEndpointRule;
   var init_evaluateEndpointRule = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateEndpointRule.js"() {
-      import_polyfills380 = __toESM(require_polyfills());
+      import_polyfills381 = __toESM(require_polyfills());
       init_debug();
       init_evaluateConditions();
       init_getEndpointHeaders();
@@ -78579,10 +76752,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js
-  var import_polyfills381, evaluateErrorRule;
+  var import_polyfills382, evaluateErrorRule;
   var init_evaluateErrorRule = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateErrorRule.js"() {
-      import_polyfills381 = __toESM(require_polyfills());
+      import_polyfills382 = __toESM(require_polyfills());
       init_types3();
       init_evaluateConditions();
       init_evaluateExpression();
@@ -78601,10 +76774,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js
-  var import_polyfills382, evaluateRules, evaluateTreeRule, group3;
+  var import_polyfills383, evaluateRules, evaluateTreeRule, group3;
   var init_evaluateRules = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateRules.js"() {
-      import_polyfills382 = __toESM(require_polyfills());
+      import_polyfills383 = __toESM(require_polyfills());
       init_types3();
       init_evaluateConditions();
       init_evaluateEndpointRule();
@@ -78648,20 +76821,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/utils/index.js
-  var import_polyfills383;
+  var import_polyfills384;
   var init_utils2 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/utils/index.js"() {
-      import_polyfills383 = __toESM(require_polyfills());
+      import_polyfills384 = __toESM(require_polyfills());
       init_customEndpointFunctions();
       init_evaluateRules();
     }
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
-  var import_polyfills384, resolveEndpoint;
+  var import_polyfills385, resolveEndpoint;
   var init_resolveEndpoint = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
-      import_polyfills384 = __toESM(require_polyfills());
+      import_polyfills385 = __toESM(require_polyfills());
       init_debug();
       init_types3();
       init_utils2();
@@ -78689,10 +76862,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-endpoints/dist-es/index.js
-  var import_polyfills385;
-  var init_dist_es31 = __esm({
+  var import_polyfills386;
+  var init_dist_es32 = __esm({
     "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
-      import_polyfills385 = __toESM(require_polyfills());
+      import_polyfills386 = __toESM(require_polyfills());
       init_EndpointCache();
       init_isIpAddress();
       init_isValidHostLabel();
@@ -78703,20 +76876,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
-  var import_polyfills386;
+  var import_polyfills387;
   var init_isIpAddress2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
-      import_polyfills386 = __toESM(require_polyfills());
-      init_dist_es31();
+      import_polyfills387 = __toESM(require_polyfills());
+      init_dist_es32();
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
-  var import_polyfills387, isVirtualHostableS3Bucket;
+  var import_polyfills388, isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
-      import_polyfills387 = __toESM(require_polyfills());
-      init_dist_es31();
+      import_polyfills388 = __toESM(require_polyfills());
+      init_dist_es32();
       init_isIpAddress2();
       isVirtualHostableS3Bucket = (value, allowSubDomains = false) => {
         if (allowSubDomains) {
@@ -78745,10 +76918,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
-  var import_polyfills388, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
+  var import_polyfills389, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
-      import_polyfills388 = __toESM(require_polyfills());
+      import_polyfills389 = __toESM(require_polyfills());
       ARN_DELIMITER = ":";
       RESOURCE_DELIMITER = "/";
       parseArn = (value) => {
@@ -78928,7 +77101,7 @@ ${toHex(hashedRequest)}`;
           regionRegex: "^eusc\\-(de)\\-\\w+\\-\\d+$",
           regions: {
             "eusc-de-east-1": {
-              description: "EU (Germany)"
+              description: "AWS European Sovereign Cloud (Germany)"
             }
           }
         }, {
@@ -79045,10 +77218,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
-  var import_polyfills389, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
+  var import_polyfills390, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
-      import_polyfills389 = __toESM(require_polyfills());
+      import_polyfills390 = __toESM(require_polyfills());
       init_partitions();
       selectedPartitionsInfo = partitions_default;
       selectedUserAgentPrefix = "";
@@ -79086,11 +77259,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
-  var import_polyfills390, awsEndpointFunctions;
+  var import_polyfills391, awsEndpointFunctions;
   var init_aws = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
-      import_polyfills390 = __toESM(require_polyfills());
-      init_dist_es31();
+      import_polyfills391 = __toESM(require_polyfills());
+      init_dist_es32();
       init_isVirtualHostableS3Bucket();
       init_parseArn();
       init_partition();
@@ -79103,130 +77276,75 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/querystring-parser/dist-es/index.js
-  function parseQueryString(querystring) {
-    const query = {};
-    querystring = querystring.replace(/^\?/, "");
-    if (querystring) {
-      for (const pair of querystring.split("&")) {
-        let [key, value = null] = pair.split("=");
-        key = decodeURIComponent(key);
-        if (value) {
-          value = decodeURIComponent(value);
-        }
-        if (!(key in query)) {
-          query[key] = value;
-        } else if (Array.isArray(query[key])) {
-          query[key].push(value);
-        } else {
-          query[key] = [query[key], value];
-        }
-      }
-    }
-    return query;
-  }
-  var import_polyfills391;
-  var init_dist_es32 = __esm({
-    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
-      import_polyfills391 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/url-parser/dist-es/index.js
-  var import_polyfills392, parseUrl;
-  var init_dist_es33 = __esm({
-    "node_modules/@smithy/url-parser/dist-es/index.js"() {
-      import_polyfills392 = __toESM(require_polyfills());
-      init_dist_es32();
-      parseUrl = (url) => {
-        if (typeof url === "string") {
-          return parseUrl(new URL(url));
-        }
-        const { hostname, pathname, port, protocol, search } = url;
-        let query;
-        if (search) {
-          query = parseQueryString(search);
-        }
-        return {
-          hostname,
-          port: port ? parseInt(port) : void 0,
-          protocol,
-          path: pathname,
-          query
-        };
-      };
-    }
-  });
-
   // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
-  var import_polyfills393;
+  var import_polyfills392;
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
-      import_polyfills393 = __toESM(require_polyfills());
+      import_polyfills392 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
-  var import_polyfills394;
+  var import_polyfills393;
   var init_resolveEndpoint2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
-      import_polyfills394 = __toESM(require_polyfills());
+      import_polyfills393 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
-  var import_polyfills395;
+  var import_polyfills394;
   var init_EndpointError2 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
-      import_polyfills395 = __toESM(require_polyfills());
+      import_polyfills394 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
-  var import_polyfills396;
+  var import_polyfills395;
   var init_EndpointRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
-      import_polyfills396 = __toESM(require_polyfills());
+      import_polyfills395 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
-  var import_polyfills397;
+  var import_polyfills396;
   var init_ErrorRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
-      import_polyfills397 = __toESM(require_polyfills());
+      import_polyfills396 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
-  var import_polyfills398;
+  var import_polyfills397;
   var init_RuleSetObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
-      import_polyfills398 = __toESM(require_polyfills());
+      import_polyfills397 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
-  var import_polyfills399;
+  var import_polyfills398;
   var init_TreeRuleObject3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
-      import_polyfills399 = __toESM(require_polyfills());
+      import_polyfills398 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
-  var import_polyfills400;
+  var import_polyfills399;
   var init_shared3 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
-      import_polyfills400 = __toESM(require_polyfills());
+      import_polyfills399 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
-  var import_polyfills401;
+  var import_polyfills400;
   var init_types4 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
-      import_polyfills401 = __toESM(require_polyfills());
+      import_polyfills400 = __toESM(require_polyfills());
       init_EndpointError2();
       init_EndpointRuleObject3();
       init_ErrorRuleObject3();
@@ -79237,10 +77355,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
-  var import_polyfills402;
-  var init_dist_es34 = __esm({
+  var import_polyfills401;
+  var init_dist_es33 = __esm({
     "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
-      import_polyfills402 = __toESM(require_polyfills());
+      import_polyfills401 = __toESM(require_polyfills());
       init_aws();
       init_partition();
       init_isIpAddress2();
@@ -79250,777 +77368,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
-  async function checkFeatures(context, config, args) {
-    const request = args.request;
-    if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
-      setFeature(context, "PROTOCOL_RPC_V2_CBOR", "M");
-    }
-    if (typeof config.retryStrategy === "function") {
-      const retryStrategy = await config.retryStrategy();
-      if (typeof retryStrategy.acquireInitialRetryToken === "function") {
-        if (retryStrategy.constructor?.name?.includes("Adaptive")) {
-          setFeature(context, "RETRY_MODE_ADAPTIVE", "F");
-        } else {
-          setFeature(context, "RETRY_MODE_STANDARD", "E");
-        }
-      } else {
-        setFeature(context, "RETRY_MODE_LEGACY", "D");
-      }
-    }
-    if (typeof config.accountIdEndpointMode === "function") {
-      const endpointV2 = context.endpointV2;
-      if (String(endpointV2?.url?.hostname).match(ACCOUNT_ID_ENDPOINT_REGEX)) {
-        setFeature(context, "ACCOUNT_ID_ENDPOINT", "O");
-      }
-      switch (await config.accountIdEndpointMode?.()) {
-        case "disabled":
-          setFeature(context, "ACCOUNT_ID_MODE_DISABLED", "Q");
-          break;
-        case "preferred":
-          setFeature(context, "ACCOUNT_ID_MODE_PREFERRED", "P");
-          break;
-        case "required":
-          setFeature(context, "ACCOUNT_ID_MODE_REQUIRED", "R");
-          break;
-      }
-    }
-    const identity = context.__smithy_context?.selectedHttpAuthScheme?.identity;
-    if (identity?.$source) {
-      const credentials = identity;
-      if (credentials.accountId) {
-        setFeature(context, "RESOLVED_ACCOUNT_ID", "T");
-      }
-      for (const [key, value] of Object.entries(credentials.$source ?? {})) {
-        setFeature(context, key, value);
-      }
-    }
-  }
-  var import_polyfills403, ACCOUNT_ID_ENDPOINT_REGEX;
-  var init_check_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
-      import_polyfills403 = __toESM(require_polyfills());
-      init_dist_es22();
-      ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
-    }
-  });
-
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
-  var import_polyfills404, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
-  var init_constants5 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
-      import_polyfills404 = __toESM(require_polyfills());
-      USER_AGENT = "user-agent";
-      X_AMZ_USER_AGENT = "x-amz-user-agent";
-      SPACE = " ";
-      UA_NAME_SEPARATOR = "/";
-      UA_NAME_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w]/g;
-      UA_VALUE_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w#]/g;
-      UA_ESCAPE_CHAR = "-";
-    }
-  });
-
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
-  function encodeFeatures(features) {
-    let buffer = "";
-    for (const key in features) {
-      const val = features[key];
-      if (buffer.length + val.length + 1 <= BYTE_LIMIT) {
-        if (buffer.length) {
-          buffer += "," + val;
-        } else {
-          buffer += val;
-        }
-        continue;
-      }
-      break;
-    }
-    return buffer;
-  }
-  var import_polyfills405, BYTE_LIMIT;
-  var init_encode_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
-      import_polyfills405 = __toESM(require_polyfills());
-      BYTE_LIMIT = 1024;
-    }
-  });
-
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
-  var import_polyfills406, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
-  var init_user_agent_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
-      import_polyfills406 = __toESM(require_polyfills());
-      init_dist_es34();
-      init_dist_es2();
-      init_check_features();
-      init_constants5();
-      init_encode_features();
-      userAgentMiddleware = (options) => (next, context) => async (args) => {
-        const { request } = args;
-        if (!HttpRequest.isInstance(request)) {
-          return next(args);
-        }
-        const { headers } = request;
-        const userAgent = context?.userAgent?.map(escapeUserAgent) || [];
-        const defaultUserAgent = (await options.defaultUserAgentProvider()).map(escapeUserAgent);
-        await checkFeatures(context, options, args);
-        const awsContext = context;
-        defaultUserAgent.push(`m/${encodeFeatures(Object.assign({}, context.__smithy_context?.features, awsContext.__aws_sdk_context?.features))}`);
-        const customUserAgent = options?.customUserAgent?.map(escapeUserAgent) || [];
-        const appId = await options.userAgentAppId();
-        if (appId) {
-          defaultUserAgent.push(escapeUserAgent([`app`, `${appId}`]));
-        }
-        const prefix = getUserAgentPrefix();
-        const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
-        const normalUAValue = [
-          ...defaultUserAgent.filter((section) => section.startsWith("aws-sdk-")),
-          ...customUserAgent
-        ].join(SPACE);
-        if (options.runtime !== "browser") {
-          if (normalUAValue) {
-            headers[X_AMZ_USER_AGENT] = headers[X_AMZ_USER_AGENT] ? `${headers[USER_AGENT]} ${normalUAValue}` : normalUAValue;
-          }
-          headers[USER_AGENT] = sdkUserAgentValue;
-        } else {
-          headers[X_AMZ_USER_AGENT] = sdkUserAgentValue;
-        }
-        return next({
-          ...args,
-          request
-        });
-      };
-      escapeUserAgent = (userAgentPair) => {
-        const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
-        const version = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
-        const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
-        const prefix = name.substring(0, prefixSeparatorIndex);
-        let uaName = name.substring(prefixSeparatorIndex + 1);
-        if (prefix === "api") {
-          uaName = uaName.toLowerCase();
-        }
-        return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
-          switch (index) {
-            case 0:
-              return item;
-            case 1:
-              return `${acc}/${item}`;
-            default:
-              return `${acc}#${item}`;
-          }
-        }, "");
-      };
-      getUserAgentMiddlewareOptions = {
-        name: "getUserAgentMiddleware",
-        step: "build",
-        priority: "low",
-        tags: ["SET_USER_AGENT", "USER_AGENT"],
-        override: true
-      };
-      getUserAgentPlugin = (config) => ({
-        applyToStack: (clientStack) => {
-          clientStack.add(userAgentMiddleware(config), getUserAgentMiddlewareOptions);
-        }
-      });
-    }
-  });
-
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
-  var import_polyfills407;
-  var init_dist_es35 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
-      import_polyfills407 = __toESM(require_polyfills());
-      init_configurations();
-      init_user_agent_middleware();
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
-  var import_polyfills408, DEFAULT_USE_DUALSTACK_ENDPOINT;
-  var init_NodeUseDualstackEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
-      import_polyfills408 = __toESM(require_polyfills());
-      DEFAULT_USE_DUALSTACK_ENDPOINT = false;
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
-  var import_polyfills409, DEFAULT_USE_FIPS_ENDPOINT;
-  var init_NodeUseFipsEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
-      import_polyfills409 = __toESM(require_polyfills());
-      DEFAULT_USE_FIPS_ENDPOINT = false;
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
-  var import_polyfills410;
-  var init_resolveCustomEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
-      import_polyfills410 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
-  var import_polyfills411;
-  var init_resolveEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
-      import_polyfills411 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
-  var import_polyfills412;
-  var init_endpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
-      import_polyfills412 = __toESM(require_polyfills());
-      init_NodeUseDualstackEndpointConfigOptions();
-      init_NodeUseFipsEndpointConfigOptions();
-      init_resolveCustomEndpointsConfig();
-      init_resolveEndpointsConfig();
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
-  var import_polyfills413;
-  var init_config2 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
-      import_polyfills413 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
-  var import_polyfills414, validRegions, checkRegion;
-  var init_checkRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
-      import_polyfills414 = __toESM(require_polyfills());
-      init_dist_es31();
-      validRegions = /* @__PURE__ */ new Set();
-      checkRegion = (region, check = isValidHostLabel) => {
-        if (!validRegions.has(region) && !check(region)) {
-          if (region === "*") {
-            console.warn(`@smithy/config-resolver WARN - Please use the caller region instead of "*". See "sigv4a" in https://github.com/aws/aws-sdk-js-v3/blob/main/supplemental-docs/CLIENTS.md.`);
-          } else {
-            throw new Error(`Region not accepted: region="${region}" is not a valid hostname component.`);
-          }
-        } else {
-          validRegions.add(region);
-        }
-      };
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
-  var import_polyfills415, isFipsRegion;
-  var init_isFipsRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
-      import_polyfills415 = __toESM(require_polyfills());
-      isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
-  var import_polyfills416, getRealRegion;
-  var init_getRealRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
-      import_polyfills416 = __toESM(require_polyfills());
-      init_isFipsRegion();
-      getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
-  var import_polyfills417, resolveRegionConfig;
-  var init_resolveRegionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
-      import_polyfills417 = __toESM(require_polyfills());
-      init_checkRegion();
-      init_getRealRegion();
-      init_isFipsRegion();
-      resolveRegionConfig = (input) => {
-        const { region, useFipsEndpoint } = input;
-        if (!region) {
-          throw new Error("Region is missing");
-        }
-        return Object.assign(input, {
-          region: async () => {
-            const providedRegion = typeof region === "function" ? await region() : region;
-            const realRegion = getRealRegion(providedRegion);
-            checkRegion(realRegion);
-            return realRegion;
-          },
-          useFipsEndpoint: async () => {
-            const providedRegion = typeof region === "string" ? region : await region();
-            if (isFipsRegion(providedRegion)) {
-              return true;
-            }
-            return typeof useFipsEndpoint !== "function" ? Promise.resolve(!!useFipsEndpoint) : useFipsEndpoint();
-          }
-        });
-      };
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
-  var import_polyfills418;
-  var init_regionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
-      import_polyfills418 = __toESM(require_polyfills());
-      init_config2();
-      init_resolveRegionConfig();
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
-  var import_polyfills419;
-  var init_PartitionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
-      import_polyfills419 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
-  var import_polyfills420;
-  var init_RegionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
-      import_polyfills420 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
-  var import_polyfills421;
-  var init_getRegionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
-      import_polyfills421 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
-  var import_polyfills422;
-  var init_regionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
-      import_polyfills422 = __toESM(require_polyfills());
-      init_PartitionHash();
-      init_RegionHash();
-      init_getRegionInfo();
-    }
-  });
-
-  // node_modules/@smithy/config-resolver/dist-es/index.js
-  var import_polyfills423;
-  var init_dist_es36 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
-      import_polyfills423 = __toESM(require_polyfills());
-      init_endpointsConfig();
-      init_regionConfig();
-      init_regionInfo();
-    }
-  });
-
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
-  var import_polyfills424, resolveEventStreamSerdeConfig;
-  var init_EventStreamSerdeConfig = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
-      import_polyfills424 = __toESM(require_polyfills());
-      resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
-        eventStreamMarshaller: input.eventStreamSerdeProvider(input)
-      });
-    }
-  });
-
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
-  var import_polyfills425;
-  var init_dist_es37 = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
-      import_polyfills425 = __toESM(require_polyfills());
-      init_EventStreamSerdeConfig();
-    }
-  });
-
-  // node_modules/@smithy/middleware-content-length/dist-es/index.js
-  function contentLengthMiddleware(bodyLengthChecker) {
-    return (next) => async (args) => {
-      const request = args.request;
-      if (HttpRequest.isInstance(request)) {
-        const { body, headers } = request;
-        if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER2) === -1) {
-          try {
-            const length = bodyLengthChecker(body);
-            request.headers = {
-              ...request.headers,
-              [CONTENT_LENGTH_HEADER2]: String(length)
-            };
-          } catch (error) {
-          }
-        }
-      }
-      return next({
-        ...args,
-        request
-      });
-    };
-  }
-  var import_polyfills426, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
-  var init_dist_es38 = __esm({
-    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
-      import_polyfills426 = __toESM(require_polyfills());
-      init_dist_es2();
-      CONTENT_LENGTH_HEADER2 = "content-length";
-      contentLengthMiddlewareOptions = {
-        step: "build",
-        tags: ["SET_CONTENT_LENGTH", "CONTENT_LENGTH"],
-        name: "contentLengthMiddleware",
-        override: true
-      };
-      getContentLengthPlugin = (options) => ({
-        applyToStack: (clientStack) => {
-          clientStack.add(contentLengthMiddleware(options.bodyLengthChecker), contentLengthMiddlewareOptions);
-        }
-      });
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
-  var import_polyfills427, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
-  var init_s3 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
-      import_polyfills427 = __toESM(require_polyfills());
-      resolveParamsForS3 = async (endpointParams) => {
-        const bucket = endpointParams?.Bucket || "";
-        if (typeof endpointParams.Bucket === "string") {
-          endpointParams.Bucket = bucket.replace(/#/g, encodeURIComponent("#")).replace(/\?/g, encodeURIComponent("?"));
-        }
-        if (isArnBucketName(bucket)) {
-          if (endpointParams.ForcePathStyle === true) {
-            throw new Error("Path-style addressing cannot be used with ARN buckets");
-          }
-        } else if (!isDnsCompatibleBucketName(bucket) || bucket.indexOf(".") !== -1 && !String(endpointParams.Endpoint).startsWith("http:") || bucket.toLowerCase() !== bucket || bucket.length < 3) {
-          endpointParams.ForcePathStyle = true;
-        }
-        if (endpointParams.DisableMultiRegionAccessPoints) {
-          endpointParams.disableMultiRegionAccessPoints = true;
-          endpointParams.DisableMRAP = true;
-        }
-        return endpointParams;
-      };
-      DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
-      IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
-      DOTS_PATTERN = /\.\./;
-      isDnsCompatibleBucketName = (bucketName) => DOMAIN_PATTERN.test(bucketName) && !IP_ADDRESS_PATTERN.test(bucketName) && !DOTS_PATTERN.test(bucketName);
-      isArnBucketName = (bucketName) => {
-        const [arn, partition2, service, , , bucket] = bucketName.split(":");
-        const isArn = arn === "arn" && bucketName.split(":").length >= 6;
-        const isValidArn = Boolean(isArn && partition2 && service && bucket);
-        if (isArn && !isValidArn) {
-          throw new Error(`Invalid ARN: ${bucketName} was an invalid ARN.`);
-        }
-        return isValidArn;
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
-  var import_polyfills428;
-  var init_service_customizations = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
-      import_polyfills428 = __toESM(require_polyfills());
-      init_s3();
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
-  var import_polyfills429, createConfigValueProvider;
-  var init_createConfigValueProvider = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
-      import_polyfills429 = __toESM(require_polyfills());
-      createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
-        const configProvider = async () => {
-          let configValue;
-          if (isClientContextParam) {
-            const clientContextParams = config.clientContextParams;
-            const nestedValue = clientContextParams?.[configKey];
-            configValue = nestedValue ?? config[configKey] ?? config[canonicalEndpointParamKey];
-          } else {
-            configValue = config[configKey] ?? config[canonicalEndpointParamKey];
-          }
-          if (typeof configValue === "function") {
-            return configValue();
-          }
-          return configValue;
-        };
-        if (configKey === "credentialScope" || canonicalEndpointParamKey === "CredentialScope") {
-          return async () => {
-            const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
-            const configValue = credentials?.credentialScope ?? credentials?.CredentialScope;
-            return configValue;
-          };
-        }
-        if (configKey === "accountId" || canonicalEndpointParamKey === "AccountId") {
-          return async () => {
-            const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
-            const configValue = credentials?.accountId ?? credentials?.AccountId;
-            return configValue;
-          };
-        }
-        if (configKey === "endpoint" || canonicalEndpointParamKey === "endpoint") {
-          return async () => {
-            if (config.isCustomEndpoint === false) {
-              return void 0;
-            }
-            const endpoint = await configProvider();
-            if (endpoint && typeof endpoint === "object") {
-              if ("url" in endpoint) {
-                return endpoint.url.href;
-              }
-              if ("hostname" in endpoint) {
-                const { protocol, hostname, port, path: path2 } = endpoint;
-                return `${protocol}//${hostname}${port ? ":" + port : ""}${path2}`;
-              }
-            }
-            return endpoint;
-          };
-        }
-        return configProvider;
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
-  var import_polyfills430, getEndpointFromConfig;
-  var init_getEndpointFromConfig_browser = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
-      import_polyfills430 = __toESM(require_polyfills());
-      getEndpointFromConfig = async (serviceId) => void 0;
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
-  var import_polyfills431, toEndpointV1;
-  var init_toEndpointV1 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
-      import_polyfills431 = __toESM(require_polyfills());
-      init_dist_es33();
-      toEndpointV1 = (endpoint) => {
-        if (typeof endpoint === "object") {
-          if ("url" in endpoint) {
-            return parseUrl(endpoint.url);
-          }
-          return endpoint;
-        }
-        return parseUrl(endpoint);
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
-  var import_polyfills432, getEndpointFromInstructions, resolveParams;
-  var init_getEndpointFromInstructions = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
-      import_polyfills432 = __toESM(require_polyfills());
-      init_service_customizations();
-      init_createConfigValueProvider();
-      init_getEndpointFromConfig_browser();
-      init_toEndpointV1();
-      getEndpointFromInstructions = async (commandInput, instructionsSupplier, clientConfig, context) => {
-        if (!clientConfig.isCustomEndpoint) {
-          let endpointFromConfig;
-          if (clientConfig.serviceConfiguredEndpoint) {
-            endpointFromConfig = await clientConfig.serviceConfiguredEndpoint();
-          } else {
-            endpointFromConfig = await getEndpointFromConfig(clientConfig.serviceId);
-          }
-          if (endpointFromConfig) {
-            clientConfig.endpoint = () => Promise.resolve(toEndpointV1(endpointFromConfig));
-            clientConfig.isCustomEndpoint = true;
-          }
-        }
-        const endpointParams = await resolveParams(commandInput, instructionsSupplier, clientConfig);
-        if (typeof clientConfig.endpointProvider !== "function") {
-          throw new Error("config.endpointProvider is not set.");
-        }
-        const endpoint = clientConfig.endpointProvider(endpointParams, context);
-        return endpoint;
-      };
-      resolveParams = async (commandInput, instructionsSupplier, clientConfig) => {
-        const endpointParams = {};
-        const instructions = instructionsSupplier?.getEndpointParameterInstructions?.() || {};
-        for (const [name, instruction] of Object.entries(instructions)) {
-          switch (instruction.type) {
-            case "staticContextParams":
-              endpointParams[name] = instruction.value;
-              break;
-            case "contextParams":
-              endpointParams[name] = commandInput[instruction.name];
-              break;
-            case "clientContextParams":
-            case "builtInParams":
-              endpointParams[name] = await createConfigValueProvider(instruction.name, name, clientConfig, instruction.type !== "builtInParams")();
-              break;
-            case "operationContextParams":
-              endpointParams[name] = instruction.get(commandInput);
-              break;
-            default:
-              throw new Error("Unrecognized endpoint parameter instruction: " + JSON.stringify(instruction));
-          }
-        }
-        if (Object.keys(instructions).length === 0) {
-          Object.assign(endpointParams, clientConfig);
-        }
-        if (String(clientConfig.serviceId).toLowerCase() === "s3") {
-          await resolveParamsForS3(endpointParams);
-        }
-        return endpointParams;
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
-  var import_polyfills433;
-  var init_adaptors = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
-      import_polyfills433 = __toESM(require_polyfills());
-      init_getEndpointFromInstructions();
-      init_toEndpointV1();
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
-  var import_polyfills434, endpointMiddleware;
-  var init_endpointMiddleware = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
-      import_polyfills434 = __toESM(require_polyfills());
-      init_dist_es14();
-      init_dist_es4();
-      init_getEndpointFromInstructions();
-      endpointMiddleware = ({ config, instructions }) => {
-        return (next, context) => async (args) => {
-          if (config.isCustomEndpoint) {
-            setFeature2(context, "ENDPOINT_OVERRIDE", "N");
-          }
-          const endpoint = await getEndpointFromInstructions(args.input, {
-            getEndpointParameterInstructions() {
-              return instructions;
-            }
-          }, { ...config }, context);
-          context.endpointV2 = endpoint;
-          context.authSchemes = endpoint.properties?.authSchemes;
-          const authScheme = context.authSchemes?.[0];
-          if (authScheme) {
-            context["signing_region"] = authScheme.signingRegion;
-            context["signing_service"] = authScheme.signingName;
-            const smithyContext = getSmithyContext(context);
-            const httpAuthOption = smithyContext?.selectedHttpAuthScheme?.httpAuthOption;
-            if (httpAuthOption) {
-              httpAuthOption.signingProperties = Object.assign(httpAuthOption.signingProperties || {}, {
-                signing_region: authScheme.signingRegion,
-                signingRegion: authScheme.signingRegion,
-                signing_service: authScheme.signingName,
-                signingName: authScheme.signingName,
-                signingRegionSet: authScheme.signingRegionSet
-              }, authScheme.properties);
-            }
-          }
-          return next({
-            ...args
-          });
-        };
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
-  var import_polyfills435, endpointMiddlewareOptions, getEndpointPlugin;
-  var init_getEndpointPlugin = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
-      import_polyfills435 = __toESM(require_polyfills());
-      init_dist_es5();
-      init_endpointMiddleware();
-      endpointMiddlewareOptions = {
-        step: "serialize",
-        tags: ["ENDPOINT_PARAMETERS", "ENDPOINT_V2", "ENDPOINT"],
-        name: "endpointV2Middleware",
-        override: true,
-        relation: "before",
-        toMiddleware: serializerMiddlewareOption.name
-      };
-      getEndpointPlugin = (config, instructions) => ({
-        applyToStack: (clientStack) => {
-          clientStack.addRelativeTo(endpointMiddleware({
-            config,
-            instructions
-          }), endpointMiddlewareOptions);
-        }
-      });
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
-  var import_polyfills436, resolveEndpointConfig;
-  var init_resolveEndpointConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
-      import_polyfills436 = __toESM(require_polyfills());
-      init_dist_es4();
-      init_getEndpointFromConfig_browser();
-      init_toEndpointV1();
-      resolveEndpointConfig = (input) => {
-        const tls = input.tls ?? true;
-        const { endpoint, useDualstackEndpoint, useFipsEndpoint } = input;
-        const customEndpointProvider = endpoint != null ? async () => toEndpointV1(await normalizeProvider(endpoint)()) : void 0;
-        const isCustomEndpoint = !!endpoint;
-        const resolvedConfig = Object.assign(input, {
-          endpoint: customEndpointProvider,
-          tls,
-          isCustomEndpoint,
-          useDualstackEndpoint: normalizeProvider(useDualstackEndpoint ?? false),
-          useFipsEndpoint: normalizeProvider(useFipsEndpoint ?? false)
-        });
-        let configuredEndpointPromise = void 0;
-        resolvedConfig.serviceConfiguredEndpoint = async () => {
-          if (input.serviceId && !configuredEndpointPromise) {
-            configuredEndpointPromise = getEndpointFromConfig(input.serviceId);
-          }
-          return configuredEndpointPromise;
-        };
-        return resolvedConfig;
-      };
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
-  var import_polyfills437;
-  var init_resolveEndpointRequiredConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
-      import_polyfills437 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
-  var import_polyfills438;
-  var init_types5 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
-      import_polyfills438 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
-  var import_polyfills439;
-  var init_dist_es39 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
-      import_polyfills439 = __toESM(require_polyfills());
-      init_adaptors();
-      init_endpointMiddleware();
-      init_getEndpointPlugin();
-      init_resolveEndpointConfig();
-      init_resolveEndpointRequiredConfig();
-      init_types5();
-    }
-  });
-
   // node_modules/@smithy/util-retry/dist-es/config.js
-  var import_polyfills440, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
-  var init_config3 = __esm({
+  var import_polyfills402, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
+  var init_config2 = __esm({
     "node_modules/@smithy/util-retry/dist-es/config.js"() {
-      import_polyfills440 = __toESM(require_polyfills());
+      import_polyfills402 = __toESM(require_polyfills());
       (function(RETRY_MODES2) {
         RETRY_MODES2["STANDARD"] = "standard";
         RETRY_MODES2["ADAPTIVE"] = "adaptive";
@@ -80031,10 +77383,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/service-error-classification/dist-es/constants.js
-  var import_polyfills441, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
-  var init_constants6 = __esm({
+  var import_polyfills403, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
+  var init_constants5 = __esm({
     "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
-      import_polyfills441 = __toESM(require_polyfills());
+      import_polyfills403 = __toESM(require_polyfills());
       THROTTLING_ERROR_CODES = [
         "BandwidthLimitExceeded",
         "EC2ThrottledException",
@@ -80059,11 +77411,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/service-error-classification/dist-es/index.js
-  var import_polyfills442, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
-  var init_dist_es40 = __esm({
+  var import_polyfills404, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
+  var init_dist_es34 = __esm({
     "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
-      import_polyfills442 = __toESM(require_polyfills());
-      init_constants6();
+      import_polyfills404 = __toESM(require_polyfills());
+      init_constants5();
       isRetryableByTrait = (error) => error?.$retryable !== void 0;
       isClockSkewCorrectedError = (error) => error.$metadata?.clockSkewCorrected;
       isBrowserNetworkError = (error) => {
@@ -80096,11 +77448,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
-  var import_polyfills443, DefaultRateLimiter;
+  var import_polyfills405, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
     "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
-      import_polyfills443 = __toESM(require_polyfills());
-      init_dist_es40();
+      import_polyfills405 = __toESM(require_polyfills());
+      init_dist_es34();
       DefaultRateLimiter = class _DefaultRateLimiter {
         static setTimeoutFn = setTimeout;
         beta;
@@ -80212,10 +77564,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/constants.js
-  var import_polyfills444, DEFAULT_RETRY_DELAY_BASE, MAXIMUM_RETRY_DELAY, THROTTLING_RETRY_DELAY_BASE, INITIAL_RETRY_TOKENS, RETRY_COST, TIMEOUT_RETRY_COST, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
-  var init_constants7 = __esm({
+  var import_polyfills406, DEFAULT_RETRY_DELAY_BASE, MAXIMUM_RETRY_DELAY, THROTTLING_RETRY_DELAY_BASE, INITIAL_RETRY_TOKENS, RETRY_COST, TIMEOUT_RETRY_COST, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
+  var init_constants6 = __esm({
     "node_modules/@smithy/util-retry/dist-es/constants.js"() {
-      import_polyfills444 = __toESM(require_polyfills());
+      import_polyfills406 = __toESM(require_polyfills());
       DEFAULT_RETRY_DELAY_BASE = 100;
       MAXIMUM_RETRY_DELAY = 20 * 1e3;
       THROTTLING_RETRY_DELAY_BASE = 500;
@@ -80229,11 +77581,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js
-  var import_polyfills445, getDefaultRetryBackoffStrategy;
+  var import_polyfills407, getDefaultRetryBackoffStrategy;
   var init_defaultRetryBackoffStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/defaultRetryBackoffStrategy.js"() {
-      import_polyfills445 = __toESM(require_polyfills());
-      init_constants7();
+      import_polyfills407 = __toESM(require_polyfills());
+      init_constants6();
       getDefaultRetryBackoffStrategy = () => {
         let delayBase = DEFAULT_RETRY_DELAY_BASE;
         const computeNextBackoffDelay = (attempts) => {
@@ -80251,11 +77603,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js
-  var import_polyfills446, createDefaultRetryToken;
+  var import_polyfills408, createDefaultRetryToken;
   var init_defaultRetryToken = __esm({
     "node_modules/@smithy/util-retry/dist-es/defaultRetryToken.js"() {
-      import_polyfills446 = __toESM(require_polyfills());
-      init_constants7();
+      import_polyfills408 = __toESM(require_polyfills());
+      init_constants6();
       createDefaultRetryToken = ({ retryDelay, retryCount, retryCost }) => {
         const getRetryCount = () => retryCount;
         const getRetryDelay = () => Math.min(MAXIMUM_RETRY_DELAY, retryDelay);
@@ -80270,12 +77622,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
-  var import_polyfills447, StandardRetryStrategy;
+  var import_polyfills409, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
-      import_polyfills447 = __toESM(require_polyfills());
-      init_config3();
-      init_constants7();
+      import_polyfills409 = __toESM(require_polyfills());
+      init_config2();
+      init_constants6();
       init_defaultRetryBackoffStrategy();
       init_defaultRetryToken();
       StandardRetryStrategy = class {
@@ -80340,11 +77692,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
-  var import_polyfills448, AdaptiveRetryStrategy;
+  var import_polyfills410, AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
-      import_polyfills448 = __toESM(require_polyfills());
-      init_config3();
+      import_polyfills410 = __toESM(require_polyfills());
+      init_config2();
       init_DefaultRateLimiter();
       init_StandardRetryStrategy();
       AdaptiveRetryStrategy = class {
@@ -80375,57 +77727,882 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
-  var import_polyfills449;
+  var import_polyfills411;
   var init_ConfiguredRetryStrategy = __esm({
     "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
-      import_polyfills449 = __toESM(require_polyfills());
+      import_polyfills411 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-retry/dist-es/types.js
-  var import_polyfills450;
-  var init_types6 = __esm({
+  var import_polyfills412;
+  var init_types5 = __esm({
     "node_modules/@smithy/util-retry/dist-es/types.js"() {
-      import_polyfills450 = __toESM(require_polyfills());
+      import_polyfills412 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/util-retry/dist-es/index.js
-  var import_polyfills451;
-  var init_dist_es41 = __esm({
+  var import_polyfills413;
+  var init_dist_es35 = __esm({
     "node_modules/@smithy/util-retry/dist-es/index.js"() {
-      import_polyfills451 = __toESM(require_polyfills());
+      import_polyfills413 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy();
       init_ConfiguredRetryStrategy();
       init_DefaultRateLimiter();
       init_StandardRetryStrategy();
-      init_config3();
+      init_config2();
+      init_constants6();
+      init_types5();
+    }
+  });
+
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
+  async function checkFeatures(context, config, args) {
+    const request = args.request;
+    if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
+      setFeature(context, "PROTOCOL_RPC_V2_CBOR", "M");
+    }
+    if (typeof config.retryStrategy === "function") {
+      const retryStrategy = await config.retryStrategy();
+      if (typeof retryStrategy.mode === "string") {
+        switch (retryStrategy.mode) {
+          case RETRY_MODES.ADAPTIVE:
+            setFeature(context, "RETRY_MODE_ADAPTIVE", "F");
+            break;
+          case RETRY_MODES.STANDARD:
+            setFeature(context, "RETRY_MODE_STANDARD", "E");
+            break;
+        }
+      }
+    }
+    if (typeof config.accountIdEndpointMode === "function") {
+      const endpointV2 = context.endpointV2;
+      if (String(endpointV2?.url?.hostname).match(ACCOUNT_ID_ENDPOINT_REGEX)) {
+        setFeature(context, "ACCOUNT_ID_ENDPOINT", "O");
+      }
+      switch (await config.accountIdEndpointMode?.()) {
+        case "disabled":
+          setFeature(context, "ACCOUNT_ID_MODE_DISABLED", "Q");
+          break;
+        case "preferred":
+          setFeature(context, "ACCOUNT_ID_MODE_PREFERRED", "P");
+          break;
+        case "required":
+          setFeature(context, "ACCOUNT_ID_MODE_REQUIRED", "R");
+          break;
+      }
+    }
+    const identity = context.__smithy_context?.selectedHttpAuthScheme?.identity;
+    if (identity?.$source) {
+      const credentials = identity;
+      if (credentials.accountId) {
+        setFeature(context, "RESOLVED_ACCOUNT_ID", "T");
+      }
+      for (const [key, value] of Object.entries(credentials.$source ?? {})) {
+        setFeature(context, key, value);
+      }
+    }
+  }
+  var import_polyfills414, ACCOUNT_ID_ENDPOINT_REGEX;
+  var init_check_features = __esm({
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
+      import_polyfills414 = __toESM(require_polyfills());
+      init_dist_es23();
+      init_dist_es35();
+      ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
+    }
+  });
+
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
+  var import_polyfills415, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
+  var init_constants7 = __esm({
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
+      import_polyfills415 = __toESM(require_polyfills());
+      USER_AGENT = "user-agent";
+      X_AMZ_USER_AGENT = "x-amz-user-agent";
+      SPACE = " ";
+      UA_NAME_SEPARATOR = "/";
+      UA_NAME_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w]/g;
+      UA_VALUE_ESCAPE_REGEX = /[^!$%&'*+\-.^_`|~\w#]/g;
+      UA_ESCAPE_CHAR = "-";
+    }
+  });
+
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
+  function encodeFeatures(features) {
+    let buffer = "";
+    for (const key in features) {
+      const val = features[key];
+      if (buffer.length + val.length + 1 <= BYTE_LIMIT) {
+        if (buffer.length) {
+          buffer += "," + val;
+        } else {
+          buffer += val;
+        }
+        continue;
+      }
+      break;
+    }
+    return buffer;
+  }
+  var import_polyfills416, BYTE_LIMIT;
+  var init_encode_features = __esm({
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
+      import_polyfills416 = __toESM(require_polyfills());
+      BYTE_LIMIT = 1024;
+    }
+  });
+
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
+  var import_polyfills417, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
+  var init_user_agent_middleware = __esm({
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
+      import_polyfills417 = __toESM(require_polyfills());
+      init_dist_es33();
+      init_dist_es2();
+      init_check_features();
       init_constants7();
+      init_encode_features();
+      userAgentMiddleware = (options) => (next, context) => async (args) => {
+        const { request } = args;
+        if (!HttpRequest.isInstance(request)) {
+          return next(args);
+        }
+        const { headers } = request;
+        const userAgent = context?.userAgent?.map(escapeUserAgent) || [];
+        const defaultUserAgent = (await options.defaultUserAgentProvider()).map(escapeUserAgent);
+        await checkFeatures(context, options, args);
+        const awsContext = context;
+        defaultUserAgent.push(`m/${encodeFeatures(Object.assign({}, context.__smithy_context?.features, awsContext.__aws_sdk_context?.features))}`);
+        const customUserAgent = options?.customUserAgent?.map(escapeUserAgent) || [];
+        const appId = await options.userAgentAppId();
+        if (appId) {
+          defaultUserAgent.push(escapeUserAgent([`app`, `${appId}`]));
+        }
+        const prefix = getUserAgentPrefix();
+        const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
+        const normalUAValue = [
+          ...defaultUserAgent.filter((section) => section.startsWith("aws-sdk-")),
+          ...customUserAgent
+        ].join(SPACE);
+        if (options.runtime !== "browser") {
+          if (normalUAValue) {
+            headers[X_AMZ_USER_AGENT] = headers[X_AMZ_USER_AGENT] ? `${headers[USER_AGENT]} ${normalUAValue}` : normalUAValue;
+          }
+          headers[USER_AGENT] = sdkUserAgentValue;
+        } else {
+          headers[X_AMZ_USER_AGENT] = sdkUserAgentValue;
+        }
+        return next({
+          ...args,
+          request
+        });
+      };
+      escapeUserAgent = (userAgentPair) => {
+        const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
+        const version = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
+        const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
+        const prefix = name.substring(0, prefixSeparatorIndex);
+        let uaName = name.substring(prefixSeparatorIndex + 1);
+        if (prefix === "api") {
+          uaName = uaName.toLowerCase();
+        }
+        return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+          switch (index) {
+            case 0:
+              return item;
+            case 1:
+              return `${acc}/${item}`;
+            default:
+              return `${acc}#${item}`;
+          }
+        }, "");
+      };
+      getUserAgentMiddlewareOptions = {
+        name: "getUserAgentMiddleware",
+        step: "build",
+        priority: "low",
+        tags: ["SET_USER_AGENT", "USER_AGENT"],
+        override: true
+      };
+      getUserAgentPlugin = (config) => ({
+        applyToStack: (clientStack) => {
+          clientStack.add(userAgentMiddleware(config), getUserAgentMiddlewareOptions);
+        }
+      });
+    }
+  });
+
+  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
+  var import_polyfills418;
+  var init_dist_es36 = __esm({
+    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
+      import_polyfills418 = __toESM(require_polyfills());
+      init_configurations();
+      init_user_agent_middleware();
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
+  var import_polyfills419, DEFAULT_USE_DUALSTACK_ENDPOINT;
+  var init_NodeUseDualstackEndpointConfigOptions = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
+      import_polyfills419 = __toESM(require_polyfills());
+      DEFAULT_USE_DUALSTACK_ENDPOINT = false;
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
+  var import_polyfills420, DEFAULT_USE_FIPS_ENDPOINT;
+  var init_NodeUseFipsEndpointConfigOptions = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
+      import_polyfills420 = __toESM(require_polyfills());
+      DEFAULT_USE_FIPS_ENDPOINT = false;
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
+  var import_polyfills421;
+  var init_resolveCustomEndpointsConfig = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
+      import_polyfills421 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
+  var import_polyfills422;
+  var init_resolveEndpointsConfig = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
+      import_polyfills422 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
+  var import_polyfills423;
+  var init_endpointsConfig = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
+      import_polyfills423 = __toESM(require_polyfills());
+      init_NodeUseDualstackEndpointConfigOptions();
+      init_NodeUseFipsEndpointConfigOptions();
+      init_resolveCustomEndpointsConfig();
+      init_resolveEndpointsConfig();
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
+  var import_polyfills424;
+  var init_config3 = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
+      import_polyfills424 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
+  var import_polyfills425, validRegions, checkRegion;
+  var init_checkRegion = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
+      import_polyfills425 = __toESM(require_polyfills());
+      init_dist_es32();
+      validRegions = /* @__PURE__ */ new Set();
+      checkRegion = (region, check = isValidHostLabel) => {
+        if (!validRegions.has(region) && !check(region)) {
+          if (region === "*") {
+            console.warn(`@smithy/config-resolver WARN - Please use the caller region instead of "*". See "sigv4a" in https://github.com/aws/aws-sdk-js-v3/blob/main/supplemental-docs/CLIENTS.md.`);
+          } else {
+            throw new Error(`Region not accepted: region="${region}" is not a valid hostname component.`);
+          }
+        } else {
+          validRegions.add(region);
+        }
+      };
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
+  var import_polyfills426, isFipsRegion;
+  var init_isFipsRegion = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
+      import_polyfills426 = __toESM(require_polyfills());
+      isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
+  var import_polyfills427, getRealRegion;
+  var init_getRealRegion = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
+      import_polyfills427 = __toESM(require_polyfills());
+      init_isFipsRegion();
+      getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
+  var import_polyfills428, resolveRegionConfig;
+  var init_resolveRegionConfig = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
+      import_polyfills428 = __toESM(require_polyfills());
+      init_checkRegion();
+      init_getRealRegion();
+      init_isFipsRegion();
+      resolveRegionConfig = (input) => {
+        const { region, useFipsEndpoint } = input;
+        if (!region) {
+          throw new Error("Region is missing");
+        }
+        return Object.assign(input, {
+          region: async () => {
+            const providedRegion = typeof region === "function" ? await region() : region;
+            const realRegion = getRealRegion(providedRegion);
+            checkRegion(realRegion);
+            return realRegion;
+          },
+          useFipsEndpoint: async () => {
+            const providedRegion = typeof region === "string" ? region : await region();
+            if (isFipsRegion(providedRegion)) {
+              return true;
+            }
+            return typeof useFipsEndpoint !== "function" ? Promise.resolve(!!useFipsEndpoint) : useFipsEndpoint();
+          }
+        });
+      };
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
+  var import_polyfills429;
+  var init_regionConfig = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
+      import_polyfills429 = __toESM(require_polyfills());
+      init_config3();
+      init_resolveRegionConfig();
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
+  var import_polyfills430;
+  var init_PartitionHash = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
+      import_polyfills430 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
+  var import_polyfills431;
+  var init_RegionHash = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
+      import_polyfills431 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
+  var import_polyfills432;
+  var init_getRegionInfo = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
+      import_polyfills432 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
+  var import_polyfills433;
+  var init_regionInfo = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
+      import_polyfills433 = __toESM(require_polyfills());
+      init_PartitionHash();
+      init_RegionHash();
+      init_getRegionInfo();
+    }
+  });
+
+  // node_modules/@smithy/config-resolver/dist-es/index.js
+  var import_polyfills434;
+  var init_dist_es37 = __esm({
+    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
+      import_polyfills434 = __toESM(require_polyfills());
+      init_endpointsConfig();
+      init_regionConfig();
+      init_regionInfo();
+    }
+  });
+
+  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
+  var import_polyfills435, resolveEventStreamSerdeConfig;
+  var init_EventStreamSerdeConfig = __esm({
+    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
+      import_polyfills435 = __toESM(require_polyfills());
+      resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
+        eventStreamMarshaller: input.eventStreamSerdeProvider(input)
+      });
+    }
+  });
+
+  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
+  var import_polyfills436;
+  var init_dist_es38 = __esm({
+    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
+      import_polyfills436 = __toESM(require_polyfills());
+      init_EventStreamSerdeConfig();
+    }
+  });
+
+  // node_modules/@smithy/middleware-content-length/dist-es/index.js
+  function contentLengthMiddleware(bodyLengthChecker) {
+    return (next) => async (args) => {
+      const request = args.request;
+      if (HttpRequest.isInstance(request)) {
+        const { body, headers } = request;
+        if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER2) === -1) {
+          try {
+            const length = bodyLengthChecker(body);
+            request.headers = {
+              ...request.headers,
+              [CONTENT_LENGTH_HEADER2]: String(length)
+            };
+          } catch (error) {
+          }
+        }
+      }
+      return next({
+        ...args,
+        request
+      });
+    };
+  }
+  var import_polyfills437, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
+  var init_dist_es39 = __esm({
+    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
+      import_polyfills437 = __toESM(require_polyfills());
+      init_dist_es2();
+      CONTENT_LENGTH_HEADER2 = "content-length";
+      contentLengthMiddlewareOptions = {
+        step: "build",
+        tags: ["SET_CONTENT_LENGTH", "CONTENT_LENGTH"],
+        name: "contentLengthMiddleware",
+        override: true
+      };
+      getContentLengthPlugin = (options) => ({
+        applyToStack: (clientStack) => {
+          clientStack.add(contentLengthMiddleware(options.bodyLengthChecker), contentLengthMiddlewareOptions);
+        }
+      });
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
+  var import_polyfills438, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
+  var init_s3 = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
+      import_polyfills438 = __toESM(require_polyfills());
+      resolveParamsForS3 = async (endpointParams) => {
+        const bucket = endpointParams?.Bucket || "";
+        if (typeof endpointParams.Bucket === "string") {
+          endpointParams.Bucket = bucket.replace(/#/g, encodeURIComponent("#")).replace(/\?/g, encodeURIComponent("?"));
+        }
+        if (isArnBucketName(bucket)) {
+          if (endpointParams.ForcePathStyle === true) {
+            throw new Error("Path-style addressing cannot be used with ARN buckets");
+          }
+        } else if (!isDnsCompatibleBucketName(bucket) || bucket.indexOf(".") !== -1 && !String(endpointParams.Endpoint).startsWith("http:") || bucket.toLowerCase() !== bucket || bucket.length < 3) {
+          endpointParams.ForcePathStyle = true;
+        }
+        if (endpointParams.DisableMultiRegionAccessPoints) {
+          endpointParams.disableMultiRegionAccessPoints = true;
+          endpointParams.DisableMRAP = true;
+        }
+        return endpointParams;
+      };
+      DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
+      IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
+      DOTS_PATTERN = /\.\./;
+      isDnsCompatibleBucketName = (bucketName) => DOMAIN_PATTERN.test(bucketName) && !IP_ADDRESS_PATTERN.test(bucketName) && !DOTS_PATTERN.test(bucketName);
+      isArnBucketName = (bucketName) => {
+        const [arn, partition2, service, , , bucket] = bucketName.split(":");
+        const isArn = arn === "arn" && bucketName.split(":").length >= 6;
+        const isValidArn = Boolean(isArn && partition2 && service && bucket);
+        if (isArn && !isValidArn) {
+          throw new Error(`Invalid ARN: ${bucketName} was an invalid ARN.`);
+        }
+        return isValidArn;
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
+  var import_polyfills439;
+  var init_service_customizations = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
+      import_polyfills439 = __toESM(require_polyfills());
+      init_s3();
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
+  var import_polyfills440, createConfigValueProvider;
+  var init_createConfigValueProvider = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
+      import_polyfills440 = __toESM(require_polyfills());
+      createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
+        const configProvider = async () => {
+          let configValue;
+          if (isClientContextParam) {
+            const clientContextParams = config.clientContextParams;
+            const nestedValue = clientContextParams?.[configKey];
+            configValue = nestedValue ?? config[configKey] ?? config[canonicalEndpointParamKey];
+          } else {
+            configValue = config[configKey] ?? config[canonicalEndpointParamKey];
+          }
+          if (typeof configValue === "function") {
+            return configValue();
+          }
+          return configValue;
+        };
+        if (configKey === "credentialScope" || canonicalEndpointParamKey === "CredentialScope") {
+          return async () => {
+            const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
+            const configValue = credentials?.credentialScope ?? credentials?.CredentialScope;
+            return configValue;
+          };
+        }
+        if (configKey === "accountId" || canonicalEndpointParamKey === "AccountId") {
+          return async () => {
+            const credentials = typeof config.credentials === "function" ? await config.credentials() : config.credentials;
+            const configValue = credentials?.accountId ?? credentials?.AccountId;
+            return configValue;
+          };
+        }
+        if (configKey === "endpoint" || canonicalEndpointParamKey === "endpoint") {
+          return async () => {
+            if (config.isCustomEndpoint === false) {
+              return void 0;
+            }
+            const endpoint = await configProvider();
+            if (endpoint && typeof endpoint === "object") {
+              if ("url" in endpoint) {
+                return endpoint.url.href;
+              }
+              if ("hostname" in endpoint) {
+                const { protocol, hostname, port, path: path2 } = endpoint;
+                return `${protocol}//${hostname}${port ? ":" + port : ""}${path2}`;
+              }
+            }
+            return endpoint;
+          };
+        }
+        return configProvider;
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
+  var import_polyfills441, getEndpointFromConfig;
+  var init_getEndpointFromConfig_browser = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
+      import_polyfills441 = __toESM(require_polyfills());
+      getEndpointFromConfig = async (serviceId) => void 0;
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
+  var import_polyfills442, toEndpointV12;
+  var init_toEndpointV12 = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
+      import_polyfills442 = __toESM(require_polyfills());
+      init_dist_es13();
+      toEndpointV12 = (endpoint) => {
+        if (typeof endpoint === "object") {
+          if ("url" in endpoint) {
+            const v1Endpoint = parseUrl(endpoint.url);
+            if (endpoint.headers) {
+              v1Endpoint.headers = {};
+              for (const [name, values] of Object.entries(endpoint.headers)) {
+                v1Endpoint.headers[name.toLowerCase()] = values.join(", ");
+              }
+            }
+            return v1Endpoint;
+          }
+          return endpoint;
+        }
+        return parseUrl(endpoint);
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
+  var import_polyfills443, getEndpointFromInstructions, resolveParams;
+  var init_getEndpointFromInstructions = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
+      import_polyfills443 = __toESM(require_polyfills());
+      init_service_customizations();
+      init_createConfigValueProvider();
+      init_getEndpointFromConfig_browser();
+      init_toEndpointV12();
+      getEndpointFromInstructions = async (commandInput, instructionsSupplier, clientConfig, context) => {
+        if (!clientConfig.isCustomEndpoint) {
+          let endpointFromConfig;
+          if (clientConfig.serviceConfiguredEndpoint) {
+            endpointFromConfig = await clientConfig.serviceConfiguredEndpoint();
+          } else {
+            endpointFromConfig = await getEndpointFromConfig(clientConfig.serviceId);
+          }
+          if (endpointFromConfig) {
+            clientConfig.endpoint = () => Promise.resolve(toEndpointV12(endpointFromConfig));
+            clientConfig.isCustomEndpoint = true;
+          }
+        }
+        const endpointParams = await resolveParams(commandInput, instructionsSupplier, clientConfig);
+        if (typeof clientConfig.endpointProvider !== "function") {
+          throw new Error("config.endpointProvider is not set.");
+        }
+        const endpoint = clientConfig.endpointProvider(endpointParams, context);
+        if (clientConfig.isCustomEndpoint && clientConfig.endpoint) {
+          const customEndpoint = await clientConfig.endpoint();
+          if (customEndpoint?.headers) {
+            endpoint.headers ??= {};
+            for (const [name, value] of Object.entries(customEndpoint.headers)) {
+              endpoint.headers[name] = Array.isArray(value) ? value : [value];
+            }
+          }
+        }
+        return endpoint;
+      };
+      resolveParams = async (commandInput, instructionsSupplier, clientConfig) => {
+        const endpointParams = {};
+        const instructions = instructionsSupplier?.getEndpointParameterInstructions?.() || {};
+        for (const [name, instruction] of Object.entries(instructions)) {
+          switch (instruction.type) {
+            case "staticContextParams":
+              endpointParams[name] = instruction.value;
+              break;
+            case "contextParams":
+              endpointParams[name] = commandInput[instruction.name];
+              break;
+            case "clientContextParams":
+            case "builtInParams":
+              endpointParams[name] = await createConfigValueProvider(instruction.name, name, clientConfig, instruction.type !== "builtInParams")();
+              break;
+            case "operationContextParams":
+              endpointParams[name] = instruction.get(commandInput);
+              break;
+            default:
+              throw new Error("Unrecognized endpoint parameter instruction: " + JSON.stringify(instruction));
+          }
+        }
+        if (Object.keys(instructions).length === 0) {
+          Object.assign(endpointParams, clientConfig);
+        }
+        if (String(clientConfig.serviceId).toLowerCase() === "s3") {
+          await resolveParamsForS3(endpointParams);
+        }
+        return endpointParams;
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
+  var import_polyfills444;
+  var init_adaptors = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
+      import_polyfills444 = __toESM(require_polyfills());
+      init_getEndpointFromInstructions();
+      init_toEndpointV12();
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
+  var import_polyfills445, endpointMiddleware;
+  var init_endpointMiddleware = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
+      import_polyfills445 = __toESM(require_polyfills());
+      init_dist_es15();
+      init_dist_es4();
+      init_getEndpointFromInstructions();
+      endpointMiddleware = ({ config, instructions }) => {
+        return (next, context) => async (args) => {
+          if (config.isCustomEndpoint) {
+            setFeature2(context, "ENDPOINT_OVERRIDE", "N");
+          }
+          const endpoint = await getEndpointFromInstructions(args.input, {
+            getEndpointParameterInstructions() {
+              return instructions;
+            }
+          }, { ...config }, context);
+          context.endpointV2 = endpoint;
+          context.authSchemes = endpoint.properties?.authSchemes;
+          const authScheme = context.authSchemes?.[0];
+          if (authScheme) {
+            context["signing_region"] = authScheme.signingRegion;
+            context["signing_service"] = authScheme.signingName;
+            const smithyContext = getSmithyContext(context);
+            const httpAuthOption = smithyContext?.selectedHttpAuthScheme?.httpAuthOption;
+            if (httpAuthOption) {
+              httpAuthOption.signingProperties = Object.assign(httpAuthOption.signingProperties || {}, {
+                signing_region: authScheme.signingRegion,
+                signingRegion: authScheme.signingRegion,
+                signing_service: authScheme.signingName,
+                signingName: authScheme.signingName,
+                signingRegionSet: authScheme.signingRegionSet
+              }, authScheme.properties);
+            }
+          }
+          return next({
+            ...args
+          });
+        };
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  var import_polyfills446;
+  var init_deserializerMiddleware = __esm({
+    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+      import_polyfills446 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
+  var import_polyfills447;
+  var init_serializerMiddleware = __esm({
+    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
+      import_polyfills447 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
+  var import_polyfills448, serializerMiddlewareOption2;
+  var init_serdePlugin = __esm({
+    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
+      import_polyfills448 = __toESM(require_polyfills());
+      serializerMiddlewareOption2 = {
+        name: "serializerMiddleware",
+        step: "serialize",
+        tags: ["SERIALIZER"],
+        override: true
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-serde/dist-es/index.js
+  var import_polyfills449;
+  var init_dist_es40 = __esm({
+    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
+      import_polyfills449 = __toESM(require_polyfills());
+      init_deserializerMiddleware();
+      init_serdePlugin();
+      init_serializerMiddleware();
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
+  var import_polyfills450, endpointMiddlewareOptions, getEndpointPlugin;
+  var init_getEndpointPlugin = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
+      import_polyfills450 = __toESM(require_polyfills());
+      init_dist_es40();
+      init_endpointMiddleware();
+      endpointMiddlewareOptions = {
+        step: "serialize",
+        tags: ["ENDPOINT_PARAMETERS", "ENDPOINT_V2", "ENDPOINT"],
+        name: "endpointV2Middleware",
+        override: true,
+        relation: "before",
+        toMiddleware: serializerMiddlewareOption2.name
+      };
+      getEndpointPlugin = (config, instructions) => ({
+        applyToStack: (clientStack) => {
+          clientStack.addRelativeTo(endpointMiddleware({
+            config,
+            instructions
+          }), endpointMiddlewareOptions);
+        }
+      });
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
+  var import_polyfills451, resolveEndpointConfig;
+  var init_resolveEndpointConfig = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
+      import_polyfills451 = __toESM(require_polyfills());
+      init_dist_es4();
+      init_getEndpointFromConfig_browser();
+      init_toEndpointV12();
+      resolveEndpointConfig = (input) => {
+        const tls = input.tls ?? true;
+        const { endpoint, useDualstackEndpoint, useFipsEndpoint } = input;
+        const customEndpointProvider = endpoint != null ? async () => toEndpointV12(await normalizeProvider(endpoint)()) : void 0;
+        const isCustomEndpoint = !!endpoint;
+        const resolvedConfig = Object.assign(input, {
+          endpoint: customEndpointProvider,
+          tls,
+          isCustomEndpoint,
+          useDualstackEndpoint: normalizeProvider(useDualstackEndpoint ?? false),
+          useFipsEndpoint: normalizeProvider(useFipsEndpoint ?? false)
+        });
+        let configuredEndpointPromise = void 0;
+        resolvedConfig.serviceConfiguredEndpoint = async () => {
+          if (input.serviceId && !configuredEndpointPromise) {
+            configuredEndpointPromise = getEndpointFromConfig(input.serviceId);
+          }
+          return configuredEndpointPromise;
+        };
+        return resolvedConfig;
+      };
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
+  var import_polyfills452;
+  var init_resolveEndpointRequiredConfig = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
+      import_polyfills452 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
+  var import_polyfills453;
+  var init_types6 = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
+      import_polyfills453 = __toESM(require_polyfills());
+    }
+  });
+
+  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
+  var import_polyfills454;
+  var init_dist_es41 = __esm({
+    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
+      import_polyfills454 = __toESM(require_polyfills());
+      init_adaptors();
+      init_endpointMiddleware();
+      init_getEndpointPlugin();
+      init_resolveEndpointConfig();
+      init_resolveEndpointRequiredConfig();
       init_types6();
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/delayDecider.js
-  var import_polyfills452;
+  var import_polyfills455;
   var init_delayDecider = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/delayDecider.js"() {
-      import_polyfills452 = __toESM(require_polyfills());
+      import_polyfills455 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/retryDecider.js
-  var import_polyfills453;
+  var import_polyfills456;
   var init_retryDecider = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/retryDecider.js"() {
-      import_polyfills453 = __toESM(require_polyfills());
+      import_polyfills456 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/util.js
-  var import_polyfills454, asSdkError;
+  var import_polyfills457, asSdkError;
   var init_util2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
-      import_polyfills454 = __toESM(require_polyfills());
+      import_polyfills457 = __toESM(require_polyfills());
       asSdkError = (error) => {
         if (error instanceof Error)
           return error;
@@ -80439,75 +78616,68 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js
-  var import_polyfills455;
+  var import_polyfills458;
   var init_StandardRetryStrategy2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/StandardRetryStrategy.js"() {
-      import_polyfills455 = __toESM(require_polyfills());
+      import_polyfills458 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js
-  var import_polyfills456;
+  var import_polyfills459;
   var init_AdaptiveRetryStrategy2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/AdaptiveRetryStrategy.js"() {
-      import_polyfills456 = __toESM(require_polyfills());
+      import_polyfills459 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/configurations.js
-  var import_polyfills457, resolveRetryConfig;
+  var import_polyfills460, resolveRetryConfig;
   var init_configurations2 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
-      import_polyfills457 = __toESM(require_polyfills());
+      import_polyfills460 = __toESM(require_polyfills());
       init_dist_es4();
-      init_dist_es41();
+      init_dist_es35();
       resolveRetryConfig = (input) => {
-        const { retryStrategy, retryMode: _retryMode, maxAttempts: _maxAttempts } = input;
-        const maxAttempts = normalizeProvider(_maxAttempts ?? DEFAULT_MAX_ATTEMPTS);
+        const { retryStrategy, retryMode } = input;
+        const maxAttempts = normalizeProvider(input.maxAttempts ?? DEFAULT_MAX_ATTEMPTS);
+        let controller = retryStrategy ? Promise.resolve(retryStrategy) : void 0;
+        const getDefault = async () => await normalizeProvider(retryMode)() === RETRY_MODES.ADAPTIVE ? new AdaptiveRetryStrategy(maxAttempts) : new StandardRetryStrategy(maxAttempts);
         return Object.assign(input, {
           maxAttempts,
-          retryStrategy: async () => {
-            if (retryStrategy) {
-              return retryStrategy;
-            }
-            const retryMode = await normalizeProvider(_retryMode)();
-            if (retryMode === RETRY_MODES.ADAPTIVE) {
-              return new AdaptiveRetryStrategy(maxAttempts);
-            }
-            return new StandardRetryStrategy(maxAttempts);
-          }
+          retryStrategy: () => controller ??= getDefault()
         });
       };
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
-  var import_polyfills458;
+  var import_polyfills461;
   var init_omitRetryHeadersMiddleware = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
-      import_polyfills458 = __toESM(require_polyfills());
+      import_polyfills461 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
-  var import_polyfills459, isStreamingPayload;
+  var import_polyfills462, isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
-      import_polyfills459 = __toESM(require_polyfills());
+      import_polyfills462 = __toESM(require_polyfills());
       isStreamingPayload = (request) => request?.body instanceof ReadableStream;
     }
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
-  var import_polyfills460, retryMiddleware, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin, getRetryAfterHint;
+  var import_polyfills463, retryMiddleware, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin, getRetryAfterHint;
   var init_retryMiddleware = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
-      import_polyfills460 = __toESM(require_polyfills());
+      import_polyfills463 = __toESM(require_polyfills());
       init_dist_es2();
-      init_dist_es40();
-      init_dist_es20();
-      init_dist_es41();
-      init_dist_es13();
+      init_dist_es34();
+      init_dist_es21();
+      init_dist_es35();
+      init_dist_es14();
       init_isStreamingPayload_browser();
       init_util2();
       retryMiddleware = (options) => (next, context) => async (args) => {
@@ -80614,10 +78784,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/middleware-retry/dist-es/index.js
-  var import_polyfills461;
+  var import_polyfills464;
   var init_dist_es42 = __esm({
     "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
-      import_polyfills461 = __toESM(require_polyfills());
+      import_polyfills464 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy2();
       init_StandardRetryStrategy2();
       init_configurations2();
@@ -80629,10 +78799,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
-  var import_polyfills462, signatureV4CrtContainer;
+  var import_polyfills465, signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
-      import_polyfills462 = __toESM(require_polyfills());
+      import_polyfills465 = __toESM(require_polyfills());
       signatureV4CrtContainer = {
         CrtSignerV4: null
       };
@@ -80640,12 +78810,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
-  var import_polyfills463, SignatureV4MultiRegion;
+  var import_polyfills466, SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
-      import_polyfills463 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es17();
+      import_polyfills466 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es18();
       init_signature_v4_crt_container();
       SignatureV4MultiRegion = class {
         sigv4aSigner;
@@ -80735,20 +78905,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
-  var import_polyfills464;
+  var import_polyfills467;
   var init_dist_es43 = __esm({
     "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
-      import_polyfills464 = __toESM(require_polyfills());
+      import_polyfills467 = __toESM(require_polyfills());
       init_SignatureV4MultiRegion();
       init_signature_v4_crt_container();
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/ruleset.js
-  var import_polyfills465, cs, ct, cu, cv, cw, cx, cy, cz, cA, cB, cC, cD, cE, cF, cG, cH, cI, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, ar, as, at, au, av, aw, ax, ay, az, aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ, aK, aL, aM, aN, aO, aP, aQ, aR, aS, aT, aU, aV, aW, aX, aY, aZ, ba, bb, bc, bd, be, bf, bg, bh, bi, bj, bk, bl, bm, bn, bo, bp, bq, br, bs, bt, bu, bv, bw, bx, by, bz, bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM, bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ, ca, cb, cc, cd, ce, cf, cg, ch, ci, cj, ck, cl, cm, cn, co, cp, cq, cr, _data, ruleSet;
+  var import_polyfills468, cs, ct, cu, cv, cw, cx, cy, cz, cA, cB, cC, cD, cE, cF, cG, cH, cI, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, ar, as, at, au, av, aw, ax, ay, az, aA, aB, aC, aD, aE, aF, aG, aH, aI, aJ, aK, aL, aM, aN, aO, aP, aQ, aR, aS, aT, aU, aV, aW, aX, aY, aZ, ba, bb, bc, bd, be, bf, bg, bh, bi, bj, bk, bl, bm, bn, bo, bp, bq, br, bs, bt, bu, bv, bw, bx, by, bz, bA, bB, bC, bD, bE, bF, bG, bH, bI, bJ, bK, bL, bM, bN, bO, bP, bQ, bR, bS, bT, bU, bV, bW, bX, bY, bZ, ca, cb, cc, cd, ce, cf, cg, ch, ci, cj, ck, cl, cm, cn, co, cp, cq, cr, _data, ruleSet;
   var init_ruleset = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/ruleset.js"() {
-      import_polyfills465 = __toESM(require_polyfills());
+      import_polyfills468 = __toESM(require_polyfills());
       cs = "required";
       ct = "type";
       cu = "rules";
@@ -80946,12 +79116,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
-  var import_polyfills466, cache, defaultEndpointResolver;
+  var import_polyfills469, cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
-      import_polyfills466 = __toESM(require_polyfills());
-      init_dist_es34();
-      init_dist_es31();
+      import_polyfills469 = __toESM(require_polyfills());
+      init_dist_es33();
+      init_dist_es32();
       init_ruleset();
       cache = new EndpointCache({
         size: 50,
@@ -81013,13 +79183,13 @@ ${toHex(hashedRequest)}`;
       })
     };
   }
-  var import_polyfills467, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
+  var import_polyfills470, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
-      import_polyfills467 = __toESM(require_polyfills());
-      init_dist_es22();
+      import_polyfills470 = __toESM(require_polyfills());
+      init_dist_es23();
       init_dist_es43();
-      init_dist_es39();
+      init_dist_es41();
       init_dist_es4();
       init_endpointResolver();
       createEndpointRuleSetHttpAuthSchemeParametersProvider = (defaultHttpAuthSchemeParametersProvider) => async (config, context, input) => {
@@ -81110,10 +79280,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
-  var import_polyfills468, resolveClientEndpointParameters, commonParams;
+  var import_polyfills471, resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
-      import_polyfills468 = __toESM(require_polyfills());
+      import_polyfills471 = __toESM(require_polyfills());
       resolveClientEndpointParameters = (options) => {
         return Object.assign(options, {
           useFipsEndpoint: options.useFipsEndpoint ?? false,
@@ -81142,11 +79312,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
-  var import_polyfills469, S3ServiceException;
+  var import_polyfills472, S3ServiceException;
   var init_S3ServiceException = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
-      import_polyfills469 = __toESM(require_polyfills());
-      init_dist_es20();
+      import_polyfills472 = __toESM(require_polyfills());
+      init_dist_es21();
       S3ServiceException = class _S3ServiceException extends ServiceException {
         constructor(options) {
           super(options);
@@ -81157,10 +79327,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
-  var import_polyfills470, NoSuchUpload, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
+  var import_polyfills473, NoSuchUpload, AccessDenied, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
-      import_polyfills470 = __toESM(require_polyfills());
+      import_polyfills473 = __toESM(require_polyfills());
       init_S3ServiceException();
       NoSuchUpload = class _NoSuchUpload extends S3ServiceException {
         name = "NoSuchUpload";
@@ -81172,6 +79342,18 @@ ${toHex(hashedRequest)}`;
             ...opts
           });
           Object.setPrototypeOf(this, _NoSuchUpload.prototype);
+        }
+      };
+      AccessDenied = class _AccessDenied extends S3ServiceException {
+        name = "AccessDenied";
+        $fault = "client";
+        constructor(opts) {
+          super({
+            name: "AccessDenied",
+            $fault: "client",
+            ...opts
+          });
+          Object.setPrototypeOf(this, _AccessDenied.prototype);
         }
       };
       ObjectNotInActiveTierError = class _ObjectNotInActiveTierError extends S3ServiceException {
@@ -81338,10 +79520,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
-  var import_polyfills471, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _sm, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacrsba, _xacs, _xacs_, _xacs__, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacs, _xafhxacs_, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, CopySourceSSECustomerKey, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EncryptionTypeMismatch$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IdempotencyParameterMismatch$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectAlreadyInActiveTierError$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectNotInActiveTierError$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TooManyParts$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, S3ServiceException$, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
+  var import_polyfills474, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _ADb, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BNu, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKA, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NEKKAS, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OE, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSE, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UOE, _UOER, _UOERp, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _st, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabn, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacrsba, _xacs, _xacs_, _xacs__, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacs, _xafhxacs_, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, _s_registry, S3ServiceException$, n0_registry, AccessDenied$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, EncryptionTypeMismatch$, IdempotencyParameterMismatch$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, ObjectAlreadyInActiveTierError$, ObjectNotInActiveTierError$, TooManyParts$, errorTypeRegistries, CopySourceSSECustomerKey, NonEmptyKmsKeyArnString, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSEKMSEncryption$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UpdateObjectEncryptionRequest$, UpdateObjectEncryptionResponse$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, ObjectEncryption$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UpdateObjectEncryption$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
-      import_polyfills471 = __toESM(require_polyfills());
+      import_polyfills474 = __toESM(require_polyfills());
       init_schema2();
       init_errors();
       init_S3ServiceException();
@@ -81354,7 +79536,8 @@ ${toHex(hashedRequest)}`;
       _ACP = "AccessControlPolicy";
       _ACT = "AccessControlTranslation";
       _ACn = "AnalyticsConfiguration";
-      _AD = "AbortDate";
+      _AD = "AccessDenied";
+      _ADb = "AbortDate";
       _AED = "AnalyticsExportDestination";
       _AF = "AnalyticsFilter";
       _AH = "AllowedHeaders";
@@ -81393,7 +79576,8 @@ ${toHex(hashedRequest)}`;
       _BLN = "BucketLocationName";
       _BLS = "BucketLoggingStatus";
       _BLT = "BucketLocationType";
-      _BN = "BucketName";
+      _BN = "BucketNamespace";
+      _BNu = "BucketName";
       _BP = "BytesProcessed";
       _BPA = "BlockPublicAcls";
       _BPP = "BlockPublicPolicy";
@@ -81771,6 +79955,7 @@ ${toHex(hashedRequest)}`;
       _KKA = "KmsKeyArn";
       _KM = "KeyMarker";
       _KMSC = "KMSContext";
+      _KMSKA = "KMSKeyArn";
       _KMSKI = "KMSKeyId";
       _KMSMKID = "KMSMasterKeyID";
       _KPE = "KeyPrefixEquals";
@@ -81869,6 +80054,7 @@ ${toHex(hashedRequest)}`;
       _NCF = "NotificationConfigurationFilter";
       _NCT = "NextContinuationToken";
       _ND = "NoncurrentDays";
+      _NEKKAS = "NonEmptyKmsKeyArnString";
       _NF = "NotFound";
       _NKM = "NextKeyMarker";
       _NM = "NextMarker";
@@ -81889,6 +80075,7 @@ ${toHex(hashedRequest)}`;
       _OC = "OwnershipControls";
       _OCR = "OwnershipControlsRule";
       _OCRw = "OwnershipControlsRules";
+      _OE = "ObjectEncryption";
       _OF = "OptionalFields";
       _OI = "ObjectIdentifier";
       _OIL = "ObjectIdentifierList";
@@ -82098,6 +80285,7 @@ ${toHex(hashedRequest)}`;
       _SSECK = "SSECustomerKey";
       _SSECKMD = "SSECustomerKeyMD5";
       _SSEKMS = "SSEKMS";
+      _SSEKMSE = "SSEKMSEncryption";
       _SSEKMSEC = "SSEKMSEncryptionContext";
       _SSEKMSKI = "SSEKMSKeyId";
       _SSER = "ServerSideEncryptionRule";
@@ -82155,6 +80343,9 @@ ${toHex(hashedRequest)}`;
       _UI = "UploadId";
       _UIM = "UploadIdMarker";
       _UM = "UserMetadata";
+      _UOE = "UpdateObjectEncryption";
+      _UOER = "UpdateObjectEncryptionRequest";
+      _UOERp = "UpdateObjectEncryptionResponse";
       _UP = "UploadPart";
       _UPC = "UploadPartCopy";
       _UPCO = "UploadPartCopyOutput";
@@ -82212,9 +80403,9 @@ ${toHex(hashedRequest)}`;
       _rcl = "response-content-language";
       _rct = "response-content-type";
       _re = "response-expires";
-      _s = "streaming";
+      _s = "smithy.ts.sdk.synthetic.com.amazonaws.s3";
       _sa = "start-after";
-      _sm = "smithy.ts.sdk.synthetic.com.amazonaws.s3";
+      _st = "streaming";
       _uI = "uploadId";
       _uim = "upload-id-marker";
       _vI = "versionId";
@@ -82233,6 +80424,7 @@ ${toHex(hashedRequest)}`;
       _xabgr = "x-amz-bypass-governance-retention";
       _xabln = "x-amz-bucket-location-name";
       _xablt = "x-amz-bucket-location-type";
+      _xabn = "x-amz-bucket-namespace";
       _xabole = "x-amz-bucket-object-lock-enabled";
       _xabolt = "x-amz-bucket-object-lock-token";
       _xabr = "x-amz-bucket-region";
@@ -82351,12 +80543,156 @@ ${toHex(hashedRequest)}`;
       _xawrl = "x-amz-website-redirect-location";
       _xs = "xsi:type";
       n0 = "com.amazonaws.s3";
+      _s_registry = TypeRegistry.for(_s);
+      S3ServiceException$ = [-3, _s, "S3ServiceException", 0, [], []];
+      _s_registry.registerError(S3ServiceException$, S3ServiceException);
+      n0_registry = TypeRegistry.for(n0);
+      AccessDenied$ = [
+        -3,
+        n0,
+        _AD,
+        { [_e]: _c, [_hE]: 403 },
+        [],
+        []
+      ];
+      n0_registry.registerError(AccessDenied$, AccessDenied);
+      BucketAlreadyExists$ = [
+        -3,
+        n0,
+        _BAE,
+        { [_e]: _c, [_hE]: 409 },
+        [],
+        []
+      ];
+      n0_registry.registerError(BucketAlreadyExists$, BucketAlreadyExists);
+      BucketAlreadyOwnedByYou$ = [
+        -3,
+        n0,
+        _BAOBY,
+        { [_e]: _c, [_hE]: 409 },
+        [],
+        []
+      ];
+      n0_registry.registerError(BucketAlreadyOwnedByYou$, BucketAlreadyOwnedByYou);
+      EncryptionTypeMismatch$ = [
+        -3,
+        n0,
+        _ETM,
+        { [_e]: _c, [_hE]: 400 },
+        [],
+        []
+      ];
+      n0_registry.registerError(EncryptionTypeMismatch$, EncryptionTypeMismatch);
+      IdempotencyParameterMismatch$ = [
+        -3,
+        n0,
+        _IPM,
+        { [_e]: _c, [_hE]: 400 },
+        [],
+        []
+      ];
+      n0_registry.registerError(IdempotencyParameterMismatch$, IdempotencyParameterMismatch);
+      InvalidObjectState$ = [
+        -3,
+        n0,
+        _IOS,
+        { [_e]: _c, [_hE]: 403 },
+        [_SC, _AT],
+        [0, 0]
+      ];
+      n0_registry.registerError(InvalidObjectState$, InvalidObjectState);
+      InvalidRequest$ = [
+        -3,
+        n0,
+        _IR,
+        { [_e]: _c, [_hE]: 400 },
+        [],
+        []
+      ];
+      n0_registry.registerError(InvalidRequest$, InvalidRequest);
+      InvalidWriteOffset$ = [
+        -3,
+        n0,
+        _IWO,
+        { [_e]: _c, [_hE]: 400 },
+        [],
+        []
+      ];
+      n0_registry.registerError(InvalidWriteOffset$, InvalidWriteOffset);
+      NoSuchBucket$ = [
+        -3,
+        n0,
+        _NSB,
+        { [_e]: _c, [_hE]: 404 },
+        [],
+        []
+      ];
+      n0_registry.registerError(NoSuchBucket$, NoSuchBucket);
+      NoSuchKey$ = [
+        -3,
+        n0,
+        _NSK,
+        { [_e]: _c, [_hE]: 404 },
+        [],
+        []
+      ];
+      n0_registry.registerError(NoSuchKey$, NoSuchKey);
+      NoSuchUpload$ = [
+        -3,
+        n0,
+        _NSU,
+        { [_e]: _c, [_hE]: 404 },
+        [],
+        []
+      ];
+      n0_registry.registerError(NoSuchUpload$, NoSuchUpload);
+      NotFound$ = [
+        -3,
+        n0,
+        _NF,
+        { [_e]: _c },
+        [],
+        []
+      ];
+      n0_registry.registerError(NotFound$, NotFound);
+      ObjectAlreadyInActiveTierError$ = [
+        -3,
+        n0,
+        _OAIATE,
+        { [_e]: _c, [_hE]: 403 },
+        [],
+        []
+      ];
+      n0_registry.registerError(ObjectAlreadyInActiveTierError$, ObjectAlreadyInActiveTierError);
+      ObjectNotInActiveTierError$ = [
+        -3,
+        n0,
+        _ONIATE,
+        { [_e]: _c, [_hE]: 403 },
+        [],
+        []
+      ];
+      n0_registry.registerError(ObjectNotInActiveTierError$, ObjectNotInActiveTierError);
+      TooManyParts$ = [
+        -3,
+        n0,
+        _TMP,
+        { [_e]: _c, [_hE]: 400 },
+        [],
+        []
+      ];
+      n0_registry.registerError(TooManyParts$, TooManyParts);
+      errorTypeRegistries = [
+        _s_registry,
+        n0_registry
+      ];
       CopySourceSSECustomerKey = [0, n0, _CSSSECK, 8, 0];
+      NonEmptyKmsKeyArnString = [0, n0, _NEKKAS, 8, 0];
       SessionCredentialValue = [0, n0, _SCV, 8, 0];
       SSECustomerKey = [0, n0, _SSECK, 8, 0];
       SSEKMSEncryptionContext = [0, n0, _SSEKMSEC, 8, 0];
       SSEKMSKeyId = [0, n0, _SSEKMSKI, 8, 0];
-      StreamingBlob = [0, n0, _SB, { [_s]: 1 }, 42];
+      StreamingBlob = [0, n0, _SB, { [_st]: 1 }, 42];
       AbacStatus$ = [
         3,
         n0,
@@ -82466,24 +80802,6 @@ ${toHex(hashedRequest)}`;
         [_N, _CD, _BR, _BA],
         [0, 4, 0, 0]
       ];
-      BucketAlreadyExists$ = [
-        -3,
-        n0,
-        _BAE,
-        { [_e]: _c, [_hE]: 409 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(BucketAlreadyExists$, BucketAlreadyExists);
-      BucketAlreadyOwnedByYou$ = [
-        -3,
-        n0,
-        _BAOBY,
-        { [_e]: _c, [_hE]: 409 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(BucketAlreadyOwnedByYou$, BucketAlreadyOwnedByYou);
       BucketInfo$ = [
         3,
         n0,
@@ -82664,8 +80982,8 @@ ${toHex(hashedRequest)}`;
         n0,
         _CBR,
         0,
-        [_B, _ACL_, _CBC, _GFC, _GR, _GRACP, _GW, _GWACP, _OLEFB, _OO],
-        [[0, 1], [0, { [_hH]: _xaa }], [() => CreateBucketConfiguration$, { [_hP]: 1, [_xN]: _CBC }], [0, { [_hH]: _xagfc }], [0, { [_hH]: _xagr }], [0, { [_hH]: _xagra }], [0, { [_hH]: _xagw }], [0, { [_hH]: _xagwa }], [2, { [_hH]: _xabole }], [0, { [_hH]: _xaoo }]],
+        [_B, _ACL_, _CBC, _GFC, _GR, _GRACP, _GW, _GWACP, _OLEFB, _OO, _BN],
+        [[0, 1], [0, { [_hH]: _xaa }], [() => CreateBucketConfiguration$, { [_hP]: 1, [_xN]: _CBC }], [0, { [_hH]: _xagfc }], [0, { [_hH]: _xagr }], [0, { [_hH]: _xagra }], [0, { [_hH]: _xagw }], [0, { [_hH]: _xagwa }], [2, { [_hH]: _xabole }], [0, { [_hH]: _xaoo }], [0, { [_hH]: _xabn }]],
         1
       ];
       CreateMultipartUploadOutput$ = [
@@ -82673,7 +80991,7 @@ ${toHex(hashedRequest)}`;
         n0,
         _CMUOr,
         { [_xN]: _IMUR },
-        [_AD, _ARI, _B, _K, _UI, _SSE, _SSECA, _SSECKMD, _SSEKMSKI, _SSEKMSEC, _BKE, _RC, _CA, _CT],
+        [_ADb, _ARI, _B, _K, _UI, _SSE, _SSECA, _SSECKMD, _SSEKMSKI, _SSEKMSEC, _BKE, _RC, _CA, _CT],
         [[4, { [_hH]: _xaad }], [0, { [_hH]: _xaari }], [0, { [_xN]: _B }], 0, 0, [0, { [_hH]: _xasse }], [0, { [_hH]: _xasseca }], [0, { [_hH]: _xasseckM }], [() => SSEKMSKeyId, { [_hH]: _xasseakki }], [() => SSEKMSEncryptionContext, { [_hH]: _xassec }], [2, { [_hH]: _xassebke }], [0, { [_hH]: _xarc }], [0, { [_hH]: _xaca }], [0, { [_hH]: _xact }]]
       ];
       CreateMultipartUploadRequest$ = [
@@ -82989,15 +81307,6 @@ ${toHex(hashedRequest)}`;
         [_RKKID],
         [0]
       ];
-      EncryptionTypeMismatch$ = [
-        -3,
-        n0,
-        _ETM,
-        { [_e]: _c, [_hE]: 400 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(EncryptionTypeMismatch$, EncryptionTypeMismatch);
       EndEvent$ = [
         3,
         n0,
@@ -83680,15 +81989,6 @@ ${toHex(hashedRequest)}`;
         [[0, 1], [0, 1], [0, { [_hH]: _IM_ }], [4, { [_hH]: _IMS_ }], [0, { [_hH]: _INM_ }], [4, { [_hH]: _IUS_ }], [0, { [_hH]: _Ra }], [0, { [_hQ]: _rcc }], [0, { [_hQ]: _rcd }], [0, { [_hQ]: _rce }], [0, { [_hQ]: _rcl }], [0, { [_hQ]: _rct }], [6, { [_hQ]: _re }], [0, { [_hQ]: _vI }], [0, { [_hH]: _xasseca }], [() => SSECustomerKey, { [_hH]: _xasseck }], [0, { [_hH]: _xasseckM }], [0, { [_hH]: _xarp }], [1, { [_hQ]: _pN }], [0, { [_hH]: _xaebo }], [0, { [_hH]: _xacm }]],
         2
       ];
-      IdempotencyParameterMismatch$ = [
-        -3,
-        n0,
-        _IPM,
-        { [_e]: _c, [_hE]: 400 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(IdempotencyParameterMismatch$, IdempotencyParameterMismatch);
       IndexDocument$ = [
         3,
         n0,
@@ -83739,33 +82039,6 @@ ${toHex(hashedRequest)}`;
         [_P, _Ta, _An],
         [0, () => Tag$, [() => IntelligentTieringAndOperator$, 0]]
       ];
-      InvalidObjectState$ = [
-        -3,
-        n0,
-        _IOS,
-        { [_e]: _c, [_hE]: 403 },
-        [_SC, _AT],
-        [0, 0]
-      ];
-      TypeRegistry.for(n0).registerError(InvalidObjectState$, InvalidObjectState);
-      InvalidRequest$ = [
-        -3,
-        n0,
-        _IR,
-        { [_e]: _c, [_hE]: 400 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(InvalidRequest$, InvalidRequest);
-      InvalidWriteOffset$ = [
-        -3,
-        n0,
-        _IWO,
-        { [_e]: _c, [_hE]: 400 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(InvalidWriteOffset$, InvalidWriteOffset);
       InventoryConfiguration$ = [
         3,
         n0,
@@ -84104,7 +82377,7 @@ ${toHex(hashedRequest)}`;
         n0,
         _LPO,
         { [_xN]: _LPR },
-        [_AD, _ARI, _B, _K, _UI, _PNM, _NPNM, _MP, _IT, _Pa, _In, _O, _SC, _RC, _CA, _CT],
+        [_ADb, _ARI, _B, _K, _UI, _PNM, _NPNM, _MP, _IT, _Pa, _In, _O, _SC, _RC, _CA, _CT],
         [[4, { [_hH]: _xaad }], [0, { [_hH]: _xaari }], 0, 0, 0, 0, 0, 1, 2, [() => Parts, { [_xF]: 1, [_xN]: _Par }], () => Initiator$, () => Owner$, 0, [0, { [_hH]: _xarc }], 0, 0]
       ];
       ListPartsRequest$ = [
@@ -84236,42 +82509,6 @@ ${toHex(hashedRequest)}`;
         [_ND, _SC, _NNV],
         [1, 0, 1]
       ];
-      NoSuchBucket$ = [
-        -3,
-        n0,
-        _NSB,
-        { [_e]: _c, [_hE]: 404 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(NoSuchBucket$, NoSuchBucket);
-      NoSuchKey$ = [
-        -3,
-        n0,
-        _NSK,
-        { [_e]: _c, [_hE]: 404 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(NoSuchKey$, NoSuchKey);
-      NoSuchUpload$ = [
-        -3,
-        n0,
-        _NSU,
-        { [_e]: _c, [_hE]: 404 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(NoSuchUpload$, NoSuchUpload);
-      NotFound$ = [
-        -3,
-        n0,
-        _NF,
-        { [_e]: _c },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(NotFound$, NotFound);
       NotificationConfiguration$ = [
         3,
         n0,
@@ -84296,15 +82533,6 @@ ${toHex(hashedRequest)}`;
         [_K, _LM, _ETa, _CA, _CT, _Si, _SC, _O, _RSe],
         [0, 4, 0, [64 | 0, { [_xF]: 1 }], 0, 1, 0, () => Owner$, () => RestoreStatus$]
       ];
-      ObjectAlreadyInActiveTierError$ = [
-        -3,
-        n0,
-        _OAIATE,
-        { [_e]: _c, [_hE]: 403 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(ObjectAlreadyInActiveTierError$, ObjectAlreadyInActiveTierError);
       ObjectIdentifier$ = [
         3,
         n0,
@@ -84346,15 +82574,6 @@ ${toHex(hashedRequest)}`;
         [_DRe],
         [() => DefaultRetention$]
       ];
-      ObjectNotInActiveTierError$ = [
-        -3,
-        n0,
-        _ONIATE,
-        { [_e]: _c, [_hE]: 403 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(ObjectNotInActiveTierError$, ObjectNotInActiveTierError);
       ObjectPart$ = [
         3,
         n0,
@@ -84951,7 +83170,7 @@ ${toHex(hashedRequest)}`;
         n0,
         _SL,
         0,
-        [_BN, _P, _En, _CACL, _ACL, _Tag, _UM, _SC],
+        [_BNu, _P, _En, _CACL, _ACL, _Tag, _UM, _SC],
         [0, 0, [() => Encryption$, 0], 0, [() => Grants, 0], [() => Tagging$, 0], [() => UserMetadata, 0], 0],
         2
       ];
@@ -85076,6 +83295,15 @@ ${toHex(hashedRequest)}`;
         [0],
         1
       ];
+      SSEKMSEncryption$ = [
+        3,
+        n0,
+        _SSEKMSE,
+        { [_xN]: _SK },
+        [_KMSKA, _BKE],
+        [[() => NonEmptyKmsKeyArnString, 0], 2],
+        1
+      ];
       SSES3$ = [
         3,
         n0,
@@ -85160,15 +83388,6 @@ ${toHex(hashedRequest)}`;
         [1, 0],
         2
       ];
-      TooManyParts$ = [
-        -3,
-        n0,
-        _TMP,
-        { [_e]: _c, [_hE]: 400 },
-        [],
-        []
-      ];
-      TypeRegistry.for(n0).registerError(TooManyParts$, TooManyParts);
       TopicConfiguration$ = [
         3,
         n0,
@@ -85203,6 +83422,23 @@ ${toHex(hashedRequest)}`;
         [_B, _JTC, _CMD, _CA, _EBO],
         [[0, 1], [() => JournalTableConfigurationUpdates$, { [_hP]: 1, [_xN]: _JTC }], [0, { [_hH]: _CM }], [0, { [_hH]: _xasca }], [0, { [_hH]: _xaebo }]],
         2
+      ];
+      UpdateObjectEncryptionRequest$ = [
+        3,
+        n0,
+        _UOER,
+        0,
+        [_B, _K, _OE, _VI, _RP, _EBO, _CMD, _CA],
+        [[0, 1], [0, 1], [() => ObjectEncryption$, 16], [0, { [_hQ]: _vI }], [0, { [_hH]: _xarp }], [0, { [_hH]: _xaebo }], [0, { [_hH]: _CM }], [0, { [_hH]: _xasca }]],
+        3
+      ];
+      UpdateObjectEncryptionResponse$ = [
+        3,
+        n0,
+        _UOERp,
+        0,
+        [_RC],
+        [[0, { [_hH]: _xarc }]]
       ];
       UploadPartCopyOutput$ = [
         3,
@@ -85264,8 +83500,6 @@ ${toHex(hashedRequest)}`;
         2
       ];
       __Unit = "unit";
-      S3ServiceException$ = [-3, _sm, "S3ServiceException", 0, [], []];
-      TypeRegistry.for(_sm).registerError(S3ServiceException$, S3ServiceException);
       AllowedHeaders = 64 | 0;
       AllowedMethods = 64 | 0;
       AllowedOrigins = 64 | 0;
@@ -85599,11 +83833,19 @@ ${toHex(hashedRequest)}`;
         [_P, _Ta, _APAc, _An],
         [0, () => Tag$, 0, [() => MetricsAndOperator$, 0]]
       ];
+      ObjectEncryption$ = [
+        4,
+        n0,
+        _OE,
+        0,
+        [_SSEKMS],
+        [[() => SSEKMSEncryption$, { [_xN]: _SK }]]
+      ];
       SelectObjectContentEventStream$ = [
         4,
         n0,
         _SOCES,
-        { [_s]: 1 },
+        { [_st]: 1 },
         [_Rec, _Sta, _Pr, _Cont, _End],
         [[() => RecordsEvent$, 0], [() => StatsEvent$, 0], [() => ProgressEvent$, 0], () => ContinuationEvent$, () => EndEvent$]
       ];
@@ -86431,6 +84673,14 @@ ${toHex(hashedRequest)}`;
         () => UpdateBucketMetadataJournalTableConfigurationRequest$,
         () => __Unit
       ];
+      UpdateObjectEncryption$ = [
+        9,
+        n0,
+        _UOE,
+        { [_hC]: "-", [_h]: ["PUT", "/{Key+}?encryption", 200] },
+        () => UpdateObjectEncryptionRequest$,
+        () => UpdateObjectEncryptionResponse$
+      ];
       UploadPart$ = [
         9,
         n0,
@@ -86459,13 +84709,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
-  var import_polyfills472, CreateSessionCommand;
+  var import_polyfills475, CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
-      import_polyfills472 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills475 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CreateSessionCommand = class extends Command.classBuilder().ep({
@@ -86489,7 +84739,7 @@ ${toHex(hashedRequest)}`;
       package_default = {
         name: "@aws-sdk/client-s3",
         description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-        version: "3.969.0",
+        version: "3.1013.0",
         scripts: {
           build: "concurrently 'yarn:build:types' 'yarn:build:es' && yarn build:cjs",
           "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -86497,7 +84747,7 @@ ${toHex(hashedRequest)}`;
           "build:include:deps": 'yarn g:turbo run build -F="$npm_package_name"',
           "build:types": "tsc -p tsconfig.types.json",
           "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
-          clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
+          clean: "premove dist-cjs dist-es dist-types tsconfig.cjs.tsbuildinfo tsconfig.es.tsbuildinfo tsconfig.types.tsbuildinfo",
           "extract:docs": "api-extractor run --local",
           "generate:client": "node ../../scripts/generate-clients/single-service --solo s3",
           test: "yarn g:vitest run",
@@ -86518,73 +84768,75 @@ ${toHex(hashedRequest)}`;
           "@aws-crypto/sha1-browser": "5.2.0",
           "@aws-crypto/sha256-browser": "5.2.0",
           "@aws-crypto/sha256-js": "5.2.0",
-          "@aws-sdk/core": "3.969.0",
-          "@aws-sdk/credential-provider-node": "3.969.0",
-          "@aws-sdk/middleware-bucket-endpoint": "3.969.0",
-          "@aws-sdk/middleware-expect-continue": "3.969.0",
-          "@aws-sdk/middleware-flexible-checksums": "3.969.0",
-          "@aws-sdk/middleware-host-header": "3.969.0",
-          "@aws-sdk/middleware-location-constraint": "3.969.0",
-          "@aws-sdk/middleware-logger": "3.969.0",
-          "@aws-sdk/middleware-recursion-detection": "3.969.0",
-          "@aws-sdk/middleware-sdk-s3": "3.969.0",
-          "@aws-sdk/middleware-ssec": "3.969.0",
-          "@aws-sdk/middleware-user-agent": "3.969.0",
-          "@aws-sdk/region-config-resolver": "3.969.0",
-          "@aws-sdk/signature-v4-multi-region": "3.969.0",
-          "@aws-sdk/types": "3.969.0",
-          "@aws-sdk/util-endpoints": "3.969.0",
-          "@aws-sdk/util-user-agent-browser": "3.969.0",
-          "@aws-sdk/util-user-agent-node": "3.969.0",
-          "@smithy/config-resolver": "^4.4.6",
-          "@smithy/core": "^3.20.5",
-          "@smithy/eventstream-serde-browser": "^4.2.8",
-          "@smithy/eventstream-serde-config-resolver": "^4.3.8",
-          "@smithy/eventstream-serde-node": "^4.2.8",
-          "@smithy/fetch-http-handler": "^5.3.9",
-          "@smithy/hash-blob-browser": "^4.2.9",
-          "@smithy/hash-node": "^4.2.8",
-          "@smithy/hash-stream-node": "^4.2.8",
-          "@smithy/invalid-dependency": "^4.2.8",
-          "@smithy/md5-js": "^4.2.8",
-          "@smithy/middleware-content-length": "^4.2.8",
-          "@smithy/middleware-endpoint": "^4.4.6",
-          "@smithy/middleware-retry": "^4.4.22",
-          "@smithy/middleware-serde": "^4.2.9",
-          "@smithy/middleware-stack": "^4.2.8",
-          "@smithy/node-config-provider": "^4.3.8",
-          "@smithy/node-http-handler": "^4.4.8",
-          "@smithy/protocol-http": "^5.3.8",
-          "@smithy/smithy-client": "^4.10.7",
-          "@smithy/types": "^4.12.0",
-          "@smithy/url-parser": "^4.2.8",
-          "@smithy/util-base64": "^4.3.0",
-          "@smithy/util-body-length-browser": "^4.2.0",
-          "@smithy/util-body-length-node": "^4.2.1",
-          "@smithy/util-defaults-mode-browser": "^4.3.21",
-          "@smithy/util-defaults-mode-node": "^4.2.24",
-          "@smithy/util-endpoints": "^3.2.8",
-          "@smithy/util-middleware": "^4.2.8",
-          "@smithy/util-retry": "^4.2.8",
-          "@smithy/util-stream": "^4.5.10",
-          "@smithy/util-utf8": "^4.2.0",
-          "@smithy/util-waiter": "^4.2.8",
+          "@aws-sdk/core": "^3.973.22",
+          "@aws-sdk/credential-provider-node": "^3.972.23",
+          "@aws-sdk/middleware-bucket-endpoint": "^3.972.8",
+          "@aws-sdk/middleware-expect-continue": "^3.972.8",
+          "@aws-sdk/middleware-flexible-checksums": "^3.974.2",
+          "@aws-sdk/middleware-host-header": "^3.972.8",
+          "@aws-sdk/middleware-location-constraint": "^3.972.8",
+          "@aws-sdk/middleware-logger": "^3.972.8",
+          "@aws-sdk/middleware-recursion-detection": "^3.972.8",
+          "@aws-sdk/middleware-sdk-s3": "^3.972.22",
+          "@aws-sdk/middleware-ssec": "^3.972.8",
+          "@aws-sdk/middleware-user-agent": "^3.972.23",
+          "@aws-sdk/region-config-resolver": "^3.972.8",
+          "@aws-sdk/signature-v4-multi-region": "^3.996.10",
+          "@aws-sdk/types": "^3.973.6",
+          "@aws-sdk/util-endpoints": "^3.996.5",
+          "@aws-sdk/util-user-agent-browser": "^3.972.8",
+          "@aws-sdk/util-user-agent-node": "^3.973.9",
+          "@smithy/config-resolver": "^4.4.11",
+          "@smithy/core": "^3.23.12",
+          "@smithy/eventstream-serde-browser": "^4.2.12",
+          "@smithy/eventstream-serde-config-resolver": "^4.3.12",
+          "@smithy/eventstream-serde-node": "^4.2.12",
+          "@smithy/fetch-http-handler": "^5.3.15",
+          "@smithy/hash-blob-browser": "^4.2.13",
+          "@smithy/hash-node": "^4.2.12",
+          "@smithy/hash-stream-node": "^4.2.12",
+          "@smithy/invalid-dependency": "^4.2.12",
+          "@smithy/md5-js": "^4.2.12",
+          "@smithy/middleware-content-length": "^4.2.12",
+          "@smithy/middleware-endpoint": "^4.4.26",
+          "@smithy/middleware-retry": "^4.4.43",
+          "@smithy/middleware-serde": "^4.2.15",
+          "@smithy/middleware-stack": "^4.2.12",
+          "@smithy/node-config-provider": "^4.3.12",
+          "@smithy/node-http-handler": "^4.5.0",
+          "@smithy/protocol-http": "^5.3.12",
+          "@smithy/smithy-client": "^4.12.6",
+          "@smithy/types": "^4.13.1",
+          "@smithy/url-parser": "^4.2.12",
+          "@smithy/util-base64": "^4.3.2",
+          "@smithy/util-body-length-browser": "^4.2.2",
+          "@smithy/util-body-length-node": "^4.2.3",
+          "@smithy/util-defaults-mode-browser": "^4.3.42",
+          "@smithy/util-defaults-mode-node": "^4.2.45",
+          "@smithy/util-endpoints": "^3.3.3",
+          "@smithy/util-middleware": "^4.2.12",
+          "@smithy/util-retry": "^4.2.12",
+          "@smithy/util-stream": "^4.5.20",
+          "@smithy/util-utf8": "^4.2.2",
+          "@smithy/util-waiter": "^4.2.13",
           tslib: "^2.6.2"
         },
         devDependencies: {
-          "@aws-sdk/signature-v4-crt": "3.969.0",
+          "@aws-sdk/signature-v4-crt": "3.1013.0",
+          "@smithy/snapshot-testing": "^2.0.3",
           "@tsconfig/node20": "20.1.8",
           "@types/node": "^20.14.8",
           concurrently: "7.0.0",
           "downlevel-dts": "0.10.1",
-          rimraf: "5.0.10",
-          typescript: "~5.8.3"
+          premove: "4.0.0",
+          typescript: "~5.8.3",
+          vitest: "^4.0.17"
         },
         engines: {
           node: ">=20.0.0"
         },
         typesVersions: {
-          "<4.0": {
+          "<4.5": {
             "dist-types/*": [
               "dist-types/ts3.4/*"
             ]
@@ -86615,36 +84867,36 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
-  var import_polyfills473, fromUtf84;
+  var import_polyfills476, fromUtf84;
   var init_fromUtf8_browser3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
-      import_polyfills473 = __toESM(require_polyfills());
+      import_polyfills476 = __toESM(require_polyfills());
       fromUtf84 = (input) => new TextEncoder().encode(input);
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
-  var import_polyfills474;
+  var import_polyfills477;
   var init_toUint8Array3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
-      import_polyfills474 = __toESM(require_polyfills());
+      import_polyfills477 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
-  var import_polyfills475;
+  var import_polyfills478;
   var init_toUtf8_browser3 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
-      import_polyfills475 = __toESM(require_polyfills());
+      import_polyfills478 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
-  var import_polyfills476;
+  var import_polyfills479;
   var init_dist_es44 = __esm({
     "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
-      import_polyfills476 = __toESM(require_polyfills());
+      import_polyfills479 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
       init_toUint8Array3();
       init_toUtf8_browser3();
@@ -86658,18 +84910,18 @@ ${toHex(hashedRequest)}`;
     }
     return data.byteLength === 0;
   }
-  var import_polyfills477;
+  var import_polyfills480;
   var init_isEmptyData2 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
-      import_polyfills477 = __toESM(require_polyfills());
+      import_polyfills480 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
-  var import_polyfills478, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
+  var import_polyfills481, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
-      import_polyfills478 = __toESM(require_polyfills());
+      import_polyfills481 = __toESM(require_polyfills());
       SHA_1_HASH = { name: "SHA-1" };
       SHA_1_HMAC_ALGO = {
         name: "HMAC",
@@ -86709,10 +84961,10 @@ ${toHex(hashedRequest)}`;
     }
     return fallbackWindow;
   }
-  var import_polyfills479, fallbackWindow;
+  var import_polyfills482, fallbackWindow;
   var init_dist_es45 = __esm({
     "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
-      import_polyfills479 = __toESM(require_polyfills());
+      import_polyfills482 = __toESM(require_polyfills());
       fallbackWindow = {};
     }
   });
@@ -86727,10 +84979,10 @@ ${toHex(hashedRequest)}`;
     }
     return new Uint8Array(data);
   }
-  var import_polyfills480, Sha1;
+  var import_polyfills483, Sha1;
   var init_webCryptoSha1 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
-      import_polyfills480 = __toESM(require_polyfills());
+      import_polyfills483 = __toESM(require_polyfills());
       init_dist_es44();
       init_isEmptyData2();
       init_constants8();
@@ -86803,10 +85055,10 @@ ${toHex(hashedRequest)}`;
       return typeof subtle[methodName] === "function";
     });
   }
-  var import_polyfills481, subtleCryptoMethods;
+  var import_polyfills484, subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
     "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
-      import_polyfills481 = __toESM(require_polyfills());
+      import_polyfills484 = __toESM(require_polyfills());
       subtleCryptoMethods = [
         "decrypt",
         "digest",
@@ -86821,19 +85073,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
-  var import_polyfills482;
+  var import_polyfills485;
   var init_module4 = __esm({
     "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
-      import_polyfills482 = __toESM(require_polyfills());
+      import_polyfills485 = __toESM(require_polyfills());
       init_supportsWebCrypto();
     }
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
-  var import_polyfills483, Sha12;
+  var import_polyfills486, Sha12;
   var init_crossPlatformSha1 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
-      import_polyfills483 = __toESM(require_polyfills());
+      import_polyfills486 = __toESM(require_polyfills());
       init_webCryptoSha1();
       init_module4();
       init_dist_es45();
@@ -86862,20 +85114,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha1-browser/build/module/index.js
-  var import_polyfills484;
+  var import_polyfills487;
   var init_module5 = __esm({
     "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
-      import_polyfills484 = __toESM(require_polyfills());
+      import_polyfills487 = __toESM(require_polyfills());
       init_crossPlatformSha1();
       init_webCryptoSha1();
     }
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
-  var import_polyfills485, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
+  var import_polyfills488, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
-      import_polyfills485 = __toESM(require_polyfills());
+      import_polyfills488 = __toESM(require_polyfills());
       SHA_256_HASH = { name: "SHA-256" };
       SHA_256_HMAC_ALGO = {
         name: "HMAC",
@@ -86919,10 +85171,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
-  var import_polyfills486, Sha256;
+  var import_polyfills489, Sha256;
   var init_webCryptoSha256 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
-      import_polyfills486 = __toESM(require_polyfills());
+      import_polyfills489 = __toESM(require_polyfills());
       init_module();
       init_constants9();
       init_dist_es45();
@@ -86978,10 +85230,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/constants.js
-  var import_polyfills487, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
+  var import_polyfills490, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
-      import_polyfills487 = __toESM(require_polyfills());
+      import_polyfills490 = __toESM(require_polyfills());
       BLOCK_SIZE = 64;
       DIGEST_LENGTH = 32;
       KEY = new Uint32Array([
@@ -87065,10 +85317,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
-  var import_polyfills488, RawSha256;
+  var import_polyfills491, RawSha256;
   var init_RawSha256 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
-      import_polyfills488 = __toESM(require_polyfills());
+      import_polyfills491 = __toESM(require_polyfills());
       init_constants10();
       RawSha256 = /** @class */
       (function() {
@@ -87179,10 +85431,10 @@ ${toHex(hashedRequest)}`;
     buffer.set(input);
     return buffer;
   }
-  var import_polyfills489, Sha2562;
+  var import_polyfills492, Sha2562;
   var init_jsSha256 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
-      import_polyfills489 = __toESM(require_polyfills());
+      import_polyfills492 = __toESM(require_polyfills());
       init_tslib_es6();
       init_constants10();
       init_RawSha256();
@@ -87247,19 +85499,19 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-js/build/module/index.js
-  var import_polyfills490;
+  var import_polyfills493;
   var init_module6 = __esm({
     "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
-      import_polyfills490 = __toESM(require_polyfills());
+      import_polyfills493 = __toESM(require_polyfills());
       init_jsSha256();
     }
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
-  var import_polyfills491, Sha2563;
+  var import_polyfills494, Sha2563;
   var init_crossPlatformSha256 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
-      import_polyfills491 = __toESM(require_polyfills());
+      import_polyfills494 = __toESM(require_polyfills());
       init_webCryptoSha256();
       init_module6();
       init_module4();
@@ -87289,20 +85541,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-crypto/sha256-browser/build/module/index.js
-  var import_polyfills492;
+  var import_polyfills495;
   var init_module7 = __esm({
     "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
-      import_polyfills492 = __toESM(require_polyfills());
+      import_polyfills495 = __toESM(require_polyfills());
       init_crossPlatformSha256();
       init_webCryptoSha256();
     }
   });
 
   // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
-  var import_polyfills493, createDefaultUserAgentProvider, fallback;
+  var import_polyfills496, createDefaultUserAgentProvider, fallback;
   var init_dist_es46 = __esm({
     "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
-      import_polyfills493 = __toESM(require_polyfills());
+      import_polyfills496 = __toESM(require_polyfills());
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
         const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
         const uaString = navigator2?.userAgent ?? "";
@@ -87368,11 +85620,11 @@ ${toHex(hashedRequest)}`;
         break;
     }
   }
-  var import_polyfills494, Int642;
+  var import_polyfills497, Int642;
   var init_Int64 = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
-      import_polyfills494 = __toESM(require_polyfills());
-      init_dist_es11();
+      import_polyfills497 = __toESM(require_polyfills());
+      init_dist_es10();
       Int642 = class _Int64 {
         bytes;
         constructor(bytes) {
@@ -87410,11 +85662,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
-  var import_polyfills495, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
+  var import_polyfills498, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
-      import_polyfills495 = __toESM(require_polyfills());
-      init_dist_es11();
+      import_polyfills498 = __toESM(require_polyfills());
+      init_dist_es10();
       init_Int64();
       HeaderMarshaller = class {
         toUtf8;
@@ -87626,10 +85878,10 @@ ${toHex(hashedRequest)}`;
       body: new Uint8Array(buffer, byteOffset + PRELUDE_LENGTH + CHECKSUM_LENGTH + headerLength, messageLength - headerLength - (PRELUDE_LENGTH + CHECKSUM_LENGTH + CHECKSUM_LENGTH))
     };
   }
-  var import_polyfills496, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
+  var import_polyfills499, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
-      import_polyfills496 = __toESM(require_polyfills());
+      import_polyfills499 = __toESM(require_polyfills());
       init_module3();
       PRELUDE_MEMBER_LENGTH = 4;
       PRELUDE_LENGTH = PRELUDE_MEMBER_LENGTH * 2;
@@ -87639,10 +85891,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
-  var import_polyfills497, EventStreamCodec;
+  var import_polyfills500, EventStreamCodec;
   var init_EventStreamCodec = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
-      import_polyfills497 = __toESM(require_polyfills());
+      import_polyfills500 = __toESM(require_polyfills());
       init_module3();
       init_HeaderMarshaller();
       init_splitMessage();
@@ -87712,18 +85964,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/Message.js
-  var import_polyfills498;
+  var import_polyfills501;
   var init_Message = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
-      import_polyfills498 = __toESM(require_polyfills());
+      import_polyfills501 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
-  var import_polyfills499, MessageDecoderStream;
+  var import_polyfills502, MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
-      import_polyfills499 = __toESM(require_polyfills());
+      import_polyfills502 = __toESM(require_polyfills());
       MessageDecoderStream = class {
         options;
         constructor(options) {
@@ -87743,10 +85995,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
-  var import_polyfills500, MessageEncoderStream;
+  var import_polyfills503, MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
-      import_polyfills500 = __toESM(require_polyfills());
+      import_polyfills503 = __toESM(require_polyfills());
       MessageEncoderStream = class {
         options;
         constructor(options) {
@@ -87769,10 +86021,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
-  var import_polyfills501, SmithyMessageDecoderStream;
+  var import_polyfills504, SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
-      import_polyfills501 = __toESM(require_polyfills());
+      import_polyfills504 = __toESM(require_polyfills());
       SmithyMessageDecoderStream = class {
         options;
         constructor(options) {
@@ -87794,10 +86046,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
-  var import_polyfills502, SmithyMessageEncoderStream;
+  var import_polyfills505, SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
-      import_polyfills502 = __toESM(require_polyfills());
+      import_polyfills505 = __toESM(require_polyfills());
       SmithyMessageEncoderStream = class {
         options;
         constructor(options) {
@@ -87817,10 +86069,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-codec/dist-es/index.js
-  var import_polyfills503;
+  var import_polyfills506;
   var init_dist_es47 = __esm({
     "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
-      import_polyfills503 = __toESM(require_polyfills());
+      import_polyfills506 = __toESM(require_polyfills());
       init_EventStreamCodec();
       init_HeaderMarshaller();
       init_Int64();
@@ -87897,10 +86149,10 @@ ${toHex(hashedRequest)}`;
       [Symbol.asyncIterator]: iterator
     };
   }
-  var import_polyfills504;
+  var import_polyfills507;
   var init_getChunkedStream = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
-      import_polyfills504 = __toESM(require_polyfills());
+      import_polyfills507 = __toESM(require_polyfills());
     }
   });
 
@@ -87935,18 +86187,18 @@ ${toHex(hashedRequest)}`;
       }
     };
   }
-  var import_polyfills505;
+  var import_polyfills508;
   var init_getUnmarshalledStream = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
-      import_polyfills505 = __toESM(require_polyfills());
+      import_polyfills508 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
-  var import_polyfills506, EventStreamMarshaller;
+  var import_polyfills509, EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
-      import_polyfills506 = __toESM(require_polyfills());
+      import_polyfills509 = __toESM(require_polyfills());
       init_dist_es47();
       init_getChunkedStream();
       init_getUnmarshalledStream();
@@ -87976,28 +86228,28 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
-  var import_polyfills507;
+  var import_polyfills510;
   var init_provider = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
-      import_polyfills507 = __toESM(require_polyfills());
+      import_polyfills510 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
-  var import_polyfills508;
+  var import_polyfills511;
   var init_dist_es48 = __esm({
     "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
-      import_polyfills508 = __toESM(require_polyfills());
+      import_polyfills511 = __toESM(require_polyfills());
       init_EventStreamMarshaller();
       init_provider();
     }
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
-  var import_polyfills509, readableStreamtoIterable, iterableToReadableStream;
+  var import_polyfills512, readableStreamtoIterable, iterableToReadableStream;
   var init_utils3 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
-      import_polyfills509 = __toESM(require_polyfills());
+      import_polyfills512 = __toESM(require_polyfills());
       readableStreamtoIterable = (readableStream) => ({
         [Symbol.asyncIterator]: async function* () {
           const reader = readableStream.getReader();
@@ -88029,10 +86281,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
-  var import_polyfills510, EventStreamMarshaller2, isReadableStream2;
+  var import_polyfills513, EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
-      import_polyfills510 = __toESM(require_polyfills());
+      import_polyfills513 = __toESM(require_polyfills());
       init_dist_es48();
       init_utils3();
       EventStreamMarshaller2 = class {
@@ -88057,20 +86309,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
-  var import_polyfills511, eventStreamSerdeProvider;
+  var import_polyfills514, eventStreamSerdeProvider;
   var init_provider2 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
-      import_polyfills511 = __toESM(require_polyfills());
+      import_polyfills514 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       eventStreamSerdeProvider = (options) => new EventStreamMarshaller2(options);
     }
   });
 
   // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
-  var import_polyfills512;
+  var import_polyfills515;
   var init_dist_es49 = __esm({
     "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
-      import_polyfills512 = __toESM(require_polyfills());
+      import_polyfills515 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       init_provider2();
       init_utils3();
@@ -88087,18 +86339,18 @@ ${toHex(hashedRequest)}`;
       totalBytesRead += slice.size;
     }
   }
-  var import_polyfills513;
+  var import_polyfills516;
   var init_dist_es50 = __esm({
     "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
-      import_polyfills513 = __toESM(require_polyfills());
+      import_polyfills516 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/hash-blob-browser/dist-es/index.js
-  var import_polyfills514, blobHasher;
+  var import_polyfills517, blobHasher;
   var init_dist_es51 = __esm({
     "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
-      import_polyfills514 = __toESM(require_polyfills());
+      import_polyfills517 = __toESM(require_polyfills());
       init_dist_es50();
       blobHasher = async function blobHasher2(hashCtor, blob) {
         const hash = new hashCtor();
@@ -88111,37 +86363,37 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
-  var import_polyfills515;
+  var import_polyfills518;
   var init_invalidFunction = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
-      import_polyfills515 = __toESM(require_polyfills());
+      import_polyfills518 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
-  var import_polyfills516, invalidProvider;
+  var import_polyfills519, invalidProvider;
   var init_invalidProvider = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
-      import_polyfills516 = __toESM(require_polyfills());
+      import_polyfills519 = __toESM(require_polyfills());
       invalidProvider = (message) => () => Promise.reject(message);
     }
   });
 
   // node_modules/@smithy/invalid-dependency/dist-es/index.js
-  var import_polyfills517;
+  var import_polyfills520;
   var init_dist_es52 = __esm({
     "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
-      import_polyfills517 = __toESM(require_polyfills());
+      import_polyfills520 = __toESM(require_polyfills());
       init_invalidFunction();
       init_invalidProvider();
     }
   });
 
   // node_modules/@smithy/md5-js/dist-es/constants.js
-  var import_polyfills518, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
+  var import_polyfills521, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
     "node_modules/@smithy/md5-js/dist-es/constants.js"() {
-      import_polyfills518 = __toESM(require_polyfills());
+      import_polyfills521 = __toESM(require_polyfills());
       BLOCK_SIZE2 = 64;
       DIGEST_LENGTH2 = 16;
       INIT2 = [1732584193, 4023233417, 2562383102, 271733878];
@@ -88180,11 +86432,11 @@ ${toHex(hashedRequest)}`;
     }
     return new Uint8Array(data);
   }
-  var import_polyfills519, Md5;
+  var import_polyfills522, Md5;
   var init_dist_es53 = __esm({
     "node_modules/@smithy/md5-js/dist-es/index.js"() {
-      import_polyfills519 = __toESM(require_polyfills());
-      init_dist_es6();
+      import_polyfills522 = __toESM(require_polyfills());
+      init_dist_es5();
       init_constants11();
       Md5 = class {
         state;
@@ -88324,20 +86576,20 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
-  var import_polyfills520, DEFAULTS_MODE_OPTIONS;
+  var import_polyfills523, DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
-      import_polyfills520 = __toESM(require_polyfills());
+      import_polyfills523 = __toESM(require_polyfills());
       DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
     }
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
-  var import_polyfills521, resolveDefaultsModeConfig, useMobileConfiguration;
+  var import_polyfills524, resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
-      import_polyfills521 = __toESM(require_polyfills());
-      init_dist_es15();
+      import_polyfills524 = __toESM(require_polyfills());
+      init_dist_es16();
       init_constants12();
       resolveDefaultsModeConfig = ({ defaultsMode } = {}) => memoize(async () => {
         const mode = typeof defaultsMode === "function" ? await defaultsMode() : defaultsMode;
@@ -88371,29 +86623,30 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
-  var import_polyfills522;
+  var import_polyfills525;
   var init_dist_es54 = __esm({
     "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
-      import_polyfills522 = __toESM(require_polyfills());
+      import_polyfills525 = __toESM(require_polyfills());
       init_resolveDefaultsModeConfig();
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
-  var import_polyfills523, getRuntimeConfig;
+  var import_polyfills526, getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
-      import_polyfills523 = __toESM(require_polyfills());
-      init_dist_es22();
+      import_polyfills526 = __toESM(require_polyfills());
+      init_dist_es23();
       init_protocols2();
       init_dist_es43();
-      init_dist_es20();
-      init_dist_es33();
-      init_dist_es7();
-      init_dist_es12();
+      init_dist_es21();
+      init_dist_es13();
       init_dist_es6();
+      init_dist_es11();
+      init_dist_es5();
       init_httpAuthSchemeProvider();
       init_endpointResolver();
+      init_schemas_0();
       getRuntimeConfig = (config) => {
         return {
           apiVersion: "2006-03-01",
@@ -88420,6 +86673,7 @@ ${toHex(hashedRequest)}`;
           protocol: config?.protocol ?? AwsRestXmlProtocol,
           protocolSettings: config?.protocolSettings ?? {
             defaultNamespace: "com.amazonaws.s3",
+            errorTypeRegistries,
             xmlNamespace: "http://s3.amazonaws.com/doc/2006-03-01/",
             version: "2006-03-01",
             serviceTarget: "AmazonS3"
@@ -88438,24 +86692,24 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
-  var import_polyfills524, getRuntimeConfig2;
+  var import_polyfills527, getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
-      import_polyfills524 = __toESM(require_polyfills());
+      import_polyfills527 = __toESM(require_polyfills());
       init_package();
       init_module5();
       init_module7();
       init_dist_es46();
-      init_dist_es36();
+      init_dist_es37();
       init_dist_es49();
-      init_dist_es10();
+      init_dist_es9();
       init_dist_es51();
       init_dist_es52();
       init_dist_es53();
-      init_dist_es20();
-      init_dist_es18();
+      init_dist_es21();
+      init_dist_es19();
       init_dist_es54();
-      init_dist_es41();
+      init_dist_es35();
       init_runtimeConfig_shared();
       getRuntimeConfig2 = (config) => {
         const defaultsMode = resolveDefaultsModeConfig(config);
@@ -88487,10 +86741,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
-  var import_polyfills525, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
+  var import_polyfills528, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
-      import_polyfills525 = __toESM(require_polyfills());
+      import_polyfills528 = __toESM(require_polyfills());
       getAwsRegionExtensionConfiguration = (runtimeConfig) => {
         return {
           setRegion(region) {
@@ -88510,26 +86764,26 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
-  var import_polyfills526;
+  var import_polyfills529;
   var init_awsRegionConfig = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
-      import_polyfills526 = __toESM(require_polyfills());
+      import_polyfills529 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
-  var import_polyfills527;
+  var import_polyfills530;
   var init_stsRegionDefaultResolver_browser = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
-      import_polyfills527 = __toESM(require_polyfills());
+      import_polyfills530 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
-  var import_polyfills528;
+  var import_polyfills531;
   var init_dist_es55 = __esm({
     "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
-      import_polyfills528 = __toESM(require_polyfills());
+      import_polyfills531 = __toESM(require_polyfills());
       init_extensions4();
       init_awsRegionConfig();
       init_stsRegionDefaultResolver_browser();
@@ -88537,10 +86791,10 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
-  var import_polyfills529, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
+  var import_polyfills532, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
-      import_polyfills529 = __toESM(require_polyfills());
+      import_polyfills532 = __toESM(require_polyfills());
       getHttpAuthExtensionConfiguration = (runtimeConfig) => {
         const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
         let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
@@ -88582,13 +86836,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
-  var import_polyfills530, resolveRuntimeExtensions;
+  var import_polyfills533, resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
-      import_polyfills530 = __toESM(require_polyfills());
+      import_polyfills533 = __toESM(require_polyfills());
       init_dist_es55();
       init_dist_es2();
-      init_dist_es20();
+      init_dist_es21();
       init_httpAuthExtensionConfiguration();
       resolveRuntimeExtensions = (runtimeConfig, extensions) => {
         const extensionConfiguration = Object.assign(getAwsRegionExtensionConfiguration(runtimeConfig), getDefaultExtensionConfiguration(runtimeConfig), getHttpHandlerExtensionConfiguration(runtimeConfig), getHttpAuthExtensionConfiguration(runtimeConfig));
@@ -88599,25 +86853,25 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
-  var import_polyfills531, S3Client;
+  var import_polyfills534, S3Client;
   var init_S3Client = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
-      import_polyfills531 = __toESM(require_polyfills());
+      import_polyfills534 = __toESM(require_polyfills());
       init_dist_es3();
-      init_dist_es25();
       init_dist_es26();
       init_dist_es27();
       init_dist_es28();
-      init_dist_es30();
-      init_dist_es35();
+      init_dist_es29();
+      init_dist_es31();
       init_dist_es36();
-      init_dist_es14();
-      init_schema2();
       init_dist_es37();
+      init_dist_es15();
+      init_schema2();
       init_dist_es38();
       init_dist_es39();
+      init_dist_es41();
       init_dist_es42();
-      init_dist_es20();
+      init_dist_es21();
       init_httpAuthSchemeProvider();
       init_CreateSessionCommand();
       init_EndpointParameters();
@@ -88670,13 +86924,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
-  var import_polyfills532, AbortMultipartUploadCommand;
+  var import_polyfills535, AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
-      import_polyfills532 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills535 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       AbortMultipartUploadCommand = class extends Command.classBuilder().ep({
@@ -88744,10 +86998,10 @@ ${toHex(hashedRequest)}`;
       return false;
     }
   }
-  var import_polyfills533, ssecMiddlewareOptions, getSsecPlugin;
+  var import_polyfills536, ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es56 = __esm({
     "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
-      import_polyfills533 = __toESM(require_polyfills());
+      import_polyfills536 = __toESM(require_polyfills());
       ssecMiddlewareOptions = {
         name: "ssecMiddleware",
         step: "initialize",
@@ -88763,14 +87017,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
-  var import_polyfills534, CompleteMultipartUploadCommand;
+  var import_polyfills537, CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
-      import_polyfills534 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills537 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CompleteMultipartUploadCommand = class extends Command.classBuilder().ep({
@@ -88789,14 +87043,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
-  var import_polyfills535, CopyObjectCommand;
+  var import_polyfills538, CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
-      import_polyfills535 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills538 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CopyObjectCommand = class extends Command.classBuilder().ep({
@@ -88830,10 +87084,10 @@ ${toHex(hashedRequest)}`;
       return next(args);
     };
   }
-  var import_polyfills536, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
+  var import_polyfills539, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es57 = __esm({
     "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
-      import_polyfills536 = __toESM(require_polyfills());
+      import_polyfills539 = __toESM(require_polyfills());
       locationConstraintMiddlewareOptions = {
         step: "initialize",
         tags: ["LOCATION_CONSTRAINT", "CREATE_BUCKET_CONFIGURATION"],
@@ -88849,14 +87103,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
-  var import_polyfills537, CreateBucketCommand;
+  var import_polyfills540, CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
-      import_polyfills537 = __toESM(require_polyfills());
+      import_polyfills540 = __toESM(require_polyfills());
       init_dist_es57();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CreateBucketCommand = class extends Command.classBuilder().ep({
@@ -88876,13 +87130,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
-  var import_polyfills538, CreateBucketMetadataConfigurationCommand;
+  var import_polyfills541, CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
-      import_polyfills538 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills541 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CreateBucketMetadataConfigurationCommand = class extends Command.classBuilder().ep({
@@ -88903,13 +87157,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
-  var import_polyfills539, CreateBucketMetadataTableConfigurationCommand;
+  var import_polyfills542, CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills539 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills542 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CreateBucketMetadataTableConfigurationCommand = class extends Command.classBuilder().ep({
@@ -88930,14 +87184,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
-  var import_polyfills540, CreateMultipartUploadCommand;
+  var import_polyfills543, CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
-      import_polyfills540 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills543 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       CreateMultipartUploadCommand = class extends Command.classBuilder().ep({
@@ -88956,12 +87210,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
-  var import_polyfills541, DeleteBucketAnalyticsConfigurationCommand;
+  var import_polyfills544, DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills541 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills544 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketAnalyticsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -88976,12 +87230,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
-  var import_polyfills542, DeleteBucketCommand;
+  var import_polyfills545, DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
-      import_polyfills542 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills545 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketCommand = class extends Command.classBuilder().ep({
@@ -88996,12 +87250,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
-  var import_polyfills543, DeleteBucketCorsCommand;
+  var import_polyfills546, DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
-      import_polyfills543 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills546 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketCorsCommand = class extends Command.classBuilder().ep({
@@ -89016,12 +87270,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
-  var import_polyfills544, DeleteBucketEncryptionCommand;
+  var import_polyfills547, DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
-      import_polyfills544 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills547 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketEncryptionCommand = class extends Command.classBuilder().ep({
@@ -89036,12 +87290,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills545, DeleteBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills548, DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills545 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills548 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketIntelligentTieringConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89056,12 +87310,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
-  var import_polyfills546, DeleteBucketInventoryConfigurationCommand;
+  var import_polyfills549, DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
-      import_polyfills546 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills549 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketInventoryConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89076,12 +87330,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
-  var import_polyfills547, DeleteBucketLifecycleCommand;
+  var import_polyfills550, DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
-      import_polyfills547 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills550 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketLifecycleCommand = class extends Command.classBuilder().ep({
@@ -89096,12 +87350,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
-  var import_polyfills548, DeleteBucketMetadataConfigurationCommand;
+  var import_polyfills551, DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
-      import_polyfills548 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills551 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketMetadataConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89116,12 +87370,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
-  var import_polyfills549, DeleteBucketMetadataTableConfigurationCommand;
+  var import_polyfills552, DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills549 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills552 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketMetadataTableConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89136,12 +87390,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
-  var import_polyfills550, DeleteBucketMetricsConfigurationCommand;
+  var import_polyfills553, DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
-      import_polyfills550 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills553 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketMetricsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89156,12 +87410,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
-  var import_polyfills551, DeleteBucketOwnershipControlsCommand;
+  var import_polyfills554, DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
-      import_polyfills551 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills554 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketOwnershipControlsCommand = class extends Command.classBuilder().ep({
@@ -89176,12 +87430,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
-  var import_polyfills552, DeleteBucketPolicyCommand;
+  var import_polyfills555, DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
-      import_polyfills552 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills555 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketPolicyCommand = class extends Command.classBuilder().ep({
@@ -89196,12 +87450,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
-  var import_polyfills553, DeleteBucketReplicationCommand;
+  var import_polyfills556, DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
-      import_polyfills553 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills556 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketReplicationCommand = class extends Command.classBuilder().ep({
@@ -89216,12 +87470,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
-  var import_polyfills554, DeleteBucketTaggingCommand;
+  var import_polyfills557, DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
-      import_polyfills554 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills557 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketTaggingCommand = class extends Command.classBuilder().ep({
@@ -89236,12 +87490,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
-  var import_polyfills555, DeleteBucketWebsiteCommand;
+  var import_polyfills558, DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
-      import_polyfills555 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills558 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteBucketWebsiteCommand = class extends Command.classBuilder().ep({
@@ -89256,13 +87510,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
-  var import_polyfills556, DeleteObjectCommand;
+  var import_polyfills559, DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
-      import_polyfills556 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills559 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteObjectCommand = class extends Command.classBuilder().ep({
@@ -89280,14 +87534,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
-  var import_polyfills557, DeleteObjectsCommand;
+  var import_polyfills560, DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
-      import_polyfills557 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills560 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteObjectsCommand = class extends Command.classBuilder().ep({
@@ -89308,13 +87562,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
-  var import_polyfills558, DeleteObjectTaggingCommand;
+  var import_polyfills561, DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
-      import_polyfills558 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills561 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeleteObjectTaggingCommand = class extends Command.classBuilder().ep({
@@ -89331,12 +87585,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
-  var import_polyfills559, DeletePublicAccessBlockCommand;
+  var import_polyfills562, DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
-      import_polyfills559 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills562 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       DeletePublicAccessBlockCommand = class extends Command.classBuilder().ep({
@@ -89351,13 +87605,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
-  var import_polyfills560, GetBucketAbacCommand;
+  var import_polyfills563, GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
-      import_polyfills560 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills563 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketAbacCommand = class extends Command.classBuilder().ep({
@@ -89374,13 +87628,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
-  var import_polyfills561, GetBucketAccelerateConfigurationCommand;
+  var import_polyfills564, GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
-      import_polyfills561 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills564 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketAccelerateConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89398,13 +87652,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
-  var import_polyfills562, GetBucketAclCommand;
+  var import_polyfills565, GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
-      import_polyfills562 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills565 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketAclCommand = class extends Command.classBuilder().ep({
@@ -89422,13 +87676,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
-  var import_polyfills563, GetBucketAnalyticsConfigurationCommand;
+  var import_polyfills566, GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills563 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills566 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketAnalyticsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89446,13 +87700,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
-  var import_polyfills564, GetBucketCorsCommand;
+  var import_polyfills567, GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
-      import_polyfills564 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills567 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketCorsCommand = class extends Command.classBuilder().ep({
@@ -89470,13 +87724,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
-  var import_polyfills565, GetBucketEncryptionCommand;
+  var import_polyfills568, GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
-      import_polyfills565 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills568 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketEncryptionCommand = class extends Command.classBuilder().ep({
@@ -89494,13 +87748,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills566, GetBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills569, GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills566 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills569 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketIntelligentTieringConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89518,13 +87772,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
-  var import_polyfills567, GetBucketInventoryConfigurationCommand;
+  var import_polyfills570, GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
-      import_polyfills567 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills570 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketInventoryConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89542,13 +87796,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
-  var import_polyfills568, GetBucketLifecycleConfigurationCommand;
+  var import_polyfills571, GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
-      import_polyfills568 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills571 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketLifecycleConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89566,13 +87820,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
-  var import_polyfills569, GetBucketLocationCommand;
+  var import_polyfills572, GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
-      import_polyfills569 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills572 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketLocationCommand = class extends Command.classBuilder().ep({
@@ -89590,13 +87844,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
-  var import_polyfills570, GetBucketLoggingCommand;
+  var import_polyfills573, GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
-      import_polyfills570 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills573 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketLoggingCommand = class extends Command.classBuilder().ep({
@@ -89614,13 +87868,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
-  var import_polyfills571, GetBucketMetadataConfigurationCommand;
+  var import_polyfills574, GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
-      import_polyfills571 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills574 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketMetadataConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89638,13 +87892,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
-  var import_polyfills572, GetBucketMetadataTableConfigurationCommand;
+  var import_polyfills575, GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
-      import_polyfills572 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills575 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketMetadataTableConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89662,13 +87916,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
-  var import_polyfills573, GetBucketMetricsConfigurationCommand;
+  var import_polyfills576, GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
-      import_polyfills573 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills576 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketMetricsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89686,13 +87940,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
-  var import_polyfills574, GetBucketNotificationConfigurationCommand;
+  var import_polyfills577, GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
-      import_polyfills574 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills577 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketNotificationConfigurationCommand = class extends Command.classBuilder().ep({
@@ -89710,13 +87964,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
-  var import_polyfills575, GetBucketOwnershipControlsCommand;
+  var import_polyfills578, GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
-      import_polyfills575 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills578 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketOwnershipControlsCommand = class extends Command.classBuilder().ep({
@@ -89734,13 +87988,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
-  var import_polyfills576, GetBucketPolicyCommand;
+  var import_polyfills579, GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
-      import_polyfills576 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills579 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketPolicyCommand = class extends Command.classBuilder().ep({
@@ -89758,13 +88012,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
-  var import_polyfills577, GetBucketPolicyStatusCommand;
+  var import_polyfills580, GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
-      import_polyfills577 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills580 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketPolicyStatusCommand = class extends Command.classBuilder().ep({
@@ -89782,13 +88036,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
-  var import_polyfills578, GetBucketReplicationCommand;
+  var import_polyfills581, GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
-      import_polyfills578 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills581 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketReplicationCommand = class extends Command.classBuilder().ep({
@@ -89806,13 +88060,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
-  var import_polyfills579, GetBucketRequestPaymentCommand;
+  var import_polyfills582, GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
-      import_polyfills579 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills582 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketRequestPaymentCommand = class extends Command.classBuilder().ep({
@@ -89830,13 +88084,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
-  var import_polyfills580, GetBucketTaggingCommand;
+  var import_polyfills583, GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
-      import_polyfills580 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills583 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketTaggingCommand = class extends Command.classBuilder().ep({
@@ -89854,13 +88108,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
-  var import_polyfills581, GetBucketVersioningCommand;
+  var import_polyfills584, GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
-      import_polyfills581 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills584 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketVersioningCommand = class extends Command.classBuilder().ep({
@@ -89878,13 +88132,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
-  var import_polyfills582, GetBucketWebsiteCommand;
+  var import_polyfills585, GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
-      import_polyfills582 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills585 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetBucketWebsiteCommand = class extends Command.classBuilder().ep({
@@ -89902,13 +88156,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
-  var import_polyfills583, GetObjectAclCommand;
+  var import_polyfills586, GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
-      import_polyfills583 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills586 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectAclCommand = class extends Command.classBuilder().ep({
@@ -89926,14 +88180,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
-  var import_polyfills584, GetObjectAttributesCommand;
+  var import_polyfills587, GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
-      import_polyfills584 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills587 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectAttributesCommand = class extends Command.classBuilder().ep({
@@ -89951,15 +88205,15 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
-  var import_polyfills585, GetObjectCommand;
+  var import_polyfills588, GetObjectCommand;
   var init_GetObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
-      import_polyfills585 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
+      import_polyfills588 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectCommand = class extends Command.classBuilder().ep({
@@ -89983,13 +88237,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
-  var import_polyfills586, GetObjectLegalHoldCommand;
+  var import_polyfills589, GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
-      import_polyfills586 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills589 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectLegalHoldCommand = class extends Command.classBuilder().ep({
@@ -90006,13 +88260,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
-  var import_polyfills587, GetObjectLockConfigurationCommand;
+  var import_polyfills590, GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
-      import_polyfills587 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills590 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectLockConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90029,13 +88283,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
-  var import_polyfills588, GetObjectRetentionCommand;
+  var import_polyfills591, GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
-      import_polyfills588 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills591 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectRetentionCommand = class extends Command.classBuilder().ep({
@@ -90052,13 +88306,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
-  var import_polyfills589, GetObjectTaggingCommand;
+  var import_polyfills592, GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
-      import_polyfills589 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills592 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectTaggingCommand = class extends Command.classBuilder().ep({
@@ -90075,12 +88329,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
-  var import_polyfills590, GetObjectTorrentCommand;
+  var import_polyfills593, GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
-      import_polyfills590 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills593 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetObjectTorrentCommand = class extends Command.classBuilder().ep({
@@ -90094,13 +88348,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
-  var import_polyfills591, GetPublicAccessBlockCommand;
+  var import_polyfills594, GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
-      import_polyfills591 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills594 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       GetPublicAccessBlockCommand = class extends Command.classBuilder().ep({
@@ -90118,13 +88372,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
-  var import_polyfills592, HeadBucketCommand;
+  var import_polyfills595, HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
-      import_polyfills592 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills595 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       HeadBucketCommand = class extends Command.classBuilder().ep({
@@ -90141,14 +88395,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
-  var import_polyfills593, HeadObjectCommand;
+  var import_polyfills596, HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
-      import_polyfills593 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills596 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       HeadObjectCommand = class extends Command.classBuilder().ep({
@@ -90168,13 +88422,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
-  var import_polyfills594, ListBucketAnalyticsConfigurationsCommand;
+  var import_polyfills597, ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
-      import_polyfills594 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills597 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListBucketAnalyticsConfigurationsCommand = class extends Command.classBuilder().ep({
@@ -90192,13 +88446,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
-  var import_polyfills595, ListBucketIntelligentTieringConfigurationsCommand;
+  var import_polyfills598, ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
-      import_polyfills595 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills598 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListBucketIntelligentTieringConfigurationsCommand = class extends Command.classBuilder().ep({
@@ -90216,13 +88470,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
-  var import_polyfills596, ListBucketInventoryConfigurationsCommand;
+  var import_polyfills599, ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
-      import_polyfills596 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills599 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListBucketInventoryConfigurationsCommand = class extends Command.classBuilder().ep({
@@ -90240,13 +88494,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
-  var import_polyfills597, ListBucketMetricsConfigurationsCommand;
+  var import_polyfills600, ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
-      import_polyfills597 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills600 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListBucketMetricsConfigurationsCommand = class extends Command.classBuilder().ep({
@@ -90263,13 +88517,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
-  var import_polyfills598, ListBucketsCommand;
+  var import_polyfills601, ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
-      import_polyfills598 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills601 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListBucketsCommand = class extends Command.classBuilder().ep(commonParams).m(function(Command2, cs2, config, o2) {
@@ -90283,13 +88537,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
-  var import_polyfills599, ListDirectoryBucketsCommand;
+  var import_polyfills602, ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
-      import_polyfills599 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills602 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListDirectoryBucketsCommand = class extends Command.classBuilder().ep({
@@ -90306,13 +88560,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
-  var import_polyfills600, ListMultipartUploadsCommand;
+  var import_polyfills603, ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
-      import_polyfills600 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills603 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListMultipartUploadsCommand = class extends Command.classBuilder().ep({
@@ -90330,13 +88584,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
-  var import_polyfills601, ListObjectsCommand;
+  var import_polyfills604, ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
-      import_polyfills601 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills604 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListObjectsCommand = class extends Command.classBuilder().ep({
@@ -90354,13 +88608,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
-  var import_polyfills602, ListObjectsV2Command;
+  var import_polyfills605, ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
-      import_polyfills602 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills605 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListObjectsV2Command = class extends Command.classBuilder().ep({
@@ -90378,13 +88632,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
-  var import_polyfills603, ListObjectVersionsCommand;
+  var import_polyfills606, ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
-      import_polyfills603 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills606 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListObjectVersionsCommand = class extends Command.classBuilder().ep({
@@ -90402,14 +88656,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
-  var import_polyfills604, ListPartsCommand;
+  var import_polyfills607, ListPartsCommand;
   var init_ListPartsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
-      import_polyfills604 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills607 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       ListPartsCommand = class extends Command.classBuilder().ep({
@@ -90428,13 +88682,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
-  var import_polyfills605, PutBucketAbacCommand;
+  var import_polyfills608, PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
-      import_polyfills605 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills608 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketAbacCommand = class extends Command.classBuilder().ep({
@@ -90454,13 +88708,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
-  var import_polyfills606, PutBucketAccelerateConfigurationCommand;
+  var import_polyfills609, PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
-      import_polyfills606 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills609 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketAccelerateConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90481,13 +88735,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
-  var import_polyfills607, PutBucketAclCommand;
+  var import_polyfills610, PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
-      import_polyfills607 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills610 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketAclCommand = class extends Command.classBuilder().ep({
@@ -90508,12 +88762,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
-  var import_polyfills608, PutBucketAnalyticsConfigurationCommand;
+  var import_polyfills611, PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
-      import_polyfills608 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills611 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketAnalyticsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90528,13 +88782,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
-  var import_polyfills609, PutBucketCorsCommand;
+  var import_polyfills612, PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
-      import_polyfills609 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills612 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketCorsCommand = class extends Command.classBuilder().ep({
@@ -90555,13 +88809,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
-  var import_polyfills610, PutBucketEncryptionCommand;
+  var import_polyfills613, PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
-      import_polyfills610 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills613 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketEncryptionCommand = class extends Command.classBuilder().ep({
@@ -90582,12 +88836,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
-  var import_polyfills611, PutBucketIntelligentTieringConfigurationCommand;
+  var import_polyfills614, PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
-      import_polyfills611 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills614 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketIntelligentTieringConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90602,12 +88856,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
-  var import_polyfills612, PutBucketInventoryConfigurationCommand;
+  var import_polyfills615, PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
-      import_polyfills612 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills615 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketInventoryConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90622,14 +88876,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
-  var import_polyfills613, PutBucketLifecycleConfigurationCommand;
+  var import_polyfills616, PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
-      import_polyfills613 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills616 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketLifecycleConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90651,13 +88905,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
-  var import_polyfills614, PutBucketLoggingCommand;
+  var import_polyfills617, PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
-      import_polyfills614 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills617 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketLoggingCommand = class extends Command.classBuilder().ep({
@@ -90678,12 +88932,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
-  var import_polyfills615, PutBucketMetricsConfigurationCommand;
+  var import_polyfills618, PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
-      import_polyfills615 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills618 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketMetricsConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90698,12 +88952,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
-  var import_polyfills616, PutBucketNotificationConfigurationCommand;
+  var import_polyfills619, PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
-      import_polyfills616 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills619 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketNotificationConfigurationCommand = class extends Command.classBuilder().ep({
@@ -90718,13 +88972,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
-  var import_polyfills617, PutBucketOwnershipControlsCommand;
+  var import_polyfills620, PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
-      import_polyfills617 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills620 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketOwnershipControlsCommand = class extends Command.classBuilder().ep({
@@ -90745,13 +88999,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
-  var import_polyfills618, PutBucketPolicyCommand;
+  var import_polyfills621, PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
-      import_polyfills618 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills621 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketPolicyCommand = class extends Command.classBuilder().ep({
@@ -90772,13 +89026,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
-  var import_polyfills619, PutBucketReplicationCommand;
+  var import_polyfills622, PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
-      import_polyfills619 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills622 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketReplicationCommand = class extends Command.classBuilder().ep({
@@ -90799,13 +89053,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
-  var import_polyfills620, PutBucketRequestPaymentCommand;
+  var import_polyfills623, PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
-      import_polyfills620 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills623 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketRequestPaymentCommand = class extends Command.classBuilder().ep({
@@ -90826,13 +89080,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
-  var import_polyfills621, PutBucketTaggingCommand;
+  var import_polyfills624, PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
-      import_polyfills621 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills624 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketTaggingCommand = class extends Command.classBuilder().ep({
@@ -90853,13 +89107,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
-  var import_polyfills622, PutBucketVersioningCommand;
+  var import_polyfills625, PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
-      import_polyfills622 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills625 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketVersioningCommand = class extends Command.classBuilder().ep({
@@ -90880,13 +89134,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
-  var import_polyfills623, PutBucketWebsiteCommand;
+  var import_polyfills626, PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
-      import_polyfills623 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills626 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutBucketWebsiteCommand = class extends Command.classBuilder().ep({
@@ -90907,14 +89161,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
-  var import_polyfills624, PutObjectAclCommand;
+  var import_polyfills627, PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
-      import_polyfills624 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills627 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectAclCommand = class extends Command.classBuilder().ep({
@@ -90936,15 +89190,15 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
-  var import_polyfills625, PutObjectCommand;
+  var import_polyfills628, PutObjectCommand;
   var init_PutObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
-      import_polyfills625 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
+      import_polyfills628 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectCommand = class extends Command.classBuilder().ep({
@@ -90968,14 +89222,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
-  var import_polyfills626, PutObjectLegalHoldCommand;
+  var import_polyfills629, PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
-      import_polyfills626 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills629 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectLegalHoldCommand = class extends Command.classBuilder().ep({
@@ -90996,14 +89250,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
-  var import_polyfills627, PutObjectLockConfigurationCommand;
+  var import_polyfills630, PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
-      import_polyfills627 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills630 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectLockConfigurationCommand = class extends Command.classBuilder().ep({
@@ -91024,14 +89278,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
-  var import_polyfills628, PutObjectRetentionCommand;
+  var import_polyfills631, PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
-      import_polyfills628 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills631 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectRetentionCommand = class extends Command.classBuilder().ep({
@@ -91052,14 +89306,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
-  var import_polyfills629, PutObjectTaggingCommand;
+  var import_polyfills632, PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
-      import_polyfills629 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills632 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutObjectTaggingCommand = class extends Command.classBuilder().ep({
@@ -91080,13 +89334,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
-  var import_polyfills630, PutPublicAccessBlockCommand;
+  var import_polyfills633, PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
-      import_polyfills630 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills633 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       PutPublicAccessBlockCommand = class extends Command.classBuilder().ep({
@@ -91107,13 +89361,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
-  var import_polyfills631, RenameObjectCommand;
+  var import_polyfills634, RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
-      import_polyfills631 = __toESM(require_polyfills());
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills634 = __toESM(require_polyfills());
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       RenameObjectCommand = class extends Command.classBuilder().ep({
@@ -91131,14 +89385,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
-  var import_polyfills632, RestoreObjectCommand;
+  var import_polyfills635, RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
-      import_polyfills632 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills635 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       RestoreObjectCommand = class extends Command.classBuilder().ep({
@@ -91159,14 +89413,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
-  var import_polyfills633, SelectObjectContentCommand;
+  var import_polyfills636, SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
-      import_polyfills633 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills636 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       SelectObjectContentCommand = class extends Command.classBuilder().ep({
@@ -91188,13 +89442,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
-  var import_polyfills634, UpdateBucketMetadataInventoryTableConfigurationCommand;
+  var import_polyfills637, UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
-      import_polyfills634 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills637 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       UpdateBucketMetadataInventoryTableConfigurationCommand = class extends Command.classBuilder().ep({
@@ -91215,13 +89469,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
-  var import_polyfills635, UpdateBucketMetadataJournalTableConfigurationCommand;
+  var import_polyfills638, UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
-      import_polyfills635 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills638 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       UpdateBucketMetadataJournalTableConfigurationCommand = class extends Command.classBuilder().ep({
@@ -91241,16 +89495,44 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
+  var import_polyfills639, UpdateObjectEncryptionCommand;
+  var init_UpdateObjectEncryptionCommand = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
+      import_polyfills639 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
+      init_dist_es41();
+      init_dist_es21();
+      init_EndpointParameters();
+      init_schemas_0();
+      UpdateObjectEncryptionCommand = class extends Command.classBuilder().ep({
+        ...commonParams,
+        Bucket: { type: "contextParams", name: "Bucket" }
+      }).m(function(Command2, cs2, config, o2) {
+        return [
+          getEndpointPlugin(config, Command2.getEndpointParameterInstructions()),
+          getFlexibleChecksumsPlugin(config, {
+            requestAlgorithmMember: { "httpHeader": "x-amz-sdk-checksum-algorithm", "name": "ChecksumAlgorithm" },
+            requestChecksumRequired: true
+          }),
+          getThrow200ExceptionsPlugin(config)
+        ];
+      }).s("AmazonS3", "UpdateObjectEncryption", {}).n("S3Client", "UpdateObjectEncryptionCommand").sc(UpdateObjectEncryption$).build() {
+      };
+    }
+  });
+
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
-  var import_polyfills636, UploadPartCommand;
+  var import_polyfills640, UploadPartCommand;
   var init_UploadPartCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
-      import_polyfills636 = __toESM(require_polyfills());
-      init_dist_es25();
-      init_dist_es30();
+      import_polyfills640 = __toESM(require_polyfills());
+      init_dist_es26();
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       UploadPartCommand = class extends Command.classBuilder().ep({
@@ -91273,14 +89555,14 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
-  var import_polyfills637, UploadPartCopyCommand;
+  var import_polyfills641, UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
-      import_polyfills637 = __toESM(require_polyfills());
-      init_dist_es30();
+      import_polyfills641 = __toESM(require_polyfills());
+      init_dist_es31();
       init_dist_es56();
-      init_dist_es39();
-      init_dist_es20();
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       UploadPartCopyCommand = class extends Command.classBuilder().ep({
@@ -91299,12 +89581,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
-  var import_polyfills638, WriteGetObjectResponseCommand;
+  var import_polyfills642, WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
-      import_polyfills638 = __toESM(require_polyfills());
-      init_dist_es39();
-      init_dist_es20();
+      import_polyfills642 = __toESM(require_polyfills());
+      init_dist_es41();
+      init_dist_es21();
       init_EndpointParameters();
       init_schemas_0();
       WriteGetObjectResponseCommand = class extends Command.classBuilder().ep({
@@ -91317,12 +89599,409 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
+  var import_polyfills643, paginateListBuckets;
+  var init_ListBucketsPaginator = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
+      import_polyfills643 = __toESM(require_polyfills());
+      init_dist_es15();
+      init_ListBucketsCommand();
+      init_S3Client();
+      paginateListBuckets = createPaginator(S3Client, ListBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxBuckets");
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
+  var import_polyfills644, paginateListDirectoryBuckets;
+  var init_ListDirectoryBucketsPaginator = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
+      import_polyfills644 = __toESM(require_polyfills());
+      init_dist_es15();
+      init_ListDirectoryBucketsCommand();
+      init_S3Client();
+      paginateListDirectoryBuckets = createPaginator(S3Client, ListDirectoryBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxDirectoryBuckets");
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
+  var import_polyfills645, paginateListObjectsV2;
+  var init_ListObjectsV2Paginator = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
+      import_polyfills645 = __toESM(require_polyfills());
+      init_dist_es15();
+      init_ListObjectsV2Command();
+      init_S3Client();
+      paginateListObjectsV2 = createPaginator(S3Client, ListObjectsV2Command, "ContinuationToken", "NextContinuationToken", "MaxKeys");
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
+  var import_polyfills646, paginateListParts;
+  var init_ListPartsPaginator = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
+      import_polyfills646 = __toESM(require_polyfills());
+      init_dist_es15();
+      init_ListPartsCommand();
+      init_S3Client();
+      paginateListParts = createPaginator(S3Client, ListPartsCommand, "PartNumberMarker", "NextPartNumberMarker", "MaxParts");
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
+  var import_polyfills647, getCircularReplacer;
+  var init_circularReplacer = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
+      import_polyfills647 = __toESM(require_polyfills());
+      getCircularReplacer = () => {
+        const seen = /* @__PURE__ */ new WeakSet();
+        return (key, value) => {
+          if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) {
+              return "[Circular]";
+            }
+            seen.add(value);
+          }
+          return value;
+        };
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
+  var import_polyfills648, sleep;
+  var init_sleep = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
+      import_polyfills648 = __toESM(require_polyfills());
+      sleep = (seconds) => {
+        return new Promise((resolve) => setTimeout(resolve, seconds * 1e3));
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/waiter.js
+  var import_polyfills649, waiterServiceDefaults, WaiterState, checkExceptions;
+  var init_waiter2 = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
+      import_polyfills649 = __toESM(require_polyfills());
+      init_circularReplacer();
+      waiterServiceDefaults = {
+        minDelay: 2,
+        maxDelay: 120
+      };
+      (function(WaiterState2) {
+        WaiterState2["ABORTED"] = "ABORTED";
+        WaiterState2["FAILURE"] = "FAILURE";
+        WaiterState2["SUCCESS"] = "SUCCESS";
+        WaiterState2["RETRY"] = "RETRY";
+        WaiterState2["TIMEOUT"] = "TIMEOUT";
+      })(WaiterState || (WaiterState = {}));
+      checkExceptions = (result) => {
+        if (result.state === WaiterState.ABORTED) {
+          const abortError = new Error(`${JSON.stringify({
+            ...result,
+            reason: "Request was aborted"
+          }, getCircularReplacer())}`);
+          abortError.name = "AbortError";
+          throw abortError;
+        } else if (result.state === WaiterState.TIMEOUT) {
+          const timeoutError = new Error(`${JSON.stringify({
+            ...result,
+            reason: "Waiter has timed out"
+          }, getCircularReplacer())}`);
+          timeoutError.name = "TimeoutError";
+          throw timeoutError;
+        } else if (result.state !== WaiterState.SUCCESS) {
+          throw new Error(`${JSON.stringify(result, getCircularReplacer())}`);
+        }
+        return result;
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/poller.js
+  var import_polyfills650, exponentialBackoffWithJitter, randomInRange, runPolling, createMessageFromResponse;
+  var init_poller = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/poller.js"() {
+      import_polyfills650 = __toESM(require_polyfills());
+      init_circularReplacer();
+      init_sleep();
+      init_waiter2();
+      exponentialBackoffWithJitter = (minDelay, maxDelay, attemptCeiling, attempt) => {
+        if (attempt > attemptCeiling)
+          return maxDelay;
+        const delay = minDelay * 2 ** (attempt - 1);
+        return randomInRange(minDelay, delay);
+      };
+      randomInRange = (min, max) => min + Math.random() * (max - min);
+      runPolling = async ({ minDelay, maxDelay, maxWaitTime, abortController, client, abortSignal }, input, acceptorChecks) => {
+        const observedResponses = {};
+        const { state, reason } = await acceptorChecks(client, input);
+        if (reason) {
+          const message = createMessageFromResponse(reason);
+          observedResponses[message] |= 0;
+          observedResponses[message] += 1;
+        }
+        if (state !== WaiterState.RETRY) {
+          return { state, reason, observedResponses };
+        }
+        let currentAttempt = 1;
+        const waitUntil = Date.now() + maxWaitTime * 1e3;
+        const attemptCeiling = Math.log(maxDelay / minDelay) / Math.log(2) + 1;
+        while (true) {
+          if (abortController?.signal?.aborted || abortSignal?.aborted) {
+            const message = "AbortController signal aborted.";
+            observedResponses[message] |= 0;
+            observedResponses[message] += 1;
+            return { state: WaiterState.ABORTED, observedResponses };
+          }
+          const delay = exponentialBackoffWithJitter(minDelay, maxDelay, attemptCeiling, currentAttempt);
+          if (Date.now() + delay * 1e3 > waitUntil) {
+            return { state: WaiterState.TIMEOUT, observedResponses };
+          }
+          await sleep(delay);
+          const { state: state2, reason: reason2 } = await acceptorChecks(client, input);
+          if (reason2) {
+            const message = createMessageFromResponse(reason2);
+            observedResponses[message] |= 0;
+            observedResponses[message] += 1;
+          }
+          if (state2 !== WaiterState.RETRY) {
+            return { state: state2, reason: reason2, observedResponses };
+          }
+          currentAttempt += 1;
+        }
+      };
+      createMessageFromResponse = (reason) => {
+        if (reason?.$responseBodyText) {
+          return `Deserialization error for body: ${reason.$responseBodyText}`;
+        }
+        if (reason?.$metadata?.httpStatusCode) {
+          if (reason.$response || reason.message) {
+            return `${reason.$response?.statusCode ?? reason.$metadata.httpStatusCode ?? "Unknown"}: ${reason.message}`;
+          }
+          return `${reason.$metadata.httpStatusCode}: OK`;
+        }
+        return String(reason?.message ?? JSON.stringify(reason, getCircularReplacer()) ?? "Unknown");
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/utils/validate.js
+  var import_polyfills651, validateWaiterOptions;
+  var init_validate = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
+      import_polyfills651 = __toESM(require_polyfills());
+      validateWaiterOptions = (options) => {
+        if (options.maxWaitTime <= 0) {
+          throw new Error(`WaiterConfiguration.maxWaitTime must be greater than 0`);
+        } else if (options.minDelay <= 0) {
+          throw new Error(`WaiterConfiguration.minDelay must be greater than 0`);
+        } else if (options.maxDelay <= 0) {
+          throw new Error(`WaiterConfiguration.maxDelay must be greater than 0`);
+        } else if (options.maxWaitTime <= options.minDelay) {
+          throw new Error(`WaiterConfiguration.maxWaitTime [${options.maxWaitTime}] must be greater than WaiterConfiguration.minDelay [${options.minDelay}] for this waiter`);
+        } else if (options.maxDelay < options.minDelay) {
+          throw new Error(`WaiterConfiguration.maxDelay [${options.maxDelay}] must be greater than WaiterConfiguration.minDelay [${options.minDelay}] for this waiter`);
+        }
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/utils/index.js
+  var import_polyfills652;
+  var init_utils4 = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
+      import_polyfills652 = __toESM(require_polyfills());
+      init_sleep();
+      init_validate();
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/createWaiter.js
+  var import_polyfills653, abortTimeout, createWaiter;
+  var init_createWaiter = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
+      import_polyfills653 = __toESM(require_polyfills());
+      init_poller();
+      init_utils4();
+      init_waiter2();
+      abortTimeout = (abortSignal) => {
+        let onAbort;
+        const promise = new Promise((resolve) => {
+          onAbort = () => resolve({ state: WaiterState.ABORTED });
+          if (typeof abortSignal.addEventListener === "function") {
+            abortSignal.addEventListener("abort", onAbort);
+          } else {
+            abortSignal.onabort = onAbort;
+          }
+        });
+        return {
+          clearListener() {
+            if (typeof abortSignal.removeEventListener === "function") {
+              abortSignal.removeEventListener("abort", onAbort);
+            }
+          },
+          aborted: promise
+        };
+      };
+      createWaiter = async (options, input, acceptorChecks) => {
+        const params = {
+          ...waiterServiceDefaults,
+          ...options
+        };
+        validateWaiterOptions(params);
+        const exitConditions = [runPolling(params, input, acceptorChecks)];
+        const finalize = [];
+        if (options.abortSignal) {
+          const { aborted, clearListener } = abortTimeout(options.abortSignal);
+          finalize.push(clearListener);
+          exitConditions.push(aborted);
+        }
+        if (options.abortController?.signal) {
+          const { aborted, clearListener } = abortTimeout(options.abortController.signal);
+          finalize.push(clearListener);
+          exitConditions.push(aborted);
+        }
+        return Promise.race(exitConditions).then((result) => {
+          for (const fn of finalize) {
+            fn();
+          }
+          return result;
+        });
+      };
+    }
+  });
+
+  // node_modules/@smithy/util-waiter/dist-es/index.js
+  var import_polyfills654;
+  var init_dist_es58 = __esm({
+    "node_modules/@smithy/util-waiter/dist-es/index.js"() {
+      import_polyfills654 = __toESM(require_polyfills());
+      init_createWaiter();
+      init_waiter2();
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
+  var import_polyfills655, checkState, waitUntilBucketExists;
+  var init_waitForBucketExists = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
+      import_polyfills655 = __toESM(require_polyfills());
+      init_dist_es58();
+      init_HeadBucketCommand();
+      checkState = async (client, input) => {
+        let reason;
+        try {
+          let result = await client.send(new HeadBucketCommand(input));
+          reason = result;
+          return { state: WaiterState.SUCCESS, reason };
+        } catch (exception) {
+          reason = exception;
+          if (exception.name && exception.name == "NotFound") {
+            return { state: WaiterState.RETRY, reason };
+          }
+        }
+        return { state: WaiterState.RETRY, reason };
+      };
+      waitUntilBucketExists = async (params, input) => {
+        const serviceDefaults = { minDelay: 5, maxDelay: 120 };
+        const result = await createWaiter({ ...serviceDefaults, ...params }, input, checkState);
+        return checkExceptions(result);
+      };
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
+  var import_polyfills656, checkState2, waitUntilBucketNotExists;
+  var init_waitForBucketNotExists = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
+      import_polyfills656 = __toESM(require_polyfills());
+      init_dist_es58();
+      init_HeadBucketCommand();
+      checkState2 = async (client, input) => {
+        let reason;
+        try {
+          let result = await client.send(new HeadBucketCommand(input));
+          reason = result;
+        } catch (exception) {
+          reason = exception;
+          if (exception.name && exception.name == "NotFound") {
+            return { state: WaiterState.SUCCESS, reason };
+          }
+        }
+        return { state: WaiterState.RETRY, reason };
+      };
+      waitUntilBucketNotExists = async (params, input) => {
+        const serviceDefaults = { minDelay: 5, maxDelay: 120 };
+        const result = await createWaiter({ ...serviceDefaults, ...params }, input, checkState2);
+        return checkExceptions(result);
+      };
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
+  var import_polyfills657, checkState3, waitUntilObjectExists;
+  var init_waitForObjectExists = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
+      import_polyfills657 = __toESM(require_polyfills());
+      init_dist_es58();
+      init_HeadObjectCommand();
+      checkState3 = async (client, input) => {
+        let reason;
+        try {
+          let result = await client.send(new HeadObjectCommand(input));
+          reason = result;
+          return { state: WaiterState.SUCCESS, reason };
+        } catch (exception) {
+          reason = exception;
+          if (exception.name && exception.name == "NotFound") {
+            return { state: WaiterState.RETRY, reason };
+          }
+        }
+        return { state: WaiterState.RETRY, reason };
+      };
+      waitUntilObjectExists = async (params, input) => {
+        const serviceDefaults = { minDelay: 5, maxDelay: 120 };
+        const result = await createWaiter({ ...serviceDefaults, ...params }, input, checkState3);
+        return checkExceptions(result);
+      };
+    }
+  });
+
+  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
+  var import_polyfills658, checkState4, waitUntilObjectNotExists;
+  var init_waitForObjectNotExists = __esm({
+    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
+      import_polyfills658 = __toESM(require_polyfills());
+      init_dist_es58();
+      init_HeadObjectCommand();
+      checkState4 = async (client, input) => {
+        let reason;
+        try {
+          let result = await client.send(new HeadObjectCommand(input));
+          reason = result;
+        } catch (exception) {
+          reason = exception;
+          if (exception.name && exception.name == "NotFound") {
+            return { state: WaiterState.SUCCESS, reason };
+          }
+        }
+        return { state: WaiterState.RETRY, reason };
+      };
+      waitUntilObjectNotExists = async (params, input) => {
+        const serviceDefaults = { minDelay: 5, maxDelay: 120 };
+        const result = await createWaiter({ ...serviceDefaults, ...params }, input, checkState4);
+        return checkExceptions(result);
+      };
+    }
+  });
+
   // node_modules/@aws-sdk/client-s3/dist-es/S3.js
-  var import_polyfills639, commands, S3;
+  var import_polyfills659, commands, paginators, waiters, S3;
   var init_S3 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
-      import_polyfills639 = __toESM(require_polyfills());
-      init_dist_es20();
+      import_polyfills659 = __toESM(require_polyfills());
+      init_dist_es21();
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
       init_CopyObjectCommand();
@@ -91426,10 +90105,19 @@ ${toHex(hashedRequest)}`;
       init_SelectObjectContentCommand();
       init_UpdateBucketMetadataInventoryTableConfigurationCommand();
       init_UpdateBucketMetadataJournalTableConfigurationCommand();
+      init_UpdateObjectEncryptionCommand();
       init_UploadPartCommand();
       init_UploadPartCopyCommand();
       init_WriteGetObjectResponseCommand();
+      init_ListBucketsPaginator();
+      init_ListDirectoryBucketsPaginator();
+      init_ListObjectsV2Paginator();
+      init_ListPartsPaginator();
       init_S3Client();
+      init_waitForBucketExists();
+      init_waitForBucketNotExists();
+      init_waitForObjectExists();
+      init_waitForObjectNotExists();
       commands = {
         AbortMultipartUploadCommand,
         CompleteMultipartUploadCommand,
@@ -91534,21 +90222,34 @@ ${toHex(hashedRequest)}`;
         SelectObjectContentCommand,
         UpdateBucketMetadataInventoryTableConfigurationCommand,
         UpdateBucketMetadataJournalTableConfigurationCommand,
+        UpdateObjectEncryptionCommand,
         UploadPartCommand,
         UploadPartCopyCommand,
         WriteGetObjectResponseCommand
       };
+      paginators = {
+        paginateListBuckets,
+        paginateListDirectoryBuckets,
+        paginateListObjectsV2,
+        paginateListParts
+      };
+      waiters = {
+        waitUntilBucketExists,
+        waitUntilBucketNotExists,
+        waitUntilObjectExists,
+        waitUntilObjectNotExists
+      };
       S3 = class extends S3Client {
       };
-      createAggregatedClient(commands, S3);
+      createAggregatedClient(commands, S3, { paginators, waiters });
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
-  var import_polyfills640;
+  var import_polyfills660;
   var init_commands = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
-      import_polyfills640 = __toESM(require_polyfills());
+      import_polyfills660 = __toESM(require_polyfills());
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
       init_CopyObjectCommand();
@@ -91652,6 +90353,7 @@ ${toHex(hashedRequest)}`;
       init_SelectObjectContentCommand();
       init_UpdateBucketMetadataInventoryTableConfigurationCommand();
       init_UpdateBucketMetadataJournalTableConfigurationCommand();
+      init_UpdateObjectEncryptionCommand();
       init_UploadPartCommand();
       init_UploadPartCopyCommand();
       init_WriteGetObjectResponseCommand();
@@ -91659,66 +90361,18 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
-  var import_polyfills641;
+  var import_polyfills661;
   var init_Interfaces = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
-      import_polyfills641 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
-  var import_polyfills642, paginateListBuckets;
-  var init_ListBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
-      import_polyfills642 = __toESM(require_polyfills());
-      init_dist_es14();
-      init_ListBucketsCommand();
-      init_S3Client();
-      paginateListBuckets = createPaginator(S3Client, ListBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxBuckets");
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
-  var import_polyfills643, paginateListDirectoryBuckets;
-  var init_ListDirectoryBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
-      import_polyfills643 = __toESM(require_polyfills());
-      init_dist_es14();
-      init_ListDirectoryBucketsCommand();
-      init_S3Client();
-      paginateListDirectoryBuckets = createPaginator(S3Client, ListDirectoryBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxDirectoryBuckets");
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
-  var import_polyfills644, paginateListObjectsV2;
-  var init_ListObjectsV2Paginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
-      import_polyfills644 = __toESM(require_polyfills());
-      init_dist_es14();
-      init_ListObjectsV2Command();
-      init_S3Client();
-      paginateListObjectsV2 = createPaginator(S3Client, ListObjectsV2Command, "ContinuationToken", "NextContinuationToken", "MaxKeys");
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
-  var import_polyfills645, paginateListParts;
-  var init_ListPartsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
-      import_polyfills645 = __toESM(require_polyfills());
-      init_dist_es14();
-      init_ListPartsCommand();
-      init_S3Client();
-      paginateListParts = createPaginator(S3Client, ListPartsCommand, "PartNumberMarker", "NextPartNumberMarker", "MaxParts");
+      import_polyfills661 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
-  var import_polyfills646;
+  var import_polyfills662;
   var init_pagination2 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
-      import_polyfills646 = __toESM(require_polyfills());
+      import_polyfills662 = __toESM(require_polyfills());
       init_Interfaces();
       init_ListBucketsPaginator();
       init_ListDirectoryBucketsPaginator();
@@ -91727,43 +90381,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
-  var import_polyfills647;
-  var init_waitForBucketExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
-      import_polyfills647 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
-  var import_polyfills648;
-  var init_waitForBucketNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
-      import_polyfills648 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
-  var import_polyfills649;
-  var init_waitForObjectExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
-      import_polyfills649 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
-  var import_polyfills650;
-  var init_waitForObjectNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
-      import_polyfills650 = __toESM(require_polyfills());
-    }
-  });
-
   // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
-  var import_polyfills651;
+  var import_polyfills663;
   var init_waiters = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
-      import_polyfills651 = __toESM(require_polyfills());
+      import_polyfills663 = __toESM(require_polyfills());
       init_waitForBucketExists();
       init_waitForBucketNotExists();
       init_waitForObjectExists();
@@ -91772,34 +90394,34 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
-  var import_polyfills652;
+  var import_polyfills664;
   var init_enums = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
-      import_polyfills652 = __toESM(require_polyfills());
+      import_polyfills664 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
-  var import_polyfills653;
+  var import_polyfills665;
   var init_models_0 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
-      import_polyfills653 = __toESM(require_polyfills());
+      import_polyfills665 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
-  var import_polyfills654;
+  var import_polyfills666;
   var init_models_1 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
-      import_polyfills654 = __toESM(require_polyfills());
+      import_polyfills666 = __toESM(require_polyfills());
     }
   });
 
   // node_modules/@aws-sdk/client-s3/dist-es/index.js
-  var import_polyfills655;
-  var init_dist_es58 = __esm({
+  var import_polyfills667;
+  var init_dist_es59 = __esm({
     "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
-      import_polyfills655 = __toESM(require_polyfills());
+      import_polyfills667 = __toESM(require_polyfills());
       init_S3Client();
       init_S3();
       init_commands();
@@ -91814,11 +90436,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/utils/Logger.ts
-  var import_polyfills656, Logger;
+  var import_polyfills668, Logger;
   var init_Logger = __esm({
     "src/utils/Logger.ts"() {
       "use strict";
-      import_polyfills656 = __toESM(require_polyfills());
+      import_polyfills668 = __toESM(require_polyfills());
       Logger = class {
         static {
           this.level = 1 /* INFO */;
@@ -91857,12 +90479,12 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/adapters/S3RemoteAdapter.ts
-  var import_polyfills657, crypto2, S3RemoteAdapter;
+  var import_polyfills669, crypto2, S3RemoteAdapter;
   var init_S3RemoteAdapter = __esm({
     "src/adapters/S3RemoteAdapter.ts"() {
       "use strict";
-      import_polyfills657 = __toESM(require_polyfills());
-      init_dist_es58();
+      import_polyfills669 = __toESM(require_polyfills());
+      init_dist_es59();
       init_Logger();
       crypto2 = __toESM(require_crypto_browserify());
       S3RemoteAdapter = class {
@@ -91995,11 +90617,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/adapters/IndexedDBStorage.ts
-  var import_polyfills658, IndexedDBStorage;
+  var import_polyfills670, IndexedDBStorage;
   var init_IndexedDBStorage = __esm({
     "src/adapters/IndexedDBStorage.ts"() {
       "use strict";
-      import_polyfills658 = __toESM(require_polyfills());
+      import_polyfills670 = __toESM(require_polyfills());
       init_Logger();
       IndexedDBStorage = class {
         constructor(dbName = "sovereign_s3nc") {
@@ -92309,7 +90931,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -92718,11 +91340,11 @@ ${toHex(hashedRequest)}`;
   __export(NodeStorage_exports, {
     NodeStorage: () => NodeStorage
   });
-  var import_polyfills659, fs, path, crypto3, NodeStorage;
+  var import_polyfills671, fs, path, crypto3, NodeStorage;
   var init_NodeStorage = __esm({
     "src/adapters/NodeStorage.ts"() {
       "use strict";
-      import_polyfills659 = __toESM(require_polyfills());
+      import_polyfills671 = __toESM(require_polyfills());
       fs = __toESM(__require("fs-extra"));
       path = __toESM(require_path_browserify());
       crypto3 = __toESM(require_crypto_browserify());
@@ -92879,11 +91501,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills660, nacl, crypto4, SovereignS3nc;
+  var import_polyfills672, nacl, crypto4, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
-      import_polyfills660 = __toESM(require_polyfills());
+      import_polyfills672 = __toESM(require_polyfills());
       nacl = __toESM(require_nacl_fast());
       init_S3RemoteAdapter();
       init_IndexedDBStorage();
@@ -93516,11 +92138,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Social.ts
-  var import_polyfills661, SocialManager;
+  var import_polyfills673, SocialManager;
   var init_Social = __esm({
     "src/modules/Social.ts"() {
       "use strict";
-      import_polyfills661 = __toESM(require_polyfills());
+      import_polyfills673 = __toESM(require_polyfills());
       init_SovereignS3nc();
       init_Logger();
       SocialManager = class _SocialManager {
@@ -94005,11 +92627,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/adapters/WebRTCRemoteAdapter.ts
-  var import_polyfills662, import_buffer, WebRTCRemoteAdapter;
+  var import_polyfills674, import_buffer, WebRTCRemoteAdapter;
   var init_WebRTCRemoteAdapter = __esm({
     "src/adapters/WebRTCRemoteAdapter.ts"() {
       "use strict";
-      import_polyfills662 = __toESM(require_polyfills());
+      import_polyfills674 = __toESM(require_polyfills());
       init_Logger();
       import_buffer = __toESM(require_buffer());
       WebRTCRemoteAdapter = class {
@@ -94204,10 +92826,10 @@ ${toHex(hashedRequest)}`;
     if (res instanceof Promise) return res.then(() => packer.getBuffer());
     return packer.getBuffer();
   }
-  var import_polyfills663, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
+  var import_polyfills675, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
   var init_binarypack = __esm({
     "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
-      import_polyfills663 = __toESM(require_polyfills(), 1);
+      import_polyfills675 = __toESM(require_polyfills(), 1);
       $e8379818650e2442$export$93654d4f2d6cd524 = class {
         constructor() {
           this.encoder = new TextEncoder();
@@ -94837,11 +93459,11 @@ ${toHex(hashedRequest)}`;
     });
     return filteredResult;
   }
-  var import_polyfills664, logDisabled_, deprecationWarnings_;
-  var init_utils4 = __esm({
+  var import_polyfills676, logDisabled_, deprecationWarnings_;
+  var init_utils5 = __esm({
     "node_modules/webrtc-adapter/src/js/utils.js"() {
       "use strict";
-      import_polyfills664 = __toESM(require_polyfills());
+      import_polyfills676 = __toESM(require_polyfills());
       logDisabled_ = true;
       deprecationWarnings_ = true;
     }
@@ -95003,12 +93625,12 @@ ${toHex(hashedRequest)}`;
       };
     }
   }
-  var import_polyfills665, logging;
+  var import_polyfills677, logging;
   var init_getusermedia = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
       "use strict";
-      import_polyfills665 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills677 = __toESM(require_polyfills());
+      init_utils5();
       logging = log;
     }
   });
@@ -95552,12 +94174,12 @@ ${toHex(hashedRequest)}`;
       return e2;
     });
   }
-  var import_polyfills666;
+  var import_polyfills678;
   var init_chrome_shim = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
       "use strict";
-      import_polyfills666 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills678 = __toESM(require_polyfills());
+      init_utils5();
       init_getusermedia();
     }
   });
@@ -95611,12 +94233,12 @@ ${toHex(hashedRequest)}`;
       }
     }
   }
-  var import_polyfills667;
+  var import_polyfills679;
   var init_getusermedia2 = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
       "use strict";
-      import_polyfills667 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills679 = __toESM(require_polyfills());
+      init_utils5();
     }
   });
 
@@ -95643,11 +94265,11 @@ ${toHex(hashedRequest)}`;
       return window2.navigator.mediaDevices.getUserMedia(constraints);
     };
   }
-  var import_polyfills668;
+  var import_polyfills680;
   var init_getdisplaymedia = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
       "use strict";
-      import_polyfills668 = __toESM(require_polyfills());
+      import_polyfills680 = __toESM(require_polyfills());
     }
   });
 
@@ -95894,12 +94516,12 @@ ${toHex(hashedRequest)}`;
       return origCreateAnswer.apply(this, arguments);
     };
   }
-  var import_polyfills669;
+  var import_polyfills681;
   var init_firefox_shim = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
       "use strict";
-      import_polyfills669 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills681 = __toESM(require_polyfills());
+      init_utils5();
       init_getusermedia2();
       init_getdisplaymedia();
     }
@@ -96220,12 +94842,12 @@ ${toHex(hashedRequest)}`;
     }
     window2.AudioContext = window2.webkitAudioContext;
   }
-  var import_polyfills670;
+  var import_polyfills682;
   var init_safari_shim = __esm({
     "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
       "use strict";
-      import_polyfills670 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills682 = __toESM(require_polyfills());
+      init_utils5();
     }
   });
 
@@ -96233,7 +94855,7 @@ ${toHex(hashedRequest)}`;
   var require_sdp = __commonJS({
     "node_modules/sdp/sdp.js"(exports, module) {
       "use strict";
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var SDPUtils2 = {};
       SDPUtils2.generateIdentifier = function() {
         return Math.random().toString(36).substring(2, 12);
@@ -97185,13 +95807,13 @@ ${toHex(hashedRequest)}`;
       return func.apply(this).then((d2) => nativeSetLocalDescription.apply(this, [d2]));
     };
   }
-  var import_polyfills671, import_sdp;
+  var import_polyfills683, import_sdp;
   var init_common_shim = __esm({
     "node_modules/webrtc-adapter/src/js/common_shim.js"() {
       "use strict";
-      import_polyfills671 = __toESM(require_polyfills());
+      import_polyfills683 = __toESM(require_polyfills());
       import_sdp = __toESM(require_sdp());
-      init_utils4();
+      init_utils5();
     }
   });
 
@@ -97295,11 +95917,11 @@ ${toHex(hashedRequest)}`;
     }
     return adapter2;
   }
-  var import_polyfills672, sdp;
+  var import_polyfills684, sdp;
   var init_adapter_factory = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
-      import_polyfills672 = __toESM(require_polyfills());
-      init_utils4();
+      import_polyfills684 = __toESM(require_polyfills());
+      init_utils5();
       init_chrome_shim();
       init_firefox_shim();
       init_safari_shim();
@@ -97309,11 +95931,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/webrtc-adapter/src/js/adapter_core.js
-  var import_polyfills673, adapter, adapter_core_default;
+  var import_polyfills685, adapter, adapter_core_default;
   var init_adapter_core = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
       "use strict";
-      import_polyfills673 = __toESM(require_polyfills());
+      import_polyfills685 = __toESM(require_polyfills());
       init_adapter_factory();
       adapter = adapterFactory({ window: typeof window === "undefined" ? void 0 : window });
       adapter_core_default = adapter;
@@ -97361,10 +95983,10 @@ ${toHex(hashedRequest)}`;
     this._events = new $c4dcfd1d1ea86647$var$Events();
     this._eventsCount = 0;
   }
-  var import_polyfills674, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
+  var import_polyfills686, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
   var init_bundler = __esm({
     "node_modules/peerjs/dist/bundler.mjs"() {
-      import_polyfills674 = __toESM(require_polyfills(), 1);
+      import_polyfills686 = __toESM(require_polyfills(), 1);
       init_binarypack();
       init_adapter_core();
       $fcbcc7538a6776d5$export$f1c5f4c9cb95390b = class {
@@ -98893,7 +97515,7 @@ ${toHex(hashedRequest)}`;
   // demo/social/src/App.tsx
   var require_App = __commonJS({
     "demo/social/src/App.tsx"() {
-      var import_polyfills675 = __toESM(require_polyfills());
+      var import_polyfills687 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
