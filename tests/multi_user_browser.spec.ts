@@ -37,6 +37,7 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     await alicePage.fill('input[placeholder="Your Name"]', 'Alice Wonderland');
     await alicePage.fill('textarea[placeholder="Tell us about yourself..."]', 'Exploring the digital rabbit hole.');
     await alicePage.click('button:has-text("Save Changes")');
+    await alicePage.click('button:has-text("OK")');
     await alicePage.waitForTimeout(2000); 
 
     // 3. Alice Posts
@@ -111,10 +112,9 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     // 7. Threading (Back on Home tab)
     await alicePage.getByTestId('nav-home').click();
     const commentBtn = alicePage.locator('.card:has-text("Hello world, this is Alice!") >> button:has-text("Comment")');
-    alicePage.on('dialog', async dialog => {
-        if (dialog.type() === 'prompt') await dialog.accept('This is a threaded reply');
-    });
     await commentBtn.click();
+    await alicePage.fill('.modal input', 'This is a threaded reply');
+    await alicePage.click('.modal button:has-text("Confirm")');
     await alicePage.waitForTimeout(3000);
 
     await bobPage.click('button:has-text("Home")');

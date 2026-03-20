@@ -1,7 +1,7 @@
 {
     "endpoint": "http://127.0.0.1:8889",
     "region": "garage",
-    "accessKeyId": "GKb3eb60ba58ca69ea3dee030e",
-    "secretAccessKey": "3a8c1a4a3ed7f82f54ed41fc1b2dc36f67f80f27c5abea6f4969c7c7ebc8437c",
-    "bucketName": "sovereign-demo"
+    "accessKeyId": "YOUR_ACCESS_KEY",
+    "secretAccessKey": "YOUR_SECRET_KEY",
+    "bucketName": "your-bucket-name"
 }
