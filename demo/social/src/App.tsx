@@ -295,7 +295,7 @@ const App = () => {
 
             await instance.init();
             setSov(instance);
-            const sm = new SocialManager(instance, '');
+            const sm = new SocialManager(instance);
             setSocial(sm);
 
             // Load user-scoped caches

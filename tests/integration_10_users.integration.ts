@@ -57,7 +57,7 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         (sov as any).storage = new IndexedDBStorage(dbName);
         
         await sov.init();
-        const social = new SocialManager(sov, '');
+        const social = new SocialManager(sov);
         
         return { userId, password, sov, social, displayName };
     }

@@ -1,13 +1,14 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest } from './types';
+import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
+import { EventEmitter } from 'events';
 
-export class SovereignS3nc {
+export class SovereignS3nc extends EventEmitter {
     public static readonly VERSION = '1.1.0';
     private storage: IStorage;
     private remote: IRemoteAdapter; // Private Remote
@@ -15,7 +16,7 @@ export class SovereignS3nc {
     private globalRemote: IRemoteAdapter;
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
-    private registeredModules: string[] = ['social'];
+    private registeredModules: ModuleDefinition[] = [];
     private isSyncing: boolean = false;
 
     constructor(
@@ -25,6 +26,7 @@ export class SovereignS3nc {
         keys?: { privateKey: string, publicKey: string },
         storage?: IStorage
     ) {
+        super();
         this.config = config;
         this.remoteFactory = remoteFactory;
 
@@ -93,9 +95,57 @@ export class SovereignS3nc {
         return `${type}/modules/${cleanModule}/${subPath}`;
     }
 
-    public registerModule(name: string) {
-        if (!this.registeredModules.includes(name)) {
-            this.registeredModules.push(name);
+    public registerModule(definition: ModuleDefinition) {
+        if (!this.registeredModules.find(m => m.name === definition.name)) {
+            this.registeredModules.push(definition);
+        }
+    }
+
+    /**
+     * Emits a change event for a specific module and path.
+     * Useful for UI components to subscribe to updates.
+     */
+    public onModuleUpdate(moduleName: string, path: string) {
+        this.emit(`${moduleName}:update`, { moduleName, path });
+        this.emit('update', { moduleName, path });
+    }
+
+    /**
+     * Core utility to apply schema and migrations to a SQLite database.
+     */
+    public applyModuleSchema(db: any, moduleName: string) {
+        const module = this.registeredModules.find(m => m.name === moduleName);
+        if (!module) return;
+
+        // 1. Initial Table Creation
+        for (const table of module.tables) {
+            db.exec(`CREATE TABLE IF NOT EXISTS ${table.name} (${table.schema});`);
+        }
+
+        // 2. Handle Migrations
+        if (module.migrations && module.migrations.length > 0) {
+            const res = db.exec('PRAGMA user_version;');
+            let currentVersion = 0;
+            if (res && res.length > 0 && res[0].values.length > 0) {
+                currentVersion = res[0].values[0][0];
+            }
+
+            const pending = module.migrations
+                .filter((m: ModuleMigration) => m.version > currentVersion)
+                .sort((a: ModuleMigration, b: ModuleMigration) => a.version - b.version);
+
+            for (const migration of pending) {
+                Logger.info(`[Schema] Applying migration v${migration.version} to ${moduleName}`);
+                for (const sql of migration.sql) {
+                    try {
+                        db.exec(sql);
+                    } catch (e: any) {
+                        Logger.warn(`[Schema] Migration v${migration.version} sql failed (likely already applied): ${e.message}`);
+                    }
+                }
+                db.exec(`PRAGMA user_version = ${migration.version};`);
+                currentVersion = migration.version;
+            }
         }
     }
 
@@ -619,7 +669,8 @@ export class SovereignS3nc {
                     for (const dateStr of dates) {
                         const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
                         const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
-                        await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                        const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                        if (changed) this.onModuleUpdate(moduleName, localPath);
                     }
                 }
 
@@ -629,7 +680,8 @@ export class SovereignS3nc {
                     for (const dateStr of manifest.dms[myId]) {
                         const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public');
                         const localPath = this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed');
-                        await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                        const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                        if (changed) this.onModuleUpdate('social', localPath);
                     }
                 }
             } else {
@@ -651,7 +703,8 @@ export class SovereignS3nc {
                     await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed'), false);
                     
                     // Pull Module Data
-                    for (const moduleName of this.registeredModules) {
+                    for (const moduleDef of this.registeredModules) {
+                        const moduleName = moduleDef.name;
                         const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
                         const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
                         await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
@@ -681,7 +734,7 @@ export class SovereignS3nc {
         throw new Error('Remote configuration missing');
     }
 
-    private async pullUserFile(userId: string, remotePath: string, publicKey: string, localPath: string, expectEncrypted: boolean = true) {
+    private async pullUserFile(userId: string, remotePath: string, publicKey: string, localPath: string, expectEncrypted: boolean = true): Promise<boolean> {
         try {
             const userRemote = this.createRemote(userId);
             const cachedEtag = await this.storage.getGenericRemoteHashCache(`${userId}:${remotePath}`);
@@ -697,6 +750,7 @@ export class SovereignS3nc {
                     }
                     await this.storage.saveFile(localPath, data);
                     if (result.etag) await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, result.etag);
+                    return true;
                 } catch (e: any) {
                     Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e.message}`);
                 }
@@ -704,6 +758,7 @@ export class SovereignS3nc {
         } catch (e: any) {
             Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e.message}`);
         }
+        return false;
     }
 
     private async pullUserDay(userId: string, date: string, publicKey: string) {

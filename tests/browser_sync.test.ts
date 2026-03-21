@@ -70,7 +70,7 @@ describe('Browser-based Social Sync', () => {
 
         const sov = new SovereignS3nc(config, factory(userId), factory);
         await sov.init();
-        const social = new SocialManager(sov, '');
+        const social = new SocialManager(sov);
         return { sov, social };
     }
 

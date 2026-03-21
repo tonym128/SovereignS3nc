@@ -44,7 +44,7 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
         };
         sov = new SovereignS3nc(config, mockRemote);
         await sov.init();
-        social = new SocialManager(sov, '');
+        social = new SocialManager(sov);
     });
 
     describe('Database Management', () => {

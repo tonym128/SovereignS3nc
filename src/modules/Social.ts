@@ -1,5 +1,6 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { Logger } from '../utils/Logger';
+import { ModuleDefinition } from '../types';
 
 export interface Post {
     id: string;
@@ -26,12 +27,66 @@ export interface Message {
     isDeleted?: boolean;
 }
 
+export const SOCIAL_MODULE_DEFINITION: ModuleDefinition = {
+    name: 'social',
+    tables: [
+        {
+            name: 'posts',
+            schema: `
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                userId TEXT
+            `
+        },
+        {
+            name: 'likes',
+            schema: `
+                postId TEXT,
+                userId TEXT,
+                timestamp INTEGER,
+                PRIMARY KEY (postId, userId)
+            `
+        },
+        {
+            name: 'messages',
+            schema: `
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                senderId TEXT,
+                recipientId TEXT,
+                image TEXT
+            `
+        }
+    ],
+    migrations: [
+        {
+            version: 1,
+            sql: [
+                "ALTER TABLE posts ADD COLUMN image TEXT;",
+                "ALTER TABLE posts ADD COLUMN parentId TEXT;",
+                "ALTER TABLE posts ADD COLUMN parentUserId TEXT;",
+                "ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;",
+                "ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;"
+            ]
+        },
+        {
+            version: 2,
+            sql: [
+                "ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;",
+                "ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;"
+            ]
+        }
+    ]
+};
+
 export class SocialManager {
     private sqliteInstance: any = null;
     private readonly MODULE_NAME = 'social';
 
-    constructor(private db: SovereignS3nc, private localPath: string, private sqliteProvider?: any) {
-        this.db.registerModule(this.MODULE_NAME);
+    constructor(private db: SovereignS3nc) {
+        this.db.registerModule(SOCIAL_MODULE_DEFINITION);
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed'): Promise<any> {
@@ -51,35 +106,8 @@ export class SocialManager {
         }
         const db = new this.sqliteInstance.Database(data || undefined);
 
-        // Initialize Schema
-        db.exec(`
-            CREATE TABLE IF NOT EXISTS posts (
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                userId TEXT,
-                image TEXT,
-                parentId TEXT,
-                parentUserId TEXT,
-                isEdited INTEGER DEFAULT 0,
-                isDeleted INTEGER DEFAULT 0
-            );
-            CREATE TABLE IF NOT EXISTS likes (
-                postId TEXT,
-                userId TEXT,
-                timestamp INTEGER,
-                PRIMARY KEY (postId, userId)
-            );
-        `);
-
-        // Migration: Ensure columns exist
-        try { db.exec('ALTER TABLE posts ADD COLUMN image TEXT;'); } catch (e) {}
-        try {
-            db.exec('ALTER TABLE posts ADD COLUMN parentId TEXT;');
-            db.exec('ALTER TABLE posts ADD COLUMN parentUserId TEXT;');
-        } catch (e) {}
-        try { db.exec('ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;'); } catch (e) {}
-        try { db.exec('ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;'); } catch (e) {}
+        // Use Core Schema Management
+        this.db.applyModuleSchema(db, this.MODULE_NAME);
 
         return db;
     }
@@ -98,6 +126,8 @@ export class SocialManager {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
+
+        this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
     }
 
     async post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string) {
@@ -123,6 +153,8 @@ export class SocialManager {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
+
+        this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
     }
 
     async editPost(postId: string, date: string, newContent: string, isPublic: boolean = true) {
@@ -135,6 +167,8 @@ export class SocialManager {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
+
+        this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
     }
 
     async deletePost(postId: string, date: string, isPublic: boolean = true) {
@@ -148,6 +182,8 @@ export class SocialManager {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
         await this.db.getStorage().saveFile(dbPath, binary);
         db.close();
+
+        this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
     }
 
     async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
@@ -160,22 +196,8 @@ export class SocialManager {
         }
         const db = new this.sqliteInstance.Database(data || undefined);
 
-        db.exec(`
-            CREATE TABLE IF NOT EXISTS messages (
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                senderId TEXT,
-                recipientId TEXT,
-                image TEXT,
-                isEdited INTEGER DEFAULT 0,
-                isDeleted INTEGER DEFAULT 0
-            );
-        `);
-        
-        // Migrations
-        try { db.exec('ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;'); } catch (e) {}
-        try { db.exec('ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;'); } catch (e) {}
+        // Use Core Schema Management
+        this.db.applyModuleSchema(db, this.MODULE_NAME);
 
         return db;
     }
@@ -212,6 +234,8 @@ export class SocialManager {
         const initSqlJs = (globalThis as any).initSqlJs;
         if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
         const publicDb = new this.sqliteInstance.Database(publicDmData || undefined);
+        
+        // Manual Schema for DM transport (not part of declarative module schema as it is a transport db)
         publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
 
         const registry = await this.db.getPublicRegistry();
@@ -236,6 +260,8 @@ export class SocialManager {
 
         await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
         publicDb.close();
+
+        this.db.onModuleUpdate(this.MODULE_NAME, outboxPath);
     }
 
     async editMessage(recipientId: string, messageId: string, date: string, newContent: string) {
@@ -395,6 +421,8 @@ export class SocialManager {
         const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.getConfig().paths.userId };
         const data = new TextEncoder().encode(JSON.stringify(profile));
         await this.db.getStorage().savePublicUserFile(data);
+        
+        this.db.onModuleUpdate(this.MODULE_NAME, 'public/user.json');
     }
 
     public static async compressImage(dataUrl: string, targetSizeBytes: number): Promise<string> {
@@ -478,6 +506,7 @@ export class SocialManager {
                     if (result.etag) {
                         await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:public/user.json`, result.etag);
                     }
+                    this.db.onModuleUpdate(this.MODULE_NAME, localPath);
                 }
             } catch (e: any) {}
         }

@@ -110,7 +110,7 @@ const App = () => {
             }
 
             setSov(instance);
-            const sm = new SocialManager(instance, '');
+            const sm = new SocialManager(instance);
             setSocial(sm);
             setProfile(await sm.getProfile());
             setIsLoggedIn(true);
@@ -155,7 +155,7 @@ const App = () => {
             });
             await instance.init();
             setSov(instance);
-            const sm = new SocialManager(instance, '');
+            const sm = new SocialManager(instance);
             setSocial(sm);
             setProfile(await sm.getProfile());
             setIsLoggedIn(true);

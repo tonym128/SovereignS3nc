@@ -76,7 +76,7 @@ async function initSovereign(profile: UserProfile): Promise<{ sov: SovereignS3nc
     const sov = new SovereignS3nc(config, undefined, undefined, undefined, storage);
     await sov.init();
     
-    const social = new SocialManager(sov, 'social');
+    const social = new SocialManager(sov);
     
     return { sov, social };
 }

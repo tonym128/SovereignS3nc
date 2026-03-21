@@ -40,6 +40,22 @@ export interface SovereignManifest {
     profileHash?: string;
 }
 
+export interface TableDefinition {
+    name: string;
+    schema: string; // "id TEXT PRIMARY KEY, content TEXT..."
+}
+
+export interface ModuleMigration {
+    version: number;
+    sql: string[];
+}
+
+export interface ModuleDefinition {
+    name: string;
+    tables: TableDefinition[];
+    migrations?: ModuleMigration[];
+}
+
 export interface SovereignAddress {
   endpoint?: string;
   region: string;
