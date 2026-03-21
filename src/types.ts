@@ -32,6 +32,14 @@ export interface SovereignConfig {
   debug?: boolean; // Enable verbose logging
 }
 
+export interface SovereignManifest {
+    updatedAt: number;
+    userId: string;
+    modules: Record<string, string[]>; // moduleName -> [dateStr, ...]
+    dms: Record<string, string[]>;     // recipientId -> [dateStr, ...]
+    profileHash?: string;
+}
+
 export interface SovereignAddress {
   endpoint?: string;
   region: string;

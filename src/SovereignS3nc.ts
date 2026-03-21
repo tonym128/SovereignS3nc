@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig } from './types';
+import { SovereignConfig, SovereignManifest } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -293,10 +293,90 @@ export class SovereignS3nc {
             await this.syncGenericFiles('private/dms/');
             await this.syncGenericFiles('private/modules/');
 
+            await this.syncManifest();
             await this.storage.setLastSyncDate(today);
         } finally {
             this.isSyncing = false;
         }
+    }
+
+    public async syncManifest() {
+        try {
+            Logger.info('[Sync] Generating and uploading manifest...');
+            const manifest = await this.generateManifest();
+            const data = new TextEncoder().encode(JSON.stringify(manifest));
+            await this.publicRemote.uploadFile('manifest.json', data);
+            Logger.info('[Sync] Manifest uploaded successfully.');
+        } catch (e: any) {
+            Logger.warn(`[Sync] Failed to sync manifest: ${e.message}`);
+        }
+    }
+
+    private async generateManifest(): Promise<SovereignManifest> {
+        const publicFiles = await this.storage.listFiles('public/');
+        const manifest: SovereignManifest = {
+            updatedAt: Date.now(),
+            userId: this.config.paths.userId,
+            modules: {},
+            dms: {}
+        };
+
+        const profileData = await this.storage.getPublicUserFile();
+        if (profileData) {
+            manifest.profileHash = this.calculateHashedContent(profileData);
+        }
+
+        for (const file of publicFiles) {
+            if (file === 'public/user.json') continue;
+            if (file === 'public/manifest.json') continue;
+
+            const parts = file.split('/');
+            
+            // Base public DB: public/{date}.db
+            if (parts.length === 2 && file.endsWith('.db')) {
+                const dateStr = parts[1].replace('.db', '');
+                if (!manifest.modules['core']) manifest.modules['core'] = [];
+                manifest.modules['core'].push(dateStr);
+                continue;
+            }
+
+            if (file.startsWith('public/modules/')) {
+                // Module file: public/modules/{moduleName}/{date}.db
+                if (parts.length === 4) {
+                    const moduleName = parts[2];
+                    const fileName = parts[3];
+                    if (fileName.endsWith('.db')) {
+                        const dateStr = fileName.replace('.db', '');
+                        if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
+                        manifest.modules[moduleName].push(dateStr);
+                    }
+                } 
+                // DM file: public/modules/social/dms/{recipientId}/{date}.db
+                else if (parts.length === 6 && parts[3] === 'dms') {
+                    const recipientId = parts[4];
+                    const fileName = parts[5];
+                    if (fileName.endsWith('.db')) {
+                        const dateStr = fileName.replace('.db', '');
+                        if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
+                        manifest.dms[recipientId].push(dateStr);
+                    }
+                }
+            }
+        }
+        return manifest;
+    }
+
+    private async fetchManifest(userId: string): Promise<SovereignManifest | null> {
+        try {
+            const userRemote = this.createRemote(userId);
+            const result = await userRemote.downloadFile('manifest.json');
+            if (result && result.data) {
+                return JSON.parse(new TextDecoder().decode(result.data));
+            }
+        } catch (e) {
+            Logger.debug(`[Sync] Manifest not found for user ${userId}`);
+        }
+        return null;
     }
 
     async saveBlob(data: Uint8Array, isPublic: boolean = true): Promise<string> {
@@ -522,31 +602,63 @@ export class SovereignS3nc {
     private async syncFollowedUsers(today: string) {
         const following = await this.storage.getFollowing();
         for (const user of following) {
-            const startDate = new Date(user.lastSync);
-            const endDate = new Date(today);
+            const manifest = await this.fetchManifest(user.userId);
             
-            let iter = new Date(startDate);
-            iter.setUTCHours(0, 0, 0, 0);
-            endDate.setUTCHours(0, 0, 0, 0);
-
-            while (iter <= endDate) {
-                const dateStr = SovereignS3nc.getDateStr(iter);
-                await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                
-                // Pull namespaced Social DMs
-                const myId = this.config.paths.userId;
-                const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public'); // Remote path on followed user side
-                // Wait, getModulePath('social', ..., 'public') returns 'public/modules/social/dms/...'
-                await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed'), false);
-                
-                // Pull Module Data
-                for (const moduleName of this.registeredModules) {
-                    const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
-                    const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
-                    await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+            if (manifest) {
+                Logger.info(`[Sync] Using manifest for ${user.userId}`);
+                // 1. Sync Core/Public DBs from manifest
+                if (manifest.modules['core']) {
+                    for (const dateStr of manifest.modules['core']) {
+                        await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                    }
                 }
 
-                iter.setUTCDate(iter.getUTCDate() + 1);
+                // 2. Sync Modules from manifest
+                for (const [moduleName, dates] of Object.entries(manifest.modules)) {
+                    if (moduleName === 'core') continue;
+                    for (const dateStr of dates) {
+                        const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
+                        const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
+                        await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                    }
+                }
+
+                // 3. Sync DMs for ME from manifest
+                const myId = this.config.paths.userId;
+                if (manifest.dms[myId]) {
+                    for (const dateStr of manifest.dms[myId]) {
+                        const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public');
+                        const localPath = this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed');
+                        await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                    }
+                }
+            } else {
+                // FALLBACK: Legacy polling-based sync (Iterate dates)
+                const startDate = new Date(user.lastSync);
+                const endDate = new Date(today);
+                
+                let iter = new Date(startDate);
+                iter.setUTCHours(0, 0, 0, 0);
+                endDate.setUTCHours(0, 0, 0, 0);
+
+                while (iter <= endDate) {
+                    const dateStr = SovereignS3nc.getDateStr(iter);
+                    await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                    
+                    // Pull namespaced Social DMs
+                    const myId = this.config.paths.userId;
+                    const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public'); 
+                    await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed'), false);
+                    
+                    // Pull Module Data
+                    for (const moduleName of this.registeredModules) {
+                        const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
+                        const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
+                        await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                    }
+
+                    iter.setUTCDate(iter.getUTCDate() + 1);
+                }
             }
             
             await this.storage.updateFollowedUserSync(user.userId, today);
