@@ -328,9 +328,9 @@ export class SovereignS3nc extends EventEmitter {
             
             await this.syncUserFile();
 
-            // 2. Global Discovery & Auto-Follow
+            // 2. Global Discovery & Registration
             await this.ensureGlobalRegistration();
-            await this.discoverAndFollowUsers(today);
+            // await this.discoverAndFollowUsers(today); // Disabled: No auto-follow
 
             // 3. Sync Followed Users (Per-User Logic)
             await this.syncFollowedUsers(today);
@@ -439,6 +439,13 @@ export class SovereignS3nc extends EventEmitter {
     public async createGroup(name: string, members: GroupMember[]): Promise<SovereignGroup> {
         const id = Math.random().toString(36).substring(2, 15);
         const sharedKey = crypto.randomBytes(32).toString('hex');
+        
+        // Owner is joined by default
+        members.forEach(m => {
+            if (m.userId === this.config.paths.userId) m.status = 'joined';
+            else m.status = 'pending';
+        });
+
         const group: SovereignGroup = {
             id,
             name,
@@ -451,17 +458,110 @@ export class SovereignS3nc extends EventEmitter {
         const groupData = new TextEncoder().encode(JSON.stringify(group));
         await this.storage.saveFile(`private/groups/${id}/info.json`, groupData);
         
+        // Also publish my own status
+        await this.respondToGroup(id, 'joined');
+
         Logger.info(`[Group] Created group ${name} (${id})`);
         return group;
+    }
+
+    /**
+     * Updates an existing group's metadata (members, name, etc.)
+     */
+    public async updateGroup(group: SovereignGroup) {
+        const groupData = new TextEncoder().encode(JSON.stringify(group));
+        await this.storage.saveFile(`private/groups/${group.id}/info.json`, groupData);
+        
+        // Notify all members of the change
+        for (const member of group.members) {
+            if (member.userId !== this.config.paths.userId) {
+                // We send an update message. Modules can detect this and refresh.
+                // In Social Demo, we'll reuse the INVITE_GROUP prefix which also updates metadata.
+                this.emit('group:update_metadata', { groupId: group.id, group });
+            }
+        }
+        
+        Logger.info(`[Group] Updated group ${group.name} (${group.id})`);
     }
 
     /**
      * Joins an existing group using a shared key and participant list.
      */
     public async joinGroup(group: SovereignGroup) {
+        // Set all members to pending initially if status is missing
+        group.members.forEach(m => {
+            if (!m.status) m.status = 'pending';
+        });
+
         const groupData = new TextEncoder().encode(JSON.stringify(group));
         await this.storage.saveFile(`private/groups/${group.id}/info.json`, groupData);
-        Logger.info(`[Group] Joined group ${group.name} (${group.id})`);
+        
+        // We DON'T respond automatically anymore, UI will call respondToGroup
+        Logger.info(`[Group] Received metadata for group ${group.name} (${group.id})`);
+    }
+
+    public async respondToGroup(groupId: string, status: 'joined' | 'declined') {
+        const statusData = new TextEncoder().encode(JSON.stringify({ status, updatedAt: Date.now() }));
+        const path = `public/groups/${groupId}/status.json`;
+        await this.storage.saveFile(path, statusData);
+        
+        // Also update local group info if exists
+        const infoPath = `private/groups/${groupId}/info.json`;
+        const localInfo = await this.storage.getFile(infoPath);
+        if (localInfo) {
+            const group: SovereignGroup = JSON.parse(new TextDecoder().decode(localInfo));
+            const me = group.members.find(m => m.userId === this.config.paths.userId);
+            if (me) {
+                me.status = status;
+                await this.storage.saveFile(infoPath, new TextEncoder().encode(JSON.stringify(group)));
+            }
+        }
+
+        Logger.info(`[Group] Responded to group ${groupId} with ${status}`);
+    }
+
+    public async leaveGroup(groupId: string) {
+        // 1. Publish 'left' status
+        const statusData = new TextEncoder().encode(JSON.stringify({ status: 'left', updatedAt: Date.now() }));
+        const path = `public/groups/${groupId}/status.json`;
+        await this.storage.saveFile(path, statusData);
+
+        // 2. Delete local group info
+        const infoPath = `private/groups/${groupId}/info.json`;
+        await this.storage.deleteFile(infoPath);
+
+        Logger.info(`[Group] Left group ${groupId}`);
+    }
+
+    public async getGroupMembersWithStatus(groupId: string): Promise<GroupMember[]> {
+        const infoPath = `private/groups/${groupId}/info.json`;
+        const localInfo = await this.storage.getFile(infoPath);
+        if (!localInfo) return [];
+
+        const group: SovereignGroup = JSON.parse(new TextDecoder().decode(localInfo));
+        const myUserId = this.config.paths.userId;
+        
+        // Update statuses from local cache (pulled during syncGroups)
+        for (const member of group.members) {
+            let statusPath: string;
+            if (member.userId === myUserId) {
+                // Check my own published status
+                statusPath = `public/groups/${groupId}/status.json`;
+            } else {
+                // Check other members' cached statuses
+                statusPath = `followed/${member.userId}/groups/${groupId}/status.json`;
+            }
+
+            const statusData = await this.storage.getFile(statusPath);
+            if (statusData) {
+                try {
+                    const { status } = JSON.parse(new TextDecoder().decode(statusData));
+                    member.status = status;
+                } catch(e) {}
+            }
+        }
+
+        return group.members;
     }
 
     public async getGroups(): Promise<SovereignGroup[]> {
@@ -471,7 +571,10 @@ export class SovereignS3nc extends EventEmitter {
             if (file.endsWith('info.json')) {
                 const data = await this.storage.getFile(file);
                 if (data) {
-                    groups.push(JSON.parse(new TextDecoder().decode(data)));
+                    const group = JSON.parse(new TextDecoder().decode(data));
+                    // Enrich with statuses
+                    group.members = await this.getGroupMembersWithStatus(group.id);
+                    groups.push(group);
                 }
             }
         }
@@ -479,28 +582,56 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     public async syncGroups(today: string) {
-        const groups = await this.getGroups();
+        const files = await this.storage.listFiles('private/groups/');
+        const groups: SovereignGroup[] = [];
+        for (const file of files) {
+            if (file.endsWith('info.json')) {
+                const data = await this.storage.getFile(file);
+                if (data) groups.push(JSON.parse(new TextDecoder().decode(data)));
+            }
+        }
+
         for (const group of groups) {
             Logger.info(`[Sync] Syncing group ${group.name} (${group.id})`);
             
-            // 1. Upload my own group data (Public namespace)
-            // The actual data is written by modules to public/groups/${groupId}/{date}.db
-            // which is handled by syncGenericFiles if we use the right prefix.
-            
+            // 1. Ensure my status is uploaded
+            const myStatusPath = `public/groups/${group.id}/status.json`;
+            const myStatusData = await this.storage.getFile(myStatusPath);
+            if (myStatusData) {
+                // syncGenericFiles handles public/groups/ prefix if added to sync()
+            }
+
             // 2. Pull from other members
             for (const member of group.members) {
                 if (member.userId === this.config.paths.userId) continue;
 
-                const manifest = await this.fetchManifest(member.userId);
-                if (manifest && manifest.groups[group.id]) {
-                    for (const dateStr of manifest.groups[group.id]) {
-                        const remotePath = `public/groups/${group.id}/${dateStr}.db`;
-                        const localPath = `followed/${member.userId}/groups/${group.id}/${dateStr}.db`;
-                        
-                        // Download and decrypt with Group Shared Key
-                        const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, true);
-                        if (changed) {
-                            this.emit(`group:${group.id}:update`, { userId: member.userId, dateStr });
+                // Pull Status FIRST
+                const remoteStatusPath = `public/groups/${group.id}/status.json`;
+                const localStatusPath = `followed/${member.userId}/groups/${group.id}/status.json`;
+                await this.pullUserFile(member.userId, remoteStatusPath, '', localStatusPath, false); // Status is public/unencrypted
+
+                // Refresh member status from newly pulled file
+                const statusData = await this.storage.getFile(localStatusPath);
+                if (statusData) {
+                    try {
+                        const { status } = JSON.parse(new TextDecoder().decode(statusData));
+                        member.status = status;
+                    } catch(e) {}
+                }
+
+                // Pull Data (Only if joined)
+                if (member.status === 'joined') {
+                    const manifest = await this.fetchManifest(member.userId);
+                    if (manifest && manifest.groups[group.id]) {
+                        for (const dateStr of manifest.groups[group.id]) {
+                            const remotePath = `public/groups/${group.id}/${dateStr}.db`;
+                            const localPath = `followed/${member.userId}/groups/${group.id}/${dateStr}.db`;
+                            
+                            // Download and decrypt with Group Shared Key
+                            const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, true);
+                            if (changed) {
+                                this.emit(`group:${group.id}:update`, { userId: member.userId, dateStr });
+                            }
                         }
                     }
                 }

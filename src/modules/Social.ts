@@ -7,6 +7,7 @@ export interface Post {
     content: string;
     timestamp: number;
     userId: string;
+    type?: 'text' | 'system';
     image?: string;
     parentId?: string;
     parentUserId?: string;
@@ -58,6 +59,14 @@ export const SOCIAL_MODULE_DEFINITION: ModuleDefinition = {
                 recipientId TEXT,
                 image TEXT
             `
+        },
+        {
+            name: 'moderation',
+            schema: `
+                targetId TEXT PRIMARY KEY,
+                action TEXT,
+                timestamp INTEGER
+            `
         }
     ],
     migrations: [
@@ -77,6 +86,18 @@ export const SOCIAL_MODULE_DEFINITION: ModuleDefinition = {
                 "ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;",
                 "ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;"
             ]
+        },
+        {
+            version: 3,
+            sql: [
+                "ALTER TABLE posts ADD COLUMN type TEXT DEFAULT 'text';"
+            ]
+        },
+        {
+            version: 4,
+            sql: [
+                "CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER);"
+            ]
         }
     ]
 };
@@ -89,7 +110,7 @@ export class SocialManager {
         this.db.registerModule(SOCIAL_MODULE_DEFINITION);
     }
 
-    private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string): Promise<any> {
+    private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string, sharedKey?: string): Promise<any> {
         let dbPath: string;
         if (type === 'followed') {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
@@ -99,8 +120,19 @@ export class SocialManager {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
         }
             
-        const data = await this.db.getStorage().getFile(dbPath);
+        let data = await this.db.getStorage().getFile(dbPath);
         
+        // Handle Group Decryption
+        if (data && type === 'group' && sharedKey) {
+            try {
+                data = await this.db.decrypt(data, sharedKey);
+            } catch (e: any) {
+                Logger.warn(`[Social] Failed to decrypt group DB: ${e.message}`);
+                // If decryption fails, we start with a fresh DB to avoid "file is not a database" errors
+                data = null; 
+            }
+        }
+
         const initSqlJs = (globalThis as any).initSqlJs;
         if (!initSqlJs) {
             throw new Error('sql.js not found. Ensure it is loaded in the environment.');
@@ -117,9 +149,9 @@ export class SocialManager {
         return db;
     }
 
-    async postToGroup(groupId: string, sharedKey: string, content: string, image?: Uint8Array) {
+    async postToGroup(groupId: string, sharedKey: string, content: string, image?: Uint8Array, type: 'text' | 'system' = 'text') {
         const date = new Date().toISOString().split('T')[0];
-        const db = await this.getDb(date, 'group', groupId);
+        const db = await this.getDb(date, 'group', groupId, sharedKey);
         
         const id = Math.random().toString(36).substring(7);
         const timestamp = Date.now();
@@ -130,8 +162,8 @@ export class SocialManager {
             imagePath = await this.db.saveBlob(image, true);
         }
 
-        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, 0, 0)';
-        db.run(sql, [id, content, timestamp, userId, imagePath]);
+        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)';
+        db.run(sql, [id, content, timestamp, userId, imagePath, type]);
 
         const binary = db.export();
         const dbPath = `public/groups/${groupId}/${date}.db`;
@@ -144,40 +176,127 @@ export class SocialManager {
         this.db.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
+    async editGroupPost(groupId: string, sharedKey: string, postId: string, date: string, newContent: string) {
+        const db = await this.getDb(date, 'group', groupId, sharedKey);
+        
+        db.run('UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?', [newContent, Date.now(), postId]);
+
+        const binary = db.export();
+        const dbPath = `public/groups/${groupId}/${date}.db`;
+        
+        const encrypted = await this.db.encrypt(binary, sharedKey);
+        await this.db.getStorage().saveFile(dbPath, encrypted);
+        
+        db.close();
+        this.db.emit(`group:${groupId}:update`, { path: dbPath });
+    }
+
+    async deleteGroupPost(groupId: string, sharedKey: string, postId: string, date: string, authorId: string) {
+        // If I am the author, I delete from my own DB
+        // If I am the owner (and not author), I write a "tombstone" or just delete it if I'm editing the author's DB?
+        // Wait, in this decentralized model, the owner CANNOT edit the author's DB file in S3 directly.
+        // However, the owner CAN post a "MODERATION" record in their own group DB that says "Delete this post".
+        // For simplicity in this demo, we'll assume:
+        // 1. Author deletes from their own DB.
+        // 2. Owner posts a system message or we add a 'moderation' table.
+        
+        // Let's implement author deletion first.
+        const myId = this.db.getConfig().paths.userId;
+        if (authorId === myId) {
+            const db = await this.getDb(date, 'group', groupId, sharedKey);
+            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+            
+            const binary = db.export();
+            const dbPath = `public/groups/${groupId}/${date}.db`;
+            const encrypted = await this.db.encrypt(binary, sharedKey);
+            await this.db.getStorage().saveFile(dbPath, encrypted);
+            db.close();
+            this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        } else {
+            // Owner deletion: We'll add a 'moderation' table to the schema
+            // For now, let's just allow authors to delete.
+            // Wait, the prompt asked for "allow owner to delete messages".
+            // I will add a 'deleted_posts' table to the social schema for moderation.
+            const db = await this.getDb(date, 'group', groupId, sharedKey);
+            db.run('CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)');
+            db.run('INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)', [postId, 'delete', Date.now()]);
+            
+            const binary = db.export();
+            const dbPath = `public/groups/${groupId}/${date}.db`;
+            const encrypted = await this.db.encrypt(binary, sharedKey);
+            await this.db.getStorage().saveFile(dbPath, encrypted);
+            db.close();
+            this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+    }
+
     async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
         const posts: Post[] = [];
+        const deletedPostIds = new Set<string>();
         const initSqlJs = (globalThis as any).initSqlJs;
         if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
 
-        // 1. Get my own posts for this group
-        const myPath = `public/groups/${groupId}/${date}.db`;
-        const myData = await this.db.getStorage().getFile(myPath);
-        if (myData) {
-            // Need to decrypt my own public group data too if it was encrypted during upload
-            const groups = await this.db.getGroups();
-            const group = groups.find(g => g.id === groupId);
-            if (group) {
-                try {
-                    const decrypted = await this.db.decrypt(myData, group.sharedKey);
-                    const db = new this.sqliteInstance.Database(decrypted);
-                    posts.push(...(await this._queryPosts(db)));
-                    db.close();
-                } catch(e) {}
-            }
-        }
-
-        // 2. Get posts from other members
         const groups = await this.db.getGroups();
         const group = groups.find(g => g.id === groupId);
         if (!group) return posts;
 
+        // 1. Collect all moderation entries from all members
+        // In a real app, we would only trust moderation from Owner/Admin.
+        const processModeration = (db: any, memberId: string) => {
+            try {
+                const memberRole = group.members.find(m => m.userId === memberId)?.role;
+                if (memberRole !== 'owner' && memberRole !== 'admin') return;
+
+                const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
+                if (res && res.length > 0) {
+                    res[0].values.forEach((row: any) => deletedPostIds.add(row[0]));
+                }
+            } catch(e) {}
+        };
+
+        // 1.1 Check my own moderation
+        const myPath = `public/groups/${groupId}/${date}.db`;
+        const myData = await this.db.getStorage().getFile(myPath);
+        if (myData) {
+            try {
+                const decrypted = await this.db.decrypt(myData, group.sharedKey);
+                const db = new this.sqliteInstance.Database(decrypted);
+                processModeration(db, this.db.getConfig().paths.userId);
+                db.close();
+            } catch(e) {}
+        }
+
+        // 1.2 Check other members moderation
         for (const member of group.members) {
             if (member.userId === this.db.getConfig().paths.userId) continue;
             const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
             const memberData = await this.db.getStorage().getFile(memberPath);
             if (memberData) {
                 const db = new this.sqliteInstance.Database(memberData);
-                posts.push(...(await this._queryPosts(db)));
+                processModeration(db, member.userId);
+                db.close();
+            }
+        }
+
+        // 2. Query posts, filtering out moderated ones
+        // 2.1 My posts
+        if (myData) {
+            try {
+                const decrypted = await this.db.decrypt(myData, group.sharedKey);
+                const db = new this.sqliteInstance.Database(decrypted);
+                posts.push(...(await this._queryPosts(db, deletedPostIds)));
+                db.close();
+            } catch(e) {}
+        }
+
+        // 2.2 Other member posts
+        for (const member of group.members) {
+            if (member.userId === this.db.getConfig().paths.userId) continue;
+            const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
+            const memberData = await this.db.getStorage().getFile(memberPath);
+            if (memberData) {
+                const db = new this.sqliteInstance.Database(memberData);
+                posts.push(...(await this._queryPosts(db, deletedPostIds)));
                 db.close();
             }
         }
@@ -186,20 +305,22 @@ export class SocialManager {
         return posts;
     }
 
-    private async _queryPosts(db: any): Promise<Post[]> {
+    private async _queryPosts(db: any, deletedIds: Set<string> = new Set()): Promise<Post[]> {
         try {
             const res = db.exec('SELECT * FROM posts');
             if (res && res.length > 0) {
                 const columns = res[0].columns;
-                return res[0].values.map((row: any) => {
-                    const post: any = {};
-                    columns.forEach((col: string, i: number) => {
-                        let val = row[i];
-                        if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') val = !!val;
-                        post[col] = val;
-                    });
-                    return post;
-                });
+                return res[0].values
+                    .map((row: any) => {
+                        const post: any = {};
+                        columns.forEach((col: string, i: number) => {
+                            let val = row[i];
+                            if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') val = !!val;
+                            post[col] = val;
+                        });
+                        return post;
+                    })
+                    .filter((p: Post) => !deletedIds.has(p.id) && !p.isDeleted);
             }
         } catch (e) {}
         return [];

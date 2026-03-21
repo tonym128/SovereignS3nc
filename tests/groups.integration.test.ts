@@ -63,6 +63,7 @@ describe('Shared Multi-Writer Rooms (Groups)', () => {
 
         // 2. Bob joins the group (In a real app, he'd get the group info via DM)
         await bob.sov.joinGroup(group);
+        await bob.sov.respondToGroup(group.id, 'joined');
 
         // 3. Alice posts to the group
         await alice.social.postToGroup(group.id, group.sharedKey, 'Hello from Alice!');

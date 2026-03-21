@@ -23583,22 +23583,22 @@
       var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
         return value !== value;
       };
-      function EventEmitter() {
-        EventEmitter.init.call(this);
+      function EventEmitter2() {
+        EventEmitter2.init.call(this);
       }
-      module.exports = EventEmitter;
+      module.exports = EventEmitter2;
       module.exports.once = once2;
-      EventEmitter.EventEmitter = EventEmitter;
-      EventEmitter.prototype._events = void 0;
-      EventEmitter.prototype._eventsCount = 0;
-      EventEmitter.prototype._maxListeners = void 0;
+      EventEmitter2.EventEmitter = EventEmitter2;
+      EventEmitter2.prototype._events = void 0;
+      EventEmitter2.prototype._eventsCount = 0;
+      EventEmitter2.prototype._maxListeners = void 0;
       var defaultMaxListeners = 10;
       function checkListener(listener) {
         if (typeof listener !== "function") {
           throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
         }
       }
-      Object.defineProperty(EventEmitter, "defaultMaxListeners", {
+      Object.defineProperty(EventEmitter2, "defaultMaxListeners", {
         enumerable: true,
         get: function() {
           return defaultMaxListeners;
@@ -23610,14 +23610,14 @@
           defaultMaxListeners = arg;
         }
       });
-      EventEmitter.init = function() {
+      EventEmitter2.init = function() {
         if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
           this._events = /* @__PURE__ */ Object.create(null);
           this._eventsCount = 0;
         }
         this._maxListeners = this._maxListeners || void 0;
       };
-      EventEmitter.prototype.setMaxListeners = function setMaxListeners(n2) {
+      EventEmitter2.prototype.setMaxListeners = function setMaxListeners(n2) {
         if (typeof n2 !== "number" || n2 < 0 || NumberIsNaN(n2)) {
           throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n2 + ".");
         }
@@ -23626,13 +23626,13 @@
       };
       function _getMaxListeners(that) {
         if (that._maxListeners === void 0)
-          return EventEmitter.defaultMaxListeners;
+          return EventEmitter2.defaultMaxListeners;
         return that._maxListeners;
       }
-      EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+      EventEmitter2.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter.prototype.emit = function emit2(type) {
+      EventEmitter2.prototype.emit = function emit2(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++) args.push(arguments[i2]);
         var doError = type === "error";
@@ -23709,11 +23709,11 @@
         }
         return target;
       }
-      EventEmitter.prototype.addListener = function addListener(type, listener) {
+      EventEmitter2.prototype.addListener = function addListener(type, listener) {
         return _addListener(this, type, listener, false);
       };
-      EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-      EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+      EventEmitter2.prototype.on = EventEmitter2.prototype.addListener;
+      EventEmitter2.prototype.prependListener = function prependListener(type, listener) {
         return _addListener(this, type, listener, true);
       };
       function onceWrapper() {
@@ -23732,17 +23732,17 @@
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter.prototype.once = function once3(type, listener) {
+      EventEmitter2.prototype.once = function once3(type, listener) {
         checkListener(listener);
         this.on(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+      EventEmitter2.prototype.prependOnceListener = function prependOnceListener(type, listener) {
         checkListener(listener);
         this.prependListener(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter.prototype.removeListener = function removeListener2(type, listener) {
+      EventEmitter2.prototype.removeListener = function removeListener2(type, listener) {
         var list, events, position, i2, originalListener;
         checkListener(listener);
         events = this._events;
@@ -23782,8 +23782,8 @@
         }
         return this;
       };
-      EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
-      EventEmitter.prototype.removeAllListeners = function removeAllListeners2(type) {
+      EventEmitter2.prototype.off = EventEmitter2.prototype.removeListener;
+      EventEmitter2.prototype.removeAllListeners = function removeAllListeners2(type) {
         var listeners2, events, i2;
         events = this._events;
         if (events === void 0)
@@ -23834,20 +23834,20 @@
           return unwrap ? [evlistener.listener || evlistener] : [evlistener];
         return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter.prototype.listeners = function listeners2(type) {
+      EventEmitter2.prototype.listeners = function listeners2(type) {
         return _listeners(this, type, true);
       };
-      EventEmitter.prototype.rawListeners = function rawListeners(type) {
+      EventEmitter2.prototype.rawListeners = function rawListeners(type) {
         return _listeners(this, type, false);
       };
-      EventEmitter.listenerCount = function(emitter, type) {
+      EventEmitter2.listenerCount = function(emitter, type) {
         if (typeof emitter.listenerCount === "function") {
           return emitter.listenerCount(type);
         } else {
           return listenerCount2.call(emitter, type);
         }
       };
-      EventEmitter.prototype.listenerCount = listenerCount2;
+      EventEmitter2.prototype.listenerCount = listenerCount2;
       function listenerCount2(type) {
         var events = this._events;
         if (events !== void 0) {
@@ -23860,7 +23860,7 @@
         }
         return 0;
       }
-      EventEmitter.prototype.eventNames = function eventNames2() {
+      EventEmitter2.prototype.eventNames = function eventNames2() {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n2) {
@@ -91501,7 +91501,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills672, nacl, crypto4, SovereignS3nc;
+  var import_polyfills672, nacl, crypto4, import_events, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
@@ -91511,9 +91511,11 @@ ${toHex(hashedRequest)}`;
       init_IndexedDBStorage();
       init_Logger();
       crypto4 = __toESM(require_crypto_browserify());
-      SovereignS3nc = class _SovereignS3nc {
+      import_events = __toESM(require_events());
+      SovereignS3nc = class _SovereignS3nc extends import_events.EventEmitter {
         constructor(config, remote, remoteFactory, keys, storage) {
-          this.registeredModules = ["social"];
+          super();
+          this.registeredModules = [];
           this.isSyncing = false;
           this.config = config;
           this.remoteFactory = remoteFactory;
@@ -91567,9 +91569,47 @@ ${toHex(hashedRequest)}`;
           }
           return `${type}/modules/${cleanModule}/${subPath}`;
         }
-        registerModule(name) {
-          if (!this.registeredModules.includes(name)) {
-            this.registeredModules.push(name);
+        registerModule(definition) {
+          if (!this.registeredModules.find((m2) => m2.name === definition.name)) {
+            this.registeredModules.push(definition);
+          }
+        }
+        /**
+         * Emits a change event for a specific module and path.
+         * Useful for UI components to subscribe to updates.
+         */
+        onModuleUpdate(moduleName, path2) {
+          this.emit(`${moduleName}:update`, { moduleName, path: path2 });
+          this.emit("update", { moduleName, path: path2 });
+        }
+        /**
+         * Core utility to apply schema and migrations to a SQLite database.
+         */
+        applyModuleSchema(db, moduleName) {
+          const module = this.registeredModules.find((m2) => m2.name === moduleName);
+          if (!module) return;
+          for (const table of module.tables) {
+            db.exec(`CREATE TABLE IF NOT EXISTS ${table.name} (${table.schema});`);
+          }
+          if (module.migrations && module.migrations.length > 0) {
+            const res = db.exec("PRAGMA user_version;");
+            let currentVersion = 0;
+            if (res && res.length > 0 && res[0].values.length > 0) {
+              currentVersion = res[0].values[0][0];
+            }
+            const pending = module.migrations.filter((m2) => m2.version > currentVersion).sort((a2, b2) => a2.version - b2.version);
+            for (const migration of pending) {
+              Logger.info(`[Schema] Applying migration v${migration.version} to ${moduleName}`);
+              for (const sql of migration.sql) {
+                try {
+                  db.exec(sql);
+                } catch (e2) {
+                  Logger.warn(`[Schema] Migration v${migration.version} sql failed (likely already applied): ${e2.message}`);
+                }
+              }
+              db.exec(`PRAGMA user_version = ${migration.version};`);
+              currentVersion = migration.version;
+            }
           }
         }
         async init() {
@@ -91717,18 +91757,252 @@ ${toHex(hashedRequest)}`;
             }
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
-            await this.discoverAndFollowUsers(today);
             await this.syncFollowedUsers(today);
+            await this.syncGroups(today);
             await this.syncGenericFiles("public/blobs/");
             await this.syncGenericFiles("public/dms/");
             await this.syncGenericFiles("public/modules/");
+            await this.syncGenericFiles("public/groups/");
             await this.syncGenericFiles("private/blobs/");
             await this.syncGenericFiles("private/dms/");
             await this.syncGenericFiles("private/modules/");
+            await this.syncGenericFiles("private/groups/");
+            await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
             this.isSyncing = false;
           }
+        }
+        async syncManifest() {
+          try {
+            Logger.info("[Sync] Generating and uploading manifest...");
+            const manifest = await this.generateManifest();
+            const data = new TextEncoder().encode(JSON.stringify(manifest));
+            await this.publicRemote.uploadFile("manifest.json", data);
+            Logger.info("[Sync] Manifest uploaded successfully.");
+          } catch (e2) {
+            Logger.warn(`[Sync] Failed to sync manifest: ${e2.message}`);
+          }
+        }
+        async generateManifest() {
+          const publicFiles = await this.storage.listFiles("public/");
+          const manifest = {
+            updatedAt: Date.now(),
+            userId: this.config.paths.userId,
+            modules: {},
+            dms: {},
+            groups: {}
+          };
+          const profileData = await this.storage.getPublicUserFile();
+          if (profileData) {
+            manifest.profileHash = this.calculateHashedContent(profileData);
+          }
+          for (const file of publicFiles) {
+            if (file === "public/user.json") continue;
+            if (file === "public/manifest.json") continue;
+            const parts = file.split("/");
+            if (parts.length === 2 && file.endsWith(".db")) {
+              const dateStr = parts[1].replace(".db", "");
+              if (!manifest.modules["core"]) manifest.modules["core"] = [];
+              manifest.modules["core"].push(dateStr);
+              continue;
+            }
+            if (file.startsWith("public/modules/")) {
+              if (parts.length === 4) {
+                const moduleName = parts[2];
+                const fileName = parts[3];
+                if (fileName.endsWith(".db")) {
+                  const dateStr = fileName.replace(".db", "");
+                  if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
+                  manifest.modules[moduleName].push(dateStr);
+                }
+              } else if (parts.length === 6 && parts[3] === "dms") {
+                const recipientId = parts[4];
+                const fileName = parts[5];
+                if (fileName.endsWith(".db")) {
+                  const dateStr = fileName.replace(".db", "");
+                  if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
+                  manifest.dms[recipientId].push(dateStr);
+                }
+              }
+            }
+            if (file.startsWith("public/groups/") && parts.length === 4) {
+              const groupId = parts[2];
+              const fileName = parts[3];
+              if (fileName.endsWith(".db")) {
+                const dateStr = fileName.replace(".db", "");
+                if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
+                manifest.groups[groupId].push(dateStr);
+              }
+            }
+          }
+          return manifest;
+        }
+        /**
+         * Creates a new multi-writer group.
+         */
+        async createGroup(name, members) {
+          const id = Math.random().toString(36).substring(2, 15);
+          const sharedKey = crypto4.randomBytes(32).toString("hex");
+          members.forEach((m2) => {
+            if (m2.userId === this.config.paths.userId) m2.status = "joined";
+            else m2.status = "pending";
+          });
+          const group4 = {
+            id,
+            name,
+            members,
+            sharedKey,
+            createdAt: Date.now()
+          };
+          const groupData = new TextEncoder().encode(JSON.stringify(group4));
+          await this.storage.saveFile(`private/groups/${id}/info.json`, groupData);
+          await this.respondToGroup(id, "joined");
+          Logger.info(`[Group] Created group ${name} (${id})`);
+          return group4;
+        }
+        /**
+         * Updates an existing group's metadata (members, name, etc.)
+         */
+        async updateGroup(group4) {
+          const groupData = new TextEncoder().encode(JSON.stringify(group4));
+          await this.storage.saveFile(`private/groups/${group4.id}/info.json`, groupData);
+          for (const member2 of group4.members) {
+            if (member2.userId !== this.config.paths.userId) {
+              this.emit("group:update_metadata", { groupId: group4.id, group: group4 });
+            }
+          }
+          Logger.info(`[Group] Updated group ${group4.name} (${group4.id})`);
+        }
+        /**
+         * Joins an existing group using a shared key and participant list.
+         */
+        async joinGroup(group4) {
+          group4.members.forEach((m2) => {
+            if (!m2.status) m2.status = "pending";
+          });
+          const groupData = new TextEncoder().encode(JSON.stringify(group4));
+          await this.storage.saveFile(`private/groups/${group4.id}/info.json`, groupData);
+          Logger.info(`[Group] Received metadata for group ${group4.name} (${group4.id})`);
+        }
+        async respondToGroup(groupId, status) {
+          const statusData = new TextEncoder().encode(JSON.stringify({ status, updatedAt: Date.now() }));
+          const path2 = `public/groups/${groupId}/status.json`;
+          await this.storage.saveFile(path2, statusData);
+          const infoPath = `private/groups/${groupId}/info.json`;
+          const localInfo = await this.storage.getFile(infoPath);
+          if (localInfo) {
+            const group4 = JSON.parse(new TextDecoder().decode(localInfo));
+            const me = group4.members.find((m2) => m2.userId === this.config.paths.userId);
+            if (me) {
+              me.status = status;
+              await this.storage.saveFile(infoPath, new TextEncoder().encode(JSON.stringify(group4)));
+            }
+          }
+          Logger.info(`[Group] Responded to group ${groupId} with ${status}`);
+        }
+        async leaveGroup(groupId) {
+          const statusData = new TextEncoder().encode(JSON.stringify({ status: "left", updatedAt: Date.now() }));
+          const path2 = `public/groups/${groupId}/status.json`;
+          await this.storage.saveFile(path2, statusData);
+          const infoPath = `private/groups/${groupId}/info.json`;
+          await this.storage.deleteFile(infoPath);
+          Logger.info(`[Group] Left group ${groupId}`);
+        }
+        async getGroupMembersWithStatus(groupId) {
+          const infoPath = `private/groups/${groupId}/info.json`;
+          const localInfo = await this.storage.getFile(infoPath);
+          if (!localInfo) return [];
+          const group4 = JSON.parse(new TextDecoder().decode(localInfo));
+          const myUserId = this.config.paths.userId;
+          for (const member2 of group4.members) {
+            let statusPath;
+            if (member2.userId === myUserId) {
+              statusPath = `public/groups/${groupId}/status.json`;
+            } else {
+              statusPath = `followed/${member2.userId}/groups/${groupId}/status.json`;
+            }
+            const statusData = await this.storage.getFile(statusPath);
+            if (statusData) {
+              try {
+                const { status } = JSON.parse(new TextDecoder().decode(statusData));
+                member2.status = status;
+              } catch (e2) {
+              }
+            }
+          }
+          return group4.members;
+        }
+        async getGroups() {
+          const files = await this.storage.listFiles("private/groups/");
+          const groups = [];
+          for (const file of files) {
+            if (file.endsWith("info.json")) {
+              const data = await this.storage.getFile(file);
+              if (data) {
+                const group4 = JSON.parse(new TextDecoder().decode(data));
+                group4.members = await this.getGroupMembersWithStatus(group4.id);
+                groups.push(group4);
+              }
+            }
+          }
+          return groups;
+        }
+        async syncGroups(today) {
+          const files = await this.storage.listFiles("private/groups/");
+          const groups = [];
+          for (const file of files) {
+            if (file.endsWith("info.json")) {
+              const data = await this.storage.getFile(file);
+              if (data) groups.push(JSON.parse(new TextDecoder().decode(data)));
+            }
+          }
+          for (const group4 of groups) {
+            Logger.info(`[Sync] Syncing group ${group4.name} (${group4.id})`);
+            const myStatusPath = `public/groups/${group4.id}/status.json`;
+            const myStatusData = await this.storage.getFile(myStatusPath);
+            if (myStatusData) {
+            }
+            for (const member2 of group4.members) {
+              if (member2.userId === this.config.paths.userId) continue;
+              const remoteStatusPath = `public/groups/${group4.id}/status.json`;
+              const localStatusPath = `followed/${member2.userId}/groups/${group4.id}/status.json`;
+              await this.pullUserFile(member2.userId, remoteStatusPath, "", localStatusPath, false);
+              const statusData = await this.storage.getFile(localStatusPath);
+              if (statusData) {
+                try {
+                  const { status } = JSON.parse(new TextDecoder().decode(statusData));
+                  member2.status = status;
+                } catch (e2) {
+                }
+              }
+              if (member2.status === "joined") {
+                const manifest = await this.fetchManifest(member2.userId);
+                if (manifest && manifest.groups[group4.id]) {
+                  for (const dateStr of manifest.groups[group4.id]) {
+                    const remotePath = `public/groups/${group4.id}/${dateStr}.db`;
+                    const localPath = `followed/${member2.userId}/groups/${group4.id}/${dateStr}.db`;
+                    const changed = await this.pullUserFile(member2.userId, remotePath, group4.sharedKey, localPath, true);
+                    if (changed) {
+                      this.emit(`group:${group4.id}:update`, { userId: member2.userId, dateStr });
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        async fetchManifest(userId) {
+          try {
+            const userRemote = this.createRemote(userId);
+            const result = await userRemote.downloadFile("manifest.json");
+            if (result && result.data) {
+              return JSON.parse(new TextDecoder().decode(result.data));
+            }
+          } catch (e2) {
+            Logger.debug(`[Sync] Manifest not found for user ${userId}`);
+          }
+          return null;
         }
         async saveBlob(data, isPublic = true) {
           const hash = this.calculateHashedContent(data);
@@ -91917,23 +92191,52 @@ ${toHex(hashedRequest)}`;
         async syncFollowedUsers(today) {
           const following = await this.storage.getFollowing();
           for (const user of following) {
-            const startDate = new Date(user.lastSync);
-            const endDate = new Date(today);
-            let iter = new Date(startDate);
-            iter.setUTCHours(0, 0, 0, 0);
-            endDate.setUTCHours(0, 0, 0, 0);
-            while (iter <= endDate) {
-              const dateStr = _SovereignS3nc.getDateStr(iter);
-              await this.pullUserDay(user.userId, dateStr, user.publicKey);
-              const myId = this.config.paths.userId;
-              const dmPath = this.getModulePath("social", `dms/${myId}/${dateStr}.db`, "public");
-              await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath("social", `${user.userId}/dms/${dateStr}.db`, "followed"), false);
-              for (const moduleName of this.registeredModules) {
-                const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, "public");
-                const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
-                await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+            const manifest = await this.fetchManifest(user.userId);
+            if (manifest) {
+              Logger.info(`[Sync] Using manifest for ${user.userId}`);
+              if (manifest.modules["core"]) {
+                for (const dateStr of manifest.modules["core"]) {
+                  await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                }
               }
-              iter.setUTCDate(iter.getUTCDate() + 1);
+              for (const [moduleName, dates] of Object.entries(manifest.modules)) {
+                if (moduleName === "core") continue;
+                for (const dateStr of dates) {
+                  const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, "public");
+                  const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
+                  const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                  if (changed) this.onModuleUpdate(moduleName, localPath);
+                }
+              }
+              const myId = this.config.paths.userId;
+              if (manifest.dms[myId]) {
+                for (const dateStr of manifest.dms[myId]) {
+                  const dmPath = this.getModulePath("social", `dms/${myId}/${dateStr}.db`, "public");
+                  const localPath = this.getModulePath("social", `${user.userId}/dms/${dateStr}.db`, "followed");
+                  const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                  if (changed) this.onModuleUpdate("social", localPath);
+                }
+              }
+            } else {
+              const startDate = new Date(user.lastSync);
+              const endDate = new Date(today);
+              let iter = new Date(startDate);
+              iter.setUTCHours(0, 0, 0, 0);
+              endDate.setUTCHours(0, 0, 0, 0);
+              while (iter <= endDate) {
+                const dateStr = _SovereignS3nc.getDateStr(iter);
+                await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                const myId = this.config.paths.userId;
+                const dmPath = this.getModulePath("social", `dms/${myId}/${dateStr}.db`, "public");
+                await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath("social", `${user.userId}/dms/${dateStr}.db`, "followed"), false);
+                for (const moduleDef of this.registeredModules) {
+                  const moduleName = moduleDef.name;
+                  const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, "public");
+                  const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
+                  await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                }
+                iter.setUTCDate(iter.getUTCDate() + 1);
+              }
             }
             await this.storage.updateFollowedUserSync(user.userId, today);
           }
@@ -91966,6 +92269,7 @@ ${toHex(hashedRequest)}`;
                 }
                 await this.storage.saveFile(localPath, data);
                 if (result.etag) await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, result.etag);
+                return true;
               } catch (e2) {
                 Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e2.message}`);
               }
@@ -91973,6 +92277,7 @@ ${toHex(hashedRequest)}`;
           } catch (e2) {
             Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e2.message}`);
           }
+          return false;
         }
         async pullUserDay(userId, date2, publicKey) {
           try {
@@ -92138,25 +92443,111 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Social.ts
-  var import_polyfills673, SocialManager;
+  var import_polyfills673, SOCIAL_MODULE_DEFINITION, SocialManager;
   var init_Social = __esm({
     "src/modules/Social.ts"() {
       "use strict";
       import_polyfills673 = __toESM(require_polyfills());
       init_SovereignS3nc();
       init_Logger();
+      SOCIAL_MODULE_DEFINITION = {
+        name: "social",
+        tables: [
+          {
+            name: "posts",
+            schema: `
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                userId TEXT
+            `
+          },
+          {
+            name: "likes",
+            schema: `
+                postId TEXT,
+                userId TEXT,
+                timestamp INTEGER,
+                PRIMARY KEY (postId, userId)
+            `
+          },
+          {
+            name: "messages",
+            schema: `
+                id TEXT PRIMARY KEY,
+                content TEXT,
+                timestamp INTEGER,
+                senderId TEXT,
+                recipientId TEXT,
+                image TEXT
+            `
+          },
+          {
+            name: "moderation",
+            schema: `
+                targetId TEXT PRIMARY KEY,
+                action TEXT,
+                timestamp INTEGER
+            `
+          }
+        ],
+        migrations: [
+          {
+            version: 1,
+            sql: [
+              "ALTER TABLE posts ADD COLUMN image TEXT;",
+              "ALTER TABLE posts ADD COLUMN parentId TEXT;",
+              "ALTER TABLE posts ADD COLUMN parentUserId TEXT;",
+              "ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;",
+              "ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;"
+            ]
+          },
+          {
+            version: 2,
+            sql: [
+              "ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;",
+              "ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;"
+            ]
+          },
+          {
+            version: 3,
+            sql: [
+              "ALTER TABLE posts ADD COLUMN type TEXT DEFAULT 'text';"
+            ]
+          },
+          {
+            version: 4,
+            sql: [
+              "CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER);"
+            ]
+          }
+        ]
+      };
       SocialManager = class _SocialManager {
-        constructor(db, localPath, sqliteProvider) {
+        constructor(db) {
           this.db = db;
-          this.localPath = localPath;
-          this.sqliteProvider = sqliteProvider;
           this.sqliteInstance = null;
           this.MODULE_NAME = "social";
-          this.db.registerModule(this.MODULE_NAME);
+          this.db.registerModule(SOCIAL_MODULE_DEFINITION);
         }
-        async getDb(date2, type) {
-          const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          const data = await this.db.getStorage().getFile(dbPath);
+        async getDb(date2, type, groupId, sharedKey) {
+          let dbPath;
+          if (type === "followed") {
+            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed");
+          } else if (type === "group" && groupId) {
+            dbPath = `public/groups/${groupId}/${date2}.db`;
+          } else {
+            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          }
+          let data = await this.db.getStorage().getFile(dbPath);
+          if (data && type === "group" && sharedKey) {
+            try {
+              data = await this.db.decrypt(data, sharedKey);
+            } catch (e2) {
+              Logger.warn(`[Social] Failed to decrypt group DB: ${e2.message}`);
+              data = null;
+            }
+          }
           const initSqlJs = globalThis.initSqlJs;
           if (!initSqlJs) {
             throw new Error("sql.js not found. Ensure it is loaded in the environment.");
@@ -92165,43 +92556,141 @@ ${toHex(hashedRequest)}`;
             this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           }
           const db = new this.sqliteInstance.Database(data || void 0);
-          db.exec(`
-            CREATE TABLE IF NOT EXISTS posts (
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                userId TEXT,
-                image TEXT,
-                parentId TEXT,
-                parentUserId TEXT,
-                isEdited INTEGER DEFAULT 0,
-                isDeleted INTEGER DEFAULT 0
-            );
-            CREATE TABLE IF NOT EXISTS likes (
-                postId TEXT,
-                userId TEXT,
-                timestamp INTEGER,
-                PRIMARY KEY (postId, userId)
-            );
-        `);
-          try {
-            db.exec("ALTER TABLE posts ADD COLUMN image TEXT;");
-          } catch (e2) {
-          }
-          try {
-            db.exec("ALTER TABLE posts ADD COLUMN parentId TEXT;");
-            db.exec("ALTER TABLE posts ADD COLUMN parentUserId TEXT;");
-          } catch (e2) {
-          }
-          try {
-            db.exec("ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;");
-          } catch (e2) {
-          }
-          try {
-            db.exec("ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;");
-          } catch (e2) {
-          }
+          this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
+        }
+        async postToGroup(groupId, sharedKey, content, image, type = "text") {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const db = await this.getDb(date2, "group", groupId, sharedKey);
+          const id = Math.random().toString(36).substring(7);
+          const timestamp = Date.now();
+          const userId = this.db.getConfig().paths.userId;
+          let imagePath = null;
+          if (image) {
+            imagePath = await this.db.saveBlob(image, true);
+          }
+          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
+          db.run(sql, [id, content, timestamp, userId, imagePath, type]);
+          const binary = db.export();
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          const encrypted = await this.db.encrypt(binary, sharedKey);
+          await this.db.getStorage().saveFile(dbPath, encrypted);
+          db.close();
+          this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+        async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
+          const db = await this.getDb(date2, "group", groupId, sharedKey);
+          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          const binary = db.export();
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          const encrypted = await this.db.encrypt(binary, sharedKey);
+          await this.db.getStorage().saveFile(dbPath, encrypted);
+          db.close();
+          this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        }
+        async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
+          const myId = this.db.getConfig().paths.userId;
+          if (authorId === myId) {
+            const db = await this.getDb(date2, "group", groupId, sharedKey);
+            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+            const binary = db.export();
+            const dbPath = `public/groups/${groupId}/${date2}.db`;
+            const encrypted = await this.db.encrypt(binary, sharedKey);
+            await this.db.getStorage().saveFile(dbPath, encrypted);
+            db.close();
+            this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          } else {
+            const db = await this.getDb(date2, "group", groupId, sharedKey);
+            db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
+            db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
+            const binary = db.export();
+            const dbPath = `public/groups/${groupId}/${date2}.db`;
+            const encrypted = await this.db.encrypt(binary, sharedKey);
+            await this.db.getStorage().saveFile(dbPath, encrypted);
+            db.close();
+            this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          }
+        }
+        async getGroupPosts(groupId, date2) {
+          const posts = [];
+          const deletedPostIds = /* @__PURE__ */ new Set();
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const groups = await this.db.getGroups();
+          const group4 = groups.find((g2) => g2.id === groupId);
+          if (!group4) return posts;
+          const processModeration = (db, memberId) => {
+            try {
+              const memberRole = group4.members.find((m2) => m2.userId === memberId)?.role;
+              if (memberRole !== "owner" && memberRole !== "admin") return;
+              const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
+              if (res && res.length > 0) {
+                res[0].values.forEach((row) => deletedPostIds.add(row[0]));
+              }
+            } catch (e2) {
+            }
+          };
+          const myPath = `public/groups/${groupId}/${date2}.db`;
+          const myData = await this.db.getStorage().getFile(myPath);
+          if (myData) {
+            try {
+              const decrypted = await this.db.decrypt(myData, group4.sharedKey);
+              const db = new this.sqliteInstance.Database(decrypted);
+              processModeration(db, this.db.getConfig().paths.userId);
+              db.close();
+            } catch (e2) {
+            }
+          }
+          for (const member2 of group4.members) {
+            if (member2.userId === this.db.getConfig().paths.userId) continue;
+            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
+            const memberData = await this.db.getStorage().getFile(memberPath);
+            if (memberData) {
+              const db = new this.sqliteInstance.Database(memberData);
+              processModeration(db, member2.userId);
+              db.close();
+            }
+          }
+          if (myData) {
+            try {
+              const decrypted = await this.db.decrypt(myData, group4.sharedKey);
+              const db = new this.sqliteInstance.Database(decrypted);
+              posts.push(...await this._queryPosts(db, deletedPostIds));
+              db.close();
+            } catch (e2) {
+            }
+          }
+          for (const member2 of group4.members) {
+            if (member2.userId === this.db.getConfig().paths.userId) continue;
+            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
+            const memberData = await this.db.getStorage().getFile(memberPath);
+            if (memberData) {
+              const db = new this.sqliteInstance.Database(memberData);
+              posts.push(...await this._queryPosts(db, deletedPostIds));
+              db.close();
+            }
+          }
+          posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
+          return posts;
+        }
+        async _queryPosts(db, deletedIds = /* @__PURE__ */ new Set()) {
+          try {
+            const res = db.exec("SELECT * FROM posts");
+            if (res && res.length > 0) {
+              const columns = res[0].columns;
+              return res[0].values.map((row) => {
+                const post = {};
+                columns.forEach((col, i2) => {
+                  let val = row[i2];
+                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
+                  post[col] = val;
+                });
+                return post;
+              }).filter((p2) => !deletedIds.has(p2.id) && !p2.isDeleted);
+            }
+          } catch (e2) {
+          }
+          return [];
         }
         async like(postId, isPublic = true) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
@@ -92214,6 +92703,7 @@ ${toHex(hashedRequest)}`;
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           await this.db.getStorage().saveFile(dbPath, binary);
           db.close();
+          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
         }
         async post(content, isPublic = true, image, parentId, parentUserId) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
@@ -92233,6 +92723,7 @@ ${toHex(hashedRequest)}`;
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           await this.db.getStorage().saveFile(dbPath, binary);
           db.close();
+          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
         }
         async editPost(postId, date2, newContent, isPublic = true) {
           const type = isPublic ? "public" : "private";
@@ -92242,6 +92733,7 @@ ${toHex(hashedRequest)}`;
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           await this.db.getStorage().saveFile(dbPath, binary);
           db.close();
+          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
         }
         async deletePost(postId, date2, isPublic = true) {
           const type = isPublic ? "public" : "private";
@@ -92251,6 +92743,7 @@ ${toHex(hashedRequest)}`;
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           await this.db.getStorage().saveFile(dbPath, binary);
           db.close();
+          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
         }
         async getMessageDb(date2, type) {
           const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
@@ -92260,26 +92753,7 @@ ${toHex(hashedRequest)}`;
             this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           }
           const db = new this.sqliteInstance.Database(data || void 0);
-          db.exec(`
-            CREATE TABLE IF NOT EXISTS messages (
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                senderId TEXT,
-                recipientId TEXT,
-                image TEXT,
-                isEdited INTEGER DEFAULT 0,
-                isDeleted INTEGER DEFAULT 0
-            );
-        `);
-          try {
-            db.exec("ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;");
-          } catch (e2) {
-          }
-          try {
-            db.exec("ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;");
-          } catch (e2) {
-          }
+          this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
         }
         async sendDirectMessage(recipientId, content, image) {
@@ -92324,6 +92798,7 @@ ${toHex(hashedRequest)}`;
           publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)", [message.id, encrypted]);
           await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
           publicDb.close();
+          this.db.onModuleUpdate(this.MODULE_NAME, outboxPath);
         }
         async editMessage(recipientId, messageId, date2, newContent) {
           const timestamp = Date.now();
@@ -92459,6 +92934,7 @@ ${toHex(hashedRequest)}`;
           const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.getConfig().paths.userId };
           const data = new TextEncoder().encode(JSON.stringify(profile));
           await this.db.getStorage().savePublicUserFile(data);
+          this.db.onModuleUpdate(this.MODULE_NAME, "public/user.json");
         }
         static async compressImage(dataUrl, targetSizeBytes) {
           if (typeof document === "undefined") return dataUrl;
@@ -92539,6 +93015,7 @@ ${toHex(hashedRequest)}`;
                 if (result.etag) {
                   await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:public/user.json`, result.etag);
                 }
+                this.db.onModuleUpdate(this.MODULE_NAME, localPath);
               }
             } catch (e2) {
             }
@@ -97565,7 +98042,7 @@ ${toHex(hashedRequest)}`;
         });
         const [profileCache, setProfileCache] = (0, import_react.useState)({});
         const [blobCache, setBlobCache] = (0, import_react.useState)({});
-        const [lastViewed, setLastViewed] = (0, import_react.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} });
+        const [lastViewed, setLastViewed] = (0, import_react.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
         const [highlights, setHighlights] = (0, import_react.useState)({ feed: 0, friends: 0 });
         const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)({});
         const [sov, setSov] = (0, import_react.useState)(null);
@@ -97585,13 +98062,20 @@ ${toHex(hashedRequest)}`;
         const [syncing, setSyncing] = (0, import_react.useState)(false);
         const [currentTab, setCurrentTab] = (0, import_react.useState)("feed");
         const [messages, setMessages] = (0, import_react.useState)([]);
+        const [groups, setGroups] = (0, import_react.useState)([]);
+        const [selectedGroup, setSelectedGroup] = (0, import_react.useState)(null);
+        const [groupPosts, setGroupPosts] = (0, import_react.useState)([]);
+        const [groupInput, setGroupInput] = (0, import_react.useState)("");
+        const [groupImage, setGroupImage] = (0, import_react.useState)(null);
+        const [groupImagePreview, setGroupImagePreview] = (0, import_react.useState)(null);
+        const groupFileRef = (0, import_react.useRef)(null);
         const [msgInput, setMsgInput] = (0, import_react.useState)("");
         const [selectedUser, setSelectedUser] = (0, import_react.useState)(null);
         const [lookbackDays, setLookbackDays] = (0, import_react.useState)(5);
         const [isConnected, setIsConnected] = (0, import_react.useState)(true);
         const [manualDisconnect, setManualDisconnect] = (0, import_react.useState)(false);
         const [reconnectDelay, setReconnectDelay] = (0, import_react.useState)(1e3);
-        const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0 });
+        const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
         const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
         const lastViewedRef = (0, import_react.useRef)(lastViewed);
         const discoveryMapRef = (0, import_react.useRef)(discoveryMap);
@@ -97619,8 +98103,8 @@ ${toHex(hashedRequest)}`;
             message,
             type: "confirm",
             onConfirm: async () => {
-              await onConfirm();
               setDialog(null);
+              await onConfirm();
             },
             onCancel: () => setDialog(null)
           });
@@ -97632,8 +98116,21 @@ ${toHex(hashedRequest)}`;
             type: "prompt",
             defaultValue,
             onConfirm: async (val) => {
-              if (val !== void 0) await onConfirm(val || "");
               setDialog(null);
+              if (val !== void 0) await onConfirm(val || "");
+            },
+            onCancel: () => setDialog(null)
+          });
+        };
+        const showMultiSelect = (message, options, onConfirm, title = "Select Members") => {
+          setDialog({
+            title,
+            message,
+            type: "multiselect",
+            options,
+            onConfirm: async (vals) => {
+              setDialog(null);
+              if (vals !== void 0) await onConfirm(vals);
             },
             onCancel: () => setDialog(null)
           });
@@ -97781,7 +98278,7 @@ ${toHex(hashedRequest)}`;
             }, remoteAdapter, factory);
             await instance.init();
             setSov(instance);
-            const sm = new SocialManager(instance, "");
+            const sm = new SocialManager(instance);
             setSocial(sm);
             const loadCache = (key, defaultVal) => {
               const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
@@ -97896,6 +98393,11 @@ ${toHex(hashedRequest)}`;
           setNewImagePreview(null);
           if (postFileRef.current) postFileRef.current.value = "";
           await sync();
+        };
+        const handlePostKeyDown = (e2) => {
+          if (e2.ctrlKey && e2.key === "Enter") {
+            handlePost();
+          }
         };
         const handleLike = async (postId) => {
           if (!social) return;
@@ -98070,10 +98572,41 @@ ${toHex(hashedRequest)}`;
               return next;
             });
           }
+          const groupsList = await v2.getGroups();
+          setGroups(groupsList);
+          if (selectedGroup) {
+            const updated = groupsList.find((g2) => g2.id === selectedGroup.id);
+            if (updated) setSelectedGroup(updated);
+          }
+          for (const m2 of newMessages) {
+            if (m2.content.startsWith("INVITE_GROUP:")) {
+              try {
+                const groupInfo = JSON.parse(m2.content.substring(13));
+                const existing = groupsList.find((g2) => g2.id === groupInfo.id);
+                if (existing) {
+                  if (groupInfo.members.find((mb) => mb.userId === m2.senderId)) {
+                    await v2.joinGroup(groupInfo);
+                  }
+                }
+              } catch (e2) {
+              }
+            }
+          }
+          let roomsUnread = 0;
+          roomsUnread = groupsList.filter((g2) => g2.createdAt > curLv.rooms).length;
+          if (curTab === "rooms") {
+            roomsUnread = 0;
+            setLastViewed((prev) => {
+              const next = { ...prev, rooms: Date.now() };
+              lastViewedRef.current = next;
+              return next;
+            });
+          }
           setUnreadCounts({
             feed: feedUnread,
             messages: totalMsgUnread,
-            friends: friendsUnread
+            friends: friendsUnread,
+            rooms: roomsUnread
           });
           setUserUnreadCounts(userMsgUnreads);
         };
@@ -98117,6 +98650,205 @@ ${toHex(hashedRequest)}`;
             if (userId) setSelectedUser(userId);
           });
         };
+        const handleCreateGroup = async () => {
+          if (!sov) return;
+          showPrompt("Enter room name:", async (name) => {
+            if (name) {
+              const options = following.filter((f2) => !!f2.publicKey).map((f2) => ({ value: f2.userId, label: f2.userId })).sort((a2, b2) => a2.label.localeCompare(b2.label));
+              if (options.length === 0) {
+                const group4 = await sov.createGroup(name, [
+                  { userId: config.userId, publicKey: sov.getConfig().publicEncryptionKey, role: "owner" }
+                ]);
+                await sync();
+                return;
+              }
+              showMultiSelect("Select members to invite:", options, async (selectedUserIds) => {
+                const members = [
+                  { userId: config.userId, publicKey: sov.getConfig().publicEncryptionKey, role: "owner" }
+                ];
+                selectedUserIds.forEach((uid) => {
+                  const f2 = following.find((u2) => u2.userId === uid);
+                  if (f2) members.push({ userId: f2.userId, publicKey: f2.publicKey, role: "member" });
+                });
+                const group4 = await sov.createGroup(name, members);
+                for (const member2 of members) {
+                  if (member2.userId !== config.userId) {
+                    await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(group4)}`);
+                  }
+                }
+                await sync();
+              });
+            }
+          });
+        };
+        const handlePostToGroup = async () => {
+          if (!social || !selectedGroup || !groupInput && !groupImage) return;
+          await social.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || void 0);
+          setGroupInput("");
+          setGroupImage(null);
+          setGroupImagePreview(null);
+          if (groupFileRef.current) groupFileRef.current.value = "";
+          await sync();
+        };
+        const handleGroupImageChange = async (e2) => {
+          const file = e2.target.files?.[0];
+          if (!file) return;
+          const compressed = await SocialManager.compressImage(await new Promise((r2) => {
+            const reader = new FileReader();
+            reader.onload = (ev) => r2(ev.target?.result);
+            reader.readAsDataURL(file);
+          }), 500 * 1024);
+          const data = await (await fetch(compressed)).arrayBuffer();
+          setGroupImage(new Uint8Array(data));
+          setGroupImagePreview(compressed);
+        };
+        const handleAcceptGroup = async (groupInfo) => {
+          if (!sov) return;
+          await sov.joinGroup(groupInfo);
+          await sov.respondToGroup(groupInfo.id, "joined");
+          await social?.postToGroup(groupInfo.id, groupInfo.sharedKey, "joined the room", void 0, "system");
+          await sync();
+          setCurrentTab("rooms");
+          const updatedGroups = await sov.getGroups();
+          const freshGroup = updatedGroups.find((g2) => g2.id === groupInfo.id);
+          setSelectedGroup(freshGroup || groupInfo);
+          setLastViewed((prev) => ({
+            ...prev,
+            rooms: Date.now(),
+            roomChat: { ...prev.roomChat || {}, [groupInfo.id]: Date.now() }
+          }));
+          showAlert(`You have joined ${groupInfo.name}!`, "Success");
+        };
+        const handleDeclineGroup = async (groupInfo) => {
+          if (!sov) return;
+          await sov.joinGroup(groupInfo);
+          await sov.respondToGroup(groupInfo.id, "declined");
+          await sync();
+          setLastViewed((prev) => ({
+            ...prev,
+            rooms: Date.now(),
+            roomChat: { ...prev.roomChat || {}, [groupInfo.id]: Date.now() }
+          }));
+          showAlert(`You declined the invite to ${groupInfo.name}.`, "Notice");
+        };
+        const handleLeaveGroup = async () => {
+          if (!sov || !selectedGroup) return;
+          showConfirm(`Are you sure you want to leave ${selectedGroup.name}?`, async () => {
+            await social?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, "left the room", void 0, "system");
+            await sov.leaveGroup(selectedGroup.id);
+            await sync();
+            setSelectedGroup(null);
+            setShowMemberManagement(false);
+            showAlert(`You left ${selectedGroup.name}.`, "Notice");
+          });
+        };
+        const handleManageMembers = async () => {
+          if (!sov || !selectedGroup) return;
+          const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
+          if (myRole !== "owner" && myRole !== "admin") {
+            showAlert("Only admins can manage members.", "Access Denied");
+            return;
+          }
+          const members = [...selectedGroup.members];
+          setShowMemberManagement(true);
+        };
+        const [showMemberManagement, setShowMemberManagement] = (0, import_react.useState)(false);
+        const updateMemberRole = async (userId, newRole) => {
+          if (!sov || !selectedGroup) return;
+          const updatedMembers = selectedGroup.members.map(
+            (m2) => m2.userId === userId ? { ...m2, role: newRole } : m2
+          );
+          const updatedGroup = { ...selectedGroup, members: updatedMembers };
+          await sov.updateGroup(updatedGroup);
+          setSelectedGroup(updatedGroup);
+          for (const member2 of updatedMembers) {
+            if (member2.userId !== config.userId) {
+              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+            }
+          }
+          await sync();
+        };
+        const removeMember = async (userId) => {
+          if (!sov || !selectedGroup) return;
+          const updatedMembers = selectedGroup.members.filter((m2) => m2.userId !== userId);
+          const updatedGroup = { ...selectedGroup, members: updatedMembers };
+          await sov.updateGroup(updatedGroup);
+          setSelectedGroup(updatedGroup);
+          for (const member2 of updatedMembers) {
+            if (member2.userId !== config.userId) {
+              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+            }
+          }
+          await social?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+          await sync();
+        };
+        const addMembersToGroup = async () => {
+          if (!sov || !selectedGroup) return;
+          const existingUserIds = selectedGroup.members.map((m2) => m2.userId);
+          const options = following.filter((f2) => !!f2.publicKey && !existingUserIds.includes(f2.userId)).map((f2) => ({ value: f2.userId, label: f2.userId })).sort((a2, b2) => a2.label.localeCompare(b2.label));
+          if (options.length === 0) {
+            showAlert("No more friends to invite.", "Notice");
+            return;
+          }
+          showMultiSelect("Select members to invite:", options, async (selectedUserIds) => {
+            const newMembers = [...selectedGroup.members];
+            selectedUserIds.forEach((uid) => {
+              const f2 = following.find((u2) => u2.userId === uid);
+              if (f2) newMembers.push({ userId: f2.userId, publicKey: f2.publicKey, role: "member", status: "pending" });
+            });
+            const updatedGroup = { ...selectedGroup, members: newMembers };
+            await sov.updateGroup(updatedGroup);
+            setSelectedGroup(updatedGroup);
+            for (const member2 of newMembers) {
+              if (member2.userId !== config.userId) {
+                await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+              }
+            }
+            await sync();
+          });
+        };
+        const loadGroupPosts = async () => {
+          if (!social || !selectedGroup) return;
+          const dates = [];
+          for (let i2 = 0; i2 < lookbackDays; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(SovereignS3nc.getDateStr(d2));
+          }
+          let all = [];
+          for (const date2 of dates) {
+            all = [...all, ...await social.getGroupPosts(selectedGroup.id, date2)];
+          }
+          setGroupPosts(all);
+          setLastViewed((prev) => ({
+            ...prev,
+            roomChat: { ...prev.roomChat || {}, [selectedGroup.id]: Date.now() }
+          }));
+        };
+        const handleEditGroupPost = async (p2) => {
+          if (!social || !selectedGroup) return;
+          showPrompt("Edit your post:", async (newContent) => {
+            if (newContent !== null && newContent !== p2.content) {
+              const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
+              await social.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, newContent);
+              await sync();
+            }
+          }, p2.content);
+        };
+        const handleDeleteGroupPost = async (p2) => {
+          if (!social || !selectedGroup) return;
+          const msg = p2.userId === config.userId ? "Delete your post?" : `Delete ${p2.userId}'s post? (Admin)`;
+          showConfirm(msg, async () => {
+            const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
+            await social.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, p2.userId);
+            await sync();
+          });
+        };
+        (0, import_react.useEffect)(() => {
+          if (isLoggedIn && selectedGroup) {
+            loadGroupPosts();
+          }
+        }, [selectedGroup, lastSyncTime, isLoggedIn]);
         const BlobImage = ({ path: path2, userId }) => {
           const [src, setSrc] = (0, import_react.useState)(blobCache[path2]);
           (0, import_react.useEffect)(() => {
@@ -98196,14 +98928,14 @@ ${toHex(hashedRequest)}`;
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
           } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             className: `btn btn-link px-2 me-2 ${isConnected ? "text-success" : "text-danger"}`,
             onClick: toggleConnection
           },
           /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
-        ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value) }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
+        ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
           showPrompt("Enter exact User ID to discover:", (uid) => {
             if (uid) {
               setDiscoveryMap((prev) => {
@@ -98216,7 +98948,31 @@ ${toHex(hashedRequest)}`;
         } }, "+ Add by ID")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
           const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
           return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
+        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
+          try {
+            const info = JSON.parse(m2.content.substring(13));
+            const myStatus = info.members.find((mb) => mb.userId === config.userId)?.status;
+            const localGroup = groups.find((g2) => g2.id === info.id);
+            const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
+            return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
+          } catch (e2) {
+            return /* @__PURE__ */ import_react.default.createElement("span", null, "Invalid Invite");
+          }
+        })()) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, groups.map((group4) => {
+          const me = group4.members.find((mb) => mb.userId === config.userId);
+          const isPending = me?.status === "pending";
+          return /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedGroup?.id === group4.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group4) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, group4.name), isPending && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-warning text-dark" }, "Invite"), !isPending && group4.createdAt > (lastViewed.roomChat?.[group4.id] || 0) && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, "New"));
+        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedGroup ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
+          const isAuthor = p2.userId === config.userId;
+          const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
+          const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
+          if (!isAuthor && !canDelete) return null;
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
+        })()), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-4 p-2 rounded bg-light shadow-sm", style: { display: "inline-block", maxWidth: "90%" } }, p2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react.default.createElement("div", null, p2.content))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
+          setGroupImage(null);
+          setGroupImagePreview(null);
+          if (groupFileRef.current) groupFileRef.current.value = "";
+        } }, "\xD7")), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image" }), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup }, "Post")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a room to start collaborating"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
           const file = e2.target.files?.[0];
           if (file) {
             const reader = new FileReader();
@@ -98232,16 +98988,53 @@ ${toHex(hashedRequest)}`;
           await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
+        } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), /* @__PURE__ */ import_react.default.createElement(
+          MemberManagementModal,
+          {
+            show: showMemberManagement,
+            onClose: () => setShowMemberManagement(false),
+            group: selectedGroup,
+            profileCache,
+            onUpdateRole: updateMemberRole,
+            onRemove: removeMember,
+            onAdd: addMembersToGroup,
+            onLeave: handleLeaveGroup,
+            currentUserId: config.userId
+          }
+        ));
+      };
+      var MemberManagementModal = ({ show, onClose, group: group4, profileCache, onUpdateRole, onRemove, onAdd, onLeave, currentUserId }) => {
+        if (!show || !group4) return null;
+        const myRole = group4.members.find((m2) => m2.userId === currentUserId)?.role;
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Manage Members: ", group4.name), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: onClose })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, "Group Members (", group4.members.length, ")"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd }, "+ Add Members")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, group4.members.map((member2) => {
+          const profile = profileCache[member2.userId];
+          const isMe = member2.userId === currentUserId;
+          const canManage = !isMe && (myRole === "owner" || myRole === "admin" && member2.role === "member");
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: member2.userId, className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" } }, member2.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile?.name || member2.userId, " ", isMe && "(You)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, /* @__PURE__ */ import_react.default.createElement("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2` }, member2.role), /* @__PURE__ */ import_react.default.createElement("span", { className: "text-capitalize" }, member2.status || "pending")))), canManage && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, member2.role === "member" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin") }, "Make Admin"), member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member") }, "Remove Admin"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
+            if (confirm(`Are you sure you want to remove ${member2.userId}?`)) onRemove(member2.userId);
+          } }, "Remove")));
+        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between" }, myRole !== "owner" ? /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave }, "Leave Room") : /* @__PURE__ */ import_react.default.createElement("div", null), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose }, "Close")))));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
       root.render(/* @__PURE__ */ import_react.default.createElement(App, null));
-      var Dialog = ({ dialog, setDialog }) => {
+      var Dialog = ({ dialog, setDialog, profileCache }) => {
         const [inputValue, setInputValue] = (0, import_react.useState)(dialog?.defaultValue || "");
+        const [selectedValues, setSelectedValues] = (0, import_react.useState)([]);
+        const [searchQuery, setSearchSearchQuery] = (0, import_react.useState)("");
         (0, import_react.useEffect)(() => {
           setInputValue(dialog?.defaultValue || "");
+          setSelectedValues([]);
+          setSearchSearchQuery("");
         }, [dialog]);
         if (!dialog) return null;
+        const toggleOption = (val) => {
+          setSelectedValues(
+            (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
+          );
+        };
+        const filteredOptions = dialog.options?.filter(
+          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
+        ) || [];
         return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.title), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: dialog.onCancel })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react.default.createElement(
           "input",
           {
@@ -98251,7 +99044,35 @@ ${toHex(hashedRequest)}`;
             onChange: (e2) => setInputValue(e2.target.value),
             onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
           }
-        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(inputValue) }, dialog.type === "alert" ? "OK" : "Confirm")))));
+        ), dialog.type === "multiselect" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement(
+          "input",
+          {
+            type: "text",
+            className: "form-control form-control-sm rounded-pill px-3",
+            placeholder: "Search members...",
+            value: searchQuery,
+            onChange: (e2) => setSearchSearchQuery(e2.target.value)
+          }
+        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" } }, filteredOptions.length > 0 ? filteredOptions.map((opt) => {
+          const userProfile = profileCache[opt.value];
+          return /* @__PURE__ */ import_react.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement(
+            "input",
+            {
+              type: "checkbox",
+              className: "form-check-input me-3",
+              checked: selectedValues.includes(opt.value),
+              onChange: () => toggleOption(opt.value)
+            }
+          ), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center flex-grow-1" }, userProfile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" } }, opt.value[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, userProfile?.name || opt.label), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, opt.value))));
+        }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-3 text-muted small" }, "No members found")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react.default.createElement(
+          "button",
+          {
+            type: "button",
+            className: "btn btn-primary rounded-pill px-4 shadow-sm",
+            onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue)
+          },
+          dialog.type === "alert" ? "OK" : "Confirm"
+        )))));
       };
     }
   });
