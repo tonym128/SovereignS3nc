@@ -89,10 +89,15 @@ export class SocialManager {
         this.db.registerModule(SOCIAL_MODULE_DEFINITION);
     }
 
-    private async getDb(date: string, type: 'private' | 'public' | 'followed'): Promise<any> {
-        const dbPath = type === 'followed' 
-            ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
-            : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+    private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string): Promise<any> {
+        let dbPath: string;
+        if (type === 'followed') {
+            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
+        } else if (type === 'group' && groupId) {
+            dbPath = `public/groups/${groupId}/${date}.db`;
+        } else {
+            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
+        }
             
         const data = await this.db.getStorage().getFile(dbPath);
         
@@ -110,6 +115,94 @@ export class SocialManager {
         this.db.applyModuleSchema(db, this.MODULE_NAME);
 
         return db;
+    }
+
+    async postToGroup(groupId: string, sharedKey: string, content: string, image?: Uint8Array) {
+        const date = new Date().toISOString().split('T')[0];
+        const db = await this.getDb(date, 'group', groupId);
+        
+        const id = Math.random().toString(36).substring(7);
+        const timestamp = Date.now();
+        const userId = this.db.getConfig().paths.userId;
+
+        let imagePath = null;
+        if (image) {
+            imagePath = await this.db.saveBlob(image, true);
+        }
+
+        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, 0, 0)';
+        db.run(sql, [id, content, timestamp, userId, imagePath]);
+
+        const binary = db.export();
+        const dbPath = `public/groups/${groupId}/${date}.db`;
+        
+        // Encrypt with Group Shared Key
+        const encrypted = await this.db.encrypt(binary, sharedKey);
+        await this.db.getStorage().saveFile(dbPath, encrypted);
+        
+        db.close();
+        this.db.emit(`group:${groupId}:update`, { path: dbPath });
+    }
+
+    async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
+        const posts: Post[] = [];
+        const initSqlJs = (globalThis as any).initSqlJs;
+        if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+
+        // 1. Get my own posts for this group
+        const myPath = `public/groups/${groupId}/${date}.db`;
+        const myData = await this.db.getStorage().getFile(myPath);
+        if (myData) {
+            // Need to decrypt my own public group data too if it was encrypted during upload
+            const groups = await this.db.getGroups();
+            const group = groups.find(g => g.id === groupId);
+            if (group) {
+                try {
+                    const decrypted = await this.db.decrypt(myData, group.sharedKey);
+                    const db = new this.sqliteInstance.Database(decrypted);
+                    posts.push(...(await this._queryPosts(db)));
+                    db.close();
+                } catch(e) {}
+            }
+        }
+
+        // 2. Get posts from other members
+        const groups = await this.db.getGroups();
+        const group = groups.find(g => g.id === groupId);
+        if (!group) return posts;
+
+        for (const member of group.members) {
+            if (member.userId === this.db.getConfig().paths.userId) continue;
+            const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
+            const memberData = await this.db.getStorage().getFile(memberPath);
+            if (memberData) {
+                const db = new this.sqliteInstance.Database(memberData);
+                posts.push(...(await this._queryPosts(db)));
+                db.close();
+            }
+        }
+
+        posts.sort((a, b) => b.timestamp - a.timestamp);
+        return posts;
+    }
+
+    private async _queryPosts(db: any): Promise<Post[]> {
+        try {
+            const res = db.exec('SELECT * FROM posts');
+            if (res && res.length > 0) {
+                const columns = res[0].columns;
+                return res[0].values.map((row: any) => {
+                    const post: any = {};
+                    columns.forEach((col: string, i: number) => {
+                        let val = row[i];
+                        if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') val = !!val;
+                        post[col] = val;
+                    });
+                    return post;
+                });
+            }
+        } catch (e) {}
+        return [];
     }
 
     async like(postId: string, isPublic: boolean = true) {

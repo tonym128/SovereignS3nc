@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration } from './types';
+import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -335,13 +335,18 @@ export class SovereignS3nc extends EventEmitter {
             // 3. Sync Followed Users (Per-User Logic)
             await this.syncFollowedUsers(today);
 
-            // 4. Sync Blobs and other files
+            // 4. Sync Groups (Multi-writer Logic)
+            await this.syncGroups(today);
+
+            // 5. Sync Blobs and other files
             await this.syncGenericFiles('public/blobs/');
             await this.syncGenericFiles('public/dms/');
             await this.syncGenericFiles('public/modules/');
+            await this.syncGenericFiles('public/groups/');
             await this.syncGenericFiles('private/blobs/');
             await this.syncGenericFiles('private/dms/');
             await this.syncGenericFiles('private/modules/');
+            await this.syncGenericFiles('private/groups/');
 
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
@@ -368,7 +373,8 @@ export class SovereignS3nc extends EventEmitter {
             updatedAt: Date.now(),
             userId: this.config.paths.userId,
             modules: {},
-            dms: {}
+            dms: {},
+            groups: {}
         };
 
         const profileData = await this.storage.getPublicUserFile();
@@ -412,8 +418,94 @@ export class SovereignS3nc extends EventEmitter {
                     }
                 }
             }
+
+            // Group data: public/groups/{groupId}/{date}.db
+            if (file.startsWith('public/groups/') && parts.length === 4) {
+                const groupId = parts[2];
+                const fileName = parts[3];
+                if (fileName.endsWith('.db')) {
+                    const dateStr = fileName.replace('.db', '');
+                    if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
+                    manifest.groups[groupId].push(dateStr);
+                }
+            }
         }
         return manifest;
+    }
+
+    /**
+     * Creates a new multi-writer group.
+     */
+    public async createGroup(name: string, members: GroupMember[]): Promise<SovereignGroup> {
+        const id = Math.random().toString(36).substring(2, 15);
+        const sharedKey = crypto.randomBytes(32).toString('hex');
+        const group: SovereignGroup = {
+            id,
+            name,
+            members,
+            sharedKey,
+            createdAt: Date.now()
+        };
+
+        // Save group info privately
+        const groupData = new TextEncoder().encode(JSON.stringify(group));
+        await this.storage.saveFile(`private/groups/${id}/info.json`, groupData);
+        
+        Logger.info(`[Group] Created group ${name} (${id})`);
+        return group;
+    }
+
+    /**
+     * Joins an existing group using a shared key and participant list.
+     */
+    public async joinGroup(group: SovereignGroup) {
+        const groupData = new TextEncoder().encode(JSON.stringify(group));
+        await this.storage.saveFile(`private/groups/${group.id}/info.json`, groupData);
+        Logger.info(`[Group] Joined group ${group.name} (${group.id})`);
+    }
+
+    public async getGroups(): Promise<SovereignGroup[]> {
+        const files = await this.storage.listFiles('private/groups/');
+        const groups: SovereignGroup[] = [];
+        for (const file of files) {
+            if (file.endsWith('info.json')) {
+                const data = await this.storage.getFile(file);
+                if (data) {
+                    groups.push(JSON.parse(new TextDecoder().decode(data)));
+                }
+            }
+        }
+        return groups;
+    }
+
+    public async syncGroups(today: string) {
+        const groups = await this.getGroups();
+        for (const group of groups) {
+            Logger.info(`[Sync] Syncing group ${group.name} (${group.id})`);
+            
+            // 1. Upload my own group data (Public namespace)
+            // The actual data is written by modules to public/groups/${groupId}/{date}.db
+            // which is handled by syncGenericFiles if we use the right prefix.
+            
+            // 2. Pull from other members
+            for (const member of group.members) {
+                if (member.userId === this.config.paths.userId) continue;
+
+                const manifest = await this.fetchManifest(member.userId);
+                if (manifest && manifest.groups[group.id]) {
+                    for (const dateStr of manifest.groups[group.id]) {
+                        const remotePath = `public/groups/${group.id}/${dateStr}.db`;
+                        const localPath = `followed/${member.userId}/groups/${group.id}/${dateStr}.db`;
+                        
+                        // Download and decrypt with Group Shared Key
+                        const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, true);
+                        if (changed) {
+                            this.emit(`group:${group.id}:update`, { userId: member.userId, dateStr });
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private async fetchManifest(userId: string): Promise<SovereignManifest | null> {

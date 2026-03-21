@@ -37,7 +37,22 @@ export interface SovereignManifest {
     userId: string;
     modules: Record<string, string[]>; // moduleName -> [dateStr, ...]
     dms: Record<string, string[]>;     // recipientId -> [dateStr, ...]
+    groups: Record<string, string[]>;  // groupId -> [dateStr, ...]
     profileHash?: string;
+}
+
+export interface GroupMember {
+    userId: string;
+    publicKey: string;
+    role: 'owner' | 'member';
+}
+
+export interface SovereignGroup {
+    id: string;
+    name: string;
+    members: GroupMember[];
+    sharedKey: string; // Symmetric key for group content
+    createdAt: number;
 }
 
 export interface TableDefinition {
