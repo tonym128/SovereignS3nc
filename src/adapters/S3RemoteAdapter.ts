@@ -13,10 +13,17 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     Logger.debug(`[S3] Initializing adapter for ${paths.userId}...`);
     this.endpoint = config.endpoint || '';
+    
+    // Support both nested credentials object and flat config (from dev.sh)
+    const credentials = config.credentials || {
+        accessKeyId: (config as any).accessKeyId,
+        secretAccessKey: (config as any).secretAccessKey
+    };
+
     this.client = new S3Client({
       region: config.region,
       endpoint: config.endpoint || undefined,
-      credentials: config.credentials,
+      credentials,
       forcePathStyle: true,
       apiVersion: '2006-03-01',
       requestHandler: {

@@ -139,6 +139,19 @@ export class IndexedDBStorage implements IStorage {
         });
     }
 
+    async deleteFile(path: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            try {
+                const store = this.getStore('files', 'readwrite');
+                const request = store.delete(path);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
     async listFiles(prefix: string): Promise<string[]> {
         return new Promise((resolve, reject) => {
             try {

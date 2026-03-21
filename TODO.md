@@ -1,48 +1,67 @@
-TODO
-- Add a multi-user integration test for messaging
-- Allow previously logged in user to login in offline mode, view and create posts, dm's, profile updates, etc and sync once they are online
-- Make sure if a user logs in using the wrong password that it fails to login (might have to check the public profiles and verify that that user profile exists when 
-- Add a way for users to change their password, by entering their existing password and new password and verifying the new password, it can initiate a copy of all data from the one profile to another, then delete all the old profile files and folders (without using listing command), keep the same public key's as it will be needed for future posts and keeping the profile intact
-logging in with the private uuid)
-- Make sure the website is mobile friendly and adjusts views to make sure functionality is present, user friendly and accesible on a mobile
-- Create a PWA for installation locally
-- Use background workers for data fetch to make the library more performant and decrease ui stutter
-- Create a Read Only version of the Website which will show all users and public posts, but not allow any actions
-    - It will also only have the ability to read data, no listing, no writing
-    - Export all data to a static html file
-- Create an Admin CLI
-    - It will have access to list commands to view all files and folders as well as read and write
-    - This will have the ability to read and write data and reset passwords on user profiles
-    - I believe they won't be able to decrypt previous data, so the profile would be moved to a new profile and the old one deleted, keeping their public id and messages if possible
-    - Backup database
-    - Restore database
-    - Clear database
-- Look at request and data usage optimisation and make reccomendations
-- Look at library performance characteristics and make reccomendations
-- Write a skill for AI Agents to use the CLI
+# SovereignS3nc TODO
 
-DONE
-- Remove FB Clone, metions of Facebook or other Facebook related text
-- Show a connected / disconnected icon in the top right, back-off reattempts to connect, and it should connect or disconnect on click. If manual disconnection, don't reconnect till pressed again.
-- Allow users to edit messages and posts, flag message or post as edited and update time
-- Allow users to send images in messages
-- Allow users to delete posts and messages, flag the message as deleted and remove the associated personal data from the item, but keep it visible to show it was deleted.
-- Allow a user to send an image without text in posts and messages
-- Reset the selected file after posting, messaging
-- Update the README.md appropriately
-- Update GEMENI.md with all the new features
-- Decrease amount of information console by SovereignS3nc library and by Social Demo application, add debug flags for any messages that will make sense while debugging issues and default to off for builds
-- Create a User CLI which can do all website actions via simple commands
-    - Create account
-    - Update Profile
-    - Login
-    - Logout
-    - Fetch new messages
-    - Fetch all messages
-    - Create, Read, Comment, Delete posts, Mark read and upload with images
-    - Create DM's, Read, Delete and see others messages and upload images
-    - The CLI should keep a local copy of data that it can reference as required with user profiles
-        - User profiles should store all information required to relogin
-        - Cache messages and posts
-        - Retrieve new messages and posts
-        - Reply to new messages and posts
+## 🏗️ Refactoring & Architecture (High Priority)
+- [ ] **Utility Extraction: `MediaUtils`**
+    - [ ] Move `compressImage` from `SocialManager` to `src/utils/MediaUtils.ts`.
+    - [ ] Add environment gating for DOM-dependent code (Browser vs Node).
+- [ ] **Core: Group Store Orchestration**
+    - [ ] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
+    - [ ] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
+- [ ] **Core: P2P Messaging Primitive**
+    - [ ] Implement `db.sendEncryptedPayload(recipientId, payload, namespace)` in `SovereignS3nc`.
+    - [ ] Move "Outbox + Encrypted Public Inbox" logic from `SocialManager._saveAndSendDM`.
+- [ ] **Core: Identity Discovery Lifecycle**
+    - [ ] Integrate `syncOtherProfiles` logic into `SovereignS3nc.sync()` or a new `db.discover()`.
+    - [ ] Automate ETag-based background checking for `user.json` across followed users.
+- [ ] **Core: Privacy & Data Protection**
+    - [ ] Implement library-level derivation of "unfindable" hashed backend paths using a combination of username and password to prevent public enumeration of user storage.
+    - [ ] Implement a mechanism to check whether a user already exists based on their username (e.g., via a hashed username registry) even when the private profile is stored at an unfindable hashed path.
+    - [ ] Implement a library-level safety mechanism to prevent a valid existing user's local or remote data from being accidentally overridden during login/registration.
+- [ ] **Storage: SQLite Node Adapter & Server**
+    - [ ] Create a `SQLiteNodeStorage` adapter that stores all files/metadata in a single consolidated SQLite database.
+    - [ ] Build a Node.js server to support the social network using this storage backend.
+- [ ] **Modules: Granular Decomposition**
+    - [ ] Create `src/modules/Profile.ts` for identity, `user.json`, and follow-graph management.
+    - [ ] Create `src/modules/Messaging.ts` for E2EE DM workflows (using core primitives).
+    - [ ] Create `src/modules/Feed.ts` for posts, comments, and distributed likes aggregation.
+    - [ ] Reduce `src/modules/Social.ts` to a thin composite wrapper.
+- [ ] **Demos: Alignment**
+    - [ ] Update Social Demo to use granular modules (`Feed`, `Messaging`, `Profile`).
+    - [ ] Update Banky Demo to use `ProfileModule` for identity, ensuring zero dependency on Social logic.
+
+## 🚀 Features & Enhancements
+- [ ] **Security & Auth**
+    - [ ] Add multi-user integration test for messaging.
+    - [ ] Implement offline login (verify against local `public/user.json` / cached private UUID).
+    - [ ] Fail login early if password results in incorrect private key derivation.
+    - [ ] Add "Change Password" flow (re-encrypting data or migrating to new profile prefix).
+- [ ] **Performance & UX**
+    - [ ] Use background Web Workers for data fetching/sync to prevent UI stutter.
+    - [ ] Implement PWA support for local installation.
+    - [ ] Optimize request/data usage (batching S3 operations).
+    - [ ] Audit library performance and provide recommendations.
+- [ ] **Accessibility & UI**
+    - [ ] Mobile-friendly responsive audit for Social Demo.
+    - [ ] Create a "Read Only" static export of user profiles and public posts.
+
+## 🛠️ Tooling & DX
+- [ ] **Admin CLI**
+    - [ ] Implement `list` commands for S3 visibility.
+    - [ ] Add password reset/migration capabilities for admins.
+    - [ ] Backup/Restore/Clear database commands.
+- [ ] **Developer Experience**
+    - [ ] Write a Gemini CLI Skill for the library.
+    - [ ] Add a multi-user integration test for messaging.
+
+---
+
+## ✅ DONE
+- [x] Remove FB Clone mentions and branding.
+- [x] Connection status icon with manual toggle/back-off logic.
+- [x] Post/Message editing with "Edited" flags.
+- [x] Post/Message deletion (tombstoning/content removal).
+- [x] Image support in posts and DMs (including image-only items).
+- [x] UI: Reset file selection after upload.
+- [x] Updated README.md and GEMINI.md with new architecture details.
+- [x] Implement Debug flags and reduce console noise.
+- [x] User CLI for account management, profiles, DMs, and feed interactions.

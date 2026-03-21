@@ -330,7 +330,8 @@ export class SovereignS3nc extends EventEmitter {
 
             // 2. Global Discovery & Registration
             await this.ensureGlobalRegistration();
-            // await this.discoverAndFollowUsers(today); // Disabled: No auto-follow
+            await this.updateFollowingPublicKeys();
+            await this.discoverAndFollowUsers(today);
 
             // 3. Sync Followed Users (Per-User Logic)
             await this.syncFollowedUsers(today);
@@ -369,6 +370,7 @@ export class SovereignS3nc extends EventEmitter {
 
     private async generateManifest(): Promise<SovereignManifest> {
         const publicFiles = await this.storage.listFiles('public/');
+        Logger.debug(`[Sync] generateManifest: Scanning ${publicFiles.length} files`);
         const manifest: SovereignManifest = {
             updatedAt: Date.now(),
             userId: this.config.paths.userId,
@@ -427,6 +429,7 @@ export class SovereignS3nc extends EventEmitter {
                     const dateStr = fileName.replace('.db', '');
                     if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
                     manifest.groups[groupId].push(dateStr);
+                    Logger.debug(`[Sync] Manifest adding group ${groupId} date ${dateStr}`);
                 }
             }
         }
@@ -782,6 +785,23 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
+    private async updateFollowingPublicKeys() {
+        try {
+            const registry = await this.getPublicRegistry();
+            const following = await this.storage.getFollowing();
+            
+            for (const user of registry) {
+                const existing = following.find(f => f.userId === user.userId);
+                if (existing && existing.publicKey !== user.publicKey) {
+                    Logger.info(`[Sync] Updating public key for followed user ${user.userId}`);
+                    await this.storage.followUser(user.userId, existing.lastSync, user.publicKey);
+                }
+            }
+        } catch (e: any) {
+            Logger.warn(`[Sync] Failed to update following public keys: ${e.message}`);
+        }
+    }
+
     async follow(userId: string) {
         // We'll try to find their public key in the global registry first
         const remotePath = 'users.json';
@@ -876,6 +896,7 @@ export class SovereignS3nc extends EventEmitter {
         const following = await this.storage.getFollowing();
         for (const user of following) {
             const manifest = await this.fetchManifest(user.userId);
+            Logger.debug(`[Sync] Followed user ${user.userId} manifest: ${!!manifest}`);
             
             if (manifest) {
                 Logger.info(`[Sync] Using manifest for ${user.userId}`);
@@ -900,9 +921,10 @@ export class SovereignS3nc extends EventEmitter {
                 // 3. Sync DMs for ME from manifest
                 const myId = this.config.paths.userId;
                 if (manifest.dms[myId]) {
+                    Logger.debug(`[Sync] Found ${manifest.dms[myId].length} DMs for ${myId} from ${user.userId}`);
                     for (const dateStr of manifest.dms[myId]) {
                         const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public');
-                        const localPath = this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed');
+                        const localPath = this.getModulePath('social', `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
                         const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
                         if (changed) this.onModuleUpdate('social', localPath);
                     }
@@ -923,7 +945,8 @@ export class SovereignS3nc extends EventEmitter {
                     // Pull namespaced Social DMs
                     const myId = this.config.paths.userId;
                     const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public'); 
-                    await this.pullUserFile(user.userId, dmPath, user.publicKey, this.getModulePath('social', `${user.userId}/dms/${dateStr}.db`, 'followed'), false);
+                    const localPath = this.getModulePath('social', `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
+                    await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
                     
                     // Pull Module Data
                     for (const moduleDef of this.registeredModules) {

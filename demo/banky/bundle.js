@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,17 +229,17 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
-      exports.Buffer = Buffer3;
+      exports.Buffer = Buffer2;
       exports.SlowBuffer = SlowBuffer;
       exports.INSPECT_MAX_BYTES = 50;
       var K_MAX_LENGTH = 2147483647;
       exports.kMaxLength = K_MAX_LENGTH;
-      Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
-      if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+      Buffer2.TYPED_ARRAY_SUPPORT = typedArraySupport();
+      if (!Buffer2.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
         console.error(
           "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
         );
@@ -257,17 +257,17 @@
           return false;
         }
       }
-      Object.defineProperty(Buffer3.prototype, "parent", {
+      Object.defineProperty(Buffer2.prototype, "parent", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer2.isBuffer(this)) return void 0;
           return this.buffer;
         }
       });
-      Object.defineProperty(Buffer3.prototype, "offset", {
+      Object.defineProperty(Buffer2.prototype, "offset", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer2.isBuffer(this)) return void 0;
           return this.byteOffset;
         }
       });
@@ -276,10 +276,10 @@
           throw new RangeError('The value "' + length + '" is invalid for option "size"');
         }
         const buf = new Uint8Array(length);
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer2.prototype);
         return buf;
       }
-      function Buffer3(arg, encodingOrOffset, length) {
+      function Buffer2(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           if (typeof encodingOrOffset === "string") {
             throw new TypeError(
@@ -290,7 +290,7 @@
         }
         return from(arg, encodingOrOffset, length);
       }
-      Buffer3.poolSize = 8192;
+      Buffer2.poolSize = 8192;
       function from(value, encodingOrOffset, length) {
         if (typeof value === "string") {
           return fromString(value, encodingOrOffset);
@@ -316,22 +316,22 @@
         }
         const valueOf = value.valueOf && value.valueOf();
         if (valueOf != null && valueOf !== value) {
-          return Buffer3.from(valueOf, encodingOrOffset, length);
+          return Buffer2.from(valueOf, encodingOrOffset, length);
         }
         const b2 = fromObject(value);
         if (b2) return b2;
         if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === "function") {
-          return Buffer3.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
+          return Buffer2.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
         }
         throw new TypeError(
           "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
         );
       }
-      Buffer3.from = function(value, encodingOrOffset, length) {
+      Buffer2.from = function(value, encodingOrOffset, length) {
         return from(value, encodingOrOffset, length);
       };
-      Object.setPrototypeOf(Buffer3.prototype, Uint8Array.prototype);
-      Object.setPrototypeOf(Buffer3, Uint8Array);
+      Object.setPrototypeOf(Buffer2.prototype, Uint8Array.prototype);
+      Object.setPrototypeOf(Buffer2, Uint8Array);
       function assertSize(size) {
         if (typeof size !== "number") {
           throw new TypeError('"size" argument must be of type number');
@@ -349,24 +349,24 @@
         }
         return createBuffer(size);
       }
-      Buffer3.alloc = function(size, fill, encoding) {
+      Buffer2.alloc = function(size, fill, encoding) {
         return alloc(size, fill, encoding);
       };
       function allocUnsafe(size) {
         assertSize(size);
         return createBuffer(size < 0 ? 0 : checked(size) | 0);
       }
-      Buffer3.allocUnsafe = function(size) {
+      Buffer2.allocUnsafe = function(size) {
         return allocUnsafe(size);
       };
-      Buffer3.allocUnsafeSlow = function(size) {
+      Buffer2.allocUnsafeSlow = function(size) {
         return allocUnsafe(size);
       };
       function fromString(string, encoding) {
         if (typeof encoding !== "string" || encoding === "") {
           encoding = "utf8";
         }
-        if (!Buffer3.isEncoding(encoding)) {
+        if (!Buffer2.isEncoding(encoding)) {
           throw new TypeError("Unknown encoding: " + encoding);
         }
         const length = byteLength(string, encoding) | 0;
@@ -407,11 +407,11 @@
         } else {
           buf = new Uint8Array(array, byteOffset, length);
         }
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer2.prototype);
         return buf;
       }
       function fromObject(obj) {
-        if (Buffer3.isBuffer(obj)) {
+        if (Buffer2.isBuffer(obj)) {
           const len = checked(obj.length) | 0;
           const buf = createBuffer(len);
           if (buf.length === 0) {
@@ -440,15 +440,15 @@
         if (+length != length) {
           length = 0;
         }
-        return Buffer3.alloc(+length);
+        return Buffer2.alloc(+length);
       }
-      Buffer3.isBuffer = function isBuffer(b2) {
-        return b2 != null && b2._isBuffer === true && b2 !== Buffer3.prototype;
+      Buffer2.isBuffer = function isBuffer(b2) {
+        return b2 != null && b2._isBuffer === true && b2 !== Buffer2.prototype;
       };
-      Buffer3.compare = function compare(a2, b2) {
-        if (isInstance(a2, Uint8Array)) a2 = Buffer3.from(a2, a2.offset, a2.byteLength);
-        if (isInstance(b2, Uint8Array)) b2 = Buffer3.from(b2, b2.offset, b2.byteLength);
-        if (!Buffer3.isBuffer(a2) || !Buffer3.isBuffer(b2)) {
+      Buffer2.compare = function compare(a2, b2) {
+        if (isInstance(a2, Uint8Array)) a2 = Buffer2.from(a2, a2.offset, a2.byteLength);
+        if (isInstance(b2, Uint8Array)) b2 = Buffer2.from(b2, b2.offset, b2.byteLength);
+        if (!Buffer2.isBuffer(a2) || !Buffer2.isBuffer(b2)) {
           throw new TypeError(
             'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
           );
@@ -467,7 +467,7 @@
         if (y2 < x2) return 1;
         return 0;
       };
-      Buffer3.isEncoding = function isEncoding(encoding) {
+      Buffer2.isEncoding = function isEncoding(encoding) {
         switch (String(encoding).toLowerCase()) {
           case "hex":
           case "utf8":
@@ -485,12 +485,12 @@
             return false;
         }
       };
-      Buffer3.concat = function concat(list, length) {
+      Buffer2.concat = function concat(list, length) {
         if (!Array.isArray(list)) {
           throw new TypeError('"list" argument must be an Array of Buffers');
         }
         if (list.length === 0) {
-          return Buffer3.alloc(0);
+          return Buffer2.alloc(0);
         }
         let i2;
         if (length === void 0) {
@@ -499,13 +499,13 @@
             length += list[i2].length;
           }
         }
-        const buffer = Buffer3.allocUnsafe(length);
+        const buffer = Buffer2.allocUnsafe(length);
         let pos = 0;
         for (i2 = 0; i2 < list.length; ++i2) {
           let buf = list[i2];
           if (isInstance(buf, Uint8Array)) {
             if (pos + buf.length > buffer.length) {
-              if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
+              if (!Buffer2.isBuffer(buf)) buf = Buffer2.from(buf);
               buf.copy(buffer, pos);
             } else {
               Uint8Array.prototype.set.call(
@@ -514,7 +514,7 @@
                 pos
               );
             }
-          } else if (!Buffer3.isBuffer(buf)) {
+          } else if (!Buffer2.isBuffer(buf)) {
             throw new TypeError('"list" argument must be an Array of Buffers');
           } else {
             buf.copy(buffer, pos);
@@ -524,7 +524,7 @@
         return buffer;
       };
       function byteLength(string, encoding) {
-        if (Buffer3.isBuffer(string)) {
+        if (Buffer2.isBuffer(string)) {
           return string.length;
         }
         if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
@@ -566,7 +566,7 @@
           }
         }
       }
-      Buffer3.byteLength = byteLength;
+      Buffer2.byteLength = byteLength;
       function slowToString(encoding, start, end) {
         let loweredCase = false;
         if (start === void 0 || start < 0) {
@@ -613,13 +613,13 @@
           }
         }
       }
-      Buffer3.prototype._isBuffer = true;
+      Buffer2.prototype._isBuffer = true;
       function swap(b2, n2, m2) {
         const i2 = b2[n2];
         b2[n2] = b2[m2];
         b2[m2] = i2;
       }
-      Buffer3.prototype.swap16 = function swap16() {
+      Buffer2.prototype.swap16 = function swap16() {
         const len = this.length;
         if (len % 2 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 16-bits");
@@ -629,7 +629,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap32 = function swap32() {
+      Buffer2.prototype.swap32 = function swap32() {
         const len = this.length;
         if (len % 4 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 32-bits");
@@ -640,7 +640,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap64 = function swap64() {
+      Buffer2.prototype.swap64 = function swap64() {
         const len = this.length;
         if (len % 8 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 64-bits");
@@ -653,19 +653,19 @@
         }
         return this;
       };
-      Buffer3.prototype.toString = function toString() {
+      Buffer2.prototype.toString = function toString() {
         const length = this.length;
         if (length === 0) return "";
         if (arguments.length === 0) return utf8Slice(this, 0, length);
         return slowToString.apply(this, arguments);
       };
-      Buffer3.prototype.toLocaleString = Buffer3.prototype.toString;
-      Buffer3.prototype.equals = function equals(b2) {
-        if (!Buffer3.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
+      Buffer2.prototype.toLocaleString = Buffer2.prototype.toString;
+      Buffer2.prototype.equals = function equals(b2) {
+        if (!Buffer2.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
         if (this === b2) return true;
-        return Buffer3.compare(this, b2) === 0;
+        return Buffer2.compare(this, b2) === 0;
       };
-      Buffer3.prototype.inspect = function inspect() {
+      Buffer2.prototype.inspect = function inspect() {
         let str = "";
         const max = exports.INSPECT_MAX_BYTES;
         str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
@@ -673,13 +673,13 @@
         return "<Buffer " + str + ">";
       };
       if (customInspectSymbol) {
-        Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
+        Buffer2.prototype[customInspectSymbol] = Buffer2.prototype.inspect;
       }
-      Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+      Buffer2.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
         if (isInstance(target, Uint8Array)) {
-          target = Buffer3.from(target, target.offset, target.byteLength);
+          target = Buffer2.from(target, target.offset, target.byteLength);
         }
-        if (!Buffer3.isBuffer(target)) {
+        if (!Buffer2.isBuffer(target)) {
           throw new TypeError(
             'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
           );
@@ -752,9 +752,9 @@
           else return -1;
         }
         if (typeof val === "string") {
-          val = Buffer3.from(val, encoding);
+          val = Buffer2.from(val, encoding);
         }
-        if (Buffer3.isBuffer(val)) {
+        if (Buffer2.isBuffer(val)) {
           if (val.length === 0) {
             return -1;
           }
@@ -822,13 +822,13 @@
         }
         return -1;
       }
-      Buffer3.prototype.includes = function includes(val, byteOffset, encoding) {
+      Buffer2.prototype.includes = function includes(val, byteOffset, encoding) {
         return this.indexOf(val, byteOffset, encoding) !== -1;
       };
-      Buffer3.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+      Buffer2.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
       };
-      Buffer3.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+      Buffer2.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
       };
       function hexWrite(buf, string, offset, length) {
@@ -866,7 +866,7 @@
       function ucs2Write(buf, string, offset, length) {
         return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
       }
-      Buffer3.prototype.write = function write(string, offset, length, encoding) {
+      Buffer2.prototype.write = function write(string, offset, length, encoding) {
         if (offset === void 0) {
           encoding = "utf8";
           length = this.length;
@@ -921,7 +921,7 @@
           }
         }
       };
-      Buffer3.prototype.toJSON = function toJSON() {
+      Buffer2.prototype.toJSON = function toJSON() {
         return {
           type: "Buffer",
           data: Array.prototype.slice.call(this._arr || this, 0)
@@ -1044,7 +1044,7 @@
         }
         return res;
       }
-      Buffer3.prototype.slice = function slice(start, end) {
+      Buffer2.prototype.slice = function slice(start, end) {
         const len = this.length;
         start = ~~start;
         end = end === void 0 ? len : ~~end;
@@ -1062,14 +1062,14 @@
         }
         if (end < start) end = start;
         const newBuf = this.subarray(start, end);
-        Object.setPrototypeOf(newBuf, Buffer3.prototype);
+        Object.setPrototypeOf(newBuf, Buffer2.prototype);
         return newBuf;
       };
       function checkOffset(offset, ext, length) {
         if (offset % 1 !== 0 || offset < 0) throw new RangeError("offset is not uint");
         if (offset + ext > length) throw new RangeError("Trying to access beyond buffer length");
       }
-      Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
+      Buffer2.prototype.readUintLE = Buffer2.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1081,7 +1081,7 @@
         }
         return val;
       };
-      Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
+      Buffer2.prototype.readUintBE = Buffer2.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) {
@@ -1094,32 +1094,32 @@
         }
         return val;
       };
-      Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+      Buffer2.prototype.readUint8 = Buffer2.prototype.readUInt8 = function readUInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         return this[offset];
       };
-      Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+      Buffer2.prototype.readUint16LE = Buffer2.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] | this[offset + 1] << 8;
       };
-      Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+      Buffer2.prototype.readUint16BE = Buffer2.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] << 8 | this[offset + 1];
       };
-      Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+      Buffer2.prototype.readUint32LE = Buffer2.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 16777216;
       };
-      Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+      Buffer2.prototype.readUint32BE = Buffer2.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] * 16777216 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
       };
-      Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
+      Buffer2.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1131,7 +1131,7 @@
         const hi = this[++offset] + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + last * 2 ** 24;
         return BigInt(lo) + (BigInt(hi) << BigInt(32));
       });
-      Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
+      Buffer2.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1143,7 +1143,7 @@
         const lo = this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last;
         return (BigInt(hi) << BigInt(32)) + BigInt(lo);
       });
-      Buffer3.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
+      Buffer2.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1157,7 +1157,7 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
+      Buffer2.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1171,35 +1171,35 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readInt8 = function readInt8(offset, noAssert) {
+      Buffer2.prototype.readInt8 = function readInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         if (!(this[offset] & 128)) return this[offset];
         return (255 - this[offset] + 1) * -1;
       };
-      Buffer3.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+      Buffer2.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset] | this[offset + 1] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+      Buffer2.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset + 1] | this[offset] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+      Buffer2.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
       };
-      Buffer3.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+      Buffer2.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
       };
-      Buffer3.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
+      Buffer2.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1210,7 +1210,7 @@
         const val = this[offset + 4] + this[offset + 5] * 2 ** 8 + this[offset + 6] * 2 ** 16 + (last << 24);
         return (BigInt(val) << BigInt(32)) + BigInt(first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24);
       });
-      Buffer3.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
+      Buffer2.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1222,32 +1222,32 @@
         this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
         return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
       });
-      Buffer3.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+      Buffer2.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, true, 23, 4);
       };
-      Buffer3.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+      Buffer2.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, false, 23, 4);
       };
-      Buffer3.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+      Buffer2.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, true, 52, 8);
       };
-      Buffer3.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+      Buffer2.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, false, 52, 8);
       };
       function checkInt(buf, value, offset, ext, max, min) {
-        if (!Buffer3.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+        if (!Buffer2.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
         if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
       }
-      Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
+      Buffer2.prototype.writeUintLE = Buffer2.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1263,7 +1263,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
+      Buffer2.prototype.writeUintBE = Buffer2.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1279,14 +1279,14 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+      Buffer2.prototype.writeUint8 = Buffer2.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 255, 0);
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
+      Buffer2.prototype.writeUint16LE = Buffer2.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1294,7 +1294,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
+      Buffer2.prototype.writeUint16BE = Buffer2.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1302,7 +1302,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
+      Buffer2.prototype.writeUint32LE = Buffer2.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1312,7 +1312,7 @@
         this[offset] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
+      Buffer2.prototype.writeUint32BE = Buffer2.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1362,13 +1362,13 @@
         buf[offset] = hi;
         return offset + 8;
       }
-      Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
+      Buffer2.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
+      Buffer2.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
+      Buffer2.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1387,7 +1387,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
+      Buffer2.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1406,7 +1406,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+      Buffer2.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 127, -128);
@@ -1414,7 +1414,7 @@
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+      Buffer2.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1422,7 +1422,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+      Buffer2.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1430,7 +1430,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+      Buffer2.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1440,7 +1440,7 @@
         this[offset + 3] = value >>> 24;
         return offset + 4;
       };
-      Buffer3.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+      Buffer2.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1451,10 +1451,10 @@
         this[offset + 3] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
+      Buffer2.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
-      Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
+      Buffer2.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
       function checkIEEE754(buf, value, offset, ext, max, min) {
@@ -1470,10 +1470,10 @@
         ieee754.write(buf, value, offset, littleEndian, 23, 4);
         return offset + 4;
       }
-      Buffer3.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+      Buffer2.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
         return writeFloat(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+      Buffer2.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
         return writeFloat(this, value, offset, false, noAssert);
       };
       function writeDouble(buf, value, offset, littleEndian, noAssert) {
@@ -1485,14 +1485,14 @@
         ieee754.write(buf, value, offset, littleEndian, 52, 8);
         return offset + 8;
       }
-      Buffer3.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+      Buffer2.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
         return writeDouble(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+      Buffer2.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
         return writeDouble(this, value, offset, false, noAssert);
       };
-      Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
-        if (!Buffer3.isBuffer(target)) throw new TypeError("argument should be a Buffer");
+      Buffer2.prototype.copy = function copy(target, targetStart, start, end) {
+        if (!Buffer2.isBuffer(target)) throw new TypeError("argument should be a Buffer");
         if (!start) start = 0;
         if (!end && end !== 0) end = this.length;
         if (targetStart >= target.length) targetStart = target.length;
@@ -1521,7 +1521,7 @@
         }
         return len;
       };
-      Buffer3.prototype.fill = function fill(val, start, end, encoding) {
+      Buffer2.prototype.fill = function fill(val, start, end, encoding) {
         if (typeof val === "string") {
           if (typeof start === "string") {
             encoding = start;
@@ -1534,7 +1534,7 @@
           if (encoding !== void 0 && typeof encoding !== "string") {
             throw new TypeError("encoding must be a string");
           }
-          if (typeof encoding === "string" && !Buffer3.isEncoding(encoding)) {
+          if (typeof encoding === "string" && !Buffer2.isEncoding(encoding)) {
             throw new TypeError("Unknown encoding: " + encoding);
           }
           if (val.length === 1) {
@@ -1563,7 +1563,7 @@
             this[i2] = val;
           }
         } else {
-          const bytes = Buffer3.isBuffer(val) ? val : Buffer3.from(val, encoding);
+          const bytes = Buffer2.isBuffer(val) ? val : Buffer2.from(val, encoding);
           const len = bytes.length;
           if (len === 0) {
             throw new TypeError('The value "' + val + '" is invalid for argument "value"');
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1981,13 +1981,13 @@
     }
   });
 
-  // demo/social/src/polyfills.js
+  // demo/banky/src/polyfills.js
   var require_polyfills = __commonJS({
-    "demo/social/src/polyfills.js"() {
+    "demo/banky/src/polyfills.js"() {
       "use strict";
-      var import_buffer2 = __toESM(require_buffer());
+      var import_buffer = __toESM(require_buffer());
       var import_process = __toESM(require_browser());
-      window.Buffer = import_buffer2.Buffer;
+      window.Buffer = import_buffer.Buffer;
       window.process = import_process.default;
       window.global = window;
     }
@@ -1997,7 +1997,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -2970,7 +2970,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2983,7 +2983,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3243,7 +3243,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3256,7 +3256,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3501,7 +3501,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3515,7 +3515,7 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -4139,9 +4139,9 @@
                   if ("string" === typeof entry.name) {
                     var JSCompiler_temp_const = info;
                     a: {
-                      var name = entry.name, env = entry.env, location2 = entry.debugLocation;
-                      if (null != location2) {
-                        var childStack = formatOwnerStack(location2), idx = childStack.lastIndexOf("\n"), lastLine = -1 === idx ? childStack : childStack.slice(idx + 1);
+                      var name = entry.name, env = entry.env, location = entry.debugLocation;
+                      if (null != location) {
+                        var childStack = formatOwnerStack(location), idx = childStack.lastIndexOf("\n"), lastLine = -1 === idx ? childStack : childStack.slice(idx + 1);
                         if (-1 !== lastLine.indexOf(name)) {
                           var JSCompiler_inline_result = "\n" + lastLine;
                           break a;
@@ -4307,7 +4307,7 @@
         }
         function clz32Fallback(x2) {
           x2 >>>= 0;
-          return 0 === x2 ? 32 : 31 - (log2(x2) / LN2 | 0) | 0;
+          return 0 === x2 ? 32 : 31 - (log(x2) / LN2 | 0) | 0;
         }
         function getHighestPriorityLanes(lanes) {
           var pendingSyncLanes = lanes & 42;
@@ -7638,33 +7638,33 @@
         function pingEngtangledActionScope() {
           if (0 === --currentEntangledPendingCount && (-1 < transitionUpdateTime || (transitionStartTime = -1.1), null !== currentEntangledListeners)) {
             null !== currentEntangledActionThenable && (currentEntangledActionThenable.status = "fulfilled");
-            var listeners2 = currentEntangledListeners;
+            var listeners = currentEntangledListeners;
             currentEntangledListeners = null;
             currentEntangledLane = 0;
             currentEntangledActionThenable = null;
-            for (var i2 = 0; i2 < listeners2.length; i2++) (0, listeners2[i2])();
+            for (var i2 = 0; i2 < listeners.length; i2++) (0, listeners[i2])();
           }
         }
         function chainThenableValue(thenable, result) {
-          var listeners2 = [], thenableWithOverride = {
+          var listeners = [], thenableWithOverride = {
             status: "pending",
             value: null,
             reason: null,
             then: function(resolve) {
-              listeners2.push(resolve);
+              listeners.push(resolve);
             }
           };
           thenable.then(
             function() {
               thenableWithOverride.status = "fulfilled";
               thenableWithOverride.value = result;
-              for (var i2 = 0; i2 < listeners2.length; i2++) (0, listeners2[i2])(result);
+              for (var i2 = 0; i2 < listeners.length; i2++) (0, listeners[i2])(result);
             },
             function(error) {
               thenableWithOverride.status = "rejected";
               thenableWithOverride.reason = error;
-              for (error = 0; error < listeners2.length; error++)
-                (0, listeners2[error])(void 0);
+              for (error = 0; error < listeners.length; error++)
+                (0, listeners[error])(void 0);
             }
           );
           return thenableWithOverride;
@@ -17312,15 +17312,15 @@
           };
         }
         function accumulateTwoPhaseListeners(targetFiber, reactName) {
-          for (var captureName = reactName + "Capture", listeners2 = []; null !== targetFiber; ) {
+          for (var captureName = reactName + "Capture", listeners = []; null !== targetFiber; ) {
             var _instance3 = targetFiber, stateNode = _instance3.stateNode;
             _instance3 = _instance3.tag;
-            5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (_instance3 = getListener(targetFiber, captureName), null != _instance3 && listeners2.unshift(
+            5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (_instance3 = getListener(targetFiber, captureName), null != _instance3 && listeners.unshift(
               createDispatchListener(targetFiber, _instance3, stateNode)
-            ), _instance3 = getListener(targetFiber, reactName), null != _instance3 && listeners2.push(
+            ), _instance3 = getListener(targetFiber, reactName), null != _instance3 && listeners.push(
               createDispatchListener(targetFiber, _instance3, stateNode)
             ));
-            if (3 === targetFiber.tag) return listeners2;
+            if (3 === targetFiber.tag) return listeners;
             targetFiber = targetFiber.return;
           }
           return [];
@@ -17333,18 +17333,18 @@
           return inst ? inst : null;
         }
         function accumulateEnterLeaveListenersForEvent(dispatchQueue, event, target, common, inCapturePhase) {
-          for (var registrationName = event._reactName, listeners2 = []; null !== target && target !== common; ) {
+          for (var registrationName = event._reactName, listeners = []; null !== target && target !== common; ) {
             var _instance4 = target, alternate = _instance4.alternate, stateNode = _instance4.stateNode;
             _instance4 = _instance4.tag;
             if (null !== alternate && alternate === common) break;
-            5 !== _instance4 && 26 !== _instance4 && 27 !== _instance4 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners2.unshift(
+            5 !== _instance4 && 26 !== _instance4 && 27 !== _instance4 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners.unshift(
               createDispatchListener(target, stateNode, alternate)
-            )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners2.push(
+            )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners.push(
               createDispatchListener(target, stateNode, alternate)
             )));
             target = target.return;
           }
-          0 !== listeners2.length && dispatchQueue.push({ event, listeners: listeners2 });
+          0 !== listeners.length && dispatchQueue.push({ event, listeners });
         }
         function validatePropertiesInDevelopment(type, props) {
           validateProperties$2(type, props);
@@ -20507,7 +20507,7 @@
         disabledLog.__reactDisabledLog = true;
         var prefix, suffix, reentry = false;
         var componentFrameCache = new ("function" === typeof WeakMap ? WeakMap : Map)();
-        var current = null, isRendering = false, hasOwnProperty = Object.prototype.hasOwnProperty, scheduleCallback$3 = Scheduler.unstable_scheduleCallback, cancelCallback$1 = Scheduler.unstable_cancelCallback, shouldYield = Scheduler.unstable_shouldYield, requestPaint = Scheduler.unstable_requestPaint, now$1 = Scheduler.unstable_now, getCurrentPriorityLevel = Scheduler.unstable_getCurrentPriorityLevel, ImmediatePriority = Scheduler.unstable_ImmediatePriority, UserBlockingPriority = Scheduler.unstable_UserBlockingPriority, NormalPriority$1 = Scheduler.unstable_NormalPriority, LowPriority = Scheduler.unstable_LowPriority, IdlePriority = Scheduler.unstable_IdlePriority, log$1 = Scheduler.log, unstable_setDisableYieldValue = Scheduler.unstable_setDisableYieldValue, rendererID = null, injectedHook = null, hasLoggedError = false, isDevToolsPresent = "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__, clz32 = Math.clz32 ? Math.clz32 : clz32Fallback, log2 = Math.log, LN2 = Math.LN2, nextTransitionUpdateLane = 256, nextTransitionDeferredLane = 262144, nextRetryLane = 4194304, DiscreteEventPriority = 2, ContinuousEventPriority = 8, DefaultEventPriority = 32, IdleEventPriority = 268435456, randomKey = Math.random().toString(36).slice(2), internalInstanceKey = "__reactFiber$" + randomKey, internalPropsKey = "__reactProps$" + randomKey, internalContainerInstanceKey = "__reactContainer$" + randomKey, internalEventHandlersKey = "__reactEvents$" + randomKey, internalEventHandlerListenersKey = "__reactListeners$" + randomKey, internalEventHandlesSetKey = "__reactHandles$" + randomKey, internalRootNodeResourcesKey = "__reactResources$" + randomKey, internalHoistableMarker = "__reactMarker$" + randomKey, allNativeEvents = /* @__PURE__ */ new Set(), registrationNameDependencies = {}, possibleRegistrationNames = {}, hasReadOnlyValue = {
+        var current = null, isRendering = false, hasOwnProperty = Object.prototype.hasOwnProperty, scheduleCallback$3 = Scheduler.unstable_scheduleCallback, cancelCallback$1 = Scheduler.unstable_cancelCallback, shouldYield = Scheduler.unstable_shouldYield, requestPaint = Scheduler.unstable_requestPaint, now$1 = Scheduler.unstable_now, getCurrentPriorityLevel = Scheduler.unstable_getCurrentPriorityLevel, ImmediatePriority = Scheduler.unstable_ImmediatePriority, UserBlockingPriority = Scheduler.unstable_UserBlockingPriority, NormalPriority$1 = Scheduler.unstable_NormalPriority, LowPriority = Scheduler.unstable_LowPriority, IdlePriority = Scheduler.unstable_IdlePriority, log$1 = Scheduler.log, unstable_setDisableYieldValue = Scheduler.unstable_setDisableYieldValue, rendererID = null, injectedHook = null, hasLoggedError = false, isDevToolsPresent = "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__, clz32 = Math.clz32 ? Math.clz32 : clz32Fallback, log = Math.log, LN2 = Math.LN2, nextTransitionUpdateLane = 256, nextTransitionDeferredLane = 262144, nextRetryLane = 4194304, DiscreteEventPriority = 2, ContinuousEventPriority = 8, DefaultEventPriority = 32, IdleEventPriority = 268435456, randomKey = Math.random().toString(36).slice(2), internalInstanceKey = "__reactFiber$" + randomKey, internalPropsKey = "__reactProps$" + randomKey, internalContainerInstanceKey = "__reactContainer$" + randomKey, internalEventHandlersKey = "__reactEvents$" + randomKey, internalEventHandlerListenersKey = "__reactListeners$" + randomKey, internalEventHandlesSetKey = "__reactHandles$" + randomKey, internalRootNodeResourcesKey = "__reactResources$" + randomKey, internalHoistableMarker = "__reactMarker$" + randomKey, allNativeEvents = /* @__PURE__ */ new Set(), registrationNameDependencies = {}, possibleRegistrationNames = {}, hasReadOnlyValue = {
           button: true,
           checkbox: true,
           image: true,
@@ -21563,15 +21563,15 @@
         var rendererCursorDEV = createCursor(null);
         var rendererSigil = {};
         var currentlyRenderingFiber$1 = null, lastContextDependency = null, isDisallowedContextReadInDEV = false, AbortControllerLocal = "undefined" !== typeof AbortController ? AbortController : function() {
-          var listeners2 = [], signal = this.signal = {
+          var listeners = [], signal = this.signal = {
             aborted: false,
             addEventListener: function(type, listener) {
-              listeners2.push(listener);
+              listeners.push(listener);
             }
           };
           this.abort = function() {
             signal.aborted = true;
-            listeners2.forEach(function(listener) {
+            listeners.forEach(function(listener) {
               return listener();
             });
           };
@@ -23415,7 +23415,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23428,36 +23428,36 @@
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       }
-      SafeBuffer.prototype = Object.create(Buffer3.prototype);
-      copyProps(Buffer3, SafeBuffer);
+      SafeBuffer.prototype = Object.create(Buffer2.prototype);
+      copyProps(Buffer2, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer2(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -23473,7 +23473,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer2(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -23488,13 +23488,13 @@
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
         throw new Error("Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11");
       }
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var crypto5 = window.crypto || window.msCrypto;
       if (crypto5 && crypto5.getRandomValues) {
         module.exports = randomBytes2;
@@ -23503,7 +23503,7 @@
       }
       function randomBytes2(size, cb2) {
         if (size > MAX_UINT32) throw new RangeError("requested too many random bytes");
-        var bytes = Buffer3.allocUnsafe(size);
+        var bytes = Buffer2.allocUnsafe(size);
         if (size > 0) {
           if (size > MAX_BYTES) {
             for (var generated = 0; generated < size; generated += MAX_BYTES) {
@@ -23526,7 +23526,7 @@
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -23560,7 +23560,7 @@
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -23587,7 +23587,7 @@
         EventEmitter2.init.call(this);
       }
       module.exports = EventEmitter2;
-      module.exports.once = once2;
+      module.exports.once = once;
       EventEmitter2.EventEmitter = EventEmitter2;
       EventEmitter2.prototype._events = void 0;
       EventEmitter2.prototype._eventsCount = 0;
@@ -23632,7 +23632,7 @@
       EventEmitter2.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter2.prototype.emit = function emit2(type) {
+      EventEmitter2.prototype.emit = function emit(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++) args.push(arguments[i2]);
         var doError = type === "error";
@@ -23659,9 +23659,9 @@
           ReflectApply(handler, this, args);
         } else {
           var len = handler.length;
-          var listeners2 = arrayClone(handler, len);
+          var listeners = arrayClone(handler, len);
           for (var i2 = 0; i2 < len; ++i2)
-            ReflectApply(listeners2[i2], this, args);
+            ReflectApply(listeners[i2], this, args);
         }
         return true;
       };
@@ -23732,7 +23732,7 @@
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter2.prototype.once = function once3(type, listener) {
+      EventEmitter2.prototype.once = function once2(type, listener) {
         checkListener(listener);
         this.on(type, _onceWrap(this, type, listener));
         return this;
@@ -23742,7 +23742,7 @@
         this.prependListener(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter2.prototype.removeListener = function removeListener2(type, listener) {
+      EventEmitter2.prototype.removeListener = function removeListener(type, listener) {
         var list, events, position, i2, originalListener;
         checkListener(listener);
         events = this._events;
@@ -23783,8 +23783,8 @@
         return this;
       };
       EventEmitter2.prototype.off = EventEmitter2.prototype.removeListener;
-      EventEmitter2.prototype.removeAllListeners = function removeAllListeners2(type) {
-        var listeners2, events, i2;
+      EventEmitter2.prototype.removeAllListeners = function removeAllListeners(type) {
+        var listeners, events, i2;
         events = this._events;
         if (events === void 0)
           return this;
@@ -23813,12 +23813,12 @@
           this._eventsCount = 0;
           return this;
         }
-        listeners2 = events[type];
-        if (typeof listeners2 === "function") {
-          this.removeListener(type, listeners2);
-        } else if (listeners2 !== void 0) {
-          for (i2 = listeners2.length - 1; i2 >= 0; i2--) {
-            this.removeListener(type, listeners2[i2]);
+        listeners = events[type];
+        if (typeof listeners === "function") {
+          this.removeListener(type, listeners);
+        } else if (listeners !== void 0) {
+          for (i2 = listeners.length - 1; i2 >= 0; i2--) {
+            this.removeListener(type, listeners[i2]);
           }
         }
         return this;
@@ -23834,7 +23834,7 @@
           return unwrap ? [evlistener.listener || evlistener] : [evlistener];
         return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter2.prototype.listeners = function listeners2(type) {
+      EventEmitter2.prototype.listeners = function listeners(type) {
         return _listeners(this, type, true);
       };
       EventEmitter2.prototype.rawListeners = function rawListeners(type) {
@@ -23844,11 +23844,11 @@
         if (typeof emitter.listenerCount === "function") {
           return emitter.listenerCount(type);
         } else {
-          return listenerCount2.call(emitter, type);
+          return listenerCount.call(emitter, type);
         }
       };
-      EventEmitter2.prototype.listenerCount = listenerCount2;
-      function listenerCount2(type) {
+      EventEmitter2.prototype.listenerCount = listenerCount;
+      function listenerCount(type) {
         var events = this._events;
         if (events !== void 0) {
           var evlistener = events[type];
@@ -23860,7 +23860,7 @@
         }
         return 0;
       }
-      EventEmitter2.prototype.eventNames = function eventNames2() {
+      EventEmitter2.prototype.eventNames = function eventNames() {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n2) {
@@ -23881,7 +23881,7 @@
         }
         return ret;
       }
-      function once2(emitter, name) {
+      function once(emitter, name) {
         return new Promise(function(resolve, reject) {
           function errorListener(err) {
             emitter.removeListener(name, resolver);
@@ -23929,7 +23929,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -23938,7 +23938,7 @@
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -23994,7 +23994,7 @@
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -24006,7 +24006,7 @@
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -24015,7 +24015,7 @@
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -24024,7 +24024,7 @@
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -24033,7 +24033,7 @@
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -24042,7 +24042,7 @@
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -24051,7 +24051,7 @@
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -24060,7 +24060,7 @@
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -24069,7 +24069,7 @@
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -24078,7 +24078,7 @@
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -24087,7 +24087,7 @@
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -24096,7 +24096,7 @@
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -24105,7 +24105,7 @@
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -24114,7 +24114,7 @@
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -24123,7 +24123,7 @@
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -24132,7 +24132,7 @@
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -24143,7 +24143,7 @@
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -24158,7 +24158,7 @@
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -24167,7 +24167,7 @@
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -24184,7 +24184,7 @@
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -24201,7 +24201,7 @@
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -24226,7 +24226,7 @@
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -24235,7 +24235,7 @@
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -24245,7 +24245,7 @@
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -24322,7 +24322,7 @@
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -24332,7 +24332,7 @@
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -24341,7 +24341,7 @@
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -24350,7 +24350,7 @@
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -24359,7 +24359,7 @@
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -24372,7 +24372,7 @@
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -24390,7 +24390,7 @@
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -24422,7 +24422,7 @@
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -24443,7 +24443,7 @@
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -24455,7 +24455,7 @@
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -24787,7 +24787,7 @@
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -24811,7 +24811,7 @@
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -24839,7 +24839,7 @@
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -24909,7 +24909,7 @@
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -24929,7 +24929,7 @@
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -24943,7 +24943,7 @@
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -24976,7 +24976,7 @@
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -25095,7 +25095,7 @@
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25156,7 +25156,7 @@
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -25178,7 +25178,7 @@
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -25197,7 +25197,7 @@
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -25246,7 +25246,7 @@
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -25269,7 +25269,7 @@
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -25323,7 +25323,7 @@
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -25337,7 +25337,7 @@
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -25363,7 +25363,7 @@
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -25485,7 +25485,7 @@
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -25497,7 +25497,7 @@
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -25727,7 +25727,7 @@
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -25737,7 +25737,7 @@
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -25777,7 +25777,7 @@
           }
         });
         for (var x2 = args[i2]; i2 < len; x2 = args[++i2]) {
-          if (isNull(x2) || !isObject2(x2)) {
+          if (isNull(x2) || !isObject(x2)) {
             str += " " + x2;
           } else {
             str += " " + inspect(x2);
@@ -25795,7 +25795,7 @@
           };
         }
         var warned = false;
-        function deprecated2() {
+        function deprecated() {
           if (!warned) {
             if (process.throwDeprecation) {
               throw new Error(msg);
@@ -25808,7 +25808,7 @@
           }
           return fn.apply(this, arguments);
         }
-        return deprecated2;
+        return deprecated;
       };
       var debugs = {};
       var debugEnvRegex = /^$/;
@@ -26122,21 +26122,21 @@
       }
       exports.isUndefined = isUndefined;
       function isRegExp(re) {
-        return isObject2(re) && objectToString(re) === "[object RegExp]";
+        return isObject(re) && objectToString(re) === "[object RegExp]";
       }
       exports.isRegExp = isRegExp;
       exports.types.isRegExp = isRegExp;
-      function isObject2(arg) {
+      function isObject(arg) {
         return typeof arg === "object" && arg !== null;
       }
-      exports.isObject = isObject2;
+      exports.isObject = isObject;
       function isDate(d2) {
-        return isObject2(d2) && objectToString(d2) === "[object Date]";
+        return isObject(d2) && objectToString(d2) === "[object Date]";
       }
       exports.isDate = isDate;
       exports.types.isDate = isDate;
       function isError(e2) {
-        return isObject2(e2) && (objectToString(e2) === "[object Error]" || e2 instanceof Error);
+        return isObject(e2) && (objectToString(e2) === "[object Error]" || e2 instanceof Error);
       }
       exports.isError = isError;
       exports.types.isNativeError = isError;
@@ -26184,7 +26184,7 @@
       };
       exports.inherits = require_inherits_browser();
       exports._extend = function(origin, add) {
-        if (!add || !isObject2(add)) return origin;
+        if (!add || !isObject(add)) return origin;
         var keys = Object.keys(add);
         var i2 = keys.length;
         while (i2--) {
@@ -26298,7 +26298,7 @@
   var require_buffer_list = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -26364,12 +26364,12 @@
         return (hint === "string" ? String : Number)(input);
       }
       var _require = require_buffer();
-      var Buffer3 = _require.Buffer;
+      var Buffer2 = _require.Buffer;
       var _require2 = require_util();
       var inspect = _require2.inspect;
       var custom = inspect && inspect.custom || "inspect";
       function copyBuffer(src, target, offset) {
-        Buffer3.prototype.copy.call(src, target, offset);
+        Buffer2.prototype.copy.call(src, target, offset);
       }
       module.exports = /* @__PURE__ */ (function() {
         function BufferList() {
@@ -26429,8 +26429,8 @@
         }, {
           key: "concat",
           value: function concat(n2) {
-            if (this.length === 0) return Buffer3.alloc(0);
-            var ret = Buffer3.allocUnsafe(n2 >>> 0);
+            if (this.length === 0) return Buffer2.alloc(0);
+            var ret = Buffer2.allocUnsafe(n2 >>> 0);
             var p2 = this.head;
             var i2 = 0;
             while (p2) {
@@ -26494,7 +26494,7 @@
         }, {
           key: "_getBuffer",
           value: function _getBuffer(n2) {
-            var ret = Buffer3.allocUnsafe(n2);
+            var ret = Buffer2.allocUnsafe(n2);
             var p2 = this.head;
             var c2 = 1;
             p2.data.copy(ret);
@@ -26541,7 +26541,7 @@
   var require_destroy = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -26631,7 +26631,7 @@
   var require_errors_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -26741,7 +26741,7 @@
   var require_state = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -26766,14 +26766,14 @@
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
           return fn;
         }
         var warned = false;
-        function deprecated2() {
+        function deprecated() {
           if (!warned) {
             if (config("throwDeprecation")) {
               throw new Error(msg);
@@ -26786,7 +26786,7 @@
           }
           return fn.apply(this, arguments);
         }
-        return deprecated2;
+        return deprecated;
       }
       function config(name) {
         try {
@@ -26805,7 +26805,7 @@
   var require_stream_writable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -26821,14 +26821,14 @@
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer2 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer2.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer2.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy();
       var _require = require_state();
@@ -26956,7 +26956,7 @@
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer3.isBuffer(chunk)) {
+        if (isBuf && !Buffer2.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -27000,7 +27000,7 @@
       });
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer3.from(chunk, encoding);
+          chunk = Buffer2.from(chunk, encoding);
         }
         return chunk;
       }
@@ -27277,7 +27277,7 @@
   var require_stream_duplex = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -27370,35 +27370,35 @@
   // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer3, SafeBuffer);
+      copyProps(Buffer2, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer2(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -27414,7 +27414,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer2(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -27429,9 +27429,9 @@
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer2().Buffer;
-      var isEncoding = Buffer3.isEncoding || function(encoding) {
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer2().Buffer;
+      var isEncoding = Buffer2.isEncoding || function(encoding) {
         encoding = "" + encoding;
         switch (encoding && encoding.toLowerCase()) {
           case "hex":
@@ -27479,7 +27479,7 @@
       }
       function normalizeEncoding(enc) {
         var nenc = _normalizeEncoding(enc);
-        if (typeof nenc !== "string" && (Buffer3.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
+        if (typeof nenc !== "string" && (Buffer2.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
         return nenc || enc;
       }
       exports.StringDecoder = StringDecoder;
@@ -27508,7 +27508,7 @@
         }
         this.lastNeed = 0;
         this.lastTotal = 0;
-        this.lastChar = Buffer3.allocUnsafe(nb);
+        this.lastChar = Buffer2.allocUnsafe(nb);
       }
       StringDecoder.prototype.write = function(buf) {
         if (buf.length === 0) return "";
@@ -27668,9 +27668,9 @@
   var require_end_of_stream = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
-      function once2(callback) {
+      function once(callback) {
         var called = false;
         return function() {
           if (called) return;
@@ -27689,7 +27689,7 @@
       function eos(stream, opts, callback) {
         if (typeof opts === "function") return eos(stream, null, opts);
         if (!opts) opts = {};
-        callback = once2(callback || noop);
+        callback = once(callback || noop);
         var readable = opts.readable || opts.readable !== false && stream.readable;
         var writable = opts.writable || opts.writable !== false && stream.writable;
         var onlegacyfinish = function onlegacyfinish2() {
@@ -27758,7 +27758,7 @@
   var require_async_iterator = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -27941,7 +27941,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -27952,7 +27952,7 @@
   var require_stream_readable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -27961,14 +27961,14 @@
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer2 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer2.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer2.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var debugUtil = require_util();
       var debug;
@@ -28076,7 +28076,7 @@
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer3.from(chunk, encoding);
+              chunk = Buffer2.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -28101,7 +28101,7 @@
           if (er) {
             errorOrDestroy(stream, er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer2.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -28686,7 +28686,7 @@
   var require_stream_transform = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -28788,7 +28788,7 @@
   var require_stream_passthrough = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -28806,9 +28806,9 @@
   var require_pipeline = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var eos;
-      function once2(callback) {
+      function once(callback) {
         var called = false;
         return function() {
           if (called) return;
@@ -28826,7 +28826,7 @@
         return stream.setHeader && typeof stream.abort === "function";
       }
       function destroyer(stream, reading, writing, callback) {
-        callback = once2(callback);
+        callback = once(callback);
         var closed = false;
         stream.on("close", function() {
           closed = true;
@@ -28891,7 +28891,7 @@
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -28970,13 +28970,13 @@
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer3.allocUnsafe(blockSize);
+        this._block = Buffer2.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -29002,18 +29002,18 @@
         callback(error);
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
-      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
+      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer2.prototype instanceof Uint8Array || Buffer2.TYPED_ARRAY_SUPPORT);
       function toBuffer(data, encoding) {
-        if (data instanceof Buffer3) return data;
-        if (typeof data === "string") return Buffer3.from(data, encoding);
+        if (data instanceof Buffer2) return data;
+        if (typeof data === "string") return Buffer2.from(data, encoding);
         if (useArrayBuffer && ArrayBuffer.isView(data)) {
-          if (data.byteLength === 0) return Buffer3.alloc(0);
-          var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
+          if (data.byteLength === 0) return Buffer2.alloc(0);
+          var res = Buffer2.from(data.buffer, data.byteOffset, data.byteLength);
           if (res.byteLength === data.byteLength) return res;
         }
-        if (useUint8Array && data instanceof Uint8Array) return Buffer3.from(data);
-        if (Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer3.from(data);
+        if (useUint8Array && data instanceof Uint8Array) return Buffer2.from(data);
+        if (Buffer2.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer2.from(data);
         }
         throw new TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
       }
@@ -29059,10 +29059,10 @@
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var ARRAY16 = new Array(16);
       function MD5() {
         HashBase.call(this, 64);
@@ -29159,7 +29159,7 @@
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer3.allocUnsafe(16);
+        var buffer = Buffer2.allocUnsafe(16);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -29188,7 +29188,7 @@
   // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29200,7 +29200,7 @@
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -29218,8 +29218,8 @@
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
       var isView = ArrayBuffer.isView || function isView2(obj) {
@@ -29232,35 +29232,35 @@
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined";
-      var useFromArrayBuffer = useArrayBuffer && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
+      var useFromArrayBuffer = useArrayBuffer && (Buffer2.prototype instanceof Uint8Array || Buffer2.TYPED_ARRAY_SUPPORT);
       module.exports = function toBuffer(data, encoding) {
-        if (Buffer3.isBuffer(data)) {
+        if (Buffer2.isBuffer(data)) {
           if (data.constructor && !("isBuffer" in data)) {
-            return Buffer3.from(data);
+            return Buffer2.from(data);
           }
           return data;
         }
         if (typeof data === "string") {
-          return Buffer3.from(data, encoding);
+          return Buffer2.from(data, encoding);
         }
         if (useArrayBuffer && isView(data)) {
           if (data.byteLength === 0) {
-            return Buffer3.alloc(0);
+            return Buffer2.alloc(0);
           }
           if (useFromArrayBuffer) {
-            var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
+            var res = Buffer2.from(data.buffer, data.byteOffset, data.byteLength);
             if (res.byteLength === data.byteLength) {
               return res;
             }
           }
           var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
-          var result = Buffer3.from(uint8);
+          var result = Buffer2.from(uint8);
           if (result.length === data.byteLength) {
             return result;
           }
         }
         if (useUint8Array && data instanceof Uint8Array) {
-          return Buffer3.from(data);
+          return Buffer2.from(data);
         }
         var isArr = isArray(data);
         if (isArr) {
@@ -29271,8 +29271,8 @@
             }
           }
         }
-        if (isArr || Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer3.from(data);
+        if (isArr || Buffer2.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer2.from(data);
         }
         throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
       };
@@ -29283,14 +29283,14 @@
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding) {
-        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer2.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError('The "data" argument must be a string, a Buffer, a Uint8Array, or a DataView');
@@ -29302,7 +29302,7 @@
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -29347,7 +29347,7 @@
   // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29358,7 +29358,7 @@
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -29366,35 +29366,35 @@
   // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer2 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer3, SafeBuffer);
+      copyProps(Buffer2, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer2(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer2(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -29410,7 +29410,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer2(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -29424,7 +29424,7 @@
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -29464,10 +29464,10 @@
         return objectToString(re) === "[object RegExp]";
       }
       exports.isRegExp = isRegExp;
-      function isObject2(arg) {
+      function isObject(arg) {
         return typeof arg === "object" && arg !== null;
       }
-      exports.isObject = isObject2;
+      exports.isObject = isObject;
       function isDate(d2) {
         return objectToString(d2) === "[object Date]";
       }
@@ -29496,13 +29496,13 @@
   var require_BufferList = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
         }
       }
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer2 = require_safe_buffer3().Buffer;
       var util = require_util();
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
@@ -29549,8 +29549,8 @@
           return ret;
         };
         BufferList.prototype.concat = function concat(n2) {
-          if (this.length === 0) return Buffer3.alloc(0);
-          var ret = Buffer3.allocUnsafe(n2 >>> 0);
+          if (this.length === 0) return Buffer2.alloc(0);
+          var ret = Buffer2.allocUnsafe(n2 >>> 0);
           var p2 = this.head;
           var i2 = 0;
           while (p2) {
@@ -29575,7 +29575,7 @@
   var require_destroy2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -29645,7 +29645,7 @@
   var require_stream_writable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -29665,14 +29665,14 @@
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer2 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer2.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer2.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy2();
       util.inherits(Writable, Stream);
@@ -29794,7 +29794,7 @@
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer3.isBuffer(chunk)) {
+        if (isBuf && !Buffer2.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -29830,7 +29830,7 @@
       };
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer3.from(chunk, encoding);
+          chunk = Buffer2.from(chunk, encoding);
         }
         return chunk;
       }
@@ -30086,7 +30086,7 @@
   var require_stream_duplex2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -30164,7 +30164,7 @@
   var require_stream_readable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -30175,14 +30175,14 @@
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer2 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer2.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer2.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
@@ -30281,7 +30281,7 @@
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer3.from(chunk, encoding);
+              chunk = Buffer2.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -30305,7 +30305,7 @@
           if (er) {
             stream.emit("error", er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer2.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -30797,7 +30797,7 @@
         return ret;
       }
       function copyFromBuffer(n2, list) {
-        var ret = Buffer3.allocUnsafe(n2);
+        var ret = Buffer2.allocUnsafe(n2);
         var p2 = list.head;
         var c2 = 1;
         p2.data.copy(ret);
@@ -30851,7 +30851,7 @@
   var require_stream_transform2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -30952,7 +30952,7 @@
   var require_stream_passthrough2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -30971,7 +30971,7 @@
   // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -30986,14 +30986,14 @@
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer3.allocUnsafe(blockSize);
+        this._block = Buffer2.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -31078,8 +31078,8 @@
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
       var ARRAY16 = new Array(16);
@@ -31504,7 +31504,7 @@
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer3.alloc ? Buffer3.alloc(20) : new Buffer3(20);
+        var buffer = Buffer2.alloc ? Buffer2.alloc(20) : new Buffer2(20);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -31520,11 +31520,11 @@
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
-        this._block = Buffer3.alloc(blockSize);
+        this._block = Buffer2.alloc(blockSize);
         this._finalSize = finalSize;
         this._blockSize = blockSize;
         this._len = 0;
@@ -31582,10 +31582,10 @@
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -31651,7 +31651,7 @@
         this._e = e2 + this._e | 0;
       };
       Sha.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(20);
+        var H2 = Buffer2.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -31667,10 +31667,10 @@
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -31739,7 +31739,7 @@
         this._e = e2 + this._e | 0;
       };
       Sha13.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(20);
+        var H2 = Buffer2.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -31755,10 +31755,10 @@
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         1899447441,
@@ -31899,7 +31899,7 @@
         this._h = h2 + this._h | 0;
       };
       Sha2564.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(32);
+        var H2 = Buffer2.allocUnsafe(32);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -31918,11 +31918,11 @@
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var W2 = new Array(64);
       function Sha224() {
         this.init();
@@ -31942,7 +31942,7 @@
         return this;
       };
       Sha224.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(28);
+        var H2 = Buffer2.allocUnsafe(28);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -31960,10 +31960,10 @@
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         3609767458,
@@ -32281,7 +32281,7 @@
         this._hh = this._hh + hh2 + getCarry(this._hl, hl) | 0;
       };
       Sha512.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(64);
+        var H2 = Buffer2.allocUnsafe(64);
         function writeInt64BE(h2, l2, offset) {
           H2.writeInt32BE(h2, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -32304,11 +32304,11 @@
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var W2 = new Array(160);
       function Sha384() {
         this.init();
@@ -32336,7 +32336,7 @@
         return this;
       };
       Sha384.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(48);
+        var H2 = Buffer2.allocUnsafe(48);
         function writeInt64BE(h2, l2, offset) {
           H2.writeInt32BE(h2, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -32357,7 +32357,7 @@
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -32379,8 +32379,8 @@
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
       var inherits = require_inherits_browser();
@@ -32447,7 +32447,7 @@
         done(err);
       };
       CipherBase.prototype._finalOrDigest = function(outputEnc) {
-        var outData = this.__final() || Buffer3.alloc(0);
+        var outData = this.__final() || Buffer2.alloc(0);
         if (outputEnc) {
           outData = this._toString(outData, outputEnc, true);
         }
@@ -32475,7 +32475,7 @@
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -32505,26 +32505,26 @@
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer2.alloc(128);
       var blocksize = 64;
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer3.from(key);
+          key = Buffer2.from(key);
         }
         this._alg = alg;
         this._key = key;
         if (key.length > blocksize) {
           key = alg(key);
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer2.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer2.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer2.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -32536,8 +32536,8 @@
         this._hash.push(data);
       };
       Hmac.prototype._final = function() {
-        var h2 = this._alg(Buffer3.concat(this._hash));
-        return this._alg(Buffer3.concat([this._opad, h2]));
+        var h2 = this._alg(Buffer2.concat(this._hash));
+        return this._alg(Buffer2.concat([this._opad, h2]));
       };
       module.exports = Hmac;
     }
@@ -32546,7 +32546,7 @@
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -32558,19 +32558,19 @@
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer2.alloc(128);
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer3.from(key);
+          key = Buffer2.from(key);
         }
         var blocksize = alg === "sha512" || alg === "sha384" ? 128 : 64;
         this._alg = alg;
@@ -32579,10 +32579,10 @@
           var hash = alg === "rmd160" ? new RIPEMD160() : sha(alg);
           key = hash.update(key).digest();
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer2.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer2.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer2.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -32774,7 +32774,7 @@
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -32783,7 +32783,7 @@
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -32807,7 +32807,7 @@
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -32826,14 +32826,14 @@
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding, name) {
-        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer2.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError(name + " must be a string, a Buffer, a Uint8Array, or a DataView");
@@ -32845,15 +32845,15 @@
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var toBuffer = require_to_buffer3();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer2.alloc(128);
       var sizes = {
         __proto__: null,
         md5: 16,
@@ -32896,15 +32896,15 @@
         if (key.length > blocksize) {
           key = hash(key);
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer2.concat([key, ZEROS], blocksize);
         }
-        var ipad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
-        var opad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
+        var ipad = Buffer2.allocUnsafe(blocksize + sizes[alg]);
+        var opad = Buffer2.allocUnsafe(blocksize + sizes[alg]);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
         }
-        var ipad1 = Buffer3.allocUnsafe(blocksize + saltLen + 4);
+        var ipad1 = Buffer2.allocUnsafe(blocksize + saltLen + 4);
         ipad.copy(ipad1, 0, 0, blocksize);
         this.ipad1 = ipad1;
         this.ipad2 = ipad;
@@ -32931,8 +32931,8 @@
           throw new TypeError("Digest algorithm not supported: " + digest);
         }
         var hmac2 = new Hmac(mappedDigest, password, salt.length);
-        var DK = Buffer3.allocUnsafe(keylen);
-        var block1 = Buffer3.allocUnsafe(salt.length + 4);
+        var DK = Buffer2.allocUnsafe(keylen);
+        var block1 = Buffer2.allocUnsafe(salt.length + 4);
         salt.copy(block1, 0, 0, salt.length);
         var destPos = 0;
         var hLen = size;
@@ -32960,8 +32960,8 @@
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var sync = require_sync_browser();
@@ -33007,7 +33007,7 @@
             }
           }, key, length << 3);
         }).then(function(res) {
-          return Buffer3.from(res);
+          return Buffer2.from(res);
         });
       }
       function checkNative(algo) {
@@ -33020,7 +33020,7 @@
         if (checks[algo] !== void 0) {
           return checks[algo];
         }
-        ZERO_BUF = ZERO_BUF || Buffer3.alloc(8);
+        ZERO_BUF = ZERO_BUF || Buffer2.alloc(8);
         var prom = browserPbkdf2(ZERO_BUF, ZERO_BUF, 10, 128, algo).then(
           function() {
             return true;
@@ -33083,7 +33083,7 @@
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -33093,7 +33093,7 @@
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -33859,7 +33859,7 @@
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -33876,7 +33876,7 @@
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -33985,7 +33985,7 @@
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -34113,7 +34113,7 @@
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -34169,7 +34169,7 @@
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -34218,7 +34218,7 @@
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -34230,11 +34230,11 @@
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var modes = {
         "des-ede3-cbc": des.CBC.instantiate(des.EDE),
         "des-ede3": des.EDE,
@@ -34258,15 +34258,15 @@
           type = "encrypt";
         }
         var key = opts.key;
-        if (!Buffer3.isBuffer(key)) {
-          key = Buffer3.from(key);
+        if (!Buffer2.isBuffer(key)) {
+          key = Buffer2.from(key);
         }
         if (modeName === "des-ede" || modeName === "des-ede-cbc") {
-          key = Buffer3.concat([key, key.slice(0, 8)]);
+          key = Buffer2.concat([key, key.slice(0, 8)]);
         }
         var iv = opts.iv;
-        if (!Buffer3.isBuffer(iv)) {
-          iv = Buffer3.from(iv);
+        if (!Buffer2.isBuffer(iv)) {
+          iv = Buffer2.from(iv);
         }
         this._des = mode.create({
           key,
@@ -34275,10 +34275,10 @@
         });
       }
       DES.prototype._update = function(data) {
-        return Buffer3.from(this._des.update(data));
+        return Buffer2.from(this._des.update(data));
       };
       DES.prototype._final = function() {
-        return Buffer3.from(this._des.final());
+        return Buffer2.from(this._des.final());
       };
     }
   });
@@ -34286,7 +34286,7 @@
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -34299,7 +34299,7 @@
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -34314,7 +34314,7 @@
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -34333,30 +34333,30 @@
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
         var len = data.length;
         var out = xor(data, self2._cache);
         self2._cache = self2._cache.slice(len);
-        self2._prev = Buffer3.concat([self2._prev, decrypt ? data : out]);
+        self2._prev = Buffer2.concat([self2._prev, decrypt ? data : out]);
         return out;
       }
       exports.encrypt = function(self2, data, decrypt) {
-        var out = Buffer3.allocUnsafe(0);
+        var out = Buffer2.allocUnsafe(0);
         var len;
         while (data.length) {
           if (self2._cache.length === 0) {
             self2._cache = self2._cipher.encryptBlock(self2._prev);
-            self2._prev = Buffer3.allocUnsafe(0);
+            self2._prev = Buffer2.allocUnsafe(0);
           }
           if (self2._cache.length <= data.length) {
             len = self2._cache.length;
-            out = Buffer3.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
+            out = Buffer2.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
             data = data.slice(len);
           } else {
-            out = Buffer3.concat([out, encryptStart(self2, data, decrypt)]);
+            out = Buffer2.concat([out, encryptStart(self2, data, decrypt)]);
             break;
           }
         }
@@ -34368,20 +34368,20 @@
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
         var out = pad[0] ^ byteParam;
-        self2._prev = Buffer3.concat([
+        self2._prev = Buffer2.concat([
           self2._prev.slice(1),
-          Buffer3.from([decrypt ? byteParam : out])
+          Buffer2.from([decrypt ? byteParam : out])
         ]);
         return out;
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer2.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -34394,8 +34394,8 @@
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
         var i2 = -1;
@@ -34414,8 +34414,8 @@
       function shiftIn(buffer, value) {
         var len = buffer.length;
         var i2 = -1;
-        var out = Buffer3.allocUnsafe(buffer.length);
-        buffer = Buffer3.concat([buffer, Buffer3.from([value])]);
+        var out = Buffer2.allocUnsafe(buffer.length);
+        buffer = Buffer2.concat([buffer, Buffer2.from([value])]);
         while (++i2 < len) {
           out[i2] = buffer[i2] << 1 | buffer[i2 + 1] >> 7;
         }
@@ -34423,7 +34423,7 @@
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer2.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -34436,7 +34436,7 @@
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -34456,7 +34456,7 @@
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -34478,9 +34478,9 @@
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
       function getBlock(self2) {
         var out = self2._cipher.encryptBlockRaw(self2._prev);
@@ -34491,9 +34491,9 @@
       exports.encrypt = function(self2, chunk) {
         var chunkNum = Math.ceil(chunk.length / blockSize);
         var start = self2._cache.length;
-        self2._cache = Buffer3.concat([
+        self2._cache = Buffer2.concat([
           self2._cache,
-          Buffer3.allocUnsafe(chunkNum * blockSize)
+          Buffer2.allocUnsafe(chunkNum * blockSize)
         ]);
         for (var i2 = 0; i2 < chunkNum; i2++) {
           var out = getBlock(self2);
@@ -34710,7 +34710,7 @@
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -34733,10 +34733,10 @@
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
-        if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
+        if (!Buffer2.isBuffer(buf)) buf = Buffer2.from(buf);
         var len = buf.length / 4 | 0;
         var out = new Array(len);
         for (var i2 = 0; i2 < len; i2++) {
@@ -34876,7 +34876,7 @@
       };
       AES.prototype.encryptBlock = function(M2) {
         var out = this.encryptBlockRaw(M2);
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer2.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[1], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -34889,7 +34889,7 @@
         M2[1] = M2[3];
         M2[3] = m1;
         var out = cryptBlock(M2, this._invKeySchedule, G2.INV_SUB_MIX, G2.INV_SBOX, this._nRounds);
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer2.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[3], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -34908,9 +34908,9 @@
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
-      var ZEROES = Buffer3.alloc(16, 0);
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
+      var ZEROES = Buffer2.alloc(16, 0);
       function toArray(buf) {
         return [
           buf.readUInt32BE(0),
@@ -34920,7 +34920,7 @@
         ];
       }
       function fromArray(out) {
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer2.allocUnsafe(16);
         buf.writeUInt32BE(out[0] >>> 0, 0);
         buf.writeUInt32BE(out[1] >>> 0, 4);
         buf.writeUInt32BE(out[2] >>> 0, 8);
@@ -34929,8 +34929,8 @@
       }
       function GHASH(key) {
         this.h = key;
-        this.state = Buffer3.alloc(16, 0);
-        this.cache = Buffer3.allocUnsafe(0);
+        this.state = Buffer2.alloc(16, 0);
+        this.cache = Buffer2.allocUnsafe(0);
       }
       GHASH.prototype.ghash = function(block) {
         var i2 = -1;
@@ -34964,7 +34964,7 @@
         this.state = fromArray(Zi);
       };
       GHASH.prototype.update = function(buf) {
-        this.cache = Buffer3.concat([this.cache, buf]);
+        this.cache = Buffer2.concat([this.cache, buf]);
         var chunk;
         while (this.cache.length >= 16) {
           chunk = this.cache.slice(0, 16);
@@ -34974,7 +34974,7 @@
       };
       GHASH.prototype.final = function(abl, bl2) {
         if (this.cache.length) {
-          this.ghash(Buffer3.concat([this.cache, ZEROES], 16));
+          this.ghash(Buffer2.concat([this.cache, ZEROES], 16));
         }
         this.ghash(fromArray([0, abl, 0, bl2]));
         return this.state;
@@ -34986,9 +34986,9 @@
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       var GHASH = require_ghash();
@@ -35005,8 +35005,8 @@
       }
       function calcIv(self2, iv, ck2) {
         if (iv.length === 12) {
-          self2._finID = Buffer3.concat([iv, Buffer3.from([0, 0, 0, 1])]);
-          return Buffer3.concat([iv, Buffer3.from([0, 0, 0, 2])]);
+          self2._finID = Buffer2.concat([iv, Buffer2.from([0, 0, 0, 1])]);
+          return Buffer2.concat([iv, Buffer2.from([0, 0, 0, 2])]);
         }
         var ghash = new GHASH(ck2);
         var len = iv.length;
@@ -35014,28 +35014,28 @@
         ghash.update(iv);
         if (toPad) {
           toPad = 16 - toPad;
-          ghash.update(Buffer3.alloc(toPad, 0));
+          ghash.update(Buffer2.alloc(toPad, 0));
         }
-        ghash.update(Buffer3.alloc(8, 0));
+        ghash.update(Buffer2.alloc(8, 0));
         var ivBits = len * 8;
-        var tail = Buffer3.alloc(8);
+        var tail = Buffer2.alloc(8);
         tail.writeUIntBE(ivBits, 0, 8);
         ghash.update(tail);
         self2._finID = ghash.state;
-        var out = Buffer3.from(self2._finID);
+        var out = Buffer2.from(self2._finID);
         incr32(out);
         return out;
       }
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
-        var h2 = Buffer3.alloc(4, 0);
+        var h2 = Buffer2.alloc(4, 0);
         this._cipher = new aes.AES(key);
         var ck2 = this._cipher.encryptBlock(h2);
         this._ghash = new GHASH(ck2);
         iv = calcIv(this, iv, ck2);
-        this._prev = Buffer3.from(iv);
-        this._cache = Buffer3.allocUnsafe(0);
-        this._secCache = Buffer3.allocUnsafe(0);
+        this._prev = Buffer2.from(iv);
+        this._cache = Buffer2.allocUnsafe(0);
+        this._secCache = Buffer2.allocUnsafe(0);
         this._decrypt = decrypt;
         this._alen = 0;
         this._len = 0;
@@ -35048,7 +35048,7 @@
         if (!this._called && this._alen) {
           var rump = 16 - this._alen % 16;
           if (rump < 16) {
-            rump = Buffer3.alloc(rump, 0);
+            rump = Buffer2.alloc(rump, 0);
             this._ghash.update(rump);
           }
         }
@@ -35070,7 +35070,7 @@
         this._cipher.scrub();
       };
       StreamCipher.prototype.getAuthTag = function getAuthTag() {
-        if (this._decrypt || !Buffer3.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
+        if (this._decrypt || !Buffer2.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
         return this._authTag;
       };
       StreamCipher.prototype.setAuthTag = function setAuthTag(tag) {
@@ -35089,17 +35089,17 @@
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
-        this._cache = Buffer3.allocUnsafe(0);
-        this._secCache = Buffer3.allocUnsafe(0);
+        this._prev = Buffer2.from(iv);
+        this._cache = Buffer2.allocUnsafe(0);
+        this._secCache = Buffer2.allocUnsafe(0);
         this._decrypt = decrypt;
         this._mode = mode;
       }
@@ -35117,19 +35117,19 @@
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
-        if (!Buffer3.isBuffer(password)) password = Buffer3.from(password, "binary");
+        if (!Buffer2.isBuffer(password)) password = Buffer2.from(password, "binary");
         if (salt) {
-          if (!Buffer3.isBuffer(salt)) salt = Buffer3.from(salt, "binary");
+          if (!Buffer2.isBuffer(salt)) salt = Buffer2.from(salt, "binary");
           if (salt.length !== 8) throw new RangeError("salt should be Buffer with 8 byte length");
         }
         var keyLen = keyBits / 8;
-        var key = Buffer3.alloc(keyLen);
-        var iv = Buffer3.alloc(ivLen || 0);
-        var tmp = Buffer3.alloc(0);
+        var key = Buffer2.alloc(keyLen);
+        var iv = Buffer2.alloc(ivLen || 0);
+        var tmp = Buffer2.alloc(0);
         while (keyLen > 0 || ivLen > 0) {
           var hash = new MD5();
           hash.update(tmp);
@@ -35160,10 +35160,10 @@
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
       var aes = require_aes();
@@ -35173,7 +35173,7 @@
         Transform.call(this);
         this._cache = new Splitter();
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
+        this._prev = Buffer2.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -35187,9 +35187,9 @@
           thing = this._mode.encrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer3.concat(out);
+        return Buffer2.concat(out);
       };
-      var PADDING = Buffer3.alloc(16, 16);
+      var PADDING = Buffer2.alloc(16, 16);
       Cipher.prototype._final = function() {
         var chunk = this._cache.flush();
         if (this._autopadding) {
@@ -35207,10 +35207,10 @@
         return this;
       };
       function Splitter() {
-        this.cache = Buffer3.allocUnsafe(0);
+        this.cache = Buffer2.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer3.concat([this.cache, data]);
+        this.cache = Buffer2.concat([this.cache, data]);
       };
       Splitter.prototype.get = function() {
         if (this.cache.length > 15) {
@@ -35222,19 +35222,19 @@
       };
       Splitter.prototype.flush = function() {
         var len = 16 - this.cache.length;
-        var padBuff = Buffer3.allocUnsafe(len);
+        var padBuff = Buffer2.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           padBuff.writeUInt8(len, i2);
         }
-        return Buffer3.concat([this.cache, padBuff]);
+        return Buffer2.concat([this.cache, padBuff]);
       };
       function createCipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof password === "string") password = Buffer3.from(password);
+        if (typeof password === "string") password = Buffer2.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
-        if (typeof iv === "string") iv = Buffer3.from(iv);
+        if (typeof iv === "string") iv = Buffer2.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv);
@@ -35257,9 +35257,9 @@
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       var MODES = require_modes();
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
@@ -35271,7 +35271,7 @@
         this._cache = new Splitter();
         this._last = void 0;
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
+        this._prev = Buffer2.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -35285,7 +35285,7 @@
           thing = this._mode.decrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer3.concat(out);
+        return Buffer2.concat(out);
       };
       Decipher.prototype._final = function() {
         var chunk = this._cache.flush();
@@ -35300,10 +35300,10 @@
         return this;
       };
       function Splitter() {
-        this.cache = Buffer3.allocUnsafe(0);
+        this.cache = Buffer2.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer3.concat([this.cache, data]);
+        this.cache = Buffer2.concat([this.cache, data]);
       };
       Splitter.prototype.get = function(autoPadding) {
         var out;
@@ -35342,9 +35342,9 @@
       function createDecipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof iv === "string") iv = Buffer3.from(iv);
+        if (typeof iv === "string") iv = Buffer2.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
-        if (typeof password === "string") password = Buffer3.from(password);
+        if (typeof password === "string") password = Buffer2.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv, true);
@@ -35367,7 +35367,7 @@
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -35385,7 +35385,7 @@
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -35416,7 +35416,7 @@
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -35478,7 +35478,7 @@
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -35515,12 +35515,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -35955,8 +35955,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -38290,7 +38290,7 @@
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -38327,12 +38327,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -38767,8 +38767,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -41102,7 +41102,7 @@
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -41160,7 +41160,7 @@
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -41252,7 +41252,7 @@
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var randomBytes2 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -41389,7 +41389,7 @@
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -41536,7 +41536,7 @@
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -41576,7 +41576,7 @@
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -41613,12 +41613,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -42075,9 +42075,9 @@
         BN.prototype.toJSON = function toJSON() {
           return this.toString(16, 2);
         };
-        if (Buffer3) {
+        if (Buffer2) {
           BN.prototype.toBuffer = function toBuffer(endian, length) {
-            return this.toArrayLike(Buffer3, endian, length);
+            return this.toArrayLike(Buffer2, endian, length);
           };
         }
         BN.prototype.toArray = function toArray(endian, length) {
@@ -44469,10 +44469,10 @@
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser2();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       function getr(priv) {
         var len = priv.modulus.byteLength();
         var r2;
@@ -44498,7 +44498,7 @@
         var m1 = c1.redPow(priv.exponent1).fromRed();
         var m2 = c2.redPow(priv.exponent2).fromRed();
         var h2 = m1.isub(m2).imul(qinv).umod(p2).imul(q2);
-        return m2.iadd(h2).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer3, "be", len);
+        return m2.iadd(h2).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer2, "be", len);
       }
       crt.getr = getr;
       module.exports = crt;
@@ -44570,7 +44570,7 @@
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -44607,12 +44607,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -45047,8 +45047,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -47383,7 +47383,7 @@
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -47443,7 +47443,7 @@
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -47550,7 +47550,7 @@
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -47873,7 +47873,7 @@
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -48572,7 +48572,7 @@
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -48701,7 +48701,7 @@
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -49003,7 +49003,7 @@
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -49016,7 +49016,7 @@
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -49262,7 +49262,7 @@
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -49342,7 +49342,7 @@
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -49389,7 +49389,7 @@
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49462,7 +49462,7 @@
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49615,7 +49615,7 @@
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -49652,7 +49652,7 @@
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -50092,7 +50092,7 @@
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -50137,7 +50137,7 @@
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -50150,7 +50150,7 @@
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -50592,7 +50592,7 @@
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -50633,7 +50633,7 @@
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -50652,7 +50652,7 @@
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -51440,7 +51440,7 @@
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -51617,7 +51617,7 @@
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -51712,7 +51712,7 @@
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51807,7 +51807,7 @@
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51963,7 +51963,7 @@
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -52171,7 +52171,7 @@
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -52246,7 +52246,7 @@
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -52297,7 +52297,7 @@
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -52386,7 +52386,7 @@
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -52401,7 +52401,7 @@
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -52438,12 +52438,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -52878,8 +52878,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -55213,7 +55213,7 @@
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -55267,7 +55267,7 @@
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -55368,13 +55368,13 @@
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer2 = require_buffer().Buffer;
       function DecoderBuffer(base, options) {
         Reporter.call(this, options);
-        if (!Buffer3.isBuffer(base)) {
+        if (!Buffer2.isBuffer(base)) {
           this.error("Input not Buffer");
           return;
         }
@@ -55433,8 +55433,8 @@
           this.length = 1;
         } else if (typeof value === "string") {
           this.value = value;
-          this.length = Buffer3.byteLength(value);
-        } else if (Buffer3.isBuffer(value)) {
+          this.length = Buffer2.byteLength(value);
+        } else if (Buffer2.isBuffer(value)) {
           this.value = value;
           this.length = value.length;
         } else {
@@ -55444,7 +55444,7 @@
       exports.EncoderBuffer = EncoderBuffer;
       EncoderBuffer.prototype.join = function join2(out, offset) {
         if (!out)
-          out = new Buffer3(this.length);
+          out = new Buffer2(this.length);
         if (!offset)
           offset = 0;
         if (this.length === 0)
@@ -55459,7 +55459,7 @@
             out[offset] = this.value;
           else if (typeof this.value === "string")
             out.write(this.value, offset);
-          else if (Buffer3.isBuffer(this.value))
+          else if (Buffer2.isBuffer(this.value))
             this.value.copy(out, offset);
           offset += this.length;
         }
@@ -55471,7 +55471,7 @@
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -56005,7 +56005,7 @@
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -56017,7 +56017,7 @@
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -56064,7 +56064,7 @@
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -56083,7 +56083,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -56347,9 +56347,9 @@
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer2 = require_buffer().Buffer;
       var DERDecoder = require_der2();
       function PEMDecoder(entity) {
         DERDecoder.call(this, entity);
@@ -56384,7 +56384,7 @@
           throw new Error("PEM section not found for: " + label);
         var base64 = lines.slice(start + 1, end).join("");
         base64.replace(/[^a-z0-9\+\/=]+/gi, "");
-        var input = new Buffer3(base64, "base64");
+        var input = new Buffer2(base64, "base64");
         return DERDecoder.prototype.decode.call(this, input, options);
       };
     }
@@ -56393,7 +56393,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -56403,9 +56403,9 @@
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer2 = require_buffer().Buffer;
       var asn1 = require_asn1();
       var base = asn1.base;
       var der = asn1.constants.der;
@@ -56427,7 +56427,7 @@
       DERNode.prototype._encodeComposite = function encodeComposite(tag, primitive, cls, content) {
         var encodedTag = encodeTag(tag, primitive, cls, this.reporter);
         if (content.length < 128) {
-          var header = new Buffer3(2);
+          var header = new Buffer2(2);
           header[0] = encodedTag;
           header[1] = content.length;
           return this._createEncoderBuffer([header, content]);
@@ -56435,7 +56435,7 @@
         var lenOctets = 1;
         for (var i2 = content.length; i2 >= 256; i2 >>= 8)
           lenOctets++;
-        var header = new Buffer3(1 + 1 + lenOctets);
+        var header = new Buffer2(1 + 1 + lenOctets);
         header[0] = encodedTag;
         header[1] = 128 | lenOctets;
         for (var i2 = 1 + lenOctets, j2 = content.length; j2 > 0; i2--, j2 >>= 8)
@@ -56446,7 +56446,7 @@
         if (tag === "bitstr") {
           return this._createEncoderBuffer([str.unused | 0, str.data]);
         } else if (tag === "bmpstr") {
-          var buf = new Buffer3(str.length * 2);
+          var buf = new Buffer2(str.length * 2);
           for (var i2 = 0; i2 < str.length; i2++) {
             buf.writeUInt16BE(str.charCodeAt(i2), i2 * 2);
           }
@@ -56497,7 +56497,7 @@
           for (size++; ident >= 128; ident >>= 7)
             size++;
         }
-        var objid = new Buffer3(size);
+        var objid = new Buffer2(size);
         var offset = objid.length - 1;
         for (var i2 = id.length - 1; i2 >= 0; i2--) {
           var ident = id[i2];
@@ -56553,18 +56553,18 @@
           }
           num = values[num];
         }
-        if (typeof num !== "number" && !Buffer3.isBuffer(num)) {
+        if (typeof num !== "number" && !Buffer2.isBuffer(num)) {
           var numArray = num.toArray();
           if (!num.sign && numArray[0] & 128) {
             numArray.unshift(0);
           }
-          num = new Buffer3(numArray);
+          num = new Buffer2(numArray);
         }
-        if (Buffer3.isBuffer(num)) {
+        if (Buffer2.isBuffer(num)) {
           var size = num.length;
           if (num.length === 0)
             size++;
-          var out = new Buffer3(size);
+          var out = new Buffer2(size);
           num.copy(out);
           if (num.length === 0)
             out[0] = 0;
@@ -56585,7 +56585,7 @@
         if (out[0] & 128) {
           out.unshift(0);
         }
-        return this._createEncoderBuffer(new Buffer3(out));
+        return this._createEncoderBuffer(new Buffer2(out));
       };
       DERNode.prototype._encodeBool = function encodeBool(value) {
         return this._createEncoderBuffer(value ? 255 : 0);
@@ -56635,7 +56635,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -56659,7 +56659,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -56669,7 +56669,7 @@
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -56684,7 +56684,7 @@
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -56764,7 +56764,7 @@
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -56898,30 +56898,30 @@
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
       var evp = require_evp_bytestokey();
       var ciphers = require_browser7();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function(okey, password) {
         var key = okey.toString();
         var match = key.match(findProc);
         var decrypted;
         if (!match) {
           var match2 = key.match(fullRegex);
-          decrypted = Buffer3.from(match2[2].replace(/[\r\n]/g, ""), "base64");
+          decrypted = Buffer2.from(match2[2].replace(/[\r\n]/g, ""), "base64");
         } else {
           var suite = "aes" + match[1];
-          var iv = Buffer3.from(match[2], "hex");
-          var cipherText = Buffer3.from(match[3].replace(/[\r\n]/g, ""), "base64");
+          var iv = Buffer2.from(match[2], "hex");
+          var cipherText = Buffer2.from(match[3].replace(/[\r\n]/g, ""), "base64");
           var cipherKey = evp(password, iv.slice(0, 8), parseInt(match[1], 10)).key;
           var out = [];
           var cipher = ciphers.createDecipheriv(suite, cipherKey, iv);
           out.push(cipher.update(cipherText));
           out.push(cipher["final"]());
-          decrypted = Buffer3.concat(out);
+          decrypted = Buffer2.concat(out);
         }
         var tag = key.match(startRegex)[1];
         return {
@@ -56936,13 +56936,13 @@
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
       var ciphers = require_browser7();
       var pbkdf2Sync2 = require_browser6().pbkdf2Sync;
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       function decrypt(data, password) {
         var salt = data.algorithm.decrypt.kde.kdeparams.salt;
         var iters = parseInt(data.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
@@ -56955,16 +56955,16 @@
         var out = [];
         out.push(cipher.update(cipherText));
         out.push(cipher["final"]());
-        return Buffer3.concat(out);
+        return Buffer2.concat(out);
       }
       function parseKeys(buffer) {
         var password;
-        if (typeof buffer === "object" && !Buffer3.isBuffer(buffer)) {
+        if (typeof buffer === "object" && !Buffer2.isBuffer(buffer)) {
           password = buffer.passphrase;
           buffer = buffer.key;
         }
         if (typeof buffer === "string") {
-          buffer = Buffer3.from(buffer);
+          buffer = Buffer2.from(buffer);
         }
         var stripped = fixProc(buffer, password);
         var type = stripped.tag;
@@ -57065,8 +57065,8 @@
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
       var EC = require_elliptic().ec;
@@ -57093,7 +57093,7 @@
         if (key.padding !== void 0 && key.padding !== RSA_PKCS1_PADDING) {
           throw new Error("illegal or unsupported padding mode");
         }
-        hash = Buffer3.concat([tag, hash]);
+        hash = Buffer2.concat([tag, hash]);
         var len = priv.modulus.byteLength();
         var pad = [0, 1];
         while (hash.length + pad.length + 1 < len) {
@@ -57115,7 +57115,7 @@
         var curve = new EC(curveId);
         var key = curve.keyFromPrivate(priv.privateKey);
         var out = key.sign(hash);
-        return Buffer3.from(out.toDER());
+        return Buffer2.from(out.toDER());
       }
       function dsaSign(hash, priv, algo) {
         var x2 = priv.params.priv_key;
@@ -57155,22 +57155,22 @@
           r2.length
         ];
         res = res.concat(r2, [2, s2.length], s2);
-        return Buffer3.from(res);
+        return Buffer2.from(res);
       }
       function getKey(x2, q2, hash, algo) {
-        x2 = Buffer3.from(x2.toArray());
+        x2 = Buffer2.from(x2.toArray());
         if (x2.length < q2.byteLength()) {
-          var zeros = Buffer3.alloc(q2.byteLength() - x2.length);
-          x2 = Buffer3.concat([zeros, x2]);
+          var zeros = Buffer2.alloc(q2.byteLength() - x2.length);
+          x2 = Buffer2.concat([zeros, x2]);
         }
         var hlen = hash.length;
         var hbits = bits2octets(hash, q2);
-        var v2 = Buffer3.alloc(hlen);
+        var v2 = Buffer2.alloc(hlen);
         v2.fill(1);
-        var k2 = Buffer3.alloc(hlen);
-        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([0])).update(x2).update(hbits).digest();
+        var k2 = Buffer2.alloc(hlen);
+        k2 = createHmac(algo, k2).update(v2).update(Buffer2.from([0])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
-        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([1])).update(x2).update(hbits).digest();
+        k2 = createHmac(algo, k2).update(v2).update(Buffer2.from([1])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
         return { k: k2, v: v2 };
       }
@@ -57185,10 +57185,10 @@
       function bits2octets(bits, q2) {
         bits = bits2int(bits, q2);
         bits = bits.mod(q2);
-        var out = Buffer3.from(bits.toArray());
+        var out = Buffer2.from(bits.toArray());
         if (out.length < q2.byteLength()) {
-          var zeros = Buffer3.alloc(q2.byteLength() - out.length);
-          out = Buffer3.concat([zeros, out]);
+          var zeros = Buffer2.alloc(q2.byteLength() - out.length);
+          out = Buffer2.concat([zeros, out]);
         }
         return out;
       }
@@ -57196,13 +57196,13 @@
         var t8;
         var k2;
         do {
-          t8 = Buffer3.alloc(0);
+          t8 = Buffer2.alloc(0);
           while (t8.length * 8 < q2.bitLength()) {
             kv.v = createHmac(algo, kv.k).update(kv.v).digest();
-            t8 = Buffer3.concat([t8, kv.v]);
+            t8 = Buffer2.concat([t8, kv.v]);
           }
           k2 = bits2int(t8, q2);
-          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer3.from([0])).digest();
+          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer2.from([0])).digest();
           kv.v = createHmac(algo, kv.k).update(kv.v).digest();
         } while (k2.cmp(q2) !== -1);
         return k2;
@@ -57220,8 +57220,8 @@
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
       var parseKeys = require_parse_asn1();
@@ -57242,7 +57242,7 @@
         if (signType !== "rsa" && signType !== "ecdsa/rsa") {
           throw new Error("wrong public key type");
         }
-        hash = Buffer3.concat([tag, hash]);
+        hash = Buffer2.concat([tag, hash]);
         var len = pub.modulus.byteLength();
         var pad = [1];
         var padNum = 0;
@@ -57255,11 +57255,11 @@
         while (++i2 < hash.length) {
           pad.push(hash[i2]);
         }
-        pad = Buffer3.from(pad);
+        pad = Buffer2.from(pad);
         var red = BN.mont(pub.modulus);
         sig = new BN(sig).toRed(red);
         sig = sig.redPow(new BN(pub.publicExponent));
-        sig = Buffer3.from(sig.fromRed().toArray());
+        sig = Buffer2.from(sig.fromRed().toArray());
         var out = padNum < 8 ? 1 : 0;
         len = Math.min(sig.length, pad.length);
         if (sig.length !== pad.length) {
@@ -57311,8 +57311,8 @@
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills674 = __toESM(require_polyfills());
+      var Buffer2 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
       var inherits = require_inherits_browser();
@@ -57320,7 +57320,7 @@
       var verify = require_verify();
       var algorithms = require_algorithms();
       Object.keys(algorithms).forEach(function(key) {
-        algorithms[key].id = Buffer3.from(algorithms[key].id, "hex");
+        algorithms[key].id = Buffer2.from(algorithms[key].id, "hex");
         algorithms[key.toLowerCase()] = algorithms[key];
       });
       function Sign(algorithm) {
@@ -57340,7 +57340,7 @@
         done();
       };
       Sign.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer2.from(data, enc) : data);
         return this;
       };
       Sign.prototype.sign = function signMethod(key, enc) {
@@ -57365,11 +57365,11 @@
         done();
       };
       Verify.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer2.from(data, enc) : data);
         return this;
       };
       Verify.prototype.verify = function verifyMethod(key, sig, enc) {
-        var sigBuffer = typeof sig === "string" ? Buffer3.from(sig, enc) : sig;
+        var sigBuffer = typeof sig === "string" ? Buffer2.from(sig, enc) : sig;
         this.end();
         var hash = this._hash.digest();
         return verify(sigBuffer, hash, key, this._signType, this._tag);
@@ -57392,7 +57392,7 @@
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -57429,12 +57429,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -57869,8 +57869,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -60204,7 +60204,7 @@
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -60323,21 +60323,21 @@
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
-        var t8 = Buffer3.alloc(0);
+        var t8 = Buffer2.alloc(0);
         var i2 = 0;
         var c2;
         while (t8.length < len) {
           c2 = i2ops(i2++);
-          t8 = Buffer3.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
+          t8 = Buffer2.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
         }
         return t8.slice(0, len);
       };
       function i2ops(c2) {
-        var out = Buffer3.allocUnsafe(4);
+        var out = Buffer2.allocUnsafe(4);
         out.writeUInt32BE(c2, 0);
         return out;
       }
@@ -60347,7 +60347,7 @@
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -60362,7 +60362,7 @@
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -60399,12 +60399,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer2;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer2 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer2 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -60839,8 +60839,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer2 !== "undefined");
+          return this.toArrayLike(Buffer2, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -63174,11 +63174,11 @@
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var BN = require_bn7();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
-        return Buffer3.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
+        return Buffer2.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
       }
       module.exports = withPublic;
     }
@@ -63187,7 +63187,7 @@
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser2();
       var createHash4 = require_browser4();
@@ -63196,7 +63196,7 @@
       var BN = require_bn7();
       var withPublic = require_withPublic();
       var crt = require_browserify_rsa();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function publicEncrypt(publicKey, msg, reverse) {
         var padding;
         if (publicKey.padding) {
@@ -63229,18 +63229,18 @@
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
         var mLen = msg.length;
-        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer2.alloc(0)).digest();
         var hLen = iHash.length;
         var hLen2 = 2 * hLen;
         if (mLen > k2 - hLen2 - 2) {
           throw new Error("message too long");
         }
-        var ps = Buffer3.alloc(k2 - mLen - hLen2 - 2);
+        var ps = Buffer2.alloc(k2 - mLen - hLen2 - 2);
         var dblen = k2 - hLen - 1;
         var seed = randomBytes2(hLen);
-        var maskedDb = xor(Buffer3.concat([iHash, ps, Buffer3.alloc(1, 1), msg], dblen), mgf(seed, dblen));
+        var maskedDb = xor(Buffer2.concat([iHash, ps, Buffer2.alloc(1, 1), msg], dblen), mgf(seed, dblen));
         var maskedSeed = xor(seed, mgf(maskedDb, hLen));
-        return new BN(Buffer3.concat([Buffer3.alloc(1), maskedSeed, maskedDb], k2));
+        return new BN(Buffer2.concat([Buffer2.alloc(1), maskedSeed, maskedDb], k2));
       }
       function pkcs1(key, msg, reverse) {
         var mLen = msg.length;
@@ -63250,14 +63250,14 @@
         }
         var ps;
         if (reverse) {
-          ps = Buffer3.alloc(k2 - mLen - 3, 255);
+          ps = Buffer2.alloc(k2 - mLen - 3, 255);
         } else {
           ps = nonZero(k2 - mLen - 3);
         }
-        return new BN(Buffer3.concat([Buffer3.from([0, reverse ? 1 : 2]), ps, Buffer3.alloc(1), msg], k2));
+        return new BN(Buffer2.concat([Buffer2.from([0, reverse ? 1 : 2]), ps, Buffer2.alloc(1), msg], k2));
       }
       function nonZero(len) {
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer2.allocUnsafe(len);
         var i2 = 0;
         var cache2 = randomBytes2(len * 2);
         var cur = 0;
@@ -63280,7 +63280,7 @@
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -63288,7 +63288,7 @@
       var crt = require_browserify_rsa();
       var createHash4 = require_browser4();
       var withPublic = require_withPublic();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer2 = require_safe_buffer().Buffer;
       module.exports = function privateDecrypt(privateKey, enc, reverse) {
         var padding;
         if (privateKey.padding) {
@@ -63309,8 +63309,8 @@
         } else {
           msg = crt(enc, key);
         }
-        var zBuffer = Buffer3.alloc(k2 - msg.length);
-        msg = Buffer3.concat([zBuffer, msg], k2);
+        var zBuffer = Buffer2.alloc(k2 - msg.length);
+        msg = Buffer2.concat([zBuffer, msg], k2);
         if (padding === 4) {
           return oaep(key, msg);
         } else if (padding === 1) {
@@ -63323,7 +63323,7 @@
       };
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
-        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer2.alloc(0)).digest();
         var hLen = iHash.length;
         if (msg[0] !== 0) {
           throw new Error("decryption error");
@@ -63367,8 +63367,8 @@
         return msg.slice(i2);
       }
       function compare(a2, b2) {
-        a2 = Buffer3.from(a2);
-        b2 = Buffer3.from(b2);
+        a2 = Buffer2.from(a2);
+        b2 = Buffer2.from(b2);
         var dif = 0;
         var len = a2.length;
         if (a2.length !== b2.length) {
@@ -63387,7 +63387,7 @@
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -63403,13 +63403,13 @@
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
       var safeBuffer = require_safe_buffer();
       var randombytes = require_browser2();
-      var Buffer3 = safeBuffer.Buffer;
+      var Buffer2 = safeBuffer.Buffer;
       var kBufferMaxLength = safeBuffer.kMaxLength;
       var crypto5 = window.crypto || window.msCrypto;
       var kMaxUint32 = Math.pow(2, 32) - 1;
@@ -63443,7 +63443,7 @@
         exports.randomFillSync = oldBrowser;
       }
       function randomFill(buf, offset, size, cb2) {
-        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer2.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         if (typeof offset === "function") {
@@ -63491,7 +63491,7 @@
         if (typeof offset === "undefined") {
           offset = 0;
         }
-        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer2.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         assertOffset(offset, buf.length);
@@ -63506,7 +63506,7 @@
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -63584,7 +63584,7 @@
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -90947,7 +90947,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills674 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -92486,44 +92486,52 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // src/modules/Social.ts
-  var import_polyfills673, SOCIAL_MODULE_DEFINITION, SocialManager;
-  var init_Social = __esm({
-    "src/modules/Social.ts"() {
+  // demo/banky/src/Banky.ts
+  var import_polyfills673, BANKY_MODULE_DEFINITION, BankyManager;
+  var init_Banky = __esm({
+    "demo/banky/src/Banky.ts"() {
       "use strict";
       import_polyfills673 = __toESM(require_polyfills());
-      init_SovereignS3nc();
-      init_Logger();
-      SOCIAL_MODULE_DEFINITION = {
-        name: "social",
+      BANKY_MODULE_DEFINITION = {
+        name: "banky",
         tables: [
           {
-            name: "posts",
+            name: "accounts",
             schema: `
                 id TEXT PRIMARY KEY,
-                content TEXT,
+                name TEXT,
+                image TEXT,
+                currency TEXT,
+                createdAt INTEGER,
+                ownerId TEXT,
+                groupId TEXT,
+                allowanceActive INTEGER DEFAULT 0,
+                allowanceAmount REAL DEFAULT 0,
+                allowanceInterval TEXT,
+                allowanceNextRun INTEGER
+            `
+          },
+          {
+            name: "transactions",
+            schema: `
+                id TEXT PRIMARY KEY,
+                date TEXT,
+                description TEXT,
+                amount REAL,
+                category TEXT,
                 timestamp INTEGER,
+                accountId TEXT,
                 userId TEXT
             `
           },
           {
-            name: "likes",
-            schema: `
-                postId TEXT,
-                userId TEXT,
-                timestamp INTEGER,
-                PRIMARY KEY (postId, userId)
-            `
-          },
-          {
-            name: "messages",
+            name: "goals",
             schema: `
                 id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                senderId TEXT,
-                recipientId TEXT,
-                image TEXT
+                name TEXT,
+                targetAmount REAL,
+                currentAmount REAL,
+                accountId TEXT
             `
           },
           {
@@ -92539,40 +92547,17 @@ ${toHex(hashedRequest)}`;
           {
             version: 1,
             sql: [
-              "ALTER TABLE posts ADD COLUMN image TEXT;",
-              "ALTER TABLE posts ADD COLUMN parentId TEXT;",
-              "ALTER TABLE posts ADD COLUMN parentUserId TEXT;",
-              "ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;",
-              "ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;"
-            ]
-          },
-          {
-            version: 2,
-            sql: [
-              "ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;",
-              "ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;"
-            ]
-          },
-          {
-            version: 3,
-            sql: [
-              "ALTER TABLE posts ADD COLUMN type TEXT DEFAULT 'text';"
-            ]
-          },
-          {
-            version: 4,
-            sql: [
-              "CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER);"
+              "ALTER TABLE accounts ADD COLUMN groupId TEXT;"
             ]
           }
         ]
       };
-      SocialManager = class _SocialManager {
+      BankyManager = class {
         constructor(db) {
           this.db = db;
           this.sqliteInstance = null;
-          this.MODULE_NAME = "social";
-          this.db.registerModule(SOCIAL_MODULE_DEFINITION);
+          this.MODULE_NAME = "banky";
+          this.db.registerModule(BANKY_MODULE_DEFINITION);
         }
         async getDb(date2, type, groupId, sharedKey) {
           let dbPath;
@@ -92580,6 +92565,8 @@ ${toHex(hashedRequest)}`;
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed");
           } else if (type === "group" && groupId) {
             dbPath = `public/groups/${groupId}/${date2}.db`;
+          } else if (type === "meta") {
+            dbPath = `private/modules/${this.MODULE_NAME}/meta.db`;
           } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           }
@@ -92588,7 +92575,7 @@ ${toHex(hashedRequest)}`;
             try {
               data = await this.db.decrypt(data, sharedKey);
             } catch (e2) {
-              Logger.warn(`[Social] Failed to decrypt group DB: ${e2.message}`);
+              console.warn(`[Banky] Failed to decrypt group DB: ${e2.message}`);
               data = null;
             }
           }
@@ -92603,6472 +92590,770 @@ ${toHex(hashedRequest)}`;
           this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
         }
-        async postToGroup(groupId, sharedKey, content, image, type = "text") {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const db = await this.getDb(date2, "group", groupId, sharedKey);
-          const id = Math.random().toString(36).substring(7);
-          const timestamp = Date.now();
-          const userId = this.db.getConfig().paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, true);
-          }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
-          db.run(sql, [id, content, timestamp, userId, imagePath, type]);
+        async saveDb(db, date2, type, groupId, sharedKey) {
           const binary = db.export();
-          const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const encrypted = await this.db.encrypt(binary, sharedKey);
-          await this.db.getStorage().saveFile(dbPath, encrypted);
-          db.close();
-          this.db.emit(`group:${groupId}:update`, { path: dbPath });
-        }
-        async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
-          const db = await this.getDb(date2, "group", groupId, sharedKey);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const encrypted = await this.db.encrypt(binary, sharedKey);
-          await this.db.getStorage().saveFile(dbPath, encrypted);
-          db.close();
-          this.db.emit(`group:${groupId}:update`, { path: dbPath });
-        }
-        async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
-          const myId = this.db.getConfig().paths.userId;
-          if (authorId === myId) {
-            const db = await this.getDb(date2, "group", groupId, sharedKey);
-            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-            const binary = db.export();
-            const dbPath = `public/groups/${groupId}/${date2}.db`;
-            const encrypted = await this.db.encrypt(binary, sharedKey);
-            await this.db.getStorage().saveFile(dbPath, encrypted);
-            db.close();
-            this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          let dbPath;
+          let finalData = binary;
+          if (type === "group" && groupId && sharedKey) {
+            dbPath = `public/groups/${groupId}/${date2}.db`;
+            finalData = await this.db.encrypt(binary, sharedKey);
+          } else if (type === "meta") {
+            dbPath = `private/modules/${this.MODULE_NAME}/meta.db`;
           } else {
-            const db = await this.getDb(date2, "group", groupId, sharedKey);
-            db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
-            db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
-            const binary = db.export();
-            const dbPath = `public/groups/${groupId}/${date2}.db`;
-            const encrypted = await this.db.encrypt(binary, sharedKey);
-            await this.db.getStorage().saveFile(dbPath, encrypted);
-            db.close();
+            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          }
+          await this.db.getStorage().saveFile(dbPath, finalData);
+          db.close();
+          if (type === "group") {
             this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          } else if (type === "meta") {
+            this.db.emit(`${this.MODULE_NAME}:meta_update`, { path: dbPath });
+          } else {
+            this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
           }
         }
-        async getGroupPosts(groupId, date2) {
-          const posts = [];
-          const deletedPostIds = /* @__PURE__ */ new Set();
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const groups = await this.db.getGroups();
-          const group4 = groups.find((g2) => g2.id === groupId);
-          if (!group4) return posts;
-          const processModeration = (db, memberId) => {
-            try {
-              const memberRole = group4.members.find((m2) => m2.userId === memberId)?.role;
-              if (memberRole !== "owner" && memberRole !== "admin") return;
-              const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
-              if (res && res.length > 0) {
-                res[0].values.forEach((row) => deletedPostIds.add(row[0]));
-              }
-            } catch (e2) {
-            }
+        async createAccount(name, currency = "USD", image) {
+          const db = await this.getDb("", "meta");
+          const account = {
+            id: Math.random().toString(36).substring(7),
+            name,
+            currency,
+            image,
+            createdAt: Date.now(),
+            ownerId: this.db.getConfig().paths.userId
           };
-          const myPath = `public/groups/${groupId}/${date2}.db`;
-          const myData = await this.db.getStorage().getFile(myPath);
-          if (myData) {
-            try {
-              const decrypted = await this.db.decrypt(myData, group4.sharedKey);
-              const db = new this.sqliteInstance.Database(decrypted);
-              processModeration(db, this.db.getConfig().paths.userId);
-              db.close();
-            } catch (e2) {
-            }
-          }
-          for (const member2 of group4.members) {
-            if (member2.userId === this.db.getConfig().paths.userId) continue;
-            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-            const memberData = await this.db.getStorage().getFile(memberPath);
-            if (memberData) {
-              const db = new this.sqliteInstance.Database(memberData);
-              processModeration(db, member2.userId);
-              db.close();
-            }
-          }
-          if (myData) {
-            try {
-              const decrypted = await this.db.decrypt(myData, group4.sharedKey);
-              const db = new this.sqliteInstance.Database(decrypted);
-              posts.push(...await this._queryPosts(db, deletedPostIds));
-              db.close();
-            } catch (e2) {
-            }
-          }
-          for (const member2 of group4.members) {
-            if (member2.userId === this.db.getConfig().paths.userId) continue;
-            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-            const memberData = await this.db.getStorage().getFile(memberPath);
-            if (memberData) {
-              const db = new this.sqliteInstance.Database(memberData);
-              posts.push(...await this._queryPosts(db, deletedPostIds));
-              db.close();
-            }
-          }
-          posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          return posts;
-        }
-        async _queryPosts(db, deletedIds = /* @__PURE__ */ new Set()) {
-          try {
-            const res = db.exec("SELECT * FROM posts");
-            if (res && res.length > 0) {
-              const columns = res[0].columns;
-              return res[0].values.map((row) => {
-                const post = {};
-                columns.forEach((col, i2) => {
-                  let val = row[i2];
-                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
-                  post[col] = val;
-                });
-                return post;
-              }).filter((p2) => !deletedIds.has(p2.id) && !p2.isDeleted);
-            }
-          } catch (e2) {
-          }
-          return [];
-        }
-        async like(postId, isPublic = true) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          const userId = this.db.getConfig().paths.userId;
-          const timestamp = Date.now();
-          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async post(content, isPublic = true, image, parentId, parentUserId) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          const id = Math.random().toString(36).substring(7);
-          const timestamp = Date.now();
-          const userId = this.db.getConfig().paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, isPublic);
-          }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)";
-          const params = [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null];
-          db.run(sql, params);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async editPost(postId, date2, newContent, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async deletePost(postId, date2, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async getMessageDb(date2, type) {
-          const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
-          const data = await this.db.getStorage().getFile(path2);
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) {
-            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          }
-          const db = new this.sqliteInstance.Database(data || void 0);
-          this.db.applyModuleSchema(db, this.MODULE_NAME);
-          return db;
-        }
-        async sendDirectMessage(recipientId, content, image) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const id = Math.random().toString(36).substring(7);
-          const timestamp = Date.now();
-          const senderId = this.db.getConfig().paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, true);
-          }
-          const message = { id, content, timestamp, senderId, recipientId, image: imagePath || void 0, isEdited: false, isDeleted: false };
-          await this._saveAndSendDM(recipientId, message, date2);
-        }
-        async _saveAndSendDM(recipientId, message, date2) {
-          const outboxDb = await this.getMessageDb(date2, "outbox");
-          outboxDb.run(
-            "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0]
+          db.run(
+            `INSERT INTO accounts (id, name, currency, image, createdAt, ownerId) VALUES (?, ?, ?, ?, ?, ?)`,
+            [account.id, account.name, account.currency, account.image || null, account.createdAt, account.ownerId]
           );
-          const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-          await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
-          outboxDb.close();
-          const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date2}.db`, "public");
-          const publicDmData = await this.db.getStorage().getFile(publicDmPath);
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const publicDb = new this.sqliteInstance.Database(publicDmData || void 0);
-          publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
-          const registry = await this.db.getPublicRegistry();
-          let recipient = registry.find((u2) => u2.userId === recipientId);
-          if (!recipient) {
-            const following = await this.db.getFollowing();
-            const f2 = following.find((u2) => u2.userId === recipientId);
-            if (f2 && f2.publicKey) {
-              recipient = { userId: f2.userId, publicKey: f2.publicKey };
-            }
-          }
-          if (!recipient || !recipient.publicKey) throw new Error("Recipient public key not found (Try syncing or re-adding friend)");
-          const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
-          const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
-          publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)", [message.id, encrypted]);
-          await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
-          publicDb.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, outboxPath);
+          await this.saveDb(db, "", "meta");
+          return account;
         }
-        async editMessage(recipientId, messageId, date2, newContent) {
-          const timestamp = Date.now();
-          const senderId = this.db.getConfig().paths.userId;
-          const outboxDb = await this.getMessageDb(date2, "outbox");
-          const res = outboxDb.exec("SELECT image FROM messages WHERE id = ?", [messageId]);
-          let imagePath = null;
-          if (res && res.length > 0 && res[0].values.length > 0) {
-            imagePath = res[0].values[0][0];
-          }
-          outboxDb.close();
-          const message = {
-            id: messageId,
-            content: newContent,
-            timestamp,
-            senderId,
-            recipientId,
-            image: imagePath,
-            isEdited: true,
-            isDeleted: false
+        async addTransaction(accountId, description, amount, category, dateStr, groupId, sharedKey) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const syncDate = dateStr || date2;
+          const type = groupId ? "group" : "private";
+          const db = await this.getDb(syncDate, type, groupId, sharedKey);
+          const tx = {
+            id: Math.random().toString(36).substring(7),
+            date: syncDate,
+            description,
+            amount,
+            category,
+            timestamp: Date.now(),
+            accountId,
+            userId: this.db.getConfig().paths.userId
           };
-          await this._saveAndSendDM(recipientId, message, date2);
+          db.run(
+            `INSERT INTO transactions (id, date, description, amount, category, timestamp, accountId, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [tx.id, tx.date, tx.description, tx.amount, tx.category, tx.timestamp, tx.accountId, tx.userId]
+          );
+          await this.saveDb(db, syncDate, type, groupId, sharedKey);
         }
-        async deleteMessage(recipientId, messageId, date2) {
-          const timestamp = Date.now();
-          const senderId = this.db.getConfig().paths.userId;
-          const message = {
-            id: messageId,
-            content: "",
-            timestamp,
-            senderId,
-            recipientId,
-            image: void 0,
-            isEdited: false,
-            isDeleted: true
-          };
-          await this._saveAndSendDM(recipientId, message, date2);
+        async renameAccount(accountId, newName) {
+          const db = await this.getDb("", "meta");
+          db.run("UPDATE accounts SET name = ? WHERE id = ?", [newName, accountId]);
+          await this.saveDb(db, "", "meta");
         }
-        async sync() {
-          await this.db.sync();
+        async updateAccountImage(accountId, image) {
+          const db = await this.getDb("", "meta");
+          db.run("UPDATE accounts SET image = ? WHERE id = ?", [image, accountId]);
+          await this.saveDb(db, "", "meta");
         }
-        async comment(parentId, parentUserId, content, image) {
-          await this.post(content, true, image, parentId, parentUserId);
+        async deleteAccount(accountId) {
+          const db = await this.getDb("", "meta");
+          db.run("DELETE FROM accounts WHERE id = ?", [accountId]);
+          db.run("DELETE FROM goals WHERE accountId = ?", [accountId]);
+          await this.saveDb(db, "", "meta");
         }
-        async getInboxMessages(days = 5) {
-          const messages = [];
-          const following = await this.db.getFollowing();
+        async getAccounts() {
+          const db = await this.getDb("", "meta");
+          const res = db.exec("SELECT * FROM accounts");
+          const accounts = [];
+          if (res.length > 0) {
+            const cols = res[0].columns;
+            res[0].values.forEach((row) => {
+              const acc = {};
+              cols.forEach((c2, i2) => acc[c2] = row[i2]);
+              accounts.push(acc);
+            });
+          }
+          db.close();
+          return accounts;
+        }
+        async getTransactions(accountId, days = 365, groupId) {
+          const transactions = [];
           const dates = [];
           for (let i2 = 0; i2 < days; i2++) {
             const d2 = /* @__PURE__ */ new Date();
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(d2.toISOString().split("T")[0]);
           }
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const myId = this.db.getConfig().paths.userId;
-          for (const user of following) {
-            const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
-            for (const date2 of dates) {
-              const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date2}.db`, "followed");
-              const data = await this.db.getStorage().getFile(localPath);
-              if (data) {
-                const db = new this.sqliteInstance.Database(data);
-                try {
-                  const res = db.exec("SELECT encrypted_data FROM messages");
-                  if (res && res.length > 0) {
-                    for (const row of res[0].values) {
-                      try {
-                        const decrypted = await this.db.decrypt(row[0], sharedSecret);
-                        if (decrypted) {
-                          const parsed = JSON.parse(new TextDecoder().decode(decrypted));
-                          if (typeof parsed.isEdited === "number") parsed.isEdited = !!parsed.isEdited;
-                          if (typeof parsed.isDeleted === "number") parsed.isDeleted = !!parsed.isDeleted;
-                          messages.push(parsed);
-                        }
-                      } catch (e2) {
-                      }
-                    }
-                  }
-                } catch (e2) {
-                }
-                db.close();
-              }
+          const availableDates = /* @__PURE__ */ new Set();
+          const groups = await this.db.getGroups();
+          const group4 = groupId ? groups.find((g2) => g2.id === groupId) : null;
+          if (groupId && group4) {
+            const myFiles = await this.db.getStorage().listFiles(`public/groups/${groupId}/`);
+            myFiles.forEach((f2) => {
+              if (f2.endsWith(".db")) availableDates.add(f2.split("/").pop().replace(".db", ""));
+            });
+            for (const member2 of group4.members) {
+              if (member2.userId === this.db.getConfig().paths.userId) continue;
+              const memberFiles = await this.db.getStorage().listFiles(`followed/${member2.userId}/groups/${groupId}/`);
+              memberFiles.forEach((f2) => {
+                if (f2.endsWith(".db")) availableDates.add(f2.split("/").pop().replace(".db", ""));
+              });
             }
+          } else {
+            const privateFiles = await this.db.getStorage().listFiles(this.db.getModulePath(this.MODULE_NAME, "", "private"));
+            privateFiles.forEach((f2) => {
+              if (f2.endsWith(".db")) availableDates.add(f2.split("/").pop().replace(".db", ""));
+            });
+          }
+          const initSqlJs = globalThis.initSqlJs;
+          if (!this.sqliteInstance) {
+            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           }
           for (const date2 of dates) {
-            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-            const data = await this.db.getStorage().getFile(outboxPath);
-            if (data) {
-              const db = new this.sqliteInstance.Database(data);
-              try {
-                const res = db.exec("SELECT * FROM messages");
-                if (res && res.length > 0) {
-                  const columns = res[0].columns;
-                  const myMsgs = res[0].values.map((row) => {
-                    const msg = {};
-                    columns.forEach((col, i2) => {
-                      let val = row[i2];
-                      if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
-                        val = !!val;
-                      }
-                      msg[col] = val;
-                    });
-                    return msg;
-                  });
-                  messages.push(...myMsgs);
+            if (!availableDates.has(date2)) continue;
+            if (groupId && group4) {
+              const myDb = await this.getDb(date2, "group", groupId, group4.sharedKey);
+              transactions.push(...this.queryTransactions(myDb, accountId));
+              myDb.close();
+              for (const member2 of group4.members) {
+                if (member2.userId === this.db.getConfig().paths.userId) continue;
+                if (member2.status !== "joined") continue;
+                const path2 = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
+                const data = await this.db.getStorage().getFile(path2);
+                if (data) {
+                  try {
+                    const db = new this.sqliteInstance.Database(data);
+                    transactions.push(...this.queryTransactions(db, accountId));
+                    db.close();
+                  } catch (e2) {
+                    console.error("DB init failed for member data:", e2);
+                  }
                 }
-              } catch (e2) {
               }
+            } else {
+              const db = await this.getDb(date2, "private");
+              transactions.push(...this.queryTransactions(db, accountId));
               db.close();
             }
           }
-          const msgMap = /* @__PURE__ */ new Map();
-          for (const m2 of messages) {
-            const existing = msgMap.get(m2.id);
-            if (!existing || m2.timestamp > existing.timestamp) {
-              msgMap.set(m2.id, m2);
-            }
-          }
-          const finalMsgs = Array.from(msgMap.values());
-          finalMsgs.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          return finalMsgs;
+          return transactions.sort((a2, b2) => b2.timestamp - a2.timestamp);
         }
-        async updateProfile(name, bio, avatar) {
-          let finalAvatar = avatar;
-          if (avatar && avatar.startsWith("data:image")) {
-            try {
-              finalAvatar = await _SocialManager.compressImage(avatar, 100 * 1024);
-            } catch (e2) {
-              Logger.warn(`[Social] Failed to compress avatar: ${e2.message}`);
-            }
-          }
-          const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.getConfig().paths.userId };
-          const data = new TextEncoder().encode(JSON.stringify(profile));
-          await this.db.getStorage().savePublicUserFile(data);
-          this.db.onModuleUpdate(this.MODULE_NAME, "public/user.json");
-        }
-        static async compressImage(dataUrl, targetSizeBytes) {
-          if (typeof document === "undefined") return dataUrl;
-          return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.src = dataUrl;
-            img.onload = () => {
-              const canvas = document.createElement("canvas");
-              let width = img.width;
-              let height = img.height;
-              const MAX_DIM = 1024;
-              if (width > MAX_DIM || height > MAX_DIM) {
-                if (width > height) {
-                  height = height / width * MAX_DIM;
-                  width = MAX_DIM;
-                } else {
-                  width = width / height * MAX_DIM;
-                  height = MAX_DIM;
-                }
-              }
-              canvas.width = width;
-              canvas.height = height;
-              const ctx = canvas.getContext("2d");
-              if (!ctx) return reject(new Error("Canvas context failed"));
-              ctx.drawImage(img, 0, 0, width, height);
-              let quality = 0.9;
-              let result = dataUrl;
-              const attempt = () => {
-                result = canvas.toDataURL("image/jpeg", quality);
-                const estimatedSize = result.length * 0.75;
-                if (estimatedSize > targetSizeBytes && quality > 0.1) {
-                  quality -= 0.1;
-                  attempt();
-                } else {
-                  resolve(result);
-                }
-              };
-              attempt();
-            };
-            img.onerror = (e2) => reject(e2);
-          });
-        }
-        async getProfile(userId) {
-          const myId = this.db.getConfig().paths.userId;
-          const targetId = userId || myId;
-          if (targetId === myId) {
-            const data = await this.db.getStorage().getPublicUserFile();
-            return data ? JSON.parse(new TextDecoder().decode(data)) : null;
-          }
-          const actualPath = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
-          const finalData = await this.db.getStorage().getFile(actualPath);
-          if (finalData) {
-            return JSON.parse(new TextDecoder().decode(finalData));
-          }
-          return null;
-        }
-        async syncOtherProfiles() {
-          const following = await this.db.getFollowing();
-          for (const user of following) {
-            const userRemote = this.db.createRemote(user.userId);
-            try {
-              const cachedEtag = await this.db.getStorage().getGenericRemoteHashCache(`${user.userId}:public/user.json`);
-              const result = await userRemote.downloadFile("public/user.json", cachedEtag || void 0);
-              if (result && !result.notModified && result.data) {
-                const data = result.data;
-                let finalData = data;
-                try {
-                  JSON.parse(new TextDecoder().decode(data));
-                } catch (e2) {
-                  try {
-                    finalData = await this.db.decrypt(data, user.publicKey);
-                  } catch (de) {
-                    continue;
-                  }
-                }
-                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/profile`, "followed");
-                await this.db.getStorage().saveFile(localPath, finalData);
-                if (result.etag) {
-                  await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:public/user.json`, result.etag);
-                }
-                this.db.onModuleUpdate(this.MODULE_NAME, localPath);
-              }
-            } catch (e2) {
-            }
-          }
-        }
-        async getPosts(date2, type) {
-          const db = await this.getDb(date2, type);
-          let posts = [];
+        queryTransactions(db, accountId) {
           try {
-            const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
-            if (res && res.length > 0) {
-              const columns = res[0].columns;
-              posts = res[0].values.map((row) => {
-                const post = {};
-                columns.forEach((col, i2) => {
-                  let val = row[i2];
-                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
-                    val = !!val;
-                  }
-                  post[col] = val;
-                });
-                if (!post.userId && type === "followed") {
-                  post.userId = date2.split("/")[0];
-                }
-                return post;
-              });
-            }
+            const res = db.exec("SELECT * FROM transactions WHERE accountId = ?", [accountId]);
+            if (res.length === 0) return [];
+            const cols = res[0].columns;
+            return res[0].values.map((row) => {
+              const tx = {};
+              cols.forEach((c2, i2) => tx[c2] = row[i2]);
+              return tx;
+            });
           } catch (e2) {
-            posts = [];
+            return [];
+          }
+        }
+        async linkAccountToGroup(accountId, groupId) {
+          const db = await this.getDb("", "meta");
+          db.run("UPDATE accounts SET groupId = ? WHERE id = ?", [groupId, accountId]);
+          await this.saveDb(db, "", "meta");
+        }
+        /**
+         * Copies all existing private transactions for an account into a shared group namespace.
+         */
+        async publishTransactionsToGroup(accountId, groupId, sharedKey) {
+          const prefix = this.db.getModulePath(this.MODULE_NAME, "", "private");
+          const files = await this.db.getStorage().listFiles(prefix);
+          const dates = files.map((f2) => f2.split("/").pop().replace(".db", ""));
+          for (const date2 of dates) {
+            const privateDb = await this.getDb(date2, "private");
+            const txs = this.queryTransactions(privateDb, accountId);
+            privateDb.close();
+            if (txs.length > 0) {
+              const groupDb = await this.getDb(date2, "group", groupId, sharedKey);
+              for (const tx of txs) {
+                groupDb.run(
+                  `INSERT OR REPLACE INTO transactions (id, date, description, amount, category, timestamp, accountId, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                  [tx.id, tx.date, tx.description, tx.amount, tx.category, tx.timestamp, groupId, tx.userId]
+                );
+              }
+              await this.saveDb(groupDb, date2, "group", groupId, sharedKey);
+            }
+          }
+        }
+        async createGoal(accountId, name, targetAmount) {
+          const db = await this.getDb("", "meta");
+          const goal = {
+            id: Math.random().toString(36).substring(7),
+            name,
+            targetAmount,
+            currentAmount: 0,
+            accountId
+          };
+          db.run(
+            `INSERT INTO goals (id, name, targetAmount, currentAmount, accountId) VALUES (?, ?, ?, ?, ?)`,
+            [goal.id, goal.name, goal.targetAmount, goal.currentAmount, goal.accountId]
+          );
+          await this.saveDb(db, "", "meta");
+          return goal;
+        }
+        async getGoals(accountId) {
+          const db = await this.getDb("", "meta");
+          const res = db.exec("SELECT * FROM goals WHERE accountId = ?", [accountId]);
+          const goals = [];
+          if (res.length > 0) {
+            const cols = res[0].columns;
+            res[0].values.forEach((row) => {
+              const goal = {};
+              cols.forEach((c2, i2) => goal[c2] = row[i2]);
+              goals.push(goal);
+            });
           }
           db.close();
-          return posts;
+          return goals;
         }
-        async enrichLikes(posts, days = 5) {
-          if (posts.length === 0) return;
-          const postMap = /* @__PURE__ */ new Map();
-          posts.forEach((p2) => {
-            p2.likesCount = 0;
-            p2.likedByMe = false;
-            postMap.set(p2.id, p2);
-          });
-          const myId = this.db.getConfig().paths.userId;
-          const following = await this.db.getFollowing();
-          const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(SovereignS3nc.getDateStr(d2));
-          }
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const processDb = async (date2, type) => {
-            const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-            const data = await this.db.getStorage().getFile(dbPath);
-            if (!data) return;
-            const db = new this.sqliteInstance.Database(data);
-            try {
-              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
-              if (tableCheck.length === 0) {
-                db.close();
-                return;
-              }
-              const res = db.exec("SELECT postId, userId FROM likes");
-              if (res && res.length > 0) {
-                for (const row of res[0].values) {
-                  const postId = row[0];
-                  const likerId = row[1];
-                  const post = postMap.get(postId);
-                  if (post) {
-                    post.likesCount = (post.likesCount || 0) + 1;
-                    if (likerId === myId) post.likedByMe = true;
-                  }
-                }
-              }
-            } catch (e2) {
-            }
-            db.close();
-          };
-          for (const date2 of dates) await processDb(date2, "public");
-          for (const user of following) {
-            for (const date2 of dates) await processDb(`${user.userId}/${date2}`, "followed");
-          }
+        async updateGoalAmount(goalId, amount) {
+          const db = await this.getDb("", "meta");
+          db.run("UPDATE goals SET currentAmount = currentAmount + ? WHERE id = ?", [amount, goalId]);
+          await this.saveDb(db, "", "meta");
         }
-      };
-    }
-  });
-
-  // src/adapters/WebRTCRemoteAdapter.ts
-  var import_polyfills674, import_buffer, WebRTCRemoteAdapter;
-  var init_WebRTCRemoteAdapter = __esm({
-    "src/adapters/WebRTCRemoteAdapter.ts"() {
-      "use strict";
-      import_polyfills674 = __toESM(require_polyfills());
-      init_Logger();
-      import_buffer = __toESM(require_buffer());
-      WebRTCRemoteAdapter = class {
-        constructor(peerId, prefix = "") {
-          this.cache = /* @__PURE__ */ new Map();
-          this.channels = /* @__PURE__ */ new Set();
-          this.pendingRequests = /* @__PURE__ */ new Map();
-          this.peerId = peerId;
-          this.prefix = prefix;
-          if (this.prefix && !this.prefix.endsWith("/")) {
-            this.prefix += "/";
-          }
+        async deleteGoal(goalId) {
+          const db = await this.getDb("", "meta");
+          db.run("DELETE FROM goals WHERE id = ?", [goalId]);
+          await this.saveDb(db, "", "meta");
         }
-        getKey(path2) {
-          return `${this.prefix}${path2}`;
-        }
-        /**
-         * Connects an RTCDataChannel (or any mock channel) to this adapter.
-         * @param sendFn A function that sends a string message to the peer.
-         * @returns A receiver function to be called when a message is received from the peer.
-         */
-        connectPeer(sendFn) {
-          const channel = { send: sendFn };
-          this.channels.add(channel);
-          return {
-            receive: (msg) => this.handleMessage(msg, channel)
-          };
-        }
-        /**
-         * Disconnects a channel.
-         */
-        disconnectPeer(receiver) {
-        }
-        handleMessage(msgStr, sourceChannel) {
-          try {
-            const msg = JSON.parse(msgStr);
-            const key = msg.path;
-            if (msg.type === "push") {
-              if (msg.data && msg.hash && msg.etag) {
-                const dataBuffer = import_buffer.Buffer.from(msg.data, "base64");
-                const existing = this.cache.get(key);
-                if (!existing || existing.etag !== msg.etag) {
-                  this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
-                  Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
-                  this.broadcast(msg, sourceChannel);
-                }
-              }
-            } else if (msg.type === "request") {
-              const entry = this.cache.get(key);
-              if (entry) {
-                const res = {
-                  type: "response",
-                  path: key,
-                  hash: entry.hash,
-                  etag: entry.etag,
-                  data: import_buffer.Buffer.from(entry.data).toString("base64"),
-                  reqId: msg.reqId,
-                  senderId: this.peerId
-                };
-                sourceChannel.send(JSON.stringify(res));
-              } else {
-                const res = {
-                  type: "not_found",
-                  path: key,
-                  reqId: msg.reqId,
-                  senderId: this.peerId
-                };
-                sourceChannel.send(JSON.stringify(res));
-              }
-            } else if (msg.type === "response" || msg.type === "not_found") {
-              if (msg.reqId && this.pendingRequests.has(msg.reqId)) {
-                this.pendingRequests.get(msg.reqId)(msg);
-              }
-            }
-          } catch (e2) {
-            Logger.warn(`[WebRTC] Failed to parse message: ${e2.message}`);
-          }
-        }
-        broadcast(msg, excludeChannel) {
-          const msgStr = JSON.stringify(msg);
-          for (const channel of this.channels) {
-            if (channel !== excludeChannel) {
-              try {
-                channel.send(msgStr);
-              } catch (e2) {
-              }
-            }
-          }
-        }
-        async uploadFile(path2, data, hash) {
-          const key = this.getKey(path2);
-          const fileHash = hash || import_buffer.Buffer.from(data).toString("hex").substring(0, 16);
-          const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
-          this.cache.set(key, { data, hash: fileHash, etag });
-          const msg = {
-            type: "push",
-            path: key,
-            hash: fileHash,
-            etag,
-            data: import_buffer.Buffer.from(data).toString("base64"),
-            senderId: this.peerId
-          };
-          Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
-          this.broadcast(msg);
-          return etag;
-        }
-        async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
-          const key = this.getKey(path2);
-          const local = this.cache.get(key);
-          if (local) {
-            if (ifNoneMatch && ifNoneMatch === local.etag) {
-              return { data: null, etag: local.etag, notModified: true };
-            }
-            return { data: local.data, etag: local.etag };
-          }
-          if (this.channels.size === 0) return null;
-          Logger.debug(`[WebRTC] Requesting ${key} from peers...`);
-          return new Promise((resolve) => {
-            const reqId = Math.random().toString(36).substring(7);
-            const timer = setTimeout(() => {
-              this.pendingRequests.delete(reqId);
-              resolve(null);
-            }, timeout);
-            let notFoundCount = 0;
-            const expectedCount = this.channels.size;
-            this.pendingRequests.set(reqId, (resMsg) => {
-              if (resMsg.type === "not_found") {
-                notFoundCount++;
-                if (notFoundCount >= expectedCount) {
-                  clearTimeout(timer);
-                  this.pendingRequests.delete(reqId);
-                  resolve(null);
-                }
-                return;
-              }
-              clearTimeout(timer);
-              this.pendingRequests.delete(reqId);
-              if (resMsg.data && resMsg.hash && resMsg.etag) {
-                const dataBuffer = import_buffer.Buffer.from(resMsg.data, "base64");
-                const u8Data = new Uint8Array(dataBuffer);
-                this.cache.set(key, { data: u8Data, hash: resMsg.hash, etag: resMsg.etag });
-                if (ifNoneMatch && ifNoneMatch === resMsg.etag) {
-                  resolve({ data: null, etag: resMsg.etag, notModified: true });
-                } else {
-                  resolve({ data: u8Data, etag: resMsg.etag });
-                }
-              } else {
-                resolve(null);
-              }
-            });
-            const reqMsg = {
-              type: "request",
-              path: key,
-              reqId,
-              senderId: this.peerId
-            };
-            this.broadcast(reqMsg);
-          });
-        }
-        async getFileHash(path2) {
-          const key = this.getKey(path2);
-          return this.cache.get(key)?.hash || null;
-        }
-        async getFileEtag(path2) {
-          const key = this.getKey(path2);
-          return this.cache.get(key)?.etag || null;
-        }
-      };
-    }
-  });
-
-  // node_modules/peerjs-js-binarypack/dist/binarypack.mjs
-  function $e8379818650e2442$var$concatArrayBuffers(bufs) {
-    let size = 0;
-    for (const buf of bufs) size += buf.byteLength;
-    const result = new Uint8Array(size);
-    let offset = 0;
-    for (const buf of bufs) {
-      const view = new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
-      result.set(view, offset);
-      offset += buf.byteLength;
-    }
-    return result;
-  }
-  function $0cfd7828ad59115f$export$417857010dc9287f(data) {
-    const unpacker = new $0cfd7828ad59115f$var$Unpacker(data);
-    return unpacker.unpack();
-  }
-  function $0cfd7828ad59115f$export$2a703dbb0cb35339(data) {
-    const packer = new $0cfd7828ad59115f$export$b9ec4b114aa40074();
-    const res = packer.pack(data);
-    if (res instanceof Promise) return res.then(() => packer.getBuffer());
-    return packer.getBuffer();
-  }
-  var import_polyfills675, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
-  var init_binarypack = __esm({
-    "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
-      import_polyfills675 = __toESM(require_polyfills(), 1);
-      $e8379818650e2442$export$93654d4f2d6cd524 = class {
-        constructor() {
-          this.encoder = new TextEncoder();
-          this._pieces = [];
-          this._parts = [];
-        }
-        append_buffer(data) {
-          this.flush();
-          this._parts.push(data);
-        }
-        append(data) {
-          this._pieces.push(data);
-        }
-        flush() {
-          if (this._pieces.length > 0) {
-            const buf = new Uint8Array(this._pieces);
-            this._parts.push(buf);
-            this._pieces = [];
-          }
-        }
-        toArrayBuffer() {
-          const buffer = [];
-          for (const part of this._parts) buffer.push(part);
-          return $e8379818650e2442$var$concatArrayBuffers(buffer).buffer;
-        }
-      };
-      $0cfd7828ad59115f$var$Unpacker = class {
-        constructor(data) {
-          this.index = 0;
-          this.dataBuffer = data;
-          this.dataView = new Uint8Array(this.dataBuffer);
-          this.length = this.dataBuffer.byteLength;
-        }
-        unpack() {
-          const type = this.unpack_uint8();
-          if (type < 128) return type;
-          else if ((type ^ 224) < 32) return (type ^ 224) - 32;
-          let size;
-          if ((size = type ^ 160) <= 15) return this.unpack_raw(size);
-          else if ((size = type ^ 176) <= 15) return this.unpack_string(size);
-          else if ((size = type ^ 144) <= 15) return this.unpack_array(size);
-          else if ((size = type ^ 128) <= 15) return this.unpack_map(size);
-          switch (type) {
-            case 192:
-              return null;
-            case 193:
-              return void 0;
-            case 194:
-              return false;
-            case 195:
-              return true;
-            case 202:
-              return this.unpack_float();
-            case 203:
-              return this.unpack_double();
-            case 204:
-              return this.unpack_uint8();
-            case 205:
-              return this.unpack_uint16();
-            case 206:
-              return this.unpack_uint32();
-            case 207:
-              return this.unpack_uint64();
-            case 208:
-              return this.unpack_int8();
-            case 209:
-              return this.unpack_int16();
-            case 210:
-              return this.unpack_int32();
-            case 211:
-              return this.unpack_int64();
-            case 212:
-              return void 0;
-            case 213:
-              return void 0;
-            case 214:
-              return void 0;
-            case 215:
-              return void 0;
-            case 216:
-              size = this.unpack_uint16();
-              return this.unpack_string(size);
-            case 217:
-              size = this.unpack_uint32();
-              return this.unpack_string(size);
-            case 218:
-              size = this.unpack_uint16();
-              return this.unpack_raw(size);
-            case 219:
-              size = this.unpack_uint32();
-              return this.unpack_raw(size);
-            case 220:
-              size = this.unpack_uint16();
-              return this.unpack_array(size);
-            case 221:
-              size = this.unpack_uint32();
-              return this.unpack_array(size);
-            case 222:
-              size = this.unpack_uint16();
-              return this.unpack_map(size);
-            case 223:
-              size = this.unpack_uint32();
-              return this.unpack_map(size);
-          }
-        }
-        unpack_uint8() {
-          const byte = this.dataView[this.index] & 255;
-          this.index++;
-          return byte;
-        }
-        unpack_uint16() {
-          const bytes = this.read(2);
-          const uint16 = (bytes[0] & 255) * 256 + (bytes[1] & 255);
-          this.index += 2;
-          return uint16;
-        }
-        unpack_uint32() {
-          const bytes = this.read(4);
-          const uint32 = ((bytes[0] * 256 + bytes[1]) * 256 + bytes[2]) * 256 + bytes[3];
-          this.index += 4;
-          return uint32;
-        }
-        unpack_uint64() {
-          const bytes = this.read(8);
-          const uint64 = ((((((bytes[0] * 256 + bytes[1]) * 256 + bytes[2]) * 256 + bytes[3]) * 256 + bytes[4]) * 256 + bytes[5]) * 256 + bytes[6]) * 256 + bytes[7];
-          this.index += 8;
-          return uint64;
-        }
-        unpack_int8() {
-          const uint8 = this.unpack_uint8();
-          return uint8 < 128 ? uint8 : uint8 - 256;
-        }
-        unpack_int16() {
-          const uint16 = this.unpack_uint16();
-          return uint16 < 32768 ? uint16 : uint16 - 65536;
-        }
-        unpack_int32() {
-          const uint32 = this.unpack_uint32();
-          return uint32 < 2 ** 31 ? uint32 : uint32 - 2 ** 32;
-        }
-        unpack_int64() {
-          const uint64 = this.unpack_uint64();
-          return uint64 < 2 ** 63 ? uint64 : uint64 - 2 ** 64;
-        }
-        unpack_raw(size) {
-          if (this.length < this.index + size) throw new Error(`BinaryPackFailure: index is out of range ${this.index} ${size} ${this.length}`);
-          const buf = this.dataBuffer.slice(this.index, this.index + size);
-          this.index += size;
-          return buf;
-        }
-        unpack_string(size) {
-          const bytes = this.read(size);
-          let i2 = 0;
-          let str = "";
-          let c2;
-          let code;
-          while (i2 < size) {
-            c2 = bytes[i2];
-            if (c2 < 160) {
-              code = c2;
-              i2++;
-            } else if ((c2 ^ 192) < 32) {
-              code = (c2 & 31) << 6 | bytes[i2 + 1] & 63;
-              i2 += 2;
-            } else if ((c2 ^ 224) < 16) {
-              code = (c2 & 15) << 12 | (bytes[i2 + 1] & 63) << 6 | bytes[i2 + 2] & 63;
-              i2 += 3;
-            } else {
-              code = (c2 & 7) << 18 | (bytes[i2 + 1] & 63) << 12 | (bytes[i2 + 2] & 63) << 6 | bytes[i2 + 3] & 63;
-              i2 += 4;
-            }
-            str += String.fromCodePoint(code);
-          }
-          this.index += size;
-          return str;
-        }
-        unpack_array(size) {
-          const objects = new Array(size);
-          for (let i2 = 0; i2 < size; i2++) objects[i2] = this.unpack();
-          return objects;
-        }
-        unpack_map(size) {
-          const map = {};
-          for (let i2 = 0; i2 < size; i2++) {
-            const key = this.unpack();
-            map[key] = this.unpack();
-          }
-          return map;
-        }
-        unpack_float() {
-          const uint32 = this.unpack_uint32();
-          const sign = uint32 >> 31;
-          const exp = (uint32 >> 23 & 255) - 127;
-          const fraction = uint32 & 8388607 | 8388608;
-          return (sign === 0 ? 1 : -1) * fraction * 2 ** (exp - 23);
-        }
-        unpack_double() {
-          const h32 = this.unpack_uint32();
-          const l32 = this.unpack_uint32();
-          const sign = h32 >> 31;
-          const exp = (h32 >> 20 & 2047) - 1023;
-          const hfrac = h32 & 1048575 | 1048576;
-          const frac = hfrac * 2 ** (exp - 20) + l32 * 2 ** (exp - 52);
-          return (sign === 0 ? 1 : -1) * frac;
-        }
-        read(length) {
-          const j2 = this.index;
-          if (j2 + length <= this.length) return this.dataView.subarray(j2, j2 + length);
-          else throw new Error("BinaryPackFailure: read index out of range");
-        }
-      };
-      $0cfd7828ad59115f$export$b9ec4b114aa40074 = class {
-        getBuffer() {
-          return this._bufferBuilder.toArrayBuffer();
-        }
-        pack(value) {
-          if (typeof value === "string") this.pack_string(value);
-          else if (typeof value === "number") {
-            if (Math.floor(value) === value) this.pack_integer(value);
-            else this.pack_double(value);
-          } else if (typeof value === "boolean") {
-            if (value === true) this._bufferBuilder.append(195);
-            else if (value === false) this._bufferBuilder.append(194);
-          } else if (value === void 0) this._bufferBuilder.append(192);
-          else if (typeof value === "object") {
-            if (value === null) this._bufferBuilder.append(192);
-            else {
-              const constructor = value.constructor;
-              if (value instanceof Array) {
-                const res = this.pack_array(value);
-                if (res instanceof Promise) return res.then(() => this._bufferBuilder.flush());
-              } else if (value instanceof ArrayBuffer) this.pack_bin(new Uint8Array(value));
-              else if ("BYTES_PER_ELEMENT" in value) {
-                const v2 = value;
-                this.pack_bin(new Uint8Array(v2.buffer, v2.byteOffset, v2.byteLength));
-              } else if (value instanceof Date) this.pack_string(value.toString());
-              else if (value instanceof Blob) return value.arrayBuffer().then((buffer) => {
-                this.pack_bin(new Uint8Array(buffer));
-                this._bufferBuilder.flush();
-              });
-              else if (constructor == Object || constructor.toString().startsWith("class")) {
-                const res = this.pack_object(value);
-                if (res instanceof Promise) return res.then(() => this._bufferBuilder.flush());
-              } else throw new Error(`Type "${constructor.toString()}" not yet supported`);
-            }
-          } else throw new Error(`Type "${typeof value}" not yet supported`);
-          this._bufferBuilder.flush();
-        }
-        pack_bin(blob) {
-          const length = blob.length;
-          if (length <= 15) this.pack_uint8(160 + length);
-          else if (length <= 65535) {
-            this._bufferBuilder.append(218);
-            this.pack_uint16(length);
-          } else if (length <= 4294967295) {
-            this._bufferBuilder.append(219);
-            this.pack_uint32(length);
-          } else throw new Error("Invalid length");
-          this._bufferBuilder.append_buffer(blob);
-        }
-        pack_string(str) {
-          const encoded = this._textEncoder.encode(str);
-          const length = encoded.length;
-          if (length <= 15) this.pack_uint8(176 + length);
-          else if (length <= 65535) {
-            this._bufferBuilder.append(216);
-            this.pack_uint16(length);
-          } else if (length <= 4294967295) {
-            this._bufferBuilder.append(217);
-            this.pack_uint32(length);
-          } else throw new Error("Invalid length");
-          this._bufferBuilder.append_buffer(encoded);
-        }
-        pack_array(ary) {
-          const length = ary.length;
-          if (length <= 15) this.pack_uint8(144 + length);
-          else if (length <= 65535) {
-            this._bufferBuilder.append(220);
-            this.pack_uint16(length);
-          } else if (length <= 4294967295) {
-            this._bufferBuilder.append(221);
-            this.pack_uint32(length);
-          } else throw new Error("Invalid length");
-          const packNext = (index) => {
-            if (index < length) {
-              const res = this.pack(ary[index]);
-              if (res instanceof Promise) return res.then(() => packNext(index + 1));
-              return packNext(index + 1);
-            }
-          };
-          return packNext(0);
-        }
-        pack_integer(num) {
-          if (num >= -32 && num <= 127) this._bufferBuilder.append(num & 255);
-          else if (num >= 0 && num <= 255) {
-            this._bufferBuilder.append(204);
-            this.pack_uint8(num);
-          } else if (num >= -128 && num <= 127) {
-            this._bufferBuilder.append(208);
-            this.pack_int8(num);
-          } else if (num >= 0 && num <= 65535) {
-            this._bufferBuilder.append(205);
-            this.pack_uint16(num);
-          } else if (num >= -32768 && num <= 32767) {
-            this._bufferBuilder.append(209);
-            this.pack_int16(num);
-          } else if (num >= 0 && num <= 4294967295) {
-            this._bufferBuilder.append(206);
-            this.pack_uint32(num);
-          } else if (num >= -2147483648 && num <= 2147483647) {
-            this._bufferBuilder.append(210);
-            this.pack_int32(num);
-          } else if (num >= -9223372036854776e3 && num <= 9223372036854776e3) {
-            this._bufferBuilder.append(211);
-            this.pack_int64(num);
-          } else if (num >= 0 && num <= 18446744073709552e3) {
-            this._bufferBuilder.append(207);
-            this.pack_uint64(num);
-          } else throw new Error("Invalid integer");
-        }
-        pack_double(num) {
-          let sign = 0;
-          if (num < 0) {
-            sign = 1;
-            num = -num;
-          }
-          const exp = Math.floor(Math.log(num) / Math.LN2);
-          const frac0 = num / 2 ** exp - 1;
-          const frac1 = Math.floor(frac0 * 2 ** 52);
-          const b32 = 2 ** 32;
-          const h32 = sign << 31 | exp + 1023 << 20 | frac1 / b32 & 1048575;
-          const l32 = frac1 % b32;
-          this._bufferBuilder.append(203);
-          this.pack_int32(h32);
-          this.pack_int32(l32);
-        }
-        pack_object(obj) {
-          const keys = Object.keys(obj);
-          const length = keys.length;
-          if (length <= 15) this.pack_uint8(128 + length);
-          else if (length <= 65535) {
-            this._bufferBuilder.append(222);
-            this.pack_uint16(length);
-          } else if (length <= 4294967295) {
-            this._bufferBuilder.append(223);
-            this.pack_uint32(length);
-          } else throw new Error("Invalid length");
-          const packNext = (index) => {
-            if (index < keys.length) {
-              const prop = keys[index];
-              if (obj.hasOwnProperty(prop)) {
-                this.pack(prop);
-                const res = this.pack(obj[prop]);
-                if (res instanceof Promise) return res.then(() => packNext(index + 1));
-              }
-              return packNext(index + 1);
-            }
-          };
-          return packNext(0);
-        }
-        pack_uint8(num) {
-          this._bufferBuilder.append(num);
-        }
-        pack_uint16(num) {
-          this._bufferBuilder.append(num >> 8);
-          this._bufferBuilder.append(num & 255);
-        }
-        pack_uint32(num) {
-          const n2 = num & 4294967295;
-          this._bufferBuilder.append((n2 & 4278190080) >>> 24);
-          this._bufferBuilder.append((n2 & 16711680) >>> 16);
-          this._bufferBuilder.append((n2 & 65280) >>> 8);
-          this._bufferBuilder.append(n2 & 255);
-        }
-        pack_uint64(num) {
-          const high = num / 2 ** 32;
-          const low = num % 2 ** 32;
-          this._bufferBuilder.append((high & 4278190080) >>> 24);
-          this._bufferBuilder.append((high & 16711680) >>> 16);
-          this._bufferBuilder.append((high & 65280) >>> 8);
-          this._bufferBuilder.append(high & 255);
-          this._bufferBuilder.append((low & 4278190080) >>> 24);
-          this._bufferBuilder.append((low & 16711680) >>> 16);
-          this._bufferBuilder.append((low & 65280) >>> 8);
-          this._bufferBuilder.append(low & 255);
-        }
-        pack_int8(num) {
-          this._bufferBuilder.append(num & 255);
-        }
-        pack_int16(num) {
-          this._bufferBuilder.append((num & 65280) >> 8);
-          this._bufferBuilder.append(num & 255);
-        }
-        pack_int32(num) {
-          this._bufferBuilder.append(num >>> 24 & 255);
-          this._bufferBuilder.append((num & 16711680) >>> 16);
-          this._bufferBuilder.append((num & 65280) >>> 8);
-          this._bufferBuilder.append(num & 255);
-        }
-        pack_int64(num) {
-          const high = Math.floor(num / 2 ** 32);
-          const low = num % 2 ** 32;
-          this._bufferBuilder.append((high & 4278190080) >>> 24);
-          this._bufferBuilder.append((high & 16711680) >>> 16);
-          this._bufferBuilder.append((high & 65280) >>> 8);
-          this._bufferBuilder.append(high & 255);
-          this._bufferBuilder.append((low & 4278190080) >>> 24);
-          this._bufferBuilder.append((low & 16711680) >>> 16);
-          this._bufferBuilder.append((low & 65280) >>> 8);
-          this._bufferBuilder.append(low & 255);
-        }
-        constructor() {
-          this._bufferBuilder = new (0, $e8379818650e2442$export$93654d4f2d6cd524)();
-          this._textEncoder = new TextEncoder();
-        }
-      };
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/utils.js
-  function extractVersion(uastring, expr, pos) {
-    const match = uastring.match(expr);
-    return match && match.length >= pos && parseFloat(match[pos], 10);
-  }
-  function wrapPeerConnectionEvent(window2, eventNameToWrap, wrapper) {
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    const proto = window2.RTCPeerConnection.prototype;
-    const nativeAddEventListener = proto.addEventListener;
-    proto.addEventListener = function(nativeEventName, cb2) {
-      if (nativeEventName !== eventNameToWrap) {
-        return nativeAddEventListener.apply(this, arguments);
-      }
-      const wrappedCallback = (e2) => {
-        const modifiedEvent = wrapper(e2);
-        if (modifiedEvent) {
-          if (cb2.handleEvent) {
-            cb2.handleEvent(modifiedEvent);
-          } else {
-            cb2(modifiedEvent);
-          }
-        }
-      };
-      this._eventMap = this._eventMap || {};
-      if (!this._eventMap[eventNameToWrap]) {
-        this._eventMap[eventNameToWrap] = /* @__PURE__ */ new Map();
-      }
-      this._eventMap[eventNameToWrap].set(cb2, wrappedCallback);
-      return nativeAddEventListener.apply(this, [
-        nativeEventName,
-        wrappedCallback
-      ]);
-    };
-    const nativeRemoveEventListener = proto.removeEventListener;
-    proto.removeEventListener = function(nativeEventName, cb2) {
-      if (nativeEventName !== eventNameToWrap || !this._eventMap || !this._eventMap[eventNameToWrap]) {
-        return nativeRemoveEventListener.apply(this, arguments);
-      }
-      if (!this._eventMap[eventNameToWrap].has(cb2)) {
-        return nativeRemoveEventListener.apply(this, arguments);
-      }
-      const unwrappedCb = this._eventMap[eventNameToWrap].get(cb2);
-      this._eventMap[eventNameToWrap].delete(cb2);
-      if (this._eventMap[eventNameToWrap].size === 0) {
-        delete this._eventMap[eventNameToWrap];
-      }
-      if (Object.keys(this._eventMap).length === 0) {
-        delete this._eventMap;
-      }
-      return nativeRemoveEventListener.apply(this, [
-        nativeEventName,
-        unwrappedCb
-      ]);
-    };
-    Object.defineProperty(proto, "on" + eventNameToWrap, {
-      get() {
-        return this["_on" + eventNameToWrap];
-      },
-      set(cb2) {
-        if (this["_on" + eventNameToWrap]) {
-          this.removeEventListener(
-            eventNameToWrap,
-            this["_on" + eventNameToWrap]
+        async updateAccountAllowance(accountId, active, amount, interval, nextRun) {
+          const db = await this.getDb("", "meta");
+          db.run(
+            `UPDATE accounts SET allowanceActive = ?, allowanceAmount = ?, allowanceInterval = ?, allowanceNextRun = ? WHERE id = ?`,
+            [active ? 1 : 0, amount, interval, nextRun, accountId]
           );
-          delete this["_on" + eventNameToWrap];
+          await this.saveDb(db, "", "meta");
         }
-        if (cb2) {
-          this.addEventListener(
-            eventNameToWrap,
-            this["_on" + eventNameToWrap] = cb2
-          );
+        async checkAllowances() {
+          const accounts = await this.getAccounts();
+          const now = Date.now();
+          const WEEK = 7 * 24 * 60 * 60 * 1e3;
+          const MONTH = 30 * 24 * 60 * 60 * 1e3;
+          for (const account of accounts) {
+            if (account.allowanceActive && account.allowanceAmount > 0) {
+              let nextRun = account.allowanceNextRun || now;
+              if (now >= nextRun) {
+                const intervalStr = account.allowanceInterval;
+                const interval = intervalStr === "monthly" ? MONTH : WEEK;
+                await this.addTransaction(account.id, "Allowance", account.allowanceAmount, "allowance");
+                const newNextRun = now + interval;
+                await this.updateAccountAllowance(account.id, true, account.allowanceAmount, intervalStr, newNextRun);
+              }
+            }
+          }
         }
-      },
-      enumerable: true,
-      configurable: true
-    });
-  }
-  function disableLog(bool) {
-    if (typeof bool !== "boolean") {
-      return new Error("Argument type: " + typeof bool + ". Please use a boolean.");
-    }
-    logDisabled_ = bool;
-    return bool ? "adapter.js logging disabled" : "adapter.js logging enabled";
-  }
-  function disableWarnings(bool) {
-    if (typeof bool !== "boolean") {
-      return new Error("Argument type: " + typeof bool + ". Please use a boolean.");
-    }
-    deprecationWarnings_ = !bool;
-    return "adapter.js deprecation warnings " + (bool ? "disabled" : "enabled");
-  }
-  function log() {
-    if (typeof window === "object") {
-      if (logDisabled_) {
-        return;
-      }
-      if (typeof console !== "undefined" && typeof console.log === "function") {
-        console.log.apply(console, arguments);
-      }
-    }
-  }
-  function deprecated(oldMethod, newMethod) {
-    if (!deprecationWarnings_) {
-      return;
-    }
-    console.warn(oldMethod + " is deprecated, please use " + newMethod + " instead.");
-  }
-  function detectBrowser(window2) {
-    const result = { browser: null, version: null };
-    if (typeof window2 === "undefined" || !window2.navigator || !window2.navigator.userAgent) {
-      result.browser = "Not a browser.";
-      return result;
-    }
-    const { navigator: navigator2 } = window2;
-    if (navigator2.userAgentData && navigator2.userAgentData.brands) {
-      const chromium = navigator2.userAgentData.brands.find((brand) => {
-        return brand.brand === "Chromium";
-      });
-      if (chromium) {
-        return { browser: "chrome", version: parseInt(chromium.version, 10) };
-      }
-    }
-    if (navigator2.mozGetUserMedia) {
-      result.browser = "firefox";
-      result.version = parseInt(extractVersion(
-        navigator2.userAgent,
-        /Firefox\/(\d+)\./,
-        1
-      ));
-    } else if (navigator2.webkitGetUserMedia || window2.isSecureContext === false && window2.webkitRTCPeerConnection) {
-      result.browser = "chrome";
-      result.version = parseInt(extractVersion(
-        navigator2.userAgent,
-        /Chrom(e|ium)\/(\d+)\./,
-        2
-      )) || null;
-    } else if (window2.RTCPeerConnection && navigator2.userAgent.match(/AppleWebKit\/(\d+)\./)) {
-      result.browser = "safari";
-      result.version = parseInt(extractVersion(
-        navigator2.userAgent,
-        /AppleWebKit\/(\d+)\./,
-        1
-      ));
-      result.supportsUnifiedPlan = window2.RTCRtpTransceiver && "currentDirection" in window2.RTCRtpTransceiver.prototype;
-      result._safariVersion = extractVersion(
-        navigator2.userAgent,
-        /Version\/(\d+(\.?\d+))/,
-        1
-      );
-    } else {
-      result.browser = "Not a supported browser.";
-      return result;
-    }
-    return result;
-  }
-  function isObject(val) {
-    return Object.prototype.toString.call(val) === "[object Object]";
-  }
-  function compactObject(data) {
-    if (!isObject(data)) {
-      return data;
-    }
-    return Object.keys(data).reduce(function(accumulator, key) {
-      const isObj = isObject(data[key]);
-      const value = isObj ? compactObject(data[key]) : data[key];
-      const isEmptyObject = isObj && !Object.keys(value).length;
-      if (value === void 0 || isEmptyObject) {
-        return accumulator;
-      }
-      return Object.assign(accumulator, { [key]: value });
-    }, {});
-  }
-  function walkStats(stats, base, resultSet) {
-    if (!base || resultSet.has(base.id)) {
-      return;
-    }
-    resultSet.set(base.id, base);
-    Object.keys(base).forEach((name) => {
-      if (name.endsWith("Id")) {
-        walkStats(stats, stats.get(base[name]), resultSet);
-      } else if (name.endsWith("Ids")) {
-        base[name].forEach((id) => {
-          walkStats(stats, stats.get(id), resultSet);
-        });
-      }
-    });
-  }
-  function filterStats(result, track, outbound) {
-    const streamStatsType = outbound ? "outbound-rtp" : "inbound-rtp";
-    const filteredResult = /* @__PURE__ */ new Map();
-    if (track === null) {
-      return filteredResult;
-    }
-    const trackStats = [];
-    result.forEach((value) => {
-      if (value.type === "track" && value.trackIdentifier === track.id) {
-        trackStats.push(value);
-      }
-    });
-    trackStats.forEach((trackStat) => {
-      result.forEach((stats) => {
-        if (stats.type === streamStatsType && stats.trackId === trackStat.id) {
-          walkStats(result, stats, filteredResult);
+        async deleteTransaction(accountId, transactionId, dateStr, groupId, sharedKey) {
+          const type = groupId ? "group" : "private";
+          const db = await this.getDb(dateStr, type, groupId, sharedKey);
+          db.run("DELETE FROM transactions WHERE id = ?", [transactionId]);
+          await this.saveDb(db, dateStr, type, groupId, sharedKey);
         }
-      });
-    });
-    return filteredResult;
-  }
-  var import_polyfills676, logDisabled_, deprecationWarnings_;
-  var init_utils5 = __esm({
-    "node_modules/webrtc-adapter/src/js/utils.js"() {
-      "use strict";
-      import_polyfills676 = __toESM(require_polyfills());
-      logDisabled_ = true;
-      deprecationWarnings_ = true;
+        async importFromBanky(bankyExport) {
+          const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          for (const id in bankyExport.accounts) {
+            const bAcc = bankyExport.accounts[id];
+            const acc = await this.createAccount(bAcc.name, "USD", bAcc.image);
+            const byDate = {};
+            bAcc.transactions.forEach((tx) => {
+              const d2 = tx.date || today;
+              if (!byDate[d2]) byDate[d2] = [];
+              byDate[d2].push(tx);
+            });
+            for (const date2 in byDate) {
+              const db = await this.getDb(date2, "private");
+              for (const bTx of byDate[date2]) {
+                db.run(
+                  `INSERT INTO transactions (id, date, description, amount, category, timestamp, accountId, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                  [bTx.id || Math.random().toString(36).substring(7), date2, bTx.description, bTx.amount, bTx.category || "other", bTx.timestamp || Date.now(), acc.id, this.db.getConfig().paths.userId]
+                );
+              }
+              await this.saveDb(db, date2, "private");
+            }
+          }
+        }
+      };
     }
   });
 
-  // node_modules/webrtc-adapter/src/js/chrome/getusermedia.js
-  function shimGetUserMedia(window2, browserDetails) {
-    const navigator2 = window2 && window2.navigator;
-    if (!navigator2.mediaDevices) {
-      return;
-    }
-    const constraintsToChrome_ = function(c2) {
-      if (typeof c2 !== "object" || c2.mandatory || c2.optional) {
-        return c2;
-      }
-      const cc2 = {};
-      Object.keys(c2).forEach((key) => {
-        if (key === "require" || key === "advanced" || key === "mediaSource") {
-          return;
-        }
-        const r2 = typeof c2[key] === "object" ? c2[key] : { ideal: c2[key] };
-        if (r2.exact !== void 0 && typeof r2.exact === "number") {
-          r2.min = r2.max = r2.exact;
-        }
-        const oldname_ = function(prefix, name) {
-          if (prefix) {
-            return prefix + name.charAt(0).toUpperCase() + name.slice(1);
-          }
-          return name === "deviceId" ? "sourceId" : name;
-        };
-        if (r2.ideal !== void 0) {
-          cc2.optional = cc2.optional || [];
-          let oc = {};
-          if (typeof r2.ideal === "number") {
-            oc[oldname_("min", key)] = r2.ideal;
-            cc2.optional.push(oc);
-            oc = {};
-            oc[oldname_("max", key)] = r2.ideal;
-            cc2.optional.push(oc);
-          } else {
-            oc[oldname_("", key)] = r2.ideal;
-            cc2.optional.push(oc);
-          }
-        }
-        if (r2.exact !== void 0 && typeof r2.exact !== "number") {
-          cc2.mandatory = cc2.mandatory || {};
-          cc2.mandatory[oldname_("", key)] = r2.exact;
-        } else {
-          ["min", "max"].forEach((mix) => {
-            if (r2[mix] !== void 0) {
-              cc2.mandatory = cc2.mandatory || {};
-              cc2.mandatory[oldname_(mix, key)] = r2[mix];
-            }
-          });
-        }
-      });
-      if (c2.advanced) {
-        cc2.optional = (cc2.optional || []).concat(c2.advanced);
-      }
-      return cc2;
-    };
-    const shimConstraints_ = function(constraints, func) {
-      if (browserDetails.version >= 61) {
-        return func(constraints);
-      }
-      constraints = JSON.parse(JSON.stringify(constraints));
-      if (constraints && typeof constraints.audio === "object") {
-        const remap = function(obj, a2, b2) {
-          if (a2 in obj && !(b2 in obj)) {
-            obj[b2] = obj[a2];
-            delete obj[a2];
-          }
-        };
-        constraints = JSON.parse(JSON.stringify(constraints));
-        remap(constraints.audio, "autoGainControl", "googAutoGainControl");
-        remap(constraints.audio, "noiseSuppression", "googNoiseSuppression");
-        constraints.audio = constraintsToChrome_(constraints.audio);
-      }
-      if (constraints && typeof constraints.video === "object") {
-        let face = constraints.video.facingMode;
-        face = face && (typeof face === "object" ? face : { ideal: face });
-        const getSupportedFacingModeLies = browserDetails.version < 66;
-        if (face && (face.exact === "user" || face.exact === "environment" || face.ideal === "user" || face.ideal === "environment") && !(navigator2.mediaDevices.getSupportedConstraints && navigator2.mediaDevices.getSupportedConstraints().facingMode && !getSupportedFacingModeLies)) {
-          delete constraints.video.facingMode;
-          let matches;
-          if (face.exact === "environment" || face.ideal === "environment") {
-            matches = ["back", "rear"];
-          } else if (face.exact === "user" || face.ideal === "user") {
-            matches = ["front"];
-          }
-          if (matches) {
-            return navigator2.mediaDevices.enumerateDevices().then((devices) => {
-              devices = devices.filter((d2) => d2.kind === "videoinput");
-              let dev = devices.find((d2) => matches.some((match) => d2.label.toLowerCase().includes(match)));
-              if (!dev && devices.length && matches.includes("back")) {
-                dev = devices[devices.length - 1];
-              }
-              if (dev) {
-                constraints.video.deviceId = face.exact ? { exact: dev.deviceId } : { ideal: dev.deviceId };
-              }
-              constraints.video = constraintsToChrome_(constraints.video);
-              logging("chrome: " + JSON.stringify(constraints));
-              return func(constraints);
-            });
-          }
-        }
-        constraints.video = constraintsToChrome_(constraints.video);
-      }
-      logging("chrome: " + JSON.stringify(constraints));
-      return func(constraints);
-    };
-    const shimError_ = function(e2) {
-      if (browserDetails.version >= 64) {
-        return e2;
-      }
-      return {
-        name: {
-          PermissionDeniedError: "NotAllowedError",
-          PermissionDismissedError: "NotAllowedError",
-          InvalidStateError: "NotAllowedError",
-          DevicesNotFoundError: "NotFoundError",
-          ConstraintNotSatisfiedError: "OverconstrainedError",
-          TrackStartError: "NotReadableError",
-          MediaDeviceFailedDueToShutdown: "NotAllowedError",
-          MediaDeviceKillSwitchOn: "NotAllowedError",
-          TabCaptureError: "AbortError",
-          ScreenCaptureError: "AbortError",
-          DeviceCaptureError: "AbortError"
-        }[e2.name] || e2.name,
-        message: e2.message,
-        constraint: e2.constraint || e2.constraintName,
-        toString() {
-          return this.name + (this.message && ": ") + this.message;
-        }
-      };
-    };
-    const getUserMedia_ = function(constraints, onSuccess, onError) {
-      shimConstraints_(constraints, (c2) => {
-        navigator2.webkitGetUserMedia(c2, onSuccess, (e2) => {
-          if (onError) {
-            onError(shimError_(e2));
-          }
-        });
-      });
-    };
-    navigator2.getUserMedia = getUserMedia_.bind(navigator2);
-    if (navigator2.mediaDevices.getUserMedia) {
-      const origGetUserMedia = navigator2.mediaDevices.getUserMedia.bind(navigator2.mediaDevices);
-      navigator2.mediaDevices.getUserMedia = function(cs2) {
-        return shimConstraints_(cs2, (c2) => origGetUserMedia(c2).then((stream) => {
-          if (c2.audio && !stream.getAudioTracks().length || c2.video && !stream.getVideoTracks().length) {
-            stream.getTracks().forEach((track) => {
-              track.stop();
-            });
-            throw new DOMException("", "NotFoundError");
-          }
-          return stream;
-        }, (e2) => Promise.reject(shimError_(e2))));
-      };
-    }
-  }
-  var import_polyfills677, logging;
-  var init_getusermedia = __esm({
-    "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
-      "use strict";
-      import_polyfills677 = __toESM(require_polyfills());
-      init_utils5();
-      logging = log;
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js
-  var chrome_shim_exports = {};
-  __export(chrome_shim_exports, {
-    fixNegotiationNeeded: () => fixNegotiationNeeded,
-    shimAddTrackRemoveTrack: () => shimAddTrackRemoveTrack,
-    shimAddTrackRemoveTrackWithNative: () => shimAddTrackRemoveTrackWithNative,
-    shimGetSendersWithDtmf: () => shimGetSendersWithDtmf,
-    shimGetUserMedia: () => shimGetUserMedia,
-    shimMediaStream: () => shimMediaStream,
-    shimOnTrack: () => shimOnTrack,
-    shimPeerConnection: () => shimPeerConnection,
-    shimSenderReceiverGetStats: () => shimSenderReceiverGetStats
-  });
-  function shimMediaStream(window2) {
-    window2.MediaStream = window2.MediaStream || window2.webkitMediaStream;
-  }
-  function shimOnTrack(window2) {
-    if (typeof window2 === "object" && window2.RTCPeerConnection && !("ontrack" in window2.RTCPeerConnection.prototype)) {
-      Object.defineProperty(window2.RTCPeerConnection.prototype, "ontrack", {
-        get() {
-          return this._ontrack;
-        },
-        set(f2) {
-          if (this._ontrack) {
-            this.removeEventListener("track", this._ontrack);
-          }
-          this.addEventListener("track", this._ontrack = f2);
-        },
-        enumerable: true,
-        configurable: true
-      });
-      const origSetRemoteDescription = window2.RTCPeerConnection.prototype.setRemoteDescription;
-      window2.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
-        if (!this._ontrackpoly) {
-          this._ontrackpoly = (e2) => {
-            e2.stream.addEventListener("addtrack", (te) => {
-              let receiver;
-              if (window2.RTCPeerConnection.prototype.getReceivers) {
-                receiver = this.getReceivers().find((r2) => r2.track && r2.track.id === te.track.id);
-              } else {
-                receiver = { track: te.track };
-              }
-              const event = new Event("track");
-              event.track = te.track;
-              event.receiver = receiver;
-              event.transceiver = { receiver };
-              event.streams = [e2.stream];
-              this.dispatchEvent(event);
-            });
-            e2.stream.getTracks().forEach((track) => {
-              let receiver;
-              if (window2.RTCPeerConnection.prototype.getReceivers) {
-                receiver = this.getReceivers().find((r2) => r2.track && r2.track.id === track.id);
-              } else {
-                receiver = { track };
-              }
-              const event = new Event("track");
-              event.track = track;
-              event.receiver = receiver;
-              event.transceiver = { receiver };
-              event.streams = [e2.stream];
-              this.dispatchEvent(event);
-            });
-          };
-          this.addEventListener("addstream", this._ontrackpoly);
-        }
-        return origSetRemoteDescription.apply(this, arguments);
-      };
-    } else {
-      wrapPeerConnectionEvent(window2, "track", (e2) => {
-        if (!e2.transceiver) {
-          Object.defineProperty(
-            e2,
-            "transceiver",
-            { value: { receiver: e2.receiver } }
-          );
-        }
-        return e2;
-      });
-    }
-  }
-  function shimGetSendersWithDtmf(window2) {
-    if (typeof window2 === "object" && window2.RTCPeerConnection && !("getSenders" in window2.RTCPeerConnection.prototype) && "createDTMFSender" in window2.RTCPeerConnection.prototype) {
-      const shimSenderWithDtmf = function(pc, track) {
-        return {
-          track,
-          get dtmf() {
-            if (this._dtmf === void 0) {
-              if (track.kind === "audio") {
-                this._dtmf = pc.createDTMFSender(track);
-              } else {
-                this._dtmf = null;
-              }
-            }
-            return this._dtmf;
-          },
-          _pc: pc
-        };
-      };
-      if (!window2.RTCPeerConnection.prototype.getSenders) {
-        window2.RTCPeerConnection.prototype.getSenders = function getSenders() {
-          this._senders = this._senders || [];
-          return this._senders.slice();
-        };
-        const origAddTrack = window2.RTCPeerConnection.prototype.addTrack;
-        window2.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
-          let sender = origAddTrack.apply(this, arguments);
-          if (!sender) {
-            sender = shimSenderWithDtmf(this, track);
-            this._senders.push(sender);
-          }
-          return sender;
-        };
-        const origRemoveTrack = window2.RTCPeerConnection.prototype.removeTrack;
-        window2.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
-          origRemoveTrack.apply(this, arguments);
-          const idx = this._senders.indexOf(sender);
-          if (idx !== -1) {
-            this._senders.splice(idx, 1);
-          }
-        };
-      }
-      const origAddStream = window2.RTCPeerConnection.prototype.addStream;
-      window2.RTCPeerConnection.prototype.addStream = function addStream(stream) {
-        this._senders = this._senders || [];
-        origAddStream.apply(this, [stream]);
-        stream.getTracks().forEach((track) => {
-          this._senders.push(shimSenderWithDtmf(this, track));
-        });
-      };
-      const origRemoveStream = window2.RTCPeerConnection.prototype.removeStream;
-      window2.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
-        this._senders = this._senders || [];
-        origRemoveStream.apply(this, [stream]);
-        stream.getTracks().forEach((track) => {
-          const sender = this._senders.find((s2) => s2.track === track);
-          if (sender) {
-            this._senders.splice(this._senders.indexOf(sender), 1);
-          }
-        });
-      };
-    } else if (typeof window2 === "object" && window2.RTCPeerConnection && "getSenders" in window2.RTCPeerConnection.prototype && "createDTMFSender" in window2.RTCPeerConnection.prototype && window2.RTCRtpSender && !("dtmf" in window2.RTCRtpSender.prototype)) {
-      const origGetSenders = window2.RTCPeerConnection.prototype.getSenders;
-      window2.RTCPeerConnection.prototype.getSenders = function getSenders() {
-        const senders = origGetSenders.apply(this, []);
-        senders.forEach((sender) => sender._pc = this);
-        return senders;
-      };
-      Object.defineProperty(window2.RTCRtpSender.prototype, "dtmf", {
-        get() {
-          if (this._dtmf === void 0) {
-            if (this.track.kind === "audio") {
-              this._dtmf = this._pc.createDTMFSender(this.track);
-            } else {
-              this._dtmf = null;
-            }
-          }
-          return this._dtmf;
-        }
-      });
-    }
-  }
-  function shimSenderReceiverGetStats(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection && window2.RTCRtpSender && window2.RTCRtpReceiver)) {
-      return;
-    }
-    if (!("getStats" in window2.RTCRtpSender.prototype)) {
-      const origGetSenders = window2.RTCPeerConnection.prototype.getSenders;
-      if (origGetSenders) {
-        window2.RTCPeerConnection.prototype.getSenders = function getSenders() {
-          const senders = origGetSenders.apply(this, []);
-          senders.forEach((sender) => sender._pc = this);
-          return senders;
-        };
-      }
-      const origAddTrack = window2.RTCPeerConnection.prototype.addTrack;
-      if (origAddTrack) {
-        window2.RTCPeerConnection.prototype.addTrack = function addTrack() {
-          const sender = origAddTrack.apply(this, arguments);
-          sender._pc = this;
-          return sender;
-        };
-      }
-      window2.RTCRtpSender.prototype.getStats = function getStats() {
-        const sender = this;
-        return this._pc.getStats().then((result) => (
-          /* Note: this will include stats of all senders that
-           *   send a track with the same id as sender.track as
-           *   it is not possible to identify the RTCRtpSender.
-           */
-          filterStats(result, sender.track, true)
-        ));
-      };
-    }
-    if (!("getStats" in window2.RTCRtpReceiver.prototype)) {
-      const origGetReceivers = window2.RTCPeerConnection.prototype.getReceivers;
-      if (origGetReceivers) {
-        window2.RTCPeerConnection.prototype.getReceivers = function getReceivers() {
-          const receivers = origGetReceivers.apply(this, []);
-          receivers.forEach((receiver) => receiver._pc = this);
-          return receivers;
-        };
-      }
-      wrapPeerConnectionEvent(window2, "track", (e2) => {
-        e2.receiver._pc = e2.srcElement;
-        return e2;
-      });
-      window2.RTCRtpReceiver.prototype.getStats = function getStats() {
-        const receiver = this;
-        return this._pc.getStats().then((result) => filterStats(result, receiver.track, false));
-      };
-    }
-    if (!("getStats" in window2.RTCRtpSender.prototype && "getStats" in window2.RTCRtpReceiver.prototype)) {
-      return;
-    }
-    const origGetStats = window2.RTCPeerConnection.prototype.getStats;
-    window2.RTCPeerConnection.prototype.getStats = function getStats() {
-      if (arguments.length > 0 && arguments[0] instanceof window2.MediaStreamTrack) {
-        const track = arguments[0];
-        let sender;
-        let receiver;
-        let err;
-        this.getSenders().forEach((s2) => {
-          if (s2.track === track) {
-            if (sender) {
-              err = true;
-            } else {
-              sender = s2;
-            }
-          }
-        });
-        this.getReceivers().forEach((r2) => {
-          if (r2.track === track) {
-            if (receiver) {
-              err = true;
-            } else {
-              receiver = r2;
-            }
-          }
-          return r2.track === track;
-        });
-        if (err || sender && receiver) {
-          return Promise.reject(new DOMException(
-            "There are more than one sender or receiver for the track.",
-            "InvalidAccessError"
-          ));
-        } else if (sender) {
-          return sender.getStats();
-        } else if (receiver) {
-          return receiver.getStats();
-        }
-        return Promise.reject(new DOMException(
-          "There is no sender or receiver for the track.",
-          "InvalidAccessError"
-        ));
-      }
-      return origGetStats.apply(this, arguments);
-    };
-  }
-  function shimAddTrackRemoveTrackWithNative(window2) {
-    window2.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
-      this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-      return Object.keys(this._shimmedLocalStreams).map((streamId) => this._shimmedLocalStreams[streamId][0]);
-    };
-    const origAddTrack = window2.RTCPeerConnection.prototype.addTrack;
-    window2.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
-      if (!stream) {
-        return origAddTrack.apply(this, arguments);
-      }
-      this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-      const sender = origAddTrack.apply(this, arguments);
-      if (!this._shimmedLocalStreams[stream.id]) {
-        this._shimmedLocalStreams[stream.id] = [stream, sender];
-      } else if (this._shimmedLocalStreams[stream.id].indexOf(sender) === -1) {
-        this._shimmedLocalStreams[stream.id].push(sender);
-      }
-      return sender;
-    };
-    const origAddStream = window2.RTCPeerConnection.prototype.addStream;
-    window2.RTCPeerConnection.prototype.addStream = function addStream(stream) {
-      this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-      stream.getTracks().forEach((track) => {
-        const alreadyExists = this.getSenders().find((s2) => s2.track === track);
-        if (alreadyExists) {
-          throw new DOMException(
-            "Track already exists.",
-            "InvalidAccessError"
-          );
-        }
-      });
-      const existingSenders = this.getSenders();
-      origAddStream.apply(this, arguments);
-      const newSenders = this.getSenders().filter((newSender) => existingSenders.indexOf(newSender) === -1);
-      this._shimmedLocalStreams[stream.id] = [stream].concat(newSenders);
-    };
-    const origRemoveStream = window2.RTCPeerConnection.prototype.removeStream;
-    window2.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
-      this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-      delete this._shimmedLocalStreams[stream.id];
-      return origRemoveStream.apply(this, arguments);
-    };
-    const origRemoveTrack = window2.RTCPeerConnection.prototype.removeTrack;
-    window2.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
-      this._shimmedLocalStreams = this._shimmedLocalStreams || {};
-      if (sender) {
-        Object.keys(this._shimmedLocalStreams).forEach((streamId) => {
-          const idx = this._shimmedLocalStreams[streamId].indexOf(sender);
-          if (idx !== -1) {
-            this._shimmedLocalStreams[streamId].splice(idx, 1);
-          }
-          if (this._shimmedLocalStreams[streamId].length === 1) {
-            delete this._shimmedLocalStreams[streamId];
-          }
-        });
-      }
-      return origRemoveTrack.apply(this, arguments);
-    };
-  }
-  function shimAddTrackRemoveTrack(window2, browserDetails) {
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    if (window2.RTCPeerConnection.prototype.addTrack && browserDetails.version >= 65) {
-      return shimAddTrackRemoveTrackWithNative(window2);
-    }
-    const origGetLocalStreams = window2.RTCPeerConnection.prototype.getLocalStreams;
-    window2.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
-      const nativeStreams = origGetLocalStreams.apply(this);
-      this._reverseStreams = this._reverseStreams || {};
-      return nativeStreams.map((stream) => this._reverseStreams[stream.id]);
-    };
-    const origAddStream = window2.RTCPeerConnection.prototype.addStream;
-    window2.RTCPeerConnection.prototype.addStream = function addStream(stream) {
-      this._streams = this._streams || {};
-      this._reverseStreams = this._reverseStreams || {};
-      stream.getTracks().forEach((track) => {
-        const alreadyExists = this.getSenders().find((s2) => s2.track === track);
-        if (alreadyExists) {
-          throw new DOMException(
-            "Track already exists.",
-            "InvalidAccessError"
-          );
-        }
-      });
-      if (!this._reverseStreams[stream.id]) {
-        const newStream = new window2.MediaStream(stream.getTracks());
-        this._streams[stream.id] = newStream;
-        this._reverseStreams[newStream.id] = stream;
-        stream = newStream;
-      }
-      origAddStream.apply(this, [stream]);
-    };
-    const origRemoveStream = window2.RTCPeerConnection.prototype.removeStream;
-    window2.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
-      this._streams = this._streams || {};
-      this._reverseStreams = this._reverseStreams || {};
-      origRemoveStream.apply(this, [this._streams[stream.id] || stream]);
-      delete this._reverseStreams[this._streams[stream.id] ? this._streams[stream.id].id : stream.id];
-      delete this._streams[stream.id];
-    };
-    window2.RTCPeerConnection.prototype.addTrack = function addTrack(track, stream) {
-      if (this.signalingState === "closed") {
-        throw new DOMException(
-          "The RTCPeerConnection's signalingState is 'closed'.",
-          "InvalidStateError"
-        );
-      }
-      const streams = [].slice.call(arguments, 1);
-      if (streams.length !== 1 || !streams[0].getTracks().find((t8) => t8 === track)) {
-        throw new DOMException(
-          "The adapter.js addTrack polyfill only supports a single  stream which is associated with the specified track.",
-          "NotSupportedError"
-        );
-      }
-      const alreadyExists = this.getSenders().find((s2) => s2.track === track);
-      if (alreadyExists) {
-        throw new DOMException(
-          "Track already exists.",
-          "InvalidAccessError"
-        );
-      }
-      this._streams = this._streams || {};
-      this._reverseStreams = this._reverseStreams || {};
-      const oldStream = this._streams[stream.id];
-      if (oldStream) {
-        oldStream.addTrack(track);
-        Promise.resolve().then(() => {
-          this.dispatchEvent(new Event("negotiationneeded"));
-        });
-      } else {
-        const newStream = new window2.MediaStream([track]);
-        this._streams[stream.id] = newStream;
-        this._reverseStreams[newStream.id] = stream;
-        this.addStream(newStream);
-      }
-      return this.getSenders().find((s2) => s2.track === track);
-    };
-    function replaceInternalStreamId(pc, description) {
-      let sdp2 = description.sdp;
-      Object.keys(pc._reverseStreams || []).forEach((internalId) => {
-        const externalStream = pc._reverseStreams[internalId];
-        const internalStream = pc._streams[externalStream.id];
-        sdp2 = sdp2.replace(
-          new RegExp(internalStream.id, "g"),
-          externalStream.id
-        );
-      });
-      return new RTCSessionDescription({
-        type: description.type,
-        sdp: sdp2
-      });
-    }
-    function replaceExternalStreamId(pc, description) {
-      let sdp2 = description.sdp;
-      Object.keys(pc._reverseStreams || []).forEach((internalId) => {
-        const externalStream = pc._reverseStreams[internalId];
-        const internalStream = pc._streams[externalStream.id];
-        sdp2 = sdp2.replace(
-          new RegExp(externalStream.id, "g"),
-          internalStream.id
-        );
-      });
-      return new RTCSessionDescription({
-        type: description.type,
-        sdp: sdp2
-      });
-    }
-    ["createOffer", "createAnswer"].forEach(function(method) {
-      const nativeMethod = window2.RTCPeerConnection.prototype[method];
-      const methodObj = { [method]() {
-        const args = arguments;
-        const isLegacyCall = arguments.length && typeof arguments[0] === "function";
-        if (isLegacyCall) {
-          return nativeMethod.apply(this, [
-            (description) => {
-              const desc = replaceInternalStreamId(this, description);
-              args[0].apply(null, [desc]);
-            },
-            (err) => {
-              if (args[1]) {
-                args[1].apply(null, err);
-              }
-            },
-            arguments[2]
-          ]);
-        }
-        return nativeMethod.apply(this, arguments).then((description) => replaceInternalStreamId(this, description));
-      } };
-      window2.RTCPeerConnection.prototype[method] = methodObj[method];
-    });
-    const origSetLocalDescription = window2.RTCPeerConnection.prototype.setLocalDescription;
-    window2.RTCPeerConnection.prototype.setLocalDescription = function setLocalDescription() {
-      if (!arguments.length || !arguments[0].type) {
-        return origSetLocalDescription.apply(this, arguments);
-      }
-      arguments[0] = replaceExternalStreamId(this, arguments[0]);
-      return origSetLocalDescription.apply(this, arguments);
-    };
-    const origLocalDescription = Object.getOwnPropertyDescriptor(
-      window2.RTCPeerConnection.prototype,
-      "localDescription"
-    );
-    Object.defineProperty(
-      window2.RTCPeerConnection.prototype,
-      "localDescription",
-      {
-        get() {
-          const description = origLocalDescription.get.apply(this);
-          if (description.type === "") {
-            return description;
-          }
-          return replaceInternalStreamId(this, description);
-        }
-      }
-    );
-    window2.RTCPeerConnection.prototype.removeTrack = function removeTrack(sender) {
-      if (this.signalingState === "closed") {
-        throw new DOMException(
-          "The RTCPeerConnection's signalingState is 'closed'.",
-          "InvalidStateError"
-        );
-      }
-      if (!sender._pc) {
-        throw new DOMException("Argument 1 of RTCPeerConnection.removeTrack does not implement interface RTCRtpSender.", "TypeError");
-      }
-      const isLocal = sender._pc === this;
-      if (!isLocal) {
-        throw new DOMException(
-          "Sender was not created by this connection.",
-          "InvalidAccessError"
-        );
-      }
-      this._streams = this._streams || {};
-      let stream;
-      Object.keys(this._streams).forEach((streamid) => {
-        const hasTrack = this._streams[streamid].getTracks().find((track) => sender.track === track);
-        if (hasTrack) {
-          stream = this._streams[streamid];
-        }
-      });
-      if (stream) {
-        if (stream.getTracks().length === 1) {
-          this.removeStream(this._reverseStreams[stream.id]);
-        } else {
-          stream.removeTrack(sender.track);
-        }
-        this.dispatchEvent(new Event("negotiationneeded"));
-      }
-    };
-  }
-  function shimPeerConnection(window2, browserDetails) {
-    if (!window2.RTCPeerConnection && window2.webkitRTCPeerConnection) {
-      window2.RTCPeerConnection = window2.webkitRTCPeerConnection;
-    }
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    if (browserDetails.version < 53) {
-      ["setLocalDescription", "setRemoteDescription", "addIceCandidate"].forEach(function(method) {
-        const nativeMethod = window2.RTCPeerConnection.prototype[method];
-        const methodObj = { [method]() {
-          arguments[0] = new (method === "addIceCandidate" ? window2.RTCIceCandidate : window2.RTCSessionDescription)(arguments[0]);
-          return nativeMethod.apply(this, arguments);
-        } };
-        window2.RTCPeerConnection.prototype[method] = methodObj[method];
-      });
-    }
-  }
-  function fixNegotiationNeeded(window2, browserDetails) {
-    wrapPeerConnectionEvent(window2, "negotiationneeded", (e2) => {
-      const pc = e2.target;
-      if (browserDetails.version < 72 || pc.getConfiguration && pc.getConfiguration().sdpSemantics === "plan-b") {
-        if (pc.signalingState !== "stable") {
-          return;
-        }
-      }
-      return e2;
-    });
-  }
-  var import_polyfills678;
-  var init_chrome_shim = __esm({
-    "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
-      "use strict";
-      import_polyfills678 = __toESM(require_polyfills());
-      init_utils5();
-      init_getusermedia();
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/firefox/getusermedia.js
-  function shimGetUserMedia2(window2, browserDetails) {
-    const navigator2 = window2 && window2.navigator;
-    const MediaStreamTrack = window2 && window2.MediaStreamTrack;
-    navigator2.getUserMedia = function(constraints, onSuccess, onError) {
-      deprecated(
-        "navigator.getUserMedia",
-        "navigator.mediaDevices.getUserMedia"
-      );
-      navigator2.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
-    };
-    if (!(browserDetails.version > 55 && "autoGainControl" in navigator2.mediaDevices.getSupportedConstraints())) {
-      const remap = function(obj, a2, b2) {
-        if (a2 in obj && !(b2 in obj)) {
-          obj[b2] = obj[a2];
-          delete obj[a2];
-        }
-      };
-      const nativeGetUserMedia = navigator2.mediaDevices.getUserMedia.bind(navigator2.mediaDevices);
-      navigator2.mediaDevices.getUserMedia = function(c2) {
-        if (typeof c2 === "object" && typeof c2.audio === "object") {
-          c2 = JSON.parse(JSON.stringify(c2));
-          remap(c2.audio, "autoGainControl", "mozAutoGainControl");
-          remap(c2.audio, "noiseSuppression", "mozNoiseSuppression");
-        }
-        return nativeGetUserMedia(c2);
-      };
-      if (MediaStreamTrack && MediaStreamTrack.prototype.getSettings) {
-        const nativeGetSettings = MediaStreamTrack.prototype.getSettings;
-        MediaStreamTrack.prototype.getSettings = function() {
-          const obj = nativeGetSettings.apply(this, arguments);
-          remap(obj, "mozAutoGainControl", "autoGainControl");
-          remap(obj, "mozNoiseSuppression", "noiseSuppression");
-          return obj;
-        };
-      }
-      if (MediaStreamTrack && MediaStreamTrack.prototype.applyConstraints) {
-        const nativeApplyConstraints = MediaStreamTrack.prototype.applyConstraints;
-        MediaStreamTrack.prototype.applyConstraints = function(c2) {
-          if (this.kind === "audio" && typeof c2 === "object") {
-            c2 = JSON.parse(JSON.stringify(c2));
-            remap(c2, "autoGainControl", "mozAutoGainControl");
-            remap(c2, "noiseSuppression", "mozNoiseSuppression");
-          }
-          return nativeApplyConstraints.apply(this, [c2]);
-        };
-      }
-    }
-  }
-  var import_polyfills679;
-  var init_getusermedia2 = __esm({
-    "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
-      "use strict";
-      import_polyfills679 = __toESM(require_polyfills());
-      init_utils5();
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js
-  function shimGetDisplayMedia(window2, preferredMediaSource) {
-    if (window2.navigator.mediaDevices && "getDisplayMedia" in window2.navigator.mediaDevices) {
-      return;
-    }
-    if (!window2.navigator.mediaDevices) {
-      return;
-    }
-    window2.navigator.mediaDevices.getDisplayMedia = function getDisplayMedia(constraints) {
-      if (!(constraints && constraints.video)) {
-        const err = new DOMException("getDisplayMedia without video constraints is undefined");
-        err.name = "NotFoundError";
-        err.code = 8;
-        return Promise.reject(err);
-      }
-      if (constraints.video === true) {
-        constraints.video = { mediaSource: preferredMediaSource };
-      } else {
-        constraints.video.mediaSource = preferredMediaSource;
-      }
-      return window2.navigator.mediaDevices.getUserMedia(constraints);
-    };
-  }
-  var import_polyfills680;
-  var init_getdisplaymedia = __esm({
-    "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
-      "use strict";
-      import_polyfills680 = __toESM(require_polyfills());
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js
-  var firefox_shim_exports = {};
-  __export(firefox_shim_exports, {
-    shimAddTransceiver: () => shimAddTransceiver,
-    shimCreateAnswer: () => shimCreateAnswer,
-    shimCreateOffer: () => shimCreateOffer,
-    shimGetDisplayMedia: () => shimGetDisplayMedia,
-    shimGetParameters: () => shimGetParameters,
-    shimGetUserMedia: () => shimGetUserMedia2,
-    shimOnTrack: () => shimOnTrack2,
-    shimPeerConnection: () => shimPeerConnection2,
-    shimRTCDataChannel: () => shimRTCDataChannel,
-    shimReceiverGetStats: () => shimReceiverGetStats,
-    shimRemoveStream: () => shimRemoveStream,
-    shimSenderGetStats: () => shimSenderGetStats
-  });
-  function shimOnTrack2(window2) {
-    if (typeof window2 === "object" && window2.RTCTrackEvent && "receiver" in window2.RTCTrackEvent.prototype && !("transceiver" in window2.RTCTrackEvent.prototype)) {
-      Object.defineProperty(window2.RTCTrackEvent.prototype, "transceiver", {
-        get() {
-          return { receiver: this.receiver };
-        }
-      });
-    }
-  }
-  function shimPeerConnection2(window2, browserDetails) {
-    if (typeof window2 !== "object" || !(window2.RTCPeerConnection || window2.mozRTCPeerConnection)) {
-      return;
-    }
-    if (!window2.RTCPeerConnection && window2.mozRTCPeerConnection) {
-      window2.RTCPeerConnection = window2.mozRTCPeerConnection;
-    }
-    if (browserDetails.version < 53) {
-      ["setLocalDescription", "setRemoteDescription", "addIceCandidate"].forEach(function(method) {
-        const nativeMethod = window2.RTCPeerConnection.prototype[method];
-        const methodObj = { [method]() {
-          arguments[0] = new (method === "addIceCandidate" ? window2.RTCIceCandidate : window2.RTCSessionDescription)(arguments[0]);
-          return nativeMethod.apply(this, arguments);
-        } };
-        window2.RTCPeerConnection.prototype[method] = methodObj[method];
-      });
-    }
-    const modernStatsTypes = {
-      inboundrtp: "inbound-rtp",
-      outboundrtp: "outbound-rtp",
-      candidatepair: "candidate-pair",
-      localcandidate: "local-candidate",
-      remotecandidate: "remote-candidate"
-    };
-    const nativeGetStats = window2.RTCPeerConnection.prototype.getStats;
-    window2.RTCPeerConnection.prototype.getStats = function getStats() {
-      const [selector, onSucc, onErr] = arguments;
-      return nativeGetStats.apply(this, [selector || null]).then((stats) => {
-        if (browserDetails.version < 53 && !onSucc) {
-          try {
-            stats.forEach((stat2) => {
-              stat2.type = modernStatsTypes[stat2.type] || stat2.type;
-            });
-          } catch (e2) {
-            if (e2.name !== "TypeError") {
-              throw e2;
-            }
-            stats.forEach((stat2, i2) => {
-              stats.set(i2, Object.assign({}, stat2, {
-                type: modernStatsTypes[stat2.type] || stat2.type
-              }));
-            });
-          }
-        }
-        return stats;
-      }).then(onSucc, onErr);
-    };
-  }
-  function shimSenderGetStats(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection && window2.RTCRtpSender)) {
-      return;
-    }
-    if (window2.RTCRtpSender && "getStats" in window2.RTCRtpSender.prototype) {
-      return;
-    }
-    const origGetSenders = window2.RTCPeerConnection.prototype.getSenders;
-    if (origGetSenders) {
-      window2.RTCPeerConnection.prototype.getSenders = function getSenders() {
-        const senders = origGetSenders.apply(this, []);
-        senders.forEach((sender) => sender._pc = this);
-        return senders;
-      };
-    }
-    const origAddTrack = window2.RTCPeerConnection.prototype.addTrack;
-    if (origAddTrack) {
-      window2.RTCPeerConnection.prototype.addTrack = function addTrack() {
-        const sender = origAddTrack.apply(this, arguments);
-        sender._pc = this;
-        return sender;
-      };
-    }
-    window2.RTCRtpSender.prototype.getStats = function getStats() {
-      return this.track ? this._pc.getStats(this.track) : Promise.resolve(/* @__PURE__ */ new Map());
-    };
-  }
-  function shimReceiverGetStats(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection && window2.RTCRtpSender)) {
-      return;
-    }
-    if (window2.RTCRtpSender && "getStats" in window2.RTCRtpReceiver.prototype) {
-      return;
-    }
-    const origGetReceivers = window2.RTCPeerConnection.prototype.getReceivers;
-    if (origGetReceivers) {
-      window2.RTCPeerConnection.prototype.getReceivers = function getReceivers() {
-        const receivers = origGetReceivers.apply(this, []);
-        receivers.forEach((receiver) => receiver._pc = this);
-        return receivers;
-      };
-    }
-    wrapPeerConnectionEvent(window2, "track", (e2) => {
-      e2.receiver._pc = e2.srcElement;
-      return e2;
-    });
-    window2.RTCRtpReceiver.prototype.getStats = function getStats() {
-      return this._pc.getStats(this.track);
-    };
-  }
-  function shimRemoveStream(window2) {
-    if (!window2.RTCPeerConnection || "removeStream" in window2.RTCPeerConnection.prototype) {
-      return;
-    }
-    window2.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
-      deprecated("removeStream", "removeTrack");
-      this.getSenders().forEach((sender) => {
-        if (sender.track && stream.getTracks().includes(sender.track)) {
-          this.removeTrack(sender);
-        }
-      });
-    };
-  }
-  function shimRTCDataChannel(window2) {
-    if (window2.DataChannel && !window2.RTCDataChannel) {
-      window2.RTCDataChannel = window2.DataChannel;
-    }
-  }
-  function shimAddTransceiver(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection)) {
-      return;
-    }
-    const origAddTransceiver = window2.RTCPeerConnection.prototype.addTransceiver;
-    if (origAddTransceiver) {
-      window2.RTCPeerConnection.prototype.addTransceiver = function addTransceiver() {
-        this.setParametersPromises = [];
-        let sendEncodings = arguments[1] && arguments[1].sendEncodings;
-        if (sendEncodings === void 0) {
-          sendEncodings = [];
-        }
-        sendEncodings = [...sendEncodings];
-        const shouldPerformCheck = sendEncodings.length > 0;
-        if (shouldPerformCheck) {
-          sendEncodings.forEach((encodingParam) => {
-            if ("rid" in encodingParam) {
-              const ridRegex = /^[a-z0-9]{0,16}$/i;
-              if (!ridRegex.test(encodingParam.rid)) {
-                throw new TypeError("Invalid RID value provided.");
-              }
-            }
-            if ("scaleResolutionDownBy" in encodingParam) {
-              if (!(parseFloat(encodingParam.scaleResolutionDownBy) >= 1)) {
-                throw new RangeError("scale_resolution_down_by must be >= 1.0");
-              }
-            }
-            if ("maxFramerate" in encodingParam) {
-              if (!(parseFloat(encodingParam.maxFramerate) >= 0)) {
-                throw new RangeError("max_framerate must be >= 0.0");
-              }
-            }
-          });
-        }
-        const transceiver = origAddTransceiver.apply(this, arguments);
-        if (shouldPerformCheck) {
-          const { sender } = transceiver;
-          const params = sender.getParameters();
-          if (!("encodings" in params) || // Avoid being fooled by patched getParameters() below.
-          params.encodings.length === 1 && Object.keys(params.encodings[0]).length === 0) {
-            params.encodings = sendEncodings;
-            sender.sendEncodings = sendEncodings;
-            this.setParametersPromises.push(
-              sender.setParameters(params).then(() => {
-                delete sender.sendEncodings;
-              }).catch(() => {
-                delete sender.sendEncodings;
-              })
-            );
-          }
-        }
-        return transceiver;
-      };
-    }
-  }
-  function shimGetParameters(window2) {
-    if (!(typeof window2 === "object" && window2.RTCRtpSender)) {
-      return;
-    }
-    const origGetParameters = window2.RTCRtpSender.prototype.getParameters;
-    if (origGetParameters) {
-      window2.RTCRtpSender.prototype.getParameters = function getParameters() {
-        const params = origGetParameters.apply(this, arguments);
-        if (!("encodings" in params)) {
-          params.encodings = [].concat(this.sendEncodings || [{}]);
-        }
-        return params;
-      };
-    }
-  }
-  function shimCreateOffer(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection)) {
-      return;
-    }
-    const origCreateOffer = window2.RTCPeerConnection.prototype.createOffer;
-    window2.RTCPeerConnection.prototype.createOffer = function createOffer() {
-      if (this.setParametersPromises && this.setParametersPromises.length) {
-        return Promise.all(this.setParametersPromises).then(() => {
-          return origCreateOffer.apply(this, arguments);
-        }).finally(() => {
-          this.setParametersPromises = [];
-        });
-      }
-      return origCreateOffer.apply(this, arguments);
-    };
-  }
-  function shimCreateAnswer(window2) {
-    if (!(typeof window2 === "object" && window2.RTCPeerConnection)) {
-      return;
-    }
-    const origCreateAnswer = window2.RTCPeerConnection.prototype.createAnswer;
-    window2.RTCPeerConnection.prototype.createAnswer = function createAnswer() {
-      if (this.setParametersPromises && this.setParametersPromises.length) {
-        return Promise.all(this.setParametersPromises).then(() => {
-          return origCreateAnswer.apply(this, arguments);
-        }).finally(() => {
-          this.setParametersPromises = [];
-        });
-      }
-      return origCreateAnswer.apply(this, arguments);
-    };
-  }
-  var import_polyfills681;
-  var init_firefox_shim = __esm({
-    "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
-      "use strict";
-      import_polyfills681 = __toESM(require_polyfills());
-      init_utils5();
-      init_getusermedia2();
-      init_getdisplaymedia();
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/safari/safari_shim.js
-  var safari_shim_exports = {};
-  __export(safari_shim_exports, {
-    shimAudioContext: () => shimAudioContext,
-    shimCallbacksAPI: () => shimCallbacksAPI,
-    shimConstraints: () => shimConstraints,
-    shimCreateOfferLegacy: () => shimCreateOfferLegacy,
-    shimGetUserMedia: () => shimGetUserMedia3,
-    shimLocalStreamsAPI: () => shimLocalStreamsAPI,
-    shimRTCIceServerUrls: () => shimRTCIceServerUrls,
-    shimRemoteStreamsAPI: () => shimRemoteStreamsAPI,
-    shimTrackEventTransceiver: () => shimTrackEventTransceiver
-  });
-  function shimLocalStreamsAPI(window2) {
-    if (typeof window2 !== "object" || !window2.RTCPeerConnection) {
-      return;
-    }
-    if (!("getLocalStreams" in window2.RTCPeerConnection.prototype)) {
-      window2.RTCPeerConnection.prototype.getLocalStreams = function getLocalStreams() {
-        if (!this._localStreams) {
-          this._localStreams = [];
-        }
-        return this._localStreams;
-      };
-    }
-    if (!("addStream" in window2.RTCPeerConnection.prototype)) {
-      const _addTrack = window2.RTCPeerConnection.prototype.addTrack;
-      window2.RTCPeerConnection.prototype.addStream = function addStream(stream) {
-        if (!this._localStreams) {
-          this._localStreams = [];
-        }
-        if (!this._localStreams.includes(stream)) {
-          this._localStreams.push(stream);
-        }
-        stream.getAudioTracks().forEach((track) => _addTrack.call(
-          this,
-          track,
-          stream
-        ));
-        stream.getVideoTracks().forEach((track) => _addTrack.call(
-          this,
-          track,
-          stream
-        ));
-      };
-      window2.RTCPeerConnection.prototype.addTrack = function addTrack(track, ...streams) {
-        if (streams) {
-          streams.forEach((stream) => {
-            if (!this._localStreams) {
-              this._localStreams = [stream];
-            } else if (!this._localStreams.includes(stream)) {
-              this._localStreams.push(stream);
-            }
-          });
-        }
-        return _addTrack.apply(this, arguments);
-      };
-    }
-    if (!("removeStream" in window2.RTCPeerConnection.prototype)) {
-      window2.RTCPeerConnection.prototype.removeStream = function removeStream(stream) {
-        if (!this._localStreams) {
-          this._localStreams = [];
-        }
-        const index = this._localStreams.indexOf(stream);
-        if (index === -1) {
-          return;
-        }
-        this._localStreams.splice(index, 1);
-        const tracks = stream.getTracks();
-        this.getSenders().forEach((sender) => {
-          if (tracks.includes(sender.track)) {
-            this.removeTrack(sender);
-          }
-        });
-      };
-    }
-  }
-  function shimRemoteStreamsAPI(window2) {
-    if (typeof window2 !== "object" || !window2.RTCPeerConnection) {
-      return;
-    }
-    if (!("getRemoteStreams" in window2.RTCPeerConnection.prototype)) {
-      window2.RTCPeerConnection.prototype.getRemoteStreams = function getRemoteStreams() {
-        return this._remoteStreams ? this._remoteStreams : [];
-      };
-    }
-    if (!("onaddstream" in window2.RTCPeerConnection.prototype)) {
-      Object.defineProperty(window2.RTCPeerConnection.prototype, "onaddstream", {
-        get() {
-          return this._onaddstream;
-        },
-        set(f2) {
-          if (this._onaddstream) {
-            this.removeEventListener("addstream", this._onaddstream);
-            this.removeEventListener("track", this._onaddstreampoly);
-          }
-          this.addEventListener("addstream", this._onaddstream = f2);
-          this.addEventListener("track", this._onaddstreampoly = (e2) => {
-            e2.streams.forEach((stream) => {
-              if (!this._remoteStreams) {
-                this._remoteStreams = [];
-              }
-              if (this._remoteStreams.includes(stream)) {
-                return;
-              }
-              this._remoteStreams.push(stream);
-              const event = new Event("addstream");
-              event.stream = stream;
-              this.dispatchEvent(event);
-            });
-          });
-        }
-      });
-      const origSetRemoteDescription = window2.RTCPeerConnection.prototype.setRemoteDescription;
-      window2.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
-        const pc = this;
-        if (!this._onaddstreampoly) {
-          this.addEventListener("track", this._onaddstreampoly = function(e2) {
-            e2.streams.forEach((stream) => {
-              if (!pc._remoteStreams) {
-                pc._remoteStreams = [];
-              }
-              if (pc._remoteStreams.indexOf(stream) >= 0) {
-                return;
-              }
-              pc._remoteStreams.push(stream);
-              const event = new Event("addstream");
-              event.stream = stream;
-              pc.dispatchEvent(event);
-            });
-          });
-        }
-        return origSetRemoteDescription.apply(pc, arguments);
-      };
-    }
-  }
-  function shimCallbacksAPI(window2) {
-    if (typeof window2 !== "object" || !window2.RTCPeerConnection) {
-      return;
-    }
-    const prototype = window2.RTCPeerConnection.prototype;
-    const origCreateOffer = prototype.createOffer;
-    const origCreateAnswer = prototype.createAnswer;
-    const setLocalDescription = prototype.setLocalDescription;
-    const setRemoteDescription = prototype.setRemoteDescription;
-    const addIceCandidate = prototype.addIceCandidate;
-    prototype.createOffer = function createOffer(successCallback, failureCallback) {
-      const options = arguments.length >= 2 ? arguments[2] : arguments[0];
-      const promise = origCreateOffer.apply(this, [options]);
-      if (!failureCallback) {
-        return promise;
-      }
-      promise.then(successCallback, failureCallback);
-      return Promise.resolve();
-    };
-    prototype.createAnswer = function createAnswer(successCallback, failureCallback) {
-      const options = arguments.length >= 2 ? arguments[2] : arguments[0];
-      const promise = origCreateAnswer.apply(this, [options]);
-      if (!failureCallback) {
-        return promise;
-      }
-      promise.then(successCallback, failureCallback);
-      return Promise.resolve();
-    };
-    let withCallback = function(description, successCallback, failureCallback) {
-      const promise = setLocalDescription.apply(this, [description]);
-      if (!failureCallback) {
-        return promise;
-      }
-      promise.then(successCallback, failureCallback);
-      return Promise.resolve();
-    };
-    prototype.setLocalDescription = withCallback;
-    withCallback = function(description, successCallback, failureCallback) {
-      const promise = setRemoteDescription.apply(this, [description]);
-      if (!failureCallback) {
-        return promise;
-      }
-      promise.then(successCallback, failureCallback);
-      return Promise.resolve();
-    };
-    prototype.setRemoteDescription = withCallback;
-    withCallback = function(candidate, successCallback, failureCallback) {
-      const promise = addIceCandidate.apply(this, [candidate]);
-      if (!failureCallback) {
-        return promise;
-      }
-      promise.then(successCallback, failureCallback);
-      return Promise.resolve();
-    };
-    prototype.addIceCandidate = withCallback;
-  }
-  function shimGetUserMedia3(window2) {
-    const navigator2 = window2 && window2.navigator;
-    if (navigator2.mediaDevices && navigator2.mediaDevices.getUserMedia) {
-      const mediaDevices = navigator2.mediaDevices;
-      const _getUserMedia = mediaDevices.getUserMedia.bind(mediaDevices);
-      navigator2.mediaDevices.getUserMedia = (constraints) => {
-        return _getUserMedia(shimConstraints(constraints));
-      };
-    }
-    if (!navigator2.getUserMedia && navigator2.mediaDevices && navigator2.mediaDevices.getUserMedia) {
-      navigator2.getUserMedia = function getUserMedia(constraints, cb2, errcb) {
-        navigator2.mediaDevices.getUserMedia(constraints).then(cb2, errcb);
-      }.bind(navigator2);
-    }
-  }
-  function shimConstraints(constraints) {
-    if (constraints && constraints.video !== void 0) {
-      return Object.assign(
-        {},
-        constraints,
-        { video: compactObject(constraints.video) }
-      );
-    }
-    return constraints;
-  }
-  function shimRTCIceServerUrls(window2) {
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    const OrigPeerConnection = window2.RTCPeerConnection;
-    window2.RTCPeerConnection = function RTCPeerConnection2(pcConfig, pcConstraints) {
-      if (pcConfig && pcConfig.iceServers) {
-        const newIceServers = [];
-        for (let i2 = 0; i2 < pcConfig.iceServers.length; i2++) {
-          let server = pcConfig.iceServers[i2];
-          if (server.urls === void 0 && server.url) {
-            deprecated("RTCIceServer.url", "RTCIceServer.urls");
-            server = JSON.parse(JSON.stringify(server));
-            server.urls = server.url;
-            delete server.url;
-            newIceServers.push(server);
-          } else {
-            newIceServers.push(pcConfig.iceServers[i2]);
-          }
-        }
-        pcConfig.iceServers = newIceServers;
-      }
-      return new OrigPeerConnection(pcConfig, pcConstraints);
-    };
-    window2.RTCPeerConnection.prototype = OrigPeerConnection.prototype;
-    if ("generateCertificate" in OrigPeerConnection) {
-      Object.defineProperty(window2.RTCPeerConnection, "generateCertificate", {
-        get() {
-          return OrigPeerConnection.generateCertificate;
-        }
-      });
-    }
-  }
-  function shimTrackEventTransceiver(window2) {
-    if (typeof window2 === "object" && window2.RTCTrackEvent && "receiver" in window2.RTCTrackEvent.prototype && !("transceiver" in window2.RTCTrackEvent.prototype)) {
-      Object.defineProperty(window2.RTCTrackEvent.prototype, "transceiver", {
-        get() {
-          return { receiver: this.receiver };
-        }
-      });
-    }
-  }
-  function shimCreateOfferLegacy(window2) {
-    const origCreateOffer = window2.RTCPeerConnection.prototype.createOffer;
-    window2.RTCPeerConnection.prototype.createOffer = function createOffer(offerOptions) {
-      if (offerOptions) {
-        if (typeof offerOptions.offerToReceiveAudio !== "undefined") {
-          offerOptions.offerToReceiveAudio = !!offerOptions.offerToReceiveAudio;
-        }
-        const audioTransceiver = this.getTransceivers().find((transceiver) => transceiver.receiver.track.kind === "audio");
-        if (offerOptions.offerToReceiveAudio === false && audioTransceiver) {
-          if (audioTransceiver.direction === "sendrecv") {
-            if (audioTransceiver.setDirection) {
-              audioTransceiver.setDirection("sendonly");
-            } else {
-              audioTransceiver.direction = "sendonly";
-            }
-          } else if (audioTransceiver.direction === "recvonly") {
-            if (audioTransceiver.setDirection) {
-              audioTransceiver.setDirection("inactive");
-            } else {
-              audioTransceiver.direction = "inactive";
-            }
-          }
-        } else if (offerOptions.offerToReceiveAudio === true && !audioTransceiver) {
-          this.addTransceiver("audio", { direction: "recvonly" });
-        }
-        if (typeof offerOptions.offerToReceiveVideo !== "undefined") {
-          offerOptions.offerToReceiveVideo = !!offerOptions.offerToReceiveVideo;
-        }
-        const videoTransceiver = this.getTransceivers().find((transceiver) => transceiver.receiver.track.kind === "video");
-        if (offerOptions.offerToReceiveVideo === false && videoTransceiver) {
-          if (videoTransceiver.direction === "sendrecv") {
-            if (videoTransceiver.setDirection) {
-              videoTransceiver.setDirection("sendonly");
-            } else {
-              videoTransceiver.direction = "sendonly";
-            }
-          } else if (videoTransceiver.direction === "recvonly") {
-            if (videoTransceiver.setDirection) {
-              videoTransceiver.setDirection("inactive");
-            } else {
-              videoTransceiver.direction = "inactive";
-            }
-          }
-        } else if (offerOptions.offerToReceiveVideo === true && !videoTransceiver) {
-          this.addTransceiver("video", { direction: "recvonly" });
-        }
-      }
-      return origCreateOffer.apply(this, arguments);
-    };
-  }
-  function shimAudioContext(window2) {
-    if (typeof window2 !== "object" || window2.AudioContext) {
-      return;
-    }
-    window2.AudioContext = window2.webkitAudioContext;
-  }
-  var import_polyfills682;
-  var init_safari_shim = __esm({
-    "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
-      "use strict";
-      import_polyfills682 = __toESM(require_polyfills());
-      init_utils5();
-    }
-  });
-
-  // node_modules/sdp/sdp.js
-  var require_sdp = __commonJS({
-    "node_modules/sdp/sdp.js"(exports, module) {
-      "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
-      var SDPUtils2 = {};
-      SDPUtils2.generateIdentifier = function() {
-        return Math.random().toString(36).substring(2, 12);
-      };
-      SDPUtils2.localCName = SDPUtils2.generateIdentifier();
-      SDPUtils2.splitLines = function(blob) {
-        return blob.trim().split("\n").map((line) => line.trim());
-      };
-      SDPUtils2.splitSections = function(blob) {
-        const parts = blob.split("\nm=");
-        return parts.map((part, index) => (index > 0 ? "m=" + part : part).trim() + "\r\n");
-      };
-      SDPUtils2.getDescription = function(blob) {
-        const sections = SDPUtils2.splitSections(blob);
-        return sections && sections[0];
-      };
-      SDPUtils2.getMediaSections = function(blob) {
-        const sections = SDPUtils2.splitSections(blob);
-        sections.shift();
-        return sections;
-      };
-      SDPUtils2.matchPrefix = function(blob, prefix) {
-        return SDPUtils2.splitLines(blob).filter((line) => line.indexOf(prefix) === 0);
-      };
-      SDPUtils2.parseCandidate = function(line) {
-        let parts;
-        if (line.indexOf("a=candidate:") === 0) {
-          parts = line.substring(12).split(" ");
-        } else {
-          parts = line.substring(10).split(" ");
-        }
-        const candidate = {
-          foundation: parts[0],
-          component: { 1: "rtp", 2: "rtcp" }[parts[1]] || parts[1],
-          protocol: parts[2].toLowerCase(),
-          priority: parseInt(parts[3], 10),
-          ip: parts[4],
-          address: parts[4],
-          // address is an alias for ip.
-          port: parseInt(parts[5], 10),
-          // skip parts[6] == 'typ'
-          type: parts[7]
-        };
-        for (let i2 = 8; i2 < parts.length; i2 += 2) {
-          switch (parts[i2]) {
-            case "raddr":
-              candidate.relatedAddress = parts[i2 + 1];
-              break;
-            case "rport":
-              candidate.relatedPort = parseInt(parts[i2 + 1], 10);
-              break;
-            case "tcptype":
-              candidate.tcpType = parts[i2 + 1];
-              break;
-            case "ufrag":
-              candidate.ufrag = parts[i2 + 1];
-              candidate.usernameFragment = parts[i2 + 1];
-              break;
-            default:
-              if (candidate[parts[i2]] === void 0) {
-                candidate[parts[i2]] = parts[i2 + 1];
-              }
-              break;
-          }
-        }
-        return candidate;
-      };
-      SDPUtils2.writeCandidate = function(candidate) {
-        const sdp2 = [];
-        sdp2.push(candidate.foundation);
-        const component = candidate.component;
-        if (component === "rtp") {
-          sdp2.push(1);
-        } else if (component === "rtcp") {
-          sdp2.push(2);
-        } else {
-          sdp2.push(component);
-        }
-        sdp2.push(candidate.protocol.toUpperCase());
-        sdp2.push(candidate.priority);
-        sdp2.push(candidate.address || candidate.ip);
-        sdp2.push(candidate.port);
-        const type = candidate.type;
-        sdp2.push("typ");
-        sdp2.push(type);
-        if (type !== "host" && candidate.relatedAddress && candidate.relatedPort) {
-          sdp2.push("raddr");
-          sdp2.push(candidate.relatedAddress);
-          sdp2.push("rport");
-          sdp2.push(candidate.relatedPort);
-        }
-        if (candidate.tcpType && candidate.protocol.toLowerCase() === "tcp") {
-          sdp2.push("tcptype");
-          sdp2.push(candidate.tcpType);
-        }
-        if (candidate.usernameFragment || candidate.ufrag) {
-          sdp2.push("ufrag");
-          sdp2.push(candidate.usernameFragment || candidate.ufrag);
-        }
-        return "candidate:" + sdp2.join(" ");
-      };
-      SDPUtils2.parseIceOptions = function(line) {
-        return line.substring(14).split(" ");
-      };
-      SDPUtils2.parseRtpMap = function(line) {
-        let parts = line.substring(9).split(" ");
-        const parsed = {
-          payloadType: parseInt(parts.shift(), 10)
-          // was: id
-        };
-        parts = parts[0].split("/");
-        parsed.name = parts[0];
-        parsed.clockRate = parseInt(parts[1], 10);
-        parsed.channels = parts.length === 3 ? parseInt(parts[2], 10) : 1;
-        parsed.numChannels = parsed.channels;
-        return parsed;
-      };
-      SDPUtils2.writeRtpMap = function(codec) {
-        let pt = codec.payloadType;
-        if (codec.preferredPayloadType !== void 0) {
-          pt = codec.preferredPayloadType;
-        }
-        const channels = codec.channels || codec.numChannels || 1;
-        return "a=rtpmap:" + pt + " " + codec.name + "/" + codec.clockRate + (channels !== 1 ? "/" + channels : "") + "\r\n";
-      };
-      SDPUtils2.parseExtmap = function(line) {
-        const parts = line.substring(9).split(" ");
-        return {
-          id: parseInt(parts[0], 10),
-          direction: parts[0].indexOf("/") > 0 ? parts[0].split("/")[1] : "sendrecv",
-          uri: parts[1],
-          attributes: parts.slice(2).join(" ")
-        };
-      };
-      SDPUtils2.writeExtmap = function(headerExtension) {
-        return "a=extmap:" + (headerExtension.id || headerExtension.preferredId) + (headerExtension.direction && headerExtension.direction !== "sendrecv" ? "/" + headerExtension.direction : "") + " " + headerExtension.uri + (headerExtension.attributes ? " " + headerExtension.attributes : "") + "\r\n";
-      };
-      SDPUtils2.parseFmtp = function(line) {
-        const parsed = {};
-        let kv;
-        const parts = line.substring(line.indexOf(" ") + 1).split(";");
-        for (let j2 = 0; j2 < parts.length; j2++) {
-          kv = parts[j2].trim().split("=");
-          parsed[kv[0].trim()] = kv[1];
-        }
-        return parsed;
-      };
-      SDPUtils2.writeFmtp = function(codec) {
-        let line = "";
-        let pt = codec.payloadType;
-        if (codec.preferredPayloadType !== void 0) {
-          pt = codec.preferredPayloadType;
-        }
-        if (codec.parameters && Object.keys(codec.parameters).length) {
-          const params = [];
-          Object.keys(codec.parameters).forEach((param) => {
-            if (codec.parameters[param] !== void 0) {
-              params.push(param + "=" + codec.parameters[param]);
-            } else {
-              params.push(param);
-            }
-          });
-          line += "a=fmtp:" + pt + " " + params.join(";") + "\r\n";
-        }
-        return line;
-      };
-      SDPUtils2.parseRtcpFb = function(line) {
-        const parts = line.substring(line.indexOf(" ") + 1).split(" ");
-        return {
-          type: parts.shift(),
-          parameter: parts.join(" ")
-        };
-      };
-      SDPUtils2.writeRtcpFb = function(codec) {
-        let lines = "";
-        let pt = codec.payloadType;
-        if (codec.preferredPayloadType !== void 0) {
-          pt = codec.preferredPayloadType;
-        }
-        if (codec.rtcpFeedback && codec.rtcpFeedback.length) {
-          codec.rtcpFeedback.forEach((fb) => {
-            lines += "a=rtcp-fb:" + pt + " " + fb.type + (fb.parameter && fb.parameter.length ? " " + fb.parameter : "") + "\r\n";
-          });
-        }
-        return lines;
-      };
-      SDPUtils2.parseSsrcMedia = function(line) {
-        const sp = line.indexOf(" ");
-        const parts = {
-          ssrc: parseInt(line.substring(7, sp), 10)
-        };
-        const colon = line.indexOf(":", sp);
-        if (colon > -1) {
-          parts.attribute = line.substring(sp + 1, colon);
-          parts.value = line.substring(colon + 1);
-        } else {
-          parts.attribute = line.substring(sp + 1);
-        }
-        return parts;
-      };
-      SDPUtils2.parseSsrcGroup = function(line) {
-        const parts = line.substring(13).split(" ");
-        return {
-          semantics: parts.shift(),
-          ssrcs: parts.map((ssrc) => parseInt(ssrc, 10))
-        };
-      };
-      SDPUtils2.getMid = function(mediaSection) {
-        const mid = SDPUtils2.matchPrefix(mediaSection, "a=mid:")[0];
-        if (mid) {
-          return mid.substring(6);
-        }
-      };
-      SDPUtils2.parseFingerprint = function(line) {
-        const parts = line.substring(14).split(" ");
-        return {
-          algorithm: parts[0].toLowerCase(),
-          // algorithm is case-sensitive in Edge.
-          value: parts[1].toUpperCase()
-          // the definition is upper-case in RFC 4572.
-        };
-      };
-      SDPUtils2.getDtlsParameters = function(mediaSection, sessionpart) {
-        const lines = SDPUtils2.matchPrefix(
-          mediaSection + sessionpart,
-          "a=fingerprint:"
-        );
-        return {
-          role: "auto",
-          fingerprints: lines.map(SDPUtils2.parseFingerprint)
-        };
-      };
-      SDPUtils2.writeDtlsParameters = function(params, setupType) {
-        let sdp2 = "a=setup:" + setupType + "\r\n";
-        params.fingerprints.forEach((fp) => {
-          sdp2 += "a=fingerprint:" + fp.algorithm + " " + fp.value + "\r\n";
-        });
-        return sdp2;
-      };
-      SDPUtils2.parseCryptoLine = function(line) {
-        const parts = line.substring(9).split(" ");
-        return {
-          tag: parseInt(parts[0], 10),
-          cryptoSuite: parts[1],
-          keyParams: parts[2],
-          sessionParams: parts.slice(3)
-        };
-      };
-      SDPUtils2.writeCryptoLine = function(parameters) {
-        return "a=crypto:" + parameters.tag + " " + parameters.cryptoSuite + " " + (typeof parameters.keyParams === "object" ? SDPUtils2.writeCryptoKeyParams(parameters.keyParams) : parameters.keyParams) + (parameters.sessionParams ? " " + parameters.sessionParams.join(" ") : "") + "\r\n";
-      };
-      SDPUtils2.parseCryptoKeyParams = function(keyParams) {
-        if (keyParams.indexOf("inline:") !== 0) {
-          return null;
-        }
-        const parts = keyParams.substring(7).split("|");
-        return {
-          keyMethod: "inline",
-          keySalt: parts[0],
-          lifeTime: parts[1],
-          mkiValue: parts[2] ? parts[2].split(":")[0] : void 0,
-          mkiLength: parts[2] ? parts[2].split(":")[1] : void 0
-        };
-      };
-      SDPUtils2.writeCryptoKeyParams = function(keyParams) {
-        return keyParams.keyMethod + ":" + keyParams.keySalt + (keyParams.lifeTime ? "|" + keyParams.lifeTime : "") + (keyParams.mkiValue && keyParams.mkiLength ? "|" + keyParams.mkiValue + ":" + keyParams.mkiLength : "");
-      };
-      SDPUtils2.getCryptoParameters = function(mediaSection, sessionpart) {
-        const lines = SDPUtils2.matchPrefix(
-          mediaSection + sessionpart,
-          "a=crypto:"
-        );
-        return lines.map(SDPUtils2.parseCryptoLine);
-      };
-      SDPUtils2.getIceParameters = function(mediaSection, sessionpart) {
-        const ufrag = SDPUtils2.matchPrefix(
-          mediaSection + sessionpart,
-          "a=ice-ufrag:"
-        )[0];
-        const pwd = SDPUtils2.matchPrefix(
-          mediaSection + sessionpart,
-          "a=ice-pwd:"
-        )[0];
-        if (!(ufrag && pwd)) {
-          return null;
-        }
-        return {
-          usernameFragment: ufrag.substring(12),
-          password: pwd.substring(10)
-        };
-      };
-      SDPUtils2.writeIceParameters = function(params) {
-        let sdp2 = "a=ice-ufrag:" + params.usernameFragment + "\r\na=ice-pwd:" + params.password + "\r\n";
-        if (params.iceLite) {
-          sdp2 += "a=ice-lite\r\n";
-        }
-        return sdp2;
-      };
-      SDPUtils2.parseRtpParameters = function(mediaSection) {
-        const description = {
-          codecs: [],
-          headerExtensions: [],
-          fecMechanisms: [],
-          rtcp: []
-        };
-        const lines = SDPUtils2.splitLines(mediaSection);
-        const mline = lines[0].split(" ");
-        description.profile = mline[2];
-        for (let i2 = 3; i2 < mline.length; i2++) {
-          const pt = mline[i2];
-          const rtpmapline = SDPUtils2.matchPrefix(
-            mediaSection,
-            "a=rtpmap:" + pt + " "
-          )[0];
-          if (rtpmapline) {
-            const codec = SDPUtils2.parseRtpMap(rtpmapline);
-            const fmtps = SDPUtils2.matchPrefix(
-              mediaSection,
-              "a=fmtp:" + pt + " "
-            );
-            codec.parameters = fmtps.length ? SDPUtils2.parseFmtp(fmtps[0]) : {};
-            codec.rtcpFeedback = SDPUtils2.matchPrefix(
-              mediaSection,
-              "a=rtcp-fb:" + pt + " "
-            ).map(SDPUtils2.parseRtcpFb);
-            description.codecs.push(codec);
-            switch (codec.name.toUpperCase()) {
-              case "RED":
-              case "ULPFEC":
-                description.fecMechanisms.push(codec.name.toUpperCase());
-                break;
-              default:
-                break;
-            }
-          }
-        }
-        SDPUtils2.matchPrefix(mediaSection, "a=extmap:").forEach((line) => {
-          description.headerExtensions.push(SDPUtils2.parseExtmap(line));
-        });
-        const wildcardRtcpFb = SDPUtils2.matchPrefix(mediaSection, "a=rtcp-fb:* ").map(SDPUtils2.parseRtcpFb);
-        description.codecs.forEach((codec) => {
-          wildcardRtcpFb.forEach((fb) => {
-            const duplicate = codec.rtcpFeedback.find((existingFeedback) => {
-              return existingFeedback.type === fb.type && existingFeedback.parameter === fb.parameter;
-            });
-            if (!duplicate) {
-              codec.rtcpFeedback.push(fb);
-            }
-          });
-        });
-        return description;
-      };
-      SDPUtils2.writeRtpDescription = function(kind, caps) {
-        let sdp2 = "";
-        sdp2 += "m=" + kind + " ";
-        sdp2 += caps.codecs.length > 0 ? "9" : "0";
-        sdp2 += " " + (caps.profile || "UDP/TLS/RTP/SAVPF") + " ";
-        sdp2 += caps.codecs.map((codec) => {
-          if (codec.preferredPayloadType !== void 0) {
-            return codec.preferredPayloadType;
-          }
-          return codec.payloadType;
-        }).join(" ") + "\r\n";
-        sdp2 += "c=IN IP4 0.0.0.0\r\n";
-        sdp2 += "a=rtcp:9 IN IP4 0.0.0.0\r\n";
-        caps.codecs.forEach((codec) => {
-          sdp2 += SDPUtils2.writeRtpMap(codec);
-          sdp2 += SDPUtils2.writeFmtp(codec);
-          sdp2 += SDPUtils2.writeRtcpFb(codec);
-        });
-        let maxptime = 0;
-        caps.codecs.forEach((codec) => {
-          if (codec.maxptime > maxptime) {
-            maxptime = codec.maxptime;
-          }
-        });
-        if (maxptime > 0) {
-          sdp2 += "a=maxptime:" + maxptime + "\r\n";
-        }
-        if (caps.headerExtensions) {
-          caps.headerExtensions.forEach((extension) => {
-            sdp2 += SDPUtils2.writeExtmap(extension);
-          });
-        }
-        return sdp2;
-      };
-      SDPUtils2.parseRtpEncodingParameters = function(mediaSection) {
-        const encodingParameters = [];
-        const description = SDPUtils2.parseRtpParameters(mediaSection);
-        const hasRed = description.fecMechanisms.indexOf("RED") !== -1;
-        const hasUlpfec = description.fecMechanisms.indexOf("ULPFEC") !== -1;
-        const ssrcs = SDPUtils2.matchPrefix(mediaSection, "a=ssrc:").map((line) => SDPUtils2.parseSsrcMedia(line)).filter((parts) => parts.attribute === "cname");
-        const primarySsrc = ssrcs.length > 0 && ssrcs[0].ssrc;
-        let secondarySsrc;
-        const flows = SDPUtils2.matchPrefix(mediaSection, "a=ssrc-group:FID").map((line) => {
-          const parts = line.substring(17).split(" ");
-          return parts.map((part) => parseInt(part, 10));
-        });
-        if (flows.length > 0 && flows[0].length > 1 && flows[0][0] === primarySsrc) {
-          secondarySsrc = flows[0][1];
-        }
-        description.codecs.forEach((codec) => {
-          if (codec.name.toUpperCase() === "RTX" && codec.parameters.apt) {
-            let encParam = {
-              ssrc: primarySsrc,
-              codecPayloadType: parseInt(codec.parameters.apt, 10)
-            };
-            if (primarySsrc && secondarySsrc) {
-              encParam.rtx = { ssrc: secondarySsrc };
-            }
-            encodingParameters.push(encParam);
-            if (hasRed) {
-              encParam = JSON.parse(JSON.stringify(encParam));
-              encParam.fec = {
-                ssrc: primarySsrc,
-                mechanism: hasUlpfec ? "red+ulpfec" : "red"
-              };
-              encodingParameters.push(encParam);
-            }
-          }
-        });
-        if (encodingParameters.length === 0 && primarySsrc) {
-          encodingParameters.push({
-            ssrc: primarySsrc
-          });
-        }
-        let bandwidth = SDPUtils2.matchPrefix(mediaSection, "b=");
-        if (bandwidth.length) {
-          if (bandwidth[0].indexOf("b=TIAS:") === 0) {
-            bandwidth = parseInt(bandwidth[0].substring(7), 10);
-          } else if (bandwidth[0].indexOf("b=AS:") === 0) {
-            bandwidth = parseInt(bandwidth[0].substring(5), 10) * 1e3 * 0.95 - 50 * 40 * 8;
-          } else {
-            bandwidth = void 0;
-          }
-          encodingParameters.forEach((params) => {
-            params.maxBitrate = bandwidth;
-          });
-        }
-        return encodingParameters;
-      };
-      SDPUtils2.parseRtcpParameters = function(mediaSection) {
-        const rtcpParameters = {};
-        const remoteSsrc = SDPUtils2.matchPrefix(mediaSection, "a=ssrc:").map((line) => SDPUtils2.parseSsrcMedia(line)).filter((obj) => obj.attribute === "cname")[0];
-        if (remoteSsrc) {
-          rtcpParameters.cname = remoteSsrc.value;
-          rtcpParameters.ssrc = remoteSsrc.ssrc;
-        }
-        const rsize = SDPUtils2.matchPrefix(mediaSection, "a=rtcp-rsize");
-        rtcpParameters.reducedSize = rsize.length > 0;
-        rtcpParameters.compound = rsize.length === 0;
-        const mux = SDPUtils2.matchPrefix(mediaSection, "a=rtcp-mux");
-        rtcpParameters.mux = mux.length > 0;
-        return rtcpParameters;
-      };
-      SDPUtils2.writeRtcpParameters = function(rtcpParameters) {
-        let sdp2 = "";
-        if (rtcpParameters.reducedSize) {
-          sdp2 += "a=rtcp-rsize\r\n";
-        }
-        if (rtcpParameters.mux) {
-          sdp2 += "a=rtcp-mux\r\n";
-        }
-        if (rtcpParameters.ssrc !== void 0 && rtcpParameters.cname) {
-          sdp2 += "a=ssrc:" + rtcpParameters.ssrc + " cname:" + rtcpParameters.cname + "\r\n";
-        }
-        return sdp2;
-      };
-      SDPUtils2.parseMsid = function(mediaSection) {
-        let parts;
-        const spec = SDPUtils2.matchPrefix(mediaSection, "a=msid:");
-        if (spec.length === 1) {
-          parts = spec[0].substring(7).split(" ");
-          return { stream: parts[0], track: parts[1] };
-        }
-        const planB = SDPUtils2.matchPrefix(mediaSection, "a=ssrc:").map((line) => SDPUtils2.parseSsrcMedia(line)).filter((msidParts) => msidParts.attribute === "msid");
-        if (planB.length > 0) {
-          parts = planB[0].value.split(" ");
-          return { stream: parts[0], track: parts[1] };
-        }
-      };
-      SDPUtils2.parseSctpDescription = function(mediaSection) {
-        const mline = SDPUtils2.parseMLine(mediaSection);
-        const maxSizeLine = SDPUtils2.matchPrefix(mediaSection, "a=max-message-size:");
-        let maxMessageSize;
-        if (maxSizeLine.length > 0) {
-          maxMessageSize = parseInt(maxSizeLine[0].substring(19), 10);
-        }
-        if (isNaN(maxMessageSize)) {
-          maxMessageSize = 65536;
-        }
-        const sctpPort = SDPUtils2.matchPrefix(mediaSection, "a=sctp-port:");
-        if (sctpPort.length > 0) {
-          return {
-            port: parseInt(sctpPort[0].substring(12), 10),
-            protocol: mline.fmt,
-            maxMessageSize
-          };
-        }
-        const sctpMapLines = SDPUtils2.matchPrefix(mediaSection, "a=sctpmap:");
-        if (sctpMapLines.length > 0) {
-          const parts = sctpMapLines[0].substring(10).split(" ");
-          return {
-            port: parseInt(parts[0], 10),
-            protocol: parts[1],
-            maxMessageSize
-          };
-        }
-      };
-      SDPUtils2.writeSctpDescription = function(media, sctp) {
-        let output = [];
-        if (media.protocol !== "DTLS/SCTP") {
-          output = [
-            "m=" + media.kind + " 9 " + media.protocol + " " + sctp.protocol + "\r\n",
-            "c=IN IP4 0.0.0.0\r\n",
-            "a=sctp-port:" + sctp.port + "\r\n"
-          ];
-        } else {
-          output = [
-            "m=" + media.kind + " 9 " + media.protocol + " " + sctp.port + "\r\n",
-            "c=IN IP4 0.0.0.0\r\n",
-            "a=sctpmap:" + sctp.port + " " + sctp.protocol + " 65535\r\n"
-          ];
-        }
-        if (sctp.maxMessageSize !== void 0) {
-          output.push("a=max-message-size:" + sctp.maxMessageSize + "\r\n");
-        }
-        return output.join("");
-      };
-      SDPUtils2.generateSessionId = function() {
-        return Math.random().toString().substr(2, 22);
-      };
-      SDPUtils2.writeSessionBoilerplate = function(sessId, sessVer, sessUser) {
-        let sessionId;
-        const version = sessVer !== void 0 ? sessVer : 2;
-        if (sessId) {
-          sessionId = sessId;
-        } else {
-          sessionId = SDPUtils2.generateSessionId();
-        }
-        const user = sessUser || "thisisadapterortc";
-        return "v=0\r\no=" + user + " " + sessionId + " " + version + " IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\n";
-      };
-      SDPUtils2.getDirection = function(mediaSection, sessionpart) {
-        const lines = SDPUtils2.splitLines(mediaSection);
-        for (let i2 = 0; i2 < lines.length; i2++) {
-          switch (lines[i2]) {
-            case "a=sendrecv":
-            case "a=sendonly":
-            case "a=recvonly":
-            case "a=inactive":
-              return lines[i2].substring(2);
-            default:
-          }
-        }
-        if (sessionpart) {
-          return SDPUtils2.getDirection(sessionpart);
-        }
-        return "sendrecv";
-      };
-      SDPUtils2.getKind = function(mediaSection) {
-        const lines = SDPUtils2.splitLines(mediaSection);
-        const mline = lines[0].split(" ");
-        return mline[0].substring(2);
-      };
-      SDPUtils2.isRejected = function(mediaSection) {
-        return mediaSection.split(" ", 2)[1] === "0";
-      };
-      SDPUtils2.parseMLine = function(mediaSection) {
-        const lines = SDPUtils2.splitLines(mediaSection);
-        const parts = lines[0].substring(2).split(" ");
-        return {
-          kind: parts[0],
-          port: parseInt(parts[1], 10),
-          protocol: parts[2],
-          fmt: parts.slice(3).join(" ")
-        };
-      };
-      SDPUtils2.parseOLine = function(mediaSection) {
-        const line = SDPUtils2.matchPrefix(mediaSection, "o=")[0];
-        const parts = line.substring(2).split(" ");
-        return {
-          username: parts[0],
-          sessionId: parts[1],
-          sessionVersion: parseInt(parts[2], 10),
-          netType: parts[3],
-          addressType: parts[4],
-          address: parts[5]
-        };
-      };
-      SDPUtils2.isValidSDP = function(blob) {
-        if (typeof blob !== "string" || blob.length === 0) {
-          return false;
-        }
-        const lines = SDPUtils2.splitLines(blob);
-        for (let i2 = 0; i2 < lines.length; i2++) {
-          if (lines[i2].length < 2 || lines[i2].charAt(1) !== "=") {
-            return false;
-          }
-        }
-        return true;
-      };
-      if (typeof module === "object") {
-        module.exports = SDPUtils2;
-      }
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/common_shim.js
-  var common_shim_exports = {};
-  __export(common_shim_exports, {
-    removeExtmapAllowMixed: () => removeExtmapAllowMixed,
-    shimAddIceCandidateNullOrEmpty: () => shimAddIceCandidateNullOrEmpty,
-    shimConnectionState: () => shimConnectionState,
-    shimMaxMessageSize: () => shimMaxMessageSize,
-    shimParameterlessSetLocalDescription: () => shimParameterlessSetLocalDescription,
-    shimRTCIceCandidate: () => shimRTCIceCandidate,
-    shimRTCIceCandidateRelayProtocol: () => shimRTCIceCandidateRelayProtocol,
-    shimSendThrowTypeError: () => shimSendThrowTypeError
-  });
-  function shimRTCIceCandidate(window2) {
-    if (!window2.RTCIceCandidate || window2.RTCIceCandidate && "foundation" in window2.RTCIceCandidate.prototype) {
-      return;
-    }
-    const NativeRTCIceCandidate = window2.RTCIceCandidate;
-    window2.RTCIceCandidate = function RTCIceCandidate(args) {
-      if (typeof args === "object" && args.candidate && args.candidate.indexOf("a=") === 0) {
-        args = JSON.parse(JSON.stringify(args));
-        args.candidate = args.candidate.substring(2);
-      }
-      if (args.candidate && args.candidate.length) {
-        const nativeCandidate = new NativeRTCIceCandidate(args);
-        const parsedCandidate = import_sdp.default.parseCandidate(args.candidate);
-        for (const key in parsedCandidate) {
-          if (!(key in nativeCandidate)) {
-            Object.defineProperty(
-              nativeCandidate,
-              key,
-              { value: parsedCandidate[key] }
-            );
-          }
-        }
-        nativeCandidate.toJSON = function toJSON() {
-          return {
-            candidate: nativeCandidate.candidate,
-            sdpMid: nativeCandidate.sdpMid,
-            sdpMLineIndex: nativeCandidate.sdpMLineIndex,
-            usernameFragment: nativeCandidate.usernameFragment
-          };
-        };
-        return nativeCandidate;
-      }
-      return new NativeRTCIceCandidate(args);
-    };
-    window2.RTCIceCandidate.prototype = NativeRTCIceCandidate.prototype;
-    wrapPeerConnectionEvent(window2, "icecandidate", (e2) => {
-      if (e2.candidate) {
-        Object.defineProperty(e2, "candidate", {
-          value: new window2.RTCIceCandidate(e2.candidate),
-          writable: "false"
-        });
-      }
-      return e2;
-    });
-  }
-  function shimRTCIceCandidateRelayProtocol(window2) {
-    if (!window2.RTCIceCandidate || window2.RTCIceCandidate && "relayProtocol" in window2.RTCIceCandidate.prototype) {
-      return;
-    }
-    wrapPeerConnectionEvent(window2, "icecandidate", (e2) => {
-      if (e2.candidate) {
-        const parsedCandidate = import_sdp.default.parseCandidate(e2.candidate.candidate);
-        if (parsedCandidate.type === "relay") {
-          e2.candidate.relayProtocol = {
-            0: "tls",
-            1: "tcp",
-            2: "udp"
-          }[parsedCandidate.priority >> 24];
-        }
-      }
-      return e2;
-    });
-  }
-  function shimMaxMessageSize(window2, browserDetails) {
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    if (!("sctp" in window2.RTCPeerConnection.prototype)) {
-      Object.defineProperty(window2.RTCPeerConnection.prototype, "sctp", {
-        get() {
-          return typeof this._sctp === "undefined" ? null : this._sctp;
-        }
-      });
-    }
-    const sctpInDescription = function(description) {
-      if (!description || !description.sdp) {
-        return false;
-      }
-      const sections = import_sdp.default.splitSections(description.sdp);
-      sections.shift();
-      return sections.some((mediaSection) => {
-        const mLine = import_sdp.default.parseMLine(mediaSection);
-        return mLine && mLine.kind === "application" && mLine.protocol.indexOf("SCTP") !== -1;
-      });
-    };
-    const getRemoteFirefoxVersion = function(description) {
-      const match = description.sdp.match(/mozilla...THIS_IS_SDPARTA-(\d+)/);
-      if (match === null || match.length < 2) {
-        return -1;
-      }
-      const version = parseInt(match[1], 10);
-      return version !== version ? -1 : version;
-    };
-    const getCanSendMaxMessageSize = function(remoteIsFirefox) {
-      let canSendMaxMessageSize = 65536;
-      if (browserDetails.browser === "firefox") {
-        if (browserDetails.version < 57) {
-          if (remoteIsFirefox === -1) {
-            canSendMaxMessageSize = 16384;
-          } else {
-            canSendMaxMessageSize = 2147483637;
-          }
-        } else if (browserDetails.version < 60) {
-          canSendMaxMessageSize = browserDetails.version === 57 ? 65535 : 65536;
-        } else {
-          canSendMaxMessageSize = 2147483637;
-        }
-      }
-      return canSendMaxMessageSize;
-    };
-    const getMaxMessageSize = function(description, remoteIsFirefox) {
-      let maxMessageSize = 65536;
-      if (browserDetails.browser === "firefox" && browserDetails.version === 57) {
-        maxMessageSize = 65535;
-      }
-      const match = import_sdp.default.matchPrefix(
-        description.sdp,
-        "a=max-message-size:"
-      );
-      if (match.length > 0) {
-        maxMessageSize = parseInt(match[0].substring(19), 10);
-      } else if (browserDetails.browser === "firefox" && remoteIsFirefox !== -1) {
-        maxMessageSize = 2147483637;
-      }
-      return maxMessageSize;
-    };
-    const origSetRemoteDescription = window2.RTCPeerConnection.prototype.setRemoteDescription;
-    window2.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription() {
-      this._sctp = null;
-      if (browserDetails.browser === "chrome" && browserDetails.version >= 76) {
-        const { sdpSemantics } = this.getConfiguration();
-        if (sdpSemantics === "plan-b") {
-          Object.defineProperty(this, "sctp", {
-            get() {
-              return typeof this._sctp === "undefined" ? null : this._sctp;
-            },
-            enumerable: true,
-            configurable: true
-          });
-        }
-      }
-      if (sctpInDescription(arguments[0])) {
-        const isFirefox = getRemoteFirefoxVersion(arguments[0]);
-        const canSendMMS = getCanSendMaxMessageSize(isFirefox);
-        const remoteMMS = getMaxMessageSize(arguments[0], isFirefox);
-        let maxMessageSize;
-        if (canSendMMS === 0 && remoteMMS === 0) {
-          maxMessageSize = Number.POSITIVE_INFINITY;
-        } else if (canSendMMS === 0 || remoteMMS === 0) {
-          maxMessageSize = Math.max(canSendMMS, remoteMMS);
-        } else {
-          maxMessageSize = Math.min(canSendMMS, remoteMMS);
-        }
-        const sctp = {};
-        Object.defineProperty(sctp, "maxMessageSize", {
-          get() {
-            return maxMessageSize;
-          }
-        });
-        this._sctp = sctp;
-      }
-      return origSetRemoteDescription.apply(this, arguments);
-    };
-  }
-  function shimSendThrowTypeError(window2) {
-    if (!(window2.RTCPeerConnection && "createDataChannel" in window2.RTCPeerConnection.prototype)) {
-      return;
-    }
-    function wrapDcSend(dc, pc) {
-      const origDataChannelSend = dc.send;
-      dc.send = function send() {
-        const data = arguments[0];
-        const length = data.length || data.size || data.byteLength;
-        if (dc.readyState === "open" && pc.sctp && length > pc.sctp.maxMessageSize) {
-          throw new TypeError("Message too large (can send a maximum of " + pc.sctp.maxMessageSize + " bytes)");
-        }
-        return origDataChannelSend.apply(dc, arguments);
-      };
-    }
-    const origCreateDataChannel = window2.RTCPeerConnection.prototype.createDataChannel;
-    window2.RTCPeerConnection.prototype.createDataChannel = function createDataChannel() {
-      const dataChannel = origCreateDataChannel.apply(this, arguments);
-      wrapDcSend(dataChannel, this);
-      return dataChannel;
-    };
-    wrapPeerConnectionEvent(window2, "datachannel", (e2) => {
-      wrapDcSend(e2.channel, e2.target);
-      return e2;
-    });
-  }
-  function shimConnectionState(window2) {
-    if (!window2.RTCPeerConnection || "connectionState" in window2.RTCPeerConnection.prototype) {
-      return;
-    }
-    const proto = window2.RTCPeerConnection.prototype;
-    Object.defineProperty(proto, "connectionState", {
-      get() {
-        return {
-          completed: "connected",
-          checking: "connecting"
-        }[this.iceConnectionState] || this.iceConnectionState;
-      },
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperty(proto, "onconnectionstatechange", {
-      get() {
-        return this._onconnectionstatechange || null;
-      },
-      set(cb2) {
-        if (this._onconnectionstatechange) {
-          this.removeEventListener(
-            "connectionstatechange",
-            this._onconnectionstatechange
-          );
-          delete this._onconnectionstatechange;
-        }
-        if (cb2) {
-          this.addEventListener(
-            "connectionstatechange",
-            this._onconnectionstatechange = cb2
-          );
-        }
-      },
-      enumerable: true,
-      configurable: true
-    });
-    ["setLocalDescription", "setRemoteDescription"].forEach((method) => {
-      const origMethod = proto[method];
-      proto[method] = function() {
-        if (!this._connectionstatechangepoly) {
-          this._connectionstatechangepoly = (e2) => {
-            const pc = e2.target;
-            if (pc._lastConnectionState !== pc.connectionState) {
-              pc._lastConnectionState = pc.connectionState;
-              const newEvent = new Event("connectionstatechange", e2);
-              pc.dispatchEvent(newEvent);
-            }
-            return e2;
-          };
-          this.addEventListener(
-            "iceconnectionstatechange",
-            this._connectionstatechangepoly
-          );
-        }
-        return origMethod.apply(this, arguments);
-      };
-    });
-  }
-  function removeExtmapAllowMixed(window2, browserDetails) {
-    if (!window2.RTCPeerConnection) {
-      return;
-    }
-    if (browserDetails.browser === "chrome" && browserDetails.version >= 71) {
-      return;
-    }
-    if (browserDetails.browser === "safari" && browserDetails._safariVersion >= 13.1) {
-      return;
-    }
-    const nativeSRD = window2.RTCPeerConnection.prototype.setRemoteDescription;
-    window2.RTCPeerConnection.prototype.setRemoteDescription = function setRemoteDescription(desc) {
-      if (desc && desc.sdp && desc.sdp.indexOf("\na=extmap-allow-mixed") !== -1) {
-        const sdp2 = desc.sdp.split("\n").filter((line) => {
-          return line.trim() !== "a=extmap-allow-mixed";
-        }).join("\n");
-        if (window2.RTCSessionDescription && desc instanceof window2.RTCSessionDescription) {
-          arguments[0] = new window2.RTCSessionDescription({
-            type: desc.type,
-            sdp: sdp2
-          });
-        } else {
-          desc.sdp = sdp2;
-        }
-      }
-      return nativeSRD.apply(this, arguments);
-    };
-  }
-  function shimAddIceCandidateNullOrEmpty(window2, browserDetails) {
-    if (!(window2.RTCPeerConnection && window2.RTCPeerConnection.prototype)) {
-      return;
-    }
-    const nativeAddIceCandidate = window2.RTCPeerConnection.prototype.addIceCandidate;
-    if (!nativeAddIceCandidate || nativeAddIceCandidate.length === 0) {
-      return;
-    }
-    window2.RTCPeerConnection.prototype.addIceCandidate = function addIceCandidate() {
-      if (!arguments[0]) {
-        if (arguments[1]) {
-          arguments[1].apply(null);
-        }
-        return Promise.resolve();
-      }
-      if ((browserDetails.browser === "chrome" && browserDetails.version < 78 || browserDetails.browser === "firefox" && browserDetails.version < 68 || browserDetails.browser === "safari") && arguments[0] && arguments[0].candidate === "") {
-        return Promise.resolve();
-      }
-      return nativeAddIceCandidate.apply(this, arguments);
-    };
-  }
-  function shimParameterlessSetLocalDescription(window2, browserDetails) {
-    if (!(window2.RTCPeerConnection && window2.RTCPeerConnection.prototype)) {
-      return;
-    }
-    const nativeSetLocalDescription = window2.RTCPeerConnection.prototype.setLocalDescription;
-    if (!nativeSetLocalDescription || nativeSetLocalDescription.length === 0) {
-      return;
-    }
-    window2.RTCPeerConnection.prototype.setLocalDescription = function setLocalDescription() {
-      let desc = arguments[0] || {};
-      if (typeof desc !== "object" || desc.type && desc.sdp) {
-        return nativeSetLocalDescription.apply(this, arguments);
-      }
-      desc = { type: desc.type, sdp: desc.sdp };
-      if (!desc.type) {
-        switch (this.signalingState) {
-          case "stable":
-          case "have-local-offer":
-          case "have-remote-pranswer":
-            desc.type = "offer";
-            break;
-          default:
-            desc.type = "answer";
-            break;
-        }
-      }
-      if (desc.sdp || desc.type !== "offer" && desc.type !== "answer") {
-        return nativeSetLocalDescription.apply(this, [desc]);
-      }
-      const func = desc.type === "offer" ? this.createOffer : this.createAnswer;
-      return func.apply(this).then((d2) => nativeSetLocalDescription.apply(this, [d2]));
-    };
-  }
-  var import_polyfills683, import_sdp;
-  var init_common_shim = __esm({
-    "node_modules/webrtc-adapter/src/js/common_shim.js"() {
-      "use strict";
-      import_polyfills683 = __toESM(require_polyfills());
-      import_sdp = __toESM(require_sdp());
-      init_utils5();
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/adapter_factory.js
-  function adapterFactory({ window: window2 } = {}, options = {
-    shimChrome: true,
-    shimFirefox: true,
-    shimSafari: true
-  }) {
-    const logging2 = log;
-    const browserDetails = detectBrowser(window2);
-    const adapter2 = {
-      browserDetails,
-      commonShim: common_shim_exports,
-      extractVersion,
-      disableLog,
-      disableWarnings,
-      // Expose sdp as a convenience. For production apps include directly.
-      sdp
-    };
-    switch (browserDetails.browser) {
-      case "chrome":
-        if (!chrome_shim_exports || !shimPeerConnection || !options.shimChrome) {
-          logging2("Chrome shim is not included in this adapter release.");
-          return adapter2;
-        }
-        if (browserDetails.version === null) {
-          logging2("Chrome shim can not determine version, not shimming.");
-          return adapter2;
-        }
-        logging2("adapter.js shimming chrome.");
-        adapter2.browserShim = chrome_shim_exports;
-        shimAddIceCandidateNullOrEmpty(window2, browserDetails);
-        shimParameterlessSetLocalDescription(window2, browserDetails);
-        shimGetUserMedia(window2, browserDetails);
-        shimMediaStream(window2, browserDetails);
-        shimPeerConnection(window2, browserDetails);
-        shimOnTrack(window2, browserDetails);
-        shimAddTrackRemoveTrack(window2, browserDetails);
-        shimGetSendersWithDtmf(window2, browserDetails);
-        shimSenderReceiverGetStats(window2, browserDetails);
-        fixNegotiationNeeded(window2, browserDetails);
-        shimRTCIceCandidate(window2, browserDetails);
-        shimRTCIceCandidateRelayProtocol(window2, browserDetails);
-        shimConnectionState(window2, browserDetails);
-        shimMaxMessageSize(window2, browserDetails);
-        shimSendThrowTypeError(window2, browserDetails);
-        removeExtmapAllowMixed(window2, browserDetails);
-        break;
-      case "firefox":
-        if (!firefox_shim_exports || !shimPeerConnection2 || !options.shimFirefox) {
-          logging2("Firefox shim is not included in this adapter release.");
-          return adapter2;
-        }
-        logging2("adapter.js shimming firefox.");
-        adapter2.browserShim = firefox_shim_exports;
-        shimAddIceCandidateNullOrEmpty(window2, browserDetails);
-        shimParameterlessSetLocalDescription(window2, browserDetails);
-        shimGetUserMedia2(window2, browserDetails);
-        shimPeerConnection2(window2, browserDetails);
-        shimOnTrack2(window2, browserDetails);
-        shimRemoveStream(window2, browserDetails);
-        shimSenderGetStats(window2, browserDetails);
-        shimReceiverGetStats(window2, browserDetails);
-        shimRTCDataChannel(window2, browserDetails);
-        shimAddTransceiver(window2, browserDetails);
-        shimGetParameters(window2, browserDetails);
-        shimCreateOffer(window2, browserDetails);
-        shimCreateAnswer(window2, browserDetails);
-        shimRTCIceCandidate(window2, browserDetails);
-        shimConnectionState(window2, browserDetails);
-        shimMaxMessageSize(window2, browserDetails);
-        shimSendThrowTypeError(window2, browserDetails);
-        break;
-      case "safari":
-        if (!safari_shim_exports || !options.shimSafari) {
-          logging2("Safari shim is not included in this adapter release.");
-          return adapter2;
-        }
-        logging2("adapter.js shimming safari.");
-        adapter2.browserShim = safari_shim_exports;
-        shimAddIceCandidateNullOrEmpty(window2, browserDetails);
-        shimParameterlessSetLocalDescription(window2, browserDetails);
-        shimRTCIceServerUrls(window2, browserDetails);
-        shimCreateOfferLegacy(window2, browserDetails);
-        shimCallbacksAPI(window2, browserDetails);
-        shimLocalStreamsAPI(window2, browserDetails);
-        shimRemoteStreamsAPI(window2, browserDetails);
-        shimTrackEventTransceiver(window2, browserDetails);
-        shimGetUserMedia3(window2, browserDetails);
-        shimAudioContext(window2, browserDetails);
-        shimRTCIceCandidate(window2, browserDetails);
-        shimRTCIceCandidateRelayProtocol(window2, browserDetails);
-        shimMaxMessageSize(window2, browserDetails);
-        shimSendThrowTypeError(window2, browserDetails);
-        removeExtmapAllowMixed(window2, browserDetails);
-        break;
-      default:
-        logging2("Unsupported browser!");
-        break;
-    }
-    return adapter2;
-  }
-  var import_polyfills684, sdp;
-  var init_adapter_factory = __esm({
-    "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
-      import_polyfills684 = __toESM(require_polyfills());
-      init_utils5();
-      init_chrome_shim();
-      init_firefox_shim();
-      init_safari_shim();
-      init_common_shim();
-      sdp = __toESM(require_sdp());
-    }
-  });
-
-  // node_modules/webrtc-adapter/src/js/adapter_core.js
-  var import_polyfills685, adapter, adapter_core_default;
-  var init_adapter_core = __esm({
-    "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
-      "use strict";
-      import_polyfills685 = __toESM(require_polyfills());
-      init_adapter_factory();
-      adapter = adapterFactory({ window: typeof window === "undefined" ? void 0 : window });
-      adapter_core_default = adapter;
-    }
-  });
-
-  // node_modules/peerjs/dist/bundler.mjs
-  function $parcel$export(e2, n2, v2, s2) {
-    Object.defineProperty(e2, n2, { get: v2, set: s2, enumerable: true, configurable: true });
-  }
-  function $fcbcc7538a6776d5$export$52c89ebcdc4f53f2(bufs) {
-    let size = 0;
-    for (const buf of bufs) size += buf.byteLength;
-    const result = new Uint8Array(size);
-    let offset = 0;
-    for (const buf of bufs) {
-      result.set(buf, offset);
-      offset += buf.byteLength;
-    }
-    return result;
-  }
-  function $c4dcfd1d1ea86647$var$Events() {
-  }
-  function $c4dcfd1d1ea86647$var$EE(fn, context, once2) {
-    this.fn = fn;
-    this.context = context;
-    this.once = once2 || false;
-  }
-  function $c4dcfd1d1ea86647$var$addListener(emitter, event, fn, context, once2) {
-    if (typeof fn !== "function") throw new TypeError("The listener must be a function");
-    var listener = new $c4dcfd1d1ea86647$var$EE(fn, context || emitter, once2), evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event;
-    if (!emitter._events[evt]) emitter._events[evt] = listener, emitter._eventsCount++;
-    else if (!emitter._events[evt].fn) emitter._events[evt].push(listener);
-    else emitter._events[evt] = [
-      emitter._events[evt],
-      listener
-    ];
-    return emitter;
-  }
-  function $c4dcfd1d1ea86647$var$clearEvent(emitter, evt) {
-    if (--emitter._eventsCount === 0) emitter._events = new $c4dcfd1d1ea86647$var$Events();
-    else delete emitter._events[evt];
-  }
-  function $c4dcfd1d1ea86647$var$EventEmitter() {
-    this._events = new $c4dcfd1d1ea86647$var$Events();
-    this._eventsCount = 0;
-  }
-  var import_polyfills686, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
-  var init_bundler = __esm({
-    "node_modules/peerjs/dist/bundler.mjs"() {
-      import_polyfills686 = __toESM(require_polyfills(), 1);
-      init_binarypack();
-      init_adapter_core();
-      $fcbcc7538a6776d5$export$f1c5f4c9cb95390b = class {
-        constructor() {
-          this.chunkedMTU = 16300;
-          this._dataCount = 1;
-          this.chunk = (blob) => {
-            const chunks = [];
-            const size = blob.byteLength;
-            const total = Math.ceil(size / this.chunkedMTU);
-            let index = 0;
-            let start = 0;
-            while (start < size) {
-              const end = Math.min(size, start + this.chunkedMTU);
-              const b2 = blob.slice(start, end);
-              const chunk = {
-                __peerData: this._dataCount,
-                n: index,
-                data: b2,
-                total
-              };
-              chunks.push(chunk);
-              start = end;
-              index++;
-            }
-            this._dataCount++;
-            return chunks;
-          };
-        }
-      };
-      $fb63e766cfafaab9$var$webRTCAdapter = //@ts-ignore
-      (0, adapter_core_default).default || (0, adapter_core_default);
-      $fb63e766cfafaab9$export$25be9502477c137d = new class {
-        isWebRTCSupported() {
-          return typeof RTCPeerConnection !== "undefined";
-        }
-        isBrowserSupported() {
-          const browser = this.getBrowser();
-          const version = this.getVersion();
-          const validBrowser = this.supportedBrowsers.includes(browser);
-          if (!validBrowser) return false;
-          if (browser === "chrome") return version >= this.minChromeVersion;
-          if (browser === "firefox") return version >= this.minFirefoxVersion;
-          if (browser === "safari") return !this.isIOS && version >= this.minSafariVersion;
-          return false;
-        }
-        getBrowser() {
-          return $fb63e766cfafaab9$var$webRTCAdapter.browserDetails.browser;
-        }
-        getVersion() {
-          return $fb63e766cfafaab9$var$webRTCAdapter.browserDetails.version || 0;
-        }
-        isUnifiedPlanSupported() {
-          const browser = this.getBrowser();
-          const version = $fb63e766cfafaab9$var$webRTCAdapter.browserDetails.version || 0;
-          if (browser === "chrome" && version < this.minChromeVersion) return false;
-          if (browser === "firefox" && version >= this.minFirefoxVersion) return true;
-          if (!window.RTCRtpTransceiver || !("currentDirection" in RTCRtpTransceiver.prototype)) return false;
-          let tempPc;
-          let supported = false;
-          try {
-            tempPc = new RTCPeerConnection();
-            tempPc.addTransceiver("audio");
-            supported = true;
-          } catch (e2) {
-          } finally {
-            if (tempPc) tempPc.close();
-          }
-          return supported;
-        }
-        toString() {
-          return `Supports:
-    browser:${this.getBrowser()}
-    version:${this.getVersion()}
-    isIOS:${this.isIOS}
-    isWebRTCSupported:${this.isWebRTCSupported()}
-    isBrowserSupported:${this.isBrowserSupported()}
-    isUnifiedPlanSupported:${this.isUnifiedPlanSupported()}`;
-        }
-        constructor() {
-          this.isIOS = typeof navigator !== "undefined" ? [
-            "iPad",
-            "iPhone",
-            "iPod"
-          ].includes(navigator.platform) : false;
-          this.supportedBrowsers = [
-            "firefox",
-            "chrome",
-            "safari"
-          ];
-          this.minFirefoxVersion = 59;
-          this.minChromeVersion = 72;
-          this.minSafariVersion = 605;
-        }
-      }();
-      $9a84a32bf0bf36bb$export$f35f128fd59ea256 = (id) => {
-        return !id || /^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/.test(id);
-      };
-      $0e5fd1585784c252$export$4e61f672936bec77 = () => Math.random().toString(36).slice(2);
-      $4f4134156c446392$var$DEFAULT_CONFIG = {
-        iceServers: [
-          {
-            urls: "stun:stun.l.google.com:19302"
-          },
-          {
-            urls: [
-              "turn:eu-0.turn.peerjs.com:3478",
-              "turn:us-0.turn.peerjs.com:3478"
-            ],
-            username: "peerjs",
-            credential: "peerjsp"
-          }
-        ],
-        sdpSemantics: "unified-plan"
-      };
-      $4f4134156c446392$export$f8f26dd395d7e1bd = class extends (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b) {
-        noop() {
-        }
-        blobToArrayBuffer(blob, cb2) {
-          const fr = new FileReader();
-          fr.onload = function(evt) {
-            if (evt.target) cb2(evt.target.result);
-          };
-          fr.readAsArrayBuffer(blob);
-          return fr;
-        }
-        binaryStringToArrayBuffer(binary) {
-          const byteArray = new Uint8Array(binary.length);
-          for (let i2 = 0; i2 < binary.length; i2++) byteArray[i2] = binary.charCodeAt(i2) & 255;
-          return byteArray.buffer;
-        }
-        isSecure() {
-          return location.protocol === "https:";
-        }
-        constructor(...args) {
-          super(...args), this.CLOUD_HOST = "0.peerjs.com", this.CLOUD_PORT = 443, // Browsers that need chunking:
-          this.chunkedBrowsers = {
-            Chrome: 1,
-            chrome: 1
-          }, // Returns browser-agnostic default config
-          this.defaultConfig = $4f4134156c446392$var$DEFAULT_CONFIG, this.browser = (0, $fb63e766cfafaab9$export$25be9502477c137d).getBrowser(), this.browserVersion = (0, $fb63e766cfafaab9$export$25be9502477c137d).getVersion(), this.pack = $0cfd7828ad59115f$export$2a703dbb0cb35339, this.unpack = $0cfd7828ad59115f$export$417857010dc9287f, /**
-          * A hash of WebRTC features mapped to booleans that correspond to whether the feature is supported by the current browser.
-          *
-          * :::caution
-          * Only the properties documented here are guaranteed to be present on `util.supports`
-          * :::
-          */
-          this.supports = (function() {
-            const supported = {
-              browser: (0, $fb63e766cfafaab9$export$25be9502477c137d).isBrowserSupported(),
-              webRTC: (0, $fb63e766cfafaab9$export$25be9502477c137d).isWebRTCSupported(),
-              audioVideo: false,
-              data: false,
-              binaryBlob: false,
-              reliable: false
-            };
-            if (!supported.webRTC) return supported;
-            let pc;
-            try {
-              pc = new RTCPeerConnection($4f4134156c446392$var$DEFAULT_CONFIG);
-              supported.audioVideo = true;
-              let dc;
-              try {
-                dc = pc.createDataChannel("_PEERJSTEST", {
-                  ordered: true
-                });
-                supported.data = true;
-                supported.reliable = !!dc.ordered;
-                try {
-                  dc.binaryType = "blob";
-                  supported.binaryBlob = !(0, $fb63e766cfafaab9$export$25be9502477c137d).isIOS;
-                } catch (e2) {
-                }
-              } catch (e2) {
-              } finally {
-                if (dc) dc.close();
-              }
-            } catch (e2) {
-            } finally {
-              if (pc) pc.close();
-            }
-            return supported;
-          })(), // Ensure alphanumeric ids
-          this.validateId = (0, $9a84a32bf0bf36bb$export$f35f128fd59ea256), this.randomToken = (0, $0e5fd1585784c252$export$4e61f672936bec77);
-        }
-      };
-      $4f4134156c446392$export$7debb50ef11d5e0b = new $4f4134156c446392$export$f8f26dd395d7e1bd();
-      $257947e92926277a$var$LOG_PREFIX = "PeerJS: ";
-      $257947e92926277a$var$Logger = class {
-        get logLevel() {
-          return this._logLevel;
-        }
-        set logLevel(logLevel) {
-          this._logLevel = logLevel;
-        }
-        log(...args) {
-          if (this._logLevel >= 3) this._print(3, ...args);
-        }
-        warn(...args) {
-          if (this._logLevel >= 2) this._print(2, ...args);
-        }
-        error(...args) {
-          if (this._logLevel >= 1) this._print(1, ...args);
-        }
-        setLogFunction(fn) {
-          this._print = fn;
-        }
-        _print(logLevel, ...rest) {
-          const copy = [
-            $257947e92926277a$var$LOG_PREFIX,
-            ...rest
-          ];
-          for (const i2 in copy) if (copy[i2] instanceof Error) copy[i2] = "(" + copy[i2].name + ") " + copy[i2].message;
-          if (logLevel >= 3) console.log(...copy);
-          else if (logLevel >= 2) console.warn("WARNING", ...copy);
-          else if (logLevel >= 1) console.error("ERROR", ...copy);
-        }
-        constructor() {
-          this._logLevel = 0;
-        }
-      };
-      $257947e92926277a$export$2e2bcd8739ae039 = new $257947e92926277a$var$Logger();
-      $c4dcfd1d1ea86647$exports = {};
-      $c4dcfd1d1ea86647$var$has = Object.prototype.hasOwnProperty;
-      $c4dcfd1d1ea86647$var$prefix = "~";
-      if (Object.create) {
-        $c4dcfd1d1ea86647$var$Events.prototype = /* @__PURE__ */ Object.create(null);
-        if (!new $c4dcfd1d1ea86647$var$Events().__proto__) $c4dcfd1d1ea86647$var$prefix = false;
-      }
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.eventNames = function eventNames() {
-        var names = [], events, name;
-        if (this._eventsCount === 0) return names;
-        for (name in events = this._events) if ($c4dcfd1d1ea86647$var$has.call(events, name)) names.push($c4dcfd1d1ea86647$var$prefix ? name.slice(1) : name);
-        if (Object.getOwnPropertySymbols) return names.concat(Object.getOwnPropertySymbols(events));
-        return names;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.listeners = function listeners(event) {
-        var evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event, handlers = this._events[evt];
-        if (!handlers) return [];
-        if (handlers.fn) return [
-          handlers.fn
-        ];
-        for (var i2 = 0, l2 = handlers.length, ee = new Array(l2); i2 < l2; i2++) ee[i2] = handlers[i2].fn;
-        return ee;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.listenerCount = function listenerCount(event) {
-        var evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event, listeners2 = this._events[evt];
-        if (!listeners2) return 0;
-        if (listeners2.fn) return 1;
-        return listeners2.length;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
-        var evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event;
-        if (!this._events[evt]) return false;
-        var listeners2 = this._events[evt], len = arguments.length, args, i2;
-        if (listeners2.fn) {
-          if (listeners2.once) this.removeListener(event, listeners2.fn, void 0, true);
-          switch (len) {
-            case 1:
-              return listeners2.fn.call(listeners2.context), true;
-            case 2:
-              return listeners2.fn.call(listeners2.context, a1), true;
-            case 3:
-              return listeners2.fn.call(listeners2.context, a1, a2), true;
-            case 4:
-              return listeners2.fn.call(listeners2.context, a1, a2, a3), true;
-            case 5:
-              return listeners2.fn.call(listeners2.context, a1, a2, a3, a4), true;
-            case 6:
-              return listeners2.fn.call(listeners2.context, a1, a2, a3, a4, a5), true;
-          }
-          for (i2 = 1, args = new Array(len - 1); i2 < len; i2++) args[i2 - 1] = arguments[i2];
-          listeners2.fn.apply(listeners2.context, args);
-        } else {
-          var length = listeners2.length, j2;
-          for (i2 = 0; i2 < length; i2++) {
-            if (listeners2[i2].once) this.removeListener(event, listeners2[i2].fn, void 0, true);
-            switch (len) {
-              case 1:
-                listeners2[i2].fn.call(listeners2[i2].context);
-                break;
-              case 2:
-                listeners2[i2].fn.call(listeners2[i2].context, a1);
-                break;
-              case 3:
-                listeners2[i2].fn.call(listeners2[i2].context, a1, a2);
-                break;
-              case 4:
-                listeners2[i2].fn.call(listeners2[i2].context, a1, a2, a3);
-                break;
-              default:
-                if (!args) for (j2 = 1, args = new Array(len - 1); j2 < len; j2++) args[j2 - 1] = arguments[j2];
-                listeners2[i2].fn.apply(listeners2[i2].context, args);
-            }
-          }
-        }
-        return true;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.on = function on(event, fn, context) {
-        return $c4dcfd1d1ea86647$var$addListener(this, event, fn, context, false);
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.once = function once(event, fn, context) {
-        return $c4dcfd1d1ea86647$var$addListener(this, event, fn, context, true);
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once2) {
-        var evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event;
-        if (!this._events[evt]) return this;
-        if (!fn) {
-          $c4dcfd1d1ea86647$var$clearEvent(this, evt);
-          return this;
-        }
-        var listeners2 = this._events[evt];
-        if (listeners2.fn) {
-          if (listeners2.fn === fn && (!once2 || listeners2.once) && (!context || listeners2.context === context)) $c4dcfd1d1ea86647$var$clearEvent(this, evt);
-        } else {
-          for (var i2 = 0, events = [], length = listeners2.length; i2 < length; i2++) if (listeners2[i2].fn !== fn || once2 && !listeners2[i2].once || context && listeners2[i2].context !== context) events.push(listeners2[i2]);
-          if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
-          else $c4dcfd1d1ea86647$var$clearEvent(this, evt);
-        }
-        return this;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.removeAllListeners = function removeAllListeners(event) {
-        var evt;
-        if (event) {
-          evt = $c4dcfd1d1ea86647$var$prefix ? $c4dcfd1d1ea86647$var$prefix + event : event;
-          if (this._events[evt]) $c4dcfd1d1ea86647$var$clearEvent(this, evt);
-        } else {
-          this._events = new $c4dcfd1d1ea86647$var$Events();
-          this._eventsCount = 0;
-        }
-        return this;
-      };
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.off = $c4dcfd1d1ea86647$var$EventEmitter.prototype.removeListener;
-      $c4dcfd1d1ea86647$var$EventEmitter.prototype.addListener = $c4dcfd1d1ea86647$var$EventEmitter.prototype.on;
-      $c4dcfd1d1ea86647$var$EventEmitter.prefixed = $c4dcfd1d1ea86647$var$prefix;
-      $c4dcfd1d1ea86647$var$EventEmitter.EventEmitter = $c4dcfd1d1ea86647$var$EventEmitter;
-      $c4dcfd1d1ea86647$exports = $c4dcfd1d1ea86647$var$EventEmitter;
-      $78455e22dea96b8c$exports = {};
-      $parcel$export($78455e22dea96b8c$exports, "ConnectionType", () => $78455e22dea96b8c$export$3157d57b4135e3bc);
-      $parcel$export($78455e22dea96b8c$exports, "PeerErrorType", () => $78455e22dea96b8c$export$9547aaa2e39030ff);
-      $parcel$export($78455e22dea96b8c$exports, "BaseConnectionErrorType", () => $78455e22dea96b8c$export$7974935686149686);
-      $parcel$export($78455e22dea96b8c$exports, "DataConnectionErrorType", () => $78455e22dea96b8c$export$49ae800c114df41d);
-      $parcel$export($78455e22dea96b8c$exports, "SerializationType", () => $78455e22dea96b8c$export$89f507cf986a947);
-      $parcel$export($78455e22dea96b8c$exports, "SocketEventType", () => $78455e22dea96b8c$export$3b5c4a4b6354f023);
-      $parcel$export($78455e22dea96b8c$exports, "ServerMessageType", () => $78455e22dea96b8c$export$adb4a1754da6f10d);
-      $78455e22dea96b8c$export$3157d57b4135e3bc = /* @__PURE__ */ (function(ConnectionType) {
-        ConnectionType["Data"] = "data";
-        ConnectionType["Media"] = "media";
-        return ConnectionType;
-      })({});
-      $78455e22dea96b8c$export$9547aaa2e39030ff = /* @__PURE__ */ (function(PeerErrorType) {
-        PeerErrorType["BrowserIncompatible"] = "browser-incompatible";
-        PeerErrorType["Disconnected"] = "disconnected";
-        PeerErrorType["InvalidID"] = "invalid-id";
-        PeerErrorType["InvalidKey"] = "invalid-key";
-        PeerErrorType["Network"] = "network";
-        PeerErrorType["PeerUnavailable"] = "peer-unavailable";
-        PeerErrorType["SslUnavailable"] = "ssl-unavailable";
-        PeerErrorType["ServerError"] = "server-error";
-        PeerErrorType["SocketError"] = "socket-error";
-        PeerErrorType["SocketClosed"] = "socket-closed";
-        PeerErrorType["UnavailableID"] = "unavailable-id";
-        PeerErrorType["WebRTC"] = "webrtc";
-        return PeerErrorType;
-      })({});
-      $78455e22dea96b8c$export$7974935686149686 = /* @__PURE__ */ (function(BaseConnectionErrorType) {
-        BaseConnectionErrorType["NegotiationFailed"] = "negotiation-failed";
-        BaseConnectionErrorType["ConnectionClosed"] = "connection-closed";
-        return BaseConnectionErrorType;
-      })({});
-      $78455e22dea96b8c$export$49ae800c114df41d = /* @__PURE__ */ (function(DataConnectionErrorType) {
-        DataConnectionErrorType["NotOpenYet"] = "not-open-yet";
-        DataConnectionErrorType["MessageToBig"] = "message-too-big";
-        return DataConnectionErrorType;
-      })({});
-      $78455e22dea96b8c$export$89f507cf986a947 = /* @__PURE__ */ (function(SerializationType) {
-        SerializationType["Binary"] = "binary";
-        SerializationType["BinaryUTF8"] = "binary-utf8";
-        SerializationType["JSON"] = "json";
-        SerializationType["None"] = "raw";
-        return SerializationType;
-      })({});
-      $78455e22dea96b8c$export$3b5c4a4b6354f023 = /* @__PURE__ */ (function(SocketEventType) {
-        SocketEventType["Message"] = "message";
-        SocketEventType["Disconnected"] = "disconnected";
-        SocketEventType["Error"] = "error";
-        SocketEventType["Close"] = "close";
-        return SocketEventType;
-      })({});
-      $78455e22dea96b8c$export$adb4a1754da6f10d = /* @__PURE__ */ (function(ServerMessageType) {
-        ServerMessageType["Heartbeat"] = "HEARTBEAT";
-        ServerMessageType["Candidate"] = "CANDIDATE";
-        ServerMessageType["Offer"] = "OFFER";
-        ServerMessageType["Answer"] = "ANSWER";
-        ServerMessageType["Open"] = "OPEN";
-        ServerMessageType["Error"] = "ERROR";
-        ServerMessageType["IdTaken"] = "ID-TAKEN";
-        ServerMessageType["InvalidKey"] = "INVALID-KEY";
-        ServerMessageType["Leave"] = "LEAVE";
-        ServerMessageType["Expire"] = "EXPIRE";
-        return ServerMessageType;
-      })({});
-      $520832d44ba058c8$export$83d89fbfd8236492 = "1.5.5";
-      $8f5bfa60836d261d$export$4798917dbf149b79 = class extends (0, $c4dcfd1d1ea86647$exports.EventEmitter) {
-        constructor(secure, host, port, path2, key, pingInterval = 5e3) {
-          super(), this.pingInterval = pingInterval, this._disconnected = true, this._messagesQueue = [];
-          const wsProtocol = secure ? "wss://" : "ws://";
-          this._baseUrl = wsProtocol + host + ":" + port + path2 + "peerjs?key=" + key;
-        }
-        start(id, token) {
-          this._id = id;
-          const wsUrl = `${this._baseUrl}&id=${id}&token=${token}`;
-          if (!!this._socket || !this._disconnected) return;
-          this._socket = new WebSocket(wsUrl + "&version=" + (0, $520832d44ba058c8$export$83d89fbfd8236492));
-          this._disconnected = false;
-          this._socket.onmessage = (event) => {
-            let data;
-            try {
-              data = JSON.parse(event.data);
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log("Server message received:", data);
-            } catch (e2) {
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log("Invalid server message", event.data);
-              return;
-            }
-            this.emit((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Message, data);
-          };
-          this._socket.onclose = (event) => {
-            if (this._disconnected) return;
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Socket closed.", event);
-            this._cleanup();
-            this._disconnected = true;
-            this.emit((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Disconnected);
-          };
-          this._socket.onopen = () => {
-            if (this._disconnected) return;
-            this._sendQueuedMessages();
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Socket open");
-            this._scheduleHeartbeat();
-          };
-        }
-        _scheduleHeartbeat() {
-          this._wsPingTimer = setTimeout(() => {
-            this._sendHeartbeat();
-          }, this.pingInterval);
-        }
-        _sendHeartbeat() {
-          if (!this._wsOpen()) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Cannot send heartbeat, because socket closed`);
-            return;
-          }
-          const message = JSON.stringify({
-            type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Heartbeat
-          });
-          this._socket.send(message);
-          this._scheduleHeartbeat();
-        }
-        /** Is the websocket currently open? */
-        _wsOpen() {
-          return !!this._socket && this._socket.readyState === 1;
-        }
-        /** Send queued messages. */
-        _sendQueuedMessages() {
-          const copiedQueue = [
-            ...this._messagesQueue
-          ];
-          this._messagesQueue = [];
-          for (const message of copiedQueue) this.send(message);
-        }
-        /** Exposed send for DC & Peer. */
-        send(data) {
-          if (this._disconnected) return;
-          if (!this._id) {
-            this._messagesQueue.push(data);
-            return;
-          }
-          if (!data.type) {
-            this.emit((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Error, "Invalid message");
-            return;
-          }
-          if (!this._wsOpen()) return;
-          const message = JSON.stringify(data);
-          this._socket.send(message);
-        }
-        close() {
-          if (this._disconnected) return;
-          this._cleanup();
-          this._disconnected = true;
-        }
-        _cleanup() {
-          if (this._socket) {
-            this._socket.onopen = this._socket.onmessage = this._socket.onclose = null;
-            this._socket.close();
-            this._socket = void 0;
-          }
-          clearTimeout(this._wsPingTimer);
-        }
-      };
-      $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a = class {
-        constructor(connection) {
-          this.connection = connection;
-        }
-        /** Returns a PeerConnection object set up correctly (for data, media). */
-        startConnection(options) {
-          const peerConnection = this._startPeerConnection();
-          this.connection.peerConnection = peerConnection;
-          if (this.connection.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media && options._stream) this._addTracksToConnection(options._stream, peerConnection);
-          if (options.originator) {
-            const dataConnection = this.connection;
-            const config = {
-              ordered: !!options.reliable
-            };
-            const dataChannel = peerConnection.createDataChannel(dataConnection.label, config);
-            dataConnection._initializeDataChannel(dataChannel);
-            this._makeOffer();
-          } else this.handleSDP("OFFER", options.sdp);
-        }
-        /** Start a PC. */
-        _startPeerConnection() {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Creating RTCPeerConnection.");
-          const peerConnection = new RTCPeerConnection(this.connection.provider.options.config);
-          this._setupListeners(peerConnection);
-          return peerConnection;
-        }
-        /** Set up various WebRTC listeners. */
-        _setupListeners(peerConnection) {
-          const peerId = this.connection.peer;
-          const connectionId = this.connection.connectionId;
-          const connectionType = this.connection.type;
-          const provider = this.connection.provider;
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for ICE candidates.");
-          peerConnection.onicecandidate = (evt) => {
-            if (!evt.candidate || !evt.candidate.candidate) return;
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received ICE candidates for ${peerId}:`, evt.candidate);
-            provider.socket.send({
-              type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Candidate,
-              payload: {
-                candidate: evt.candidate,
-                type: connectionType,
-                connectionId
-              },
-              dst: peerId
-            });
-          };
-          peerConnection.oniceconnectionstatechange = () => {
-            switch (peerConnection.iceConnectionState) {
-              case "failed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is failed, closing connections to " + peerId);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).NegotiationFailed, "Negotiation of connection to " + peerId + " failed.");
-                this.connection.close();
-                break;
-              case "closed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is closed, closing connections to " + peerId);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).ConnectionClosed, "Connection to " + peerId + " closed.");
-                this.connection.close();
-                break;
-              case "disconnected":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState changed to disconnected on the connection with " + peerId);
-                break;
-              case "completed":
-                peerConnection.onicecandidate = () => {
-                };
-                break;
-            }
-            this.connection.emit("iceStateChanged", peerConnection.iceConnectionState);
-          };
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for data channel");
-          peerConnection.ondatachannel = (evt) => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received data channel");
-            const dataChannel = evt.channel;
-            const connection = provider.getConnection(peerId, connectionId);
-            connection._initializeDataChannel(dataChannel);
-          };
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for remote stream");
-          peerConnection.ontrack = (evt) => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received remote stream");
-            const stream = evt.streams[0];
-            const connection = provider.getConnection(peerId, connectionId);
-            if (connection.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
-              const mediaConnection = connection;
-              this._addStreamToMediaConnection(stream, mediaConnection);
-            }
-          };
-        }
-        cleanup() {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Cleaning up PeerConnection to " + this.connection.peer);
-          const peerConnection = this.connection.peerConnection;
-          if (!peerConnection) return;
-          this.connection.peerConnection = null;
-          peerConnection.onicecandidate = peerConnection.oniceconnectionstatechange = peerConnection.ondatachannel = peerConnection.ontrack = () => {
-          };
-          const peerConnectionNotClosed = peerConnection.signalingState !== "closed";
-          let dataChannelNotClosed = false;
-          const dataChannel = this.connection.dataChannel;
-          if (dataChannel) dataChannelNotClosed = !!dataChannel.readyState && dataChannel.readyState !== "closed";
-          if (peerConnectionNotClosed || dataChannelNotClosed) peerConnection.close();
-        }
-        async _makeOffer() {
-          const peerConnection = this.connection.peerConnection;
-          const provider = this.connection.provider;
-          try {
-            const offer = await peerConnection.createOffer(this.connection.options.constraints);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Created offer.");
-            if (this.connection.options.sdpTransform && typeof this.connection.options.sdpTransform === "function") offer.sdp = this.connection.options.sdpTransform(offer.sdp) || offer.sdp;
-            try {
-              await peerConnection.setLocalDescription(offer);
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log("Set localDescription:", offer, `for:${this.connection.peer}`);
-              let payload = {
-                sdp: offer,
-                type: this.connection.type,
-                connectionId: this.connection.connectionId,
-                metadata: this.connection.metadata
-              };
-              if (this.connection.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data) {
-                const dataConnection = this.connection;
-                payload = {
-                  ...payload,
-                  label: dataConnection.label,
-                  reliable: dataConnection.reliable,
-                  serialization: dataConnection.serialization
-                };
-              }
-              provider.socket.send({
-                type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Offer,
-                payload,
-                dst: this.connection.peer
-              });
-            } catch (err) {
-              if (err != "OperationError: Failed to set local offer sdp: Called in wrong state: kHaveRemoteOffer") {
-                provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err);
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to setLocalDescription, ", err);
-              }
-            }
-          } catch (err_1) {
-            provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err_1);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to createOffer, ", err_1);
-          }
-        }
-        async _makeAnswer() {
-          const peerConnection = this.connection.peerConnection;
-          const provider = this.connection.provider;
-          try {
-            const answer = await peerConnection.createAnswer();
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Created answer.");
-            if (this.connection.options.sdpTransform && typeof this.connection.options.sdpTransform === "function") answer.sdp = this.connection.options.sdpTransform(answer.sdp) || answer.sdp;
-            try {
-              await peerConnection.setLocalDescription(answer);
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Set localDescription:`, answer, `for:${this.connection.peer}`);
-              provider.socket.send({
-                type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Answer,
-                payload: {
-                  sdp: answer,
-                  type: this.connection.type,
-                  connectionId: this.connection.connectionId
-                },
-                dst: this.connection.peer
-              });
-            } catch (err) {
-              provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err);
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to setLocalDescription, ", err);
-            }
-          } catch (err_1) {
-            provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err_1);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to create answer, ", err_1);
-          }
-        }
-        /** Handle an SDP. */
-        async handleSDP(type, sdp2) {
-          sdp2 = new RTCSessionDescription(sdp2);
-          const peerConnection = this.connection.peerConnection;
-          const provider = this.connection.provider;
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Setting remote description", sdp2);
-          const self2 = this;
-          try {
-            await peerConnection.setRemoteDescription(sdp2);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Set remoteDescription:${type} for:${this.connection.peer}`);
-            if (type === "OFFER") await self2._makeAnswer();
-          } catch (err) {
-            provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to setRemoteDescription, ", err);
-          }
-        }
-        /** Handle a candidate. */
-        async handleCandidate(ice) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`handleCandidate:`, ice);
-          try {
-            await this.connection.peerConnection.addIceCandidate(ice);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Added ICE candidate for:${this.connection.peer}`);
-          } catch (err) {
-            this.connection.provider.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).WebRTC, err);
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log("Failed to handleCandidate, ", err);
-          }
-        }
-        _addTracksToConnection(stream, peerConnection) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add tracks from stream ${stream.id} to peer connection`);
-          if (!peerConnection.addTrack) return (0, $257947e92926277a$export$2e2bcd8739ae039).error(`Your browser does't support RTCPeerConnection#addTrack. Ignored.`);
-          stream.getTracks().forEach((track) => {
-            peerConnection.addTrack(track, stream);
-          });
-        }
-        _addStreamToMediaConnection(stream, mediaConnection) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add stream ${stream.id} to media connection ${mediaConnection.connectionId}`);
-          mediaConnection.addStream(stream);
-        }
-      };
-      $23779d1881157a18$export$6a678e589c8a4542 = class extends (0, $c4dcfd1d1ea86647$exports.EventEmitter) {
-        /**
-        * Emits a typed error message.
-        *
-        * @internal
-        */
-        emitError(type, err) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).error("Error:", err);
-          this.emit("error", new $23779d1881157a18$export$98871882f492de82(`${type}`, err));
-        }
-      };
-      $23779d1881157a18$export$98871882f492de82 = class extends Error {
-        /**
-        * @internal
-        */
-        constructor(type, err) {
-          if (typeof err === "string") super(err);
-          else {
-            super();
-            Object.assign(this, err);
-          }
-          this.type = type;
-        }
-      };
-      $5045192fc6d387ba$export$23a2a68283c24d80 = class extends (0, $23779d1881157a18$export$6a678e589c8a4542) {
-        /**
-        * Whether the media connection is active (e.g. your call has been answered).
-        * You can check this if you want to set a maximum wait time for a one-sided call.
-        */
-        get open() {
-          return this._open;
-        }
-        constructor(peer, provider, options) {
-          super(), this.peer = peer, this.provider = provider, this.options = options, this._open = false;
-          this.metadata = options.metadata;
-        }
-      };
-      $5c1d08c7c57da9a3$export$4a84e95a2324ac29 = class _$5c1d08c7c57da9a3$export$4a84e95a2324ac29 extends (0, $5045192fc6d387ba$export$23a2a68283c24d80) {
-        static #_ = this.ID_PREFIX = "mc_";
-        /**
-        * For media connections, this is always 'media'.
-        */
-        get type() {
-          return (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media;
-        }
-        get localStream() {
-          return this._localStream;
-        }
-        get remoteStream() {
-          return this._remoteStream;
-        }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options);
-          this._localStream = this.options._stream;
-          this.connectionId = this.options.connectionId || _$5c1d08c7c57da9a3$export$4a84e95a2324ac29.ID_PREFIX + (0, $4f4134156c446392$export$7debb50ef11d5e0b).randomToken();
-          this._negotiator = new (0, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a)(this);
-          if (this._localStream) this._negotiator.startConnection({
-            _stream: this._localStream,
-            originator: true
-          });
-        }
-        /** Called by the Negotiator when the DataChannel is ready. */
-        _initializeDataChannel(dc) {
-          this.dataChannel = dc;
-          this.dataChannel.onopen = () => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} dc connection success`);
-            this.emit("willCloseOnRemote");
-          };
-          this.dataChannel.onclose = () => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} dc closed for:`, this.peer);
-            this.close();
-          };
-        }
-        addStream(remoteStream) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log("Receiving stream", remoteStream);
-          this._remoteStream = remoteStream;
-          super.emit("stream", remoteStream);
-        }
-        /**
-        * @internal
-        */
-        handleMessage(message) {
-          const type = message.type;
-          const payload = message.payload;
-          switch (message.type) {
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Answer:
-              this._negotiator.handleSDP(type, payload.sdp);
-              this._open = true;
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Candidate:
-              this._negotiator.handleCandidate(payload.candidate);
-              break;
-            default:
-              (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Unrecognized message type:${type} from peer:${this.peer}`);
-              break;
-          }
-        }
-        /**
-             * When receiving a {@apilink PeerEvents | `call`} event on a peer, you can call
-             * `answer` on the media connection provided by the callback to accept the call
-             * and optionally send your own media stream.
-        
-             *
-             * @param stream A WebRTC media stream.
-             * @param options
-             * @returns
-             */
-        answer(stream, options = {}) {
-          if (this._localStream) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).warn("Local stream already exists on this MediaConnection. Are you answering a call twice?");
-            return;
-          }
-          this._localStream = stream;
-          if (options && options.sdpTransform) this.options.sdpTransform = options.sdpTransform;
-          this._negotiator.startConnection({
-            ...this.options._payload,
-            _stream: stream
-          });
-          const messages = this.provider._getMessages(this.connectionId);
-          for (const message of messages) this.handleMessage(message);
-          this._open = true;
-        }
-        /**
-        * Exposed functionality for users.
-        */
-        /**
-        * Closes the media connection.
-        */
-        close() {
-          if (this._negotiator) {
-            this._negotiator.cleanup();
-            this._negotiator = null;
-          }
-          this._localStream = null;
-          this._remoteStream = null;
-          if (this.provider) {
-            this.provider._removeConnection(this);
-            this.provider = null;
-          }
-          if (this.options && this.options._stream) this.options._stream = null;
-          if (!this.open) return;
-          this._open = false;
-          super.emit("close");
-        }
-      };
-      $abf266641927cd89$export$2c4e825dc9120f87 = class {
-        constructor(_options) {
-          this._options = _options;
-        }
-        _buildRequest(method) {
-          const protocol = this._options.secure ? "https" : "http";
-          const { host, port, path: path2, key } = this._options;
-          const url = new URL(`${protocol}://${host}:${port}${path2}${key}/${method}`);
-          url.searchParams.set("ts", `${Date.now()}${Math.random()}`);
-          url.searchParams.set("version", (0, $520832d44ba058c8$export$83d89fbfd8236492));
-          return fetch(url.href, {
-            referrerPolicy: this._options.referrerPolicy
-          });
-        }
-        /** Get a unique ID from the server via XHR and initialize with it. */
-        async retrieveId() {
-          try {
-            const response = await this._buildRequest("id");
-            if (response.status !== 200) throw new Error(`Error. Status:${response.status}`);
-            return response.text();
-          } catch (error) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).error("Error retrieving ID", error);
-            let pathError = "";
-            if (this._options.path === "/" && this._options.host !== (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_HOST) pathError = " If you passed in a `path` to your self-hosted PeerServer, you'll also need to pass in that same path when creating a new Peer.";
-            throw new Error("Could not get an ID from the server." + pathError);
-          }
-        }
-        /** @deprecated */
-        async listAllPeers() {
-          try {
-            const response = await this._buildRequest("peers");
-            if (response.status !== 200) {
-              if (response.status === 401) {
-                let helpfulError = "";
-                if (this._options.host === (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_HOST) helpfulError = "It looks like you're using the cloud server. You can email team@peerjs.com to enable peer listing for your API key.";
-                else helpfulError = "You need to enable `allow_discovery` on your self-hosted PeerServer to use this feature.";
-                throw new Error("It doesn't look like you have permission to list peers IDs. " + helpfulError);
-              }
-              throw new Error(`Error. Status:${response.status}`);
-            }
-            return response.json();
-          } catch (error) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).error("Error retrieving list peers", error);
-            throw new Error("Could not get list peers from the server." + error);
-          }
-        }
-      };
-      $6366c4ca161bc297$export$d365f7ad9d7df9c9 = class _$6366c4ca161bc297$export$d365f7ad9d7df9c9 extends (0, $5045192fc6d387ba$export$23a2a68283c24d80) {
-        static #_ = this.ID_PREFIX = "dc_";
-        static #_2 = this.MAX_BUFFERED_AMOUNT = 8388608;
-        get type() {
-          return (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data;
-        }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options);
-          this.connectionId = this.options.connectionId || _$6366c4ca161bc297$export$d365f7ad9d7df9c9.ID_PREFIX + (0, $0e5fd1585784c252$export$4e61f672936bec77)();
-          this.label = this.options.label || this.connectionId;
-          this.reliable = !!this.options.reliable;
-          this._negotiator = new (0, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a)(this);
-          this._negotiator.startConnection(this.options._payload || {
-            originator: true,
-            reliable: this.reliable
-          });
-        }
-        /** Called by the Negotiator when the DataChannel is ready. */
-        _initializeDataChannel(dc) {
-          this.dataChannel = dc;
-          this.dataChannel.onopen = () => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} dc connection success`);
-            this._open = true;
-            this.emit("open");
-          };
-          this.dataChannel.onmessage = (e2) => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} dc onmessage:`, e2.data);
-          };
-          this.dataChannel.onclose = () => {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} dc closed for:`, this.peer);
-            this.close();
-          };
-        }
-        /**
-        * Exposed functionality for users.
-        */
-        /** Allows user to close connection. */
-        close(options) {
-          if (options?.flush) {
-            this.send({
-              __peerData: {
-                type: "close"
-              }
-            });
-            return;
-          }
-          if (this._negotiator) {
-            this._negotiator.cleanup();
-            this._negotiator = null;
-          }
-          if (this.provider) {
-            this.provider._removeConnection(this);
-            this.provider = null;
-          }
-          if (this.dataChannel) {
-            this.dataChannel.onopen = null;
-            this.dataChannel.onmessage = null;
-            this.dataChannel.onclose = null;
-            this.dataChannel = null;
-          }
-          if (!this.open) return;
-          this._open = false;
-          super.emit("close");
-        }
-        /** Allows user to send data. */
-        send(data, chunked = false) {
-          if (!this.open) {
-            this.emitError((0, $78455e22dea96b8c$export$49ae800c114df41d).NotOpenYet, "Connection is not open. You should listen for the `open` event before sending messages.");
-            return;
-          }
-          return this._send(data, chunked);
-        }
-        async handleMessage(message) {
-          const payload = message.payload;
-          switch (message.type) {
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Answer:
-              await this._negotiator.handleSDP(message.type, payload.sdp);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Candidate:
-              await this._negotiator.handleCandidate(payload.candidate);
-              break;
-            default:
-              (0, $257947e92926277a$export$2e2bcd8739ae039).warn("Unrecognized message type:", message.type, "from peer:", this.peer);
-              break;
-          }
-        }
-      };
-      $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b = class extends (0, $6366c4ca161bc297$export$d365f7ad9d7df9c9) {
-        get bufferSize() {
-          return this._bufferSize;
-        }
-        _initializeDataChannel(dc) {
-          super._initializeDataChannel(dc);
-          this.dataChannel.binaryType = "arraybuffer";
-          this.dataChannel.addEventListener("message", (e2) => this._handleDataMessage(e2));
-        }
-        _bufferedSend(msg) {
-          if (this._buffering || !this._trySend(msg)) {
-            this._buffer.push(msg);
-            this._bufferSize = this._buffer.length;
-          }
-        }
-        // Returns true if the send succeeds.
-        _trySend(msg) {
-          if (!this.open) return false;
-          if (this.dataChannel.bufferedAmount > (0, $6366c4ca161bc297$export$d365f7ad9d7df9c9).MAX_BUFFERED_AMOUNT) {
-            this._buffering = true;
-            setTimeout(() => {
-              this._buffering = false;
-              this._tryBuffer();
-            }, 50);
-            return false;
-          }
-          try {
-            this.dataChannel.send(msg);
-          } catch (e2) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).error(`DC#:${this.connectionId} Error when sending:`, e2);
-            this._buffering = true;
-            this.close();
-            return false;
-          }
-          return true;
-        }
-        // Try to send the first message in the buffer.
-        _tryBuffer() {
-          if (!this.open) return;
-          if (this._buffer.length === 0) return;
-          const msg = this._buffer[0];
-          if (this._trySend(msg)) {
-            this._buffer.shift();
-            this._bufferSize = this._buffer.length;
-            this._tryBuffer();
-          }
-        }
-        close(options) {
-          if (options?.flush) {
-            this.send({
-              __peerData: {
-                type: "close"
-              }
-            });
-            return;
-          }
-          this._buffer = [];
-          this._bufferSize = 0;
-          super.close();
-        }
-        constructor(...args) {
-          super(...args), this._buffer = [], this._bufferSize = 0, this._buffering = false;
-        }
-      };
-      $9fcfddb3ae148f88$export$f0a5a64d5bb37108 = class extends (0, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b) {
-        close(options) {
-          super.close(options);
-          this._chunkedData = {};
-        }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options), this.chunker = new (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b)(), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).Binary, this._chunkedData = {};
-        }
-        // Handles a DataChannel message.
-        _handleDataMessage({ data }) {
-          const deserializedData = (0, $0cfd7828ad59115f$export$417857010dc9287f)(data);
-          const peerData = deserializedData["__peerData"];
-          if (peerData) {
-            if (peerData.type === "close") {
-              this.close();
-              return;
-            }
-            this._handleChunk(deserializedData);
-            return;
-          }
-          this.emit("data", deserializedData);
-        }
-        _handleChunk(data) {
-          const id = data.__peerData;
-          const chunkInfo = this._chunkedData[id] || {
-            data: [],
-            count: 0,
-            total: data.total
-          };
-          chunkInfo.data[data.n] = new Uint8Array(data.data);
-          chunkInfo.count++;
-          this._chunkedData[id] = chunkInfo;
-          if (chunkInfo.total === chunkInfo.count) {
-            delete this._chunkedData[id];
-            const data2 = (0, $fcbcc7538a6776d5$export$52c89ebcdc4f53f2)(chunkInfo.data);
-            this._handleDataMessage({
-              data: data2
-            });
-          }
-        }
-        _send(data, chunked) {
-          const blob = (0, $0cfd7828ad59115f$export$2a703dbb0cb35339)(data);
-          if (blob instanceof Promise) return this._send_blob(blob);
-          if (!chunked && blob.byteLength > this.chunker.chunkedMTU) {
-            this._sendChunks(blob);
-            return;
-          }
-          this._bufferedSend(blob);
-        }
-        async _send_blob(blobPromise) {
-          const blob = await blobPromise;
-          if (blob.byteLength > this.chunker.chunkedMTU) {
-            this._sendChunks(blob);
-            return;
-          }
-          this._bufferedSend(blob);
-        }
-        _sendChunks(blob) {
-          const blobs = this.chunker.chunk(blob);
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`DC#${this.connectionId} Try to send ${blobs.length} chunks...`);
-          for (const blob2 of blobs) this.send(blob2, true);
-        }
-      };
-      $bbaee3f15f714663$export$6f88fe47d32c9c94 = class extends (0, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b) {
-        _handleDataMessage({ data }) {
-          super.emit("data", data);
-        }
-        _send(data, _chunked) {
-          this._bufferedSend(data);
-        }
-        constructor(...args) {
-          super(...args), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).None;
-        }
-      };
-      $817f931e3f9096cf$export$48880ac635f47186 = class extends (0, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b) {
-        // Handles a DataChannel message.
-        _handleDataMessage({ data }) {
-          const deserializedData = this.parse(this.decoder.decode(data));
-          const peerData = deserializedData["__peerData"];
-          if (peerData && peerData.type === "close") {
-            this.close();
-            return;
-          }
-          this.emit("data", deserializedData);
-        }
-        _send(data, _chunked) {
-          const encodedData = this.encoder.encode(this.stringify(data));
-          if (encodedData.byteLength >= (0, $4f4134156c446392$export$7debb50ef11d5e0b).chunkedMTU) {
-            this.emitError((0, $78455e22dea96b8c$export$49ae800c114df41d).MessageToBig, "Message too big for JSON channel");
-            return;
-          }
-          this._bufferedSend(encodedData);
-        }
-        constructor(...args) {
-          super(...args), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).JSON, this.encoder = new TextEncoder(), this.decoder = new TextDecoder(), this.stringify = JSON.stringify, this.parse = JSON.parse;
-        }
-      };
-      $416260bce337df90$export$ecd1fc136c422448 = class _$416260bce337df90$export$ecd1fc136c422448 extends (0, $23779d1881157a18$export$6a678e589c8a4542) {
-        static #_ = this.DEFAULT_KEY = "peerjs";
-        /**
-        * The brokering ID of this peer
-        *
-        * If no ID was specified in {@apilink Peer | the constructor},
-        * this will be `undefined` until the {@apilink PeerEvents | `open`} event is emitted.
-        */
-        get id() {
-          return this._id;
-        }
-        get options() {
-          return this._options;
-        }
-        get open() {
-          return this._open;
-        }
-        /**
-        * @internal
-        */
-        get socket() {
-          return this._socket;
-        }
-        /**
-        * A hash of all connections associated with this peer, keyed by the remote peer's ID.
-        * @deprecated
-        * Return type will change from Object to Map<string,[]>
-        */
-        get connections() {
-          const plainConnections = /* @__PURE__ */ Object.create(null);
-          for (const [k2, v2] of this._connections) plainConnections[k2] = v2;
-          return plainConnections;
-        }
-        /**
-        * true if this peer and all of its connections can no longer be used.
-        */
-        get destroyed() {
-          return this._destroyed;
-        }
-        /**
-        * false if there is an active connection to the PeerServer.
-        */
-        get disconnected() {
-          return this._disconnected;
-        }
-        constructor(id, options) {
-          super(), this._serializers = {
-            raw: (0, $bbaee3f15f714663$export$6f88fe47d32c9c94),
-            json: (0, $817f931e3f9096cf$export$48880ac635f47186),
-            binary: (0, $9fcfddb3ae148f88$export$f0a5a64d5bb37108),
-            "binary-utf8": (0, $9fcfddb3ae148f88$export$f0a5a64d5bb37108),
-            default: (0, $9fcfddb3ae148f88$export$f0a5a64d5bb37108)
-          }, this._id = null, this._lastServerId = null, // States.
-          this._destroyed = false, this._disconnected = false, this._open = false, this._connections = /* @__PURE__ */ new Map(), this._lostMessages = /* @__PURE__ */ new Map();
-          let userId;
-          if (id && id.constructor == Object) options = id;
-          else if (id) userId = id.toString();
-          options = {
-            debug: 0,
-            host: (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_HOST,
-            port: (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_PORT,
-            path: "/",
-            key: _$416260bce337df90$export$ecd1fc136c422448.DEFAULT_KEY,
-            token: (0, $4f4134156c446392$export$7debb50ef11d5e0b).randomToken(),
-            config: (0, $4f4134156c446392$export$7debb50ef11d5e0b).defaultConfig,
-            referrerPolicy: "strict-origin-when-cross-origin",
-            serializers: {},
-            ...options
-          };
-          this._options = options;
-          this._serializers = {
-            ...this._serializers,
-            ...this.options.serializers
-          };
-          if (this._options.host === "/") this._options.host = window.location.hostname;
-          if (this._options.path) {
-            if (this._options.path[0] !== "/") this._options.path = "/" + this._options.path;
-            if (this._options.path[this._options.path.length - 1] !== "/") this._options.path += "/";
-          }
-          if (this._options.secure === void 0 && this._options.host !== (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_HOST) this._options.secure = (0, $4f4134156c446392$export$7debb50ef11d5e0b).isSecure();
-          else if (this._options.host == (0, $4f4134156c446392$export$7debb50ef11d5e0b).CLOUD_HOST) this._options.secure = true;
-          if (this._options.logFunction) (0, $257947e92926277a$export$2e2bcd8739ae039).setLogFunction(this._options.logFunction);
-          (0, $257947e92926277a$export$2e2bcd8739ae039).logLevel = this._options.debug || 0;
-          this._api = new (0, $abf266641927cd89$export$2c4e825dc9120f87)(options);
-          this._socket = this._createServerConnection();
-          if (!(0, $4f4134156c446392$export$7debb50ef11d5e0b).supports.audioVideo && !(0, $4f4134156c446392$export$7debb50ef11d5e0b).supports.data) {
-            this._delayedAbort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).BrowserIncompatible, "The current browser does not support WebRTC");
-            return;
-          }
-          if (!!userId && !(0, $4f4134156c446392$export$7debb50ef11d5e0b).validateId(userId)) {
-            this._delayedAbort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).InvalidID, `ID "${userId}" is invalid`);
-            return;
-          }
-          if (userId) this._initialize(userId);
-          else this._api.retrieveId().then((id2) => this._initialize(id2)).catch((error) => this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).ServerError, error));
-        }
-        _createServerConnection() {
-          const socket = new (0, $8f5bfa60836d261d$export$4798917dbf149b79)(this._options.secure, this._options.host, this._options.port, this._options.path, this._options.key, this._options.pingInterval);
-          socket.on((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Message, (data) => {
-            this._handleMessage(data);
-          });
-          socket.on((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Error, (error) => {
-            this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).SocketError, error);
-          });
-          socket.on((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Disconnected, () => {
-            if (this.disconnected) return;
-            this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).Network, "Lost connection to server.");
-            this.disconnect();
-          });
-          socket.on((0, $78455e22dea96b8c$export$3b5c4a4b6354f023).Close, () => {
-            if (this.disconnected) return;
-            this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).SocketClosed, "Underlying socket is already closed.");
-          });
-          return socket;
-        }
-        /** Initialize a connection with the server. */
-        _initialize(id) {
-          this._id = id;
-          this.socket.start(id, this._options.token);
-        }
-        /** Handles messages from the server. */
-        _handleMessage(message) {
-          const type = message.type;
-          const payload = message.payload;
-          const peerId = message.src;
-          switch (type) {
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Open:
-              this._lastServerId = this.id;
-              this._open = true;
-              this.emit("open", this.id);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Error:
-              this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).ServerError, payload.msg);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).IdTaken:
-              this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).UnavailableID, `ID "${this.id}" is taken`);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).InvalidKey:
-              this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).InvalidKey, `API KEY "${this._options.key}" is invalid`);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Leave:
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received leave message from ${peerId}`);
-              this._cleanupPeer(peerId);
-              this._connections.delete(peerId);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Expire:
-              this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).PeerUnavailable, `Could not connect to peer ${peerId}`);
-              break;
-            case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Offer: {
-              const connectionId = payload.connectionId;
-              let connection = this.getConnection(peerId, connectionId);
-              if (connection) {
-                connection.close();
-                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Offer received for existing Connection ID:${connectionId}`);
-              }
-              if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
-                const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peerId, this, {
-                  connectionId,
-                  _payload: payload,
-                  metadata: payload.metadata
-                });
-                connection = mediaConnection;
-                this._addConnection(peerId, connection);
-                this.emit("call", mediaConnection);
-              } else if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data) {
-                const dataConnection = new this._serializers[payload.serialization](peerId, this, {
-                  connectionId,
-                  _payload: payload,
-                  metadata: payload.metadata,
-                  label: payload.label,
-                  serialization: payload.serialization,
-                  reliable: payload.reliable
-                });
-                connection = dataConnection;
-                this._addConnection(peerId, connection);
-                this.emit("connection", dataConnection);
-              } else {
-                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Received malformed connection type:${payload.type}`);
-                return;
-              }
-              const messages = this._getMessages(connectionId);
-              for (const message2 of messages) connection.handleMessage(message2);
-              break;
-            }
-            default: {
-              if (!payload) {
-                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`You received a malformed message from ${peerId} of type ${type}`);
-                return;
-              }
-              const connectionId = payload.connectionId;
-              const connection = this.getConnection(peerId, connectionId);
-              if (connection && connection.peerConnection)
-                connection.handleMessage(message);
-              else if (connectionId)
-                this._storeMessage(connectionId, message);
-              else (0, $257947e92926277a$export$2e2bcd8739ae039).warn("You received an unrecognized message:", message);
-              break;
-            }
-          }
-        }
-        /** Stores messages without a set up connection, to be claimed later. */
-        _storeMessage(connectionId, message) {
-          if (!this._lostMessages.has(connectionId)) this._lostMessages.set(connectionId, []);
-          this._lostMessages.get(connectionId).push(message);
-        }
-        /**
-        * Retrieve messages from lost message store
-        * @internal
-        */
-        //TODO Change it to private
-        _getMessages(connectionId) {
-          const messages = this._lostMessages.get(connectionId);
-          if (messages) {
-            this._lostMessages.delete(connectionId);
-            return messages;
-          }
-          return [];
-        }
-        /**
-        * Connects to the remote peer specified by id and returns a data connection.
-        * @param peer The brokering ID of the remote peer (their {@apilink Peer.id}).
-        * @param options for specifying details about Peer Connection
-        */
-        connect(peer, options = {}) {
-          options = {
-            serialization: "default",
-            ...options
-          };
-          if (this.disconnected) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).warn("You cannot connect to a new Peer because you called .disconnect() on this Peer and ended your connection with the server. You can create a new Peer to reconnect, or call reconnect on this peer if you believe its ID to still be available.");
-            this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).Disconnected, "Cannot connect to new Peer after disconnecting from server.");
-            return;
-          }
-          const dataConnection = new this._serializers[options.serialization](peer, this, options);
-          this._addConnection(peer, dataConnection);
-          return dataConnection;
-        }
-        /**
-        * Calls the remote peer specified by id and returns a media connection.
-        * @param peer The brokering ID of the remote peer (their peer.id).
-        * @param stream The caller's media stream
-        * @param options Metadata associated with the connection, passed in by whoever initiated the connection.
-        */
-        call(peer, stream, options = {}) {
-          if (this.disconnected) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).warn("You cannot connect to a new Peer because you called .disconnect() on this Peer and ended your connection with the server. You can create a new Peer to reconnect.");
-            this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).Disconnected, "Cannot connect to new Peer after disconnecting from server.");
-            return;
-          }
-          if (!stream) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).error("To call a peer, you must provide a stream from your browser's `getUserMedia`.");
-            return;
-          }
-          const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peer, this, {
-            ...options,
-            _stream: stream
-          });
-          this._addConnection(peer, mediaConnection);
-          return mediaConnection;
-        }
-        /** Add a data/media connection to this peer. */
-        _addConnection(peerId, connection) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add connection ${connection.type}:${connection.connectionId} to peerId:${peerId}`);
-          if (!this._connections.has(peerId)) this._connections.set(peerId, []);
-          this._connections.get(peerId).push(connection);
-        }
-        //TODO should be private
-        _removeConnection(connection) {
-          const connections = this._connections.get(connection.peer);
-          if (connections) {
-            const index = connections.indexOf(connection);
-            if (index !== -1) connections.splice(index, 1);
-          }
-          this._lostMessages.delete(connection.connectionId);
-        }
-        /** Retrieve a data/media connection for this peer. */
-        getConnection(peerId, connectionId) {
-          const connections = this._connections.get(peerId);
-          if (!connections) return null;
-          for (const connection of connections) {
-            if (connection.connectionId === connectionId) return connection;
-          }
-          return null;
-        }
-        _delayedAbort(type, message) {
-          setTimeout(() => {
-            this._abort(type, message);
-          }, 0);
-        }
-        /**
-        * Emits an error message and destroys the Peer.
-        * The Peer is not destroyed if it's in a disconnected state, in which case
-        * it retains its disconnected state and its existing connections.
-        */
-        _abort(type, message) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).error("Aborting!");
-          this.emitError(type, message);
-          if (!this._lastServerId) this.destroy();
-          else this.disconnect();
-        }
-        /**
-        * Destroys the Peer: closes all active connections as well as the connection
-        * to the server.
-        *
-        * :::caution
-        * This cannot be undone; the respective peer object will no longer be able
-        * to create or receive any connections, its ID will be forfeited on the server,
-        * and all of its data and media connections will be closed.
-        * :::
-        */
-        destroy() {
-          if (this.destroyed) return;
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Destroy peer with ID:${this.id}`);
-          this.disconnect();
-          this._cleanup();
-          this._destroyed = true;
-          this.emit("close");
-        }
-        /** Disconnects every connection on this peer. */
-        _cleanup() {
-          for (const peerId of this._connections.keys()) {
-            this._cleanupPeer(peerId);
-            this._connections.delete(peerId);
-          }
-          this.socket.removeAllListeners();
-        }
-        /** Closes all connections to this peer. */
-        _cleanupPeer(peerId) {
-          const connections = this._connections.get(peerId);
-          if (!connections) return;
-          for (const connection of connections) connection.close();
-        }
-        /**
-        * Disconnects the Peer's connection to the PeerServer. Does not close any
-        *  active connections.
-        * Warning: The peer can no longer create or accept connections after being
-        *  disconnected. It also cannot reconnect to the server.
-        */
-        disconnect() {
-          if (this.disconnected) return;
-          const currentId = this.id;
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Disconnect peer with ID:${currentId}`);
-          this._disconnected = true;
-          this._open = false;
-          this.socket.close();
-          this._lastServerId = currentId;
-          this._id = null;
-          this.emit("disconnected", currentId);
-        }
-        /** Attempts to reconnect with the same ID.
-        *
-        * Only {@apilink Peer.disconnect | disconnected peers} can be reconnected.
-        * Destroyed peers cannot be reconnected.
-        * If the connection fails (as an example, if the peer's old ID is now taken),
-        * the peer's existing connections will not close, but any associated errors events will fire.
-        */
-        reconnect() {
-          if (this.disconnected && !this.destroyed) {
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Attempting reconnection to server with ID ${this._lastServerId}`);
-            this._disconnected = false;
-            this._initialize(this._lastServerId);
-          } else if (this.destroyed) throw new Error("This peer cannot reconnect to the server. It has already been destroyed.");
-          else if (!this.disconnected && !this.open)
-            (0, $257947e92926277a$export$2e2bcd8739ae039).error("In a hurry? We're still trying to make the initial connection!");
-          else throw new Error(`Peer ${this.id} cannot reconnect because it is not disconnected from the server!`);
-        }
-        /**
-        * Get a list of available peer IDs. If you're running your own server, you'll
-        * want to set allow_discovery: true in the PeerServer options. If you're using
-        * the cloud server, email team@peerjs.com to get the functionality enabled for
-        * your key.
-        */
-        listAllPeers(cb2 = (_) => {
-        }) {
-          this._api.listAllPeers().then((peers) => cb2(peers)).catch((error) => this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).ServerError, error));
-        }
-      };
-      $dd0187d7f28e386f$export$2e2bcd8739ae039 = (0, $416260bce337df90$export$ecd1fc136c422448);
-    }
-  });
-
-  // demo/social/src/App.tsx
+  // demo/banky/src/App.tsx
   var require_App = __commonJS({
-    "demo/social/src/App.tsx"() {
-      var import_polyfills687 = __toESM(require_polyfills());
+    "demo/banky/src/App.tsx"() {
+      var import_polyfills674 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
-      init_Social();
-      init_WebRTCRemoteAdapter();
-      init_bundler();
-      var DEBUG = false;
-      var PrefixProxyAdapter = class {
-        constructor(baseAdapter, prefix) {
-          this.baseAdapter = baseAdapter;
-          this.prefix = prefix;
-        }
-        getKey(path2) {
-          return `${this.prefix}/${path2}`;
-        }
-        uploadFile(path2, data, hash) {
-          return this.baseAdapter.uploadFile(this.getKey(path2), data, hash);
-        }
-        downloadFile(path2, ifNoneMatch, timeout) {
-          return this.baseAdapter.downloadFile(this.getKey(path2), ifNoneMatch, timeout);
-        }
-        getFileHash(path2) {
-          return this.baseAdapter.getFileHash(this.getKey(path2));
-        }
-        getFileEtag(path2) {
-          return this.baseAdapter.getFileEtag(this.getKey(path2));
-        }
-      };
+      init_Banky();
       var App = () => {
         const [config, setConfig] = (0, import_react.useState)({
-          syncMode: "s3",
-          region: "ap-southeast-1",
-          endpoint: "",
-          accessKeyId: "",
-          secretAccessKey: "",
-          bucketName: "",
-          appId: "sov-social",
-          userId: "user-" + Math.random().toString(36).substring(7),
-          password: "password123"
+          paths: {
+            userId: localStorage.getItem("sov_banky_userId") || "",
+            appId: "banky-sov",
+            storeId: "main"
+          },
+          password: ""
         });
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
-        const getStorageKey = (key) => `sov_${config.userId}_${key}`;
-        const [autoLogin, setAutoLogin] = (0, import_react.useState)(localStorage.getItem("sov_auto_login") === "true");
-        const [rememberedUsers, setRememberedUsers] = (0, import_react.useState)(() => {
-          const saved = localStorage.getItem("sov_remembered_users");
-          return saved ? JSON.parse(saved) : [];
-        });
-        const [profileCache, setProfileCache] = (0, import_react.useState)({});
-        const [blobCache, setBlobCache] = (0, import_react.useState)({});
-        const [lastViewed, setLastViewed] = (0, import_react.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
-        const [highlights, setHighlights] = (0, import_react.useState)({ feed: 0, friends: 0 });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)({});
         const [sov, setSov] = (0, import_react.useState)(null);
-        const [social, setSocial] = (0, import_react.useState)(null);
-        const [posts, setPosts] = (0, import_react.useState)([]);
+        const [banky, setBanky] = (0, import_react.useState)(null);
+        const [accounts, setAccounts] = (0, import_react.useState)([]);
+        const [sharedAccounts, setSharedAccounts] = (0, import_react.useState)([]);
+        const [selectedAccount, setSelectedAccount] = (0, import_react.useState)(null);
+        const [transactions, setTransactions] = (0, import_react.useState)([]);
+        const [goals, setGoals] = (0, import_react.useState)([]);
+        const chartRef = (0, import_react.useRef)(null);
+        const chartInstance = (0, import_react.useRef)(null);
         const [following, setFollowing] = (0, import_react.useState)([]);
-        const [allUsers, setAllUsers] = (0, import_react.useState)([]);
+        const [registry, setRegistry] = (0, import_react.useState)([]);
         const [lastSyncTime, setLastSyncTime] = (0, import_react.useState)(null);
-        const [newPost, setNewPost] = (0, import_react.useState)("");
-        const [newImage, setNewPostImage] = (0, import_react.useState)(null);
-        const [newImagePreview, setNewImagePreview] = (0, import_react.useState)(null);
-        const [msgImage, setMsgImage] = (0, import_react.useState)(null);
-        const [msgImagePreview, setMsgImagePreview] = (0, import_react.useState)(null);
-        const postFileRef = (0, import_react.useRef)(null);
-        const msgFileRef = (0, import_react.useRef)(null);
-        const [profile, setProfile] = (0, import_react.useState)(null);
         const [syncing, setSyncing] = (0, import_react.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react.useState)("feed");
-        const [messages, setMessages] = (0, import_react.useState)([]);
-        const [groups, setGroups] = (0, import_react.useState)([]);
-        const [selectedGroup, setSelectedGroup] = (0, import_react.useState)(null);
-        const [groupPosts, setGroupPosts] = (0, import_react.useState)([]);
-        const [groupInput, setGroupInput] = (0, import_react.useState)("");
-        const [groupImage, setGroupImage] = (0, import_react.useState)(null);
-        const [groupImagePreview, setGroupImagePreview] = (0, import_react.useState)(null);
-        const groupFileRef = (0, import_react.useRef)(null);
-        const [msgInput, setMsgInput] = (0, import_react.useState)("");
-        const [selectedUser, setSelectedUser] = (0, import_react.useState)(null);
-        const [lookbackDays, setLookbackDays] = (0, import_react.useState)(5);
-        const [isConnected, setIsConnected] = (0, import_react.useState)(true);
-        const [manualDisconnect, setManualDisconnect] = (0, import_react.useState)(false);
-        const [reconnectDelay, setReconnectDelay] = (0, import_react.useState)(1e3);
-        const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
-        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
-        const lastViewedRef = (0, import_react.useRef)(lastViewed);
-        const discoveryMapRef = (0, import_react.useRef)(discoveryMap);
-        const currentTabRef = (0, import_react.useRef)(currentTab);
-        const selectedUserRef = (0, import_react.useRef)(selectedUser);
-        (0, import_react.useEffect)(() => {
-          lastViewedRef.current = lastViewed;
-        }, [lastViewed]);
-        (0, import_react.useEffect)(() => {
-          discoveryMapRef.current = discoveryMap;
-        }, [discoveryMap]);
-        (0, import_react.useEffect)(() => {
-          currentTabRef.current = currentTab;
-        }, [currentTab]);
-        (0, import_react.useEffect)(() => {
-          selectedUserRef.current = selectedUser;
-        }, [selectedUser]);
+        const [currentTab, setCurrentTab] = (0, import_react.useState)("accounts");
+        const [profile, setProfile] = (0, import_react.useState)({ name: "", avatar: "" });
         const [dialog, setDialog] = (0, import_react.useState)(null);
-        const showAlert = (message, title = "Notice") => {
-          setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
+        const accountFileRef = (0, import_react.useRef)(null);
+        const handleLogout = () => {
+          setIsLoggedIn(false);
+          setSov(null);
+          setBanky(null);
+          setSelectedAccount(null);
         };
-        const showConfirm = (message, onConfirm, title = "Confirm") => {
-          setDialog({
-            title,
-            message,
-            type: "confirm",
-            onConfirm: async () => {
-              setDialog(null);
-              await onConfirm();
-            },
-            onCancel: () => setDialog(null)
-          });
-        };
-        const showPrompt = (message, onConfirm, defaultValue = "", title = "Input") => {
-          setDialog({
-            title,
-            message,
-            type: "prompt",
-            defaultValue,
-            onConfirm: async (val) => {
-              setDialog(null);
-              if (val !== void 0) await onConfirm(val || "");
-            },
-            onCancel: () => setDialog(null)
-          });
-        };
-        const showMultiSelect = (message, options, onConfirm, title = "Select Members") => {
-          setDialog({
-            title,
-            message,
-            type: "multiselect",
-            options,
-            onConfirm: async (vals) => {
-              setDialog(null);
-              if (vals !== void 0) await onConfirm(vals);
-            },
-            onCancel: () => setDialog(null)
-          });
-        };
-        const toggleConnection = () => {
-          setIsConnected((prev) => !prev);
-        };
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn) return;
-          localStorage.setItem(getStorageKey("profile_cache"), JSON.stringify(profileCache));
-        }, [profileCache, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn) return;
-          localStorage.setItem(getStorageKey("blob_cache"), JSON.stringify(blobCache));
-        }, [blobCache, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn) return;
-          localStorage.setItem(getStorageKey("discovery_map"), JSON.stringify(discoveryMap));
-        }, [discoveryMap, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn) return;
-          localStorage.setItem(getStorageKey("last_viewed_v2"), JSON.stringify(lastViewed));
-        }, [lastViewed, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn) return;
-          localStorage.setItem(getStorageKey("highlights"), JSON.stringify(highlights));
-        }, [highlights, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
-          const savedConfig = localStorage.getItem("sov_social_config");
-          if (savedConfig && autoLogin) {
-            try {
-              const parsed = JSON.parse(savedConfig);
-              setConfig(parsed);
-              performLogin(parsed);
-              return;
-            } catch (e2) {
+        const handleClearCache = async () => {
+          showConfirm("This will delete all local data. You will need to re-sync from S3. Continue?", async () => {
+            const dbs = await indexedDB.databases();
+            for (const db of dbs) {
+              if (db.name && db.name.startsWith(`sov_${config.paths.appId}_`)) {
+                console.log(`[Cache] Deleting database: ${db.name}`);
+                indexedDB.deleteDatabase(db.name);
+              }
             }
-          }
-          fetch("config.json").then((res) => res.json()).then((data) => {
-            setConfig((prev) => ({ ...prev, ...data }));
-          }).catch(() => {
+            localStorage.clear();
+            handleLogout();
+            showAlert("Local cache cleared. Please login again.");
           });
+        };
+        (0, import_react.useEffect)(() => {
+          fetch("config.json").then((res) => res.json()).then((data) => {
+            setConfig((prev) => ({ ...prev, s3: data }));
+          }).catch((e2) => console.error("Failed to load config.json", e2));
         }, []);
-        const performLogin = async (currentConfig) => {
+        const handleLogin = async (e2) => {
+          e2.preventDefault();
+          if (!config.paths.userId || !config.password) return;
           try {
-            setConfig(currentConfig);
-            const s3Config = {
-              region: currentConfig.region,
-              endpoint: currentConfig.endpoint,
-              credentials: {
-                accessKeyId: currentConfig.accessKeyId,
-                secretAccessKey: currentConfig.secretAccessKey
-              },
-              bucketName: currentConfig.bucketName,
-              forcePathStyle: true
-            };
-            let remoteAdapter;
-            let factory;
-            if (currentConfig.syncMode === "webrtc" || currentConfig.syncMode === "peerjs") {
-              const adapter2 = new WebRTCRemoteAdapter(currentConfig.userId);
-              if (currentConfig.syncMode === "webrtc") {
-                const bc2 = new BroadcastChannel("sov-webrtc-mesh");
-                const peer = adapter2.connectPeer((msg) => bc2.postMessage(msg));
-                bc2.onmessage = (e2) => peer.receive(e2.data);
-              } else if (currentConfig.syncMode === "peerjs") {
-                const peerId = `${currentConfig.appId}-${currentConfig.userId}`;
-                const peer = new $dd0187d7f28e386f$export$2e2bcd8739ae039(peerId);
-                const activeConnections = /* @__PURE__ */ new Set();
-                const setupConnection = (conn) => {
-                  if (activeConnections.has(conn.peer)) return;
-                  activeConnections.add(conn.peer);
-                  let peerInterface = null;
-                  conn.on("open", () => {
-                    if (DEBUG) console.log(`[PeerJS] Connected to ${conn.peer}`);
-                    peerInterface = adapter2.connectPeer((msg) => {
-                      if (conn.open) conn.send(msg);
-                    });
-                    setTimeout(async () => {
-                      if (instance && instance.getStorage()) {
+            const instance = new SovereignS3nc(config);
+            await instance.init();
+            setSov(instance);
+            const bm2 = new BankyManager(instance);
+            setBanky(bm2);
+            localStorage.setItem("sov_banky_userId", config.paths.userId);
+            setIsLoggedIn(true);
+            await loadData(instance, bm2);
+          } catch (e3) {
+            alert("Login failed: " + e3.message);
+          }
+        };
+        const loadData = async (v2, bm2) => {
+          setSyncing(true);
+          try {
+            const accs = await bm2.getAccounts();
+            setAccounts(accs);
+            const reg = await v2.getPublicRegistry();
+            setRegistry(reg);
+            const f2 = await v2.getFollowing();
+            setFollowing(f2);
+            const dates = [];
+            for (let i2 = 0; i2 < 2; i2++) {
+              const d2 = /* @__PURE__ */ new Date();
+              d2.setUTCDate(d2.getUTCDate() - i2);
+              dates.push(d2.toISOString().split("T")[0]);
+            }
+            for (const user of f2) {
+              if (!user.publicKey) continue;
+              const sharedSecret = v2.deriveSharedSecret(user.publicKey);
+              const myId = config.paths.userId;
+              for (const date2 of dates) {
+                const localPath = `followed/${user.userId}/modules/social/dms/${myId}/${date2}.db`;
+                const data = await v2.getStorage().getFile(localPath);
+                if (data) {
+                  const SQL = await globalThis.initSqlJs(window.SQL_CONFIG);
+                  const db = new SQL.Database(data);
+                  try {
+                    const res = db.exec("SELECT encrypted_data FROM messages");
+                    if (res.length > 0) {
+                      for (const row of res[0].values) {
                         try {
-                          const globalRemotePath = `${getPrefix("global", "users")}/users.json`;
-                          const registry = await instance.getPublicRegistry();
-                          if (registry.length > 0) {
-                            adapter2.uploadFile(globalRemotePath, new TextEncoder().encode(JSON.stringify(registry)));
-                          }
-                          const publicProfile = await instance.getStorage().getPublicUserFile();
-                          if (publicProfile) {
-                            adapter2.uploadFile(`${getPrefix(currentConfig.userId, "social")}/public/user.json`, publicProfile);
-                          }
-                          const today = SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
-                          const publicDb = await instance.getStorage().getFile(instance.getModulePath("social", `${today}.db`, "public"));
-                          if (publicDb) {
-                            adapter2.uploadFile(`${getPrefix(currentConfig.userId, "social")}/public/modules/social/${today}.db`, publicDb);
+                          const decrypted = await v2.decrypt(row[0], sharedSecret);
+                          const msg = JSON.parse(new TextDecoder().decode(decrypted));
+                          if (msg.content.startsWith("INVITE_GROUP:")) {
+                            const groupInfo = JSON.parse(msg.content.substring(13));
+                            const groups2 = await v2.getGroups();
+                            if (!groups2.find((g2) => g2.id === groupInfo.id)) {
+                              await v2.joinGroup(groupInfo);
+                              await v2.respondToGroup(groupInfo.id, "joined");
+                            }
                           }
                         } catch (e2) {
                         }
                       }
-                    }, 1e3);
-                  });
-                  conn.on("data", (data) => {
-                    if (peerInterface) peerInterface.receive(data);
-                  });
-                  conn.on("close", () => {
-                    if (DEBUG) console.log(`[PeerJS] Connection closed: ${conn.peer}`);
-                    activeConnections.delete(conn.peer);
-                  });
-                  conn.on("error", (err) => {
-                    if (DEBUG) console.warn(`[PeerJS] Connection error with ${conn.peer}:`, err);
-                    activeConnections.delete(conn.peer);
-                  });
-                };
-                peer.on("connection", setupConnection);
-                peer.on("error", (err) => {
-                  if (DEBUG) console.warn(`[PeerJS] Global Peer Error:`, err);
-                });
-                setInterval(() => {
-                  try {
-                    const knownUsers = JSON.parse(localStorage.getItem("sov_remembered_users") || "[]");
-                    const discovery = JSON.parse(localStorage.getItem("sov_discovery_map") || "{}");
-                    const peersToConnect = /* @__PURE__ */ new Set();
-                    knownUsers.forEach((u2) => peersToConnect.add(`${currentConfig.appId}-${u2.userId}`));
-                    Object.keys(discovery).forEach((uid) => peersToConnect.add(`${currentConfig.appId}-${uid}`));
-                    peersToConnect.forEach((targetPeerId) => {
-                      if (targetPeerId !== peerId && !activeConnections.has(targetPeerId)) {
-                        const conn = peer.connect(targetPeerId);
-                        setupConnection(conn);
-                      }
-                    });
+                    }
                   } catch (e2) {
                   }
-                }, 5e3);
-              }
-              const getPrefix = (uid, sid) => `${currentConfig.appId}/${uid}/${sid}`;
-              remoteAdapter = new PrefixProxyAdapter(adapter2, getPrefix(currentConfig.userId, "social"));
-              factory = (uid) => {
-                if (uid === "global") return new PrefixProxyAdapter(adapter2, getPrefix("global", "users"));
-                return new PrefixProxyAdapter(adapter2, getPrefix(uid, "social"));
-              };
-            }
-            const instance = new SovereignS3nc({
-              s3: currentConfig.syncMode === "s3" || !currentConfig.syncMode ? s3Config : void 0,
-              paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: "social" },
-              password: currentConfig.password,
-              debug: DEBUG
-            }, remoteAdapter, factory);
-            await instance.init();
-            setSov(instance);
-            const sm = new SocialManager(instance);
-            setSocial(sm);
-            const loadCache = (key, defaultVal) => {
-              const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
-              return s2 ? JSON.parse(s2) : defaultVal;
-            };
-            setProfileCache(loadCache("profile_cache", {}));
-            setBlobCache(loadCache("blob_cache", {}));
-            setDiscoveryMap(loadCache("discovery_map", {}));
-            setHighlights(loadCache("highlights", { feed: 0, friends: 0 }));
-            setLastViewed(loadCache("last_viewed_v2", { feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} }));
-            const profileData = await sm.getProfile();
-            setProfile(profileData);
-            setIsLoggedIn(true);
-            localStorage.setItem("sov_social_config", JSON.stringify(currentConfig));
-            localStorage.setItem("sov_auto_login", autoLogin.toString());
-            await loadData(sm, instance);
-            const newUser = { userId: currentConfig.userId, name: profileData?.name || currentConfig.userId, avatar: profileData?.avatar, config: currentConfig };
-            setRememberedUsers((prev) => {
-              const updated = [newUser, ...prev.filter((u2) => u2.userId !== currentConfig.userId)];
-              localStorage.setItem("sov_remembered_users", JSON.stringify(updated));
-              return updated;
-            });
-            setTimeout(() => {
-              instance.sync().then(() => {
-                loadData();
-              }).catch((e2) => {
-                loadData();
-              });
-            }, 100);
-          } catch (e2) {
-            showAlert("Login initialization failed: " + e2.message, "Login Error");
-          }
-        };
-        const login = () => performLogin(config);
-        const logout = () => {
-          localStorage.removeItem("sov_social_config");
-          setIsLoggedIn(false);
-          setSov(null);
-          setSocial(null);
-          setPosts([]);
-          setFollowing([]);
-          setMessages([]);
-        };
-        const resetLocalData = async () => {
-          showConfirm("Clear all local data? This will forget your account and settings.", async () => {
-            localStorage.clear();
-            const dbs = await indexedDB.databases();
-            for (const db of dbs) {
-              if (db.name) indexedDB.deleteDatabase(db.name);
-            }
-            window.location.reload();
-          });
-        };
-        const compressImage = async (file) => {
-          return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (event) => {
-              const img = new Image();
-              img.src = event.target?.result;
-              img.onload = () => {
-                const canvas = document.createElement("canvas");
-                let width = img.width;
-                let height = img.height;
-                const MAX_DIM = 1200;
-                if (width > MAX_DIM || height > MAX_DIM) {
-                  const scale = Math.min(MAX_DIM / width, MAX_DIM / height);
-                  width *= scale;
-                  height *= scale;
+                  db.close();
                 }
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
-                let quality = 0.8;
-                const check = () => {
-                  canvas.toBlob((b2) => {
-                    if (b2 && b2.size > 200 * 1024 && quality > 0.1) {
-                      quality -= 0.1;
-                      check();
-                    } else {
-                      b2?.arrayBuffer().then((ab2) => resolve(new Uint8Array(ab2)));
-                    }
-                  }, "image/jpeg", quality);
-                };
-                check();
-              };
-            };
-          });
-        };
-        const handleImageChange = async (e2, isMessage = false) => {
-          const file = e2.target.files[0];
-          if (!file) return;
-          const compressed = await compressImage(file);
-          if (isMessage) {
-            setMsgImage(compressed);
-            const reader = new FileReader();
-            reader.onload = (ev) => setMsgImagePreview(ev.target?.result);
-            reader.readAsDataURL(new Blob([compressed]));
-          } else {
-            setNewPostImage(compressed);
-            const reader = new FileReader();
-            reader.onload = (ev) => setNewImagePreview(ev.target?.result);
-            reader.readAsDataURL(new Blob([compressed]));
-          }
-        };
-        const handlePost = async () => {
-          if (!social || !newPost && !newImage) return;
-          await social.post(newPost, true, newImage || void 0);
-          setNewPost("");
-          setNewPostImage(null);
-          setNewImagePreview(null);
-          if (postFileRef.current) postFileRef.current.value = "";
-          await sync();
-        };
-        const handlePostKeyDown = (e2) => {
-          if (e2.ctrlKey && e2.key === "Enter") {
-            handlePost();
-          }
-        };
-        const handleLike = async (postId) => {
-          if (!social) return;
-          await social.like(postId);
-          await loadData();
-        };
-        const handleComment = async (post) => {
-          if (!social) return;
-          showPrompt(`Replying to ${post.userId}:`, async (content) => {
-            if (content) {
-              await social.comment(post.id, post.userId, content);
-              await sync();
-            }
-          });
-        };
-        const handleEditPost = async (post) => {
-          if (!social) return;
-          showPrompt("Edit your post:", async (newContent) => {
-            if (newContent !== null && newContent !== post.content) {
-              const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
-              await social.editPost(post.id, dateStr, newContent);
-              await sync();
-            }
-          }, post.content);
-        };
-        const handleDeletePost = async (post) => {
-          if (!social) return;
-          showConfirm("Delete this post? Data will be removed but a placeholder will remain.", async () => {
-            const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
-            await social.deletePost(post.id, dateStr);
-            await sync();
-          });
-        };
-        const handleShare = async (post) => {
-          const text = `Post by ${post.userId}: ${post.content}`;
-          try {
-            await navigator.clipboard.writeText(text);
-            showAlert("Post content copied to clipboard!", "Success");
-          } catch (e2) {
-            showAlert(text, "Post Content");
-          }
-        };
-        const sync = async () => {
-          if (!sov || !social || syncing || !isConnected) return;
-          setSyncing(true);
-          try {
-            await sov.sync();
-            await social.syncOtherProfiles();
-            setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
-            await loadData();
-          } catch (e2) {
-          } finally {
-            setSyncing(false);
-          }
-        };
-        (0, import_react.useEffect)(() => {
-          if (isLoggedIn) {
-            sync();
-            if (currentTab === "feed" || currentTab === "friends") {
-              setHighlights((prev) => ({ ...prev, [currentTab]: lastViewed[currentTab] || 0 }));
-              setLastViewed((prev) => ({ ...prev, [currentTab]: Date.now() }));
-            }
-          }
-        }, [currentTab]);
-        (0, import_react.useEffect)(() => {
-          if (currentTab === "messages" && selectedUser) {
-            setLastViewed((prev) => ({
-              ...prev,
-              chat: { ...prev.chat || {}, [selectedUser]: Date.now() }
-            }));
-            setUserUnreadCounts((prev) => ({ ...prev, [selectedUser]: 0 }));
-          }
-        }, [selectedUser, currentTab]);
-        (0, import_react.useEffect)(() => {
-          if (!isLoggedIn || !sov || !social) return;
-          const interval = setInterval(() => {
-            sync();
-          }, 15e3);
-          return () => clearInterval(interval);
-        }, [isLoggedIn, sov, social]);
-        const lookbackDaysRef = (0, import_react.useRef)(lookbackDays);
-        (0, import_react.useEffect)(() => {
-          lookbackDaysRef.current = lookbackDays;
-        }, [lookbackDays]);
-        const loadData = async (activeSocial, activeSov) => {
-          const s2 = activeSocial || social;
-          const v2 = activeSov || sov;
-          if (!s2 || !v2) return;
-          const registry = await v2.getPublicRegistry();
-          Object.keys(discoveryMapRef.current).forEach((uid) => {
-            if (!registry.find((u2) => u2.userId === uid)) {
-              registry.push({ userId: uid, publicKey: "" });
-            }
-          });
-          setAllUsers(registry);
-          const now = Date.now();
-          const curDiscoveryMap = discoveryMapRef.current;
-          const newDiscoveryMap = { ...curDiscoveryMap };
-          let discoveryChanged = false;
-          registry.forEach((u2) => {
-            if (!newDiscoveryMap[u2.userId]) {
-              newDiscoveryMap[u2.userId] = now;
-              discoveryChanged = true;
-            }
-          });
-          if (discoveryChanged) {
-            setDiscoveryMap(newDiscoveryMap);
-            discoveryMapRef.current = newDiscoveryMap;
-          }
-          const followingList = await v2.getFollowing();
-          setFollowing(followingList);
-          const dates = [];
-          const currentLookbackDays = lookbackDaysRef.current;
-          for (let i2 = 0; i2 < currentLookbackDays; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(SovereignS3nc.getDateStr(d2));
-          }
-          let allPosts = [];
-          for (const date2 of dates) {
-            allPosts = [...allPosts, ...await s2.getPosts(date2, "public")];
-            for (const user of followingList) {
-              allPosts = [...allPosts, ...await s2.getPosts(`${user.userId}/${date2}`, "followed")];
-            }
-          }
-          allPosts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          await s2.enrichLikes(allPosts, currentLookbackDays);
-          setPosts(allPosts);
-          const newMessages = await s2.getInboxMessages(currentLookbackDays);
-          setMessages(newMessages);
-          const curLv = lastViewedRef.current;
-          const curTab = currentTabRef.current;
-          const curUser = selectedUserRef.current;
-          let feedUnread = allPosts.filter((p2) => p2.timestamp > curLv.feed && p2.userId !== config.userId).length;
-          if (curTab === "feed") {
-            feedUnread = 0;
-            setLastViewed((prev) => {
-              const next = { ...prev, feed: Date.now() };
-              lastViewedRef.current = next;
-              return next;
-            });
-          }
-          const userMsgUnreads = {};
-          let totalMsgUnread = 0;
-          newMessages.forEach((m2) => {
-            if (m2.senderId !== config.userId) {
-              const userLastViewed = (curLv.chat || {})[m2.senderId] || 0;
-              if (m2.timestamp > userLastViewed) {
-                userMsgUnreads[m2.senderId] = (userMsgUnreads[m2.senderId] || 0) + 1;
-                totalMsgUnread++;
               }
             }
-          });
-          if (curTab === "messages" && curUser) {
-            totalMsgUnread -= userMsgUnreads[curUser] || 0;
-            userMsgUnreads[curUser] = 0;
-            setLastViewed((prev) => {
-              const next = {
-                ...prev,
-                chat: { ...prev.chat || {}, [curUser]: Date.now() }
-              };
-              lastViewedRef.current = next;
-              return next;
-            });
-          }
-          let friendsUnread = registry.filter((u2) => (newDiscoveryMap[u2.userId] || 0) > curLv.friends && u2.userId !== config.userId).length;
-          if (curTab === "friends") {
-            friendsUnread = 0;
-            setLastViewed((prev) => {
-              const next = { ...prev, friends: Date.now() };
-              lastViewedRef.current = next;
-              return next;
-            });
-          }
-          const groupsList = await v2.getGroups();
-          setGroups(groupsList);
-          if (selectedGroup) {
-            const updated = groupsList.find((g2) => g2.id === selectedGroup.id);
-            if (updated) setSelectedGroup(updated);
-          }
-          for (const m2 of newMessages) {
-            if (m2.content.startsWith("INVITE_GROUP:")) {
+            const groups = await v2.getGroups();
+            setSharedAccounts(groups);
+            const profileData = await v2.getStorage().getPublicUserFile();
+            if (profileData) {
               try {
-                const groupInfo = JSON.parse(m2.content.substring(13));
-                const existing = groupsList.find((g2) => g2.id === groupInfo.id);
-                if (existing) {
-                  if (groupInfo.members.find((mb) => mb.userId === m2.senderId)) {
-                    await v2.joinGroup(groupInfo);
-                  }
-                }
+                setProfile(JSON.parse(new TextDecoder().decode(profileData)));
               } catch (e2) {
               }
             }
+            setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
+          } catch (e2) {
           }
-          let roomsUnread = 0;
-          roomsUnread = groupsList.filter((g2) => g2.createdAt > curLv.rooms).length;
-          if (curTab === "rooms") {
-            roomsUnread = 0;
-            setLastViewed((prev) => {
-              const next = { ...prev, rooms: Date.now() };
-              lastViewedRef.current = next;
-              return next;
-            });
-          }
-          setUnreadCounts({
-            feed: feedUnread,
-            messages: totalMsgUnread,
-            friends: friendsUnread,
-            rooms: roomsUnread
-          });
-          setUserUnreadCounts(userMsgUnreads);
+          setSyncing(false);
         };
-        const handleSendMessage = async () => {
-          if (!social || !selectedUser || !msgInput && !msgImage) return;
-          await social.sendDirectMessage(selectedUser, msgInput, msgImage || void 0);
-          setMsgInput("");
-          setMsgImage(null);
-          setMsgImagePreview(null);
-          if (msgFileRef.current) msgFileRef.current.value = "";
-          await sync();
+        const sync = async () => {
+          if (!sov || !banky) return;
+          setSyncing(true);
+          await sov.sync();
+          await loadData(sov, banky);
+          setSyncing(false);
         };
-        const handleLoadMore = () => {
-          setLookbackDays((prev) => prev + 5);
-        };
-        (0, import_react.useEffect)(() => {
-          if (isLoggedIn) loadData();
-        }, [lookbackDays]);
-        const handleEditMessage = async (m2) => {
-          if (!social) return;
-          showPrompt("Edit your message:", async (newContent) => {
-            if (newContent !== null && newContent !== m2.content) {
-              const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
-              const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-              await social.editMessage(otherUser, m2.id, dateStr, newContent);
+        const handleCreateAccount = async () => {
+          if (!banky) return;
+          showPrompt("Enter Account Name:", async (name) => {
+            if (name) {
+              await banky.createAccount(name);
               await sync();
             }
-          }, m2.content);
-        };
-        const handleDeleteMessage = async (m2) => {
-          if (!social) return;
-          showConfirm("Delete this message for everyone?", async () => {
-            const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
-            const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-            await social.deleteMessage(otherUser, m2.id, dateStr);
-            await sync();
           });
         };
-        const handleNewChat = () => {
-          showPrompt("Enter User ID to chat with:", (userId) => {
-            if (userId) setSelectedUser(userId);
-          });
-        };
-        const handleCreateGroup = async () => {
-          if (!sov) return;
-          showPrompt("Enter room name:", async (name) => {
-            if (name) {
-              const options = following.filter((f2) => !!f2.publicKey).map((f2) => ({ value: f2.userId, label: f2.userId })).sort((a2, b2) => a2.label.localeCompare(b2.label));
-              if (options.length === 0) {
-                const group4 = await sov.createGroup(name, [
-                  { userId: config.userId, publicKey: sov.getConfig().publicEncryptionKey, role: "owner" }
-                ]);
-                await sync();
-                return;
+        const handleRenameAccount = async (acc) => {
+          if (!banky) return;
+          showPrompt("New Account Name:", async (newName) => {
+            if (newName && newName !== acc.name) {
+              await banky.renameAccount(acc.id, newName);
+              await sync();
+              if (selectedAccount?.id === acc.id) {
+                setSelectedAccount({ ...acc, name: newName });
               }
-              showMultiSelect("Select members to invite:", options, async (selectedUserIds) => {
-                const members = [
-                  { userId: config.userId, publicKey: sov.getConfig().publicEncryptionKey, role: "owner" }
-                ];
-                selectedUserIds.forEach((uid) => {
-                  const f2 = following.find((u2) => u2.userId === uid);
-                  if (f2) members.push({ userId: f2.userId, publicKey: f2.publicKey, role: "member" });
-                });
-                const group4 = await sov.createGroup(name, members);
-                for (const member2 of members) {
-                  if (member2.userId !== config.userId) {
-                    await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(group4)}`);
-                  }
-                }
-                await sync();
-              });
             }
+          }, acc.name);
+        };
+        const handleDeleteAccount = async (acc) => {
+          if (!banky) return;
+          showConfirm(`Delete account "${acc.name}"? This cannot be undone.`, async () => {
+            await banky.deleteAccount(acc.id);
+            await sync();
+            if (selectedAccount?.id === acc.id) setSelectedAccount(null);
           });
         };
-        const handlePostToGroup = async () => {
-          if (!social || !selectedGroup || !groupInput && !groupImage) return;
-          await social.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || void 0);
-          setGroupInput("");
-          setGroupImage(null);
-          setGroupImagePreview(null);
-          if (groupFileRef.current) groupFileRef.current.value = "";
-          await sync();
-        };
-        const handleGroupImageChange = async (e2) => {
+        const handleAccountImageChange = async (e2) => {
+          if (!banky || !selectedAccount) return;
           const file = e2.target.files?.[0];
           if (!file) return;
-          const compressed = await SocialManager.compressImage(await new Promise((r2) => {
+          try {
             const reader = new FileReader();
-            reader.onload = (ev) => r2(ev.target?.result);
+            reader.onload = async (ev) => {
+              const img = await SovereignS3nc.compressImage(ev.target?.result, 100 * 1024);
+              await banky.updateAccountImage(selectedAccount.id, img);
+              await sync();
+              setSelectedAccount({ ...selectedAccount, image: img });
+            };
             reader.readAsDataURL(file);
-          }), 500 * 1024);
-          const data = await (await fetch(compressed)).arrayBuffer();
-          setGroupImage(new Uint8Array(data));
-          setGroupImagePreview(compressed);
+          } catch (e3) {
+            showAlert("Failed to process image");
+          }
         };
-        const handleAcceptGroup = async (groupInfo) => {
-          if (!sov) return;
-          await sov.joinGroup(groupInfo);
-          await sov.respondToGroup(groupInfo.id, "joined");
-          await social?.postToGroup(groupInfo.id, groupInfo.sharedKey, "joined the room", void 0, "system");
+        const handleRemoveAccountImage = async () => {
+          if (!banky || !selectedAccount) return;
+          await banky.updateAccountImage(selectedAccount.id, null);
           await sync();
-          setCurrentTab("rooms");
-          const updatedGroups = await sov.getGroups();
-          const freshGroup = updatedGroups.find((g2) => g2.id === groupInfo.id);
-          setSelectedGroup(freshGroup || groupInfo);
-          setLastViewed((prev) => ({
-            ...prev,
-            rooms: Date.now(),
-            roomChat: { ...prev.roomChat || {}, [groupInfo.id]: Date.now() }
-          }));
-          showAlert(`You have joined ${groupInfo.name}!`, "Success");
+          setSelectedAccount({ ...selectedAccount, image: void 0 });
         };
-        const handleDeclineGroup = async (groupInfo) => {
-          if (!sov) return;
-          await sov.joinGroup(groupInfo);
-          await sov.respondToGroup(groupInfo.id, "declined");
-          await sync();
-          setLastViewed((prev) => ({
-            ...prev,
-            rooms: Date.now(),
-            roomChat: { ...prev.roomChat || {}, [groupInfo.id]: Date.now() }
-          }));
-          showAlert(`You declined the invite to ${groupInfo.name}.`, "Notice");
-        };
-        const handleLeaveGroup = async () => {
-          if (!sov || !selectedGroup) return;
-          showConfirm(`Are you sure you want to leave ${selectedGroup.name}?`, async () => {
-            await social?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, "left the room", void 0, "system");
-            await sov.leaveGroup(selectedGroup.id);
-            await sync();
-            setSelectedGroup(null);
-            setShowMemberManagement(false);
-            showAlert(`You left ${selectedGroup.name}.`, "Notice");
+        const handleAddTransaction = async (isCredit) => {
+          if (!banky || !selectedAccount) return;
+          const type = isCredit ? "Credit" : "Debit";
+          showPrompt(`Enter ${type} Amount:`, async (amt) => {
+            const amount = parseFloat(amt);
+            if (isNaN(amount)) return;
+            showPrompt(`Enter description for ${type}:`, async (desc) => {
+              if (desc) {
+                const shared = sharedAccounts.find((g2) => g2.id === selectedAccount.id);
+                await banky.addTransaction(selectedAccount.id, desc, isCredit ? amount : -amount, "other", void 0, shared?.id, shared?.sharedKey);
+                await sync();
+                loadTransactions(selectedAccount);
+              }
+            });
           });
         };
-        const handleManageMembers = async () => {
-          if (!sov || !selectedGroup) return;
-          const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
-          if (myRole !== "owner" && myRole !== "admin") {
-            showAlert("Only admins can manage members.", "Access Denied");
-            return;
-          }
-          const members = [...selectedGroup.members];
-          setShowMemberManagement(true);
+        const loadTransactions = async (acc) => {
+          if (!banky) return;
+          setSelectedAccount(acc);
+          const shared = sharedAccounts.find((g3) => g3.id === acc.id);
+          const txs = await banky.getTransactions(acc.id, 365, shared?.id);
+          setTransactions(txs);
+          const g2 = await banky.getGoals(acc.id);
+          setGoals(g2);
         };
-        const [showMemberManagement, setShowMemberManagement] = (0, import_react.useState)(false);
-        const updateMemberRole = async (userId, newRole) => {
-          if (!sov || !selectedGroup) return;
-          const updatedMembers = selectedGroup.members.map(
-            (m2) => m2.userId === userId ? { ...m2, role: newRole } : m2
-          );
-          const updatedGroup = { ...selectedGroup, members: updatedMembers };
-          await sov.updateGroup(updatedGroup);
-          setSelectedGroup(updatedGroup);
-          for (const member2 of updatedMembers) {
-            if (member2.userId !== config.userId) {
-              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+        (0, import_react.useEffect)(() => {
+          if (!chartRef.current || transactions.length === 0) return;
+          const ctx = chartRef.current.getContext("2d");
+          if (!ctx) return;
+          if (chartInstance.current) {
+            chartInstance.current.destroy();
+          }
+          const sorted = [...transactions].reverse();
+          let balance = 0;
+          const data = sorted.map((tx) => {
+            balance += tx.amount;
+            return balance;
+          });
+          const labels = sorted.map((tx) => tx.date);
+          chartInstance.current = new window.Chart(ctx, {
+            type: "line",
+            data: {
+              labels,
+              datasets: [{
+                label: "Balance",
+                data,
+                borderColor: "#0d6efd",
+                backgroundColor: "rgba(13, 110, 253, 0.1)",
+                fill: true,
+                tension: 0.4
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                x: { display: false },
+                y: { beginAtZero: true }
+              }
             }
-          }
-          await sync();
+          });
+        }, [transactions]);
+        const handleDeleteTransaction = async (tx) => {
+          if (!banky || !selectedAccount) return;
+          showConfirm("Delete this transaction?", async () => {
+            const shared = sharedAccounts.find((g2) => g2.id === selectedAccount.id);
+            await banky.deleteTransaction(selectedAccount.id, tx.id, tx.date, shared?.id, shared?.sharedKey);
+            await sync();
+            loadTransactions(selectedAccount);
+          });
         };
-        const removeMember = async (userId) => {
-          if (!sov || !selectedGroup) return;
-          const updatedMembers = selectedGroup.members.filter((m2) => m2.userId !== userId);
-          const updatedGroup = { ...selectedGroup, members: updatedMembers };
-          await sov.updateGroup(updatedGroup);
-          setSelectedGroup(updatedGroup);
-          for (const member2 of updatedMembers) {
-            if (member2.userId !== config.userId) {
-              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+        const handleCreateGoal = async () => {
+          if (!banky || !selectedAccount) return;
+          showPrompt("Enter Goal Name:", async (name) => {
+            if (name) {
+              showPrompt("Enter Target Amount:", async (amount) => {
+                const target = parseFloat(amount);
+                if (!isNaN(target)) {
+                  await banky.createGoal(selectedAccount.id, name, target);
+                  await sync();
+                  loadTransactions(selectedAccount);
+                }
+              });
             }
-          }
-          await social?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
-          await sync();
+          });
         };
-        const addMembersToGroup = async () => {
-          if (!sov || !selectedGroup) return;
-          const existingUserIds = selectedGroup.members.map((m2) => m2.userId);
-          const options = following.filter((f2) => !!f2.publicKey && !existingUserIds.includes(f2.userId)).map((f2) => ({ value: f2.userId, label: f2.userId })).sort((a2, b2) => a2.label.localeCompare(b2.label));
+        const handleGoalTransfer = async (goal, isContribute) => {
+          if (!banky || !selectedAccount) return;
+          const type = isContribute ? "Contribute to" : "Withdraw from";
+          showPrompt(`Enter amount to ${type.toLowerCase()} ${goal.name}:`, async (amt) => {
+            const amount = parseFloat(amt);
+            if (isNaN(amount) || amount <= 0) return;
+            const finalAmount = isContribute ? amount : -amount;
+            const description = isContribute ? `Saved for ${goal.name}` : `Withdrew from ${goal.name}`;
+            await banky.updateGoalAmount(goal.id, finalAmount);
+            const shared = sharedAccounts.find((g2) => g2.id === selectedAccount.id);
+            await banky.addTransaction(selectedAccount.id, description, -finalAmount, "goals", void 0, shared?.id, shared?.sharedKey);
+            await sync();
+            loadTransactions(selectedAccount);
+          });
+        };
+        const handleSetAllowance = () => {
+          if (!banky || !selectedAccount) return;
+          showPrompt("Enter weekly allowance amount (or 0 to disable):", async (amt) => {
+            const amount = parseFloat(amt);
+            if (!isNaN(amount)) {
+              if (amount > 0) {
+                await banky.updateAccountAllowance(selectedAccount.id, true, amount, "weekly", Date.now() + 7 * 24 * 60 * 60 * 1e3);
+                showAlert("Weekly allowance enabled.");
+              } else {
+                await banky.updateAccountAllowance(selectedAccount.id, false, 0, "weekly", 0);
+                showAlert("Allowance disabled.");
+              }
+              await sync();
+              loadData(sov, banky);
+            }
+          });
+        };
+        const handleShareAccount = async (acc) => {
+          if (!sov || !banky) return;
+          const options = following.filter((f2) => f2.publicKey && f2.publicKey.length === 64).map((f2) => ({ value: f2.userId, label: f2.userId }));
           if (options.length === 0) {
-            showAlert("No more friends to invite.", "Notice");
+            showAlert("Follow someone with a valid public key (Try Syncing first) to share accounts.");
             return;
           }
-          showMultiSelect("Select members to invite:", options, async (selectedUserIds) => {
-            const newMembers = [...selectedGroup.members];
-            selectedUserIds.forEach((uid) => {
+          showMultiSelect(`Share ${acc.name} with:`, options, async (userIds) => {
+            const members = [
+              { userId: config.paths.userId, publicKey: sov.getConfig().publicEncryptionKey, role: "owner", status: "joined" }
+            ];
+            userIds.forEach((uid) => {
               const f2 = following.find((u2) => u2.userId === uid);
-              if (f2) newMembers.push({ userId: f2.userId, publicKey: f2.publicKey, role: "member", status: "pending" });
+              if (f2) members.push({ userId: f2.userId, publicKey: f2.publicKey, role: "admin", status: "pending" });
             });
-            const updatedGroup = { ...selectedGroup, members: newMembers };
-            await sov.updateGroup(updatedGroup);
-            setSelectedGroup(updatedGroup);
-            for (const member2 of newMembers) {
-              if (member2.userId !== config.userId) {
-                await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+            const group4 = await sov.createGroup(`Shared Account: ${acc.name}`, members);
+            await banky.linkAccountToGroup(acc.id, group4.id);
+            await banky.publishTransactionsToGroup(acc.id, group4.id, group4.sharedKey);
+            for (const uid of userIds) {
+              const inviteMsg = `INVITE_GROUP:${JSON.stringify(group4)}`;
+              const recipient = following.find((f2) => f2.userId === uid);
+              if (recipient) {
+                const sharedSecret = sov.deriveSharedSecret(recipient.publicKey);
+                const message = {
+                  id: Math.random().toString(36).substring(7),
+                  content: inviteMsg,
+                  timestamp: Date.now(),
+                  senderId: config.paths.userId,
+                  recipientId: uid
+                };
+                const encrypted = await sov.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
+                const dateStr = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+                const dmPath = `public/modules/social/dms/${uid}/${dateStr}.db`;
+                const existingData = await sov.getStorage().getFile(dmPath);
+                const SQL = await globalThis.initSqlJs(window.SQL_CONFIG);
+                const db = new SQL.Database(existingData || void 0);
+                db.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
+                db.run("INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)", [message.id, encrypted]);
+                await sov.getStorage().saveFile(dmPath, db.export());
+                db.close();
               }
             }
             await sync();
+            showAlert(`Created shared account and sent ${userIds.length} invites.`);
           });
         };
-        const loadGroupPosts = async () => {
-          if (!social || !selectedGroup) return;
-          const dates = [];
-          for (let i2 = 0; i2 < lookbackDays; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(SovereignS3nc.getDateStr(d2));
-          }
-          let all = [];
-          for (const date2 of dates) {
-            all = [...all, ...await social.getGroupPosts(selectedGroup.id, date2)];
-          }
-          setGroupPosts(all);
-          setLastViewed((prev) => ({
-            ...prev,
-            roomChat: { ...prev.roomChat || {}, [selectedGroup.id]: Date.now() }
-          }));
+        const handleImport = async (e2) => {
+          if (!banky) return;
+          const file = e2.target.files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = async (ev) => {
+            try {
+              const data = JSON.parse(ev.target?.result);
+              await banky.importFromBanky(data);
+              await sync();
+              showAlert("Import successful!");
+            } catch (e3) {
+              showAlert("Import failed: Invalid JSON");
+            }
+          };
+          reader.readAsText(file);
         };
-        const handleEditGroupPost = async (p2) => {
-          if (!social || !selectedGroup) return;
-          showPrompt("Edit your post:", async (newContent) => {
-            if (newContent !== null && newContent !== p2.content) {
-              const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
-              await social.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, newContent);
+        const handleImportTransactions = async (e2) => {
+          if (!banky || !selectedAccount) return;
+          const file = e2.target.files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = async (ev) => {
+            try {
+              const data = JSON.parse(ev.target?.result);
+              const shared = sharedAccounts.find((g2) => g2.id === selectedAccount.id);
+              for (const tx of data) {
+                await banky.addTransaction(selectedAccount.id, tx.description, tx.amount, tx.category || "other", tx.date, shared?.id, shared?.sharedKey);
+              }
+              await sync();
+              loadTransactions(selectedAccount);
+              showAlert("Transactions imported!");
+            } catch (e3) {
+              showAlert("Import failed");
+            }
+          };
+          reader.readAsText(file);
+        };
+        const handleExportData = () => {
+          const data = {
+            userId: config.paths.userId,
+            exportDate: (/* @__PURE__ */ new Date()).toISOString(),
+            transactions
+          };
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const a2 = document.createElement("a");
+          a2.href = url;
+          a2.download = `banky-export-${selectedAccount?.name || "account"}.json`;
+          a2.click();
+        };
+        const handleUpdateProfile = () => {
+          showPrompt("Enter your display name:", async (name) => {
+            if (name) {
+              setProfile({ ...profile, name });
+              const profileData = new TextEncoder().encode(JSON.stringify({ name, userId: config.paths.userId }));
+              await sov?.getStorage().savePublicUserFile(profileData);
+              await sync();
+              showAlert("Profile updated!");
+            }
+          }, profile.name);
+        };
+        const showAlert = (message) => setDialog({ type: "alert", message, onConfirm: () => setDialog(null) });
+        const showConfirm = (message, onConfirm) => setDialog({ type: "confirm", message, onConfirm: () => {
+          setDialog(null);
+          onConfirm();
+        } });
+        const showPrompt = (message, onConfirm, defaultValue = "") => setDialog({ type: "prompt", message, defaultValue, onConfirm: (val) => {
+          setDialog(null);
+          onConfirm(val);
+        } });
+        const showMultiSelect = (message, options, onConfirm) => setDialog({ type: "multiselect", message, options, onConfirm: (vals) => {
+          setDialog(null);
+          onConfirm(vals);
+        } });
+        if (!isLoggedIn) {
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "text-center mb-4 fw-bold text-primary" }, "Banky-Sov"), /* @__PURE__ */ import_react.default.createElement("form", { onSubmit: handleLogin }, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "User ID"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })), /* @__PURE__ */ import_react.default.createElement("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3" }, "Login / Register"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache }, "Clear Local Data"))))));
+        }
+        return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small text-muted me-3", style: { opacity: 0.6 } }, "[", config.paths.userId, "]"), /* @__PURE__ */ import_react.default.createElement("span", { className: "navbar-brand fw-bold text-primary mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-bank me-2" }), "Banky-Sov")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex" }, /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts") }, "Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing") }, "Friends"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary ms-2 rounded-pill", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Sync")), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown ms-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-list" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" } }, /* @__PURE__ */ import_react.default.createElement("li", { className: "px-3 py-2 border-bottom mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile.name || "User"), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "@", config.paths.userId)), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-gear me-2" }), " Edit Profile")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Legacy Data"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "dropdown-item rounded-3 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Legacy JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Transactions"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-down me-2" }), " Export Account JSON")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}` }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Account JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash3 me-2" }), " Clear Local Cache")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, currentTab === "accounts" && /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-0 fw-bold" }, "My Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount }, "+ New")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, accounts.map((acc) => /* @__PURE__ */ import_react.default.createElement("button", { key: acc.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, acc.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-primary" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-wallet2 fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, acc.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, acc.id))))), sharedAccounts.map((group4) => /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group4.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group4.id, name: group4.name, currency: "USD", createdAt: group4.createdAt, ownerId: "shared" }) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, group4.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: group4.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-info" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-people fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, group4.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, "Shared Account"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, selectedAccount ? /* @__PURE__ */ import_react.default.createElement("div", { className: "card border-0 p-4 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h3", { className: "fw-bold mb-0" }, selectedAccount.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted" }, "Balance: ", selectedAccount.currency, " ", transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)), selectedAccount.allowanceActive && /* @__PURE__ */ import_react.default.createElement("div", { className: "badge bg-light text-primary border border-primary mt-1" }, "Allowance: ", selectedAccount.allowanceAmount, " / ", selectedAccount.allowanceInterval)), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2 flex-wrap justify-content-end" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true) }, "Deposit"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false) }, "Spend"), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-share me-2" }), " Share Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: handleSetAllowance }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cash-coin me-2" }), " Set Allowance")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-pencil me-2" }), " Rename Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click() }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image me-2" }), " Set Account Image")), selectedAccount.image && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image-fill me-2" }), " Remove Image")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash me-2" }), " Delete Account")))))), transactions.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4", style: { height: "200px" } }, /* @__PURE__ */ import_react.default.createElement("canvas", { ref: chartRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Goals"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal }, "+ New Goal")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row mb-4" }, goals.map((goal) => {
+          const progress = Math.min(100, Math.round(goal.currentAmount / goal.targetAmount * 100));
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: goal.id, className: "col-md-6 mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card bg-light border-0 p-3 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, goal.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: async () => {
+            await banky?.deleteGoal(goal.id);
+            loadTransactions(selectedAccount);
+          } }, "Delete Goal"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "progress mb-2", style: { height: "10px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "progress-bar bg-success", style: { width: `${progress}%` } })), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, selectedAccount.currency, " ", goal.currentAmount, " / ", goal.targetAmount), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group btn-group-sm" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-success", onClick: () => handleGoalTransfer(goal, true) }, "+"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger", onClick: () => handleGoalTransfer(goal, false), disabled: goal.currentAmount <= 0 }, "-")))));
+        })), /* @__PURE__ */ import_react.default.createElement("hr", null), /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Recent Transactions"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, transactions.map((tx) => /* @__PURE__ */ import_react.default.createElement("div", { key: tx.id, className: `list-group-item d-flex justify-content-between align-items-center px-0 py-3 transaction-item ${tx.amount >= 0 ? "tx-credit" : "tx-debit"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "ps-3 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, tx.description, " ", tx.category === "goals" && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-light text-secondary border ms-2" }, "Goal")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, tx.date, " \u2022 by ", tx.userId)), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: `fw-bold fs-5 me-3 ${tx.amount >= 0 ? "text-success" : "text-danger"}` }, tx.amount >= 0 ? "+" : "", tx.amount.toFixed(2)), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-danger p-0", onClick: () => handleDeleteTransaction(tx) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash" }))))), transactions.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-5 text-muted" }, "No transactions yet."))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-bank fs-1 mb-3" }), /* @__PURE__ */ import_react.default.createElement("h4", null, "Select an account to view details")))), currentTab === "sharing" && /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 border-0 mb-4 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-0 fw-bold" }, "Friends & Sharing"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill btn-sm", onClick: () => {
+          showPrompt("Enter User ID to follow:", async (uid) => {
+            if (uid) {
+              await sov?.follow(uid);
               await sync();
             }
-          }, p2.content);
-        };
-        const handleDeleteGroupPost = async (p2) => {
-          if (!social || !selectedGroup) return;
-          const msg = p2.userId === config.userId ? "Delete your post?" : `Delete ${p2.userId}'s post? (Admin)`;
-          showConfirm(msg, async () => {
-            const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
-            await social.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, p2.userId);
-            await sync();
           });
-        };
-        (0, import_react.useEffect)(() => {
-          if (isLoggedIn && selectedGroup) {
-            loadGroupPosts();
-          }
-        }, [selectedGroup, lastSyncTime, isLoggedIn]);
-        const BlobImage = ({ path: path2, userId }) => {
-          const [src, setSrc] = (0, import_react.useState)(blobCache[path2]);
-          (0, import_react.useEffect)(() => {
-            if (!src && sov) {
-              sov.getBlob(path2, userId).then((data) => {
-                if (data) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    const base64data = reader.result;
-                    setSrc(base64data);
-                    setBlobCache((prev) => ({ ...prev, [path2]: base64data }));
-                  };
-                  reader.readAsDataURL(new Blob([data]));
-                }
-              });
-            }
-          }, [path2, userId, sov]);
-          if (!src) return /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light p-5 text-center text-muted" }, "Loading image...");
-          return /* @__PURE__ */ import_react.default.createElement("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
-        };
-        const UserAvatar = ({ userId, size = 40 }) => {
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
-            if (social) {
-              social.getProfile(userId).then((p3) => {
-                if (p3 && (!userData || p3.updatedAt > (userData.updatedAt || 0) || p3.name !== userData.name || p3.avatar !== userData.avatar)) {
-                  setUserData(p3);
-                  setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
-                }
-              });
-            }
-          }, [userId, social, lastSyncTime]);
-          const p2 = userData || { name: userId };
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" } }, userId[0].toUpperCase()), size > 30 && /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold" }, p2.name || userId));
-        };
-        const UserName = ({ userId, className }) => {
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
-            if (social) {
-              social.getProfile(userId).then((p2) => {
-                if (p2 && (!userData || p2.updatedAt > (userData.updatedAt || 0) || p2.name !== userData.name)) {
-                  setUserData(p2);
-                  setProfileCache((prev) => ({ ...prev, [userId]: p2 }));
-                }
-              });
-            }
-          }, [userId, social, lastSyncTime]);
-          return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
-        };
-        const PostItem = ({ post, allPosts, depth = 0 }) => {
-          const replies = allPosts.filter((p2) => p2.parentId === post.id);
-          const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isNew ? "border-primary shadow-sm" : ""}`, style: isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
-            "button",
-            {
-              className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
-              onClick: () => handleLike(post.id),
-              disabled: post.isDeleted
-            },
-            "Like ",
-            post.likesCount ? `(${post.likesCount})` : ""
-          ), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleComment(post), disabled: post.isDeleted }, "Comment"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleShare(post), disabled: post.isDeleted }, "Share"))), replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: reply.id, post: reply, allPosts, depth: depth + 1 })));
-        };
-        if (!isLoggedIn) {
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "text-primary text-center fw-bold mb-4" }, "Sovereign Social"), rememberedUsers.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Switch Account"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, rememberedUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement(
-            "button",
-            {
-              key: u2.userId,
-              className: "list-group-item list-group-item-action d-flex align-items-center py-2",
-              onClick: () => performLogin(u2.config)
-            },
-            u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
-            /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
-            /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh (Local)"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modePeerjs", autoComplete: "off", checked: config.syncMode === "peerjs", onChange: () => setConfig({ ...config, syncMode: "peerjs" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modePeerjs" }, "PeerJS (Global P2P) ", /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-warning text-dark ms-1" }, "Alpha"))), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
-            setAutoLogin(e2.target.checked);
-            localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
-        }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(
-          "button",
-          {
-            className: `btn btn-link px-2 me-2 ${isConnected ? "text-success" : "text-danger"}`,
-            onClick: toggleConnection
-          },
-          /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
-        ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
-          showPrompt("Enter exact User ID to discover:", (uid) => {
-            if (uid) {
-              setDiscoveryMap((prev) => {
-                const next = { ...prev, [uid]: Date.now() };
-                setTimeout(() => loadData(), 500);
-                return next;
-              });
-            }
-          });
-        } }, "+ Add by ID")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
-          const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
-          try {
-            const info = JSON.parse(m2.content.substring(13));
-            const myStatus = info.members.find((mb) => mb.userId === config.userId)?.status;
-            const localGroup = groups.find((g2) => g2.id === info.id);
-            const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
-            return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
-          } catch (e2) {
-            return /* @__PURE__ */ import_react.default.createElement("span", null, "Invalid Invite");
-          }
-        })()) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, groups.map((group4) => {
-          const me = group4.members.find((mb) => mb.userId === config.userId);
-          const isPending = me?.status === "pending";
-          return /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedGroup?.id === group4.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group4) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, group4.name), isPending && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-warning text-dark" }, "Invite"), !isPending && group4.createdAt > (lastViewed.roomChat?.[group4.id] || 0) && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, "New"));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedGroup ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
-          const isAuthor = p2.userId === config.userId;
-          const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
-          const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
-          if (!isAuthor && !canDelete) return null;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
-        })()), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-4 p-2 rounded bg-light shadow-sm", style: { display: "inline-block", maxWidth: "90%" } }, p2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react.default.createElement("div", null, p2.content))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
-          setGroupImage(null);
-          setGroupImagePreview(null);
-          if (groupFileRef.current) groupFileRef.current.value = "";
-        } }, "\xD7")), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image" }), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup }, "Post")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a room to start collaborating"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
-          const file = e2.target.files?.[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-              setProfile({ ...profile, avatar: ev.target?.result });
-            };
-            reader.readAsDataURL(file);
-          }
-        } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "User ID (Share this for P2P)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: () => {
-          navigator.clipboard.writeText(config.userId);
-          showAlert("User ID copied!", "Clipboard");
-        } }, "Copy"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
-          await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
+        } }, "+ Follow User")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((f2) => /* @__PURE__ */ import_react.default.createElement("div", { key: f2.userId, className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-2 me-3" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, f2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "Last sync: ", f2.lastSync))), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill", onClick: async () => {
+          await sov?.unfollow(f2.userId);
           await sync();
-          showAlert("Profile updated!", "Success");
-        } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), /* @__PURE__ */ import_react.default.createElement(
-          MemberManagementModal,
-          {
-            show: showMemberManagement,
-            onClose: () => setShowMemberManagement(false),
-            group: selectedGroup,
-            profileCache,
-            onUpdateRole: updateMemberRole,
-            onRemove: removeMember,
-            onAdd: addMembersToGroup,
-            onLeave: handleLeaveGroup,
-            currentUserId: config.userId
-          }
-        ));
+        } }, "Unfollow"))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-4 text-muted" }, "You are not following anyone yet."))), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 border-0 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Discover Friends"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, registry.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-search fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, u2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "Global Registry"))), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
+          await sov?.follow(u2.userId);
+          await sync();
+        } }, "Follow"))), registry.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-4 text-muted" }, "No new users discovered.")))))), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
       };
-      var MemberManagementModal = ({ show, onClose, group: group4, profileCache, onUpdateRole, onRemove, onAdd, onLeave, currentUserId }) => {
-        if (!show || !group4) return null;
-        const myRole = group4.members.find((m2) => m2.userId === currentUserId)?.role;
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Manage Members: ", group4.name), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: onClose })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, "Group Members (", group4.members.length, ")"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd }, "+ Add Members")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, group4.members.map((member2) => {
-          const profile = profileCache[member2.userId];
-          const isMe = member2.userId === currentUserId;
-          const canManage = !isMe && (myRole === "owner" || myRole === "admin" && member2.role === "member");
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: member2.userId, className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" } }, member2.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile?.name || member2.userId, " ", isMe && "(You)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, /* @__PURE__ */ import_react.default.createElement("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2` }, member2.role), /* @__PURE__ */ import_react.default.createElement("span", { className: "text-capitalize" }, member2.status || "pending")))), canManage && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, member2.role === "member" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin") }, "Make Admin"), member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member") }, "Remove Admin"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
-            if (confirm(`Are you sure you want to remove ${member2.userId}?`)) onRemove(member2.userId);
-          } }, "Remove")));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between" }, myRole !== "owner" ? /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave }, "Leave Room") : /* @__PURE__ */ import_react.default.createElement("div", null), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose }, "Close")))));
-      };
-      var root = (0, import_client2.createRoot)(document.getElementById("root"));
-      root.render(/* @__PURE__ */ import_react.default.createElement(App, null));
-      var Dialog = ({ dialog, setDialog, profileCache }) => {
-        const [inputValue, setInputValue] = (0, import_react.useState)(dialog?.defaultValue || "");
+      var Dialog = ({ dialog, setDialog }) => {
+        const [inputValue, setInputValue] = (0, import_react.useState)("");
         const [selectedValues, setSelectedValues] = (0, import_react.useState)([]);
-        const [searchQuery, setSearchSearchQuery] = (0, import_react.useState)("");
         (0, import_react.useEffect)(() => {
-          setInputValue(dialog?.defaultValue || "");
+          setInputValue("");
           setSelectedValues([]);
-          setSearchSearchQuery("");
         }, [dialog]);
         if (!dialog) return null;
         const toggleOption = (val) => {
@@ -99076,48 +93361,10 @@ ${toHex(hashedRequest)}`;
             (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
           );
         };
-        const filteredOptions = dialog.options?.filter(
-          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
-        ) || [];
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.title), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: dialog.onCancel })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react.default.createElement(
-          "input",
-          {
-            autoFocus: true,
-            className: "form-control rounded-pill px-3 shadow-sm",
-            value: inputValue,
-            onChange: (e2) => setInputValue(e2.target.value),
-            onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
-          }
-        ), dialog.type === "multiselect" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement(
-          "input",
-          {
-            type: "text",
-            className: "form-control form-control-sm rounded-pill px-3",
-            placeholder: "Search members...",
-            value: searchQuery,
-            onChange: (e2) => setSearchSearchQuery(e2.target.value)
-          }
-        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" } }, filteredOptions.length > 0 ? filteredOptions.map((opt) => {
-          const userProfile = profileCache[opt.value];
-          return /* @__PURE__ */ import_react.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement(
-            "input",
-            {
-              type: "checkbox",
-              className: "form-check-input me-3",
-              checked: selectedValues.includes(opt.value),
-              onChange: () => toggleOption(opt.value)
-            }
-          ), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center flex-grow-1" }, userProfile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" } }, opt.value[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, userProfile?.name || opt.label), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, opt.value))));
-        }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-3 text-muted small" }, "No members found")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react.default.createElement(
-          "button",
-          {
-            type: "button",
-            className: "btn btn-primary rounded-pill px-4 shadow-sm",
-            onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue)
-          },
-          dialog.type === "alert" ? "OK" : "Confirm"
-        )))));
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.type.toUpperCase()), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: () => setDialog(null) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react.default.createElement("input", { autoFocus: true, className: "form-control rounded-pill px-3 shadow-sm", value: inputValue, onChange: (e2) => setInputValue(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue) }), dialog.type === "multiselect" && dialog.options && /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, dialog.options.map((opt) => /* @__PURE__ */ import_react.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "checkbox", className: "form-check-input me-3", checked: selectedValues.includes(opt.value), onChange: () => toggleOption(opt.value) }), /* @__PURE__ */ import_react.default.createElement("span", null, opt.label))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: () => setDialog(null) }, "Cancel"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue) }, "OK")))));
       };
+      var root = (0, import_client2.createRoot)(document.getElementById("root"));
+      root.render(/* @__PURE__ */ import_react.default.createElement(App, null));
     }
   });
   require_App();

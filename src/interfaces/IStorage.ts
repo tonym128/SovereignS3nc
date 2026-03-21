@@ -48,6 +48,11 @@ export interface IStorage {
   saveFile(path: string, data: Uint8Array): Promise<void>;
 
   /**
+   * Delete generic file.
+   */
+  deleteFile(path: string): Promise<void>;
+
+  /**
    * List all files in a prefix.
    */
   listFiles(prefix: string): Promise<string[]>;

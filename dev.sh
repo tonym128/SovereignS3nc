@@ -5,7 +5,8 @@
 set -e
 
 # Configuration
-CONFIG_FILE="demo/social/config.json"
+SOCIAL_CONFIG="demo/social/config.json"
+BANKY_CONFIG="demo/banky/config.json"
 BUCKET_NAME="sovereign-demo"
 KEY_NAME="dev-key"
 GARAGE_BINARY="./bin/garage"
@@ -81,31 +82,39 @@ function dev() {
     disown $PROXY_PID
     echo $PROXY_PID > .proxy.pid
 
-    echo "Updating $CONFIG_FILE..."
-    cat <<EOF > "$CONFIG_FILE"
-{
-    "endpoint": "http://127.0.0.1:8889",
-    "region": "garage",
-    "accessKeyId": "$ACCESS_KEY",
-    "secretAccessKey": "$SECRET_KEY",
-    "bucketName": "$BUCKET_NAME"
-}
-EOF
+    echo "Updating Config Files..."
+    JSON_CONFIG="{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"garage\",
+    \"accessKeyId\": \"$ACCESS_KEY\",
+    \"secretAccessKey\": \"$SECRET_KEY\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}"
+    echo "$JSON_CONFIG" > "$SOCIAL_CONFIG"
+    echo "$JSON_CONFIG" > "$BANKY_CONFIG"
 
-    echo "--- Building Social Demo App ---"
+    echo "--- Building Demo Apps ---"
     npm run build:social
+    npm run build:banky
 
-    echo "--- Starting Web Server (Local) ---"
-    nohup python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social > web_server.log 2>&1 &
-    WEB_PID=$!
-    disown $WEB_PID
-    echo $WEB_PID > .web.pid
+    echo "--- Starting Social Web Server (Port 8888) ---"
+    nohup python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social > social_web.log 2>&1 &
+    SOCIAL_PID=$!
+    disown $SOCIAL_PID
+    echo $SOCIAL_PID > .social_web.pid
+
+    echo "--- Starting Banky Web Server (Port 8887) ---"
+    nohup python3 -m http.server 8887 --bind 127.0.0.1 --directory demo/banky > banky_web.log 2>&1 &
+    BANKY_PID=$!
+    disown $BANKY_PID
+    echo $BANKY_PID > .banky_web.pid
 
     echo "------------------------------------------------"
     echo "Development environment is ready!"
     echo "Garage S3 API (Direct):  http://127.0.0.1:3900"
     echo "Garage S3 API (Proxy):   http://127.0.0.1:8889"
     echo "Social Demo App:         http://127.0.0.1:8888"
+    echo "Banky Demo App:          http://127.0.0.1:8887"
     echo "------------------------------------------------"
     echo "Use './dev.sh stop' to shut down services."
 }
@@ -113,7 +122,8 @@ EOF
 function stop() {
     echo "Stopping services and cleaning up..."
     
-    [ -f .web.pid ] && kill $(cat .web.pid) 2>/dev/null && rm .web.pid
+    [ -f .social_web.pid ] && kill $(cat .social_web.pid) 2>/dev/null && rm .social_web.pid
+    [ -f .banky_web.pid ] && kill $(cat .banky_web.pid) 2>/dev/null && rm .banky_web.pid
     [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid
     [ -f .garage.pid ] && kill $(cat .garage.pid) 2>/dev/null && rm .garage.pid
     
@@ -121,21 +131,26 @@ function stop() {
     pkill -9 garage 2>/dev/null || true
     pkill -f "node scripts/proxy.js" 2>/dev/null || true
     pkill -f "python3 -m http.server 127.0.0.1 8888" 2>/dev/null || true
+    pkill -f "python3 -m http.server 127.0.0.1 8887" 2>/dev/null || true
 
     echo "Removing temporary data..."
-    rm -rf "$DATA_DIR" "$GARAGE_LOCAL_TOML" "$LOG_FILE" "web_server.log" "proxy.log"
+    rm -rf "$DATA_DIR" "$GARAGE_LOCAL_TOML" "$LOG_FILE" "*_web.log" "proxy.log"
 
-    if [ -f "$CONFIG_FILE" ]; then
-        echo "Resetting $CONFIG_FILE..."
-        cat <<EOF > "$CONFIG_FILE"
-{
-    "endpoint": "http://127.0.0.1:8889",
-    "region": "garage",
-    "accessKeyId": "YOUR_ACCESS_KEY",
-    "secretAccessKey": "YOUR_SECRET_KEY",
-    "bucketName": "your-bucket-name"
-}
-EOF
+    RESET_CONFIG="{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"garage\",
+    \"accessKeyId\": \"YOUR_ACCESS_KEY\",
+    \"secretAccessKey\": \"YOUR_SECRET_KEY\",
+    \"bucketName\": \"your-bucket-name\"
+}"
+
+    if [ -f "$SOCIAL_CONFIG" ]; then
+        echo "Resetting $SOCIAL_CONFIG..."
+        echo "$RESET_CONFIG" > "$SOCIAL_CONFIG"
+    fi
+    if [ -f "$BANKY_CONFIG" ]; then
+        echo "Resetting $BANKY_CONFIG..."
+        echo "$RESET_CONFIG" > "$BANKY_CONFIG"
     fi
     echo "Cleanup complete."
 }

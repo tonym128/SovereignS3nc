@@ -552,7 +552,7 @@ export class SocialManager {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
 
             for (const date of dates) {
-                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${date}.db`, 'followed');
+                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed');
                 const data = await this.db.getStorage().getFile(localPath);
                 if (data) {
                     const db = new this.sqliteInstance.Database(data);

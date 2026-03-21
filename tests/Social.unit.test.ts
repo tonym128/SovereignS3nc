@@ -120,7 +120,8 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             const dbData = db.export();
             db.close();
 
-            const localPath = sov.getModulePath('social', `${bobId}/dms/${today}.db`, 'followed');
+            const myId = sov.getConfig().paths.userId;
+            const localPath = sov.getModulePath('social', `${bobId}/dms/${myId}/${today}.db`, 'followed');
             await sov.getStorage().saveFile(localPath, dbData);
             await sov.getStorage().followUser(bobId, today, bobPublicKey);
 

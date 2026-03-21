@@ -83,6 +83,13 @@ export class NodeStorage implements IStorage {
         await fs.writeFile(fullPath, data);
     }
 
+    async deleteFile(filePath: string): Promise<void> {
+        const fullPath = this.getFilePath(filePath);
+        if (await fs.pathExists(fullPath)) {
+            await fs.unlink(fullPath);
+        }
+    }
+
     async listFiles(prefix: string): Promise<string[]> {
         const fullPrefix = this.getFilePath(prefix);
         if (!(await fs.pathExists(fullPrefix))) return [];

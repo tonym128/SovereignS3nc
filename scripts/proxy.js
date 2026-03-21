@@ -2,7 +2,7 @@ const http = require('http');
 
 const TARGET_HOST = '127.0.0.1';
 const TARGET_PORT = 3900;
-const PROXY_PORT = 8889;
+const PROXY_PORT = process.env.PROXY_PORT || 8889;
 
 const server = http.createServer((req, res) => {
   const timestamp = new Date().toISOString();

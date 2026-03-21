@@ -20,6 +20,9 @@
     "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:social": "node demo/social/build.js",
+    "build:banky": "node demo/banky/build.js",
+    "demo:social": "node scripts/proxy.js demo/social",
+    "demo:banky": "node scripts/proxy.js demo/banky",
     "build": "tsc && npm run build:esm && npm run build:global",
     "prepublishOnly": "npm run build"
   },
