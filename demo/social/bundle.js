@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,7 +229,7 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1997,7 +1997,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -2970,7 +2970,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2983,7 +2983,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3243,7 +3243,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3256,7 +3256,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3501,7 +3501,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3515,7 +3515,7 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -23415,7 +23415,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23428,7 +23428,7 @@
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -23488,7 +23488,7 @@
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -23526,7 +23526,7 @@
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -23560,7 +23560,7 @@
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -23929,7 +23929,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -23938,7 +23938,7 @@
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -23994,7 +23994,7 @@
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -24006,7 +24006,7 @@
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -24015,7 +24015,7 @@
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -24024,7 +24024,7 @@
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -24033,7 +24033,7 @@
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -24042,7 +24042,7 @@
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -24051,7 +24051,7 @@
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -24060,7 +24060,7 @@
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -24069,7 +24069,7 @@
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -24078,7 +24078,7 @@
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -24087,7 +24087,7 @@
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -24096,7 +24096,7 @@
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -24105,7 +24105,7 @@
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -24114,7 +24114,7 @@
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -24123,7 +24123,7 @@
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -24132,7 +24132,7 @@
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -24143,7 +24143,7 @@
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -24158,7 +24158,7 @@
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -24167,7 +24167,7 @@
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -24184,7 +24184,7 @@
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -24201,7 +24201,7 @@
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -24226,7 +24226,7 @@
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -24235,7 +24235,7 @@
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -24245,7 +24245,7 @@
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -24322,7 +24322,7 @@
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -24332,7 +24332,7 @@
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -24341,7 +24341,7 @@
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -24350,7 +24350,7 @@
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -24359,7 +24359,7 @@
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -24372,7 +24372,7 @@
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -24390,7 +24390,7 @@
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -24422,7 +24422,7 @@
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -24443,7 +24443,7 @@
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -24455,7 +24455,7 @@
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -24787,7 +24787,7 @@
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -24811,7 +24811,7 @@
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -24839,7 +24839,7 @@
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -24909,7 +24909,7 @@
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -24929,7 +24929,7 @@
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -24943,7 +24943,7 @@
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -24976,7 +24976,7 @@
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -25095,7 +25095,7 @@
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25156,7 +25156,7 @@
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -25178,7 +25178,7 @@
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -25197,7 +25197,7 @@
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -25246,7 +25246,7 @@
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -25269,7 +25269,7 @@
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -25323,7 +25323,7 @@
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -25337,7 +25337,7 @@
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -25363,7 +25363,7 @@
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -25485,7 +25485,7 @@
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -25497,7 +25497,7 @@
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -25727,7 +25727,7 @@
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -25737,7 +25737,7 @@
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -26298,7 +26298,7 @@
   var require_buffer_list = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -26541,7 +26541,7 @@
   var require_destroy = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -26631,7 +26631,7 @@
   var require_errors_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -26741,7 +26741,7 @@
   var require_state = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -26766,7 +26766,7 @@
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -26805,7 +26805,7 @@
   var require_stream_writable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -27277,7 +27277,7 @@
   var require_stream_duplex = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -27370,7 +27370,7 @@
   // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -27429,7 +27429,7 @@
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer3.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -27668,7 +27668,7 @@
   var require_end_of_stream = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once2(callback) {
         var called = false;
@@ -27758,7 +27758,7 @@
   var require_async_iterator = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -27941,7 +27941,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -27952,7 +27952,7 @@
   var require_stream_readable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -28686,7 +28686,7 @@
   var require_stream_transform = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -28788,7 +28788,7 @@
   var require_stream_passthrough = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -28806,7 +28806,7 @@
   var require_pipeline = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var eos;
       function once2(callback) {
         var called = false;
@@ -28891,7 +28891,7 @@
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -28970,7 +28970,7 @@
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -29059,7 +29059,7 @@
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -29188,7 +29188,7 @@
   // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29200,7 +29200,7 @@
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -29218,7 +29218,7 @@
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -29283,7 +29283,7 @@
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -29302,7 +29302,7 @@
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -29347,7 +29347,7 @@
   // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29358,7 +29358,7 @@
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -29366,7 +29366,7 @@
   // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -29424,7 +29424,7 @@
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -29496,7 +29496,7 @@
   var require_BufferList = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -29575,7 +29575,7 @@
   var require_destroy2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -29645,7 +29645,7 @@
   var require_stream_writable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -30086,7 +30086,7 @@
   var require_stream_duplex2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -30164,7 +30164,7 @@
   var require_stream_readable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -30851,7 +30851,7 @@
   var require_stream_transform2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -30952,7 +30952,7 @@
   var require_stream_passthrough2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -30971,7 +30971,7 @@
   // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -30986,7 +30986,7 @@
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -31078,7 +31078,7 @@
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -31520,7 +31520,7 @@
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -31582,7 +31582,7 @@
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -31667,7 +31667,7 @@
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -31755,7 +31755,7 @@
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -31918,7 +31918,7 @@
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -31960,7 +31960,7 @@
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -32304,7 +32304,7 @@
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -32357,7 +32357,7 @@
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -32379,7 +32379,7 @@
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -32475,7 +32475,7 @@
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -32505,7 +32505,7 @@
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -32546,7 +32546,7 @@
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -32558,7 +32558,7 @@
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -32774,7 +32774,7 @@
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -32783,7 +32783,7 @@
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -32807,7 +32807,7 @@
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -32826,7 +32826,7 @@
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -32845,7 +32845,7 @@
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -32960,7 +32960,7 @@
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -33083,7 +33083,7 @@
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -33093,7 +33093,7 @@
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -33859,7 +33859,7 @@
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -33876,7 +33876,7 @@
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -33985,7 +33985,7 @@
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -34113,7 +34113,7 @@
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -34169,7 +34169,7 @@
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -34218,7 +34218,7 @@
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -34230,7 +34230,7 @@
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -34286,7 +34286,7 @@
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -34299,7 +34299,7 @@
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -34314,7 +34314,7 @@
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -34333,7 +34333,7 @@
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -34368,7 +34368,7 @@
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -34394,7 +34394,7 @@
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -34436,7 +34436,7 @@
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -34456,7 +34456,7 @@
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -34478,7 +34478,7 @@
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer3 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -34710,7 +34710,7 @@
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -34733,7 +34733,7 @@
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
@@ -34908,7 +34908,7 @@
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var ZEROES = Buffer3.alloc(16, 0);
       function toArray(buf) {
@@ -34986,7 +34986,7 @@
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35089,7 +35089,7 @@
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35117,7 +35117,7 @@
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -35160,7 +35160,7 @@
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -35257,7 +35257,7 @@
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -35367,7 +35367,7 @@
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -35385,7 +35385,7 @@
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -35416,7 +35416,7 @@
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -35478,7 +35478,7 @@
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -38290,7 +38290,7 @@
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -41102,7 +41102,7 @@
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -41160,7 +41160,7 @@
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -41252,7 +41252,7 @@
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var randomBytes2 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -41389,7 +41389,7 @@
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -41536,7 +41536,7 @@
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -41576,7 +41576,7 @@
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -44469,7 +44469,7 @@
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser2();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -44570,7 +44570,7 @@
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -47383,7 +47383,7 @@
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -47443,7 +47443,7 @@
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -47550,7 +47550,7 @@
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -47873,7 +47873,7 @@
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -48572,7 +48572,7 @@
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -48701,7 +48701,7 @@
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -49003,7 +49003,7 @@
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -49016,7 +49016,7 @@
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -49262,7 +49262,7 @@
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -49342,7 +49342,7 @@
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -49389,7 +49389,7 @@
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49462,7 +49462,7 @@
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49615,7 +49615,7 @@
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -49652,7 +49652,7 @@
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -50092,7 +50092,7 @@
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -50137,7 +50137,7 @@
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -50150,7 +50150,7 @@
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -50592,7 +50592,7 @@
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -50633,7 +50633,7 @@
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -50652,7 +50652,7 @@
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -51440,7 +51440,7 @@
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -51617,7 +51617,7 @@
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -51712,7 +51712,7 @@
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51807,7 +51807,7 @@
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51963,7 +51963,7 @@
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -52171,7 +52171,7 @@
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -52246,7 +52246,7 @@
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -52297,7 +52297,7 @@
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -52386,7 +52386,7 @@
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -52401,7 +52401,7 @@
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -55213,7 +55213,7 @@
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -55267,7 +55267,7 @@
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -55368,7 +55368,7 @@
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer3 = require_buffer().Buffer;
@@ -55471,7 +55471,7 @@
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -56005,7 +56005,7 @@
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -56017,7 +56017,7 @@
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -56064,7 +56064,7 @@
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -56083,7 +56083,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -56347,7 +56347,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -56393,7 +56393,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -56403,7 +56403,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -56635,7 +56635,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -56659,7 +56659,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -56669,7 +56669,7 @@
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -56684,7 +56684,7 @@
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -56764,7 +56764,7 @@
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -56898,7 +56898,7 @@
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -56936,7 +56936,7 @@
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -57065,7 +57065,7 @@
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
@@ -57220,7 +57220,7 @@
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -57311,7 +57311,7 @@
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
@@ -57392,7 +57392,7 @@
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -60204,7 +60204,7 @@
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -60323,7 +60323,7 @@
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
@@ -60347,7 +60347,7 @@
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -60362,7 +60362,7 @@
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -63174,7 +63174,7 @@
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer3 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -63187,7 +63187,7 @@
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser2();
       var createHash4 = require_browser4();
@@ -63280,7 +63280,7 @@
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -63387,7 +63387,7 @@
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -63403,7 +63403,7 @@
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -63506,7 +63506,7 @@
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -63584,7 +63584,7 @@
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -90947,7 +90947,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -91777,6 +91777,25 @@ ${toHex(hashedRequest)}`;
               await this.syncDay(dateStr, "private", void 0, this.remote);
               await this.syncDay(dateStr, "public", void 0, this.publicRemote);
             }
+            const publicModuleFiles = await this.storage.listFiles("public/modules/");
+            for (const file of publicModuleFiles) {
+              if (file.endsWith(".db")) {
+                const relativePath = file.replace("public/", "");
+                await this.syncGenericFile(relativePath, "public");
+              }
+            }
+            const privateModuleFiles = await this.storage.listFiles("private/modules/");
+            for (const file of privateModuleFiles) {
+              if (file.endsWith(".db")) {
+                const relativePath = file.replace("private/", "");
+                await this.syncGenericFile(relativePath, "private");
+              }
+            }
+            const groupFiles = await this.storage.listFiles("public/groups/");
+            for (const file of groupFiles) {
+              const relativePath = file.replace("public/", "");
+              await this.syncGenericFile(relativePath, "public");
+            }
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -91842,6 +91861,7 @@ ${toHex(hashedRequest)}`;
                   manifest.modules[moduleName].push(dateStr);
                 }
               } else if (parts.length === 6 && parts[3] === "dms") {
+                const moduleName = parts[2];
                 const recipientId = parts[4];
                 const fileName = parts[5];
                 if (fileName.endsWith(".db")) {
@@ -92008,7 +92028,8 @@ ${toHex(hashedRequest)}`;
                   for (const dateStr of manifest.groups[group4.id]) {
                     const remotePath = `public/groups/${group4.id}/${dateStr}.db`;
                     const localPath = `followed/${member2.userId}/groups/${group4.id}/${dateStr}.db`;
-                    const changed = await this.pullUserFile(member2.userId, remotePath, group4.sharedKey, localPath, true);
+                    Logger.debug(`[Sync] Group Pull: member=${member2.userId}, remotePath=${remotePath}, localPath=${localPath}`);
+                    const changed = await this.pullUserFile(member2.userId, remotePath, group4.sharedKey, localPath, false);
                     if (changed) {
                       this.emit(`group:${group4.id}:update`, { userId: member2.userId, dateStr });
                     }
@@ -92071,6 +92092,30 @@ ${toHex(hashedRequest)}`;
             return data;
           }
           return null;
+        }
+        async syncGenericFile(relativePath, type) {
+          try {
+            const activeRemote = type === "public" ? this.publicRemote : this.remote;
+            const key = type === "private" ? this.config.encryptionKey : void 0;
+            const fullPath = `${type}/${relativePath}`;
+            const localData = await this.storage.getFile(fullPath);
+            if (!localData) return;
+            const localHash = this.calculateHashedContent(localData, key);
+            const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
+            const remoteHash = await activeRemote.getFileHash(relativePath);
+            if (localHash !== remoteHash || remoteHash === null) {
+              Logger.info(`[Sync] Uploading generic file: ${fullPath}`);
+              let uploadData = localData;
+              if (key) uploadData = await this.encrypt(localData, key);
+              const etag = await activeRemote.uploadFile(relativePath, uploadData, localHash);
+              if (etag) await this.storage.setGenericRemoteHashCache(fullPath, etag);
+            } else if (!cachedEtag && remoteHash) {
+              const remoteEtag = await activeRemote.getFileEtag(relativePath);
+              if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
+            }
+          } catch (e2) {
+            Logger.warn(`[Sync] syncGenericFile failed for ${relativePath}: ${e2.message}`);
+          }
         }
         async syncGenericFiles(prefix) {
           try {
@@ -92254,10 +92299,13 @@ ${toHex(hashedRequest)}`;
               if (manifest.dms[myId]) {
                 Logger.debug(`[Sync] Found ${manifest.dms[myId].length} DMs for ${myId} from ${user.userId}`);
                 for (const dateStr of manifest.dms[myId]) {
-                  const dmPath = this.getModulePath("social", `dms/${myId}/${dateStr}.db`, "public");
-                  const localPath = this.getModulePath("social", `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
-                  const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                  if (changed) this.onModuleUpdate("social", localPath);
+                  for (const moduleDef of this.registeredModules) {
+                    const moduleName = moduleDef.name;
+                    const dmPath = this.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
+                    const localPath = this.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
+                    const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                    if (changed) this.onModuleUpdate(moduleName, localPath);
+                  }
                 }
               }
             } else {
@@ -92269,15 +92317,15 @@ ${toHex(hashedRequest)}`;
               while (iter <= endDate) {
                 const dateStr = _SovereignS3nc.getDateStr(iter);
                 await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                const myId = this.config.paths.userId;
-                const dmPath = this.getModulePath("social", `dms/${myId}/${dateStr}.db`, "public");
-                const localPath = this.getModulePath("social", `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
-                await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
                 for (const moduleDef of this.registeredModules) {
                   const moduleName = moduleDef.name;
                   const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, "public");
-                  const localPath2 = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
-                  await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath2, false);
+                  const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
+                  await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                  const myId = this.config.paths.userId;
+                  const dmPath = this.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
+                  const dmLocalPath = this.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
+                  await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
                 }
                 iter.setUTCDate(iter.getUTCDate() + 1);
               }
@@ -92486,16 +92534,15 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // src/modules/Social.ts
-  var import_polyfills673, SOCIAL_MODULE_DEFINITION, SocialManager;
-  var init_Social = __esm({
-    "src/modules/Social.ts"() {
+  // src/modules/Feed.ts
+  var import_polyfills673, FEED_MODULE_DEFINITION, FeedModule;
+  var init_Feed = __esm({
+    "src/modules/Feed.ts"() {
       "use strict";
       import_polyfills673 = __toESM(require_polyfills());
-      init_SovereignS3nc();
       init_Logger();
-      SOCIAL_MODULE_DEFINITION = {
-        name: "social",
+      FEED_MODULE_DEFINITION = {
+        name: "feed",
         tables: [
           {
             name: "posts",
@@ -92503,7 +92550,13 @@ ${toHex(hashedRequest)}`;
                 id TEXT PRIMARY KEY,
                 content TEXT,
                 timestamp INTEGER,
-                userId TEXT
+                userId TEXT,
+                image TEXT,
+                parentId TEXT,
+                parentUserId TEXT,
+                isEdited INTEGER DEFAULT 0,
+                isDeleted INTEGER DEFAULT 0,
+                type TEXT DEFAULT 'text'
             `
           },
           {
@@ -92516,17 +92569,6 @@ ${toHex(hashedRequest)}`;
             `
           },
           {
-            name: "messages",
-            schema: `
-                id TEXT PRIMARY KEY,
-                content TEXT,
-                timestamp INTEGER,
-                senderId TEXT,
-                recipientId TEXT,
-                image TEXT
-            `
-          },
-          {
             name: "moderation",
             schema: `
                 targetId TEXT PRIMARY KEY,
@@ -92535,44 +92577,14 @@ ${toHex(hashedRequest)}`;
             `
           }
         ],
-        migrations: [
-          {
-            version: 1,
-            sql: [
-              "ALTER TABLE posts ADD COLUMN image TEXT;",
-              "ALTER TABLE posts ADD COLUMN parentId TEXT;",
-              "ALTER TABLE posts ADD COLUMN parentUserId TEXT;",
-              "ALTER TABLE posts ADD COLUMN isEdited INTEGER DEFAULT 0;",
-              "ALTER TABLE posts ADD COLUMN isDeleted INTEGER DEFAULT 0;"
-            ]
-          },
-          {
-            version: 2,
-            sql: [
-              "ALTER TABLE messages ADD COLUMN isEdited INTEGER DEFAULT 0;",
-              "ALTER TABLE messages ADD COLUMN isDeleted INTEGER DEFAULT 0;"
-            ]
-          },
-          {
-            version: 3,
-            sql: [
-              "ALTER TABLE posts ADD COLUMN type TEXT DEFAULT 'text';"
-            ]
-          },
-          {
-            version: 4,
-            sql: [
-              "CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER);"
-            ]
-          }
-        ]
+        migrations: []
+        // New module, so we start with the full schema
       };
-      SocialManager = class _SocialManager {
+      FeedModule = class {
         constructor(db) {
           this.db = db;
-          this.sqliteInstance = null;
-          this.MODULE_NAME = "social";
-          this.db.registerModule(SOCIAL_MODULE_DEFINITION);
+          this.MODULE_NAME = "feed";
+          this.db.registerModule(FEED_MODULE_DEFINITION);
         }
         async getDb(date2, type, groupId, sharedKey) {
           let dbPath;
@@ -92588,21 +92600,154 @@ ${toHex(hashedRequest)}`;
             try {
               data = await this.db.decrypt(data, sharedKey);
             } catch (e2) {
-              Logger.warn(`[Social] Failed to decrypt group DB: ${e2.message}`);
+              Logger.warn(`[Feed] Failed to decrypt group DB: ${e2.message}`);
               data = null;
             }
           }
           const initSqlJs = globalThis.initSqlJs;
-          if (!initSqlJs) {
-            throw new Error("sql.js not found. Ensure it is loaded in the environment.");
-          }
-          if (!this.sqliteInstance) {
-            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          }
-          const db = new this.sqliteInstance.Database(data || void 0);
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const db = new sqliteInstance.Database(data || void 0);
           this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
         }
+        async post(content, isPublic = true, image, parentId, parentUserId) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
+          const id = Math.random().toString(36).substring(7);
+          const timestamp = Date.now();
+          const userId = this.db.getConfig().paths.userId;
+          let imagePath = null;
+          if (image) {
+            imagePath = await this.db.saveBlob(image, isPublic);
+          }
+          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)";
+          db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null]);
+          const binary = db.export();
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          await this.db.getStorage().saveFile(dbPath, binary);
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        }
+        async editPost(postId, date2, newContent, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
+          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          const binary = db.export();
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          await this.db.getStorage().saveFile(dbPath, binary);
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        }
+        async deletePost(postId, date2, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
+          db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+          const binary = db.export();
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          await this.db.getStorage().saveFile(dbPath, binary);
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        }
+        async like(postId, isPublic = true) {
+          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const type = isPublic ? "public" : "private";
+          const db = await this.getDb(date2, type);
+          const userId = this.db.getConfig().paths.userId;
+          const timestamp = Date.now();
+          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
+          const binary = db.export();
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          await this.db.getStorage().saveFile(dbPath, binary);
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        }
+        async comment(parentId, parentUserId, content, image) {
+          await this.post(content, true, image, parentId, parentUserId);
+        }
+        async getPosts(date2, type) {
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          let allPosts = [];
+          const initSqlJs = globalThis.initSqlJs;
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const data = await this.db.getStorage().getFile(dbPath);
+          if (data) {
+            const db = new sqliteInstance.Database(data);
+            try {
+              const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
+              if (res && res.length > 0) {
+                const columns = res[0].columns;
+                const posts = res[0].values.map((row) => {
+                  const post = {};
+                  columns.forEach((col, i2) => {
+                    let val = row[i2];
+                    if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
+                      val = !!val;
+                    }
+                    post[col] = val;
+                  });
+                  if (!post.userId && type === "followed") {
+                    post.userId = date2.split("/")[0];
+                  }
+                  return post;
+                });
+                allPosts.push(...posts);
+              }
+            } catch (e2) {
+            }
+            db.close();
+          }
+          return allPosts;
+        }
+        async enrichLikes(posts, days = 5) {
+          if (posts.length === 0) return;
+          const postMap = /* @__PURE__ */ new Map();
+          posts.forEach((p2) => {
+            p2.likesCount = 0;
+            p2.likedByMe = false;
+            postMap.set(p2.id, p2);
+          });
+          const myId = this.db.getConfig().paths.userId;
+          const following = await this.db.getFollowing();
+          const dates = [];
+          for (let i2 = 0; i2 < days; i2++) {
+            const d2 = /* @__PURE__ */ new Date();
+            d2.setUTCDate(d2.getUTCDate() - i2);
+            dates.push(d2.toISOString().split("T")[0]);
+          }
+          const initSqlJs = globalThis.initSqlJs;
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const processDb = async (date2, type) => {
+            const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+            const data = await this.db.getStorage().getFile(dbPath);
+            if (!data) return;
+            const db = new sqliteInstance.Database(data);
+            try {
+              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
+              if (tableCheck.length > 0) {
+                const res = db.exec("SELECT postId, userId FROM likes");
+                if (res && res.length > 0) {
+                  for (const row of res[0].values) {
+                    const postId = row[0];
+                    const likerId = row[1];
+                    const post = postMap.get(postId);
+                    if (post) {
+                      post.likesCount = (post.likesCount || 0) + 1;
+                      if (likerId === myId) post.likedByMe = true;
+                    }
+                  }
+                }
+              }
+            } catch (e2) {
+            }
+            db.close();
+          };
+          for (const date2 of dates) await processDb(date2, "public");
+          for (const user of following) {
+            for (const date2 of dates) await processDb(`${user.userId}/${date2}`, "followed");
+          }
+        }
+        // --- Group logic ---
         async postToGroup(groupId, sharedKey, content, image, type = "text") {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const db = await this.getDb(date2, "group", groupId, sharedKey);
@@ -92634,32 +92779,25 @@ ${toHex(hashedRequest)}`;
         }
         async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
           const myId = this.db.getConfig().paths.userId;
+          const db = await this.getDb(date2, "group", groupId, sharedKey);
           if (authorId === myId) {
-            const db = await this.getDb(date2, "group", groupId, sharedKey);
             db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-            const binary = db.export();
-            const dbPath = `public/groups/${groupId}/${date2}.db`;
-            const encrypted = await this.db.encrypt(binary, sharedKey);
-            await this.db.getStorage().saveFile(dbPath, encrypted);
-            db.close();
-            this.db.emit(`group:${groupId}:update`, { path: dbPath });
           } else {
-            const db = await this.getDb(date2, "group", groupId, sharedKey);
             db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
             db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
-            const binary = db.export();
-            const dbPath = `public/groups/${groupId}/${date2}.db`;
-            const encrypted = await this.db.encrypt(binary, sharedKey);
-            await this.db.getStorage().saveFile(dbPath, encrypted);
-            db.close();
-            this.db.emit(`group:${groupId}:update`, { path: dbPath });
           }
+          const binary = db.export();
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          const encrypted = await this.db.encrypt(binary, sharedKey);
+          await this.db.getStorage().saveFile(dbPath, encrypted);
+          db.close();
+          this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async getGroupPosts(groupId, date2) {
           const posts = [];
           const deletedPostIds = /* @__PURE__ */ new Set();
           const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           const groups = await this.db.getGroups();
           const group4 = groups.find((g2) => g2.id === groupId);
           if (!group4) return posts;
@@ -92669,7 +92807,31 @@ ${toHex(hashedRequest)}`;
               if (memberRole !== "owner" && memberRole !== "admin") return;
               const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
               if (res && res.length > 0) {
-                res[0].values.forEach((row) => deletedPostIds.add(row[0]));
+                res[0].values.forEach((row) => {
+                  deletedPostIds.add(row[0]);
+                });
+              }
+            } catch (e2) {
+            }
+          };
+          const processPosts = async (db) => {
+            try {
+              const res = db.exec("SELECT * FROM posts");
+              if (res && res.length > 0) {
+                const columns = res[0].columns;
+                const batch = res[0].values.map((row) => {
+                  const post = {};
+                  columns.forEach((col, i2) => {
+                    let val = row[i2];
+                    if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
+                    post[col] = val;
+                  });
+                  return post;
+                });
+                const filtered = batch.filter((p2) => {
+                  return !p2.isDeleted && !deletedPostIds.has(p2.id);
+                });
+                posts.push(...filtered);
               }
             } catch (e2) {
             }
@@ -92679,8 +92841,9 @@ ${toHex(hashedRequest)}`;
           if (myData) {
             try {
               const decrypted = await this.db.decrypt(myData, group4.sharedKey);
-              const db = new this.sqliteInstance.Database(decrypted);
+              const db = new sqliteInstance.Database(decrypted);
               processModeration(db, this.db.getConfig().paths.userId);
+              await processPosts(db);
               db.close();
             } catch (e2) {
             }
@@ -92690,113 +92853,58 @@ ${toHex(hashedRequest)}`;
             const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
             const memberData = await this.db.getStorage().getFile(memberPath);
             if (memberData) {
-              const db = new this.sqliteInstance.Database(memberData);
-              processModeration(db, member2.userId);
-              db.close();
-            }
-          }
-          if (myData) {
-            try {
-              const decrypted = await this.db.decrypt(myData, group4.sharedKey);
-              const db = new this.sqliteInstance.Database(decrypted);
-              posts.push(...await this._queryPosts(db, deletedPostIds));
-              db.close();
-            } catch (e2) {
-            }
-          }
-          for (const member2 of group4.members) {
-            if (member2.userId === this.db.getConfig().paths.userId) continue;
-            const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-            const memberData = await this.db.getStorage().getFile(memberPath);
-            if (memberData) {
-              const db = new this.sqliteInstance.Database(memberData);
-              posts.push(...await this._queryPosts(db, deletedPostIds));
-              db.close();
+              try {
+                const decrypted = await this.db.decrypt(memberData, group4.sharedKey);
+                const db = new sqliteInstance.Database(decrypted);
+                processModeration(db, member2.userId);
+                await processPosts(db);
+                db.close();
+              } catch (e2) {
+              }
             }
           }
           posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
           return posts;
         }
-        async _queryPosts(db, deletedIds = /* @__PURE__ */ new Set()) {
-          try {
-            const res = db.exec("SELECT * FROM posts");
-            if (res && res.length > 0) {
-              const columns = res[0].columns;
-              return res[0].values.map((row) => {
-                const post = {};
-                columns.forEach((col, i2) => {
-                  let val = row[i2];
-                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") val = !!val;
-                  post[col] = val;
-                });
-                return post;
-              }).filter((p2) => !deletedIds.has(p2.id) && !p2.isDeleted);
-            }
-          } catch (e2) {
-          }
-          return [];
-        }
-        async like(postId, isPublic = true) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          const userId = this.db.getConfig().paths.userId;
-          const timestamp = Date.now();
-          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async post(content, isPublic = true, image, parentId, parentUserId) {
-          const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          const id = Math.random().toString(36).substring(7);
-          const timestamp = Date.now();
-          const userId = this.db.getConfig().paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, isPublic);
-          }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)";
-          const params = [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null];
-          db.run(sql, params);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async editPost(postId, date2, newContent, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
-        }
-        async deletePost(postId, date2, isPublic = true) {
-          const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, dbPath);
+      };
+    }
+  });
+
+  // src/modules/Messaging.ts
+  var import_polyfills674, MessagingModule;
+  var init_Messaging = __esm({
+    "src/modules/Messaging.ts"() {
+      "use strict";
+      import_polyfills674 = __toESM(require_polyfills());
+      MessagingModule = class {
+        constructor(db) {
+          this.db = db;
+          this.MODULE_NAME = "messaging";
+          this.db.registerModule({
+            name: this.MODULE_NAME,
+            tables: [
+              {
+                name: "messages",
+                schema: `
+                        id TEXT PRIMARY KEY,
+                        content TEXT,
+                        timestamp INTEGER,
+                        senderId TEXT,
+                        recipientId TEXT,
+                        image TEXT,
+                        isEdited INTEGER DEFAULT 0,
+                        isDeleted INTEGER DEFAULT 0
+                    `
+              }
+            ]
+          });
         }
         async getMessageDb(date2, type) {
           const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
           const data = await this.db.getStorage().getFile(path2);
           const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) {
-            this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          }
-          const db = new this.sqliteInstance.Database(data || void 0);
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const db = new sqliteInstance.Database(data || void 0);
           this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
         }
@@ -92824,8 +92932,8 @@ ${toHex(hashedRequest)}`;
           const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date2}.db`, "public");
           const publicDmData = await this.db.getStorage().getFile(publicDmPath);
           const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const publicDb = new this.sqliteInstance.Database(publicDmData || void 0);
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const publicDb = new sqliteInstance.Database(publicDmData || void 0);
           publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
           const registry = await this.db.getPublicRegistry();
           let recipient = registry.find((u2) => u2.userId === recipientId);
@@ -92836,13 +92944,13 @@ ${toHex(hashedRequest)}`;
               recipient = { userId: f2.userId, publicKey: f2.publicKey };
             }
           }
-          if (!recipient || !recipient.publicKey) throw new Error("Recipient public key not found (Try syncing or re-adding friend)");
+          if (!recipient || !recipient.publicKey) throw new Error("Recipient public key not found");
           const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
           const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
           publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)", [message.id, encrypted]);
           await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
           publicDb.close();
-          this.db.onModuleUpdate(this.MODULE_NAME, outboxPath);
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
         }
         async editMessage(recipientId, messageId, date2, newContent) {
           const timestamp = Date.now();
@@ -92881,12 +92989,6 @@ ${toHex(hashedRequest)}`;
           };
           await this._saveAndSendDM(recipientId, message, date2);
         }
-        async sync() {
-          await this.db.sync();
-        }
-        async comment(parentId, parentUserId, content, image) {
-          await this.post(content, true, image, parentId, parentUserId);
-        }
         async getInboxMessages(days = 5) {
           const messages = [];
           const following = await this.db.getFollowing();
@@ -92897,7 +92999,7 @@ ${toHex(hashedRequest)}`;
             dates.push(d2.toISOString().split("T")[0]);
           }
           const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           const myId = this.db.getConfig().paths.userId;
           for (const user of following) {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
@@ -92905,7 +93007,7 @@ ${toHex(hashedRequest)}`;
               const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date2}.db`, "followed");
               const data = await this.db.getStorage().getFile(localPath);
               if (data) {
-                const db = new this.sqliteInstance.Database(data);
+                const db = new sqliteInstance.Database(data);
                 try {
                   const res = db.exec("SELECT encrypted_data FROM messages");
                   if (res && res.length > 0) {
@@ -92932,7 +93034,7 @@ ${toHex(hashedRequest)}`;
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
             const data = await this.db.getStorage().getFile(outboxPath);
             if (data) {
-              const db = new this.sqliteInstance.Database(data);
+              const db = new sqliteInstance.Database(data);
               try {
                 const res = db.exec("SELECT * FROM messages");
                 if (res && res.length > 0) {
@@ -92966,20 +93068,21 @@ ${toHex(hashedRequest)}`;
           finalMsgs.sort((a2, b2) => b2.timestamp - a2.timestamp);
           return finalMsgs;
         }
-        async updateProfile(name, bio, avatar) {
-          let finalAvatar = avatar;
-          if (avatar && avatar.startsWith("data:image")) {
-            try {
-              finalAvatar = await _SocialManager.compressImage(avatar, 100 * 1024);
-            } catch (e2) {
-              Logger.warn(`[Social] Failed to compress avatar: ${e2.message}`);
-            }
-          }
-          const profile = { name, bio, avatar: finalAvatar, updatedAt: Date.now(), userId: this.db.getConfig().paths.userId };
-          const data = new TextEncoder().encode(JSON.stringify(profile));
-          await this.db.getStorage().savePublicUserFile(data);
-          this.db.onModuleUpdate(this.MODULE_NAME, "public/user.json");
-        }
+      };
+    }
+  });
+
+  // src/utils/MediaUtils.ts
+  var import_polyfills675, MediaUtils;
+  var init_MediaUtils = __esm({
+    "src/utils/MediaUtils.ts"() {
+      "use strict";
+      import_polyfills675 = __toESM(require_polyfills());
+      MediaUtils = class {
+        /**
+         * Compresses an image data URL to stay under a target size in bytes.
+         * Only works in browser environments where 'document' and 'Image' are available.
+         */
         static async compressImage(dataUrl, targetSizeBytes) {
           if (typeof document === "undefined") return dataUrl;
           return new Promise((resolve, reject) => {
@@ -93021,25 +93124,71 @@ ${toHex(hashedRequest)}`;
             img.onerror = (e2) => reject(e2);
           });
         }
+      };
+    }
+  });
+
+  // src/modules/Profile.ts
+  var import_polyfills676, ProfileModule;
+  var init_Profile = __esm({
+    "src/modules/Profile.ts"() {
+      "use strict";
+      import_polyfills676 = __toESM(require_polyfills());
+      init_Logger();
+      init_MediaUtils();
+      ProfileModule = class {
+        constructor(db) {
+          this.db = db;
+          this.MODULE_NAME = "profile";
+        }
+        /**
+         * Updates the current user's profile.
+         */
+        async updateProfile(name, bio, avatar) {
+          let finalAvatar = avatar;
+          if (avatar && avatar.startsWith("data:image")) {
+            try {
+              finalAvatar = await MediaUtils.compressImage(avatar, 100 * 1024);
+            } catch (e2) {
+              Logger.warn(`[Profile] Failed to compress avatar: ${e2.message}`);
+            }
+          }
+          const profile = {
+            name,
+            bio,
+            avatar: finalAvatar,
+            updatedAt: Date.now(),
+            userId: this.db.getConfig().paths.userId
+          };
+          const data = new TextEncoder().encode(JSON.stringify(profile));
+          await this.db.getStorage().savePublicUserFile(data);
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: "public/user.json" });
+        }
+        /**
+         * Retrieves a profile for a given user.
+         */
         async getProfile(userId) {
           const myId = this.db.getConfig().paths.userId;
           const targetId = userId || myId;
           if (targetId === myId) {
-            const data = await this.db.getStorage().getPublicUserFile();
-            return data ? JSON.parse(new TextDecoder().decode(data)) : null;
+            const data2 = await this.db.getStorage().getPublicUserFile();
+            return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
           }
-          const actualPath = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
-          const finalData = await this.db.getStorage().getFile(actualPath);
-          if (finalData) {
-            return JSON.parse(new TextDecoder().decode(finalData));
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
+          const data = await this.db.getStorage().getFile(path2);
+          if (data) {
+            return JSON.parse(new TextDecoder().decode(data));
           }
           return null;
         }
+        /**
+         * Syncs profiles of followed users from their remotes.
+         */
         async syncOtherProfiles() {
           const following = await this.db.getFollowing();
           for (const user of following) {
-            const userRemote = this.db.createRemote(user.userId);
             try {
+              const userRemote = this.db.createRemote(user.userId);
               const cachedEtag = await this.db.getStorage().getGenericRemoteHashCache(`${user.userId}:public/user.json`);
               const result = await userRemote.downloadFile("public/user.json", cachedEtag || void 0);
               if (result && !result.notModified && result.data) {
@@ -93059,100 +93208,42 @@ ${toHex(hashedRequest)}`;
                 if (result.etag) {
                   await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:public/user.json`, result.etag);
                 }
-                this.db.onModuleUpdate(this.MODULE_NAME, localPath);
+                this.db.emit(`${this.MODULE_NAME}:update`, { path: localPath, userId: user.userId });
               }
             } catch (e2) {
+              Logger.debug(`[Profile] Failed to sync profile for ${user.userId}: ${e2.message}`);
             }
           }
         }
-        async getPosts(date2, type) {
-          const db = await this.getDb(date2, type);
-          let posts = [];
-          try {
-            const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
-            if (res && res.length > 0) {
-              const columns = res[0].columns;
-              posts = res[0].values.map((row) => {
-                const post = {};
-                columns.forEach((col, i2) => {
-                  let val = row[i2];
-                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
-                    val = !!val;
-                  }
-                  post[col] = val;
-                });
-                if (!post.userId && type === "followed") {
-                  post.userId = date2.split("/")[0];
-                }
-                return post;
-              });
-            }
-          } catch (e2) {
-            posts = [];
-          }
-          db.close();
-          return posts;
+        /**
+         * Follow a new user.
+         */
+        async follow(userId) {
+          await this.db.follow(userId);
+          await this.syncOtherProfiles();
         }
-        async enrichLikes(posts, days = 5) {
-          if (posts.length === 0) return;
-          const postMap = /* @__PURE__ */ new Map();
-          posts.forEach((p2) => {
-            p2.likesCount = 0;
-            p2.likedByMe = false;
-            postMap.set(p2.id, p2);
-          });
-          const myId = this.db.getConfig().paths.userId;
-          const following = await this.db.getFollowing();
-          const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
-            const d2 = /* @__PURE__ */ new Date();
-            d2.setUTCDate(d2.getUTCDate() - i2);
-            dates.push(SovereignS3nc.getDateStr(d2));
-          }
-          const initSqlJs = globalThis.initSqlJs;
-          if (!this.sqliteInstance) this.sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
-          const processDb = async (date2, type) => {
-            const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-            const data = await this.db.getStorage().getFile(dbPath);
-            if (!data) return;
-            const db = new this.sqliteInstance.Database(data);
-            try {
-              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
-              if (tableCheck.length === 0) {
-                db.close();
-                return;
-              }
-              const res = db.exec("SELECT postId, userId FROM likes");
-              if (res && res.length > 0) {
-                for (const row of res[0].values) {
-                  const postId = row[0];
-                  const likerId = row[1];
-                  const post = postMap.get(postId);
-                  if (post) {
-                    post.likesCount = (post.likesCount || 0) + 1;
-                    if (likerId === myId) post.likedByMe = true;
-                  }
-                }
-              }
-            } catch (e2) {
-            }
-            db.close();
-          };
-          for (const date2 of dates) await processDb(date2, "public");
-          for (const user of following) {
-            for (const date2 of dates) await processDb(`${user.userId}/${date2}`, "followed");
-          }
+        /**
+         * Unfollow a user.
+         */
+        async unfollow(userId) {
+          await this.db.unfollow(userId);
+        }
+        /**
+         * Get list of followed users.
+         */
+        async getFollowing() {
+          return this.db.getFollowing();
         }
       };
     }
   });
 
   // src/adapters/WebRTCRemoteAdapter.ts
-  var import_polyfills674, import_buffer, WebRTCRemoteAdapter;
+  var import_polyfills677, import_buffer, WebRTCRemoteAdapter;
   var init_WebRTCRemoteAdapter = __esm({
     "src/adapters/WebRTCRemoteAdapter.ts"() {
       "use strict";
-      import_polyfills674 = __toESM(require_polyfills());
+      import_polyfills677 = __toESM(require_polyfills());
       init_Logger();
       import_buffer = __toESM(require_buffer());
       WebRTCRemoteAdapter = class {
@@ -93347,10 +93438,10 @@ ${toHex(hashedRequest)}`;
     if (res instanceof Promise) return res.then(() => packer.getBuffer());
     return packer.getBuffer();
   }
-  var import_polyfills675, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
+  var import_polyfills678, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
   var init_binarypack = __esm({
     "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
-      import_polyfills675 = __toESM(require_polyfills(), 1);
+      import_polyfills678 = __toESM(require_polyfills(), 1);
       $e8379818650e2442$export$93654d4f2d6cd524 = class {
         constructor() {
           this.encoder = new TextEncoder();
@@ -93980,11 +94071,11 @@ ${toHex(hashedRequest)}`;
     });
     return filteredResult;
   }
-  var import_polyfills676, logDisabled_, deprecationWarnings_;
+  var import_polyfills679, logDisabled_, deprecationWarnings_;
   var init_utils5 = __esm({
     "node_modules/webrtc-adapter/src/js/utils.js"() {
       "use strict";
-      import_polyfills676 = __toESM(require_polyfills());
+      import_polyfills679 = __toESM(require_polyfills());
       logDisabled_ = true;
       deprecationWarnings_ = true;
     }
@@ -94146,11 +94237,11 @@ ${toHex(hashedRequest)}`;
       };
     }
   }
-  var import_polyfills677, logging;
+  var import_polyfills680, logging;
   var init_getusermedia = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
       "use strict";
-      import_polyfills677 = __toESM(require_polyfills());
+      import_polyfills680 = __toESM(require_polyfills());
       init_utils5();
       logging = log;
     }
@@ -94695,11 +94786,11 @@ ${toHex(hashedRequest)}`;
       return e2;
     });
   }
-  var import_polyfills678;
+  var import_polyfills681;
   var init_chrome_shim = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
       "use strict";
-      import_polyfills678 = __toESM(require_polyfills());
+      import_polyfills681 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia();
     }
@@ -94754,11 +94845,11 @@ ${toHex(hashedRequest)}`;
       }
     }
   }
-  var import_polyfills679;
+  var import_polyfills682;
   var init_getusermedia2 = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
       "use strict";
-      import_polyfills679 = __toESM(require_polyfills());
+      import_polyfills682 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -94786,11 +94877,11 @@ ${toHex(hashedRequest)}`;
       return window2.navigator.mediaDevices.getUserMedia(constraints);
     };
   }
-  var import_polyfills680;
+  var import_polyfills683;
   var init_getdisplaymedia = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
       "use strict";
-      import_polyfills680 = __toESM(require_polyfills());
+      import_polyfills683 = __toESM(require_polyfills());
     }
   });
 
@@ -95037,11 +95128,11 @@ ${toHex(hashedRequest)}`;
       return origCreateAnswer.apply(this, arguments);
     };
   }
-  var import_polyfills681;
+  var import_polyfills684;
   var init_firefox_shim = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
       "use strict";
-      import_polyfills681 = __toESM(require_polyfills());
+      import_polyfills684 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia2();
       init_getdisplaymedia();
@@ -95363,11 +95454,11 @@ ${toHex(hashedRequest)}`;
     }
     window2.AudioContext = window2.webkitAudioContext;
   }
-  var import_polyfills682;
+  var import_polyfills685;
   var init_safari_shim = __esm({
     "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
       "use strict";
-      import_polyfills682 = __toESM(require_polyfills());
+      import_polyfills685 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -95376,7 +95467,7 @@ ${toHex(hashedRequest)}`;
   var require_sdp = __commonJS({
     "node_modules/sdp/sdp.js"(exports, module) {
       "use strict";
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var SDPUtils2 = {};
       SDPUtils2.generateIdentifier = function() {
         return Math.random().toString(36).substring(2, 12);
@@ -96328,11 +96419,11 @@ ${toHex(hashedRequest)}`;
       return func.apply(this).then((d2) => nativeSetLocalDescription.apply(this, [d2]));
     };
   }
-  var import_polyfills683, import_sdp;
+  var import_polyfills686, import_sdp;
   var init_common_shim = __esm({
     "node_modules/webrtc-adapter/src/js/common_shim.js"() {
       "use strict";
-      import_polyfills683 = __toESM(require_polyfills());
+      import_polyfills686 = __toESM(require_polyfills());
       import_sdp = __toESM(require_sdp());
       init_utils5();
     }
@@ -96438,10 +96529,10 @@ ${toHex(hashedRequest)}`;
     }
     return adapter2;
   }
-  var import_polyfills684, sdp;
+  var import_polyfills687, sdp;
   var init_adapter_factory = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
-      import_polyfills684 = __toESM(require_polyfills());
+      import_polyfills687 = __toESM(require_polyfills());
       init_utils5();
       init_chrome_shim();
       init_firefox_shim();
@@ -96452,11 +96543,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/webrtc-adapter/src/js/adapter_core.js
-  var import_polyfills685, adapter, adapter_core_default;
+  var import_polyfills688, adapter, adapter_core_default;
   var init_adapter_core = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
       "use strict";
-      import_polyfills685 = __toESM(require_polyfills());
+      import_polyfills688 = __toESM(require_polyfills());
       init_adapter_factory();
       adapter = adapterFactory({ window: typeof window === "undefined" ? void 0 : window });
       adapter_core_default = adapter;
@@ -96504,10 +96595,10 @@ ${toHex(hashedRequest)}`;
     this._events = new $c4dcfd1d1ea86647$var$Events();
     this._eventsCount = 0;
   }
-  var import_polyfills686, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
+  var import_polyfills689, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
   var init_bundler = __esm({
     "node_modules/peerjs/dist/bundler.mjs"() {
-      import_polyfills686 = __toESM(require_polyfills(), 1);
+      import_polyfills689 = __toESM(require_polyfills(), 1);
       init_binarypack();
       init_adapter_core();
       $fcbcc7538a6776d5$export$f1c5f4c9cb95390b = class {
@@ -98036,13 +98127,16 @@ ${toHex(hashedRequest)}`;
   // demo/social/src/App.tsx
   var require_App = __commonJS({
     "demo/social/src/App.tsx"() {
-      var import_polyfills687 = __toESM(require_polyfills());
+      var import_polyfills690 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
-      init_Social();
+      init_Feed();
+      init_Messaging();
+      init_Profile();
       init_WebRTCRemoteAdapter();
       init_bundler();
+      init_MediaUtils();
       var DEBUG = false;
       var PrefixProxyAdapter = class {
         constructor(baseAdapter, prefix) {
@@ -98090,7 +98184,9 @@ ${toHex(hashedRequest)}`;
         const [highlights, setHighlights] = (0, import_react.useState)({ feed: 0, friends: 0 });
         const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)({});
         const [sov, setSov] = (0, import_react.useState)(null);
-        const [social, setSocial] = (0, import_react.useState)(null);
+        const [feed, setFeed] = (0, import_react.useState)(null);
+        const [messaging, setMessaging] = (0, import_react.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react.useState)(null);
         const [posts, setPosts] = (0, import_react.useState)([]);
         const [following, setFollowing] = (0, import_react.useState)([]);
         const [allUsers, setAllUsers] = (0, import_react.useState)([]);
@@ -98322,8 +98418,12 @@ ${toHex(hashedRequest)}`;
             }, remoteAdapter, factory);
             await instance.init();
             setSov(instance);
-            const sm = new SocialManager(instance);
-            setSocial(sm);
+            const fm = new FeedModule(instance);
+            setFeed(fm);
+            const mm = new MessagingModule(instance);
+            setMessaging(mm);
+            const pm = new ProfileModule(instance);
+            setProfileModule(pm);
             const loadCache = (key, defaultVal) => {
               const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
               return s2 ? JSON.parse(s2) : defaultVal;
@@ -98333,12 +98433,12 @@ ${toHex(hashedRequest)}`;
             setDiscoveryMap(loadCache("discovery_map", {}));
             setHighlights(loadCache("highlights", { feed: 0, friends: 0 }));
             setLastViewed(loadCache("last_viewed_v2", { feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} }));
-            const profileData = await sm.getProfile();
+            const profileData = await pm.getProfile();
             setProfile(profileData);
             setIsLoggedIn(true);
             localStorage.setItem("sov_social_config", JSON.stringify(currentConfig));
             localStorage.setItem("sov_auto_login", autoLogin.toString());
-            await loadData(sm, instance);
+            await loadData(instance, fm, mm, pm);
             const newUser = { userId: currentConfig.userId, name: profileData?.name || currentConfig.userId, avatar: profileData?.avatar, config: currentConfig };
             setRememberedUsers((prev) => {
               const updated = [newUser, ...prev.filter((u2) => u2.userId !== currentConfig.userId)];
@@ -98347,9 +98447,9 @@ ${toHex(hashedRequest)}`;
             });
             setTimeout(() => {
               instance.sync().then(() => {
-                loadData();
+                loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
               }).catch((e2) => {
-                loadData();
+                loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
               });
             }, 100);
           } catch (e2) {
@@ -98361,7 +98461,9 @@ ${toHex(hashedRequest)}`;
           localStorage.removeItem("sov_social_config");
           setIsLoggedIn(false);
           setSov(null);
-          setSocial(null);
+          setFeed(null);
+          setMessaging(null);
+          setProfileModule(null);
           setPosts([]);
           setFollowing([]);
           setMessages([]);
@@ -98430,8 +98532,8 @@ ${toHex(hashedRequest)}`;
           }
         };
         const handlePost = async () => {
-          if (!social || !newPost && !newImage) return;
-          await social.post(newPost, true, newImage || void 0);
+          if (!feed || !newPost && !newImage) return;
+          await feed.post(newPost, true, newImage || void 0);
           setNewPost("");
           setNewPostImage(null);
           setNewImagePreview(null);
@@ -98444,34 +98546,34 @@ ${toHex(hashedRequest)}`;
           }
         };
         const handleLike = async (postId) => {
-          if (!social) return;
-          await social.like(postId);
-          await loadData();
+          if (!feed || !profileModule) return;
+          await feed.like(postId);
+          await loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
         };
         const handleComment = async (post) => {
-          if (!social) return;
+          if (!feed || !profileModule) return;
           showPrompt(`Replying to ${post.userId}:`, async (content) => {
             if (content) {
-              await social.comment(post.id, post.userId, content);
+              await feed.comment(post.id, post.userId, content);
               await sync();
             }
           });
         };
         const handleEditPost = async (post) => {
-          if (!social) return;
+          if (!feed || !profileModule) return;
           showPrompt("Edit your post:", async (newContent) => {
             if (newContent !== null && newContent !== post.content) {
               const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
-              await social.editPost(post.id, dateStr, newContent);
+              await feed.editPost(post.id, dateStr, newContent);
               await sync();
             }
           }, post.content);
         };
         const handleDeletePost = async (post) => {
-          if (!social) return;
+          if (!feed || !profileModule) return;
           showConfirm("Delete this post? Data will be removed but a placeholder will remain.", async () => {
             const dateStr = new Date(post.timestamp).toISOString().split("T")[0];
-            await social.deletePost(post.id, dateStr);
+            await feed.deletePost(post.id, dateStr);
             await sync();
           });
         };
@@ -98485,13 +98587,13 @@ ${toHex(hashedRequest)}`;
           }
         };
         const sync = async () => {
-          if (!sov || !social || syncing || !isConnected) return;
+          if (!sov || !feed || syncing || !isConnected) return;
           setSyncing(true);
           try {
             await sov.sync();
-            await social.syncOtherProfiles();
+            if (profileModule) await profileModule.syncOtherProfiles();
             setLastSyncTime((/* @__PURE__ */ new Date()).toLocaleTimeString());
-            await loadData();
+            await loadData(sov, feed, messaging, profileModule);
           } catch (e2) {
           } finally {
             setSyncing(false);
@@ -98516,21 +98618,23 @@ ${toHex(hashedRequest)}`;
           }
         }, [selectedUser, currentTab]);
         (0, import_react.useEffect)(() => {
-          if (!isLoggedIn || !sov || !social) return;
+          if (!isLoggedIn || !sov || !feed) return;
           const interval = setInterval(() => {
             sync();
           }, 15e3);
           return () => clearInterval(interval);
-        }, [isLoggedIn, sov, social]);
+        }, [isLoggedIn, sov, feed]);
         const lookbackDaysRef = (0, import_react.useRef)(lookbackDays);
         (0, import_react.useEffect)(() => {
           lookbackDaysRef.current = lookbackDays;
         }, [lookbackDays]);
-        const loadData = async (activeSocial, activeSov) => {
-          const s2 = activeSocial || social;
-          const v2 = activeSov || sov;
-          if (!s2 || !v2) return;
-          const registry = await v2.getPublicRegistry();
+        const loadData = async (v2, fm, mm, pm) => {
+          const activeSov = v2 || sov;
+          const activeFeed = fm || feed;
+          const activeMessaging = mm || messaging;
+          const activeProfile = pm || profileModule;
+          if (!activeSov || !activeFeed || !activeMessaging || !activeProfile) return;
+          const registry = await activeSov.getPublicRegistry();
           Object.keys(discoveryMapRef.current).forEach((uid) => {
             if (!registry.find((u2) => u2.userId === uid)) {
               registry.push({ userId: uid, publicKey: "" });
@@ -98562,15 +98666,15 @@ ${toHex(hashedRequest)}`;
           }
           let allPosts = [];
           for (const date2 of dates) {
-            allPosts = [...allPosts, ...await s2.getPosts(date2, "public")];
+            allPosts = [...allPosts, ...await activeFeed.getPosts(date2, "public")];
             for (const user of followingList) {
-              allPosts = [...allPosts, ...await s2.getPosts(`${user.userId}/${date2}`, "followed")];
+              allPosts = [...allPosts, ...await activeFeed.getPosts(`${user.userId}/${date2}`, "followed")];
             }
           }
           allPosts.sort((a2, b2) => b2.timestamp - a2.timestamp);
-          await s2.enrichLikes(allPosts, currentLookbackDays);
+          await activeFeed.enrichLikes(allPosts, currentLookbackDays);
           setPosts(allPosts);
-          const newMessages = await s2.getInboxMessages(currentLookbackDays);
+          const newMessages = await activeMessaging.getInboxMessages(currentLookbackDays);
           setMessages(newMessages);
           const curLv = lastViewedRef.current;
           const curTab = currentTabRef.current;
@@ -98655,8 +98759,8 @@ ${toHex(hashedRequest)}`;
           setUserUnreadCounts(userMsgUnreads);
         };
         const handleSendMessage = async () => {
-          if (!social || !selectedUser || !msgInput && !msgImage) return;
-          await social.sendDirectMessage(selectedUser, msgInput, msgImage || void 0);
+          if (!messaging || !selectedUser || !msgInput && !msgImage) return;
+          await messaging.sendDirectMessage(selectedUser, msgInput, msgImage || void 0);
           setMsgInput("");
           setMsgImage(null);
           setMsgImagePreview(null);
@@ -98667,25 +98771,25 @@ ${toHex(hashedRequest)}`;
           setLookbackDays((prev) => prev + 5);
         };
         (0, import_react.useEffect)(() => {
-          if (isLoggedIn) loadData();
+          if (isLoggedIn) loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
         }, [lookbackDays]);
         const handleEditMessage = async (m2) => {
-          if (!social) return;
+          if (!feed || !profileModule) return;
           showPrompt("Edit your message:", async (newContent) => {
             if (newContent !== null && newContent !== m2.content) {
               const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
               const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-              await social.editMessage(otherUser, m2.id, dateStr, newContent);
+              await messaging.editMessage(otherUser, m2.id, dateStr, newContent);
               await sync();
             }
           }, m2.content);
         };
         const handleDeleteMessage = async (m2) => {
-          if (!social) return;
+          if (!feed || !profileModule) return;
           showConfirm("Delete this message for everyone?", async () => {
             const dateStr = new Date(m2.timestamp).toISOString().split("T")[0];
             const otherUser = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-            await social.deleteMessage(otherUser, m2.id, dateStr);
+            await messaging.deleteMessage(otherUser, m2.id, dateStr);
             await sync();
           });
         };
@@ -98717,7 +98821,7 @@ ${toHex(hashedRequest)}`;
                 const group4 = await sov.createGroup(name, members);
                 for (const member2 of members) {
                   if (member2.userId !== config.userId) {
-                    await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(group4)}`);
+                    await messaging?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(group4)}`);
                   }
                 }
                 await sync();
@@ -98727,7 +98831,7 @@ ${toHex(hashedRequest)}`;
         };
         const handlePostToGroup = async () => {
           if (!social || !selectedGroup || !groupInput && !groupImage) return;
-          await social.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || void 0);
+          await feed.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || void 0);
           setGroupInput("");
           setGroupImage(null);
           setGroupImagePreview(null);
@@ -98737,7 +98841,7 @@ ${toHex(hashedRequest)}`;
         const handleGroupImageChange = async (e2) => {
           const file = e2.target.files?.[0];
           if (!file) return;
-          const compressed = await SocialManager.compressImage(await new Promise((r2) => {
+          const compressed = await MediaUtils.compressImage(await new Promise((r2) => {
             const reader = new FileReader();
             reader.onload = (ev) => r2(ev.target?.result);
             reader.readAsDataURL(file);
@@ -98750,7 +98854,7 @@ ${toHex(hashedRequest)}`;
           if (!sov) return;
           await sov.joinGroup(groupInfo);
           await sov.respondToGroup(groupInfo.id, "joined");
-          await social?.postToGroup(groupInfo.id, groupInfo.sharedKey, "joined the room", void 0, "system");
+          await feed?.postToGroup(groupInfo.id, groupInfo.sharedKey, "joined the room", void 0, "system");
           await sync();
           setCurrentTab("rooms");
           const updatedGroups = await sov.getGroups();
@@ -98778,7 +98882,7 @@ ${toHex(hashedRequest)}`;
         const handleLeaveGroup = async () => {
           if (!sov || !selectedGroup) return;
           showConfirm(`Are you sure you want to leave ${selectedGroup.name}?`, async () => {
-            await social?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, "left the room", void 0, "system");
+            await feed?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, "left the room", void 0, "system");
             await sov.leaveGroup(selectedGroup.id);
             await sync();
             setSelectedGroup(null);
@@ -98807,7 +98911,7 @@ ${toHex(hashedRequest)}`;
           setSelectedGroup(updatedGroup);
           for (const member2 of updatedMembers) {
             if (member2.userId !== config.userId) {
-              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+              await messaging?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
             }
           }
           await sync();
@@ -98820,10 +98924,10 @@ ${toHex(hashedRequest)}`;
           setSelectedGroup(updatedGroup);
           for (const member2 of updatedMembers) {
             if (member2.userId !== config.userId) {
-              await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+              await messaging?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
             }
           }
-          await social?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+          await messaging?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
           await sync();
         };
         const addMembersToGroup = async () => {
@@ -98845,14 +98949,14 @@ ${toHex(hashedRequest)}`;
             setSelectedGroup(updatedGroup);
             for (const member2 of newMembers) {
               if (member2.userId !== config.userId) {
-                await social?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+                await messaging?.sendDirectMessage(member2.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
               }
             }
             await sync();
           });
         };
         const loadGroupPosts = async () => {
-          if (!social || !selectedGroup) return;
+          if (!feed || !selectedGroup) return;
           const dates = [];
           for (let i2 = 0; i2 < lookbackDays; i2++) {
             const d2 = /* @__PURE__ */ new Date();
@@ -98861,7 +98965,7 @@ ${toHex(hashedRequest)}`;
           }
           let all = [];
           for (const date2 of dates) {
-            all = [...all, ...await social.getGroupPosts(selectedGroup.id, date2)];
+            all = [...all, ...await feed.getGroupPosts(selectedGroup.id, date2)];
           }
           setGroupPosts(all);
           setLastViewed((prev) => ({
@@ -98870,21 +98974,21 @@ ${toHex(hashedRequest)}`;
           }));
         };
         const handleEditGroupPost = async (p2) => {
-          if (!social || !selectedGroup) return;
+          if (!feed || !selectedGroup) return;
           showPrompt("Edit your post:", async (newContent) => {
             if (newContent !== null && newContent !== p2.content) {
               const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
-              await social.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, newContent);
+              await feed.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, newContent);
               await sync();
             }
           }, p2.content);
         };
         const handleDeleteGroupPost = async (p2) => {
-          if (!social || !selectedGroup) return;
+          if (!feed || !selectedGroup) return;
           const msg = p2.userId === config.userId ? "Delete your post?" : `Delete ${p2.userId}'s post? (Admin)`;
           showConfirm(msg, async () => {
             const dateStr = new Date(p2.timestamp).toISOString().split("T")[0];
-            await social.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, p2.userId);
+            await feed.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p2.id, dateStr, p2.userId);
             await sync();
           });
         };
@@ -98916,30 +99020,30 @@ ${toHex(hashedRequest)}`;
         const UserAvatar = ({ userId, size = 40 }) => {
           const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
           (0, import_react.useEffect)(() => {
-            if (social) {
-              social.getProfile(userId).then((p3) => {
+            if (profileModule) {
+              profileModule.getProfile(userId).then((p3) => {
                 if (p3 && (!userData || p3.updatedAt > (userData.updatedAt || 0) || p3.name !== userData.name || p3.avatar !== userData.avatar)) {
                   setUserData(p3);
                   setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
                 }
               });
             }
-          }, [userId, social, lastSyncTime]);
+          }, [userId, profileModule, lastSyncTime]);
           const p2 = userData || { name: userId };
           return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" } }, userId[0].toUpperCase()), size > 30 && /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold" }, p2.name || userId));
         };
         const UserName = ({ userId, className }) => {
           const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
           (0, import_react.useEffect)(() => {
-            if (social) {
-              social.getProfile(userId).then((p2) => {
+            if (profileModule) {
+              profileModule.getProfile(userId).then((p2) => {
                 if (p2 && (!userData || p2.updatedAt > (userData.updatedAt || 0) || p2.name !== userData.name)) {
                   setUserData(p2);
                   setProfileCache((prev) => ({ ...prev, [userId]: p2 }));
                 }
               });
             }
-          }, [userId, social, lastSyncTime]);
+          }, [userId, profileModule, lastSyncTime]);
           return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
         };
         const PostItem = ({ post, allPosts, depth = 0 }) => {
@@ -98984,7 +99088,7 @@ ${toHex(hashedRequest)}`;
             if (uid) {
               setDiscoveryMap((prev) => {
                 const next = { ...prev, [uid]: Date.now() };
-                setTimeout(() => loadData(), 500);
+                setTimeout(() => loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0), 500);
                 return next;
               });
             }
@@ -99029,7 +99133,7 @@ ${toHex(hashedRequest)}`;
           navigator.clipboard.writeText(config.userId);
           showAlert("User ID copied!", "Clipboard");
         } }, "Copy"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
-          await social?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
+          await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
         } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), /* @__PURE__ */ import_react.default.createElement(

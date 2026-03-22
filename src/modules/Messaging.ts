@@ -186,69 +186,59 @@ export class MessagingModule {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
 
             for (const date of dates) {
-                // Check both new and old module paths for compatibility
-                const pathsToCheck = [
-                    this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed'),
-                    this.db.getModulePath('social', `${user.userId}/dms/${myId}/${date}.db`, 'followed')
-                ];
+                // Check new module path
+                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed');
 
-                for (const localPath of pathsToCheck) {
-                    const data = await this.db.getStorage().getFile(localPath);
-                    if (data) {
-                        const db = new sqliteInstance.Database(data);
-                        try {
-                            const res = db.exec('SELECT encrypted_data FROM messages');
-                            if (res && res.length > 0) {
-                                for (const row of res[0].values) {
-                                    try {
-                                        const decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecret);
-                                        if (decrypted) {
-                                            const parsed = JSON.parse(new TextDecoder().decode(decrypted)) as Message;
-                                            if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
-                                            if (typeof (parsed as any).isDeleted === 'number') parsed.isDeleted = !!(parsed as any).isDeleted;
-                                            messages.push(parsed);
-                                        }
-                                    } catch (e) {}
-                                }
-                            }
-                        } catch (e) {}
-                        db.close();
-                    }
-                }
-            }
-        }
-
-        // Also check my own outbox (both new and old)
-        for (const date of dates) {
-            const pathsToCheck = [
-                this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private'),
-                this.db.getModulePath('social', `dms/outbox/${date}.db`, 'private')
-            ];
-
-            for (const outboxPath of pathsToCheck) {
-                const data = await this.db.getStorage().getFile(outboxPath);
+                const data = await this.db.getStorage().getFile(localPath);
                 if (data) {
                     const db = new sqliteInstance.Database(data);
                     try {
-                        const res = db.exec('SELECT * FROM messages');
+                        const res = db.exec('SELECT encrypted_data FROM messages');
                         if (res && res.length > 0) {
-                            const columns = res[0].columns;
-                            const myMsgs = res[0].values.map((row: any) => {
-                                const msg: any = {};
-                                columns.forEach((col: string, i: number) => {
-                                    let val = row[i];
-                                    if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') {
-                                        val = !!val;
+                            for (const row of res[0].values) {
+                                try {
+                                    const decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecret);
+                                    if (decrypted) {
+                                        const parsed = JSON.parse(new TextDecoder().decode(decrypted)) as Message;
+                                        if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
+                                        if (typeof (parsed as any).isDeleted === 'number') parsed.isDeleted = !!(parsed as any).isDeleted;
+                                        messages.push(parsed);
                                     }
-                                    msg[col] = val;
-                                });
-                                return msg as Message;
-                            });
-                            messages.push(...myMsgs);
+                                } catch (e) {}
+                            }
                         }
                     } catch (e) {}
                     db.close();
                 }
+            }
+        }
+
+        // Also check my own outbox
+        for (const date of dates) {
+            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
+
+            const data = await this.db.getStorage().getFile(outboxPath);
+            if (data) {
+                const db = new sqliteInstance.Database(data);
+                try {
+                    const res = db.exec('SELECT * FROM messages');
+                    if (res && res.length > 0) {
+                        const columns = res[0].columns;
+                        const myMsgs = res[0].values.map((row: any) => {
+                            const msg: any = {};
+                            columns.forEach((col: string, i: number) => {
+                                let val = row[i];
+                                if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') {
+                                    val = !!val;
+                                }
+                                msg[col] = val;
+                            });
+                            return msg as Message;
+                        });
+                        messages.push(...myMsgs);
+                    }
+                } catch (e) {}
+                db.close();
             }
         }
 

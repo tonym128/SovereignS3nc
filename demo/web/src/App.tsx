@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
-import { SocialManager, Post } from '../../../src/modules/Social';
+import { ProfileModule } from '../../../src/modules/Profile';
+import { FeedModule, Post } from '../../../src/modules/Feed';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
 
@@ -20,7 +21,8 @@ const App = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
-    const [social, setSocial] = useState<SocialManager | null>(null);
+    const [feed, setFeed] = useState<FeedModule | null>(null);
+    const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
     const [following, setFollowing] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<any[]>([]);
@@ -110,16 +112,18 @@ const App = () => {
             }
 
             setSov(instance);
-            const sm = new SocialManager(instance);
-            setSocial(sm);
-            setProfile(await sm.getProfile());
+            const fm = new FeedModule(instance);
+            const pm = new ProfileModule(instance);
+            setFeed(fm);
+            setProfileModule(pm);
+            setProfile(await pm.getProfile());
             setIsLoggedIn(true);
             
             // Trigger initial sync for discovery
             setTimeout(() => {
                 instance.sync().then(() => {
                     console.log('Initial sync complete');
-                    loadPosts();
+                    loadPosts(instance, fm, pm);
                 });
             }, 100);
         } catch (e: any) {
@@ -155,9 +159,11 @@ const App = () => {
             });
             await instance.init();
             setSov(instance);
-            const sm = new SocialManager(instance);
-            setSocial(sm);
-            setProfile(await sm.getProfile());
+            const fm = new FeedModule(instance);
+            const pm = new ProfileModule(instance);
+            setFeed(fm);
+            setProfileModule(pm);
+            setProfile(await pm.getProfile());
             setIsLoggedIn(true);
         } catch (e) {
             alert('Invalid password or corrupted data');
@@ -218,8 +224,8 @@ const App = () => {
     };
 
     const saveProfile = async () => {
-        if (!social || !profile) return;
-        await social.updateProfile(profile.name, profile.bio, profile.avatar);
+        if (!profileModule || !profile) return;
+        await profileModule.updateProfile(profile.name, profile.bio, profile.avatar);
         setIsEditingProfile(false);
     };
 
@@ -228,8 +234,8 @@ const App = () => {
     }, [isLoggedIn]);
 
     const handlePost = async () => {
-        if (!social || !newPost) return;
-        await social.post(newPost, true, newImage || undefined);
+        if (!feed || !newPost) return;
+        await feed.post(newPost, true, newImage || undefined);
         setNewPost('');
         setNewPostImage(null);
         await loadPosts();
@@ -237,17 +243,17 @@ const App = () => {
 
     const handleComment = async (parent: Post) => {
         const content = prompt('Your comment:');
-        if (!content || !social) return;
-        await social.comment(parent.id, parent.userId, content);
+        if (!content || !feed) return;
+        await feed.comment(parent.id, parent.userId, content);
         await loadPosts();
     };
 
     const sync = async () => {
-        if (!sov || !social) return;
+        if (!sov || !feed || !profileModule) return;
         setSyncing(true);
         try {
             await sov.sync();
-            await social.syncOtherProfiles();
+            await profileModule.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
             await loadPosts();
         } finally {
@@ -267,12 +273,15 @@ const App = () => {
         }
     };
 
-    const loadPosts = async () => {
-        if (!social || !sov) return;
+    const loadPosts = async (v?: SovereignS3nc, fm?: FeedModule, pm?: ProfileModule) => {
+        const activeSov = v || sov;
+        const activeFeed = fm || feed;
+        const activeProfile = pm || profileModule;
+        if (!activeFeed || !activeSov) return;
         console.log('[Demo] Refreshing feed...');
         
         // 1. Get registry for sidebar
-        const registry = await sov.getPublicRegistry();
+        const registry = await activeSov.getPublicRegistry();
         setAllUsers(registry);
 
         // 2. Generate dates for last 7 days
@@ -287,17 +296,17 @@ const App = () => {
 
         // 3. Get my own posts
         for (const date of dates) {
-            const myDayPosts = await social.getPosts(date, 'public');
+            const myDayPosts = await activeFeed.getPosts(date, 'public');
             allPosts = [...allPosts, ...myDayPosts];
         }
         
         // 4. Get following list and their posts
-        const followingList = await sov.getFollowing();
+        const followingList = await activeSov.getFollowing();
         setFollowing(followingList);
 
         for (const user of followingList) {
             for (const date of dates) {
-                const userPosts = await social.getPosts(`${user.userId}/${date}`, 'followed');
+                const userPosts = await activeFeed.getPosts(`${user.userId}/${date}`, 'followed');
                 allPosts = [...allPosts, ...userPosts];
             }
         }
@@ -313,9 +322,9 @@ const App = () => {
         const [userData, setUserData] = useState<any>(profileCache[userId]);
 
         useEffect(() => {
-            if (!userData && social) {
+            if (!userData && profileModule) {
                 console.log(`[UI] Fetching profile for ${userId}...`);
-                social.getProfile(userId).then(p => {
+                profileModule.getProfile(userId).then(p => {
                     if (p) {
                         console.log(`[UI] Found profile for ${userId}:`, p.name);
                         setUserData(p);
@@ -325,7 +334,7 @@ const App = () => {
                     }
                 });
             }
-        }, [userId, social, userData]);
+        }, [userId, profileModule, userData]);
 
         const p = userData || { name: userId };
 

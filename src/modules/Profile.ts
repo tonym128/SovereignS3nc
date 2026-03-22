@@ -57,22 +57,9 @@ export class ProfileModule {
             return data ? JSON.parse(new TextDecoder().decode(data)) : null;
         }
         
-        // Followed profiles are stored by the social module currently at a specific path.
-        // We'll keep this logic but maybe refine the pathing if needed.
-        // The old Social.ts used: this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, 'followed')
-        // where MODULE_NAME was 'social'.
-        // For compatibility with existing data, we might need to check both or migrate.
-        // But the TODO says "Create src/modules/Profile.ts for identity, user.json, and follow-graph management."
-        
-        // Let's check for profile in the 'profile' module path first, then fallback to 'social' for legacy.
-        let path = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, 'followed');
-        let data = await this.db.getStorage().getFile(path);
-        
-        if (!data) {
-            // Legacy fallback
-            const legacyPath = this.db.getModulePath('social', `${targetId}/profile`, 'followed');
-            data = await this.db.getStorage().getFile(legacyPath);
-        }
+        // Followed profiles are stored by the profile module now at a specific path.
+        const path = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, 'followed');
+        const data = await this.db.getStorage().getFile(path);
 
         if (data) {
             return JSON.parse(new TextDecoder().decode(data));

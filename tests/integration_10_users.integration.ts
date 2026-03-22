@@ -1,5 +1,8 @@
+
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { SocialManager } from '../src/modules/Social';
+import { ProfileModule } from '../src/modules/Profile';
+import { MessagingModule } from '../src/modules/Messaging';
+import { FeedModule } from '../src/modules/Feed';
 import { S3RemoteAdapter } from '../src/adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
 import crypto from 'crypto';
@@ -24,7 +27,9 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         userId: string; 
         password: string; 
         sov: SovereignS3nc; 
-        social: SocialManager;
+        profile: ProfileModule;
+        messaging: MessagingModule;
+        feed: FeedModule;
         displayName: string;
     }[] = [];
 
@@ -57,9 +62,16 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         (sov as any).storage = new IndexedDBStorage(dbName);
         
         await sov.init();
-        const social = new SocialManager(sov);
         
-        return { userId, password, sov, social, displayName };
+        return { 
+            userId, 
+            password, 
+            sov, 
+            profile: new ProfileModule(sov),
+            messaging: new MessagingModule(sov),
+            feed: new FeedModule(sov),
+            displayName 
+        };
     }
 
     beforeAll(async () => {
@@ -72,7 +84,7 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
 
     test('All users can register and sync profiles', async () => {
         for (const user of users) {
-            await user.social.updateProfile(user.displayName, `I am user number ${user.userId}`, `avatar_${user.userId}`);
+            await user.profile.updateProfile(user.displayName, `I am user number ${user.userId}`, `avatar_${user.userId}`);
             await user.sov.sync();
         }
 
@@ -95,10 +107,10 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         expect(currentRunFollowing.length).toBe(userCount - 1);
 
         // Verify profile syncing for followed users
-        await me.social.syncOtherProfiles();
+        await me.profile.syncOtherProfiles();
         for (let i = 1; i < users.length; i++) {
-            const profile = await me.social.getProfile(users[i].userId);
-            expect(profile.name).toBe(users[i].displayName);
+            const p = await me.profile.getProfile(users[i].userId);
+            expect(p!.name).toBe(users[i].displayName);
         }
     }, 60000);
 
@@ -107,7 +119,7 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         
         // Everyone (except user 0) creates a post
         for (let i = 1; i < users.length; i++) {
-            await users[i].social.post(`Hello from ${users[i].userId}! This is my test post.`);
+            await users[i].feed.post(`Hello from ${users[i].userId}! This is my test post.`);
             await users[i].sov.sync();
         }
 
@@ -117,7 +129,7 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
 
         let allFollowedPosts: any[] = [];
         for (let i = 1; i < users.length; i++) {
-            const userPosts = await me.social.getPosts(`${users[i].userId}/${today}`, 'followed');
+            const userPosts = await me.feed.getPosts(`${users[i].userId}/${today}`, 'followed');
             allFollowedPosts = [...allFollowedPosts, ...userPosts];
         }
 
@@ -133,12 +145,12 @@ describe('Sovereign Social Integration Test (10 Users)', () => {
         const receiver = users[2];
         const messageText = "Secret integration test message";
 
-        await sender.social.sendDirectMessage(receiver.userId, messageText);
+        await sender.messaging.sendDirectMessage(receiver.userId, messageText);
         await sender.sov.sync();
 
         // Receiver syncs
         await receiver.sov.sync();
-        const inbox = await receiver.social.getInboxMessages();
+        const inbox = await receiver.messaging.getInboxMessages();
         const msg = inbox.find(m => m.senderId === sender.userId && m.content === messageText);
         
         expect(msg).toBeDefined();

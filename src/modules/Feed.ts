@@ -173,11 +173,7 @@ export class FeedModule {
     }
 
     async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
-        // Compatibility: Check both new and old module paths
-        const pathsToCheck = [
-            this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type),
-            this.db.getModulePath('social', `${date}.db`, type)
-        ];
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
 
         let allPosts: Post[] = [];
 
@@ -185,10 +181,8 @@ export class FeedModule {
         const initSqlJs = (globalThis as any).initSqlJs;
         const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
 
-        for (const dbPath of pathsToCheck) {
-            const data = await this.db.getStorage().getFile(dbPath);
-            if (!data) continue;
-
+        const data = await this.db.getStorage().getFile(dbPath);
+        if (data) {
             const db = new sqliteInstance.Database(data);
             try {
                 const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
@@ -214,18 +208,7 @@ export class FeedModule {
             db.close();
         }
 
-        // Deduplicate by ID
-        const postMap = new Map<string, Post>();
-        allPosts.forEach(p => {
-            const existing = postMap.get(p.id);
-            if (!existing || p.timestamp > existing.timestamp) {
-                postMap.set(p.id, p);
-            }
-        });
-
-        const finalPosts = Array.from(postMap.values());
-        finalPosts.sort((a, b) => b.timestamp - a.timestamp);
-        return finalPosts;
+        return allPosts;
     }
 
     async enrichLikes(posts: Post[], days: number = 5) {
@@ -253,39 +236,32 @@ export class FeedModule {
         const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
 
         const processDb = async (date: string, type: 'public' | 'followed') => {
-            const pathsToCheck = [
-                type === 'followed' 
-                    ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
-                    : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type),
-                type === 'followed'
-                    ? this.db.getModulePath('social', `${date}.db`, 'followed')
-                    : this.db.getModulePath('social', `${date}.db`, type)
-            ];
+            const dbPath = type === 'followed' 
+                ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
+                : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
 
-            for (const dbPath of pathsToCheck) {
-                const data = await this.db.getStorage().getFile(dbPath);
-                if (!data) continue;
+            const data = await this.db.getStorage().getFile(dbPath);
+            if (!data) return;
 
-                const db = new sqliteInstance.Database(data);
-                try {
-                    const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
-                    if (tableCheck.length > 0) {
-                        const res = db.exec('SELECT postId, userId FROM likes');
-                        if (res && res.length > 0) {
-                            for (const row of res[0].values) {
-                                const postId = row[0] as string;
-                                const likerId = row[1];
-                                const post = postMap.get(postId);
-                                if (post) {
-                                    post.likesCount = (post.likesCount || 0) + 1;
-                                    if (likerId === myId) post.likedByMe = true;
-                                }
+            const db = new sqliteInstance.Database(data);
+            try {
+                const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
+                if (tableCheck.length > 0) {
+                    const res = db.exec('SELECT postId, userId FROM likes');
+                    if (res && res.length > 0) {
+                        for (const row of res[0].values) {
+                            const postId = row[0] as string;
+                            const likerId = row[1];
+                            const post = postMap.get(postId);
+                            if (post) {
+                                post.likesCount = (post.likesCount || 0) + 1;
+                                if (likerId === myId) post.likedByMe = true;
                             }
                         }
                     }
-                } catch (e) {}
-                db.close();
-            }
+                }
+            } catch (e) {}
+            db.close();
         };
 
         for (const date of dates) await processDb(date, 'public');
@@ -372,7 +348,9 @@ export class FeedModule {
 
                 const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
                 if (res && res.length > 0) {
-                    res[0].values.forEach((row: any) => deletedPostIds.add(row[0]));
+                    res[0].values.forEach((row: any) => {
+                        deletedPostIds.add(row[0]);
+                    });
                 }
             } catch(e) {}
         };
@@ -391,11 +369,15 @@ export class FeedModule {
                                 post[col] = val;
                             });
                             return post as Post;
-                        })
-                        .filter((p: Post) => !deletedPostIds.has(p.id) && !p.isDeleted);
-                    posts.push(...batch);
+                        });
+                    
+                    const filtered = batch.filter((p: Post) => {
+                        return !p.isDeleted && !deletedPostIds.has(p.id);
+                    });
+                    
+                    posts.push(...filtered);
                 }
-            } catch (e) {}
+            } catch (e: any) {}
         };
 
         // 1. My data
@@ -408,26 +390,23 @@ export class FeedModule {
                 processModeration(db, this.db.getConfig().paths.userId);
                 await processPosts(db);
                 db.close();
-            } catch(e) {}
+            } catch(e: any) {}
         }
 
         // 2. Member data
         for (const member of group.members) {
             if (member.userId === this.db.getConfig().paths.userId) continue;
             const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
+            
             const memberData = await this.db.getStorage().getFile(memberPath);
             if (memberData) {
                 try {
-                    // Member data in their public folder should also be encrypted with group key if they are following conventions,
-                    // but wait, members save their own contribution to their own prefix.
-                    // For groups, everyone saves to their own prefix: followed/userId/groups/groupId/date.db
-                    // We need to decrypt it with the group shared key.
                     const decrypted = await this.db.decrypt(memberData, group.sharedKey);
                     const db = new sqliteInstance.Database(decrypted);
                     processModeration(db, member.userId);
                     await processPosts(db);
                     db.close();
-                } catch(e) {}
+                } catch(e: any) {}
             }
         }
 

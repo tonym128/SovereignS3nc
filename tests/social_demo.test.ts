@@ -1,5 +1,8 @@
+
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { SocialManager, Post } from '../src/modules/Social';
+import { FeedModule, Post } from '../src/modules/Feed';
+import { MessagingModule, Message } from '../src/modules/Messaging';
+import { ProfileModule } from '../src/modules/Profile';
 import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
@@ -71,8 +74,12 @@ describe('Social Demo Full Functionality', () => {
 
         const sov = new SovereignS3nc(config, factory(userId), factory);
         await sov.init();
-        const social = new SocialManager(sov);
-        return { sov, social };
+        return { 
+            sov, 
+            feed: new FeedModule(sov),
+            messaging: new MessagingModule(sov),
+            profile: new ProfileModule(sov)
+        };
     }
 
     test('Friendship, Blobs, and DMs', async () => {
@@ -91,12 +98,12 @@ describe('Social Demo Full Functionality', () => {
 
         // 3. Blobs (Alice posts an image)
         const dummyImage = new Uint8Array([1, 2, 3, 4, 5]);
-        await alice.social.post('Alice with image', true, dummyImage);
+        await alice.feed.post('Alice with image', true, dummyImage);
         await alice.sov.sync();
 
         // Bob syncs and sees the image
         await bob.sov.sync();
-        const alicePosts = await bob.social.getPosts('alice/' + today, 'followed');
+        const alicePosts = await bob.feed.getPosts('alice/' + today, 'followed');
         expect(alicePosts.length).toBe(1);
         expect(alicePosts[0].image).toBeDefined();
 
@@ -104,20 +111,20 @@ describe('Social Demo Full Functionality', () => {
         expect(blobData).toEqual(dummyImage);
 
         // 4. Direct Messaging (Bob sends a message to Alice)
-        await bob.social.sendDirectMessage('alice', 'Hi Alice!');
+        await bob.messaging.sendDirectMessage('alice', 'Hi Alice!');
         await bob.sov.sync();
         
         // Alice syncs and sees the message
         await alice.sov.sync();
-        const inbox = await alice.social.getInboxMessages();
+        const inbox = await alice.messaging.getInboxMessages();
         const msg = inbox.find(m => m.senderId === 'bob' && m.content === 'Hi Alice!');
         expect(msg).toBeDefined();
 
         // 5. Offline Mode
         mockS3.isOffline = true;
         // Alice should still be able to post while offline
-        await alice.social.post('Offline post', true);
-        const offlinePosts = await alice.social.getPosts(today, 'public');
+        await alice.feed.post('Offline post', true);
+        const offlinePosts = await alice.feed.getPosts(today, 'public');
         expect(offlinePosts.find(p => p.content === 'Offline post')).toBeDefined();
 
         // Sync should fail but not crash
@@ -128,7 +135,7 @@ describe('Social Demo Full Functionality', () => {
         await alice.sov.sync(); // Now it should upload
         
         await bob.sov.sync();
-        const alicePostsAfterOffline = await bob.social.getPosts('alice/' + today, 'followed');
+        const alicePostsAfterOffline = await bob.feed.getPosts('alice/' + today, 'followed');
         expect(alicePostsAfterOffline.find(p => p.content === 'Offline post')).toBeDefined();
     });
 
@@ -136,14 +143,14 @@ describe('Social Demo Full Functionality', () => {
         const alice = await setupUser('alice', 'alice-pass');
         const bob = await setupUser('bob', 'bob-pass');
 
-        await alice.social.updateProfile('Alice A.', 'I love decentralization', 'avatar-data');
+        await alice.profile.updateProfile('Alice A.', 'I love decentralization', 'avatar-data');
         await alice.sov.sync();
 
         await bob.sov.follow('alice');
-        await bob.social.syncOtherProfiles();
+        await bob.profile.syncOtherProfiles();
         
-        const aliceProfile = await bob.social.getProfile('alice');
-        expect(aliceProfile.name).toBe('Alice A.');
-        expect(aliceProfile.bio).toBe('I love decentralization');
+        const aliceProfile = await bob.profile.getProfile('alice');
+        expect(aliceProfile!.name).toBe('Alice A.');
+        expect(aliceProfile!.bio).toBe('I love decentralization');
     });
 });

@@ -2,7 +2,9 @@
 import * as http from 'http';
 import { SovereignS3nc } from './SovereignS3nc';
 import { SQLiteNodeStorage } from './adapters/SQLiteNodeStorage';
-import { SocialManager } from './modules/Social';
+import { ProfileModule } from './modules/Profile';
+import { MessagingModule } from './modules/Messaging';
+import { FeedModule } from './modules/Feed';
 import { Logger } from './utils/Logger';
 import * as path from 'path';
 
@@ -12,7 +14,9 @@ import * as path from 'path';
  */
 class SovereignNode {
     private sov: SovereignS3nc;
-    private social: SocialManager;
+    private profile: ProfileModule;
+    private messaging: MessagingModule;
+    private feed: FeedModule;
     private config: any;
     private port: number;
     private syncInterval: number;
@@ -26,7 +30,9 @@ class SovereignNode {
         const storage = new SQLiteNodeStorage(dbPath);
 
         this.sov = new SovereignS3nc(config, undefined, undefined, undefined, storage);
-        this.social = new SocialManager(this.sov);
+        this.profile = new ProfileModule(this.sov);
+        this.messaging = new MessagingModule(this.sov);
+        this.feed = new FeedModule(this.sov);
     }
 
     async start() {

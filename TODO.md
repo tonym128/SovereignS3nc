@@ -20,11 +20,12 @@
 - [x] **Storage: SQLite Node Adapter & Server**
     - [x] Create a `SQLiteNodeStorage` adapter that stores all files/metadata in a single consolidated SQLite database.
     - [x] Build a Node.js server to support the social network using this storage backend.
-- [x] **Modules: Granular Decomposition**
+- [x] Modules: Granular Decomposition
     - [x] Create `src/modules/Profile.ts` for identity, `user.json`, and follow-graph management.
     - [x] Create `src/modules/Messaging.ts` for E2EE DM workflows (using core primitives).
     - [x] Create `src/modules/Feed.ts` for posts, comments, and distributed likes aggregation.
-    - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper.
+    - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper and mark as @deprecated.
+    - [x] Replace all `SocialManager` usage in CLI, Server, and Demos with granular modules.
 - [x] **Demos: Alignment**
     - [x] Update Social Demo to use granular modules (`Feed`, `Messaging`, `Profile`).
     - [x] Update Banky Demo to use `ProfileModule` for identity, ensuring zero dependency on Social logic.

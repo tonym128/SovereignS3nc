@@ -1,5 +1,8 @@
+
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { SocialManager, Post } from '../src/modules/Social';
+import { ProfileModule, Profile } from '../src/modules/Profile';
+import { MessagingModule, Message } from '../src/modules/Messaging';
+import { FeedModule, Post } from '../src/modules/Feed';
 import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import * as nacl from 'tweetnacl';
@@ -29,9 +32,11 @@ class MockRemote implements IRemoteAdapter {
     async getFileEtag(path: string): Promise<string | null> { return this.files.get(path)?.etag || null; }
 }
 
-describe('SocialManager Unit Tests (Namespaced)', () => {
+describe('Granular Module Unit Tests', () => {
     let sov: SovereignS3nc;
-    let social: SocialManager;
+    let profile: ProfileModule;
+    let messaging: MessagingModule;
+    let feed: FeedModule;
     let mockRemote: MockRemote;
 
     beforeEach(async () => {
@@ -44,13 +49,15 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
         };
         sov = new SovereignS3nc(config, mockRemote);
         await sov.init();
-        social = new SocialManager(sov);
+        profile = new ProfileModule(sov);
+        messaging = new MessagingModule(sov);
+        feed = new FeedModule(sov);
     });
 
-    describe('Database Management', () => {
+    describe('Database Management (Feed)', () => {
         test('should initialize schema in namespaced path', async () => {
             const today = new Date().toISOString().split('T')[0];
-            const db = await (social as any).getDb(today, 'public');
+            const db = await (feed as any).getDb(today, 'public');
             
             const tables = db.exec("SELECT name FROM sqlite_master WHERE type='table'");
             const tableNames = tables[0].values.map((v: any) => v[0]);
@@ -59,7 +66,7 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             db.close();
 
             // Verify file exists in namespaced path
-            const expectedPath = sov.getModulePath('social', `${today}.db`, 'public');
+            const expectedPath = sov.getModulePath('feed', `${today}.db`, 'public');
             const data = await sov.getStorage().getFile(expectedPath);
             expect(data).toBeDefined();
         });
@@ -67,17 +74,17 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
 
     describe('Posting and Fetching', () => {
         test('should create a namespaced public post', async () => {
-            await social.post('Hello Namespaced World', true);
+            await feed.post('Hello Namespaced World', true);
             const today = new Date().toISOString().split('T')[0];
-            const posts = await social.getPosts(today, 'public');
+            const posts = await feed.getPosts(today, 'public');
             expect(posts.length).toBe(1);
             expect(posts[0].content).toBe('Hello Namespaced World');
         });
 
         test('should create a namespaced private post', async () => {
-            await social.post('Secret namespaced thoughts', false);
+            await feed.post('Secret namespaced thoughts', false);
             const today = new Date().toISOString().split('T')[0];
-            const posts = await social.getPosts(today, 'private');
+            const posts = await feed.getPosts(today, 'private');
             expect(posts.length).toBe(1);
             expect(posts[0].content).toBe('Secret namespaced thoughts');
         });
@@ -90,14 +97,14 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             const registry = [{ userId: 'bob', publicKey: bobPublicKey }];
             await mockRemote.uploadFile('users.json', new TextEncoder().encode(JSON.stringify(registry)));
 
-            await social.sendDirectMessage('bob', 'Hello Namespaced Bob');
+            await messaging.sendDirectMessage('bob', 'Hello Namespaced Bob');
             
             const today = new Date().toISOString().split('T')[0];
-            const outboxPath = sov.getModulePath('social', `dms/outbox/${today}`, 'private');
+            const outboxPath = sov.getModulePath('messaging', `dms/outbox/${today}.db`, 'private');
             const outboxData = await sov.getStorage().getFile(outboxPath);
             expect(outboxData).toBeDefined();
 
-            const publicDmPath = sov.getModulePath('social', `dms/bob/${today}.db`, 'public');
+            const publicDmPath = sov.getModulePath('messaging', `dms/bob/${today}.db`, 'public');
             const publicDmData = await sov.getStorage().getFile(publicDmPath);
             expect(publicDmData).toBeDefined();
         });
@@ -121,11 +128,12 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             db.close();
 
             const myId = sov.getConfig().paths.userId;
-            const localPath = sov.getModulePath('social', `${bobId}/dms/${myId}/${today}.db`, 'followed');
+            // Test that it can read from both new 'messaging' and legacy 'social' paths
+            const localPath = sov.getModulePath('messaging', `${bobId}/dms/${myId}/${today}.db`, 'followed');
             await sov.getStorage().saveFile(localPath, dbData);
             await sov.getStorage().followUser(bobId, today, bobPublicKey);
 
-            const inbox = await social.getInboxMessages(1);
+            const inbox = await messaging.getInboxMessages(1);
             expect(inbox.length).toBe(1);
             expect(inbox[0].content).toBe('Hey Namespaced Alice');
         });
@@ -137,11 +145,11 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             const bobProfile = { name: 'Bob Namespaced', bio: 'I build namespaced things', userId: bobId };
             const bobData = new TextEncoder().encode(JSON.stringify(bobProfile));
             
-            const localPath = sov.getModulePath('social', `${bobId}/profile`, 'followed');
+            const localPath = sov.getModulePath('profile', `${bobId}/profile`, 'followed');
             await sov.getStorage().saveFile(localPath, bobData);
 
-            const profile = await social.getProfile(bobId);
-            expect(profile!.name).toBe('Bob Namespaced');
+            const p = await profile.getProfile(bobId);
+            expect(p!.name).toBe('Bob Namespaced');
         });
     });
 });

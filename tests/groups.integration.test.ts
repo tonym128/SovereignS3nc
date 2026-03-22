@@ -1,5 +1,6 @@
+
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { SocialManager } from '../src/modules/Social';
+import { FeedModule } from '../src/modules/Feed';
 import { IRemoteAdapter, DownloadResult } from '../src/interfaces/IRemoteAdapter';
 import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
 import { GroupMember } from '../src/types';
@@ -39,15 +40,15 @@ describe('Shared Multi-Writer Rooms (Groups)', () => {
         const config = {
             paths: { appId: 'test-app', userId, storeId: 'main' },
             password,
-            debug: false
+            debug: true
         };
 
         const sov = new SovereignS3nc(config, factory(userId), factory);
-        // Use unique DB per user in fake-indexeddb
-        (sov as any).storage = new IndexedDBStorage(`db_${userId}_${Math.random()}`);
+        // Use consistent DB per user
+        (sov as any).storage = new IndexedDBStorage(`db_${userId}`);
         await sov.init();
-        const social = new SocialManager(sov);
-        return { sov, social, userId };
+        const feed = new FeedModule(sov);
+        return { sov, feed, userId };
     }
 
     test('Multi-writer group sync', async () => {
@@ -60,13 +61,16 @@ describe('Shared Multi-Writer Rooms (Groups)', () => {
             { userId: 'bob', publicKey: bob.sov.getConfig().publicEncryptionKey!, role: 'member' }
         ];
         const group = await alice.sov.createGroup('Decentralized Devs', members);
+        
+        // Alice syncs to upload group info and status
+        await alice.sov.sync();
 
-        // 2. Bob joins the group (In a real app, he'd get the group info via DM)
+        // 2. Bob joins the group
         await bob.sov.joinGroup(group);
         await bob.sov.respondToGroup(group.id, 'joined');
 
         // 3. Alice posts to the group
-        await alice.social.postToGroup(group.id, group.sharedKey, 'Hello from Alice!');
+        await alice.feed.postToGroup(group.id, group.sharedKey, 'Hello from Alice!');
         
         // Alice syncs to upload her contribution and manifest
         await alice.sov.sync();
@@ -75,20 +79,20 @@ describe('Shared Multi-Writer Rooms (Groups)', () => {
         await bob.sov.sync();
 
         const today = new Date().toISOString().split('T')[0];
-        const bobViewOfPosts = await bob.social.getGroupPosts(group.id, today);
+        const bobViewOfPosts = await bob.feed.getGroupPosts(group.id, today);
         
         expect(bobViewOfPosts.length).toBe(1);
         expect(bobViewOfPosts[0].content).toBe('Hello from Alice!');
         expect(bobViewOfPosts[0].userId).toBe('alice');
 
         // 5. Bob posts to the same group
-        await bob.social.postToGroup(group.id, group.sharedKey, 'Hey Alice, Bob here!');
+        await bob.feed.postToGroup(group.id, group.sharedKey, 'Hey Alice, Bob here!');
         await bob.sov.sync();
 
         // 6. Alice syncs to see Bob's post
         await alice.sov.sync();
 
-        const aliceViewOfPosts = await alice.social.getGroupPosts(group.id, today);
+        const aliceViewOfPosts = await alice.feed.getGroupPosts(group.id, today);
         expect(aliceViewOfPosts.length).toBe(2);
         expect(aliceViewOfPosts[0].content).toBe('Hey Alice, Bob here!');
         expect(aliceViewOfPosts[1].content).toBe('Hello from Alice!');

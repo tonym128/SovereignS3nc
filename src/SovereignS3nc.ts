@@ -320,14 +320,35 @@ export class SovereignS3nc extends EventEmitter {
             
             const sortedDates = Array.from(syncDates).sort();
             for (const dateStr of sortedDates) {
-                // Private data goes to PRIVATE remote (this.remote)
+                // Core data
                 await this.syncDay(dateStr, 'private', undefined, this.remote);
-                // Public data goes to PUBLIC remote
                 await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
             }
-            
-            await this.syncUserFile();
 
+            // Sync all module files
+            const publicModuleFiles = await this.storage.listFiles('public/modules/');
+            for (const file of publicModuleFiles) {
+                if (file.endsWith('.db')) {
+                    const relativePath = file.replace('public/', '');
+                    await this.syncGenericFile(relativePath, 'public');
+                }
+            }
+            const privateModuleFiles = await this.storage.listFiles('private/modules/');
+            for (const file of privateModuleFiles) {
+                if (file.endsWith('.db')) {
+                    const relativePath = file.replace('private/', '');
+                    await this.syncGenericFile(relativePath, 'private');
+                }
+            }
+
+            // Sync all group files
+            const groupFiles = await this.storage.listFiles('public/groups/');
+            for (const file of groupFiles) {
+                const relativePath = file.replace('public/', '');
+                await this.syncGenericFile(relativePath, 'public');
+            }
+
+            await this.syncUserFile();
             // 2. Global Discovery & Registration
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -409,8 +430,9 @@ export class SovereignS3nc extends EventEmitter {
                         manifest.modules[moduleName].push(dateStr);
                     }
                 } 
-                // DM file: public/modules/social/dms/{recipientId}/{date}.db
+                // DM file: public/modules/{moduleName}/dms/{recipientId}/{date}.db
                 else if (parts.length === 6 && parts[3] === 'dms') {
+                    const moduleName = parts[2];
                     const recipientId = parts[4];
                     const fileName = parts[5];
                     if (fileName.endsWith('.db')) {
@@ -630,8 +652,10 @@ export class SovereignS3nc extends EventEmitter {
                             const remotePath = `public/groups/${group.id}/${dateStr}.db`;
                             const localPath = `followed/${member.userId}/groups/${group.id}/${dateStr}.db`;
                             
-                            // Download and decrypt with Group Shared Key
-                            const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, true);
+                            Logger.debug(`[Sync] Group Pull: member=${member.userId}, remotePath=${remotePath}, localPath=${localPath}`);
+
+                            // Download but DON'T decrypt here - FeedModule handles Group Decryption with sharedKey
+                            const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, false);
                             if (changed) {
                                 this.emit(`group:${group.id}:update`, { userId: member.userId, dateStr });
                             }
@@ -703,6 +727,34 @@ export class SovereignS3nc extends EventEmitter {
             return data;
         }
         return null;
+    }
+
+    private async syncGenericFile(relativePath: string, type: 'private' | 'public') {
+        try {
+            const activeRemote = type === 'public' ? this.publicRemote : this.remote;
+            const key = type === 'private' ? this.config.encryptionKey : undefined;
+            const fullPath = `${type}/${relativePath}`;
+
+            const localData = await this.storage.getFile(fullPath);
+            if (!localData) return;
+
+            const localHash = this.calculateHashedContent(localData, key);
+            const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
+            const remoteHash = await activeRemote.getFileHash(relativePath);
+
+            if (localHash !== remoteHash || remoteHash === null) {
+                Logger.info(`[Sync] Uploading generic file: ${fullPath}`);
+                let uploadData = localData;
+                if (key) uploadData = await this.encrypt(localData, key);
+                const etag = await activeRemote.uploadFile(relativePath, uploadData, localHash);
+                if (etag) await this.storage.setGenericRemoteHashCache(fullPath, etag);
+            } else if (!cachedEtag && remoteHash) {
+                const remoteEtag = await activeRemote.getFileEtag(relativePath);
+                if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
+            }
+        } catch (e: any) {
+            Logger.warn(`[Sync] syncGenericFile failed for ${relativePath}: ${e.message}`);
+        }
     }
 
     private async syncGenericFiles(prefix: string) {
@@ -923,10 +975,14 @@ export class SovereignS3nc extends EventEmitter {
                 if (manifest.dms[myId]) {
                     Logger.debug(`[Sync] Found ${manifest.dms[myId].length} DMs for ${myId} from ${user.userId}`);
                     for (const dateStr of manifest.dms[myId]) {
-                        const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public');
-                        const localPath = this.getModulePath('social', `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
-                        const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                        if (changed) this.onModuleUpdate('social', localPath);
+                        // Check ALL registered modules for DMs
+                        for (const moduleDef of this.registeredModules) {
+                            const moduleName = moduleDef.name;
+                            const dmPath = this.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public');
+                            const localPath = this.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
+                            const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
+                            if (changed) this.onModuleUpdate(moduleName, localPath);
+                        }
                     }
                 }
             } else {
@@ -942,18 +998,20 @@ export class SovereignS3nc extends EventEmitter {
                     const dateStr = SovereignS3nc.getDateStr(iter);
                     await this.pullUserDay(user.userId, dateStr, user.publicKey);
                     
-                    // Pull namespaced Social DMs
-                    const myId = this.config.paths.userId;
-                    const dmPath = this.getModulePath('social', `dms/${myId}/${dateStr}.db`, 'public'); 
-                    const localPath = this.getModulePath('social', `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
-                    await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                    
                     // Pull Module Data
                     for (const moduleDef of this.registeredModules) {
                         const moduleName = moduleDef.name;
+                        
+                        // Check for regular module DB
                         const remotePath = this.getModulePath(moduleName, `${dateStr}.db`, 'public');
                         const localPath = this.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
                         await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+
+                        // Also check for DMs in this module
+                        const myId = this.config.paths.userId;
+                        const dmPath = this.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public'); 
+                        const dmLocalPath = this.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
+                        await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
                     }
 
                     iter.setUTCDate(iter.getUTCDate() + 1);

@@ -4,7 +4,6 @@ export * from './interfaces/IStorage';
 export * from './interfaces/IRemoteAdapter';
 export * from './adapters/S3RemoteAdapter';
 export * from './adapters/SQLiteNodeStorage';
-export * from './modules/Social';
 export * from './modules/Profile';
 export * from './modules/Messaging';
 export * from './modules/Feed';

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
-import { SocialManager } from '../../../src/modules/Social';
 import { FeedModule, Post } from '../../../src/modules/Feed';
 import { MessagingModule, Message } from '../../../src/modules/Messaging';
 import { ProfileModule, Profile } from '../../../src/modules/Profile';
@@ -10,6 +9,8 @@ import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteA
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
 import Peer from 'peerjs';
+
+import { MediaUtils } from '../../../src/utils/MediaUtils';
 
 const DEBUG = false;
 
@@ -53,7 +54,6 @@ const App = () => {
     const [discoveryMap, setDiscoveryMap] = useState<Record<string, number>>({});
 
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
-    const [social, setSocial] = useState<SocialManager | null>(null);
     const [feed, setFeed] = useState<FeedModule | null>(null);
     const [messaging, setMessaging] = useState<MessagingModule | null>(null);
     const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
@@ -323,11 +323,12 @@ const App = () => {
             await instance.init();
             setSov(instance);
             
-            const sm = new SocialManager(instance);
-            setSocial(sm);
-            setFeed(new FeedModule(instance));
-            setMessaging(new MessagingModule(instance));
-            setProfileModule(new ProfileModule(instance));
+            const fm = new FeedModule(instance);
+            setFeed(fm);
+            const mm = new MessagingModule(instance);
+            setMessaging(mm);
+            const pm = new ProfileModule(instance);
+            setProfileModule(pm);
 
             // Load user-scoped caches
             const loadCache = (key: string, defaultVal: any) => {
@@ -341,14 +342,14 @@ const App = () => {
             setHighlights(loadCache('highlights', { feed: 0, friends: 0 }));
             setLastViewed(loadCache('last_viewed_v2', { feed: Date.now(), friends: Date.now(), messages: Date.now(), chat: {} }));
             
-            const profileData = await sm.getProfile();
+            const profileData = await pm.getProfile();
             setProfile(profileData);
 
             setIsLoggedIn(true);
             localStorage.setItem('sov_social_config', JSON.stringify(currentConfig));
             localStorage.setItem('sov_auto_login', autoLogin.toString());
 
-            await loadData(sm, instance);
+            await loadData(instance, fm, mm, pm);
 
             const newUser = { userId: currentConfig.userId, name: profileData?.name || currentConfig.userId, avatar: profileData?.avatar, config: currentConfig };
             setRememberedUsers(prev => {
@@ -359,9 +360,9 @@ const App = () => {
             
             setTimeout(() => {
                 instance.sync().then(() => {
-                    loadData();
+                    loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined);
                 }).catch(e => {
-                    loadData(); 
+                    loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined); 
                 });
             }, 100);
         } catch (e: any) {
@@ -375,7 +376,9 @@ const App = () => {
         localStorage.removeItem('sov_social_config');
         setIsLoggedIn(false);
         setSov(null);
-        setSocial(null);
+        setFeed(null);
+        setMessaging(null);
+        setProfileModule(null);
         setPosts([]);
         setFollowing([]);
         setMessages([]);
@@ -449,8 +452,8 @@ const App = () => {
     };
 
     const handlePost = async () => {
-        if (!social || (!newPost && !newImage)) return;
-        await social.post(newPost, true, newImage || undefined);
+        if (!feed || (!newPost && !newImage)) return;
+        await feed.post(newPost, true, newImage || undefined);
         setNewPost('');
         setNewPostImage(null);
         setNewImagePreview(null);
@@ -465,37 +468,37 @@ const App = () => {
     };
 
     const handleLike = async (postId: string) => {
-        if (!social) return;
-        await social.like(postId);
-        await loadData();
+        if (!feed || !profileModule) return;
+        await feed.like(postId);
+        await loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined);
     };
 
     const handleComment = async (post: Post) => {
-        if (!social) return;
+        if (!feed || !profileModule) return;
         showPrompt(`Replying to ${post.userId}:`, async (content) => {
             if (content) {
-                await social.comment(post.id, post.userId, content);
+                await feed.comment(post.id, post.userId, content);
                 await sync();
             }
         });
     };
 
     const handleEditPost = async (post: Post) => {
-        if (!social) return;
+        if (!feed || !profileModule) return;
         showPrompt('Edit your post:', async (newContent) => {
             if (newContent !== null && newContent !== post.content) {
                 const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
-                await social.editPost(post.id, dateStr, newContent);
+                await feed.editPost(post.id, dateStr, newContent);
                 await sync();
             }
         }, post.content);
     };
 
     const handleDeletePost = async (post: Post) => {
-        if (!social) return;
+        if (!feed || !profileModule) return;
         showConfirm('Delete this post? Data will be removed but a placeholder will remain.', async () => {
             const dateStr = new Date(post.timestamp).toISOString().split('T')[0];
-            await social.deletePost(post.id, dateStr);
+            await feed.deletePost(post.id, dateStr);
             await sync();
         });
     };
@@ -511,13 +514,13 @@ const App = () => {
     };
 
     const sync = async () => {
-        if (!sov || !social || syncing || !isConnected) return;
+        if (!sov || !feed || syncing || !isConnected) return;
         setSyncing(true);
         try {
             await sov.sync();
-            await social.syncOtherProfiles();
+            if (profileModule) await profileModule.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
-            await loadData();
+            await loadData(sov, feed, messaging, profileModule);
         } catch (e) {
         } finally {
             setSyncing(false);
@@ -545,22 +548,25 @@ const App = () => {
     }, [selectedUser, currentTab]);
 
     useEffect(() => {
-        if (!isLoggedIn || !sov || !social) return;
+        if (!isLoggedIn || !sov || !feed) return;
         const interval = setInterval(() => {
             sync();
         }, 15000);
         return () => clearInterval(interval);
-    }, [isLoggedIn, sov, social]);
+    }, [isLoggedIn, sov, feed]);
 
     const lookbackDaysRef = useRef(lookbackDays);
     useEffect(() => { lookbackDaysRef.current = lookbackDays; }, [lookbackDays]);
 
-    const loadData = async (activeSocial?: SocialManager, activeSov?: SovereignS3nc) => {
-        const s = activeSocial || social;
-        const v = activeSov || sov;
-        if (!s || !v) return;
+    const loadData = async (v?: SovereignS3nc, fm?: FeedModule, mm?: MessagingModule, pm?: ProfileModule) => {
+        const activeSov = v || sov;
+        const activeFeed = fm || feed;
+        const activeMessaging = mm || messaging;
+        const activeProfile = pm || profileModule;
+        
+        if (!activeSov || !activeFeed || !activeMessaging || !activeProfile) return;
 
-        const registry = await v.getPublicRegistry();
+        const registry = await activeSov.getPublicRegistry();
         
         // In P2P mode, the global registry might be fragmented. 
         // We inject manually discovered users into the list so they can be followed.
@@ -601,17 +607,17 @@ const App = () => {
 
         let allPosts: Post[] = [];
         for (const date of dates) {
-            allPosts = [...allPosts, ...(await s.getPosts(date, 'public'))];
+            allPosts = [...allPosts, ...(await activeFeed.getPosts(date, 'public'))];
             for (const user of followingList) {
-                allPosts = [...allPosts, ...(await s.getPosts(`${user.userId}/${date}`, 'followed'))];
+                allPosts = [...allPosts, ...(await activeFeed.getPosts(`${user.userId}/${date}`, 'followed'))];
             }
         }
 
         allPosts.sort((a, b) => b.timestamp - a.timestamp);
-        await s.enrichLikes(allPosts, currentLookbackDays);
+        await activeFeed.enrichLikes(allPosts, currentLookbackDays);
         setPosts(allPosts);
 
-        const newMessages = await s.getInboxMessages(currentLookbackDays);
+        const newMessages = await activeMessaging.getInboxMessages(currentLookbackDays);
         setMessages(newMessages);
 
         const curLv = lastViewedRef.current;
@@ -712,8 +718,8 @@ const App = () => {
     };
 
     const handleSendMessage = async () => {
-        if (!social || !selectedUser || (!msgInput && !msgImage)) return;
-        await social.sendDirectMessage(selectedUser, msgInput, msgImage || undefined);
+        if (!messaging || !selectedUser || (!msgInput && !msgImage)) return;
+        await messaging.sendDirectMessage(selectedUser, msgInput, msgImage || undefined);
         setMsgInput('');
         setMsgImage(null);
         setMsgImagePreview(null);
@@ -726,27 +732,27 @@ const App = () => {
     };
 
     useEffect(() => {
-        if (isLoggedIn) loadData();
+        if (isLoggedIn) loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined);
     }, [lookbackDays]);
 
     const handleEditMessage = async (m: Message) => {
-        if (!social) return;
+        if (!feed || !profileModule) return;
         showPrompt('Edit your message:', async (newContent) => {
             if (newContent !== null && newContent !== m.content) {
                 const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
                 const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
-                await social.editMessage(otherUser, m.id, dateStr, newContent);
+                await messaging.editMessage(otherUser, m.id, dateStr, newContent);
                 await sync();
             }
         }, m.content);
     };
 
     const handleDeleteMessage = async (m: Message) => {
-        if (!social) return;
+        if (!feed || !profileModule) return;
         showConfirm('Delete this message for everyone?', async () => {
             const dateStr = new Date(m.timestamp).toISOString().split('T')[0];
             const otherUser = m.senderId === config.userId ? m.recipientId : m.senderId;
-            await social.deleteMessage(otherUser, m.id, dateStr);
+            await messaging.deleteMessage(otherUser, m.id, dateStr);
             await sync();
         });
     };
@@ -791,7 +797,7 @@ const App = () => {
                     // Invite others via DM
                     for (const member of members) {
                         if (member.userId !== config.userId) {
-                            await social?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(group)}`);
+                            await messaging?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(group)}`);
                         }
                     }
 
@@ -803,7 +809,7 @@ const App = () => {
 
     const handlePostToGroup = async () => {
         if (!social || !selectedGroup || (!groupInput && !groupImage)) return;
-        await social.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || undefined);
+        await feed.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || undefined);
         setGroupInput('');
         setGroupImage(null);
         setGroupImagePreview(null);
@@ -814,7 +820,7 @@ const App = () => {
     const handleGroupImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        const compressed = await SocialManager.compressImage(await new Promise(r => {
+        const compressed = await MediaUtils.compressImage(await new Promise(r => {
             const reader = new FileReader();
             reader.onload = (ev) => r(ev.target?.result as string);
             reader.readAsDataURL(file);
@@ -831,7 +837,7 @@ const App = () => {
         await sov.respondToGroup(groupInfo.id, 'joined');
         
         // Post a join message to the group
-        await social?.postToGroup(groupInfo.id, groupInfo.sharedKey, 'joined the room', undefined, 'system');
+        await feed?.postToGroup(groupInfo.id, groupInfo.sharedKey, 'joined the room', undefined, 'system');
         
         await sync();
         setCurrentTab('rooms');
@@ -872,7 +878,7 @@ const App = () => {
         
         showConfirm(`Are you sure you want to leave ${selectedGroup.name}?`, async () => {
             // Post leave message before losing access to key/metadata
-            await social?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, 'left the room', undefined, 'system');
+            await feed?.postToGroup(selectedGroup.id, selectedGroup.sharedKey, 'left the room', undefined, 'system');
             
             await sov.leaveGroup(selectedGroup.id);
             await sync();
@@ -912,7 +918,7 @@ const App = () => {
         // Notify members (reuse INVITE_GROUP to broadcast metadata)
         for (const member of updatedMembers) {
             if (member.userId !== config.userId) {
-                await social?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+                await messaging?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
             }
         }
         await sync();
@@ -928,11 +934,11 @@ const App = () => {
         // Notify remaining members
         for (const member of updatedMembers) {
             if (member.userId !== config.userId) {
-                await social?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+                await messaging?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
             }
         }
         // Notify removed member (they won't get future updates)
-        await social?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+        await messaging?.sendDirectMessage(userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
         
         await sync();
     };
@@ -965,7 +971,7 @@ const App = () => {
             // Notify all members
             for (const member of newMembers) {
                 if (member.userId !== config.userId) {
-                    await social?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
+                    await messaging?.sendDirectMessage(member.userId, `INVITE_GROUP:${JSON.stringify(updatedGroup)}`);
                 }
             }
             await sync();
@@ -973,7 +979,7 @@ const App = () => {
     };
 
     const loadGroupPosts = async () => {
-        if (!social || !selectedGroup) return;
+        if (!feed || !selectedGroup) return;
         const dates: string[] = [];
         for (let i = 0; i < lookbackDays; i++) {
             const d = new Date();
@@ -982,7 +988,7 @@ const App = () => {
         }
         let all: Post[] = [];
         for (const date of dates) {
-            all = [...all, ...(await social.getGroupPosts(selectedGroup.id, date))];
+            all = [...all, ...(await feed.getGroupPosts(selectedGroup.id, date))];
         }
         setGroupPosts(all);
 
@@ -994,22 +1000,22 @@ const App = () => {
     };
 
     const handleEditGroupPost = async (p: Post) => {
-        if (!social || !selectedGroup) return;
+        if (!feed || !selectedGroup) return;
         showPrompt('Edit your post:', async (newContent) => {
             if (newContent !== null && newContent !== p.content) {
                 const dateStr = new Date(p.timestamp).toISOString().split('T')[0];
-                await social.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p.id, dateStr, newContent);
+                await feed.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, p.id, dateStr, newContent);
                 await sync();
             }
         }, p.content);
     };
 
     const handleDeleteGroupPost = async (p: Post) => {
-        if (!social || !selectedGroup) return;
+        if (!feed || !selectedGroup) return;
         const msg = p.userId === config.userId ? 'Delete your post?' : `Delete ${p.userId}'s post? (Admin)`;
         showConfirm(msg, async () => {
             const dateStr = new Date(p.timestamp).toISOString().split('T')[0];
-            await social.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p.id, dateStr, p.userId);
+            await feed.deleteGroupPost(selectedGroup.id, selectedGroup.sharedKey, p.id, dateStr, p.userId);
             await sync();
         });
     };
@@ -1045,15 +1051,15 @@ const App = () => {
     const UserAvatar = ({ userId, size = 40 }: { userId: string, size?: number }) => {
         const [userData, setUserData] = useState<any>(profileCache[userId]);
         useEffect(() => {
-            if (social) {
-                social.getProfile(userId).then(p => {
+            if (profileModule) {
+                profileModule.getProfile(userId).then(p => {
                     if (p && (!userData || p.updatedAt > (userData.updatedAt || 0) || p.name !== userData.name || p.avatar !== userData.avatar)) {
                         setUserData(p);
                         setProfileCache(prev => ({ ...prev, [userId]: p }));
                     }
                 });
             }
-        }, [userId, social, lastSyncTime]);
+        }, [userId, profileModule, lastSyncTime]);
         const p = userData || { name: userId };
         return (
             <div className="d-flex align-items-center">
@@ -1072,15 +1078,15 @@ const App = () => {
     const UserName = ({ userId, className }: { userId: string, className?: string }) => {
         const [userData, setUserData] = useState<any>(profileCache[userId]);
         useEffect(() => {
-            if (social) {
-                social.getProfile(userId).then(p => {
+            if (profileModule) {
+                profileModule.getProfile(userId).then(p => {
                     if (p && (!userData || p.updatedAt > (userData.updatedAt || 0) || p.name !== userData.name)) {
                         setUserData(p);
                         setProfileCache(prev => ({ ...prev, [userId]: p }));
                     }
                 });
             }
-        }, [userId, social, lastSyncTime]);
+        }, [userId, profileModule, lastSyncTime]);
         return <span className={className || 'fw-bold'}>{userData?.name || userId}</span>;
     };
 
@@ -1316,7 +1322,7 @@ const App = () => {
                                                 setDiscoveryMap(prev => {
                                                     const next = {...prev, [uid]: Date.now()};
                                                     // Trigger a sync shortly after adding them to discovery map
-                                                    setTimeout(() => loadData(), 500);
+                                                    setTimeout(() => loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined), 500);
                                                     return next;
                                                 });
                                             }
@@ -1630,10 +1636,11 @@ const App = () => {
                                     <textarea className="form-control" rows={3} value={profile?.bio || ''} onChange={e => setProfile({...profile, bio: e.target.value})} placeholder="Tell us about yourself..." />
                                 </div>
                                 <button className="btn btn-primary w-100 py-2 fw-bold" onClick={async () => {
-                                    await social?.updateProfile(profile?.name || config.userId, profile?.bio || '', profile?.avatar);
-                                    await sync();
-                                    showAlert('Profile updated!', 'Success');
+                                   await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || '', profile?.avatar);
+                                   await sync();
+                                   showAlert('Profile updated!', 'Success');
                                 }}>Save Changes</button>
+
                             </div>
                         </div>
                     )}

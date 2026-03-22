@@ -1,5 +1,6 @@
+
 import { SovereignS3nc } from '../src/SovereignS3nc';
-import { SocialManager } from '../src/modules/Social';
+import { FeedModule } from '../src/modules/Feed';
 import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
@@ -70,8 +71,8 @@ describe('Browser-based Social Sync', () => {
 
         const sov = new SovereignS3nc(config, factory(userId), factory);
         await sov.init();
-        const social = new SocialManager(sov);
-        return { sov, social };
+        const feed = new FeedModule(sov);
+        return { sov, feed };
     }
 
     test('Alice posts, Bob syncs and sees it', async () => {
@@ -81,7 +82,7 @@ describe('Browser-based Social Sync', () => {
 
         // 1. Alice posts
         console.log('Alice posting...');
-        await alice.social.post('Hello from Alice', true);
+        await alice.feed.post('Hello from Alice', true);
         
         // 2. Alice syncs to upload data and register in users.json
         await alice.sov.sync();
@@ -91,7 +92,7 @@ describe('Browser-based Social Sync', () => {
         await bob.sov.sync();
 
         // 4. Bob reads feed
-        const posts = await bob.social.getPosts('alice/' + today, 'followed');
+        const posts = await bob.feed.getPosts('alice/' + today, 'followed');
         
         expect(posts.length).toBe(1);
         expect(posts[0].content).toBe('Hello from Alice');

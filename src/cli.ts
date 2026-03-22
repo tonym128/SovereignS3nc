@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 import { SovereignS3nc } from './SovereignS3nc';
-import { SocialManager, Post, Message } from './modules/Social';
+import { ProfileModule, Profile } from './modules/Profile';
+import { MessagingModule, Message } from './modules/Messaging';
+import { FeedModule, Post } from './modules/Feed';
 import { NodeStorage } from './adapters/NodeStorage';
 import * as path from 'path';
 import * as fs from 'fs-extra';
@@ -62,7 +64,12 @@ async function setCurrentUser(userId: string) {
     await fs.writeJson(path.join(CLI_DATA_DIR, 'current_user.json'), { userId });
 }
 
-async function initSovereign(profile: UserProfile): Promise<{ sov: SovereignS3nc, social: SocialManager }> {
+async function initSovereign(profile: UserProfile): Promise<{ 
+    sov: SovereignS3nc, 
+    profile: ProfileModule,
+    messaging: MessagingModule,
+    feed: FeedModule
+}> {
     const storagePath = path.join(CLI_DATA_DIR, 'storage', profile.userId);
     const storage = new NodeStorage(storagePath);
     
@@ -76,9 +83,12 @@ async function initSovereign(profile: UserProfile): Promise<{ sov: SovereignS3nc
     const sov = new SovereignS3nc(config, undefined, undefined, undefined, storage);
     await sov.init();
     
-    const social = new SocialManager(sov);
-    
-    return { sov, social };
+    return { 
+        sov, 
+        profile: new ProfileModule(sov),
+        messaging: new MessagingModule(sov),
+        feed: new FeedModule(sov)
+    };
 }
 
 export async function run(args: string[]) {
@@ -162,7 +172,7 @@ SovereignS3nc CLI - Usage:
                 const postCmd = args[1];
                 const user = await getCurrentUser();
                 if (!user) return console.error('Not logged in.');
-                const { social, sov } = await initSovereign(user);
+                const { feed, sov } = await initSovereign(user);
 
                 if (postCmd === 'create') {
                     const content = args[2];
@@ -171,13 +181,13 @@ SovereignS3nc CLI - Usage:
                     if (imagePath && await fs.pathExists(imagePath)) {
                         image = await fs.readFile(imagePath);
                     }
-                    await social.post(content, true, image);
+                    await feed.post(content, true, image);
                     console.log('Post created.');
                 } else if (postCmd === 'list') {
                     const targetId = args[2] || user.userId;
                     const today = new Date().toISOString().split('T')[0];
                     const type = targetId === user.userId ? 'public' : 'followed';
-                    const posts = await social.getPosts(targetId === user.userId ? today : `${targetId}/${today}`, type);
+                    const posts = await feed.getPosts(targetId === user.userId ? today : `${targetId}/${today}`, type);
                     
                     const lastViewed = user.lastViewed?.feed || 0;
                     console.log(`\n--- Posts for ${targetId} (${today}) ---`);
@@ -192,12 +202,12 @@ SovereignS3nc CLI - Usage:
                     const postId = args[2];
                     const parentUserId = args[3];
                     const content = args[4];
-                    await social.comment(postId, parentUserId, content);
+                    await feed.comment(postId, parentUserId, content);
                     console.log('Comment added.');
                 } else if (postCmd === 'delete') {
                     const postId = args[2];
                     const today = new Date().toISOString().split('T')[0];
-                    await social.deletePost(postId, today);
+                    await feed.deletePost(postId, today);
                     console.log('Post deleted.');
                 } else if (postCmd === 'read') {
                     user.lastViewed!.feed = Date.now();
@@ -210,7 +220,7 @@ SovereignS3nc CLI - Usage:
                 const dmCmd = args[1];
                 const dmUser = await getCurrentUser();
                 if (!dmUser) return console.error('Not logged in.');
-                const { social: dmSocial } = await initSovereign(dmUser);
+                const { messaging: dmMessaging } = await initSovereign(dmUser);
 
                 if (dmCmd === 'send') {
                     const recipientId = args[2];
@@ -220,10 +230,10 @@ SovereignS3nc CLI - Usage:
                     if (imagePath && await fs.pathExists(imagePath)) {
                         image = await fs.readFile(imagePath);
                     }
-                    await dmSocial.sendDirectMessage(recipientId, content, image);
+                    await dmMessaging.sendDirectMessage(recipientId, content, image);
                     console.log('Message sent.');
                 } else if (dmCmd === 'list') {
-                    const messages = await dmSocial.getInboxMessages(5);
+                    const messages = await dmMessaging.getInboxMessages(5);
                     const targetId = args[2];
                     const filtered = targetId 
                         ? messages.filter(m => m.senderId === targetId || m.recipientId === targetId)
@@ -248,7 +258,7 @@ SovereignS3nc CLI - Usage:
                 const profCmd = args[1];
                 const profUser = await getCurrentUser();
                 if (!profUser) return console.error('Not logged in.');
-                const { sov: profSov, social: profSocial } = await initSovereign(profUser);
+                const { sov: profSov, profile: profModule } = await initSovereign(profUser);
 
                 if (profCmd === 'update') {
                     const name = args[2];
@@ -261,18 +271,13 @@ SovereignS3nc CLI - Usage:
                         avatarData = `data:image/jpeg;base64,${buffer.toString('base64')}`;
                     }
 
-                    await profSocial.updateProfile(name, bio, avatarData);
+                    await profModule.updateProfile(name, bio, avatarData);
                     console.log('Profile updated.');
                 } else if (profCmd === 'show') {
                     const targetId = args[2] || profUser.userId;
-                    let profileData: Uint8Array | null;
-                    if (targetId === profUser.userId) {
-                        profileData = await profSov.getStorage().getPublicUserFile();
-                    } else {
-                        profileData = await profSov.getStorage().getFile(`followed/${targetId}/public/user.json`);
-                    }
-                    if (profileData) {
-                        const profile = JSON.parse(new TextDecoder().decode(profileData));
+                    const profile = await profModule.getProfile(targetId);
+                    
+                    if (profile) {
                         console.log(`\n--- Profile for ${targetId} ---`);
                         console.log(`Name: ${profile.name}`);
                         console.log(`Bio: ${profile.bio}`);

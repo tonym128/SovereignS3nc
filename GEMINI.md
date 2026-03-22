@@ -7,7 +7,7 @@
 - **Offline-First**: Operates on local storage (`IndexedDB` in the browser) and syncs asynchronously when connectivity is available.
 - **S3 Synchronization**: Two-way sync with conflict resolution (Last-Write-Wins and Timestamp checks).
 - **End-to-End Encryption (E2EE)**: True asymmetric E2EE using `tweetnacl` (X25519 identity keys) combined with AES-256-GCM for payload encryption.
-- **Pluggable Module Architecture**: Uses a generic module registration system so sub-apps (like `SocialManager`) can be built cleanly with auto-namespaced paths (`public/modules/social/`).
+- **Pluggable Module Architecture**: Uses a generic module registration system so specialized modules (like `Feed`, `Messaging`, `Profile`) can be built cleanly with auto-namespaced paths (`public/modules/feed/`, etc.).
 - **Social Graph & Discovery**: Follow users via a global registry (`users.json`), allowing background syncing of their public profiles, modules, and DMs.
 
 ## Architecture
@@ -50,9 +50,9 @@
 
 ### Directory Structure
 - `src/`: Core library code.
-    - `adapters/`: S3 and IndexedDB logic.
+    - `adapters/`: S3, IndexedDB and SQLite Node logic.
     - `interfaces/`: Core contracts.
-    - `modules/`: Reference applications like `Social.ts`.
+    - `modules/`: Specialized modules (`Profile`, `Messaging`, `Feed`).
 - `dist/`: Compiled outputs.
 - `tests/`: Extensive unit, integration, and browser testing.
 - `demo/social/`: Fully featured React application demonstrating the library.
