@@ -9,7 +9,7 @@ import * as crypto from 'crypto';
 import { EventEmitter } from 'events';
 
 export class SovereignS3nc extends EventEmitter {
-    public static readonly VERSION = '1.1.0';
+    public static readonly VERSION = '2.0.1';
     private storage: IStorage;
     private remote: IRemoteAdapter; // Private Remote
     private publicRemote: IRemoteAdapter;

@@ -4,21 +4,24 @@ A decentralized, offline-first data storage and synchronization library designed
 
 ## Overview
 
-SovereignS3nc empowers developers to build local-first, decentralized applications. Data is stored locally (via IndexedDB in the browser or an in-memory/file backend in Node.js) and synced with remote S3 buckets using a robust, hash-based "last-write-wins" approach.
+SovereignS3nc empowers developers to build local-first, decentralized applications. Data is stored locally (via IndexedDB in the browser or SQLite/Filesystem in Node.js) and synced with remote S3 buckets using a robust, hash-based "last-write-wins" approach.
 
 ### Key Features
 
 - **Offline-First**: Operates seamlessly on local storage and syncs changes only when network connectivity is available.
-- **End-to-End Encrypted (E2EE)**: True asymmetric E2EE identity using `tweetnacl` (X25519 identity keys + AES-256-GCM symmetric encryption). Perfect for secure Direct Messaging.
-- **Pluggable Module Architecture**: Seamlessly build sub-applications using the Module API (`registerModule()`), ensuring application data is safely namespaced (e.g., `public/modules/social/`).
-- **Global Discovery & Social Graph**: Discover other users through a global registry, follow them, and securely synchronize their public data, modules, and profiles.
-- **Secure File/Blob Storage**: Store and share media files (images, audio, etc.) in generic `public/blobs/` or `private/blobs/` buckets.
-- **No List Capability Required**: Designed to function on minimal S3 permissions without requiring `ListObjects`.
+- **End-to-End Encrypted (E2EE)**: True asymmetric E2EE identity using `tweetnacl` (X25519 identity keys + AES-256-GCM symmetric encryption).
+- **Pluggable Module Architecture**: Granular modules for specialized use cases:
+    - **Profile**: Manage identity, public profiles, and following graphs.
+    - **Messaging**: Secure, E2EE Direct Messaging with image support.
+    - **Feed**: Public social feeds with nested comments, likes, and attachments.
+- **Global Discovery**: Automatically discover and follow users through a global registry.
+- **Multi-writer Groups**: Support for shared group stores with symmetric encryption.
+- **Universal Storage**: Seamlessly transition between Browser (IndexedDB) and Node.js (SQLite/FileSystem) environments.
 
 ## Installation
 
 ```bash
-npm install sovereigns3nc tweetnacl
+npm install sovereigns3nc
 ```
 
 ## Basic Usage
@@ -30,7 +33,7 @@ import { SovereignS3nc } from 'sovereigns3nc';
 const sovereign = new SovereignS3nc({
   s3: {
     region: 'us-east-1',
-    endpoint: 'https://...', // For Garage/Minio/OCI
+    endpoint: 'https://...', // For Garage/Minio/OCI/S3
     credentials: {
       accessKeyId: '...',
       secretAccessKey: '...'
@@ -43,42 +46,53 @@ const sovereign = new SovereignS3nc({
     userId: 'user-123',
     storeId: 'main'
   },
-  password: 'my-super-strong-password', // Used to derive deterministic E2EE Master Keys
+  password: 'my-super-strong-password', // Used to derive E2EE Identity Keys
   debug: true
 });
 
 // 2. Initialize (generates E2EE keypairs and connects to local storage)
 await sovereign.init();
 
-// 3. Sync changes (handles pull, merge, and push of all registered modules and blobs)
+// 3. Sync changes (Pull updates from followed users & Push local changes)
 await sovereign.sync();
 ```
 
-## Module API Example
+## Module System
 
-SovereignS3nc provides an API specifically to let developers build sub-applications ("Modules") like Social Feeds, Todo Lists, or Finance Trackers without worrying about sync state.
+SovereignS3nc includes high-level modules to handle common application logic:
 
 ```typescript
-export class MyCustomModule {
-    private readonly MODULE_NAME = 'mymodule';
+import { FeedModule, MessagingModule, ProfileModule } from 'sovereigns3nc';
 
-    constructor(private db: SovereignS3nc) {
-        // Auto-registers this module to be included in the sync cycle
-        this.db.registerModule(this.MODULE_NAME);
-    }
+// Profile Management
+const profile = new ProfileModule(sovereign);
+await profile.updateProfile({ displayName: "Alice", bio: "Hello World" });
 
-    async saveMyData(date: string, payload: Uint8Array) {
-        // Automatically namespaces data to avoid system collisions
-        const path = this.db.getModulePath(this.MODULE_NAME, `data/${date}.bin`, 'private');
-        await this.db.getStorage().saveFile(path, payload);
-    }
-}
+// E2EE Messaging
+const messaging = new MessagingModule(sovereign);
+await messaging.sendMessage("bob-123", "Hey Bob, check this out!", "feed");
+
+// Social Feeds
+const feed = new FeedModule(sovereign);
+await feed.createPost("My first decentralized post!");
 ```
+
+## Storage Adapters
+
+The library automatically selects the best storage adapter for your environment:
+- **Browser**: `IndexedDBStorage` (High performance, large capacity).
+- **Node.js**: `NodeStorage` (File-system based) or `SQLiteNodeStorage` (Consolidated SQLite database).
 
 ## Architecture
 
-- **Local Storage**: Uses `IndexedDBStorage` in the browser or `InMemoryStorage` for testing.
-- **Remote Adapters**: Exposes an S3 wrapper, handling `PutObject`, `GetObject`, and `HeadObject` for hash optimization.
-- **Security**: 
-    - Derives a private, deterministic S3 prefix (Private GUID) based on the user's password so remote locations are obscured.
-    - Generates X25519 identity keys for Diffie-Hellman Shared Secret generation, encrypting Direct Messages using AES-256-GCM.
+SovereignS3nc operates on a **Daily-DB** pattern:
+1. Every day, a new local SQLite database is created for active modules.
+2. During `sync()`, these databases are hashed, encrypted (if private), and uploaded to S3.
+3. Followed users' databases are downloaded and cached locally for lightning-fast offline access.
+4. Conflicts are resolved via timestamps and SHA-256 hash comparisons.
+
+## Security
+
+- **Private GUID**: Your private data is stored at a deterministic path derived from your password, making it "unfindable" by others.
+- **Identity Keys**: Uses `tweetnacl` to generate X25519 keys from your password.
+- **Shared Secrets**: DMs use Diffie-Hellman Key Exchange to derive shared secrets, ensuring only the sender and recipient can read the content.
