@@ -808,7 +808,7 @@ const App = () => {
     };
 
     const handlePostToGroup = async () => {
-        if (!social || !selectedGroup || (!groupInput && !groupImage)) return;
+        if (!feed || !selectedGroup || (!groupInput && !groupImage)) return;
         await feed.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || undefined);
         setGroupInput('');
         setGroupImage(null);

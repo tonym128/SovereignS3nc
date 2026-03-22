@@ -231,7 +231,7 @@ const App = () => {
         if (!banky) return;
         setSelectedAccount(acc);
         const shared = sharedAccounts.find(g => g.id === acc.id);
-        const txs = await banky.getTransactions(acc.id, 365, shared?.id);
+        const txs = await banky.getTransactions(acc.id, 365, shared?.id, shared?.sharedKey);
         setTransactions(txs);
         
         const g = await banky.getGoals(acc.id);

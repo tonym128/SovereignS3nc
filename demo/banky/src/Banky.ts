@@ -306,14 +306,23 @@ export class BankyManager {
                     if (member.userId === this.db.getConfig().paths.userId) continue;
                     if (member.status !== 'joined') continue;
                     const path = `followed/${member.userId}/groups/${groupId}/${date}.db`;
-                    const data = await this.db.getStorage().getFile(path);
+                    let data = await this.db.getStorage().getFile(path);
+                    
                     if (data) {
                         try {
+                            // Shared DBs are encrypted with group sharedKey
+                            try {
+                                data = await this.db.decrypt(data, group.sharedKey);
+                            } catch (de: any) {
+                                console.error(`[Banky] Decryption failed for ${path}: ${de.message}`);
+                                continue;
+                            }
+                            
                             const db = new this.sqliteInstance.Database(data);
-                            transactions.push(...this.queryTransactions(db, accountId));
+                            transactions.push(...this.queryTransactions(db, groupId)); // Note: using groupId as accountId for shared DBs
                             db.close();
-                        } catch (e) {
-                            console.error('DB init failed for member data:', e);
+                        } catch (e: any) {
+                            console.error(`[Banky] DB init failed for member data ${path}: ${e.message}`);
                         }
                     }
                 }
@@ -330,7 +339,7 @@ export class BankyManager {
 
     private queryTransactions(db: any, accountId: string): Transaction[] {
         try {
-            const res = db.exec('SELECT * FROM transactions WHERE accountId = ?', [accountId]);
+            const res = db.exec('SELECT * FROM transactions WHERE accountId = ? ORDER BY timestamp DESC', [accountId]);
             if (res.length === 0) return [];
             const cols = res[0].columns;
             return res[0].values.map((row: any) => {
@@ -338,7 +347,8 @@ export class BankyManager {
                 cols.forEach((c: string, i: number) => tx[c] = row[i]);
                 return tx;
             });
-        } catch(e) {
+        } catch(e: any) {
+            console.error('[Banky] queryTransactions failed:', e.message);
             return [];
         }
     }
@@ -366,6 +376,7 @@ export class BankyManager {
             if (txs.length > 0) {
                 // Open (or create) the group DB for this date
                 const groupDb = await this.getDb(date, 'group', groupId, sharedKey);
+                Logger.info(`[Banky] Publishing ${txs.length} transactions from account ${accountId} to group ${groupId}`);
                 for (const tx of txs) {
                     // Important: Use groupId as the accountId in the shared DB
                     groupDb.run(`INSERT OR REPLACE INTO transactions (id, date, description, amount, category, timestamp, accountId, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,

@@ -91779,14 +91779,14 @@ ${toHex(hashedRequest)}`;
             }
             const publicModuleFiles = await this.storage.listFiles("public/modules/");
             for (const file of publicModuleFiles) {
-              if (file.endsWith(".db")) {
+              if (file.endsWith(".db") || file.endsWith(".json")) {
                 const relativePath = file.replace("public/", "");
                 await this.syncGenericFile(relativePath, "public");
               }
             }
             const privateModuleFiles = await this.storage.listFiles("private/modules/");
             for (const file of privateModuleFiles) {
-              if (file.endsWith(".db")) {
+              if (file.endsWith(".db") || file.endsWith(".json")) {
                 const relativePath = file.replace("private/", "");
                 await this.syncGenericFile(relativePath, "private");
               }
@@ -91920,16 +91920,13 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info(`[Group] Updated group ${group4.name} (${group4.id})`);
         }
-        /**
-         * Joins an existing group using a shared key and participant list.
-         */
         async joinGroup(group4) {
           group4.members.forEach((m2) => {
             if (!m2.status) m2.status = "pending";
           });
           const groupData = new TextEncoder().encode(JSON.stringify(group4));
           await this.storage.saveFile(`private/groups/${group4.id}/info.json`, groupData);
-          Logger.info(`[Group] Received metadata for group ${group4.name} (${group4.id})`);
+          Logger.info(`[Group] Received and saved metadata for group ${group4.name} (${group4.id})`);
         }
         async respondToGroup(groupId, status) {
           const statusData = new TextEncoder().encode(JSON.stringify({ status, updatedAt: Date.now() }));
@@ -98830,7 +98827,7 @@ ${toHex(hashedRequest)}`;
           });
         };
         const handlePostToGroup = async () => {
-          if (!social || !selectedGroup || !groupInput && !groupImage) return;
+          if (!feed || !selectedGroup || !groupInput && !groupImage) return;
           await feed.postToGroup(selectedGroup.id, selectedGroup.sharedKey, groupInput, groupImage || void 0);
           setGroupInput("");
           setGroupImage(null);

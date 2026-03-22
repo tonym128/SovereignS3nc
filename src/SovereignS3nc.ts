@@ -325,17 +325,17 @@ export class SovereignS3nc extends EventEmitter {
                 await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
             }
 
-            // Sync all module files
+            // Sync all module files (recursively find all .db and .json files in modules)
             const publicModuleFiles = await this.storage.listFiles('public/modules/');
             for (const file of publicModuleFiles) {
-                if (file.endsWith('.db')) {
+                if (file.endsWith('.db') || file.endsWith('.json')) {
                     const relativePath = file.replace('public/', '');
                     await this.syncGenericFile(relativePath, 'public');
                 }
             }
             const privateModuleFiles = await this.storage.listFiles('private/modules/');
             for (const file of privateModuleFiles) {
-                if (file.endsWith('.db')) {
+                if (file.endsWith('.db') || file.endsWith('.json')) {
                     const relativePath = file.replace('private/', '');
                     await this.syncGenericFile(relativePath, 'private');
                 }
@@ -509,20 +509,17 @@ export class SovereignS3nc extends EventEmitter {
         Logger.info(`[Group] Updated group ${group.name} (${group.id})`);
     }
 
-    /**
-     * Joins an existing group using a shared key and participant list.
-     */
     public async joinGroup(group: SovereignGroup) {
         // Set all members to pending initially if status is missing
         group.members.forEach(m => {
             if (!m.status) m.status = 'pending';
         });
 
+        // CRITICAL: We must save the info.json so we can find it in getGroups()
         const groupData = new TextEncoder().encode(JSON.stringify(group));
         await this.storage.saveFile(`private/groups/${group.id}/info.json`, groupData);
         
-        // We DON'T respond automatically anymore, UI will call respondToGroup
-        Logger.info(`[Group] Received metadata for group ${group.name} (${group.id})`);
+        Logger.info(`[Group] Received and saved metadata for group ${group.name} (${group.id})`);
     }
 
     public async respondToGroup(groupId: string, status: 'joined' | 'declined') {
