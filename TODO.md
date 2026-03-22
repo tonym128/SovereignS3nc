@@ -1,9 +1,9 @@
 # SovereignS3nc TODO
 
 ## 🏗️ Refactoring & Architecture (High Priority)
-- [ ] **Utility Extraction: `MediaUtils`**
-    - [ ] Move `compressImage` from `SocialManager` to `src/utils/MediaUtils.ts`.
-    - [ ] Add environment gating for DOM-dependent code (Browser vs Node).
+- [x] **Utility Extraction: `MediaUtils`**
+    - [x] Move `compressImage` from `SocialManager` to `src/utils/MediaUtils.ts`.
+    - [x] Add environment gating for DOM-dependent code (Browser vs Node).
 - [ ] **Core: Group Store Orchestration**
     - [ ] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
     - [ ] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
@@ -17,17 +17,17 @@
     - [ ] Implement library-level derivation of "unfindable" hashed backend paths using a combination of username and password to prevent public enumeration of user storage.
     - [ ] Implement a mechanism to check whether a user already exists based on their username (e.g., via a hashed username registry) even when the private profile is stored at an unfindable hashed path.
     - [ ] Implement a library-level safety mechanism to prevent a valid existing user's local or remote data from being accidentally overridden during login/registration.
-- [ ] **Storage: SQLite Node Adapter & Server**
-    - [ ] Create a `SQLiteNodeStorage` adapter that stores all files/metadata in a single consolidated SQLite database.
-    - [ ] Build a Node.js server to support the social network using this storage backend.
-- [ ] **Modules: Granular Decomposition**
-    - [ ] Create `src/modules/Profile.ts` for identity, `user.json`, and follow-graph management.
-    - [ ] Create `src/modules/Messaging.ts` for E2EE DM workflows (using core primitives).
-    - [ ] Create `src/modules/Feed.ts` for posts, comments, and distributed likes aggregation.
-    - [ ] Reduce `src/modules/Social.ts` to a thin composite wrapper.
-- [ ] **Demos: Alignment**
-    - [ ] Update Social Demo to use granular modules (`Feed`, `Messaging`, `Profile`).
-    - [ ] Update Banky Demo to use `ProfileModule` for identity, ensuring zero dependency on Social logic.
+- [x] **Storage: SQLite Node Adapter & Server**
+    - [x] Create a `SQLiteNodeStorage` adapter that stores all files/metadata in a single consolidated SQLite database.
+    - [x] Build a Node.js server to support the social network using this storage backend.
+- [x] **Modules: Granular Decomposition**
+    - [x] Create `src/modules/Profile.ts` for identity, `user.json`, and follow-graph management.
+    - [x] Create `src/modules/Messaging.ts` for E2EE DM workflows (using core primitives).
+    - [x] Create `src/modules/Feed.ts` for posts, comments, and distributed likes aggregation.
+    - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper.
+- [x] **Demos: Alignment**
+    - [x] Update Social Demo to use granular modules (`Feed`, `Messaging`, `Profile`).
+    - [x] Update Banky Demo to use `ProfileModule` for identity, ensuring zero dependency on Social logic.
 
 ## 🚀 Features & Enhancements
 - [ ] **Security & Auth**

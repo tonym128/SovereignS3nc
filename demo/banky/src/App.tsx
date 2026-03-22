@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
+import { ProfileModule } from '../../../src/modules/Profile';
+import { MessagingModule } from '../../../src/modules/Messaging';
 import { BankyManager, BankAccount, Transaction, Goal } from './Banky';
 import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from '../../../src/adapters/S3RemoteAdapter';
@@ -110,45 +112,19 @@ const App = () => {
             const f = await v.getFollowing();
             setFollowing(f);
 
-            // Auto-join logic: Check for invitations in followed DMs
-            const dates: string[] = [];
-            for (let i = 0; i < 2; i++) {
-                const d = new Date();
-                d.setUTCDate(d.getUTCDate() - i);
-                dates.push(d.toISOString().split('T')[0]);
-            }
-
-            for (const user of f) {
-                if (!user.publicKey) continue;
-                const sharedSecret = v.deriveSharedSecret(user.publicKey);
-                const myId = config.paths.userId;
-                for (const date of dates) {
-                    const localPath = `followed/${user.userId}/modules/social/dms/${myId}/${date}.db`;
-                    const data = await v.getStorage().getFile(localPath);
-                    if (data) {
-                        const SQL = await (globalThis as any).initSqlJs(window.SQL_CONFIG);
-                        const db = new SQL.Database(data);
-                        try {
-                            const res = db.exec('SELECT encrypted_data FROM messages');
-                            if (res.length > 0) {
-                                for (const row of res[0].values) {
-                                    try {
-                                        const decrypted = await v.decrypt(row[0] as Uint8Array, sharedSecret);
-                                        const msg = JSON.parse(new TextDecoder().decode(decrypted));
-                                        if (msg.content.startsWith('INVITE_GROUP:')) {
-                                            const groupInfo = JSON.parse(msg.content.substring(13));
-                                            const groups = await v.getGroups();
-                                            if (!groups.find(g => g.id === groupInfo.id)) {
-                                                await v.joinGroup(groupInfo);
-                                                await v.respondToGroup(groupInfo.id, 'joined');
-                                            }
-                                        }
-                                    } catch(e) {}
-                                }
-                            }
-                        } catch(e) {}
-                        db.close();
-                    }
+            // Auto-join logic using MessagingModule
+            const messaging = new MessagingModule(v);
+            const inbox = await messaging.getInboxMessages(2);
+            for (const msg of inbox) {
+                if (msg.content.startsWith('INVITE_GROUP:')) {
+                    try {
+                        const groupInfo = JSON.parse(msg.content.substring(13));
+                        const groups = await v.getGroups();
+                        if (!groups.find(g => g.id === groupInfo.id)) {
+                            await v.joinGroup(groupInfo);
+                            await v.respondToGroup(groupInfo.id, 'joined');
+                        }
+                    } catch(e) {}
                 }
             }
 
@@ -156,12 +132,10 @@ const App = () => {
             const groups = await v.getGroups();
             setSharedAccounts(groups);
 
-            const profileData = await v.getStorage().getPublicUserFile();
-            if (profileData) {
-                try {
-                    setProfile(JSON.parse(new TextDecoder().decode(profileData)));
-                } catch(e) {}
-            }
+            // Load profile using ProfileModule
+            const profileModule = new ProfileModule(v);
+            const p = await profileModule.getProfile();
+            if (p) setProfile(p);
 
             setLastSyncTime(new Date().toLocaleTimeString());
         } catch (e) {}
@@ -505,11 +479,10 @@ const App = () => {
 
     const handleUpdateProfile = () => {
         showPrompt('Enter your display name:', async (name) => {
-            if (name) {
+            if (name && sov) {
+                const profileModule = new ProfileModule(sov);
+                await profileModule.updateProfile(name, profile.bio || '');
                 setProfile({ ...profile, name });
-                // In real app, you'd save this to a public user file on S3
-                const profileData = new TextEncoder().encode(JSON.stringify({ name, userId: config.paths.userId }));
-                await sov?.getStorage().savePublicUserFile(profileData);
                 await sync();
                 showAlert('Profile updated!');
             }

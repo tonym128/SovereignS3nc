@@ -141,7 +141,7 @@ describe('SocialManager Unit Tests (Namespaced)', () => {
             await sov.getStorage().saveFile(localPath, bobData);
 
             const profile = await social.getProfile(bobId);
-            expect(profile.name).toBe('Bob Namespaced');
+            expect(profile!.name).toBe('Bob Namespaced');
         });
     });
 });

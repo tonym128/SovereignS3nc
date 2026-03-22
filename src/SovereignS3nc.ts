@@ -964,7 +964,7 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
-    private createRemote(userId: string): IRemoteAdapter {
+    public createRemote(userId: string): IRemoteAdapter {
         if (this.remoteFactory) {
             Logger.info(`[Sync] Creating remote for ${userId} using factory.`);
             return this.remoteFactory(userId);

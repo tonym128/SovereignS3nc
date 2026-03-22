@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
-import { SocialManager, Post, Message } from '../../../src/modules/Social';
+import { SocialManager } from '../../../src/modules/Social';
+import { FeedModule, Post } from '../../../src/modules/Feed';
+import { MessagingModule, Message } from '../../../src/modules/Messaging';
+import { ProfileModule, Profile } from '../../../src/modules/Profile';
 import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
@@ -51,6 +54,9 @@ const App = () => {
 
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [social, setSocial] = useState<SocialManager | null>(null);
+    const [feed, setFeed] = useState<FeedModule | null>(null);
+    const [messaging, setMessaging] = useState<MessagingModule | null>(null);
+    const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
     const [following, setFollowing] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<any[]>([]);
@@ -316,8 +322,12 @@ const App = () => {
 
             await instance.init();
             setSov(instance);
+            
             const sm = new SocialManager(instance);
             setSocial(sm);
+            setFeed(new FeedModule(instance));
+            setMessaging(new MessagingModule(instance));
+            setProfileModule(new ProfileModule(instance));
 
             // Load user-scoped caches
             const loadCache = (key: string, defaultVal: any) => {
