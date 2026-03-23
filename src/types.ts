@@ -11,6 +11,7 @@ export interface S3Config {
 
 export interface SovereignConfig {
   s3?: S3Config;
+  offline?: boolean; // Flag for explicit offline-first initialization
   ociParUrl?: string; // OCI Pre-Authenticated Request URL (alternative to S3 Config)
   paths: {
     appId: string;   // Unique GUID for the application

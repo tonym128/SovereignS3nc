@@ -11,9 +11,9 @@ import { EventEmitter } from 'events';
 export class SovereignS3nc extends EventEmitter {
     public static readonly VERSION = '2.0.1';
     private storage: IStorage;
-    private remote: IRemoteAdapter; // Private Remote
-    private publicRemote: IRemoteAdapter;
-    private globalRemote: IRemoteAdapter;
+    private remote?: IRemoteAdapter; // Private Remote (Optional for local-only)
+    private publicRemote?: IRemoteAdapter;
+    private globalRemote?: IRemoteAdapter;
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
     private registeredModules: ModuleDefinition[] = [];
@@ -43,32 +43,39 @@ export class SovereignS3nc extends EventEmitter {
         // which is async. For now we set a dummy.
         this.storage = storage || (null as any);
         
-        // Initialize Remotes
+        // Initialize Remotes if available
         if (remote) {
             this.remote = remote;
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory('global') : remote; 
         } else if (config.s3) {
-            // Public Remote uses the provided userId
-            this.publicRemote = new S3RemoteAdapter(config.s3, {
-                appId: config.paths.appId,
-                userId: config.paths.userId,
-                storeId: config.paths.storeId
-            });
-
-            // Global Remote - Simplified path
-            this.globalRemote = new S3RemoteAdapter(config.s3, {
-                appId: config.paths.appId,
-                userId: 'global',
-                storeId: 'users'
-            });
-
-            // Private Remote - Initialize with a dummy or same as public for now, 
-            // but it will be replaced in initKeys with the proper Private GUID.
-            this.remote = this.publicRemote;
-        } else {
-            throw new Error('S3 configuration required for this version');
+            this.initializeS3Remotes(config.s3);
+        } else if (!config.offline) {
+            Logger.warn('[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.');
         }
+    }
+
+    private initializeS3Remotes(s3: any, privateUserId?: string) {
+        // Public Remote uses the provided userId
+        this.publicRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: this.config.paths.userId,
+            storeId: this.config.paths.storeId
+        });
+
+        // Global Remote - Simplified path
+        this.globalRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: 'global',
+            storeId: 'users'
+        });
+
+        // Private Remote
+        this.remote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: privateUserId || this.config.paths.userId,
+            storeId: this.config.paths.storeId
+        });
     }
 
     public getStorage(): IStorage {
@@ -184,6 +191,69 @@ export class SovereignS3nc extends EventEmitter {
         Logger.info('[Sovereign] Initialization complete.');
     }
 
+    /**
+     * Connects a remote storage backend to an instance that was started in local-only mode.
+     * This will initialize remotes, upload local keys if missing from remote, and trigger a sync.
+     */
+    public async connectRemote(remote: any) {
+        Logger.info('[Sovereign] Connecting to remote...');
+        
+        if (remote.region && remote.bucketName) {
+            // It's an S3Config
+            this.config.s3 = remote;
+            
+            // If keys were already derived, we need the Private ID for the remote path
+            let privateId: string | undefined;
+            if (this.config.password) {
+                privateId = crypto.pbkdf2Sync(this.config.password, this.config.paths.userId + '-private-id', 1000, 32, 'sha256').toString('hex');
+            }
+            
+            this.initializeS3Remotes(remote, privateId);
+        } else {
+            // It's an IRemoteAdapter (e.g. WebRTC)
+            this.remote = remote;
+            this.publicRemote = remote;
+            this.globalRemote = remote;
+        }
+
+        // 1. Ensure keys are synced to the new remote
+        if (this.config.password && this.config.encryptionKey) {
+            await this.ensureKeysAreRemote();
+        }
+
+        // 2. Register in global registry
+        if (this.config.publicEncryptionKey) {
+            await this.ensureGlobalRegistration();
+        }
+
+        // 3. Trigger initial sync
+        await this.sync();
+        Logger.info('[Sovereign] Remote connection and initial sync complete.');
+    }
+
+    private async ensureKeysAreRemote() {
+        if (!this.remote || !this.config.password || !this.config.encryptionKey) return;
+
+        const publicUserId = this.config.paths.userId;
+        const masterKey = crypto.pbkdf2Sync(this.config.password, publicUserId + '-master', 1000, 32, 'sha256').toString('hex');
+        
+        try {
+            const check = await this.remote.downloadFile('_keys.json');
+            if (!check || !check.data) {
+                Logger.info('[Keys] Keys missing from remote. Uploading local keys...');
+                const keyInfo = { 
+                    privateKey: this.config.encryptionKey, 
+                    publicKey: this.config.publicEncryptionKey 
+                };
+                const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
+                await this.remote.uploadFile('_keys.json', encrypted);
+                Logger.info('[Keys] Local keys uploaded to remote.');
+            }
+        } catch (e: any) {
+            Logger.warn(`[Keys] Failed to ensure keys are remote: ${e.message}`);
+        }
+    }
+
     private async initKeys() {
         const password = this.config.password!;
         const publicUserId = this.config.paths.userId;
@@ -205,21 +275,23 @@ export class SovereignS3nc extends EventEmitter {
         
         Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0,8)}...`);
 
-        // 2. Initialize the Private Remote with the secret GUID
-        Logger.info('[Keys] Step 2: Initializing Private Remote...');
-        try {
-            if (!this.remoteFactory && this.config.s3) {
-                this.remote = new S3RemoteAdapter(this.config.s3, {
-                    appId: appId,
-                    userId: privateId,
-                    storeId: this.config.paths.storeId
-                });
-            } else if (this.remoteFactory) {
-                this.remote = this.remoteFactory(privateId);
+        // 2. Initialize the Private Remote with the secret GUID (if config exists)
+        if (!this.remote && (this.config.s3 || this.remoteFactory)) {
+            Logger.info('[Keys] Step 2: Initializing Private Remote...');
+            try {
+                if (!this.remoteFactory && this.config.s3) {
+                    this.remote = new S3RemoteAdapter(this.config.s3, {
+                        appId: appId,
+                        userId: privateId,
+                        storeId: this.config.paths.storeId
+                    });
+                } else if (this.remoteFactory) {
+                    this.remote = this.remoteFactory(privateId);
+                }
+            } catch (e: any) {
+                Logger.error('[Keys] Remote initialization failed:', e.message);
+                // We don't throw here to allow local-only initialization even if remote setup fails
             }
-        } catch (e: any) {
-            Logger.error('[Keys] Remote initialization failed:', e.message);
-            throw e;
         }
 
         // 3. Try to load keys from local private storage
@@ -245,7 +317,7 @@ export class SovereignS3nc extends EventEmitter {
         }
 
         // 4. If not found locally, try remote (at the Private GUID path)
-        if (!keyInfo) {
+        if (!keyInfo && this.remote) {
             Logger.info('[Keys] Step 4: Trying to download keys from remote...');
             const result = await this.remote.downloadFile('_keys.json');
             Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
@@ -276,9 +348,14 @@ export class SovereignS3nc extends EventEmitter {
             Logger.info('[Keys] Encrypting new keys for storage...');
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb('_keys', 'private', encrypted);
-            Logger.info('[Keys] Uploading new keys to remote...');
-            await this.remote.uploadFile('_keys.json', encrypted);
-            Logger.info('[Keys] New keys generated, saved and uploaded.');
+            
+            if (this.remote) {
+                Logger.info('[Keys] Uploading new keys to remote...');
+                await this.remote.uploadFile('_keys.json', encrypted);
+                Logger.info('[Keys] New keys uploaded.');
+            } else {
+                Logger.info('[Keys] New keys generated and saved locally (no remote connected).');
+            }
         }
 
         this.config.encryptionKey = keyInfo.privateKey;
@@ -286,6 +363,11 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     async sync() {
+        if (!this.remote || !this.publicRemote || !this.globalRemote) {
+            Logger.info('[Sovereign] Remote not connected, skipping sync.');
+            return;
+        }
+
         if (this.isSyncing) {
             Logger.info('[Sovereign] Sync already in progress, skipping...');
             return;
@@ -378,6 +460,7 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     public async syncManifest() {
+        if (!this.publicRemote) return;
         try {
             Logger.info('[Sync] Generating and uploading manifest...');
             const manifest = await this.generateManifest();
@@ -691,6 +774,7 @@ export class SovereignS3nc extends EventEmitter {
             if (!data) {
                 // Try to download from own remote
                 const activeRemote = path.startsWith('public/') ? this.publicRemote : this.remote;
+                if (!activeRemote) return null;
                 const key = path.startsWith('public/') ? undefined : this.config.encryptionKey;
                 const result = await activeRemote.downloadFile(path);
                 if (result && result.data) {
@@ -729,6 +813,7 @@ export class SovereignS3nc extends EventEmitter {
     private async syncGenericFile(relativePath: string, type: 'private' | 'public') {
         try {
             const activeRemote = type === 'public' ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = type === 'private' ? this.config.encryptionKey : undefined;
             const fullPath = `${type}/${relativePath}`;
 
@@ -758,6 +843,7 @@ export class SovereignS3nc extends EventEmitter {
         try {
             const isPublic = prefix.startsWith('public/');
             const activeRemote = isPublic ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = isPublic ? undefined : this.config.encryptionKey;
 
             // 1. Sync Local -> Remote (Upload new files)
@@ -792,6 +878,7 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private async ensureGlobalRegistration() {
+        if (!this.globalRemote) return;
         const remotePath = 'users.json';
         const myUserId = this.config.paths.userId;
         const myPublicKey = this.config.publicEncryptionKey!;
@@ -856,7 +943,7 @@ export class SovereignS3nc extends EventEmitter {
         const remotePath = 'users.json';
         let publicKey = '';
         try {
-            const result = await this.globalRemote.downloadFile(remotePath);
+            const result = await this.globalRemote?.downloadFile(remotePath);
             if (result && result.data) {
                 const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
                 const user = userList.find(u => u.userId === userId);
@@ -896,6 +983,7 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     async getPublicRegistry(): Promise<{userId: string, publicKey: string}[]> {
+        if (!this.globalRemote) return [];
         Logger.info('[Sovereign] Fetching public registry...');
         const remotePath = 'users.json';
         const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
@@ -908,6 +996,7 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private async discoverAndFollowUsers(today: string) {
+        if (!this.globalRemote) return;
         const remotePath = 'users.json';
         let remoteData: Uint8Array | null = null;
         try {
@@ -1101,6 +1190,7 @@ export class SovereignS3nc extends EventEmitter {
         try {
             const remotePath = `${type}/${date}.db`;
             const activeRemote = remoteOverride || this.remote;
+            if (!activeRemote) return;
             
             let localData = await this.storage.getDailyDb(date, type);
             // ONLY encrypt/decrypt private data. Public data is open for sharing.
@@ -1188,6 +1278,7 @@ export class SovereignS3nc extends EventEmitter {
     
     private async syncUserFile() {
         try {
+            if (!this.publicRemote) return;
             const remotePath = 'public/user.json';
             let localData = await this.storage.getPublicUserFile();
             const key = this.config.publicEncryptionKey;

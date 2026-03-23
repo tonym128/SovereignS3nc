@@ -91553,23 +91553,30 @@ ${toHex(hashedRequest)}`;
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory("global") : remote;
           } else if (config.s3) {
-            this.publicRemote = new S3RemoteAdapter(config.s3, {
-              appId: config.paths.appId,
-              userId: config.paths.userId,
-              storeId: config.paths.storeId
-            });
-            this.globalRemote = new S3RemoteAdapter(config.s3, {
-              appId: config.paths.appId,
-              userId: "global",
-              storeId: "users"
-            });
-            this.remote = this.publicRemote;
-          } else {
-            throw new Error("S3 configuration required for this version");
+            this.initializeS3Remotes(config.s3);
+          } else if (!config.offline) {
+            Logger.warn("[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.");
           }
         }
         static {
-          this.VERSION = "1.1.0";
+          this.VERSION = "2.0.1";
+        }
+        initializeS3Remotes(s3, privateUserId) {
+          this.publicRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: this.config.paths.userId,
+            storeId: this.config.paths.storeId
+          });
+          this.globalRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: "global",
+            storeId: "users"
+          });
+          this.remote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: privateUserId || this.config.paths.userId,
+            storeId: this.config.paths.storeId
+          });
         }
         getStorage() {
           if (!this.storage) throw new Error("Storage not initialized. Call init() first.");
@@ -91663,6 +91670,53 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info("[Sovereign] Initialization complete.");
         }
+        /**
+         * Connects a remote storage backend to an instance that was started in local-only mode.
+         * This will initialize remotes, upload local keys if missing from remote, and trigger a sync.
+         */
+        async connectRemote(remote) {
+          Logger.info("[Sovereign] Connecting to remote...");
+          if (remote.region && remote.bucketName) {
+            this.config.s3 = remote;
+            let privateId;
+            if (this.config.password) {
+              privateId = crypto4.pbkdf2Sync(this.config.password, this.config.paths.userId + "-private-id", 1e3, 32, "sha256").toString("hex");
+            }
+            this.initializeS3Remotes(remote, privateId);
+          } else {
+            this.remote = remote;
+            this.publicRemote = remote;
+            this.globalRemote = remote;
+          }
+          if (this.config.password && this.config.encryptionKey) {
+            await this.ensureKeysAreRemote();
+          }
+          if (this.config.publicEncryptionKey) {
+            await this.ensureGlobalRegistration();
+          }
+          await this.sync();
+          Logger.info("[Sovereign] Remote connection and initial sync complete.");
+        }
+        async ensureKeysAreRemote() {
+          if (!this.remote || !this.config.password || !this.config.encryptionKey) return;
+          const publicUserId = this.config.paths.userId;
+          const masterKey = crypto4.pbkdf2Sync(this.config.password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
+          try {
+            const check = await this.remote.downloadFile("_keys.json");
+            if (!check || !check.data) {
+              Logger.info("[Keys] Keys missing from remote. Uploading local keys...");
+              const keyInfo = {
+                privateKey: this.config.encryptionKey,
+                publicKey: this.config.publicEncryptionKey
+              };
+              const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
+              await this.remote.uploadFile("_keys.json", encrypted);
+              Logger.info("[Keys] Local keys uploaded to remote.");
+            }
+          } catch (e2) {
+            Logger.warn(`[Keys] Failed to ensure keys are remote: ${e2.message}`);
+          }
+        }
         async initKeys() {
           const password = this.config.password;
           const publicUserId = this.config.paths.userId;
@@ -91678,20 +91732,21 @@ ${toHex(hashedRequest)}`;
             throw new Error(`Secret derivation failed: ${e2.message}`);
           }
           Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
-          Logger.info("[Keys] Step 2: Initializing Private Remote...");
-          try {
-            if (!this.remoteFactory && this.config.s3) {
-              this.remote = new S3RemoteAdapter(this.config.s3, {
-                appId,
-                userId: privateId,
-                storeId: this.config.paths.storeId
-              });
-            } else if (this.remoteFactory) {
-              this.remote = this.remoteFactory(privateId);
+          if (!this.remote && (this.config.s3 || this.remoteFactory)) {
+            Logger.info("[Keys] Step 2: Initializing Private Remote...");
+            try {
+              if (!this.remoteFactory && this.config.s3) {
+                this.remote = new S3RemoteAdapter(this.config.s3, {
+                  appId,
+                  userId: privateId,
+                  storeId: this.config.paths.storeId
+                });
+              } else if (this.remoteFactory) {
+                this.remote = this.remoteFactory(privateId);
+              }
+            } catch (e2) {
+              Logger.error("[Keys] Remote initialization failed:", e2.message);
             }
-          } catch (e2) {
-            Logger.error("[Keys] Remote initialization failed:", e2.message);
-            throw e2;
           }
           Logger.info("[Keys] Step 3: Checking local storage for keys...");
           let keyInfo = null;
@@ -91712,7 +91767,7 @@ ${toHex(hashedRequest)}`;
               Logger.warn(`[Keys] Failed to decrypt local keys: ${e2.message}`);
             }
           }
-          if (!keyInfo) {
+          if (!keyInfo && this.remote) {
             Logger.info("[Keys] Step 4: Trying to download keys from remote...");
             const result = await this.remote.downloadFile("_keys.json");
             Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
@@ -91740,14 +91795,22 @@ ${toHex(hashedRequest)}`;
             Logger.info("[Keys] Encrypting new keys for storage...");
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
-            Logger.info("[Keys] Uploading new keys to remote...");
-            await this.remote.uploadFile("_keys.json", encrypted);
-            Logger.info("[Keys] New keys generated, saved and uploaded.");
+            if (this.remote) {
+              Logger.info("[Keys] Uploading new keys to remote...");
+              await this.remote.uploadFile("_keys.json", encrypted);
+              Logger.info("[Keys] New keys uploaded.");
+            } else {
+              Logger.info("[Keys] New keys generated and saved locally (no remote connected).");
+            }
           }
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
         }
         async sync() {
+          if (!this.remote || !this.publicRemote || !this.globalRemote) {
+            Logger.info("[Sovereign] Remote not connected, skipping sync.");
+            return;
+          }
           if (this.isSyncing) {
             Logger.info("[Sovereign] Sync already in progress, skipping...");
             return;
@@ -91817,6 +91880,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async syncManifest() {
+          if (!this.publicRemote) return;
           try {
             Logger.info("[Sync] Generating and uploading manifest...");
             const manifest = await this.generateManifest();
@@ -92061,6 +92125,7 @@ ${toHex(hashedRequest)}`;
             let data = await this.storage.getFile(path2);
             if (!data) {
               const activeRemote = path2.startsWith("public/") ? this.publicRemote : this.remote;
+              if (!activeRemote) return null;
               const key = path2.startsWith("public/") ? void 0 : this.config.encryptionKey;
               const result2 = await activeRemote.downloadFile(path2);
               if (result2 && result2.data) {
@@ -92093,6 +92158,7 @@ ${toHex(hashedRequest)}`;
         async syncGenericFile(relativePath, type) {
           try {
             const activeRemote = type === "public" ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = type === "private" ? this.config.encryptionKey : void 0;
             const fullPath = `${type}/${relativePath}`;
             const localData = await this.storage.getFile(fullPath);
@@ -92118,6 +92184,7 @@ ${toHex(hashedRequest)}`;
           try {
             const isPublic = prefix.startsWith("public/");
             const activeRemote = isPublic ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = isPublic ? void 0 : this.config.encryptionKey;
             const localFiles = await this.storage.listFiles(prefix);
             for (const filePath of localFiles) {
@@ -92142,6 +92209,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async ensureGlobalRegistration() {
+          if (!this.globalRemote) return;
           const remotePath = "users.json";
           const myUserId = this.config.paths.userId;
           const myPublicKey = this.config.publicEncryptionKey;
@@ -92198,7 +92266,7 @@ ${toHex(hashedRequest)}`;
           const remotePath = "users.json";
           let publicKey = "";
           try {
-            const result = await this.globalRemote.downloadFile(remotePath);
+            const result = await this.globalRemote?.downloadFile(remotePath);
             if (result && result.data) {
               const userList = JSON.parse(new TextDecoder().decode(result.data));
               const user = userList.find((u2) => u2.userId === userId);
@@ -92233,6 +92301,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async getPublicRegistry() {
+          if (!this.globalRemote) return [];
           Logger.info("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
           const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
@@ -92244,6 +92313,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async discoverAndFollowUsers(today) {
+          if (!this.globalRemote) return;
           const remotePath = "users.json";
           let remoteData = null;
           try {
@@ -92402,6 +92472,7 @@ ${toHex(hashedRequest)}`;
           try {
             const remotePath = `${type}/${date2}.db`;
             const activeRemote = remoteOverride || this.remote;
+            if (!activeRemote) return;
             let localData = await this.storage.getDailyDb(date2, type);
             const currentKey = type === "private" ? this.config.encryptionKey : void 0;
             const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
@@ -92476,6 +92547,7 @@ ${toHex(hashedRequest)}`;
         }
         async syncUserFile() {
           try {
+            if (!this.publicRemote) return;
             const remotePath = "public/user.json";
             let localData = await this.storage.getPublicUserFile();
             const key = this.config.publicEncryptionKey;
@@ -98159,6 +98231,7 @@ ${toHex(hashedRequest)}`;
       var App = () => {
         const [config, setConfig] = (0, import_react.useState)({
           syncMode: "s3",
+          // Default to s3 for existing tests
           region: "ap-southeast-1",
           endpoint: "",
           accessKeyId: "",
@@ -98408,7 +98481,8 @@ ${toHex(hashedRequest)}`;
               };
             }
             const instance = new SovereignS3nc({
-              s3: currentConfig.syncMode === "s3" || !currentConfig.syncMode ? s3Config : void 0,
+              s3: currentConfig.syncMode === "s3" ? s3Config : void 0,
+              offline: currentConfig.syncMode === "offline",
               paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: "social" },
               password: currentConfig.password,
               debug: DEBUG
@@ -98454,6 +98528,49 @@ ${toHex(hashedRequest)}`;
           }
         };
         const login = () => performLogin(config);
+        const handleConnectRemote = async () => {
+          setDialog({
+            title: "Connect to Remote Storage",
+            message: "Configure your remote backend to enable cross-device sync and social discovery.",
+            type: "config",
+            onConfirm: async (newRemoteConfig) => {
+              if (!sov) return;
+              try {
+                setSyncing(true);
+                setDialog(null);
+                if (newRemoteConfig.syncMode === "s3") {
+                  await sov.connectRemote({
+                    region: newRemoteConfig.region,
+                    endpoint: newRemoteConfig.endpoint,
+                    credentials: {
+                      accessKeyId: newRemoteConfig.accessKeyId,
+                      secretAccessKey: newRemoteConfig.secretAccessKey
+                    },
+                    bucketName: newRemoteConfig.bucketName,
+                    forcePathStyle: true
+                  });
+                } else if (newRemoteConfig.syncMode === "webrtc") {
+                  const adapter2 = new WebRTCRemoteAdapter(config.userId);
+                  const bc2 = new BroadcastChannel("sov-webrtc-mesh");
+                  const peer = adapter2.connectPeer((msg) => bc2.postMessage(msg));
+                  bc2.onmessage = (e2) => peer.receive(e2.data);
+                  const getPrefix = (uid, sid) => `${config.appId}/${uid}/${sid}`;
+                  const remoteAdapter = new PrefixProxyAdapter(adapter2, getPrefix(config.userId, "social"));
+                  await sov.connectRemote(remoteAdapter);
+                }
+                setConfig({ ...config, ...newRemoteConfig });
+                localStorage.setItem("sov_social_config", JSON.stringify({ ...config, ...newRemoteConfig }));
+                showAlert("Connected to remote successfully!", "Success");
+                await loadData(sov, feed, messaging, profileModule);
+              } catch (e2) {
+                showAlert("Failed to connect: " + e2.message, "Error");
+              } finally {
+                setSyncing(false);
+              }
+            },
+            onCancel: () => setDialog(null)
+          });
+        };
         const logout = () => {
           localStorage.removeItem("sov_social_config");
           setIsLoggedIn(false);
@@ -99068,19 +99185,19 @@ ${toHex(hashedRequest)}`;
             u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
             /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
             /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh (Local)"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modePeerjs", autoComplete: "off", checked: config.syncMode === "peerjs", onChange: () => setConfig({ ...config, syncMode: "peerjs" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modePeerjs" }, "PeerJS (Global P2P) ", /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-warning text-dark ms-1" }, "Alpha"))), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
             setAutoLogin(e2.target.checked);
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
+          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             className: `btn btn-link px-2 me-2 ${isConnected ? "text-success" : "text-danger"}`,
             onClick: toggleConnection
           },
           /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
-        ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing }, syncing ? "..." : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
+        ), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-3", onClick: sync, disabled: syncing || config.syncMode === "offline" }, syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
           showPrompt("Enter exact User ID to discover:", (uid) => {
             if (uid) {
               setDiscoveryMap((prev) => {
@@ -99166,6 +99283,14 @@ ${toHex(hashedRequest)}`;
         const [inputValue, setInputValue] = (0, import_react.useState)(dialog?.defaultValue || "");
         const [selectedValues, setSelectedValues] = (0, import_react.useState)([]);
         const [searchQuery, setSearchSearchQuery] = (0, import_react.useState)("");
+        const [configData, setConfigData] = (0, import_react.useState)({
+          syncMode: "s3",
+          region: "us-east-1",
+          endpoint: "",
+          accessKeyId: "",
+          secretAccessKey: "",
+          bucketName: ""
+        });
         (0, import_react.useEffect)(() => {
           setInputValue(dialog?.defaultValue || "");
           setSelectedValues([]);
@@ -99189,7 +99314,7 @@ ${toHex(hashedRequest)}`;
             onChange: (e2) => setInputValue(e2.target.value),
             onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
           }
-        ), dialog.type === "multiselect" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement(
+        ), dialog.type === "config" && /* @__PURE__ */ import_react.default.createElement("div", { className: "config-form" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("select", { className: "form-select mb-3 rounded-pill", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }) }, /* @__PURE__ */ import_react.default.createElement("option", { value: "s3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("option", { value: "webrtc" }, "WebRTC Mesh")), configData.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) }))), dialog.type === "multiselect" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement(
           "input",
           {
             type: "text",
@@ -99214,7 +99339,7 @@ ${toHex(hashedRequest)}`;
           {
             type: "button",
             className: "btn btn-primary rounded-pill px-4 shadow-sm",
-            onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue)
+            onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : dialog.type === "config" ? configData : inputValue)
           },
           dialog.type === "alert" ? "OK" : "Confirm"
         )))));

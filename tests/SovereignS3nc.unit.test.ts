@@ -74,10 +74,12 @@ describe('SovereignS3nc Unit Tests', () => {
             expect(sov).toBeDefined();
         });
 
-        test('should throw if no remote or S3 config provided', () => {
-            const noS3Config = { ...config };
+        test('should allow startup in local-only mode if no remote or S3 config provided', async () => {
+            const noS3Config = { ...config, offline: true };
             delete noS3Config.s3;
-            expect(() => new SovereignS3nc(noS3Config)).toThrow('S3 configuration required for this version');
+            const sov = new SovereignS3nc(noS3Config);
+            await sov.init();
+            expect(sov).toBeDefined();
         });
 
         test('should initialize keys if password is provided', async () => {

@@ -91553,23 +91553,30 @@ ${toHex(hashedRequest)}`;
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory("global") : remote;
           } else if (config.s3) {
-            this.publicRemote = new S3RemoteAdapter(config.s3, {
-              appId: config.paths.appId,
-              userId: config.paths.userId,
-              storeId: config.paths.storeId
-            });
-            this.globalRemote = new S3RemoteAdapter(config.s3, {
-              appId: config.paths.appId,
-              userId: "global",
-              storeId: "users"
-            });
-            this.remote = this.publicRemote;
-          } else {
-            throw new Error("S3 configuration required for this version");
+            this.initializeS3Remotes(config.s3);
+          } else if (!config.offline) {
+            Logger.warn("[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.");
           }
         }
         static {
-          this.VERSION = "1.1.0";
+          this.VERSION = "2.0.1";
+        }
+        initializeS3Remotes(s3, privateUserId) {
+          this.publicRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: this.config.paths.userId,
+            storeId: this.config.paths.storeId
+          });
+          this.globalRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: "global",
+            storeId: "users"
+          });
+          this.remote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: privateUserId || this.config.paths.userId,
+            storeId: this.config.paths.storeId
+          });
         }
         getStorage() {
           if (!this.storage) throw new Error("Storage not initialized. Call init() first.");
@@ -91663,6 +91670,53 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info("[Sovereign] Initialization complete.");
         }
+        /**
+         * Connects a remote storage backend to an instance that was started in local-only mode.
+         * This will initialize remotes, upload local keys if missing from remote, and trigger a sync.
+         */
+        async connectRemote(remote) {
+          Logger.info("[Sovereign] Connecting to remote...");
+          if (remote.region && remote.bucketName) {
+            this.config.s3 = remote;
+            let privateId;
+            if (this.config.password) {
+              privateId = crypto4.pbkdf2Sync(this.config.password, this.config.paths.userId + "-private-id", 1e3, 32, "sha256").toString("hex");
+            }
+            this.initializeS3Remotes(remote, privateId);
+          } else {
+            this.remote = remote;
+            this.publicRemote = remote;
+            this.globalRemote = remote;
+          }
+          if (this.config.password && this.config.encryptionKey) {
+            await this.ensureKeysAreRemote();
+          }
+          if (this.config.publicEncryptionKey) {
+            await this.ensureGlobalRegistration();
+          }
+          await this.sync();
+          Logger.info("[Sovereign] Remote connection and initial sync complete.");
+        }
+        async ensureKeysAreRemote() {
+          if (!this.remote || !this.config.password || !this.config.encryptionKey) return;
+          const publicUserId = this.config.paths.userId;
+          const masterKey = crypto4.pbkdf2Sync(this.config.password, publicUserId + "-master", 1e3, 32, "sha256").toString("hex");
+          try {
+            const check = await this.remote.downloadFile("_keys.json");
+            if (!check || !check.data) {
+              Logger.info("[Keys] Keys missing from remote. Uploading local keys...");
+              const keyInfo = {
+                privateKey: this.config.encryptionKey,
+                publicKey: this.config.publicEncryptionKey
+              };
+              const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
+              await this.remote.uploadFile("_keys.json", encrypted);
+              Logger.info("[Keys] Local keys uploaded to remote.");
+            }
+          } catch (e2) {
+            Logger.warn(`[Keys] Failed to ensure keys are remote: ${e2.message}`);
+          }
+        }
         async initKeys() {
           const password = this.config.password;
           const publicUserId = this.config.paths.userId;
@@ -91678,20 +91732,21 @@ ${toHex(hashedRequest)}`;
             throw new Error(`Secret derivation failed: ${e2.message}`);
           }
           Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
-          Logger.info("[Keys] Step 2: Initializing Private Remote...");
-          try {
-            if (!this.remoteFactory && this.config.s3) {
-              this.remote = new S3RemoteAdapter(this.config.s3, {
-                appId,
-                userId: privateId,
-                storeId: this.config.paths.storeId
-              });
-            } else if (this.remoteFactory) {
-              this.remote = this.remoteFactory(privateId);
+          if (!this.remote && (this.config.s3 || this.remoteFactory)) {
+            Logger.info("[Keys] Step 2: Initializing Private Remote...");
+            try {
+              if (!this.remoteFactory && this.config.s3) {
+                this.remote = new S3RemoteAdapter(this.config.s3, {
+                  appId,
+                  userId: privateId,
+                  storeId: this.config.paths.storeId
+                });
+              } else if (this.remoteFactory) {
+                this.remote = this.remoteFactory(privateId);
+              }
+            } catch (e2) {
+              Logger.error("[Keys] Remote initialization failed:", e2.message);
             }
-          } catch (e2) {
-            Logger.error("[Keys] Remote initialization failed:", e2.message);
-            throw e2;
           }
           Logger.info("[Keys] Step 3: Checking local storage for keys...");
           let keyInfo = null;
@@ -91712,7 +91767,7 @@ ${toHex(hashedRequest)}`;
               Logger.warn(`[Keys] Failed to decrypt local keys: ${e2.message}`);
             }
           }
-          if (!keyInfo) {
+          if (!keyInfo && this.remote) {
             Logger.info("[Keys] Step 4: Trying to download keys from remote...");
             const result = await this.remote.downloadFile("_keys.json");
             Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
@@ -91740,14 +91795,22 @@ ${toHex(hashedRequest)}`;
             Logger.info("[Keys] Encrypting new keys for storage...");
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
-            Logger.info("[Keys] Uploading new keys to remote...");
-            await this.remote.uploadFile("_keys.json", encrypted);
-            Logger.info("[Keys] New keys generated, saved and uploaded.");
+            if (this.remote) {
+              Logger.info("[Keys] Uploading new keys to remote...");
+              await this.remote.uploadFile("_keys.json", encrypted);
+              Logger.info("[Keys] New keys uploaded.");
+            } else {
+              Logger.info("[Keys] New keys generated and saved locally (no remote connected).");
+            }
           }
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
         }
         async sync() {
+          if (!this.remote || !this.publicRemote || !this.globalRemote) {
+            Logger.info("[Sovereign] Remote not connected, skipping sync.");
+            return;
+          }
           if (this.isSyncing) {
             Logger.info("[Sovereign] Sync already in progress, skipping...");
             return;
@@ -91817,6 +91880,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async syncManifest() {
+          if (!this.publicRemote) return;
           try {
             Logger.info("[Sync] Generating and uploading manifest...");
             const manifest = await this.generateManifest();
@@ -92061,6 +92125,7 @@ ${toHex(hashedRequest)}`;
             let data = await this.storage.getFile(path3);
             if (!data) {
               const activeRemote = path3.startsWith("public/") ? this.publicRemote : this.remote;
+              if (!activeRemote) return null;
               const key = path3.startsWith("public/") ? void 0 : this.config.encryptionKey;
               const result2 = await activeRemote.downloadFile(path3);
               if (result2 && result2.data) {
@@ -92093,6 +92158,7 @@ ${toHex(hashedRequest)}`;
         async syncGenericFile(relativePath, type) {
           try {
             const activeRemote = type === "public" ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = type === "private" ? this.config.encryptionKey : void 0;
             const fullPath = `${type}/${relativePath}`;
             const localData = await this.storage.getFile(fullPath);
@@ -92118,6 +92184,7 @@ ${toHex(hashedRequest)}`;
           try {
             const isPublic = prefix.startsWith("public/");
             const activeRemote = isPublic ? this.publicRemote : this.remote;
+            if (!activeRemote) return;
             const key = isPublic ? void 0 : this.config.encryptionKey;
             const localFiles = await this.storage.listFiles(prefix);
             for (const filePath of localFiles) {
@@ -92142,6 +92209,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async ensureGlobalRegistration() {
+          if (!this.globalRemote) return;
           const remotePath = "users.json";
           const myUserId = this.config.paths.userId;
           const myPublicKey = this.config.publicEncryptionKey;
@@ -92198,7 +92266,7 @@ ${toHex(hashedRequest)}`;
           const remotePath = "users.json";
           let publicKey = "";
           try {
-            const result = await this.globalRemote.downloadFile(remotePath);
+            const result = await this.globalRemote?.downloadFile(remotePath);
             if (result && result.data) {
               const userList = JSON.parse(new TextDecoder().decode(result.data));
               const user = userList.find((u2) => u2.userId === userId);
@@ -92233,6 +92301,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async getPublicRegistry() {
+          if (!this.globalRemote) return [];
           Logger.info("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
           const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
@@ -92244,6 +92313,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         async discoverAndFollowUsers(today) {
+          if (!this.globalRemote) return;
           const remotePath = "users.json";
           let remoteData = null;
           try {
@@ -92402,6 +92472,7 @@ ${toHex(hashedRequest)}`;
           try {
             const remotePath = `${type}/${date2}.db`;
             const activeRemote = remoteOverride || this.remote;
+            if (!activeRemote) return;
             let localData = await this.storage.getDailyDb(date2, type);
             const currentKey = type === "private" ? this.config.encryptionKey : void 0;
             const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
@@ -92476,6 +92547,7 @@ ${toHex(hashedRequest)}`;
         }
         async syncUserFile() {
           try {
+            if (!this.publicRemote) return;
             const remotePath = "public/user.json";
             let localData = await this.storage.getPublicUserFile();
             const key = this.config.publicEncryptionKey;
@@ -93441,7 +93513,10 @@ ${toHex(hashedRequest)}`;
           e2.preventDefault();
           if (!config.paths.userId || !config.password) return;
           try {
-            const instance = new SovereignS3nc(config);
+            const instance = new SovereignS3nc({
+              ...config,
+              offline: !config.s3
+            });
             await instance.init();
             setSov(instance);
             const bm2 = new BankyManager(instance);
@@ -93452,6 +93527,35 @@ ${toHex(hashedRequest)}`;
           } catch (e3) {
             alert("Login failed: " + e3.message);
           }
+        };
+        const handleConnectRemote = async () => {
+          showPrompt("Enter S3 Endpoint (or leave empty for default):", (endpoint) => {
+            showPrompt("Enter Access Key:", (accessKeyId) => {
+              showPrompt("Enter Secret Key:", (secretAccessKey) => {
+                showPrompt("Enter Bucket Name:", async (bucketName) => {
+                  if (accessKeyId && secretAccessKey && bucketName && sov) {
+                    try {
+                      setSyncing(true);
+                      await sov.connectRemote({
+                        region: "us-east-1",
+                        endpoint,
+                        credentials: { accessKeyId, secretAccessKey },
+                        bucketName,
+                        forcePathStyle: true
+                      });
+                      setConfig({ ...config, s3: { endpoint, accessKeyId, secretAccessKey, bucketName } });
+                      showAlert("Connected to remote and synced!");
+                      await loadData(sov, banky);
+                    } catch (e2) {
+                      showAlert("Connection failed: " + e2.message);
+                    } finally {
+                      setSyncing(false);
+                    }
+                  }
+                });
+              });
+            });
+          });
         };
         const loadData = async (v2, bm2) => {
           setSyncing(true);
@@ -93789,7 +93893,7 @@ ${toHex(hashedRequest)}`;
         if (!isLoggedIn) {
           return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "text-center mb-4 fw-bold text-primary" }, "Banky-Sov"), /* @__PURE__ */ import_react.default.createElement("form", { onSubmit: handleLogin }, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "User ID"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })), /* @__PURE__ */ import_react.default.createElement("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3" }, "Login / Register"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache }, "Clear Local Data"))))));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small text-muted me-3", style: { opacity: 0.6 } }, "[", config.paths.userId, "]"), /* @__PURE__ */ import_react.default.createElement("span", { className: "navbar-brand fw-bold text-primary mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-bank me-2" }), "Banky-Sov")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex" }, /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts") }, "Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing") }, "Friends"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary ms-2 rounded-pill", onClick: sync, disabled: syncing }, syncing ? "Syncing..." : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Sync")), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown ms-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-list" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" } }, /* @__PURE__ */ import_react.default.createElement("li", { className: "px-3 py-2 border-bottom mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile.name || "User"), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "@", config.paths.userId)), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-gear me-2" }), " Edit Profile")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Legacy Data"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "dropdown-item rounded-3 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Legacy JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Transactions"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-down me-2" }), " Export Account JSON")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}` }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Account JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash3 me-2" }), " Clear Local Cache")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, currentTab === "accounts" && /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-0 fw-bold" }, "My Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount }, "+ New")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, accounts.map((acc) => /* @__PURE__ */ import_react.default.createElement("button", { key: acc.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, acc.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-primary" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-wallet2 fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, acc.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, acc.id))))), sharedAccounts.map((group4) => /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group4.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group4.id, name: group4.name, currency: "USD", createdAt: group4.createdAt, ownerId: "shared" }) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, group4.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: group4.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-info" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-people fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, group4.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, "Shared Account"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, selectedAccount ? /* @__PURE__ */ import_react.default.createElement("div", { className: "card border-0 p-4 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h3", { className: "fw-bold mb-0" }, selectedAccount.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted" }, "Balance: ", selectedAccount.currency, " ", transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)), selectedAccount.allowanceActive && /* @__PURE__ */ import_react.default.createElement("div", { className: "badge bg-light text-primary border border-primary mt-1" }, "Allowance: ", selectedAccount.allowanceAmount, " / ", selectedAccount.allowanceInterval)), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2 flex-wrap justify-content-end" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true) }, "Deposit"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false) }, "Spend"), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-share me-2" }), " Share Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: handleSetAllowance }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cash-coin me-2" }), " Set Allowance")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-pencil me-2" }), " Rename Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click() }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image me-2" }), " Set Account Image")), selectedAccount.image && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image-fill me-2" }), " Remove Image")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash me-2" }), " Delete Account")))))), transactions.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4", style: { height: "200px" } }, /* @__PURE__ */ import_react.default.createElement("canvas", { ref: chartRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Goals"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal }, "+ New Goal")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row mb-4" }, goals.map((goal) => {
+        return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small text-muted me-3", style: { opacity: 0.6 } }, "[", config.paths.userId, "]"), /* @__PURE__ */ import_react.default.createElement("span", { className: "navbar-brand fw-bold text-primary mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-bank me-2" }), "Banky-Sov")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex" }, /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts") }, "Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing") }, "Friends"), !config.s3 && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill ms-2", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload" }), " Connect Cloud"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary ms-2 rounded-pill", onClick: sync, disabled: syncing || !config.s3 }, syncing ? "Syncing..." : !config.s3 ? "Offline" : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Sync")), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown ms-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-list" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" } }, /* @__PURE__ */ import_react.default.createElement("li", { className: "px-3 py-2 border-bottom mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile.name || "User"), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "@", config.paths.userId)), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-gear me-2" }), " Edit Profile")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Legacy Data"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "dropdown-item rounded-3 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Legacy JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Transactions"), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-down me-2" }), " Export Account JSON")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}` }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Account JSON", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount }))), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash3 me-2" }), " Clear Local Cache")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, currentTab === "accounts" && /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-0 fw-bold" }, "My Accounts"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount }, "+ New")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, accounts.map((acc) => /* @__PURE__ */ import_react.default.createElement("button", { key: acc.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, acc.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-primary" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-wallet2 fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, acc.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, acc.id))))), sharedAccounts.map((group4) => /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group4.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group4.id, name: group4.name, currency: "USD", createdAt: group4.createdAt, ownerId: "shared" }) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center p-2" }, group4.image ? /* @__PURE__ */ import_react.default.createElement("img", { src: group4.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-info" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-people fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, group4.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small opacity-75" }, "Shared Account"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8" }, selectedAccount ? /* @__PURE__ */ import_react.default.createElement("div", { className: "card border-0 p-4 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h3", { className: "fw-bold mb-0" }, selectedAccount.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted" }, "Balance: ", selectedAccount.currency, " ", transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)), selectedAccount.allowanceActive && /* @__PURE__ */ import_react.default.createElement("div", { className: "badge bg-light text-primary border border-primary mt-1" }, "Allowance: ", selectedAccount.allowanceAmount, " / ", selectedAccount.allowanceInterval)), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2 flex-wrap justify-content-end" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true) }, "Deposit"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false) }, "Spend"), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-share me-2" }), " Share Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: handleSetAllowance }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cash-coin me-2" }), " Set Allowance")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-pencil me-2" }), " Rename Account")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click() }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image me-2" }), " Set Account Image")), selectedAccount.image && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image-fill me-2" }), " Remove Image")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash me-2" }), " Delete Account")))))), transactions.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4", style: { height: "200px" } }, /* @__PURE__ */ import_react.default.createElement("canvas", { ref: chartRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Goals"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal }, "+ New Goal")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row mb-4" }, goals.map((goal) => {
           const progress = Math.min(100, Math.round(goal.currentAmount / goal.targetAmount * 100));
           return /* @__PURE__ */ import_react.default.createElement("div", { key: goal.id, className: "col-md-6 mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card bg-light border-0 p-3 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, goal.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: async () => {
             await banky?.deleteGoal(goal.id);

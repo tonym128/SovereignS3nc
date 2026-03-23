@@ -84,8 +84,11 @@ const App = () => {
         if (!config.paths.userId || !config.password) return;
         
         try {
-            // Use the config loaded from config.json
-            const instance = new SovereignS3nc(config);
+            // Use the config loaded from config.json if available, otherwise start offline
+            const instance = new SovereignS3nc({
+                ...config,
+                offline: !config.s3
+            });
             await instance.init();
             setSov(instance);
             
@@ -98,6 +101,36 @@ const App = () => {
         } catch (e: any) {
             alert('Login failed: ' + e.message);
         }
+    };
+
+    const handleConnectRemote = async () => {
+        showPrompt('Enter S3 Endpoint (or leave empty for default):', (endpoint) => {
+            showPrompt('Enter Access Key:', (accessKeyId) => {
+                showPrompt('Enter Secret Key:', (secretAccessKey) => {
+                    showPrompt('Enter Bucket Name:', async (bucketName) => {
+                        if (accessKeyId && secretAccessKey && bucketName && sov) {
+                            try {
+                                setSyncing(true);
+                                await sov.connectRemote({
+                                    region: 'us-east-1',
+                                    endpoint,
+                                    credentials: { accessKeyId, secretAccessKey },
+                                    bucketName,
+                                    forcePathStyle: true
+                                });
+                                setConfig({ ...config, s3: { endpoint, accessKeyId, secretAccessKey, bucketName } });
+                                showAlert('Connected to remote and synced!');
+                                await loadData(sov, banky!);
+                            } catch (e: any) {
+                                showAlert('Connection failed: ' + e.message);
+                            } finally {
+                                setSyncing(false);
+                            }
+                        }
+                    });
+                });
+            });
+        });
     };
 
     const loadData = async (v: SovereignS3nc, bm: BankyManager) => {
@@ -532,8 +565,13 @@ const App = () => {
                     <div className="d-flex">
                         <button className={`btn mx-1 ${currentTab === 'accounts' ? 'btn-primary' : 'btn-light'}`} onClick={() => setCurrentTab('accounts')}>Accounts</button>
                         <button className={`btn mx-1 ${currentTab === 'sharing' ? 'btn-primary' : 'btn-light'}`} onClick={() => setCurrentTab('sharing')}>Friends</button>
-                        <button className="btn btn-outline-secondary ms-2 rounded-pill" onClick={sync} disabled={syncing}>
-                            {syncing ? 'Syncing...' : <><i className="bi bi-arrow-repeat me-1"></i> Sync</>}
+                        {!config.s3 && (
+                            <button className="btn btn-sm btn-primary rounded-pill ms-2" onClick={handleConnectRemote}>
+                                <i className="bi bi-cloud-upload"></i> Connect Cloud
+                            </button>
+                        )}
+                        <button className="btn btn-outline-secondary ms-2 rounded-pill" onClick={sync} disabled={syncing || !config.s3}>
+                            {syncing ? 'Syncing...' : !config.s3 ? 'Offline' : <><i className="bi bi-arrow-repeat me-1"></i> Sync</>}
                         </button>
                         <div className="dropdown ms-2">
                             <button className="btn btn-light rounded-circle shadow-sm" data-bs-toggle="dropdown"><i className="bi bi-list"></i></button>

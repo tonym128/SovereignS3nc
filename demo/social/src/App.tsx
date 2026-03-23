@@ -26,7 +26,7 @@ class PrefixProxyAdapter implements IRemoteAdapter {
 
 const App = () => {
     const [config, setConfig] = useState({
-        syncMode: 's3',
+        syncMode: 's3', // Default to s3 for existing tests
         region: 'ap-southeast-1',
         endpoint: '',
         accessKeyId: '',
@@ -46,7 +46,6 @@ const App = () => {
         return saved ? JSON.parse(saved) : [];
     });
     
-    // We don't initialize these until we know the userId
     const [profileCache, setProfileCache] = useState<Record<string, any>>({});
     const [blobCache, setBlobCache] = useState<Record<string, string>>({});
     const [lastViewed, setLastViewed] = useState<Record<string, any>>({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
@@ -101,7 +100,7 @@ const App = () => {
     const [dialog, setDialog] = useState<{
         title: string;
         message: string;
-        type: 'alert' | 'confirm' | 'prompt' | 'multiselect';
+        type: 'alert' | 'confirm' | 'prompt' | 'multiselect' | 'config';
         defaultValue?: string;
         options?: { value: string, label: string }[];
         onConfirm: (value?: any) => void;
@@ -314,7 +313,8 @@ const App = () => {
             }
 
             const instance = new SovereignS3nc({
-                s3: currentConfig.syncMode === 's3' || !currentConfig.syncMode ? s3Config : undefined,
+                s3: currentConfig.syncMode === 's3' ? s3Config : undefined,
+                offline: currentConfig.syncMode === 'offline',
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
                 password: currentConfig.password,
                 debug: DEBUG
@@ -371,6 +371,56 @@ const App = () => {
     };
 
     const login = () => performLogin(config);
+
+    const handleConnectRemote = async () => {
+        setDialog({
+            title: 'Connect to Remote Storage',
+            message: 'Configure your remote backend to enable cross-device sync and social discovery.',
+            type: 'config',
+            onConfirm: async (newRemoteConfig: any) => {
+                if (!sov) return;
+                try {
+                    setSyncing(true);
+                    setDialog(null);
+                    
+                    if (newRemoteConfig.syncMode === 's3') {
+                        await sov.connectRemote({
+                            region: newRemoteConfig.region,
+                            endpoint: newRemoteConfig.endpoint,
+                            credentials: {
+                                accessKeyId: newRemoteConfig.accessKeyId,
+                                secretAccessKey: newRemoteConfig.secretAccessKey
+                            },
+                            bucketName: newRemoteConfig.bucketName,
+                            forcePathStyle: true
+                        });
+                    } else if (newRemoteConfig.syncMode === 'webrtc') {
+                        // For WebRTC we need to set up the adapter same as in login
+                        const adapter = new WebRTCRemoteAdapter(config.userId);
+                        const bc = new BroadcastChannel('sov-webrtc-mesh');
+                        const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
+                        bc.onmessage = (e) => peer.receive(e.data);
+                        
+                        const getPrefix = (uid: string, sid: string) => `${config.appId}/${uid}/${sid}`;
+                        const remoteAdapter = new PrefixProxyAdapter(adapter, getPrefix(config.userId, 'social'));
+                        // Note: SovereignS3nc doesn't currently support updating the factory after init, 
+                        // but connectRemote can take an IRemoteAdapter.
+                        await sov.connectRemote(remoteAdapter);
+                    }
+                    
+                    setConfig({ ...config, ...newRemoteConfig });
+                    localStorage.setItem('sov_social_config', JSON.stringify({ ...config, ...newRemoteConfig }));
+                    showAlert('Connected to remote successfully!', 'Success');
+                    await loadData(sov, feed, messaging, profileModule);
+                } catch (e: any) {
+                    showAlert('Failed to connect: ' + e.message, 'Error');
+                } finally {
+                    setSyncing(false);
+                }
+            },
+            onCancel: () => setDialog(null)
+        });
+    };
 
     const logout = () => {
         localStorage.removeItem('sov_social_config');
@@ -1192,14 +1242,14 @@ const App = () => {
 
                     <label className="form-label small fw-bold text-muted text-uppercase">Sync Mode</label>
                     <div className="btn-group w-100 mb-4 flex-wrap">
+                        <input type="radio" className="btn-check" name="syncMode" id="modeOffline" autoComplete="off" checked={config.syncMode === 'offline'} onChange={() => setConfig({...config, syncMode: 'offline'})} />
+                        <label className="btn btn-outline-primary" htmlFor="modeOffline">Offline-First</label>
+
                         <input type="radio" className="btn-check" name="syncMode" id="modeS3" autoComplete="off" checked={config.syncMode === 's3'} onChange={() => setConfig({...config, syncMode: 's3'})} />
                         <label className="btn btn-outline-primary" htmlFor="modeS3">S3 Cloud</label>
                         
                         <input type="radio" className="btn-check" name="syncMode" id="modeWebrtc" autoComplete="off" checked={config.syncMode === 'webrtc'} onChange={() => setConfig({...config, syncMode: 'webrtc'})} />
-                        <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh (Local)</label>
-
-                        <input type="radio" className="btn-check" name="syncMode" id="modePeerjs" autoComplete="off" checked={config.syncMode === 'peerjs'} onChange={() => setConfig({...config, syncMode: 'peerjs'})} />
-                        <label className="btn btn-outline-primary" htmlFor="modePeerjs">PeerJS (Global P2P) <span className="badge bg-warning text-dark ms-1">Alpha</span></label>
+                        <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh</label>
                     </div>
 
                     {config.syncMode === 's3' && (
@@ -1227,7 +1277,7 @@ const App = () => {
                         <button className="btn btn-link btn-sm text-danger text-decoration-none" onClick={resetLocalData}>Reset Local Data</button>
                     </div>
                 </div>
-                <Dialog dialog={dialog} setDialog={setDialog} />
+                <Dialog dialog={dialog} setDialog={setDialog} profileCache={profileCache} />
             </div>
         );
     }
@@ -1266,6 +1316,11 @@ const App = () => {
                     </button>
                 </div>
                 <div className="d-flex align-items-center">
+                    {config.syncMode === 'offline' && (
+                        <button className="btn btn-sm btn-primary rounded-pill me-3" onClick={handleConnectRemote}>
+                            <i className="bi bi-cloud-upload me-1"></i> Connect Remote
+                        </button>
+                    )}
                     <button 
                         className={`btn btn-link px-2 me-2 ${isConnected ? 'text-success' : 'text-danger'}`} 
                         onClick={toggleConnection}
@@ -1273,8 +1328,8 @@ const App = () => {
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
                     </button>
                     <UserAvatar userId={config.userId} size={32} />
-                    <button className="btn btn-sm btn-outline-secondary ms-3" onClick={sync} disabled={syncing}>
-                        {syncing ? '...' : 'Sync'}
+                    <button className="btn btn-sm btn-outline-secondary ms-3" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
+                        {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
                     <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
                 </div>
@@ -1743,6 +1798,14 @@ const Dialog = ({ dialog, setDialog, profileCache }: { dialog: any, setDialog: a
     const [inputValue, setInputValue] = useState(dialog?.defaultValue || '');
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const [searchQuery, setSearchSearchQuery] = useState('');
+    const [configData, setConfigData] = useState({
+        syncMode: 's3',
+        region: 'us-east-1',
+        endpoint: '',
+        accessKeyId: '',
+        secretAccessKey: '',
+        bucketName: ''
+    });
     
     useEffect(() => {
         setInputValue(dialog?.defaultValue || '');
@@ -1781,6 +1844,25 @@ const Dialog = ({ dialog, setDialog, profileCache }: { dialog: any, setDialog: a
                                 onChange={e => setInputValue(e.target.value)}
                                 onKeyDown={e => e.key === 'Enter' && dialog.onConfirm(inputValue)}
                             />
+                        )}
+                        {dialog.type === 'config' && (
+                            <div className="config-form">
+                                <label className="form-label small fw-bold">Sync Mode</label>
+                                <select className="form-select mb-3 rounded-pill" value={configData.syncMode} onChange={e => setConfigData({...configData, syncMode: e.target.value})}>
+                                    <option value="s3">S3 Cloud</option>
+                                    <option value="webrtc">WebRTC Mesh</option>
+                                </select>
+                                
+                                {configData.syncMode === 's3' && (
+                                    <>
+                                        <input className="form-control mb-2 rounded-pill" placeholder="Region" value={configData.region} onChange={e => setConfigData({...configData, region: e.target.value})} />
+                                        <input className="form-control mb-2 rounded-pill" placeholder="Endpoint (optional)" value={configData.endpoint} onChange={e => setConfigData({...configData, endpoint: e.target.value})} />
+                                        <input className="form-control mb-2 rounded-pill" placeholder="Access Key" value={configData.accessKeyId} onChange={e => setConfigData({...configData, accessKeyId: e.target.value})} />
+                                        <input className="form-control mb-2 rounded-pill" type="password" placeholder="Secret Key" value={configData.secretAccessKey} onChange={e => setConfigData({...configData, secretAccessKey: e.target.value})} />
+                                        <input className="form-control mb-2 rounded-pill" placeholder="Bucket Name" value={configData.bucketName} onChange={e => setConfigData({...configData, bucketName: e.target.value})} />
+                                    </>
+                                )}
+                            </div>
                         )}
                         {dialog.type === 'multiselect' && (
                             <>
@@ -1835,7 +1917,7 @@ const Dialog = ({ dialog, setDialog, profileCache }: { dialog: any, setDialog: a
                         <button 
                             type="button" 
                             className="btn btn-primary rounded-pill px-4 shadow-sm" 
-                            onClick={() => dialog.onConfirm(dialog.type === 'multiselect' ? selectedValues : inputValue)}
+                            onClick={() => dialog.onConfirm(dialog.type === 'multiselect' ? selectedValues : (dialog.type === 'config' ? configData : inputValue))}
                         >
                             {dialog.type === 'alert' ? 'OK' : 'Confirm'}
                         </button>
