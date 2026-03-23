@@ -212,4 +212,10 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
         const key = this.getKey(path);
         return this.cache.get(key)?.etag || null;
     }
+
+    async canWrite(path: string): Promise<boolean> {
+        // In P2P Mesh, 'write access' depends on if we have any authorized peers 
+        // who would accept our push. For now we assume true if connected.
+        return this.peers.size > 0;
+    }
 }

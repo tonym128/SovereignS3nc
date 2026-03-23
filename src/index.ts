@@ -7,5 +7,6 @@ export * from './adapters/SQLiteNodeStorage';
 export * from './modules/Profile';
 export * from './modules/Messaging';
 export * from './modules/Feed';
+export * from './modules/Moderation';
 export * from './utils/Logger';
 export * from './utils/MediaUtils';

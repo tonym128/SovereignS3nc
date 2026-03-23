@@ -14,6 +14,8 @@ export class SovereignS3nc extends EventEmitter {
     private remote?: IRemoteAdapter; // Private Remote (Optional for local-only)
     private publicRemote?: IRemoteAdapter;
     private globalRemote?: IRemoteAdapter;
+    public adminRemote?: IRemoteAdapter; // Access to appId/admin/
+    public rootRemote?: IRemoteAdapter; // Access to appId/ (Requires root/admin credentials)
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
     private registeredModules: ModuleDefinition[] = [];
@@ -48,6 +50,7 @@ export class SovereignS3nc extends EventEmitter {
             this.remote = remote;
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory('global') : remote; 
+            this.adminRemote = remoteFactory ? remoteFactory('admin') : remote;
         } else if (config.s3) {
             this.initializeS3Remotes(config.s3);
         } else if (!config.offline) {
@@ -68,6 +71,13 @@ export class SovereignS3nc extends EventEmitter {
             appId: this.config.paths.appId,
             userId: 'global',
             storeId: 'users'
+        });
+
+        // Admin Remote - Access to appId/admin
+        this.adminRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: 'admin',
+            storeId: 'data'
         });
 
         // Private Remote
@@ -188,7 +198,28 @@ export class SovereignS3nc extends EventEmitter {
             await this.ensureGlobalRegistration();
         }
 
+        // Fetch blacklist immediately on startup
+        await this.syncBlacklist();
+
         Logger.info('[Sovereign] Initialization complete.');
+    }
+
+    /**
+     * Downloads the global blacklist and updates local config.
+     */
+    public async syncBlacklist() {
+        if (!this.globalRemote) return;
+        const path = 'blacklist.json';
+        try {
+            const result = await this.globalRemote.downloadFile(path);
+            if (result && result.data) {
+                const list = JSON.parse(new TextDecoder().decode(result.data));
+                this.config.blacklist = list;
+                Logger.info(`[Sync] Updated blacklist: ${list.length} users.`);
+            }
+        } catch (e) {
+            // No blacklist found, which is fine
+        }
     }
 
     /**
@@ -1016,7 +1047,9 @@ export class SovereignS3nc extends EventEmitter {
         if (!remoteData) return null;
 
         try {
-            return JSON.parse(new TextDecoder().decode(remoteData));
+            const users: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(remoteData));
+            const blacklist = this.config.blacklist || [];
+            return users.filter(u => !blacklist.includes(u.userId));
         } catch (e) {
             Logger.warn('[Sync] Failed to parse global registry', e);
             return null;
@@ -1046,7 +1079,13 @@ export class SovereignS3nc extends EventEmitter {
 
     private async syncFollowedUsers(today: string) {
         const following = await this.storage.getFollowing();
+        const blacklist = this.config.blacklist || [];
+
         for (const user of following) {
+            if (blacklist.includes(user.userId)) {
+                Logger.info(`[Sync] Skipping blacklisted user ${user.userId}`);
+                continue;
+            }
             const manifest = await this.fetchManifest(user.userId);
             Logger.debug(`[Sync] Followed user ${user.userId} manifest: ${!!manifest}`);
             

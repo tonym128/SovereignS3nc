@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { S3Config } from '../types';
 import { IRemoteAdapter, DownloadResult } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
@@ -32,7 +32,10 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     });
     Logger.debug(`[S3] Client created for ${paths.userId}`);
     this.bucket = config.bucketName;
-    this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+    
+    // Construct prefix, ignoring empty parts to support root-level access
+    const pathParts = [paths.appId, paths.userId, paths.storeId].filter(p => p && p.trim() !== '');
+    this.prefix = pathParts.length > 0 ? `${pathParts.join('/')}/` : '';
   }
 
   async uploadFile(path: string, data: Uint8Array, providedHash?: string): Promise<string | null> {
@@ -153,6 +156,69 @@ export class S3RemoteAdapter implements IRemoteAdapter {
               return null;
           }
           throw e;
+      }
+  }
+
+  async canWrite(path: string): Promise<boolean> {
+      const key = this.getKey(path.endsWith('/') ? `${path}.probe` : `${path}/.probe`);
+      try {
+          // Probe: Try to write a tiny hidden file to the path/prefix
+          const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
+          await this.client.send(new PutObjectCommand({
+              Bucket: this.bucket,
+              Key: key,
+              Body: sentinel,
+              ContentType: 'application/json'
+          }));
+          return true;
+      } catch (e: any) {
+          // 403 Forbidden or 405 Method Not Allowed means we don't have write access
+          return false;
+      }
+  }
+
+  async listFiles(prefix: string): Promise<string[]> {
+      const fullPrefix = this.getKey(prefix);
+      const keys: string[] = [];
+      let continuationToken: string | undefined = undefined;
+
+      try {
+          do {
+              const command = new ListObjectsV2Command({
+                  Bucket: this.bucket,
+                  Prefix: fullPrefix,
+                  ContinuationToken: continuationToken
+              });
+              const response = await this.client.send(command);
+              if (response.Contents) {
+                  for (const item of response.Contents) {
+                      if (item.Key) {
+                          // Strip the adapter prefix to return relative paths
+                          const relativePath = item.Key.substring(this.prefix.length);
+                          keys.push(relativePath);
+                      }
+                  }
+              }
+              continuationToken = response.NextContinuationToken;
+          } while (continuationToken);
+      } catch (e: any) {
+          Logger.warn(`[S3] Failed to list files for prefix ${prefix}: ${e.message}`);
+      }
+
+      return keys;
+  }
+
+  async deleteFile(path: string): Promise<void> {
+      const key = this.getKey(path);
+      try {
+          const command = new DeleteObjectCommand({
+              Bucket: this.bucket,
+              Key: key
+          });
+          await this.client.send(command);
+          Logger.debug(`[S3] Deleted file: ${key}`);
+      } catch (e: any) {
+          Logger.warn(`[S3] Failed to delete file ${key}: ${e.message}`);
       }
   }
 

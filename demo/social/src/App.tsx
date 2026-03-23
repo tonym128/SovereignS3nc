@@ -4,6 +4,7 @@ import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { FeedModule, Post } from '../../../src/modules/Feed';
 import { MessagingModule, Message } from '../../../src/modules/Messaging';
 import { ProfileModule, Profile } from '../../../src/modules/Profile';
+import { ModerationModule, Report } from '../../../src/modules/Moderation';
 import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
@@ -34,8 +35,12 @@ const App = () => {
         bucketName: '',
         appId: 'sov-social',
         userId: 'user-' + Math.random().toString(36).substring(7),
-        password: 'password123'
+        password: 'password123',
+        admins: [] as string[] // List of User IDs with admin privileges
     });
+
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [adminKeyPublished, setAdminKeyPublished] = useState(false);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const getStorageKey = (key: string) => `sov_${config.userId}_${key}`;
@@ -56,6 +61,8 @@ const App = () => {
     const [feed, setFeed] = useState<FeedModule | null>(null);
     const [messaging, setMessaging] = useState<MessagingModule | null>(null);
     const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
+    const [moderation, setModeration] = useState<ModerationModule | null>(null);
+    const [reports, setReports] = useState<Report[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
     const [following, setFollowing] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<any[]>([]);
@@ -69,7 +76,7 @@ const App = () => {
     const msgFileRef = useRef<HTMLInputElement>(null);
     const [profile, setProfile] = useState<any>(null);
     const [syncing, setSyncing] = useState(false);
-    const [currentTab, setCurrentTab] = useState<'feed' | 'friends' | 'messages' | 'rooms' | 'profile'>('feed');
+    const [currentTab, setCurrentTab] = useState<'feed' | 'friends' | 'messages' | 'rooms' | 'profile' | 'admin'>('feed');
     const [messages, setMessages] = useState<Message[]>([]);
     const [groups, setGroups] = useState<any[]>([]);
     const [selectedGroup, setSelectedGroup] = useState<any | null>(null);
@@ -330,6 +337,21 @@ const App = () => {
             setMessaging(mm);
             const pm = new ProfileModule(instance);
             setProfileModule(pm);
+            const mod = new ModerationModule(instance);
+            setModeration(mod);
+            
+            // Real probe for admin permissions
+            const isUserAdmin = await mod.isAdmin();
+            setIsAdmin(isUserAdmin);
+
+            // Check if admin key is already published
+            try {
+                const adminRemote = (instance as any).adminRemote;
+                const keyFile = await adminRemote?.downloadFile('public_key.json');
+                setAdminKeyPublished(!!(keyFile && keyFile.data));
+            } catch (e) {
+                setAdminKeyPublished(false);
+            }
 
             // Load user-scoped caches
             const loadCache = (key: string, defaultVal: any) => {
@@ -1141,6 +1163,19 @@ const App = () => {
         return <span className={className || 'fw-bold'}>{userData?.name || userId}</span>;
     };
 
+    const handleReportPost = async (post: Post) => {
+        showPrompt('Reason for reporting this post:', async (reason) => {
+            if (reason && moderation) {
+                try {
+                    await moderation.reportContent(post.userId, post.id, 'post', reason, post);
+                    showAlert('Post reported. Thank you for keeping the community safe.', 'Report Submitted');
+                } catch (e: any) {
+                    showAlert('Failed to submit report: ' + e.message, 'Error');
+                }
+            }
+        });
+    };
+
     const PostItem = ({ post, allPosts, depth = 0 }: { post: Post, allPosts: Post[], depth?: number }) => {
         const replies = allPosts.filter(p => p.parentId === post.id);
         const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
@@ -1161,15 +1196,20 @@ const App = () => {
                                 )}
                             </div>
                         </div>
-                        {post.userId === config.userId && !post.isDeleted && (
-                            <div className="dropdown">
-                                <button className="btn btn-sm btn-light rounded-circle" data-bs-toggle="dropdown">⋮</button>
-                                <ul className="dropdown-menu dropdown-menu-end">
-                                    <li><button className="dropdown-item" onClick={() => handleEditPost(post)}>Edit</button></li>
-                                    <li><button className="dropdown-item text-danger" onClick={() => handleDeletePost(post)}>Delete</button></li>
-                                </ul>
-                            </div>
-                        )}
+                        <div className="dropdown">
+                            <button className="btn btn-sm btn-light rounded-circle" data-bs-toggle="dropdown">⋮</button>
+                            <ul className="dropdown-menu dropdown-menu-end">
+                                {post.userId === config.userId && !post.isDeleted && (
+                                    <>
+                                        <li><button className="dropdown-item" onClick={() => handleEditPost(post)}>Edit</button></li>
+                                        <li><button className="dropdown-item text-danger" onClick={() => handleDeletePost(post)}>Delete</button></li>
+                                    </>
+                                )}
+                                {post.userId !== config.userId && (
+                                    <li><button className="dropdown-item text-warning" onClick={() => handleReportPost(post)}>Report Abuse</button></li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                     <div className="mb-3">
                         {post.isDeleted ? (
@@ -1315,8 +1355,12 @@ const App = () => {
                     <button data-testid="nav-profile" className={`btn mx-2 ${currentTab === 'profile' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('profile')}>
                         Profile
                     </button>
-                </div>
-                <div className="d-flex align-items-center">
+                    {isAdmin && (
+                       <button data-testid="nav-admin" className={`btn mx-2 ${currentTab === 'admin' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('admin')}>
+                           Admin
+                       </button>
+                    )}
+                    </div>                <div className="d-flex align-items-center">
                     {config.syncMode === 'offline' && (
                         <button className="btn btn-sm btn-primary rounded-pill me-3" onClick={handleConnectRemote}>
                             <i className="bi bi-cloud-upload me-1"></i> Connect Remote
@@ -1697,6 +1741,196 @@ const App = () => {
                                    showAlert('Profile updated!', 'Success');
                                 }}>Save Changes</button>
 
+                            </div>
+                        </div>
+                    )}
+
+                    {currentTab === 'admin' && isAdmin && (
+                        <div className="col-md-10">
+                            <div className="card p-4 shadow-sm border-0 mb-4">
+                                <h4 className="mb-4 fw-bold text-danger"><i className="bi bi-shield-lock me-2"></i>Admin Dashboard</h4>
+                                
+                                <div className="alert alert-secondary py-3 mb-4 border-0">
+                                    <h6 className="fw-bold mb-1">Admin Status</h6>
+                                    {adminKeyPublished ? (
+                                        <div className="text-success small"><i className="bi bi-check-circle-fill me-1"></i> Reporting is ACTIVE. Your public key is published.</div>
+                                    ) : (
+                                        <div className="text-warning small"><i className="bi bi-exclamation-triangle-fill me-1"></i> Reporting is INACTIVE. You must publish your admin key for users to send reports.</div>
+                                    )}
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-6 mb-4">
+                                        <div className="card h-100 border-0 bg-light">
+                                            <div className="card-body">
+                                                <h5 className="fw-bold mb-3">Governance</h5>
+                                                <button className="btn btn-outline-danger w-100 mb-2" onClick={async () => {
+                                                    const uid = await new Promise(resolve => showPrompt('Enter User ID to blacklist:', resolve));
+                                                    if (uid && moderation) {
+                                                        try {
+                                                            await (moderation as any).blacklistUser(uid);
+                                                            await sync();
+                                                            showAlert(`User ${uid} has been blacklisted globally.`);
+                                                        } catch (e: any) {
+                                                            showAlert('Failed to blacklist: ' + e.message, 'Error');
+                                                        }
+                                                    }
+                                                }}>
+                                                    <i className="bi bi-person-x me-2"></i> Blacklist User
+                                                </button>
+                                                <button className="btn btn-outline-secondary w-100 mb-2" onClick={async () => {
+                                                    if (sov) {
+                                                        await sov.syncBlacklist();
+                                                        showAlert('Blacklist synchronized with cloud.');
+                                                    }
+                                                }}>
+                                                    <i className="bi bi-arrow-repeat me-2"></i> Sync Blacklist
+                                                </button>
+                                                <button className="btn btn-outline-primary w-100" onClick={async () => {
+                                                    if (moderation) {
+                                                        try {
+                                                            await moderation.publishAdminKey();
+                                                            setAdminKeyPublished(true);
+                                                            showAlert('Admin public key published successfully for E2EE reporting.');
+                                                        } catch (e: any) {
+                                                            showAlert('Failed to publish admin key: ' + e.message, 'Error');
+                                                        }
+                                                    }
+                                                }}>
+                                                    <i className="bi bi-key me-2"></i> Publish Admin Key
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 mb-4">
+                                        <div className="card h-100 border-0 bg-light">
+                                            <div className="card-body">
+                                                <h5 className="fw-bold mb-3">Provision User S3 Keys</h5>
+                                                <div className="small text-muted mb-3">Generate dedicated S3 credentials for a new user to ensure infrastructure isolation.</div>
+                                                <button className="btn btn-primary w-100 mb-2" onClick={async () => {
+                                                    showPrompt('Enter new User ID to provision:', (uid) => {
+                                                        if (uid) {
+                                                            // In a real application, this would call your backend API
+                                                            // e.g., POST /api/admin/provision { userId: uid }
+                                                            // For the demo, we show the Garage CLI command needed.
+                                                            const cmd = `garage key create sov-${uid} && garage bucket allow ${config.bucketName} --read --write --owner --key <ACCESS_KEY>`;
+                                                            showAlert(`To provision ${uid} in Garage S3, run:\n\n${cmd}\n\nThen provide the user with the generated credentials.`, 'Provisioning Instructions');
+                                                        }
+                                                    });
+                                                }}>
+                                                    <i className="bi bi-person-plus-fill me-2"></i> Create User Keys
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-4">
+                                    <div className="col-12">
+                                        <div className="card border-0 bg-light border-danger border-start border-4">
+                                            <div className="card-body">
+                                                <h5 className="fw-bold text-danger mb-3"><i className="bi bi-exclamation-triangle-fill me-2"></i>Data Management (Root Access)</h5>
+                                                <div className="d-flex gap-3 flex-wrap">
+                                                    <button className="btn btn-outline-primary" onClick={async () => {
+                                                        if (moderation) {
+                                                            try {
+                                                                const data = await moderation.exportAllData();
+                                                                const blob = new Blob([data], { type: 'application/json' });
+                                                                const url = URL.createObjectURL(blob);
+                                                                const a = document.createElement('a');
+                                                                a.href = url;
+                                                                a.download = `sovereign_export_${config.appId}_${new Date().toISOString().split('T')[0]}.json`;
+                                                                a.click();
+                                                                URL.revokeObjectURL(url);
+                                                                showAlert('Data exported successfully.');
+                                                            } catch (e: any) {
+                                                                showAlert('Export failed: ' + e.message, 'Error');
+                                                            }
+                                                        }
+                                                    }}>
+                                                        <i className="bi bi-download me-2"></i> Export All Data
+                                                    </button>
+                                                    <label className="btn btn-outline-secondary mb-0">
+                                                        <i className="bi bi-upload me-2"></i> Import Data
+                                                        <input type="file" className="d-none" accept=".json" onChange={async (e) => {
+                                                            const file = e.target.files?.[0];
+                                                            if (file && moderation) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = async (ev) => {
+                                                                    try {
+                                                                        const content = ev.target?.result as string;
+                                                                        await moderation.importAllData(content);
+                                                                        showAlert('Data imported successfully.');
+                                                                        e.target.value = ''; // Reset
+                                                                    } catch (err: any) {
+                                                                        showAlert('Import failed: ' + err.message, 'Error');
+                                                                    }
+                                                                };
+                                                                reader.readAsText(file);
+                                                            }
+                                                        }} />
+                                                    </label>
+                                                    <button className="btn btn-danger ms-auto" onClick={() => {
+                                                        showConfirm('WARNING: This will permanently delete ALL user data, posts, and DMs for this App ID across the entire S3 bucket. This action CANNOT be undone. Are you absolutely sure?', async () => {
+                                                            if (moderation) {
+                                                                try {
+                                                                    await moderation.burnItToTheGround();
+                                                                    showAlert('All data has been burned to the ground.', 'System Purged');
+                                                                } catch (e: any) {
+                                                                    showAlert('Purge failed: ' + e.message, 'Error');
+                                                                }
+                                                            }
+                                                        }, 'BURN IT TO THE GROUND');
+                                                    }}>
+                                                        <i className="bi bi-fire me-2"></i> BURN IT TO THE GROUND
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h5 className="fw-bold mt-2 mb-3">Abuse Reports</h5>
+                                <div className="table-responsive">
+                                    <table className="table table-hover align-middle">
+                                        <thead className="table-light">
+                                            <tr>
+                                                <th>Reporter</th>
+                                                <th>Target</th>
+                                                <th>Type</th>
+                                                <th>Reason</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {reports.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan={5} className="text-center py-4 text-muted">No pending reports found in this session.</td>
+                                                </tr>
+                                            ) : (
+                                                reports.map(report => (
+                                                    <tr key={report.id}>
+                                                        <td><UserName userId={report.reporterId} /></td>
+                                                        <td><UserName userId={report.targetUserId} /></td>
+                                                        <td><span className="badge bg-info">{report.contentType}</span></td>
+                                                        <td className="small">{report.reason}</td>
+                                                        <td>
+                                                            <button className="btn btn-sm btn-danger" onClick={() => {
+                                                                if (moderation) {
+                                                                    (moderation as any).blacklistUser(report.targetUserId).catch((e: any) => showAlert('Error: ' + e.message));
+                                                                }
+                                                            }}>Ban</button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="alert alert-info py-2 small mb-0">
+                                    <i className="bi bi-info-circle me-2"></i>
+                                    Reports are encrypted with the Admin Public Key and stored in <code>{config.appId}/admin/reports/</code>. A background worker or Lambda is typically used to decrypt and aggregate these.
+                                </div>
                             </div>
                         </div>
                     )}

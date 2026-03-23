@@ -31,6 +31,7 @@ export interface SovereignConfig {
   password?: string; // Used to decrypt the stored private key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
   autoFollowDiscoveredUsers?: boolean; // Default: true (set to false to disable auto-following everyone in global registry)
+  blacklist?: string[]; // Global blacklist of User IDs to ignore
   debug?: boolean; // Enable verbose logging
 }
 
