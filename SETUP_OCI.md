@@ -8,12 +8,24 @@ SovereignS3nc is fully compatible with **OCI Object Storage** using its Amazon S
 - A **Compartment** created to isolate your SovereignS3nc resources.
 
 ## 2. Obtain S3 Credentials (Customer Secret Keys)
-SovereignS3nc uses "Customer Secret Keys" to authenticate with OCI:
-1. Open the OCI Console.
-2. Go to **Identity & Security** -> **Users** -> Select your user.
-3. Click **Customer Secret Keys** in the sidebar.
-4. Click **Generate Secret Key**.
-5. Copy the **Access Key ID** and the **Secret Key**.
+SovereignS3nc uses "Customer Secret Keys" to authenticate with OCI. For a secure deployment, you should create separate keys for the Admin and regular Users.
+
+### Admin Credentials
+Create an OCI User (e.g., `sov-admin`) and generate a Customer Secret Key. This user should have a policy allowing `manage objects` in the bucket.
+
+### User Credentials
+For regular users, create a separate user or group. We recommend using **OCI IAM Policies** to restrict these keys to specific prefixes:
+```text
+Allow group SovereignUsers to manage objects in compartment SovereignS3nc 
+where all {
+  target.bucket.name='your-bucket',
+  any {
+    target.object.name='global/*',
+    target.object.name='admin/data/reports/*',
+    target.object.name = StringStartsWith(request.principal.name, '/')
+  }
+}
+```
 
 ## 3. Identify your Endpoint
 OCI S3-compatible endpoints follow this pattern:

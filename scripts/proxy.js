@@ -1,7 +1,7 @@
 const http = require('http');
 
 const TARGET_HOST = '127.0.0.1';
-const TARGET_PORT = 3900;
+const TARGET_PORT = process.env.TARGET_PORT || 3900;
 const PROXY_PORT = process.env.PROXY_PORT || 8889;
 
 const server = http.createServer((req, res) => {
@@ -13,7 +13,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
   res.setHeader('Access-Control-Allow-Headers', '*');
-  res.setHeader('Access-Control-Expose-Headers', '*');
+  res.setHeader('Access-Control-Expose-Headers', 'ETag, Content-Length, x-amz-meta-hash, x-amz-id-2, x-amz-request-id');
 
   // 2. HANDLE PING
   if (req.url === '/_ping') {

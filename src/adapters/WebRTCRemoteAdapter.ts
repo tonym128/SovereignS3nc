@@ -3,7 +3,7 @@ import { Logger } from '../utils/Logger';
 import { Buffer } from 'buffer';
 
 export interface PeerMessage {
-    type: 'push' | 'request' | 'response' | 'not_found';
+    type: 'push' | 'request' | 'response' | 'not_found' | 'purge';
     path: string;
     hash?: string;
     etag?: string;
@@ -18,8 +18,9 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     private prefix: string;
     public peerId: string;
     private pendingRequests: Map<string, (res: PeerMessage) => void> = new Map();
+    public storage?: any; // Reference to Sovereign storage for purge operations
 
-    constructor(peerId: string, prefix: string = '') {
+    constructor(userId: string) {
         this.peerId = peerId;
         this.prefix = prefix;
         if (this.prefix && !this.prefix.endsWith('/')) {
@@ -216,6 +217,15 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     async canWrite(path: string): Promise<boolean> {
         // In P2P Mesh, 'write access' depends on if we have any authorized peers 
         // who would accept our push. For now we assume true if connected.
-        return this.peers.size > 0;
+        return (this as any).channels.size > 0;
     }
-}
+
+    async listFiles(prefix: string): Promise<string[]> {
+        // P2P Listing not yet implemented
+        return [];
+    }
+
+    async deleteFile(path: string): Promise<void> {
+        // P2P Deletion not yet implemented
+    }
+    }

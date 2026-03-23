@@ -21,7 +21,7 @@ export interface IRemoteAdapter {
   listFiles?(prefix: string): Promise<string[]>;
 
   /**
-   * Delete a file at a specific path.
+   * Permanently delete all data associated with the current appId/scope.
    */
-  deleteFile?(path: string): Promise<void>;
+  purge?(): Promise<void>;
   }

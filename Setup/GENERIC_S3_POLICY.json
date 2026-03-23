@@ -1,0 +1,49 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowUserOwnPrefix",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${userId}",
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${userId}/*"
+            ]
+        },
+        {
+            "Sid": "AllowPublicRegistryRead",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/global/*"
+            ]
+        },
+        {
+            "Sid": "AllowOtherUsersPublicRead",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/*/public/*"
+            ]
+        },
+        {
+            "Sid": "AllowReportingToWriteAdminPrefix",
+            "Effect": "Allow",
+            "Action": "s3:PutObject",
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/admin/data/reports/*"
+            ]
+        },
+        {
+            "Sid": "DenyAdminData",
+            "Effect": "Deny",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/admin/data/*"
+            ]
+        }
+    ]
+}

@@ -29,6 +29,15 @@ class PrefixProxyAdapter implements IRemoteAdapter {
     getFileEtag(path: string) {
         return this.baseAdapter.getFileEtag(this.getKey(path));
     }
+    canWrite(path: string) {
+        return this.baseAdapter.canWrite(this.getKey(path));
+    }
+    listFiles(prefix: string) {
+        return this.baseAdapter.listFiles ? this.baseAdapter.listFiles(this.getKey(prefix)) : Promise.resolve([]);
+    }
+    deleteFile(path: string) {
+        return this.baseAdapter.deleteFile ? this.baseAdapter.deleteFile(this.getKey(path)) : Promise.resolve();
+    }
 }
 
 describe('WebRTC Mesh Integration', () => {

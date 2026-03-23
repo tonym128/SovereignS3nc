@@ -42,6 +42,21 @@ class MockRemote implements IRemoteAdapter {
         if (this.isOffline) throw new Error('Network Error');
         return this.files.get(path)?.etag || null;
     }
+
+    async canWrite(path: string): Promise<boolean> {
+        if (this.isOffline) throw new Error('Network Error');
+        return true;
+    }
+
+    async listFiles(prefix: string): Promise<string[]> {
+        if (this.isOffline) throw new Error('Network Error');
+        return Array.from(this.files.keys()).filter(k => k.startsWith(prefix));
+    }
+
+    async deleteFile(path: string): Promise<void> {
+        if (this.isOffline) throw new Error('Network Error');
+        this.files.delete(path);
+    }
 }
 
 describe('SovereignS3nc Unit Tests', () => {

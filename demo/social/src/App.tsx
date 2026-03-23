@@ -40,6 +40,7 @@ const App = () => {
     });
 
     const [isAdmin, setIsAdmin] = useState(false);
+    const [requestAdminMode, setRequestAdminMode] = useState(false);
     const [adminKeyPublished, setAdminKeyPublished] = useState(false);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -340,17 +341,21 @@ const App = () => {
             const mod = new ModerationModule(instance);
             setModeration(mod);
             
-            // Real probe for admin permissions
-            const isUserAdmin = await mod.isAdmin();
-            setIsAdmin(isUserAdmin);
+            // Real probe for admin permissions - Only if requested by the user
+            if (requestAdminMode) {
+                const isUserAdmin = await mod.isAdmin();
+                setIsAdmin(isUserAdmin);
 
-            // Check if admin key is already published
-            try {
-                const adminRemote = (instance as any).adminRemote;
-                const keyFile = await adminRemote?.downloadFile('public_key.json');
-                setAdminKeyPublished(!!(keyFile && keyFile.data));
-            } catch (e) {
-                setAdminKeyPublished(false);
+                // Check if admin key is already published
+                try {
+                    const adminRemote = (instance as any).adminRemote;
+                    const keyFile = await adminRemote?.downloadFile('public_key.json');
+                    setAdminKeyPublished(!!(keyFile && keyFile.data));
+                } catch (e) {
+                    setAdminKeyPublished(false);
+                }
+            } else {
+                setIsAdmin(false);
             }
 
             // Load user-scoped caches
@@ -1307,11 +1312,15 @@ const App = () => {
                     <input className="form-control mb-2" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
                     <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
                     
-                    <div className="form-check mb-4">
+                    <div className="form-check mb-2">
                         <input className="form-check-input" type="checkbox" id="autoLogin" checked={autoLogin} onChange={e => { setAutoLogin(e.target.checked); localStorage.setItem('sov_auto_login', e.target.checked.toString()); }} />
                         <label className="form-check-label small" htmlFor="autoLogin">Auto-login next time</label>
                     </div>
 
+                    <div className="form-check mb-4">
+                        <input className="form-check-input" type="checkbox" id="adminMode" checked={requestAdminMode} onChange={e => setRequestAdminMode(e.target.checked)} />
+                        <label className="form-check-label small fw-bold text-danger" htmlFor="adminMode"><i className="bi bi-shield-lock me-1"></i> Attempt Login as Admin</label>
+                    </div>
                     <button className="btn btn-sov w-100 py-2 fs-5 mb-3" onClick={login}>Log In</button>
                     
                     <div className="text-center mt-3">

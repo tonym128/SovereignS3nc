@@ -39,6 +39,12 @@ class MockRemote {
     async getFileEtag(path: string): Promise<string | null> {
         return this.files.get(path)?.etag || null;
     }
+
+    async canWrite(path: string): Promise<boolean> { return true; }
+    async listFiles(prefix: string): Promise<string[]> {
+        return Array.from(this.files.keys()).filter(k => k.startsWith(prefix));
+    }
+    async deleteFile(path: string): Promise<void> { this.files.delete(path); }
 }
 
 describe('Browser-based Social Sync', () => {
@@ -65,7 +71,10 @@ describe('Browser-based Social Sync', () => {
                     return mockS3.downloadFile(`${prefix}/${p}`, etag);
                 },
                 getFileHash: (p: string) => mockS3.getFileHash(`${prefix}/${p}`),
-                getFileEtag: (p: string) => mockS3.getFileEtag(`${prefix}/${p}`)
+                getFileEtag: (p: string) => mockS3.getFileEtag(`${prefix}/${p}`),
+                canWrite: (p: string) => mockS3.canWrite(`${prefix}/${p}`),
+                listFiles: (p: string) => mockS3.listFiles(`${prefix}/${p}`),
+                deleteFile: (p: string) => mockS3.deleteFile(`${prefix}/${p}`)
             } as IRemoteAdapter;
         };
 

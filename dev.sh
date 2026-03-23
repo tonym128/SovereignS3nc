@@ -67,12 +67,21 @@ function dev() {
     $GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" layout apply --version "$CURRENT_VERSION"
 
     echo "Creating S3 credentials and bucket..."
-    KEY_OUTPUT=$($GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" key create "$KEY_NAME")
-    ACCESS_KEY=$(echo "$KEY_OUTPUT" | grep "Key ID" | awk '{print $3}')
-    SECRET_KEY=$(echo "$KEY_OUTPUT" | grep "Secret key" | awk '{print $3}')
+    # Admin Key
+    ADMIN_KEY_OUTPUT=$($GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" key create admin-key)
+    ADMIN_ACCESS=$(echo "$ADMIN_KEY_OUTPUT" | grep "Key ID" | awk '{print $3}')
+    ADMIN_SECRET=$(echo "$ADMIN_KEY_OUTPUT" | grep "Secret key" | awk '{print $3}')
+
+    # User Key
+    USER_KEY_OUTPUT=$($GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" key create user-key)
+    USER_ACCESS=$(echo "$USER_KEY_OUTPUT" | grep "Key ID" | awk '{print $3}')
+    USER_SECRET=$(echo "$USER_KEY_OUTPUT" | grep "Secret key" | awk '{print $3}')
 
     $GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" bucket create "$BUCKET_NAME"
-    $GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" bucket allow "$BUCKET_NAME" --read --write --owner --key "$KEY_NAME"
+    
+    # Allow both keys on the bucket for local dev (isolation tested in integration tests via mocks if needed)
+    $GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" bucket allow "$BUCKET_NAME" --read --write --owner --key admin-key
+    $GARAGE_BINARY -c "$GARAGE_LOCAL_TOML" bucket allow "$BUCKET_NAME" --read --write --key user-key
 
     echo "--- Starting CORS Proxy (Port 8889) ---"
     touch proxy.log
@@ -86,12 +95,21 @@ function dev() {
     JSON_CONFIG="{
     \"endpoint\": \"http://127.0.0.1:8889\",
     \"region\": \"garage\",
-    \"accessKeyId\": \"$ACCESS_KEY\",
-    \"secretAccessKey\": \"$SECRET_KEY\",
+    \"accessKeyId\": \"$USER_ACCESS\",
+    \"secretAccessKey\": \"$USER_SECRET\",
     \"bucketName\": \"$BUCKET_NAME\"
 }"
     echo "$JSON_CONFIG" > "$SOCIAL_CONFIG"
     echo "$JSON_CONFIG" > "$BANKY_CONFIG"
+
+    # Also save admin config for reference/manual testing
+    echo "{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"garage\",
+    \"accessKeyId\": \"$ADMIN_ACCESS\",
+    \"secretAccessKey\": \"$ADMIN_SECRET\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}" > "demo/social/admin_config.json"
 
     echo "--- Building Demo Apps ---"
     npm run build:social
@@ -115,6 +133,10 @@ function dev() {
     echo "Garage S3 API (Proxy):   http://127.0.0.1:8889"
     echo "Social Demo App:         http://127.0.0.1:8888"
     echo "Banky Demo App:          http://127.0.0.1:8887"
+    echo ""
+    echo "ADMIN CREDENTIALS (for manual testing):"
+    echo "Access Key: $ADMIN_ACCESS"
+    echo "Secret Key: $ADMIN_SECRET"
     echo "------------------------------------------------"
     echo "Use './dev.sh stop' to shut down services."
 }

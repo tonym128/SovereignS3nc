@@ -83,6 +83,16 @@ The library automatically selects the best storage adapter for your environment:
 - **Browser**: `IndexedDBStorage` (High performance, large capacity).
 - **Node.js**: `NodeStorage` (File-system based) or `SQLiteNodeStorage` (Consolidated SQLite database).
 
+## Security & Governance
+
+SovereignS3nc uses a two-tier security model to balance user privacy with application moderation:
+
+- **User Keys**: Individual S3 credentials scoped to `${appId}/${userId}/`. Users have full control over their own data but cannot access other users' private prefixes.
+- **Admin Keys**: High-privilege credentials with write access to `${appId}/admin/`. Admins can publish a public key for E2EE abuse reports, manage a global blacklist, and perform app-wide data exports.
+
+### Prefix-Based Isolation
+For production deployments, we recommend enforcing path isolation at the S3 bucket policy level. See `Setup/GENERIC_S3_POLICY.json` for a template that secures your bucket while allowing users to sync and report abuse safely.
+
 ## Architecture
 
 SovereignS3nc operates on a **Daily-DB** pattern:

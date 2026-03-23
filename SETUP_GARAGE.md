@@ -27,18 +27,24 @@ chmod +x Setup/GARAGE/setup.sh
 
 ## 4. Manual Configuration
 
-### Step A: Key Creation
-```bash
-garage key create my-sov-key
-```
+### Step A: Key Creation (Admin vs User)
+Garage allows you to create multiple keys with different permission levels.
 
-### Step B: Bucket Creation and Access
+**1. Create an Admin Key (Full Access)**
 ```bash
-garage bucket create my-sov-bucket
-garage bucket allow my-sov-bucket --read --write --owner --key <ACCESS_KEY_ID>
+garage key create sov-admin
+garage bucket allow my-sov-bucket --read --write --owner --key sov-admin
 ```
+*Use this key for administrative tasks like full data exports.*
 
-### Step C: Native Quotas (Anti-DoS)
+**2. Create a User Key (Restricted Access)**
+```bash
+garage key create sov-user-1
+garage bucket allow my-sov-bucket --read --write --key sov-user-1
+```
+*Note: We omit the `--owner` flag for regular users so they cannot change bucket settings or quotas.*
+
+### Step B: Native Quotas (Anti-DoS)
 Garage provides excellent protection against storage-based DoS attacks. You can limit a bucket to 5GB and 10,000 objects:
 ```bash
 garage bucket set-quotas --max-size 5G --max-objects 10000 my-sov-bucket

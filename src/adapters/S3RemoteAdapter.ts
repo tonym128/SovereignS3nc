@@ -9,6 +9,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private bucket: string;
   private prefix: string;
   private endpoint: string;
+  private supportsMetadataHash: boolean = true; // Optimization flag for backends like RustFS
 
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     Logger.debug(`[S3] Initializing adapter for ${paths.userId}...`);
@@ -124,14 +125,30 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   }
 
   async getFileHash(path: string): Promise<string | null> {
+     // If we've already detected that metadata hashes aren't supported, 
+     // fallback to ETag immediately to save a HeadObject call (if we can)
+     // and reduce log noise.
+     if (!this.supportsMetadataHash) {
+         return this.getFileEtag(path);
+     }
+
      const key = this.getKey(path);
      try {
          const response = await this.client.send(new HeadObjectCommand({
              Bucket: this.bucket,
              Key: key
          }));
+         
          const hash = response.Metadata?.hash || null;
-         if (!hash) Logger.warn(`[S3] File ${key} exists but is missing 'hash' metadata. Check CORS 'ExposeHeaders'.`);
+         
+         if (!hash) {
+             // Backend exists but doesn't have our custom hash. 
+             // Mark this connection as not supporting hashes to avoid future noise.
+             Logger.info(`[S3] Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
+             this.supportsMetadataHash = false;
+             return response.ETag || null;
+         }
+         
          return hash;
      } catch (e: any) {
          const statusCode = e.$metadata?.httpStatusCode;
@@ -183,13 +200,14 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       let continuationToken: string | undefined = undefined;
 
       try {
-          do {
+          let hasMore = true;
+          while (hasMore) {
               const command = new ListObjectsV2Command({
                   Bucket: this.bucket,
                   Prefix: fullPrefix,
                   ContinuationToken: continuationToken
               });
-              const response = await this.client.send(command);
+              const response: any = await this.client.send(command);
               if (response.Contents) {
                   for (const item of response.Contents) {
                       if (item.Key) {
@@ -200,7 +218,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
                   }
               }
               continuationToken = response.NextContinuationToken;
-          } while (continuationToken);
+              hasMore = response.IsTruncated || false;
+          }
       } catch (e: any) {
           Logger.warn(`[S3] Failed to list files for prefix ${prefix}: ${e.message}`);
       }
@@ -222,7 +241,20 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       }
   }
 
+  async purge(): Promise<void> {
+      Logger.info(`[S3] Purging all data in bucket ${this.bucket} under prefix ${this.prefix}...`);
+      const files = await this.listFiles('');
+      for (const file of files) {
+          await this.deleteFile(file);
+      }
+      Logger.info(`[S3] Purge complete. ${files.length} files deleted.`);
+  }
+
   private getKey(path: string): string {
+      // Safety check: ensure path doesn't try to escape the prefix (e.g. via ../)
+      if (path.includes('..')) {
+          throw new Error(`Security Violation: Path '${path}' contains parent directory references.`);
+      }
       return `${this.prefix}${path}`;
   }
 }

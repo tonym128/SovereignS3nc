@@ -27,6 +27,12 @@ class MockRemote implements IRemoteAdapter {
     }
     async getFileHash(path: string): Promise<string | null> { return this.files.get(path)?.hash || null; }
     async getFileEtag(path: string): Promise<string | null> { return this.files.get(path)?.etag || null; }
+
+    async canWrite(path: string): Promise<boolean> { return true; }
+    async listFiles(prefix: string): Promise<string[]> {
+        return Array.from(this.files.keys()).filter(k => k.startsWith(prefix));
+    }
+    async deleteFile(path: string): Promise<void> { this.files.delete(path); }
 }
 
 describe('BankyManager Unit Tests', () => {

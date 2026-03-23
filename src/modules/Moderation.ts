@@ -114,14 +114,14 @@ export class ModerationModule {
      * (Admin Only) Add a user to the global blacklist.
      */
     async blacklistUser(userId: string) {
-        const adminRemote = (this.sovereign as any).adminRemote;
-        if (!adminRemote) return;
+        const globalRemote = (this.sovereign as any).globalRemote;
+        if (!globalRemote) return;
 
         const path = 'blacklist.json';
         let blacklist: string[] = [];
 
         try {
-            const result = await adminRemote.downloadFile(path);
+            const result = await globalRemote.downloadFile(path);
             if (result && result.data) {
                 blacklist = JSON.parse(new TextDecoder().decode(result.data));
             }
@@ -130,11 +130,11 @@ export class ModerationModule {
         if (!blacklist.includes(userId)) {
             blacklist.push(userId);
             try {
-                await adminRemote.uploadFile(path, new TextEncoder().encode(JSON.stringify(blacklist)));
+                await globalRemote.uploadFile(path, new TextEncoder().encode(JSON.stringify(blacklist)));
                 Logger.info(`[Moderation] User ${userId} blacklisted.`);
             } catch (e: any) {
                 Logger.warn(`[Moderation] Failed to blacklist user (Not an admin?): ${e.message}`);
-                throw new Error('Permission denied. You do not have admin S3 credentials.');
+                throw new Error('Permission denied. Your S3 credentials do not have write access to the global registry.');
             }
         }
     }

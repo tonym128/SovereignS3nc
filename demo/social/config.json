@@ -1,7 +1,7 @@
 {
     "endpoint": "http://127.0.0.1:8889",
-    "region": "garage",
-    "accessKeyId": "GK15314cbea9b4f4cbe063e388",
-    "secretAccessKey": "f576a8120c173b9b0b25f0e99f615428310243f14cc066873ae0a422e92a7ef0",
+    "region": "rustfs",
+    "accessKeyId": "user-key",
+    "secretAccessKey": "user-secret-123",
     "bucketName": "sovereign-demo"
 }

@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,17 +229,17 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
-      exports.Buffer = Buffer3;
+      exports.Buffer = Buffer4;
       exports.SlowBuffer = SlowBuffer;
       exports.INSPECT_MAX_BYTES = 50;
       var K_MAX_LENGTH = 2147483647;
       exports.kMaxLength = K_MAX_LENGTH;
-      Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
-      if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+      Buffer4.TYPED_ARRAY_SUPPORT = typedArraySupport();
+      if (!Buffer4.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
         console.error(
           "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
         );
@@ -257,17 +257,17 @@
           return false;
         }
       }
-      Object.defineProperty(Buffer3.prototype, "parent", {
+      Object.defineProperty(Buffer4.prototype, "parent", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer4.isBuffer(this)) return void 0;
           return this.buffer;
         }
       });
-      Object.defineProperty(Buffer3.prototype, "offset", {
+      Object.defineProperty(Buffer4.prototype, "offset", {
         enumerable: true,
         get: function() {
-          if (!Buffer3.isBuffer(this)) return void 0;
+          if (!Buffer4.isBuffer(this)) return void 0;
           return this.byteOffset;
         }
       });
@@ -276,10 +276,10 @@
           throw new RangeError('The value "' + length + '" is invalid for option "size"');
         }
         const buf = new Uint8Array(length);
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer4.prototype);
         return buf;
       }
-      function Buffer3(arg, encodingOrOffset, length) {
+      function Buffer4(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           if (typeof encodingOrOffset === "string") {
             throw new TypeError(
@@ -290,7 +290,7 @@
         }
         return from(arg, encodingOrOffset, length);
       }
-      Buffer3.poolSize = 8192;
+      Buffer4.poolSize = 8192;
       function from(value, encodingOrOffset, length) {
         if (typeof value === "string") {
           return fromString(value, encodingOrOffset);
@@ -316,22 +316,22 @@
         }
         const valueOf = value.valueOf && value.valueOf();
         if (valueOf != null && valueOf !== value) {
-          return Buffer3.from(valueOf, encodingOrOffset, length);
+          return Buffer4.from(valueOf, encodingOrOffset, length);
         }
         const b2 = fromObject(value);
         if (b2) return b2;
         if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === "function") {
-          return Buffer3.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
+          return Buffer4.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
         }
         throw new TypeError(
           "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
         );
       }
-      Buffer3.from = function(value, encodingOrOffset, length) {
+      Buffer4.from = function(value, encodingOrOffset, length) {
         return from(value, encodingOrOffset, length);
       };
-      Object.setPrototypeOf(Buffer3.prototype, Uint8Array.prototype);
-      Object.setPrototypeOf(Buffer3, Uint8Array);
+      Object.setPrototypeOf(Buffer4.prototype, Uint8Array.prototype);
+      Object.setPrototypeOf(Buffer4, Uint8Array);
       function assertSize(size) {
         if (typeof size !== "number") {
           throw new TypeError('"size" argument must be of type number');
@@ -349,24 +349,24 @@
         }
         return createBuffer(size);
       }
-      Buffer3.alloc = function(size, fill, encoding) {
+      Buffer4.alloc = function(size, fill, encoding) {
         return alloc(size, fill, encoding);
       };
       function allocUnsafe(size) {
         assertSize(size);
         return createBuffer(size < 0 ? 0 : checked(size) | 0);
       }
-      Buffer3.allocUnsafe = function(size) {
+      Buffer4.allocUnsafe = function(size) {
         return allocUnsafe(size);
       };
-      Buffer3.allocUnsafeSlow = function(size) {
+      Buffer4.allocUnsafeSlow = function(size) {
         return allocUnsafe(size);
       };
       function fromString(string, encoding) {
         if (typeof encoding !== "string" || encoding === "") {
           encoding = "utf8";
         }
-        if (!Buffer3.isEncoding(encoding)) {
+        if (!Buffer4.isEncoding(encoding)) {
           throw new TypeError("Unknown encoding: " + encoding);
         }
         const length = byteLength(string, encoding) | 0;
@@ -407,11 +407,11 @@
         } else {
           buf = new Uint8Array(array, byteOffset, length);
         }
-        Object.setPrototypeOf(buf, Buffer3.prototype);
+        Object.setPrototypeOf(buf, Buffer4.prototype);
         return buf;
       }
       function fromObject(obj) {
-        if (Buffer3.isBuffer(obj)) {
+        if (Buffer4.isBuffer(obj)) {
           const len = checked(obj.length) | 0;
           const buf = createBuffer(len);
           if (buf.length === 0) {
@@ -440,15 +440,15 @@
         if (+length != length) {
           length = 0;
         }
-        return Buffer3.alloc(+length);
+        return Buffer4.alloc(+length);
       }
-      Buffer3.isBuffer = function isBuffer(b2) {
-        return b2 != null && b2._isBuffer === true && b2 !== Buffer3.prototype;
+      Buffer4.isBuffer = function isBuffer(b2) {
+        return b2 != null && b2._isBuffer === true && b2 !== Buffer4.prototype;
       };
-      Buffer3.compare = function compare(a2, b2) {
-        if (isInstance(a2, Uint8Array)) a2 = Buffer3.from(a2, a2.offset, a2.byteLength);
-        if (isInstance(b2, Uint8Array)) b2 = Buffer3.from(b2, b2.offset, b2.byteLength);
-        if (!Buffer3.isBuffer(a2) || !Buffer3.isBuffer(b2)) {
+      Buffer4.compare = function compare(a2, b2) {
+        if (isInstance(a2, Uint8Array)) a2 = Buffer4.from(a2, a2.offset, a2.byteLength);
+        if (isInstance(b2, Uint8Array)) b2 = Buffer4.from(b2, b2.offset, b2.byteLength);
+        if (!Buffer4.isBuffer(a2) || !Buffer4.isBuffer(b2)) {
           throw new TypeError(
             'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
           );
@@ -467,7 +467,7 @@
         if (y2 < x2) return 1;
         return 0;
       };
-      Buffer3.isEncoding = function isEncoding(encoding) {
+      Buffer4.isEncoding = function isEncoding(encoding) {
         switch (String(encoding).toLowerCase()) {
           case "hex":
           case "utf8":
@@ -485,12 +485,12 @@
             return false;
         }
       };
-      Buffer3.concat = function concat(list, length) {
+      Buffer4.concat = function concat(list, length) {
         if (!Array.isArray(list)) {
           throw new TypeError('"list" argument must be an Array of Buffers');
         }
         if (list.length === 0) {
-          return Buffer3.alloc(0);
+          return Buffer4.alloc(0);
         }
         let i2;
         if (length === void 0) {
@@ -499,13 +499,13 @@
             length += list[i2].length;
           }
         }
-        const buffer = Buffer3.allocUnsafe(length);
+        const buffer = Buffer4.allocUnsafe(length);
         let pos = 0;
         for (i2 = 0; i2 < list.length; ++i2) {
           let buf = list[i2];
           if (isInstance(buf, Uint8Array)) {
             if (pos + buf.length > buffer.length) {
-              if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
+              if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
               buf.copy(buffer, pos);
             } else {
               Uint8Array.prototype.set.call(
@@ -514,7 +514,7 @@
                 pos
               );
             }
-          } else if (!Buffer3.isBuffer(buf)) {
+          } else if (!Buffer4.isBuffer(buf)) {
             throw new TypeError('"list" argument must be an Array of Buffers');
           } else {
             buf.copy(buffer, pos);
@@ -524,7 +524,7 @@
         return buffer;
       };
       function byteLength(string, encoding) {
-        if (Buffer3.isBuffer(string)) {
+        if (Buffer4.isBuffer(string)) {
           return string.length;
         }
         if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
@@ -566,7 +566,7 @@
           }
         }
       }
-      Buffer3.byteLength = byteLength;
+      Buffer4.byteLength = byteLength;
       function slowToString(encoding, start, end) {
         let loweredCase = false;
         if (start === void 0 || start < 0) {
@@ -613,13 +613,13 @@
           }
         }
       }
-      Buffer3.prototype._isBuffer = true;
+      Buffer4.prototype._isBuffer = true;
       function swap(b2, n2, m2) {
         const i2 = b2[n2];
         b2[n2] = b2[m2];
         b2[m2] = i2;
       }
-      Buffer3.prototype.swap16 = function swap16() {
+      Buffer4.prototype.swap16 = function swap16() {
         const len = this.length;
         if (len % 2 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 16-bits");
@@ -629,7 +629,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap32 = function swap32() {
+      Buffer4.prototype.swap32 = function swap32() {
         const len = this.length;
         if (len % 4 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 32-bits");
@@ -640,7 +640,7 @@
         }
         return this;
       };
-      Buffer3.prototype.swap64 = function swap64() {
+      Buffer4.prototype.swap64 = function swap64() {
         const len = this.length;
         if (len % 8 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 64-bits");
@@ -653,19 +653,19 @@
         }
         return this;
       };
-      Buffer3.prototype.toString = function toString() {
+      Buffer4.prototype.toString = function toString() {
         const length = this.length;
         if (length === 0) return "";
         if (arguments.length === 0) return utf8Slice(this, 0, length);
         return slowToString.apply(this, arguments);
       };
-      Buffer3.prototype.toLocaleString = Buffer3.prototype.toString;
-      Buffer3.prototype.equals = function equals(b2) {
-        if (!Buffer3.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
+      Buffer4.prototype.toLocaleString = Buffer4.prototype.toString;
+      Buffer4.prototype.equals = function equals(b2) {
+        if (!Buffer4.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
         if (this === b2) return true;
-        return Buffer3.compare(this, b2) === 0;
+        return Buffer4.compare(this, b2) === 0;
       };
-      Buffer3.prototype.inspect = function inspect() {
+      Buffer4.prototype.inspect = function inspect() {
         let str = "";
         const max = exports.INSPECT_MAX_BYTES;
         str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
@@ -673,13 +673,13 @@
         return "<Buffer " + str + ">";
       };
       if (customInspectSymbol) {
-        Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
+        Buffer4.prototype[customInspectSymbol] = Buffer4.prototype.inspect;
       }
-      Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+      Buffer4.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
         if (isInstance(target, Uint8Array)) {
-          target = Buffer3.from(target, target.offset, target.byteLength);
+          target = Buffer4.from(target, target.offset, target.byteLength);
         }
-        if (!Buffer3.isBuffer(target)) {
+        if (!Buffer4.isBuffer(target)) {
           throw new TypeError(
             'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
           );
@@ -752,9 +752,9 @@
           else return -1;
         }
         if (typeof val === "string") {
-          val = Buffer3.from(val, encoding);
+          val = Buffer4.from(val, encoding);
         }
-        if (Buffer3.isBuffer(val)) {
+        if (Buffer4.isBuffer(val)) {
           if (val.length === 0) {
             return -1;
           }
@@ -822,13 +822,13 @@
         }
         return -1;
       }
-      Buffer3.prototype.includes = function includes(val, byteOffset, encoding) {
+      Buffer4.prototype.includes = function includes(val, byteOffset, encoding) {
         return this.indexOf(val, byteOffset, encoding) !== -1;
       };
-      Buffer3.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+      Buffer4.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
       };
-      Buffer3.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+      Buffer4.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
       };
       function hexWrite(buf, string, offset, length) {
@@ -866,7 +866,7 @@
       function ucs2Write(buf, string, offset, length) {
         return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
       }
-      Buffer3.prototype.write = function write(string, offset, length, encoding) {
+      Buffer4.prototype.write = function write(string, offset, length, encoding) {
         if (offset === void 0) {
           encoding = "utf8";
           length = this.length;
@@ -921,7 +921,7 @@
           }
         }
       };
-      Buffer3.prototype.toJSON = function toJSON() {
+      Buffer4.prototype.toJSON = function toJSON() {
         return {
           type: "Buffer",
           data: Array.prototype.slice.call(this._arr || this, 0)
@@ -1044,7 +1044,7 @@
         }
         return res;
       }
-      Buffer3.prototype.slice = function slice(start, end) {
+      Buffer4.prototype.slice = function slice(start, end) {
         const len = this.length;
         start = ~~start;
         end = end === void 0 ? len : ~~end;
@@ -1062,14 +1062,14 @@
         }
         if (end < start) end = start;
         const newBuf = this.subarray(start, end);
-        Object.setPrototypeOf(newBuf, Buffer3.prototype);
+        Object.setPrototypeOf(newBuf, Buffer4.prototype);
         return newBuf;
       };
       function checkOffset(offset, ext, length) {
         if (offset % 1 !== 0 || offset < 0) throw new RangeError("offset is not uint");
         if (offset + ext > length) throw new RangeError("Trying to access beyond buffer length");
       }
-      Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readUintLE = Buffer4.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1081,7 +1081,7 @@
         }
         return val;
       };
-      Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readUintBE = Buffer4.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) {
@@ -1094,32 +1094,32 @@
         }
         return val;
       };
-      Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+      Buffer4.prototype.readUint8 = Buffer4.prototype.readUInt8 = function readUInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         return this[offset];
       };
-      Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+      Buffer4.prototype.readUint16LE = Buffer4.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] | this[offset + 1] << 8;
       };
-      Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+      Buffer4.prototype.readUint16BE = Buffer4.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] << 8 | this[offset + 1];
       };
-      Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+      Buffer4.prototype.readUint32LE = Buffer4.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 16777216;
       };
-      Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+      Buffer4.prototype.readUint32BE = Buffer4.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] * 16777216 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
       };
-      Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
+      Buffer4.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1131,7 +1131,7 @@
         const hi = this[++offset] + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + last * 2 ** 24;
         return BigInt(lo) + (BigInt(hi) << BigInt(32));
       });
-      Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
+      Buffer4.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1143,7 +1143,7 @@
         const lo = this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last;
         return (BigInt(hi) << BigInt(32)) + BigInt(lo);
       });
-      Buffer3.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1157,7 +1157,7 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
+      Buffer4.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1171,35 +1171,35 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer3.prototype.readInt8 = function readInt8(offset, noAssert) {
+      Buffer4.prototype.readInt8 = function readInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         if (!(this[offset] & 128)) return this[offset];
         return (255 - this[offset] + 1) * -1;
       };
-      Buffer3.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+      Buffer4.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset] | this[offset + 1] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+      Buffer4.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset + 1] | this[offset] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer3.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+      Buffer4.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
       };
-      Buffer3.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+      Buffer4.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
       };
-      Buffer3.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
+      Buffer4.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1210,7 +1210,7 @@
         const val = this[offset + 4] + this[offset + 5] * 2 ** 8 + this[offset + 6] * 2 ** 16 + (last << 24);
         return (BigInt(val) << BigInt(32)) + BigInt(first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24);
       });
-      Buffer3.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
+      Buffer4.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1222,32 +1222,32 @@
         this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
         return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
       });
-      Buffer3.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+      Buffer4.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, true, 23, 4);
       };
-      Buffer3.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+      Buffer4.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, false, 23, 4);
       };
-      Buffer3.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+      Buffer4.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, true, 52, 8);
       };
-      Buffer3.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+      Buffer4.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, false, 52, 8);
       };
       function checkInt(buf, value, offset, ext, max, min) {
-        if (!Buffer3.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+        if (!Buffer4.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
         if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
       }
-      Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeUintLE = Buffer4.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1263,7 +1263,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeUintBE = Buffer4.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1279,14 +1279,14 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+      Buffer4.prototype.writeUint8 = Buffer4.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 255, 0);
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint16LE = Buffer4.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1294,7 +1294,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint16BE = Buffer4.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1302,7 +1302,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint32LE = Buffer4.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1312,7 +1312,7 @@
         this[offset] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
+      Buffer4.prototype.writeUint32BE = Buffer4.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1362,13 +1362,13 @@
         buf[offset] = hi;
         return offset + 8;
       }
-      Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
+      Buffer4.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
+      Buffer4.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer3.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1387,7 +1387,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
+      Buffer4.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1406,7 +1406,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer3.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+      Buffer4.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 127, -128);
@@ -1414,7 +1414,7 @@
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer3.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1422,7 +1422,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1430,7 +1430,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer3.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1440,7 +1440,7 @@
         this[offset + 3] = value >>> 24;
         return offset + 4;
       };
-      Buffer3.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+      Buffer4.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1451,10 +1451,10 @@
         this[offset + 3] = value & 255;
         return offset + 4;
       };
-      Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
+      Buffer4.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
-      Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
+      Buffer4.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
       function checkIEEE754(buf, value, offset, ext, max, min) {
@@ -1470,10 +1470,10 @@
         ieee754.write(buf, value, offset, littleEndian, 23, 4);
         return offset + 4;
       }
-      Buffer3.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+      Buffer4.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
         return writeFloat(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+      Buffer4.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
         return writeFloat(this, value, offset, false, noAssert);
       };
       function writeDouble(buf, value, offset, littleEndian, noAssert) {
@@ -1485,14 +1485,14 @@
         ieee754.write(buf, value, offset, littleEndian, 52, 8);
         return offset + 8;
       }
-      Buffer3.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+      Buffer4.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
         return writeDouble(this, value, offset, true, noAssert);
       };
-      Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+      Buffer4.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
         return writeDouble(this, value, offset, false, noAssert);
       };
-      Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
-        if (!Buffer3.isBuffer(target)) throw new TypeError("argument should be a Buffer");
+      Buffer4.prototype.copy = function copy(target, targetStart, start, end) {
+        if (!Buffer4.isBuffer(target)) throw new TypeError("argument should be a Buffer");
         if (!start) start = 0;
         if (!end && end !== 0) end = this.length;
         if (targetStart >= target.length) targetStart = target.length;
@@ -1521,7 +1521,7 @@
         }
         return len;
       };
-      Buffer3.prototype.fill = function fill(val, start, end, encoding) {
+      Buffer4.prototype.fill = function fill(val, start, end, encoding) {
         if (typeof val === "string") {
           if (typeof start === "string") {
             encoding = start;
@@ -1534,7 +1534,7 @@
           if (encoding !== void 0 && typeof encoding !== "string") {
             throw new TypeError("encoding must be a string");
           }
-          if (typeof encoding === "string" && !Buffer3.isEncoding(encoding)) {
+          if (typeof encoding === "string" && !Buffer4.isEncoding(encoding)) {
             throw new TypeError("Unknown encoding: " + encoding);
           }
           if (val.length === 1) {
@@ -1563,7 +1563,7 @@
             this[i2] = val;
           }
         } else {
-          const bytes = Buffer3.isBuffer(val) ? val : Buffer3.from(val, encoding);
+          const bytes = Buffer4.isBuffer(val) ? val : Buffer4.from(val, encoding);
           const len = bytes.length;
           if (len === 0) {
             throw new TypeError('The value "' + val + '" is invalid for argument "value"');
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1985,9 +1985,9 @@
   var require_polyfills = __commonJS({
     "demo/social/src/polyfills.js"() {
       "use strict";
-      var import_buffer2 = __toESM(require_buffer());
+      var import_buffer3 = __toESM(require_buffer());
       var import_process = __toESM(require_browser());
-      window.Buffer = import_buffer2.Buffer;
+      window.Buffer = import_buffer3.Buffer;
       window.process = import_process.default;
       window.global = window;
     }
@@ -1997,7 +1997,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -2970,7 +2970,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2983,7 +2983,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3243,7 +3243,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3256,7 +3256,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3501,7 +3501,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3515,7 +3515,7 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -3988,15 +3988,15 @@
           return error;
         }
         function describeBuiltInComponentFrame(name) {
-          if (void 0 === prefix)
+          if (void 0 === prefix2)
             try {
               throw Error();
             } catch (x2) {
               var match = x2.stack.trim().match(/\n( *(at )?)/);
-              prefix = match && match[1] || "";
+              prefix2 = match && match[1] || "";
               suffix = -1 < x2.stack.indexOf("\n    at") ? " (<anonymous>)" : -1 < x2.stack.indexOf("@") ? "@unknown:0:0" : "";
             }
-          return "\n" + prefix + name + suffix;
+          return "\n" + prefix2 + name + suffix;
         }
         function describeNativeComponentFrame(fn, construct) {
           if (!fn || reentry) return "";
@@ -4675,8 +4675,8 @@
                   node.removeAttribute(name);
                   return;
                 case "boolean":
-                  var prefix2 = name.toLowerCase().slice(0, 5);
-                  if ("data-" !== prefix2 && "aria-" !== prefix2) {
+                  var prefix3 = name.toLowerCase().slice(0, 5);
+                  if ("data-" !== prefix3 && "aria-" !== prefix3) {
                     node.removeAttribute(name);
                     return;
                   }
@@ -6182,11 +6182,11 @@
           }
           return kind;
         }
-        function addObjectToProperties(object, properties, indent, prefix2) {
+        function addObjectToProperties(object, properties, indent, prefix3) {
           for (var key in object)
-            hasOwnProperty.call(object, key) && "_" !== key[0] && addValueToProperties(key, object[key], properties, indent, prefix2);
+            hasOwnProperty.call(object, key) && "_" !== key[0] && addValueToProperties(key, object[key], properties, indent, prefix3);
         }
-        function addValueToProperties(propertyName, value, properties, indent, prefix2) {
+        function addValueToProperties(propertyName, value, properties, indent, prefix3) {
           switch (typeof value) {
             case "object":
               if (null === value) {
@@ -6206,7 +6206,7 @@
                     break;
                   }
                   properties.push([
-                    prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
+                    prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
                     "<" + typeName2
                   ]);
                   null !== key && addValueToProperties(
@@ -6214,7 +6214,7 @@
                     key,
                     properties,
                     indent + 1,
-                    prefix2
+                    prefix3
                   );
                   propertyName = false;
                   for (var propKey in value)
@@ -6223,7 +6223,7 @@
                       value[propKey],
                       properties,
                       indent + 1,
-                      prefix2
+                      prefix3
                     );
                   properties.push([
                     "",
@@ -6239,7 +6239,7 @@
                     break;
                   } else if (propKey === ENTRIES_ARRAY) {
                     properties.push([
-                      prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
+                      prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
                       ""
                     ]);
                     for (propertyName = 0; propertyName < value.length; propertyName++)
@@ -6248,7 +6248,7 @@
                         typeName2[1],
                         properties,
                         indent + 1,
-                        prefix2
+                        prefix3
                       );
                     return;
                   }
@@ -6260,7 +6260,7 @@
                       value.value,
                       properties,
                       indent,
-                      prefix2
+                      prefix3
                     ), properties.length > typeName2) {
                       properties = properties[typeName2];
                       properties[1] = "Promise<" + (properties[1] || "Object") + ">";
@@ -6271,7 +6271,7 @@
                     value.reason,
                     properties,
                     indent,
-                    prefix2
+                    prefix3
                   ), properties.length > typeName2)) {
                     properties = properties[typeName2];
                     properties[1] = "Rejected Promise<" + properties[1] + ">";
@@ -6285,10 +6285,10 @@
                 }
                 "Object" === typeName2 && (propKey = Object.getPrototypeOf(value)) && "function" === typeof propKey.constructor && (typeName2 = propKey.constructor.name);
                 properties.push([
-                  prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
+                  prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
                   "Object" === typeName2 ? 3 > indent ? "" : "\u2026" : typeName2
                 ]);
-                3 > indent && addObjectToProperties(value, properties, indent + 1, prefix2);
+                3 > indent && addObjectToProperties(value, properties, indent + 1, prefix3);
                 return;
               }
             case "function":
@@ -6307,7 +6307,7 @@
               value = String(value);
           }
           properties.push([
-            prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
+            prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
             value
           ]);
         }
@@ -20505,7 +20505,7 @@
         var fiberStack = [];
         var index$jscomp$0 = -1, contextStackCursor = createCursor(null), contextFiberStackCursor = createCursor(null), rootInstanceStackCursor = createCursor(null), hostTransitionProviderCursor = createCursor(null), disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
         disabledLog.__reactDisabledLog = true;
-        var prefix, suffix, reentry = false;
+        var prefix2, suffix, reentry = false;
         var componentFrameCache = new ("function" === typeof WeakMap ? WeakMap : Map)();
         var current = null, isRendering = false, hasOwnProperty = Object.prototype.hasOwnProperty, scheduleCallback$3 = Scheduler.unstable_scheduleCallback, cancelCallback$1 = Scheduler.unstable_cancelCallback, shouldYield = Scheduler.unstable_shouldYield, requestPaint = Scheduler.unstable_requestPaint, now$1 = Scheduler.unstable_now, getCurrentPriorityLevel = Scheduler.unstable_getCurrentPriorityLevel, ImmediatePriority = Scheduler.unstable_ImmediatePriority, UserBlockingPriority = Scheduler.unstable_UserBlockingPriority, NormalPriority$1 = Scheduler.unstable_NormalPriority, LowPriority = Scheduler.unstable_LowPriority, IdlePriority = Scheduler.unstable_IdlePriority, log$1 = Scheduler.log, unstable_setDisableYieldValue = Scheduler.unstable_setDisableYieldValue, rendererID = null, injectedHook = null, hasLoggedError = false, isDevToolsPresent = "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__, clz32 = Math.clz32 ? Math.clz32 : clz32Fallback, log2 = Math.log, LN2 = Math.LN2, nextTransitionUpdateLane = 256, nextTransitionDeferredLane = 262144, nextRetryLane = 4194304, DiscreteEventPriority = 2, ContinuousEventPriority = 8, DefaultEventPriority = 32, IdleEventPriority = 268435456, randomKey = Math.random().toString(36).slice(2), internalInstanceKey = "__reactFiber$" + randomKey, internalPropsKey = "__reactProps$" + randomKey, internalContainerInstanceKey = "__reactContainer$" + randomKey, internalEventHandlersKey = "__reactEvents$" + randomKey, internalEventHandlerListenersKey = "__reactListeners$" + randomKey, internalEventHandlesSetKey = "__reactHandles$" + randomKey, internalRootNodeResourcesKey = "__reactResources$" + randomKey, internalHoistableMarker = "__reactMarker$" + randomKey, allNativeEvents = /* @__PURE__ */ new Set(), registrationNameDependencies = {}, possibleRegistrationNames = {}, hasReadOnlyValue = {
           button: true,
@@ -23415,7 +23415,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23428,36 +23428,36 @@
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       }
-      SafeBuffer.prototype = Object.create(Buffer3.prototype);
-      copyProps(Buffer3, SafeBuffer);
+      SafeBuffer.prototype = Object.create(Buffer4.prototype);
+      copyProps(Buffer4, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer4(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -23473,7 +23473,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer4(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -23488,13 +23488,13 @@
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
         throw new Error("Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11");
       }
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var crypto5 = window.crypto || window.msCrypto;
       if (crypto5 && crypto5.getRandomValues) {
         module.exports = randomBytes2;
@@ -23503,7 +23503,7 @@
       }
       function randomBytes2(size, cb2) {
         if (size > MAX_UINT32) throw new RangeError("requested too many random bytes");
-        var bytes = Buffer3.allocUnsafe(size);
+        var bytes = Buffer4.allocUnsafe(size);
         if (size > 0) {
           if (size > MAX_BYTES) {
             for (var generated = 0; generated < size; generated += MAX_BYTES) {
@@ -23526,7 +23526,7 @@
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -23560,7 +23560,7 @@
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -23929,7 +23929,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -23938,7 +23938,7 @@
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -23994,7 +23994,7 @@
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -24006,7 +24006,7 @@
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -24015,7 +24015,7 @@
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -24024,7 +24024,7 @@
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -24033,7 +24033,7 @@
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -24042,7 +24042,7 @@
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -24051,7 +24051,7 @@
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -24060,7 +24060,7 @@
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -24069,7 +24069,7 @@
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -24078,7 +24078,7 @@
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -24087,7 +24087,7 @@
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -24096,7 +24096,7 @@
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -24105,7 +24105,7 @@
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -24114,7 +24114,7 @@
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -24123,7 +24123,7 @@
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -24132,7 +24132,7 @@
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -24143,7 +24143,7 @@
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -24158,7 +24158,7 @@
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -24167,7 +24167,7 @@
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -24184,7 +24184,7 @@
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -24201,7 +24201,7 @@
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -24226,7 +24226,7 @@
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -24235,7 +24235,7 @@
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -24245,7 +24245,7 @@
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -24322,7 +24322,7 @@
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -24332,7 +24332,7 @@
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -24341,7 +24341,7 @@
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -24350,7 +24350,7 @@
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -24359,7 +24359,7 @@
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -24372,7 +24372,7 @@
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -24390,7 +24390,7 @@
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -24422,7 +24422,7 @@
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -24443,7 +24443,7 @@
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -24455,7 +24455,7 @@
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -24787,7 +24787,7 @@
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -24811,7 +24811,7 @@
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -24839,7 +24839,7 @@
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -24909,7 +24909,7 @@
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -24929,7 +24929,7 @@
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -24943,7 +24943,7 @@
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -24976,7 +24976,7 @@
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -25095,7 +25095,7 @@
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25156,7 +25156,7 @@
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -25178,7 +25178,7 @@
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -25197,7 +25197,7 @@
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -25246,7 +25246,7 @@
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -25269,7 +25269,7 @@
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -25323,7 +25323,7 @@
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -25337,7 +25337,7 @@
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -25363,7 +25363,7 @@
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -25485,7 +25485,7 @@
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -25497,7 +25497,7 @@
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -25727,7 +25727,7 @@
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -25737,7 +25737,7 @@
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -26298,7 +26298,7 @@
   var require_buffer_list = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -26364,12 +26364,12 @@
         return (hint === "string" ? String : Number)(input);
       }
       var _require = require_buffer();
-      var Buffer3 = _require.Buffer;
+      var Buffer4 = _require.Buffer;
       var _require2 = require_util();
       var inspect = _require2.inspect;
       var custom = inspect && inspect.custom || "inspect";
       function copyBuffer(src, target, offset) {
-        Buffer3.prototype.copy.call(src, target, offset);
+        Buffer4.prototype.copy.call(src, target, offset);
       }
       module.exports = /* @__PURE__ */ (function() {
         function BufferList() {
@@ -26429,8 +26429,8 @@
         }, {
           key: "concat",
           value: function concat(n2) {
-            if (this.length === 0) return Buffer3.alloc(0);
-            var ret = Buffer3.allocUnsafe(n2 >>> 0);
+            if (this.length === 0) return Buffer4.alloc(0);
+            var ret = Buffer4.allocUnsafe(n2 >>> 0);
             var p2 = this.head;
             var i2 = 0;
             while (p2) {
@@ -26494,7 +26494,7 @@
         }, {
           key: "_getBuffer",
           value: function _getBuffer(n2) {
-            var ret = Buffer3.allocUnsafe(n2);
+            var ret = Buffer4.allocUnsafe(n2);
             var p2 = this.head;
             var c2 = 1;
             p2.data.copy(ret);
@@ -26541,7 +26541,7 @@
   var require_destroy = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -26631,7 +26631,7 @@
   var require_errors_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -26741,7 +26741,7 @@
   var require_state = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -26766,7 +26766,7 @@
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -26805,7 +26805,7 @@
   var require_stream_writable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -26821,14 +26821,14 @@
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer4 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer4.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy();
       var _require = require_state();
@@ -26956,7 +26956,7 @@
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer3.isBuffer(chunk)) {
+        if (isBuf && !Buffer4.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -27000,7 +27000,7 @@
       });
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer3.from(chunk, encoding);
+          chunk = Buffer4.from(chunk, encoding);
         }
         return chunk;
       }
@@ -27277,7 +27277,7 @@
   var require_stream_duplex = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -27370,35 +27370,35 @@
   // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer3, SafeBuffer);
+      copyProps(Buffer4, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer4(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -27414,7 +27414,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer4(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -27429,9 +27429,9 @@
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer2().Buffer;
-      var isEncoding = Buffer3.isEncoding || function(encoding) {
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer2().Buffer;
+      var isEncoding = Buffer4.isEncoding || function(encoding) {
         encoding = "" + encoding;
         switch (encoding && encoding.toLowerCase()) {
           case "hex":
@@ -27479,7 +27479,7 @@
       }
       function normalizeEncoding(enc) {
         var nenc = _normalizeEncoding(enc);
-        if (typeof nenc !== "string" && (Buffer3.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
+        if (typeof nenc !== "string" && (Buffer4.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
         return nenc || enc;
       }
       exports.StringDecoder = StringDecoder;
@@ -27508,7 +27508,7 @@
         }
         this.lastNeed = 0;
         this.lastTotal = 0;
-        this.lastChar = Buffer3.allocUnsafe(nb);
+        this.lastChar = Buffer4.allocUnsafe(nb);
       }
       StringDecoder.prototype.write = function(buf) {
         if (buf.length === 0) return "";
@@ -27668,7 +27668,7 @@
   var require_end_of_stream = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once2(callback) {
         var called = false;
@@ -27758,7 +27758,7 @@
   var require_async_iterator = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -27941,7 +27941,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -27952,7 +27952,7 @@
   var require_stream_readable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -27961,14 +27961,14 @@
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer4 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer4.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var debugUtil = require_util();
       var debug;
@@ -28076,7 +28076,7 @@
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer3.from(chunk, encoding);
+              chunk = Buffer4.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -28101,7 +28101,7 @@
           if (er) {
             errorOrDestroy(stream, er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer4.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -28686,7 +28686,7 @@
   var require_stream_transform = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -28788,7 +28788,7 @@
   var require_stream_passthrough = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -28806,7 +28806,7 @@
   var require_pipeline = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var eos;
       function once2(callback) {
         var called = false;
@@ -28891,7 +28891,7 @@
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -28970,13 +28970,13 @@
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer3.allocUnsafe(blockSize);
+        this._block = Buffer4.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -29002,18 +29002,18 @@
         callback(error);
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
-      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
+      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer4.prototype instanceof Uint8Array || Buffer4.TYPED_ARRAY_SUPPORT);
       function toBuffer(data, encoding) {
-        if (data instanceof Buffer3) return data;
-        if (typeof data === "string") return Buffer3.from(data, encoding);
+        if (data instanceof Buffer4) return data;
+        if (typeof data === "string") return Buffer4.from(data, encoding);
         if (useArrayBuffer && ArrayBuffer.isView(data)) {
-          if (data.byteLength === 0) return Buffer3.alloc(0);
-          var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
+          if (data.byteLength === 0) return Buffer4.alloc(0);
+          var res = Buffer4.from(data.buffer, data.byteOffset, data.byteLength);
           if (res.byteLength === data.byteLength) return res;
         }
-        if (useUint8Array && data instanceof Uint8Array) return Buffer3.from(data);
-        if (Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer3.from(data);
+        if (useUint8Array && data instanceof Uint8Array) return Buffer4.from(data);
+        if (Buffer4.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer4.from(data);
         }
         throw new TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
       }
@@ -29059,10 +29059,10 @@
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var ARRAY16 = new Array(16);
       function MD5() {
         HashBase.call(this, 64);
@@ -29159,7 +29159,7 @@
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer3.allocUnsafe(16);
+        var buffer = Buffer4.allocUnsafe(16);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -29188,7 +29188,7 @@
   // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29200,7 +29200,7 @@
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -29218,8 +29218,8 @@
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
       var isView = ArrayBuffer.isView || function isView2(obj) {
@@ -29232,35 +29232,35 @@
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined";
-      var useFromArrayBuffer = useArrayBuffer && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
+      var useFromArrayBuffer = useArrayBuffer && (Buffer4.prototype instanceof Uint8Array || Buffer4.TYPED_ARRAY_SUPPORT);
       module.exports = function toBuffer(data, encoding) {
-        if (Buffer3.isBuffer(data)) {
+        if (Buffer4.isBuffer(data)) {
           if (data.constructor && !("isBuffer" in data)) {
-            return Buffer3.from(data);
+            return Buffer4.from(data);
           }
           return data;
         }
         if (typeof data === "string") {
-          return Buffer3.from(data, encoding);
+          return Buffer4.from(data, encoding);
         }
         if (useArrayBuffer && isView(data)) {
           if (data.byteLength === 0) {
-            return Buffer3.alloc(0);
+            return Buffer4.alloc(0);
           }
           if (useFromArrayBuffer) {
-            var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
+            var res = Buffer4.from(data.buffer, data.byteOffset, data.byteLength);
             if (res.byteLength === data.byteLength) {
               return res;
             }
           }
           var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
-          var result = Buffer3.from(uint8);
+          var result = Buffer4.from(uint8);
           if (result.length === data.byteLength) {
             return result;
           }
         }
         if (useUint8Array && data instanceof Uint8Array) {
-          return Buffer3.from(data);
+          return Buffer4.from(data);
         }
         var isArr = isArray(data);
         if (isArr) {
@@ -29271,8 +29271,8 @@
             }
           }
         }
-        if (isArr || Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer3.from(data);
+        if (isArr || Buffer4.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer4.from(data);
         }
         throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
       };
@@ -29283,14 +29283,14 @@
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding) {
-        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer4.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError('The "data" argument must be a string, a Buffer, a Uint8Array, or a DataView');
@@ -29302,7 +29302,7 @@
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -29347,7 +29347,7 @@
   // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29358,7 +29358,7 @@
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -29366,35 +29366,35 @@
   // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer3 = buffer.Buffer;
+      var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
+      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer3, SafeBuffer);
+      copyProps(Buffer4, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer3(arg, encodingOrOffset, length);
+        return Buffer4(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer3(size);
+        var buf = Buffer4(size);
         if (fill !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill, encoding);
@@ -29410,7 +29410,7 @@
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer3(size);
+        return Buffer4(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -29424,7 +29424,7 @@
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -29496,13 +29496,13 @@
   var require_BufferList = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
         }
       }
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer4 = require_safe_buffer3().Buffer;
       var util = require_util();
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
@@ -29549,8 +29549,8 @@
           return ret;
         };
         BufferList.prototype.concat = function concat(n2) {
-          if (this.length === 0) return Buffer3.alloc(0);
-          var ret = Buffer3.allocUnsafe(n2 >>> 0);
+          if (this.length === 0) return Buffer4.alloc(0);
+          var ret = Buffer4.allocUnsafe(n2 >>> 0);
           var p2 = this.head;
           var i2 = 0;
           while (p2) {
@@ -29575,7 +29575,7 @@
   var require_destroy2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -29645,7 +29645,7 @@
   var require_stream_writable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -29665,14 +29665,14 @@
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer4 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer4.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy2();
       util.inherits(Writable, Stream);
@@ -29794,7 +29794,7 @@
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer3.isBuffer(chunk)) {
+        if (isBuf && !Buffer4.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -29830,7 +29830,7 @@
       };
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer3.from(chunk, encoding);
+          chunk = Buffer4.from(chunk, encoding);
         }
         return chunk;
       }
@@ -30086,7 +30086,7 @@
   var require_stream_duplex2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -30164,7 +30164,7 @@
   var require_stream_readable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -30175,14 +30175,14 @@
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser2();
-      var Buffer3 = require_safe_buffer3().Buffer;
+      var Buffer4 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer3.from(chunk);
+        return Buffer4.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
@@ -30281,7 +30281,7 @@
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer3.from(chunk, encoding);
+              chunk = Buffer4.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -30305,7 +30305,7 @@
           if (er) {
             stream.emit("error", er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer4.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -30797,7 +30797,7 @@
         return ret;
       }
       function copyFromBuffer(n2, list) {
-        var ret = Buffer3.allocUnsafe(n2);
+        var ret = Buffer4.allocUnsafe(n2);
         var p2 = list.head;
         var c2 = 1;
         p2.data.copy(ret);
@@ -30851,7 +30851,7 @@
   var require_stream_transform2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -30952,7 +30952,7 @@
   var require_stream_passthrough2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -30971,7 +30971,7 @@
   // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -30986,14 +30986,14 @@
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer3.allocUnsafe(blockSize);
+        this._block = Buffer4.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -31078,8 +31078,8 @@
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
       var ARRAY16 = new Array(16);
@@ -31504,7 +31504,7 @@
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer3.alloc ? Buffer3.alloc(20) : new Buffer3(20);
+        var buffer = Buffer4.alloc ? Buffer4.alloc(20) : new Buffer4(20);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -31520,11 +31520,11 @@
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
-        this._block = Buffer3.alloc(blockSize);
+        this._block = Buffer4.alloc(blockSize);
         this._finalSize = finalSize;
         this._blockSize = blockSize;
         this._len = 0;
@@ -31582,10 +31582,10 @@
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -31651,7 +31651,7 @@
         this._e = e2 + this._e | 0;
       };
       Sha.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(20);
+        var H2 = Buffer4.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -31667,10 +31667,10 @@
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -31739,7 +31739,7 @@
         this._e = e2 + this._e | 0;
       };
       Sha13.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(20);
+        var H2 = Buffer4.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -31755,10 +31755,10 @@
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         1899447441,
@@ -31899,7 +31899,7 @@
         this._h = h2 + this._h | 0;
       };
       Sha2564.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(32);
+        var H2 = Buffer4.allocUnsafe(32);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -31918,11 +31918,11 @@
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var W2 = new Array(64);
       function Sha224() {
         this.init();
@@ -31942,7 +31942,7 @@
         return this;
       };
       Sha224.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(28);
+        var H2 = Buffer4.allocUnsafe(28);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -31960,10 +31960,10 @@
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         3609767458,
@@ -32281,7 +32281,7 @@
         this._hh = this._hh + hh2 + getCarry(this._hl, hl) | 0;
       };
       Sha512.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(64);
+        var H2 = Buffer4.allocUnsafe(64);
         function writeInt64BE(h2, l2, offset) {
           H2.writeInt32BE(h2, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -32304,11 +32304,11 @@
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var W2 = new Array(160);
       function Sha384() {
         this.init();
@@ -32336,7 +32336,7 @@
         return this;
       };
       Sha384.prototype._hash = function() {
-        var H2 = Buffer3.allocUnsafe(48);
+        var H2 = Buffer4.allocUnsafe(48);
         function writeInt64BE(h2, l2, offset) {
           H2.writeInt32BE(h2, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -32357,7 +32357,7 @@
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -32379,8 +32379,8 @@
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
       var inherits = require_inherits_browser();
@@ -32447,7 +32447,7 @@
         done(err);
       };
       CipherBase.prototype._finalOrDigest = function(outputEnc) {
-        var outData = this.__final() || Buffer3.alloc(0);
+        var outData = this.__final() || Buffer4.alloc(0);
         if (outputEnc) {
           outData = this._toString(outData, outputEnc, true);
         }
@@ -32475,7 +32475,7 @@
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -32505,26 +32505,26 @@
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer4.alloc(128);
       var blocksize = 64;
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer3.from(key);
+          key = Buffer4.from(key);
         }
         this._alg = alg;
         this._key = key;
         if (key.length > blocksize) {
           key = alg(key);
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer4.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer4.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer4.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -32536,8 +32536,8 @@
         this._hash.push(data);
       };
       Hmac.prototype._final = function() {
-        var h2 = this._alg(Buffer3.concat(this._hash));
-        return this._alg(Buffer3.concat([this._opad, h2]));
+        var h2 = this._alg(Buffer4.concat(this._hash));
+        return this._alg(Buffer4.concat([this._opad, h2]));
       };
       module.exports = Hmac;
     }
@@ -32546,7 +32546,7 @@
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -32558,19 +32558,19 @@
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer4.alloc(128);
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer3.from(key);
+          key = Buffer4.from(key);
         }
         var blocksize = alg === "sha512" || alg === "sha384" ? 128 : 64;
         this._alg = alg;
@@ -32579,10 +32579,10 @@
           var hash = alg === "rmd160" ? new RIPEMD160() : sha(alg);
           key = hash.update(key).digest();
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer4.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer4.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer4.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -32774,7 +32774,7 @@
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -32783,7 +32783,7 @@
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -32807,7 +32807,7 @@
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -32826,14 +32826,14 @@
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding, name) {
-        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer4.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError(name + " must be a string, a Buffer, a Uint8Array, or a DataView");
@@ -32845,15 +32845,15 @@
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var toBuffer = require_to_buffer3();
-      var ZEROS = Buffer3.alloc(128);
+      var ZEROS = Buffer4.alloc(128);
       var sizes = {
         __proto__: null,
         md5: 16,
@@ -32896,15 +32896,15 @@
         if (key.length > blocksize) {
           key = hash(key);
         } else if (key.length < blocksize) {
-          key = Buffer3.concat([key, ZEROS], blocksize);
+          key = Buffer4.concat([key, ZEROS], blocksize);
         }
-        var ipad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
-        var opad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
+        var ipad = Buffer4.allocUnsafe(blocksize + sizes[alg]);
+        var opad = Buffer4.allocUnsafe(blocksize + sizes[alg]);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
         }
-        var ipad1 = Buffer3.allocUnsafe(blocksize + saltLen + 4);
+        var ipad1 = Buffer4.allocUnsafe(blocksize + saltLen + 4);
         ipad.copy(ipad1, 0, 0, blocksize);
         this.ipad1 = ipad1;
         this.ipad2 = ipad;
@@ -32931,8 +32931,8 @@
           throw new TypeError("Digest algorithm not supported: " + digest);
         }
         var hmac2 = new Hmac(mappedDigest, password, salt.length);
-        var DK = Buffer3.allocUnsafe(keylen);
-        var block1 = Buffer3.allocUnsafe(salt.length + 4);
+        var DK = Buffer4.allocUnsafe(keylen);
+        var block1 = Buffer4.allocUnsafe(salt.length + 4);
         salt.copy(block1, 0, 0, salt.length);
         var destPos = 0;
         var hLen = size;
@@ -32960,8 +32960,8 @@
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var sync = require_sync_browser();
@@ -33007,7 +33007,7 @@
             }
           }, key, length << 3);
         }).then(function(res) {
-          return Buffer3.from(res);
+          return Buffer4.from(res);
         });
       }
       function checkNative(algo) {
@@ -33020,7 +33020,7 @@
         if (checks[algo] !== void 0) {
           return checks[algo];
         }
-        ZERO_BUF = ZERO_BUF || Buffer3.alloc(8);
+        ZERO_BUF = ZERO_BUF || Buffer4.alloc(8);
         var prom = browserPbkdf2(ZERO_BUF, ZERO_BUF, 10, 128, algo).then(
           function() {
             return true;
@@ -33083,7 +33083,7 @@
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -33093,7 +33093,7 @@
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -33859,7 +33859,7 @@
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -33876,7 +33876,7 @@
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -33985,7 +33985,7 @@
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -34113,7 +34113,7 @@
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -34169,7 +34169,7 @@
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -34218,7 +34218,7 @@
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -34230,11 +34230,11 @@
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var modes = {
         "des-ede3-cbc": des.CBC.instantiate(des.EDE),
         "des-ede3": des.EDE,
@@ -34258,15 +34258,15 @@
           type = "encrypt";
         }
         var key = opts.key;
-        if (!Buffer3.isBuffer(key)) {
-          key = Buffer3.from(key);
+        if (!Buffer4.isBuffer(key)) {
+          key = Buffer4.from(key);
         }
         if (modeName === "des-ede" || modeName === "des-ede-cbc") {
-          key = Buffer3.concat([key, key.slice(0, 8)]);
+          key = Buffer4.concat([key, key.slice(0, 8)]);
         }
         var iv = opts.iv;
-        if (!Buffer3.isBuffer(iv)) {
-          iv = Buffer3.from(iv);
+        if (!Buffer4.isBuffer(iv)) {
+          iv = Buffer4.from(iv);
         }
         this._des = mode.create({
           key,
@@ -34275,10 +34275,10 @@
         });
       }
       DES.prototype._update = function(data) {
-        return Buffer3.from(this._des.update(data));
+        return Buffer4.from(this._des.update(data));
       };
       DES.prototype._final = function() {
-        return Buffer3.from(this._des.final());
+        return Buffer4.from(this._des.final());
       };
     }
   });
@@ -34286,7 +34286,7 @@
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -34299,7 +34299,7 @@
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -34314,7 +34314,7 @@
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -34333,30 +34333,30 @@
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
         var len = data.length;
         var out = xor(data, self2._cache);
         self2._cache = self2._cache.slice(len);
-        self2._prev = Buffer3.concat([self2._prev, decrypt ? data : out]);
+        self2._prev = Buffer4.concat([self2._prev, decrypt ? data : out]);
         return out;
       }
       exports.encrypt = function(self2, data, decrypt) {
-        var out = Buffer3.allocUnsafe(0);
+        var out = Buffer4.allocUnsafe(0);
         var len;
         while (data.length) {
           if (self2._cache.length === 0) {
             self2._cache = self2._cipher.encryptBlock(self2._prev);
-            self2._prev = Buffer3.allocUnsafe(0);
+            self2._prev = Buffer4.allocUnsafe(0);
           }
           if (self2._cache.length <= data.length) {
             len = self2._cache.length;
-            out = Buffer3.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
+            out = Buffer4.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
             data = data.slice(len);
           } else {
-            out = Buffer3.concat([out, encryptStart(self2, data, decrypt)]);
+            out = Buffer4.concat([out, encryptStart(self2, data, decrypt)]);
             break;
           }
         }
@@ -34368,20 +34368,20 @@
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
         var out = pad[0] ^ byteParam;
-        self2._prev = Buffer3.concat([
+        self2._prev = Buffer4.concat([
           self2._prev.slice(1),
-          Buffer3.from([decrypt ? byteParam : out])
+          Buffer4.from([decrypt ? byteParam : out])
         ]);
         return out;
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer4.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -34394,8 +34394,8 @@
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
         var i2 = -1;
@@ -34414,8 +34414,8 @@
       function shiftIn(buffer, value) {
         var len = buffer.length;
         var i2 = -1;
-        var out = Buffer3.allocUnsafe(buffer.length);
-        buffer = Buffer3.concat([buffer, Buffer3.from([value])]);
+        var out = Buffer4.allocUnsafe(buffer.length);
+        buffer = Buffer4.concat([buffer, Buffer4.from([value])]);
         while (++i2 < len) {
           out[i2] = buffer[i2] << 1 | buffer[i2 + 1] >> 7;
         }
@@ -34423,7 +34423,7 @@
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer4.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -34436,7 +34436,7 @@
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -34456,7 +34456,7 @@
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -34478,9 +34478,9 @@
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
       function getBlock(self2) {
         var out = self2._cipher.encryptBlockRaw(self2._prev);
@@ -34491,9 +34491,9 @@
       exports.encrypt = function(self2, chunk) {
         var chunkNum = Math.ceil(chunk.length / blockSize);
         var start = self2._cache.length;
-        self2._cache = Buffer3.concat([
+        self2._cache = Buffer4.concat([
           self2._cache,
-          Buffer3.allocUnsafe(chunkNum * blockSize)
+          Buffer4.allocUnsafe(chunkNum * blockSize)
         ]);
         for (var i2 = 0; i2 < chunkNum; i2++) {
           var out = getBlock(self2);
@@ -34710,7 +34710,7 @@
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -34733,10 +34733,10 @@
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
-        if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
+        if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
         var len = buf.length / 4 | 0;
         var out = new Array(len);
         for (var i2 = 0; i2 < len; i2++) {
@@ -34876,7 +34876,7 @@
       };
       AES.prototype.encryptBlock = function(M2) {
         var out = this.encryptBlockRaw(M2);
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer4.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[1], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -34889,7 +34889,7 @@
         M2[1] = M2[3];
         M2[3] = m1;
         var out = cryptBlock(M2, this._invKeySchedule, G2.INV_SUB_MIX, G2.INV_SBOX, this._nRounds);
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer4.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[3], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -34908,9 +34908,9 @@
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
-      var ZEROES = Buffer3.alloc(16, 0);
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
+      var ZEROES = Buffer4.alloc(16, 0);
       function toArray(buf) {
         return [
           buf.readUInt32BE(0),
@@ -34920,7 +34920,7 @@
         ];
       }
       function fromArray(out) {
-        var buf = Buffer3.allocUnsafe(16);
+        var buf = Buffer4.allocUnsafe(16);
         buf.writeUInt32BE(out[0] >>> 0, 0);
         buf.writeUInt32BE(out[1] >>> 0, 4);
         buf.writeUInt32BE(out[2] >>> 0, 8);
@@ -34929,8 +34929,8 @@
       }
       function GHASH(key) {
         this.h = key;
-        this.state = Buffer3.alloc(16, 0);
-        this.cache = Buffer3.allocUnsafe(0);
+        this.state = Buffer4.alloc(16, 0);
+        this.cache = Buffer4.allocUnsafe(0);
       }
       GHASH.prototype.ghash = function(block) {
         var i2 = -1;
@@ -34964,7 +34964,7 @@
         this.state = fromArray(Zi);
       };
       GHASH.prototype.update = function(buf) {
-        this.cache = Buffer3.concat([this.cache, buf]);
+        this.cache = Buffer4.concat([this.cache, buf]);
         var chunk;
         while (this.cache.length >= 16) {
           chunk = this.cache.slice(0, 16);
@@ -34974,7 +34974,7 @@
       };
       GHASH.prototype.final = function(abl, bl2) {
         if (this.cache.length) {
-          this.ghash(Buffer3.concat([this.cache, ZEROES], 16));
+          this.ghash(Buffer4.concat([this.cache, ZEROES], 16));
         }
         this.ghash(fromArray([0, abl, 0, bl2]));
         return this.state;
@@ -34986,9 +34986,9 @@
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       var GHASH = require_ghash();
@@ -35005,8 +35005,8 @@
       }
       function calcIv(self2, iv, ck2) {
         if (iv.length === 12) {
-          self2._finID = Buffer3.concat([iv, Buffer3.from([0, 0, 0, 1])]);
-          return Buffer3.concat([iv, Buffer3.from([0, 0, 0, 2])]);
+          self2._finID = Buffer4.concat([iv, Buffer4.from([0, 0, 0, 1])]);
+          return Buffer4.concat([iv, Buffer4.from([0, 0, 0, 2])]);
         }
         var ghash = new GHASH(ck2);
         var len = iv.length;
@@ -35014,28 +35014,28 @@
         ghash.update(iv);
         if (toPad) {
           toPad = 16 - toPad;
-          ghash.update(Buffer3.alloc(toPad, 0));
+          ghash.update(Buffer4.alloc(toPad, 0));
         }
-        ghash.update(Buffer3.alloc(8, 0));
+        ghash.update(Buffer4.alloc(8, 0));
         var ivBits = len * 8;
-        var tail = Buffer3.alloc(8);
+        var tail = Buffer4.alloc(8);
         tail.writeUIntBE(ivBits, 0, 8);
         ghash.update(tail);
         self2._finID = ghash.state;
-        var out = Buffer3.from(self2._finID);
+        var out = Buffer4.from(self2._finID);
         incr32(out);
         return out;
       }
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
-        var h2 = Buffer3.alloc(4, 0);
+        var h2 = Buffer4.alloc(4, 0);
         this._cipher = new aes.AES(key);
         var ck2 = this._cipher.encryptBlock(h2);
         this._ghash = new GHASH(ck2);
         iv = calcIv(this, iv, ck2);
-        this._prev = Buffer3.from(iv);
-        this._cache = Buffer3.allocUnsafe(0);
-        this._secCache = Buffer3.allocUnsafe(0);
+        this._prev = Buffer4.from(iv);
+        this._cache = Buffer4.allocUnsafe(0);
+        this._secCache = Buffer4.allocUnsafe(0);
         this._decrypt = decrypt;
         this._alen = 0;
         this._len = 0;
@@ -35048,7 +35048,7 @@
         if (!this._called && this._alen) {
           var rump = 16 - this._alen % 16;
           if (rump < 16) {
-            rump = Buffer3.alloc(rump, 0);
+            rump = Buffer4.alloc(rump, 0);
             this._ghash.update(rump);
           }
         }
@@ -35070,7 +35070,7 @@
         this._cipher.scrub();
       };
       StreamCipher.prototype.getAuthTag = function getAuthTag() {
-        if (this._decrypt || !Buffer3.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
+        if (this._decrypt || !Buffer4.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
         return this._authTag;
       };
       StreamCipher.prototype.setAuthTag = function setAuthTag(tag) {
@@ -35089,17 +35089,17 @@
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
-        this._cache = Buffer3.allocUnsafe(0);
-        this._secCache = Buffer3.allocUnsafe(0);
+        this._prev = Buffer4.from(iv);
+        this._cache = Buffer4.allocUnsafe(0);
+        this._secCache = Buffer4.allocUnsafe(0);
         this._decrypt = decrypt;
         this._mode = mode;
       }
@@ -35117,19 +35117,19 @@
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
-        if (!Buffer3.isBuffer(password)) password = Buffer3.from(password, "binary");
+        if (!Buffer4.isBuffer(password)) password = Buffer4.from(password, "binary");
         if (salt) {
-          if (!Buffer3.isBuffer(salt)) salt = Buffer3.from(salt, "binary");
+          if (!Buffer4.isBuffer(salt)) salt = Buffer4.from(salt, "binary");
           if (salt.length !== 8) throw new RangeError("salt should be Buffer with 8 byte length");
         }
         var keyLen = keyBits / 8;
-        var key = Buffer3.alloc(keyLen);
-        var iv = Buffer3.alloc(ivLen || 0);
-        var tmp = Buffer3.alloc(0);
+        var key = Buffer4.alloc(keyLen);
+        var iv = Buffer4.alloc(ivLen || 0);
+        var tmp = Buffer4.alloc(0);
         while (keyLen > 0 || ivLen > 0) {
           var hash = new MD5();
           hash.update(tmp);
@@ -35160,10 +35160,10 @@
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
       var aes = require_aes();
@@ -35173,7 +35173,7 @@
         Transform.call(this);
         this._cache = new Splitter();
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
+        this._prev = Buffer4.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -35187,9 +35187,9 @@
           thing = this._mode.encrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer3.concat(out);
+        return Buffer4.concat(out);
       };
-      var PADDING = Buffer3.alloc(16, 16);
+      var PADDING = Buffer4.alloc(16, 16);
       Cipher.prototype._final = function() {
         var chunk = this._cache.flush();
         if (this._autopadding) {
@@ -35207,10 +35207,10 @@
         return this;
       };
       function Splitter() {
-        this.cache = Buffer3.allocUnsafe(0);
+        this.cache = Buffer4.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer3.concat([this.cache, data]);
+        this.cache = Buffer4.concat([this.cache, data]);
       };
       Splitter.prototype.get = function() {
         if (this.cache.length > 15) {
@@ -35222,19 +35222,19 @@
       };
       Splitter.prototype.flush = function() {
         var len = 16 - this.cache.length;
-        var padBuff = Buffer3.allocUnsafe(len);
+        var padBuff = Buffer4.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           padBuff.writeUInt8(len, i2);
         }
-        return Buffer3.concat([this.cache, padBuff]);
+        return Buffer4.concat([this.cache, padBuff]);
       };
       function createCipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof password === "string") password = Buffer3.from(password);
+        if (typeof password === "string") password = Buffer4.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
-        if (typeof iv === "string") iv = Buffer3.from(iv);
+        if (typeof iv === "string") iv = Buffer4.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv);
@@ -35257,9 +35257,9 @@
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       var MODES = require_modes();
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
@@ -35271,7 +35271,7 @@
         this._cache = new Splitter();
         this._last = void 0;
         this._cipher = new aes.AES(key);
-        this._prev = Buffer3.from(iv);
+        this._prev = Buffer4.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -35285,7 +35285,7 @@
           thing = this._mode.decrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer3.concat(out);
+        return Buffer4.concat(out);
       };
       Decipher.prototype._final = function() {
         var chunk = this._cache.flush();
@@ -35300,10 +35300,10 @@
         return this;
       };
       function Splitter() {
-        this.cache = Buffer3.allocUnsafe(0);
+        this.cache = Buffer4.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer3.concat([this.cache, data]);
+        this.cache = Buffer4.concat([this.cache, data]);
       };
       Splitter.prototype.get = function(autoPadding) {
         var out;
@@ -35342,9 +35342,9 @@
       function createDecipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof iv === "string") iv = Buffer3.from(iv);
+        if (typeof iv === "string") iv = Buffer4.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
-        if (typeof password === "string") password = Buffer3.from(password);
+        if (typeof password === "string") password = Buffer4.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv, true);
@@ -35367,7 +35367,7 @@
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -35385,7 +35385,7 @@
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -35416,7 +35416,7 @@
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -35478,7 +35478,7 @@
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -35515,12 +35515,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -35955,8 +35955,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -38290,7 +38290,7 @@
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -38327,12 +38327,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -38767,8 +38767,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -41102,7 +41102,7 @@
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -41160,7 +41160,7 @@
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -41252,7 +41252,7 @@
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var randomBytes2 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -41389,7 +41389,7 @@
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -41536,7 +41536,7 @@
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -41576,7 +41576,7 @@
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -41613,12 +41613,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -42075,9 +42075,9 @@
         BN.prototype.toJSON = function toJSON() {
           return this.toString(16, 2);
         };
-        if (Buffer3) {
+        if (Buffer4) {
           BN.prototype.toBuffer = function toBuffer(endian, length) {
-            return this.toArrayLike(Buffer3, endian, length);
+            return this.toArrayLike(Buffer4, endian, length);
           };
         }
         BN.prototype.toArray = function toArray(endian, length) {
@@ -44469,10 +44469,10 @@
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser2();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       function getr(priv) {
         var len = priv.modulus.byteLength();
         var r2;
@@ -44498,7 +44498,7 @@
         var m1 = c1.redPow(priv.exponent1).fromRed();
         var m2 = c2.redPow(priv.exponent2).fromRed();
         var h2 = m1.isub(m2).imul(qinv).umod(p2).imul(q2);
-        return m2.iadd(h2).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer3, "be", len);
+        return m2.iadd(h2).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer4, "be", len);
       }
       crt.getr = getr;
       module.exports = crt;
@@ -44570,7 +44570,7 @@
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -44607,12 +44607,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -45047,8 +45047,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -47383,7 +47383,7 @@
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -47443,7 +47443,7 @@
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -47550,7 +47550,7 @@
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -47873,7 +47873,7 @@
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -48572,7 +48572,7 @@
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -48701,7 +48701,7 @@
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -49003,7 +49003,7 @@
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -49016,7 +49016,7 @@
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -49262,7 +49262,7 @@
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -49342,7 +49342,7 @@
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -49389,7 +49389,7 @@
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49462,7 +49462,7 @@
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49615,7 +49615,7 @@
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -49652,7 +49652,7 @@
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -50092,7 +50092,7 @@
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -50137,7 +50137,7 @@
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -50150,7 +50150,7 @@
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -50592,7 +50592,7 @@
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -50633,7 +50633,7 @@
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -50652,7 +50652,7 @@
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -51440,7 +51440,7 @@
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -51617,7 +51617,7 @@
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -51712,7 +51712,7 @@
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51807,7 +51807,7 @@
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51963,7 +51963,7 @@
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -52171,7 +52171,7 @@
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -52246,7 +52246,7 @@
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -52297,7 +52297,7 @@
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -52386,7 +52386,7 @@
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -52401,7 +52401,7 @@
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -52438,12 +52438,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -52878,8 +52878,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -55213,7 +55213,7 @@
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -55267,7 +55267,7 @@
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -55368,13 +55368,13 @@
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer4 = require_buffer().Buffer;
       function DecoderBuffer(base, options) {
         Reporter.call(this, options);
-        if (!Buffer3.isBuffer(base)) {
+        if (!Buffer4.isBuffer(base)) {
           this.error("Input not Buffer");
           return;
         }
@@ -55433,8 +55433,8 @@
           this.length = 1;
         } else if (typeof value === "string") {
           this.value = value;
-          this.length = Buffer3.byteLength(value);
-        } else if (Buffer3.isBuffer(value)) {
+          this.length = Buffer4.byteLength(value);
+        } else if (Buffer4.isBuffer(value)) {
           this.value = value;
           this.length = value.length;
         } else {
@@ -55444,7 +55444,7 @@
       exports.EncoderBuffer = EncoderBuffer;
       EncoderBuffer.prototype.join = function join2(out, offset) {
         if (!out)
-          out = new Buffer3(this.length);
+          out = new Buffer4(this.length);
         if (!offset)
           offset = 0;
         if (this.length === 0)
@@ -55459,7 +55459,7 @@
             out[offset] = this.value;
           else if (typeof this.value === "string")
             out.write(this.value, offset);
-          else if (Buffer3.isBuffer(this.value))
+          else if (Buffer4.isBuffer(this.value))
             this.value.copy(out, offset);
           offset += this.length;
         }
@@ -55471,7 +55471,7 @@
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -56005,7 +56005,7 @@
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -56017,7 +56017,7 @@
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -56064,7 +56064,7 @@
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -56083,7 +56083,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -56347,9 +56347,9 @@
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer4 = require_buffer().Buffer;
       var DERDecoder = require_der2();
       function PEMDecoder(entity) {
         DERDecoder.call(this, entity);
@@ -56384,7 +56384,7 @@
           throw new Error("PEM section not found for: " + label);
         var base64 = lines.slice(start + 1, end).join("");
         base64.replace(/[^a-z0-9\+\/=]+/gi, "");
-        var input = new Buffer3(base64, "base64");
+        var input = new Buffer4(base64, "base64");
         return DERDecoder.prototype.decode.call(this, input, options);
       };
     }
@@ -56393,7 +56393,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -56403,9 +56403,9 @@
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer3 = require_buffer().Buffer;
+      var Buffer4 = require_buffer().Buffer;
       var asn1 = require_asn1();
       var base = asn1.base;
       var der = asn1.constants.der;
@@ -56427,7 +56427,7 @@
       DERNode.prototype._encodeComposite = function encodeComposite(tag, primitive, cls, content) {
         var encodedTag = encodeTag(tag, primitive, cls, this.reporter);
         if (content.length < 128) {
-          var header = new Buffer3(2);
+          var header = new Buffer4(2);
           header[0] = encodedTag;
           header[1] = content.length;
           return this._createEncoderBuffer([header, content]);
@@ -56435,7 +56435,7 @@
         var lenOctets = 1;
         for (var i2 = content.length; i2 >= 256; i2 >>= 8)
           lenOctets++;
-        var header = new Buffer3(1 + 1 + lenOctets);
+        var header = new Buffer4(1 + 1 + lenOctets);
         header[0] = encodedTag;
         header[1] = 128 | lenOctets;
         for (var i2 = 1 + lenOctets, j2 = content.length; j2 > 0; i2--, j2 >>= 8)
@@ -56446,7 +56446,7 @@
         if (tag === "bitstr") {
           return this._createEncoderBuffer([str.unused | 0, str.data]);
         } else if (tag === "bmpstr") {
-          var buf = new Buffer3(str.length * 2);
+          var buf = new Buffer4(str.length * 2);
           for (var i2 = 0; i2 < str.length; i2++) {
             buf.writeUInt16BE(str.charCodeAt(i2), i2 * 2);
           }
@@ -56497,7 +56497,7 @@
           for (size++; ident >= 128; ident >>= 7)
             size++;
         }
-        var objid = new Buffer3(size);
+        var objid = new Buffer4(size);
         var offset = objid.length - 1;
         for (var i2 = id.length - 1; i2 >= 0; i2--) {
           var ident = id[i2];
@@ -56553,18 +56553,18 @@
           }
           num = values[num];
         }
-        if (typeof num !== "number" && !Buffer3.isBuffer(num)) {
+        if (typeof num !== "number" && !Buffer4.isBuffer(num)) {
           var numArray = num.toArray();
           if (!num.sign && numArray[0] & 128) {
             numArray.unshift(0);
           }
-          num = new Buffer3(numArray);
+          num = new Buffer4(numArray);
         }
-        if (Buffer3.isBuffer(num)) {
+        if (Buffer4.isBuffer(num)) {
           var size = num.length;
           if (num.length === 0)
             size++;
-          var out = new Buffer3(size);
+          var out = new Buffer4(size);
           num.copy(out);
           if (num.length === 0)
             out[0] = 0;
@@ -56585,7 +56585,7 @@
         if (out[0] & 128) {
           out.unshift(0);
         }
-        return this._createEncoderBuffer(new Buffer3(out));
+        return this._createEncoderBuffer(new Buffer4(out));
       };
       DERNode.prototype._encodeBool = function encodeBool(value) {
         return this._createEncoderBuffer(value ? 255 : 0);
@@ -56635,7 +56635,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -56659,7 +56659,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -56669,7 +56669,7 @@
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -56684,7 +56684,7 @@
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -56764,7 +56764,7 @@
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -56898,30 +56898,30 @@
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
       var evp = require_evp_bytestokey();
       var ciphers = require_browser7();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       module.exports = function(okey, password) {
         var key = okey.toString();
         var match = key.match(findProc);
         var decrypted;
         if (!match) {
           var match2 = key.match(fullRegex);
-          decrypted = Buffer3.from(match2[2].replace(/[\r\n]/g, ""), "base64");
+          decrypted = Buffer4.from(match2[2].replace(/[\r\n]/g, ""), "base64");
         } else {
           var suite = "aes" + match[1];
-          var iv = Buffer3.from(match[2], "hex");
-          var cipherText = Buffer3.from(match[3].replace(/[\r\n]/g, ""), "base64");
+          var iv = Buffer4.from(match[2], "hex");
+          var cipherText = Buffer4.from(match[3].replace(/[\r\n]/g, ""), "base64");
           var cipherKey = evp(password, iv.slice(0, 8), parseInt(match[1], 10)).key;
           var out = [];
           var cipher = ciphers.createDecipheriv(suite, cipherKey, iv);
           out.push(cipher.update(cipherText));
           out.push(cipher["final"]());
-          decrypted = Buffer3.concat(out);
+          decrypted = Buffer4.concat(out);
         }
         var tag = key.match(startRegex)[1];
         return {
@@ -56936,13 +56936,13 @@
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
       var ciphers = require_browser7();
       var pbkdf2Sync2 = require_browser6().pbkdf2Sync;
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       function decrypt(data, password) {
         var salt = data.algorithm.decrypt.kde.kdeparams.salt;
         var iters = parseInt(data.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
@@ -56955,16 +56955,16 @@
         var out = [];
         out.push(cipher.update(cipherText));
         out.push(cipher["final"]());
-        return Buffer3.concat(out);
+        return Buffer4.concat(out);
       }
       function parseKeys(buffer) {
         var password;
-        if (typeof buffer === "object" && !Buffer3.isBuffer(buffer)) {
+        if (typeof buffer === "object" && !Buffer4.isBuffer(buffer)) {
           password = buffer.passphrase;
           buffer = buffer.key;
         }
         if (typeof buffer === "string") {
-          buffer = Buffer3.from(buffer);
+          buffer = Buffer4.from(buffer);
         }
         var stripped = fixProc(buffer, password);
         var type = stripped.tag;
@@ -57065,8 +57065,8 @@
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
       var EC = require_elliptic().ec;
@@ -57093,7 +57093,7 @@
         if (key.padding !== void 0 && key.padding !== RSA_PKCS1_PADDING) {
           throw new Error("illegal or unsupported padding mode");
         }
-        hash = Buffer3.concat([tag, hash]);
+        hash = Buffer4.concat([tag, hash]);
         var len = priv.modulus.byteLength();
         var pad = [0, 1];
         while (hash.length + pad.length + 1 < len) {
@@ -57115,7 +57115,7 @@
         var curve = new EC(curveId);
         var key = curve.keyFromPrivate(priv.privateKey);
         var out = key.sign(hash);
-        return Buffer3.from(out.toDER());
+        return Buffer4.from(out.toDER());
       }
       function dsaSign(hash, priv, algo) {
         var x2 = priv.params.priv_key;
@@ -57155,22 +57155,22 @@
           r2.length
         ];
         res = res.concat(r2, [2, s2.length], s2);
-        return Buffer3.from(res);
+        return Buffer4.from(res);
       }
       function getKey(x2, q2, hash, algo) {
-        x2 = Buffer3.from(x2.toArray());
+        x2 = Buffer4.from(x2.toArray());
         if (x2.length < q2.byteLength()) {
-          var zeros = Buffer3.alloc(q2.byteLength() - x2.length);
-          x2 = Buffer3.concat([zeros, x2]);
+          var zeros = Buffer4.alloc(q2.byteLength() - x2.length);
+          x2 = Buffer4.concat([zeros, x2]);
         }
         var hlen = hash.length;
         var hbits = bits2octets(hash, q2);
-        var v2 = Buffer3.alloc(hlen);
+        var v2 = Buffer4.alloc(hlen);
         v2.fill(1);
-        var k2 = Buffer3.alloc(hlen);
-        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([0])).update(x2).update(hbits).digest();
+        var k2 = Buffer4.alloc(hlen);
+        k2 = createHmac(algo, k2).update(v2).update(Buffer4.from([0])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
-        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([1])).update(x2).update(hbits).digest();
+        k2 = createHmac(algo, k2).update(v2).update(Buffer4.from([1])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
         return { k: k2, v: v2 };
       }
@@ -57185,10 +57185,10 @@
       function bits2octets(bits, q2) {
         bits = bits2int(bits, q2);
         bits = bits.mod(q2);
-        var out = Buffer3.from(bits.toArray());
+        var out = Buffer4.from(bits.toArray());
         if (out.length < q2.byteLength()) {
-          var zeros = Buffer3.alloc(q2.byteLength() - out.length);
-          out = Buffer3.concat([zeros, out]);
+          var zeros = Buffer4.alloc(q2.byteLength() - out.length);
+          out = Buffer4.concat([zeros, out]);
         }
         return out;
       }
@@ -57196,13 +57196,13 @@
         var t8;
         var k2;
         do {
-          t8 = Buffer3.alloc(0);
+          t8 = Buffer4.alloc(0);
           while (t8.length * 8 < q2.bitLength()) {
             kv.v = createHmac(algo, kv.k).update(kv.v).digest();
-            t8 = Buffer3.concat([t8, kv.v]);
+            t8 = Buffer4.concat([t8, kv.v]);
           }
           k2 = bits2int(t8, q2);
-          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer3.from([0])).digest();
+          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer4.from([0])).digest();
           kv.v = createHmac(algo, kv.k).update(kv.v).digest();
         } while (k2.cmp(q2) !== -1);
         return k2;
@@ -57220,8 +57220,8 @@
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
       var parseKeys = require_parse_asn1();
@@ -57242,7 +57242,7 @@
         if (signType !== "rsa" && signType !== "ecdsa/rsa") {
           throw new Error("wrong public key type");
         }
-        hash = Buffer3.concat([tag, hash]);
+        hash = Buffer4.concat([tag, hash]);
         var len = pub.modulus.byteLength();
         var pad = [1];
         var padNum = 0;
@@ -57255,11 +57255,11 @@
         while (++i2 < hash.length) {
           pad.push(hash[i2]);
         }
-        pad = Buffer3.from(pad);
+        pad = Buffer4.from(pad);
         var red = BN.mont(pub.modulus);
         sig = new BN(sig).toRed(red);
         sig = sig.redPow(new BN(pub.publicExponent));
-        sig = Buffer3.from(sig.fromRed().toArray());
+        sig = Buffer4.from(sig.fromRed().toArray());
         var out = padNum < 8 ? 1 : 0;
         len = Math.min(sig.length, pad.length);
         if (sig.length !== pad.length) {
@@ -57311,8 +57311,8 @@
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
-      var Buffer3 = require_safe_buffer().Buffer;
+      var import_polyfills691 = __toESM(require_polyfills());
+      var Buffer4 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
       var inherits = require_inherits_browser();
@@ -57320,7 +57320,7 @@
       var verify = require_verify();
       var algorithms = require_algorithms();
       Object.keys(algorithms).forEach(function(key) {
-        algorithms[key].id = Buffer3.from(algorithms[key].id, "hex");
+        algorithms[key].id = Buffer4.from(algorithms[key].id, "hex");
         algorithms[key.toLowerCase()] = algorithms[key];
       });
       function Sign(algorithm) {
@@ -57340,7 +57340,7 @@
         done();
       };
       Sign.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer4.from(data, enc) : data);
         return this;
       };
       Sign.prototype.sign = function signMethod(key, enc) {
@@ -57365,11 +57365,11 @@
         done();
       };
       Verify.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer4.from(data, enc) : data);
         return this;
       };
       Verify.prototype.verify = function verifyMethod(key, sig, enc) {
-        var sigBuffer = typeof sig === "string" ? Buffer3.from(sig, enc) : sig;
+        var sigBuffer = typeof sig === "string" ? Buffer4.from(sig, enc) : sig;
         this.end();
         var hash = this._hash.digest();
         return verify(sigBuffer, hash, key, this._signType, this._tag);
@@ -57392,7 +57392,7 @@
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -57429,12 +57429,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -57869,8 +57869,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -60204,7 +60204,7 @@
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -60323,21 +60323,21 @@
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
-        var t8 = Buffer3.alloc(0);
+        var t8 = Buffer4.alloc(0);
         var i2 = 0;
         var c2;
         while (t8.length < len) {
           c2 = i2ops(i2++);
-          t8 = Buffer3.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
+          t8 = Buffer4.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
         }
         return t8.slice(0, len);
       };
       function i2ops(c2) {
-        var out = Buffer3.allocUnsafe(4);
+        var out = Buffer4.allocUnsafe(4);
         out.writeUInt32BE(c2, 0);
         return out;
       }
@@ -60347,7 +60347,7 @@
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -60362,7 +60362,7 @@
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -60399,12 +60399,12 @@
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer3;
+        var Buffer4;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer3 = window.Buffer;
+            Buffer4 = window.Buffer;
           } else {
-            Buffer3 = require_buffer().Buffer;
+            Buffer4 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -60839,8 +60839,8 @@
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer3 !== "undefined");
-          return this.toArrayLike(Buffer3, endian, length);
+          assert(typeof Buffer4 !== "undefined");
+          return this.toArrayLike(Buffer4, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -63174,11 +63174,11 @@
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var BN = require_bn7();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
-        return Buffer3.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
+        return Buffer4.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
       }
       module.exports = withPublic;
     }
@@ -63187,7 +63187,7 @@
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser2();
       var createHash4 = require_browser4();
@@ -63196,7 +63196,7 @@
       var BN = require_bn7();
       var withPublic = require_withPublic();
       var crt = require_browserify_rsa();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       module.exports = function publicEncrypt(publicKey, msg, reverse) {
         var padding;
         if (publicKey.padding) {
@@ -63229,18 +63229,18 @@
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
         var mLen = msg.length;
-        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer4.alloc(0)).digest();
         var hLen = iHash.length;
         var hLen2 = 2 * hLen;
         if (mLen > k2 - hLen2 - 2) {
           throw new Error("message too long");
         }
-        var ps = Buffer3.alloc(k2 - mLen - hLen2 - 2);
+        var ps = Buffer4.alloc(k2 - mLen - hLen2 - 2);
         var dblen = k2 - hLen - 1;
         var seed = randomBytes2(hLen);
-        var maskedDb = xor(Buffer3.concat([iHash, ps, Buffer3.alloc(1, 1), msg], dblen), mgf(seed, dblen));
+        var maskedDb = xor(Buffer4.concat([iHash, ps, Buffer4.alloc(1, 1), msg], dblen), mgf(seed, dblen));
         var maskedSeed = xor(seed, mgf(maskedDb, hLen));
-        return new BN(Buffer3.concat([Buffer3.alloc(1), maskedSeed, maskedDb], k2));
+        return new BN(Buffer4.concat([Buffer4.alloc(1), maskedSeed, maskedDb], k2));
       }
       function pkcs1(key, msg, reverse) {
         var mLen = msg.length;
@@ -63250,14 +63250,14 @@
         }
         var ps;
         if (reverse) {
-          ps = Buffer3.alloc(k2 - mLen - 3, 255);
+          ps = Buffer4.alloc(k2 - mLen - 3, 255);
         } else {
           ps = nonZero(k2 - mLen - 3);
         }
-        return new BN(Buffer3.concat([Buffer3.from([0, reverse ? 1 : 2]), ps, Buffer3.alloc(1), msg], k2));
+        return new BN(Buffer4.concat([Buffer4.from([0, reverse ? 1 : 2]), ps, Buffer4.alloc(1), msg], k2));
       }
       function nonZero(len) {
-        var out = Buffer3.allocUnsafe(len);
+        var out = Buffer4.allocUnsafe(len);
         var i2 = 0;
         var cache2 = randomBytes2(len * 2);
         var cur = 0;
@@ -63280,7 +63280,7 @@
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -63288,7 +63288,7 @@
       var crt = require_browserify_rsa();
       var createHash4 = require_browser4();
       var withPublic = require_withPublic();
-      var Buffer3 = require_safe_buffer().Buffer;
+      var Buffer4 = require_safe_buffer().Buffer;
       module.exports = function privateDecrypt(privateKey, enc, reverse) {
         var padding;
         if (privateKey.padding) {
@@ -63309,8 +63309,8 @@
         } else {
           msg = crt(enc, key);
         }
-        var zBuffer = Buffer3.alloc(k2 - msg.length);
-        msg = Buffer3.concat([zBuffer, msg], k2);
+        var zBuffer = Buffer4.alloc(k2 - msg.length);
+        msg = Buffer4.concat([zBuffer, msg], k2);
         if (padding === 4) {
           return oaep(key, msg);
         } else if (padding === 1) {
@@ -63323,7 +63323,7 @@
       };
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
-        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer4.alloc(0)).digest();
         var hLen = iHash.length;
         if (msg[0] !== 0) {
           throw new Error("decryption error");
@@ -63367,8 +63367,8 @@
         return msg.slice(i2);
       }
       function compare(a2, b2) {
-        a2 = Buffer3.from(a2);
-        b2 = Buffer3.from(b2);
+        a2 = Buffer4.from(a2);
+        b2 = Buffer4.from(b2);
         var dif = 0;
         var len = a2.length;
         if (a2.length !== b2.length) {
@@ -63387,7 +63387,7 @@
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -63403,13 +63403,13 @@
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
       var safeBuffer = require_safe_buffer();
       var randombytes = require_browser2();
-      var Buffer3 = safeBuffer.Buffer;
+      var Buffer4 = safeBuffer.Buffer;
       var kBufferMaxLength = safeBuffer.kMaxLength;
       var crypto5 = window.crypto || window.msCrypto;
       var kMaxUint32 = Math.pow(2, 32) - 1;
@@ -63443,7 +63443,7 @@
         exports.randomFillSync = oldBrowser;
       }
       function randomFill(buf, offset, size, cb2) {
-        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer4.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         if (typeof offset === "function") {
@@ -63491,7 +63491,7 @@
         if (typeof offset === "undefined") {
           offset = 0;
         }
-        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer4.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         assertOffset(offset, buf.length);
@@ -63506,7 +63506,7 @@
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -63584,7 +63584,7 @@
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -73486,9 +73486,9 @@ ${toHex(hashedRequest)}`;
         }
         getXmlnsAttribute(ns, parentXmlns) {
           const traits = ns.getMergedTraits();
-          const [prefix, xmlns] = traits.xmlNamespace ?? [];
+          const [prefix2, xmlns] = traits.xmlNamespace ?? [];
           if (xmlns && xmlns !== parentXmlns) {
-            return [prefix ? `xmlns:${prefix}` : "xmlns", xmlns];
+            return [prefix2 ? `xmlns:${prefix2}` : "xmlns", xmlns];
           }
           return [void 0, void 0];
         }
@@ -77880,8 +77880,8 @@ ${toHex(hashedRequest)}`;
         if (appId) {
           defaultUserAgent.push(escapeUserAgent([`app`, `${appId}`]));
         }
-        const prefix = getUserAgentPrefix();
-        const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
+        const prefix2 = getUserAgentPrefix();
+        const sdkUserAgentValue = (prefix2 ? [prefix2] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
         const normalUAValue = [
           ...defaultUserAgent.filter((section) => section.startsWith("aws-sdk-")),
           ...customUserAgent
@@ -77903,12 +77903,12 @@ ${toHex(hashedRequest)}`;
         const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
         const version = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
         const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
-        const prefix = name.substring(0, prefixSeparatorIndex);
+        const prefix2 = name.substring(0, prefixSeparatorIndex);
         let uaName = name.substring(prefixSeparatorIndex + 1);
-        if (prefix === "api") {
+        if (prefix2 === "api") {
           uaName = uaName.toLowerCase();
         }
-        return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+        return [prefix2, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
           switch (index) {
             case 0:
               return item;
@@ -90451,8 +90451,8 @@ ${toHex(hashedRequest)}`;
         static setLevel(level) {
           this.level = level;
         }
-        static setPrefix(prefix) {
-          this.prefix = prefix;
+        static setPrefix(prefix2) {
+          this.prefix = prefix2;
         }
         static debug(message, ...args) {
           if (this.level <= 0 /* DEBUG */) {
@@ -90488,7 +90488,9 @@ ${toHex(hashedRequest)}`;
       init_Logger();
       crypto2 = __toESM(require_crypto_browserify());
       S3RemoteAdapter = class {
+        // Optimization flag for backends like RustFS
         constructor(config, paths) {
+          this.supportsMetadataHash = true;
           Logger.debug(`[S3] Initializing adapter for ${paths.userId}...`);
           this.endpoint = config.endpoint || "";
           const credentials = config.credentials || {
@@ -90507,7 +90509,8 @@ ${toHex(hashedRequest)}`;
           });
           Logger.debug(`[S3] Client created for ${paths.userId}`);
           this.bucket = config.bucketName;
-          this.prefix = `${paths.appId}/${paths.userId}/${paths.storeId}/`;
+          const pathParts = [paths.appId, paths.userId, paths.storeId].filter((p2) => p2 && p2.trim() !== "");
+          this.prefix = pathParts.length > 0 ? `${pathParts.join("/")}/` : "";
         }
         async uploadFile(path2, data, providedHash) {
           const key = this.getKey(path2);
@@ -90580,6 +90583,9 @@ ${toHex(hashedRequest)}`;
           }
         }
         async getFileHash(path2) {
+          if (!this.supportsMetadataHash) {
+            return this.getFileEtag(path2);
+          }
           const key = this.getKey(path2);
           try {
             const response = await this.client.send(new HeadObjectCommand({
@@ -90587,7 +90593,11 @@ ${toHex(hashedRequest)}`;
               Key: key
             }));
             const hash = response.Metadata?.hash || null;
-            if (!hash) Logger.warn(`[S3] File ${key} exists but is missing 'hash' metadata. Check CORS 'ExposeHeaders'.`);
+            if (!hash) {
+              Logger.info(`[S3] Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
+              this.supportsMetadataHash = false;
+              return response.ETag || null;
+            }
             return hash;
           } catch (e2) {
             const statusCode = e2.$metadata?.httpStatusCode;
@@ -90613,7 +90623,75 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
+        async canWrite(path2) {
+          const key = this.getKey(path2.endsWith("/") ? `${path2}.probe` : `${path2}/.probe`);
+          try {
+            const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
+            await this.client.send(new PutObjectCommand({
+              Bucket: this.bucket,
+              Key: key,
+              Body: sentinel,
+              ContentType: "application/json"
+            }));
+            return true;
+          } catch (e2) {
+            return false;
+          }
+        }
+        async listFiles(prefix2) {
+          const fullPrefix = this.getKey(prefix2);
+          const keys = [];
+          let continuationToken = void 0;
+          try {
+            let hasMore = true;
+            while (hasMore) {
+              const command = new ListObjectsV2Command({
+                Bucket: this.bucket,
+                Prefix: fullPrefix,
+                ContinuationToken: continuationToken
+              });
+              const response = await this.client.send(command);
+              if (response.Contents) {
+                for (const item of response.Contents) {
+                  if (item.Key) {
+                    const relativePath = item.Key.substring(this.prefix.length);
+                    keys.push(relativePath);
+                  }
+                }
+              }
+              continuationToken = response.NextContinuationToken;
+              hasMore = response.IsTruncated || false;
+            }
+          } catch (e2) {
+            Logger.warn(`[S3] Failed to list files for prefix ${prefix2}: ${e2.message}`);
+          }
+          return keys;
+        }
+        async deleteFile(path2) {
+          const key = this.getKey(path2);
+          try {
+            const command = new DeleteObjectCommand({
+              Bucket: this.bucket,
+              Key: key
+            });
+            await this.client.send(command);
+            Logger.debug(`[S3] Deleted file: ${key}`);
+          } catch (e2) {
+            Logger.warn(`[S3] Failed to delete file ${key}: ${e2.message}`);
+          }
+        }
+        async purge() {
+          Logger.info(`[S3] Purging all data in bucket ${this.bucket} under prefix ${this.prefix}...`);
+          const files = await this.listFiles("");
+          for (const file of files) {
+            await this.deleteFile(file);
+          }
+          Logger.info(`[S3] Purge complete. ${files.length} files deleted.`);
+        }
         getKey(path2) {
+          if (path2.includes("..")) {
+            throw new Error(`Security Violation: Path '${path2}' contains parent directory references.`);
+          }
           return `${this.prefix}${path2}`;
         }
       };
@@ -90761,14 +90839,14 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async listFiles(prefix) {
+        async listFiles(prefix2) {
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
               const request = store.getAllKeys();
               request.onsuccess = () => {
                 const allKeys = request.result;
-                resolve(allKeys.filter((k2) => k2.startsWith(prefix)));
+                resolve(allKeys.filter((k2) => k2.startsWith(prefix2)));
               };
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -90947,7 +91025,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -91432,8 +91510,8 @@ ${toHex(hashedRequest)}`;
             await fs.unlink(fullPath);
           }
         }
-        async listFiles(prefix) {
-          const fullPrefix = this.getFilePath(prefix);
+        async listFiles(prefix2) {
+          const fullPrefix = this.getFilePath(prefix2);
           if (!await fs.pathExists(fullPrefix)) return [];
           const files = [];
           const walk = async (dir) => {
@@ -91445,7 +91523,7 @@ ${toHex(hashedRequest)}`;
                 await walk(fullPath);
               } else {
                 const relativePath = path.relative(this.filesDir, fullPath);
-                if (relativePath.startsWith(prefix)) {
+                if (relativePath.startsWith(prefix2)) {
                   files.push(relativePath);
                 }
               }
@@ -91552,6 +91630,11 @@ ${toHex(hashedRequest)}`;
             this.remote = remote;
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory("global") : remote;
+            this.adminRemote = remoteFactory ? remoteFactory("admin") : remote;
+            this.rootRemote = remoteFactory ? remoteFactory("root") : remote;
+            if (this.remote.storage === void 0) {
+              this.remote.storage = this.storage;
+            }
           } else if (config.s3) {
             this.initializeS3Remotes(config.s3);
           } else if (!config.offline) {
@@ -91571,6 +91654,16 @@ ${toHex(hashedRequest)}`;
             appId: this.config.paths.appId,
             userId: "global",
             storeId: "users"
+          });
+          this.adminRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: "admin",
+            storeId: "data"
+          });
+          this.rootRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: "",
+            storeId: ""
           });
           this.remote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
@@ -91668,7 +91761,24 @@ ${toHex(hashedRequest)}`;
           if (this.config.publicEncryptionKey) {
             await this.ensureGlobalRegistration();
           }
+          await this.syncBlacklist();
           Logger.info("[Sovereign] Initialization complete.");
+        }
+        /**
+         * Downloads the global blacklist and updates local config.
+         */
+        async syncBlacklist() {
+          if (!this.globalRemote) return;
+          const path2 = "blacklist.json";
+          try {
+            const result = await this.globalRemote.downloadFile(path2);
+            if (result && result.data) {
+              const list = JSON.parse(new TextDecoder().decode(result.data));
+              this.config.blacklist = list;
+              Logger.info(`[Sync] Updated blacklist: ${list.length} users.`);
+            }
+          } catch (e2) {
+          }
         }
         /**
          * Connects a remote storage backend to an instance that was started in local-only mode.
@@ -92185,13 +92295,13 @@ ${toHex(hashedRequest)}`;
             Logger.warn(`[Sync] syncGenericFile failed for ${relativePath}: ${e2.message}`);
           }
         }
-        async syncGenericFiles(prefix) {
+        async syncGenericFiles(prefix2) {
           try {
-            const isPublic = prefix.startsWith("public/");
+            const isPublic = prefix2.startsWith("public/");
             const activeRemote = isPublic ? this.publicRemote : this.remote;
             if (!activeRemote) return;
             const key = isPublic ? void 0 : this.config.encryptionKey;
-            const localFiles = await this.storage.listFiles(prefix);
+            const localFiles = await this.storage.listFiles(prefix2);
             for (const filePath of localFiles) {
               const localData = await this.storage.getFile(filePath);
               if (!localData) continue;
@@ -92210,7 +92320,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           } catch (e2) {
-            Logger.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e2.message}`);
+            Logger.warn(`[Sync] syncGenericFiles failed for ${prefix2}: ${e2.message}`);
           }
         }
         async ensureGlobalRegistration() {
@@ -92330,7 +92440,9 @@ ${toHex(hashedRequest)}`;
           }
           if (!remoteData) return null;
           try {
-            return JSON.parse(new TextDecoder().decode(remoteData));
+            const users = JSON.parse(new TextDecoder().decode(remoteData));
+            const blacklist = this.config.blacklist || [];
+            return users.filter((u2) => !blacklist.includes(u2.userId));
           } catch (e2) {
             Logger.warn("[Sync] Failed to parse global registry", e2);
             return null;
@@ -92355,7 +92467,12 @@ ${toHex(hashedRequest)}`;
         }
         async syncFollowedUsers(today) {
           const following = await this.storage.getFollowing();
+          const blacklist = this.config.blacklist || [];
           for (const user of following) {
+            if (blacklist.includes(user.userId)) {
+              Logger.info(`[Sync] Skipping blacklisted user ${user.userId}`);
+              continue;
+            }
             const manifest = await this.fetchManifest(user.userId);
             Logger.debug(`[Sync] Followed user ${user.userId} manifest: ${!!manifest}`);
             if (manifest) {
@@ -93319,16 +93436,192 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // src/adapters/WebRTCRemoteAdapter.ts
-  var import_polyfills677, import_buffer, WebRTCRemoteAdapter;
-  var init_WebRTCRemoteAdapter = __esm({
-    "src/adapters/WebRTCRemoteAdapter.ts"() {
+  // src/modules/Moderation.ts
+  var import_polyfills677, import_buffer, ModerationModule;
+  var init_Moderation = __esm({
+    "src/modules/Moderation.ts"() {
       "use strict";
       import_polyfills677 = __toESM(require_polyfills());
       init_Logger();
       import_buffer = __toESM(require_buffer());
+      ModerationModule = class {
+        constructor(sovereign) {
+          this.sovereign = sovereign;
+        }
+        /**
+         * Determine if the current user has write access to the admin prefix by probing S3.
+         */
+        async isAdmin() {
+          const adminRemote = this.sovereign.adminRemote;
+          if (!adminRemote) return false;
+          try {
+            const sentinel = new TextEncoder().encode(JSON.stringify({ lastProbe: Date.now() }));
+            await adminRemote.uploadFile(".probe", sentinel);
+            return true;
+          } catch (e2) {
+            return false;
+          }
+        }
+        /**
+         * (Admin Only) Publishes the admin's public key so users can encrypt reports to them.
+         */
+        async publishAdminKey() {
+          const adminRemote = this.sovereign.adminRemote;
+          const pk = this.sovereign.getConfig().publicEncryptionKey;
+          if (adminRemote && pk) {
+            try {
+              await adminRemote.uploadFile("public_key.json", new TextEncoder().encode(JSON.stringify({ publicKey: pk })));
+              Logger.info("[Moderation] Admin public key published.");
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to publish admin key (Not an admin?): ${e2.message}`);
+              throw new Error("Permission denied. You do not have admin S3 credentials.");
+            }
+          }
+        }
+        /**
+         * Submit a report against a user or piece of content.
+         * Reports are encrypted with the Admin's public key and saved to 'admin/reports/'.
+         */
+        async reportContent(targetUserId, contentId, contentType, reason, evidence) {
+          const adminRemote = this.sovereign.adminRemote;
+          if (!adminRemote) throw new Error("Admin remote not configured.");
+          let adminPublicKey = "";
+          try {
+            const result = await adminRemote.downloadFile("public_key.json");
+            if (result && result.data) {
+              const data = JSON.parse(new TextDecoder().decode(result.data));
+              adminPublicKey = data.publicKey;
+            } else {
+              throw new Error("Admin public key not found.");
+            }
+          } catch (e2) {
+            throw new Error(`Failed to fetch admin key: ${e2.message}. The system might not have an admin configured.`);
+          }
+          const report = {
+            id: `report-${Math.random().toString(36).substring(7)}`,
+            reporterId: this.sovereign.getConfig().paths.userId,
+            targetUserId,
+            contentId,
+            contentType,
+            reason,
+            timestamp: Date.now(),
+            evidence
+          };
+          const reportData = new TextEncoder().encode(JSON.stringify(report));
+          const sharedSecret = this.sovereign.deriveSharedSecret(adminPublicKey);
+          const encryptedData = await this.sovereign.encrypt(reportData, sharedSecret);
+          const reportPath = `reports/${report.id}.enc`;
+          await adminRemote.uploadFile(reportPath, encryptedData);
+          Logger.info(`[Moderation] Report ${report.id} submitted securely.`);
+        }
+        /**
+         * (Admin Only) Fetch and decrypt all pending reports.
+         */
+        async getReports() {
+          Logger.info("[Moderation] Admin fetching reports (Requires S3 ListObjects capability)...");
+          return [];
+        }
+        /**
+         * (Admin Only) Add a user to the global blacklist.
+         */
+        async blacklistUser(userId) {
+          const globalRemote = this.sovereign.globalRemote;
+          if (!globalRemote) return;
+          const path2 = "blacklist.json";
+          let blacklist = [];
+          try {
+            const result = await globalRemote.downloadFile(path2);
+            if (result && result.data) {
+              blacklist = JSON.parse(new TextDecoder().decode(result.data));
+            }
+          } catch (e2) {
+          }
+          if (!blacklist.includes(userId)) {
+            blacklist.push(userId);
+            try {
+              await globalRemote.uploadFile(path2, new TextEncoder().encode(JSON.stringify(blacklist)));
+              Logger.info(`[Moderation] User ${userId} blacklisted.`);
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to blacklist user (Not an admin?): ${e2.message}`);
+              throw new Error("Permission denied. Your S3 credentials do not have write access to the global registry.");
+            }
+          }
+        }
+        /**
+         * (Admin Only) Exports all data under the appId namespace as a JSON string containing base64 encoded files.
+         */
+        async exportAllData() {
+          const rootRemote = this.sovereign.rootRemote;
+          if (!rootRemote || !rootRemote.listFiles || !rootRemote.downloadFile) {
+            throw new Error("Root remote not configured or missing listFiles capability. Are you an admin?");
+          }
+          Logger.info("[Moderation] Exporting all data...");
+          const files = await rootRemote.listFiles("");
+          const exportData = {};
+          for (const file of files) {
+            try {
+              const result = await rootRemote.downloadFile(file);
+              if (result && result.data) {
+                exportData[file] = import_buffer.Buffer.from(result.data).toString("base64");
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to export file ${file}: ${e2.message}`);
+            }
+          }
+          return JSON.stringify(exportData);
+        }
+        /**
+         * (Admin Only) Imports a JSON dump of base64 files and overwrites/creates them on the remote.
+         */
+        async importAllData(jsonData) {
+          const rootRemote = this.sovereign.rootRemote;
+          if (!rootRemote) throw new Error("Root remote not configured. Are you an admin?");
+          Logger.info("[Moderation] Importing data...");
+          const parsed = JSON.parse(jsonData);
+          for (const [path2, base64Data] of Object.entries(parsed)) {
+            try {
+              const data = import_buffer.Buffer.from(base64Data, "base64");
+              await rootRemote.uploadFile(path2, data);
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to import file ${path2}: ${e2.message}`);
+            }
+          }
+          Logger.info("[Moderation] Data import complete.");
+        }
+        /**
+         * (Admin Only) Deletes all files in the appId namespace permanently.
+         */
+        async burnItToTheGround() {
+          const rootRemote = this.sovereign.rootRemote;
+          if (!rootRemote || !rootRemote.listFiles || !rootRemote.deleteFile) {
+            throw new Error("Root remote not configured or missing deleteFile capability. Are you an admin?");
+          }
+          Logger.info("[Moderation] Warning: Initiating Burn It To The Ground protocol...");
+          const files = await rootRemote.listFiles("");
+          for (const file of files) {
+            try {
+              await rootRemote.deleteFile(file);
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to delete ${file}: ${e2.message}`);
+            }
+          }
+          Logger.info("[Moderation] All data has been deleted from the remote backend.");
+        }
+      };
+    }
+  });
+
+  // src/adapters/WebRTCRemoteAdapter.ts
+  var import_polyfills678, import_buffer2, WebRTCRemoteAdapter;
+  var init_WebRTCRemoteAdapter = __esm({
+    "src/adapters/WebRTCRemoteAdapter.ts"() {
+      "use strict";
+      import_polyfills678 = __toESM(require_polyfills());
+      init_Logger();
+      import_buffer2 = __toESM(require_buffer());
       WebRTCRemoteAdapter = class {
-        constructor(peerId, prefix = "") {
+        // Reference to Sovereign storage for purge operations
+        constructor(userId) {
           this.cache = /* @__PURE__ */ new Map();
           this.channels = /* @__PURE__ */ new Set();
           this.pendingRequests = /* @__PURE__ */ new Map();
@@ -93364,7 +93657,7 @@ ${toHex(hashedRequest)}`;
             const key = msg.path;
             if (msg.type === "push") {
               if (msg.data && msg.hash && msg.etag) {
-                const dataBuffer = import_buffer.Buffer.from(msg.data, "base64");
+                const dataBuffer = import_buffer2.Buffer.from(msg.data, "base64");
                 const existing = this.cache.get(key);
                 if (!existing || existing.etag !== msg.etag) {
                   this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
@@ -93380,7 +93673,7 @@ ${toHex(hashedRequest)}`;
                   path: key,
                   hash: entry.hash,
                   etag: entry.etag,
-                  data: import_buffer.Buffer.from(entry.data).toString("base64"),
+                  data: import_buffer2.Buffer.from(entry.data).toString("base64"),
                   reqId: msg.reqId,
                   senderId: this.peerId
                 };
@@ -93416,7 +93709,7 @@ ${toHex(hashedRequest)}`;
         }
         async uploadFile(path2, data, hash) {
           const key = this.getKey(path2);
-          const fileHash = hash || import_buffer.Buffer.from(data).toString("hex").substring(0, 16);
+          const fileHash = hash || import_buffer2.Buffer.from(data).toString("hex").substring(0, 16);
           const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
           this.cache.set(key, { data, hash: fileHash, etag });
           const msg = {
@@ -93424,7 +93717,7 @@ ${toHex(hashedRequest)}`;
             path: key,
             hash: fileHash,
             etag,
-            data: import_buffer.Buffer.from(data).toString("base64"),
+            data: import_buffer2.Buffer.from(data).toString("base64"),
             senderId: this.peerId
           };
           Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
@@ -93463,7 +93756,7 @@ ${toHex(hashedRequest)}`;
               clearTimeout(timer);
               this.pendingRequests.delete(reqId);
               if (resMsg.data && resMsg.hash && resMsg.etag) {
-                const dataBuffer = import_buffer.Buffer.from(resMsg.data, "base64");
+                const dataBuffer = import_buffer2.Buffer.from(resMsg.data, "base64");
                 const u8Data = new Uint8Array(dataBuffer);
                 this.cache.set(key, { data: u8Data, hash: resMsg.hash, etag: resMsg.etag });
                 if (ifNoneMatch && ifNoneMatch === resMsg.etag) {
@@ -93492,6 +93785,14 @@ ${toHex(hashedRequest)}`;
           const key = this.getKey(path2);
           return this.cache.get(key)?.etag || null;
         }
+        async canWrite(path2) {
+          return this.channels.size > 0;
+        }
+        async listFiles(prefix2) {
+          return [];
+        }
+        async deleteFile(path2) {
+        }
       };
     }
   });
@@ -93519,10 +93820,10 @@ ${toHex(hashedRequest)}`;
     if (res instanceof Promise) return res.then(() => packer.getBuffer());
     return packer.getBuffer();
   }
-  var import_polyfills678, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
+  var import_polyfills679, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
   var init_binarypack = __esm({
     "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
-      import_polyfills678 = __toESM(require_polyfills(), 1);
+      import_polyfills679 = __toESM(require_polyfills(), 1);
       $e8379818650e2442$export$93654d4f2d6cd524 = class {
         constructor() {
           this.encoder = new TextEncoder();
@@ -94152,11 +94453,11 @@ ${toHex(hashedRequest)}`;
     });
     return filteredResult;
   }
-  var import_polyfills679, logDisabled_, deprecationWarnings_;
+  var import_polyfills680, logDisabled_, deprecationWarnings_;
   var init_utils5 = __esm({
     "node_modules/webrtc-adapter/src/js/utils.js"() {
       "use strict";
-      import_polyfills679 = __toESM(require_polyfills());
+      import_polyfills680 = __toESM(require_polyfills());
       logDisabled_ = true;
       deprecationWarnings_ = true;
     }
@@ -94181,9 +94482,9 @@ ${toHex(hashedRequest)}`;
         if (r2.exact !== void 0 && typeof r2.exact === "number") {
           r2.min = r2.max = r2.exact;
         }
-        const oldname_ = function(prefix, name) {
-          if (prefix) {
-            return prefix + name.charAt(0).toUpperCase() + name.slice(1);
+        const oldname_ = function(prefix2, name) {
+          if (prefix2) {
+            return prefix2 + name.charAt(0).toUpperCase() + name.slice(1);
           }
           return name === "deviceId" ? "sourceId" : name;
         };
@@ -94318,11 +94619,11 @@ ${toHex(hashedRequest)}`;
       };
     }
   }
-  var import_polyfills680, logging;
+  var import_polyfills681, logging;
   var init_getusermedia = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
       "use strict";
-      import_polyfills680 = __toESM(require_polyfills());
+      import_polyfills681 = __toESM(require_polyfills());
       init_utils5();
       logging = log;
     }
@@ -94867,11 +95168,11 @@ ${toHex(hashedRequest)}`;
       return e2;
     });
   }
-  var import_polyfills681;
+  var import_polyfills682;
   var init_chrome_shim = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
       "use strict";
-      import_polyfills681 = __toESM(require_polyfills());
+      import_polyfills682 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia();
     }
@@ -94926,11 +95227,11 @@ ${toHex(hashedRequest)}`;
       }
     }
   }
-  var import_polyfills682;
+  var import_polyfills683;
   var init_getusermedia2 = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
       "use strict";
-      import_polyfills682 = __toESM(require_polyfills());
+      import_polyfills683 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -94958,11 +95259,11 @@ ${toHex(hashedRequest)}`;
       return window2.navigator.mediaDevices.getUserMedia(constraints);
     };
   }
-  var import_polyfills683;
+  var import_polyfills684;
   var init_getdisplaymedia = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
       "use strict";
-      import_polyfills683 = __toESM(require_polyfills());
+      import_polyfills684 = __toESM(require_polyfills());
     }
   });
 
@@ -95209,11 +95510,11 @@ ${toHex(hashedRequest)}`;
       return origCreateAnswer.apply(this, arguments);
     };
   }
-  var import_polyfills684;
+  var import_polyfills685;
   var init_firefox_shim = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
       "use strict";
-      import_polyfills684 = __toESM(require_polyfills());
+      import_polyfills685 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia2();
       init_getdisplaymedia();
@@ -95535,11 +95836,11 @@ ${toHex(hashedRequest)}`;
     }
     window2.AudioContext = window2.webkitAudioContext;
   }
-  var import_polyfills685;
+  var import_polyfills686;
   var init_safari_shim = __esm({
     "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
       "use strict";
-      import_polyfills685 = __toESM(require_polyfills());
+      import_polyfills686 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -95548,7 +95849,7 @@ ${toHex(hashedRequest)}`;
   var require_sdp = __commonJS({
     "node_modules/sdp/sdp.js"(exports, module) {
       "use strict";
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var SDPUtils2 = {};
       SDPUtils2.generateIdentifier = function() {
         return Math.random().toString(36).substring(2, 12);
@@ -95570,8 +95871,8 @@ ${toHex(hashedRequest)}`;
         sections.shift();
         return sections;
       };
-      SDPUtils2.matchPrefix = function(blob, prefix) {
-        return SDPUtils2.splitLines(blob).filter((line) => line.indexOf(prefix) === 0);
+      SDPUtils2.matchPrefix = function(blob, prefix2) {
+        return SDPUtils2.splitLines(blob).filter((line) => line.indexOf(prefix2) === 0);
       };
       SDPUtils2.parseCandidate = function(line) {
         let parts;
@@ -96500,11 +96801,11 @@ ${toHex(hashedRequest)}`;
       return func.apply(this).then((d2) => nativeSetLocalDescription.apply(this, [d2]));
     };
   }
-  var import_polyfills686, import_sdp;
+  var import_polyfills687, import_sdp;
   var init_common_shim = __esm({
     "node_modules/webrtc-adapter/src/js/common_shim.js"() {
       "use strict";
-      import_polyfills686 = __toESM(require_polyfills());
+      import_polyfills687 = __toESM(require_polyfills());
       import_sdp = __toESM(require_sdp());
       init_utils5();
     }
@@ -96610,10 +96911,10 @@ ${toHex(hashedRequest)}`;
     }
     return adapter2;
   }
-  var import_polyfills687, sdp;
+  var import_polyfills688, sdp;
   var init_adapter_factory = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
-      import_polyfills687 = __toESM(require_polyfills());
+      import_polyfills688 = __toESM(require_polyfills());
       init_utils5();
       init_chrome_shim();
       init_firefox_shim();
@@ -96624,11 +96925,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/webrtc-adapter/src/js/adapter_core.js
-  var import_polyfills688, adapter, adapter_core_default;
+  var import_polyfills689, adapter, adapter_core_default;
   var init_adapter_core = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
       "use strict";
-      import_polyfills688 = __toESM(require_polyfills());
+      import_polyfills689 = __toESM(require_polyfills());
       init_adapter_factory();
       adapter = adapterFactory({ window: typeof window === "undefined" ? void 0 : window });
       adapter_core_default = adapter;
@@ -96676,10 +96977,10 @@ ${toHex(hashedRequest)}`;
     this._events = new $c4dcfd1d1ea86647$var$Events();
     this._eventsCount = 0;
   }
-  var import_polyfills689, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
+  var import_polyfills690, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
   var init_bundler = __esm({
     "node_modules/peerjs/dist/bundler.mjs"() {
-      import_polyfills689 = __toESM(require_polyfills(), 1);
+      import_polyfills690 = __toESM(require_polyfills(), 1);
       init_binarypack();
       init_adapter_core();
       $fcbcc7538a6776d5$export$f1c5f4c9cb95390b = class {
@@ -97205,14 +97506,14 @@ ${toHex(hashedRequest)}`;
         }
         /** Set up various WebRTC listeners. */
         _setupListeners(peerConnection) {
-          const peerId = this.connection.peer;
+          const peerId2 = this.connection.peer;
           const connectionId = this.connection.connectionId;
           const connectionType = this.connection.type;
           const provider = this.connection.provider;
           (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for ICE candidates.");
           peerConnection.onicecandidate = (evt) => {
             if (!evt.candidate || !evt.candidate.candidate) return;
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received ICE candidates for ${peerId}:`, evt.candidate);
+            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received ICE candidates for ${peerId2}:`, evt.candidate);
             provider.socket.send({
               type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Candidate,
               payload: {
@@ -97220,23 +97521,23 @@ ${toHex(hashedRequest)}`;
                 type: connectionType,
                 connectionId
               },
-              dst: peerId
+              dst: peerId2
             });
           };
           peerConnection.oniceconnectionstatechange = () => {
             switch (peerConnection.iceConnectionState) {
               case "failed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is failed, closing connections to " + peerId);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).NegotiationFailed, "Negotiation of connection to " + peerId + " failed.");
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is failed, closing connections to " + peerId2);
+                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).NegotiationFailed, "Negotiation of connection to " + peerId2 + " failed.");
                 this.connection.close();
                 break;
               case "closed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is closed, closing connections to " + peerId);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).ConnectionClosed, "Connection to " + peerId + " closed.");
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is closed, closing connections to " + peerId2);
+                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).ConnectionClosed, "Connection to " + peerId2 + " closed.");
                 this.connection.close();
                 break;
               case "disconnected":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState changed to disconnected on the connection with " + peerId);
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState changed to disconnected on the connection with " + peerId2);
                 break;
               case "completed":
                 peerConnection.onicecandidate = () => {
@@ -97249,14 +97550,14 @@ ${toHex(hashedRequest)}`;
           peerConnection.ondatachannel = (evt) => {
             (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received data channel");
             const dataChannel = evt.channel;
-            const connection = provider.getConnection(peerId, connectionId);
+            const connection = provider.getConnection(peerId2, connectionId);
             connection._initializeDataChannel(dataChannel);
           };
           (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for remote stream");
           peerConnection.ontrack = (evt) => {
             (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received remote stream");
             const stream = evt.streams[0];
-            const connection = provider.getConnection(peerId, connectionId);
+            const connection = provider.getConnection(peerId2, connectionId);
             if (connection.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
               const mediaConnection = connection;
               this._addStreamToMediaConnection(stream, mediaConnection);
@@ -97435,8 +97736,8 @@ ${toHex(hashedRequest)}`;
         get remoteStream() {
           return this._remoteStream;
         }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options);
+        constructor(peerId2, provider, options) {
+          super(peerId2, provider, options);
           this._localStream = this.options._stream;
           this.connectionId = this.options.connectionId || _$5c1d08c7c57da9a3$export$4a84e95a2324ac29.ID_PREFIX + (0, $4f4134156c446392$export$7debb50ef11d5e0b).randomToken();
           this._negotiator = new (0, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a)(this);
@@ -97582,8 +97883,8 @@ ${toHex(hashedRequest)}`;
         get type() {
           return (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data;
         }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options);
+        constructor(peerId2, provider, options) {
+          super(peerId2, provider, options);
           this.connectionId = this.options.connectionId || _$6366c4ca161bc297$export$d365f7ad9d7df9c9.ID_PREFIX + (0, $0e5fd1585784c252$export$4e61f672936bec77)();
           this.label = this.options.label || this.connectionId;
           this.reliable = !!this.options.reliable;
@@ -97732,8 +98033,8 @@ ${toHex(hashedRequest)}`;
           super.close(options);
           this._chunkedData = {};
         }
-        constructor(peerId, provider, options) {
-          super(peerId, provider, options), this.chunker = new (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b)(), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).Binary, this._chunkedData = {};
+        constructor(peerId2, provider, options) {
+          super(peerId2, provider, options), this.chunker = new (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b)(), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).Binary, this._chunkedData = {};
         }
         // Handles a DataChannel message.
         _handleDataMessage({ data }) {
@@ -97948,7 +98249,7 @@ ${toHex(hashedRequest)}`;
         _handleMessage(message) {
           const type = message.type;
           const payload = message.payload;
-          const peerId = message.src;
+          const peerId2 = message.src;
           switch (type) {
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Open:
               this._lastServerId = this.id;
@@ -97965,31 +98266,31 @@ ${toHex(hashedRequest)}`;
               this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).InvalidKey, `API KEY "${this._options.key}" is invalid`);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Leave:
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received leave message from ${peerId}`);
-              this._cleanupPeer(peerId);
-              this._connections.delete(peerId);
+              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received leave message from ${peerId2}`);
+              this._cleanupPeer(peerId2);
+              this._connections.delete(peerId2);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Expire:
-              this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).PeerUnavailable, `Could not connect to peer ${peerId}`);
+              this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).PeerUnavailable, `Could not connect to peer ${peerId2}`);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Offer: {
               const connectionId = payload.connectionId;
-              let connection = this.getConnection(peerId, connectionId);
+              let connection = this.getConnection(peerId2, connectionId);
               if (connection) {
                 connection.close();
                 (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Offer received for existing Connection ID:${connectionId}`);
               }
               if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
-                const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peerId, this, {
+                const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peerId2, this, {
                   connectionId,
                   _payload: payload,
                   metadata: payload.metadata
                 });
                 connection = mediaConnection;
-                this._addConnection(peerId, connection);
+                this._addConnection(peerId2, connection);
                 this.emit("call", mediaConnection);
               } else if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data) {
-                const dataConnection = new this._serializers[payload.serialization](peerId, this, {
+                const dataConnection = new this._serializers[payload.serialization](peerId2, this, {
                   connectionId,
                   _payload: payload,
                   metadata: payload.metadata,
@@ -97998,7 +98299,7 @@ ${toHex(hashedRequest)}`;
                   reliable: payload.reliable
                 });
                 connection = dataConnection;
-                this._addConnection(peerId, connection);
+                this._addConnection(peerId2, connection);
                 this.emit("connection", dataConnection);
               } else {
                 (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Received malformed connection type:${payload.type}`);
@@ -98010,11 +98311,11 @@ ${toHex(hashedRequest)}`;
             }
             default: {
               if (!payload) {
-                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`You received a malformed message from ${peerId} of type ${type}`);
+                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`You received a malformed message from ${peerId2} of type ${type}`);
                 return;
               }
               const connectionId = payload.connectionId;
-              const connection = this.getConnection(peerId, connectionId);
+              const connection = this.getConnection(peerId2, connectionId);
               if (connection && connection.peerConnection)
                 connection.handleMessage(message);
               else if (connectionId)
@@ -98085,10 +98386,10 @@ ${toHex(hashedRequest)}`;
           return mediaConnection;
         }
         /** Add a data/media connection to this peer. */
-        _addConnection(peerId, connection) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add connection ${connection.type}:${connection.connectionId} to peerId:${peerId}`);
-          if (!this._connections.has(peerId)) this._connections.set(peerId, []);
-          this._connections.get(peerId).push(connection);
+        _addConnection(peerId2, connection) {
+          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add connection ${connection.type}:${connection.connectionId} to peerId:${peerId2}`);
+          if (!this._connections.has(peerId2)) this._connections.set(peerId2, []);
+          this._connections.get(peerId2).push(connection);
         }
         //TODO should be private
         _removeConnection(connection) {
@@ -98100,8 +98401,8 @@ ${toHex(hashedRequest)}`;
           this._lostMessages.delete(connection.connectionId);
         }
         /** Retrieve a data/media connection for this peer. */
-        getConnection(peerId, connectionId) {
-          const connections = this._connections.get(peerId);
+        getConnection(peerId2, connectionId) {
+          const connections = this._connections.get(peerId2);
           if (!connections) return null;
           for (const connection of connections) {
             if (connection.connectionId === connectionId) return connection;
@@ -98144,15 +98445,15 @@ ${toHex(hashedRequest)}`;
         }
         /** Disconnects every connection on this peer. */
         _cleanup() {
-          for (const peerId of this._connections.keys()) {
-            this._cleanupPeer(peerId);
-            this._connections.delete(peerId);
+          for (const peerId2 of this._connections.keys()) {
+            this._cleanupPeer(peerId2);
+            this._connections.delete(peerId2);
           }
           this.socket.removeAllListeners();
         }
         /** Closes all connections to this peer. */
-        _cleanupPeer(peerId) {
-          const connections = this._connections.get(peerId);
+        _cleanupPeer(peerId2) {
+          const connections = this._connections.get(peerId2);
           if (!connections) return;
           for (const connection of connections) connection.close();
         }
@@ -98208,21 +98509,22 @@ ${toHex(hashedRequest)}`;
   // demo/social/src/App.tsx
   var require_App = __commonJS({
     "demo/social/src/App.tsx"() {
-      var import_polyfills690 = __toESM(require_polyfills());
+      var import_polyfills691 = __toESM(require_polyfills());
       var import_react = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
       init_Messaging();
       init_Profile();
+      init_Moderation();
       init_WebRTCRemoteAdapter();
       init_bundler();
       init_MediaUtils();
       var DEBUG = false;
       var PrefixProxyAdapter = class {
-        constructor(baseAdapter, prefix) {
+        constructor(baseAdapter, prefix2) {
           this.baseAdapter = baseAdapter;
-          this.prefix = prefix;
+          this.prefix = prefix2;
         }
         getKey(path2) {
           return `${this.prefix}/${path2}`;
@@ -98251,8 +98553,13 @@ ${toHex(hashedRequest)}`;
           bucketName: "",
           appId: "sov-social",
           userId: "user-" + Math.random().toString(36).substring(7),
-          password: "password123"
+          password: "password123",
+          admins: []
+          // List of User IDs with admin privileges
         });
+        const [isAdmin, setIsAdmin] = (0, import_react.useState)(false);
+        const [requestAdminMode, setRequestAdminMode] = (0, import_react.useState)(false);
+        const [adminKeyPublished, setAdminKeyPublished] = (0, import_react.useState)(false);
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
         const getStorageKey = (key) => `sov_${config.userId}_${key}`;
         const [autoLogin, setAutoLogin] = (0, import_react.useState)(localStorage.getItem("sov_auto_login") === "true");
@@ -98269,6 +98576,8 @@ ${toHex(hashedRequest)}`;
         const [feed, setFeed] = (0, import_react.useState)(null);
         const [messaging, setMessaging] = (0, import_react.useState)(null);
         const [profileModule, setProfileModule] = (0, import_react.useState)(null);
+        const [moderation, setModeration] = (0, import_react.useState)(null);
+        const [reports, setReports] = (0, import_react.useState)([]);
         const [posts, setPosts] = (0, import_react.useState)([]);
         const [following, setFollowing] = (0, import_react.useState)([]);
         const [allUsers, setAllUsers] = (0, import_react.useState)([]);
@@ -98418,8 +98727,8 @@ ${toHex(hashedRequest)}`;
                 const peer = adapter2.connectPeer((msg) => bc2.postMessage(msg));
                 bc2.onmessage = (e2) => peer.receive(e2.data);
               } else if (currentConfig.syncMode === "peerjs") {
-                const peerId = `${currentConfig.appId}-${currentConfig.userId}`;
-                const peer = new $dd0187d7f28e386f$export$2e2bcd8739ae039(peerId);
+                const peerId2 = `${currentConfig.appId}-${currentConfig.userId}`;
+                const peer = new $dd0187d7f28e386f$export$2e2bcd8739ae039(peerId2);
                 const activeConnections = /* @__PURE__ */ new Set();
                 const setupConnection = (conn) => {
                   if (activeConnections.has(conn.peer)) return;
@@ -98476,7 +98785,7 @@ ${toHex(hashedRequest)}`;
                     knownUsers.forEach((u2) => peersToConnect.add(`${currentConfig.appId}-${u2.userId}`));
                     Object.keys(discovery).forEach((uid) => peersToConnect.add(`${currentConfig.appId}-${uid}`));
                     peersToConnect.forEach((targetPeerId) => {
-                      if (targetPeerId !== peerId && !activeConnections.has(targetPeerId)) {
+                      if (targetPeerId !== peerId2 && !activeConnections.has(targetPeerId)) {
                         const conn = peer.connect(targetPeerId);
                         setupConnection(conn);
                       }
@@ -98508,6 +98817,21 @@ ${toHex(hashedRequest)}`;
             setMessaging(mm);
             const pm = new ProfileModule(instance);
             setProfileModule(pm);
+            const mod = new ModerationModule(instance);
+            setModeration(mod);
+            if (requestAdminMode) {
+              const isUserAdmin = await mod.isAdmin();
+              setIsAdmin(isUserAdmin);
+              try {
+                const adminRemote = instance.adminRemote;
+                const keyFile = await adminRemote?.downloadFile("public_key.json");
+                setAdminKeyPublished(!!(keyFile && keyFile.data));
+              } catch (e2) {
+                setAdminKeyPublished(false);
+              }
+            } else {
+              setIsAdmin(false);
+            }
             const loadCache = (key, defaultVal) => {
               const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
               return s2 ? JSON.parse(s2) : defaultVal;
@@ -99173,10 +99497,22 @@ ${toHex(hashedRequest)}`;
           }, [userId, profileModule, lastSyncTime]);
           return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
         };
+        const handleReportPost = async (post) => {
+          showPrompt("Reason for reporting this post:", async (reason) => {
+            if (reason && moderation) {
+              try {
+                await moderation.reportContent(post.userId, post.id, "post", reason, post);
+                showAlert("Post reported. Thank you for keeping the community safe.", "Report Submitted");
+              } catch (e2) {
+                showAlert("Failed to submit report: " + e2.message, "Error");
+              }
+            }
+          });
+        };
         const PostItem = ({ post, allPosts, depth = 0 }) => {
           const replies = allPosts.filter((p2) => p2.parentId === post.id);
           const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isNew ? "border-primary shadow-sm" : ""}`, style: isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isNew ? "border-primary shadow-sm" : ""}`, style: isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))), post.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post) }, "Report Abuse"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
             "button",
             {
               className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
@@ -99198,12 +99534,12 @@ ${toHex(hashedRequest)}`;
             u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
             /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
             /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
             setAutoLogin(e2.target.checked);
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
+          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "adminMode", checked: requestAdminMode, onChange: (e2) => setRequestAdminMode(e2.target.checked) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small fw-bold text-danger", htmlFor: "adminMode" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-1" }), " Attempt Login as Admin")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), "                ", /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
             className: `btn btn-link px-2 me-2 ${isConnected ? "text-success" : "text-danger"}`,
@@ -99263,7 +99599,91 @@ ${toHex(hashedRequest)}`;
           await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes"))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), /* @__PURE__ */ import_react.default.createElement(
+        } }, "Save Changes"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+          const uid = await new Promise((resolve) => showPrompt("Enter User ID to blacklist:", resolve));
+          if (uid && moderation) {
+            try {
+              await moderation.blacklistUser(uid);
+              await sync();
+              showAlert(`User ${uid} has been blacklisted globally.`);
+            } catch (e2) {
+              showAlert("Failed to blacklist: " + e2.message, "Error");
+            }
+          }
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-x me-2" }), " Blacklist User"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-2", onClick: async () => {
+          if (sov) {
+            await sov.syncBlacklist();
+            showAlert("Blacklist synchronized with cloud.");
+          }
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-2" }), " Sync Blacklist"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100", onClick: async () => {
+          if (moderation) {
+            try {
+              await moderation.publishAdminKey();
+              setAdminKeyPublished(true);
+              showAlert("Admin public key published successfully for E2EE reporting.");
+            } catch (e2) {
+              showAlert("Failed to publish admin key: " + e2.message, "Error");
+            }
+          }
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-key me-2" }), " Publish Admin Key")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Provision User S3 Keys"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mb-3" }, "Generate dedicated S3 credentials for a new user to ensure infrastructure isolation."), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: async () => {
+          showPrompt("Enter new User ID to provision:", (uid) => {
+            if (uid) {
+              const cmd = `garage key create sov-${uid} && garage bucket allow ${config.bucketName} --read --write --owner --key <ACCESS_KEY>`;
+              showAlert(`To provision ${uid} in Garage S3, run:
+
+${cmd}
+
+Then provide the user with the generated credentials.`, "Provisioning Instructions");
+            }
+          });
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-plus-fill me-2" }), " Create User Keys"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-12" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card border-0 bg-light border-danger border-start border-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold text-danger mb-3" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Data Management (Root Access)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-3 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary", onClick: async () => {
+          if (moderation) {
+            try {
+              const data = await moderation.exportAllData();
+              const blob = new Blob([data], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const a2 = document.createElement("a");
+              a2.href = url;
+              a2.download = `sovereign_export_${config.appId}_${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}.json`;
+              a2.click();
+              URL.revokeObjectURL(url);
+              showAlert("Data exported successfully.");
+            } catch (e2) {
+              showAlert("Export failed: " + e2.message, "Error");
+            }
+          }
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-download me-2" }), " Export All Data"), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-secondary mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-upload me-2" }), " Import Data", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: async (e2) => {
+          const file = e2.target.files?.[0];
+          if (file && moderation) {
+            const reader = new FileReader();
+            reader.onload = async (ev) => {
+              try {
+                const content = ev.target?.result;
+                await moderation.importAllData(content);
+                showAlert("Data imported successfully.");
+                e2.target.value = "";
+              } catch (err) {
+                showAlert("Import failed: " + err.message, "Error");
+              }
+            };
+            reader.readAsText(file);
+          }
+        } })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger ms-auto", onClick: () => {
+          showConfirm("WARNING: This will permanently delete ALL user data, posts, and DMs for this App ID across the entire S3 bucket. This action CANNOT be undone. Are you absolutely sure?", async () => {
+            if (moderation) {
+              try {
+                await moderation.burnItToTheGround();
+                showAlert("All data has been burned to the ground.", "System Purged");
+              } catch (e2) {
+                showAlert("Purge failed: " + e2.message, "Error");
+              }
+            }
+          }, "BURN IT TO THE GROUND");
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-fire me-2" }), " BURN IT TO THE GROUND")))))), /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mt-2 mb-3" }, "Abuse Reports"), /* @__PURE__ */ import_react.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger", onClick: () => {
+          if (moderation) {
+            moderation.blacklistUser(report.targetUserId).catch((e2) => showAlert("Error: " + e2.message));
+          }
+        } }, "Ban"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-info py-2 small mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-info-circle me-2" }), "Reports are encrypted with the Admin Public Key and stored in ", /* @__PURE__ */ import_react.default.createElement("code", null, config.appId, "/admin/reports/"), ". A background worker or Lambda is typically used to decrypt and aggregate these."))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), /* @__PURE__ */ import_react.default.createElement(
           MemberManagementModal,
           {
             show: showMemberManagement,

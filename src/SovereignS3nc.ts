@@ -51,6 +51,12 @@ export class SovereignS3nc extends EventEmitter {
             this.publicRemote = remote;
             this.globalRemote = remoteFactory ? remoteFactory('global') : remote; 
             this.adminRemote = remoteFactory ? remoteFactory('admin') : remote;
+            this.rootRemote = remoteFactory ? remoteFactory('root') : remote;
+
+            // Link storage for purge support if applicable
+            if ((this.remote as any).storage === undefined) {
+                (this.remote as any).storage = this.storage;
+            }
         } else if (config.s3) {
             this.initializeS3Remotes(config.s3);
         } else if (!config.offline) {
@@ -78,6 +84,13 @@ export class SovereignS3nc extends EventEmitter {
             appId: this.config.paths.appId,
             userId: 'admin',
             storeId: 'data'
+        });
+
+        // Root Remote - Access to appId/
+        this.rootRemote = new S3RemoteAdapter(s3, {
+            appId: this.config.paths.appId,
+            userId: '',
+            storeId: ''
         });
 
         // Private Remote

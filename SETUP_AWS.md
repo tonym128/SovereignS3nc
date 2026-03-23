@@ -6,15 +6,24 @@ This guide provides instructions for deploying SovereignS3nc on **Amazon S3** wi
 - [AWS CLI](https://aws.amazon.com/cli/) installed and configured with appropriate permissions.
 - An existing S3 Bucket (or create one using `aws s3 mb s3://your-bucket-name`).
 
-## 2. Security: Enforce 1MB File Limit
-To prevent DoS attacks where an attacker tries to upload massive files, you should enforce a 1MB limit at the IAM level.
+## 2. IAM Security: Admin vs. User Keys
+SovereignS3nc relies on IAM policies to enforce data isolation between users and admins.
+
+### Step A: The Admin Policy
+Create an IAM user for yourself and attach a policy that allows full access to the `${appId}/` prefix. This user will have access to the Admin Dashboard.
+
+### Step B: The User Policy (Enforce 1MB Limit & Isolation)
+For regular users, you should use a policy that restricts them to their own `${userId}` prefix and enforces a 1MB file limit.
 
 **Run the helper script:**
 ```bash
 chmod +x Setup/AWS/create-iam-policy.sh
 ./Setup/AWS/create-iam-policy.sh [your-bucket-name]
 ```
-Attach the generated `SovereignS3nc-1MB-Limit` policy to the IAM user whose credentials you provide to the SovereignS3nc library.
+*Note: The generated policy `SovereignS3nc-1MB-Limit` uses the `s3:content-length` condition to prevent massive uploads.*
+
+### Step C: Production isolation
+For a multi-user production environment, we recommend using **IAM Policy Variables** (like `${aws:username}`) to create a single policy that automatically scopes every user to their own folder. See `Setup/GENERIC_S3_POLICY.json` for the logic.
 
 ## 3. Cost Management: The Budget Circuit Breaker
 Since S3 is pay-as-you-go, an attacker could potentially drain your funds by uploading millions of 1MB files. We handle this by setting a monthly budget that triggers a Lambda "Circuit Breaker" to lock the bucket.
