@@ -1,0 +1,183 @@
+#!/bin/bash
+
+# devrustfs.sh - Development environment management script for SovereignS3nc (RustFS Mode)
+
+set -e
+
+# Configuration
+SOCIAL_CONFIG="demo/social/config.json"
+BANKY_CONFIG="demo/banky/config.json"
+BUCKET_NAME="sovereign-demo"
+RUSTFS_BINARY="./bin/rustfs"
+RC_BINARY="./bin/rc"
+DATA_DIR="./rustfs_data"
+LOG_FILE="rustfs.log"
+RUSTFS_PORT=9000
+RUSTFS_ROOT_KEY="rustfsroot"
+RUSTFS_ROOT_SECRET="rustfsrootsecret"
+
+function check_binaries() {
+    if [ ! -f "$RUSTFS_BINARY" ]; then
+        echo "--- Downloading RustFS Binary ---"
+        mkdir -p bin
+        curl -L https://dl.rustfs.com/artifacts/rustfs/release/rustfs-linux-x86_64-musl-latest.zip -o bin/rustfs.zip
+        cd bin && unzip -o rustfs.zip && chmod +x rustfs && rm rustfs.zip && cd ..
+    fi
+    if [ ! -f "$RC_BINARY" ]; then
+        echo "--- Downloading RustFS CLI (rc) ---"
+        mkdir -p bin
+        curl -L https://github.com/rustfs/cli/releases/download/v0.1.7/rustfs-cli-linux-amd64-v0.1.7.tar.gz -o bin/rc.tar.gz
+        cd bin && tar -xzf rc.tar.gz && chmod +x rc && rm rc.tar.gz && cd ..
+    fi
+}
+
+function dev() {
+    check_binaries
+    echo "--- Cleaning up previous runs ---"
+    stop
+    sleep 2
+
+    echo "--- Preparing Local Environment ---"
+    mkdir -p "$DATA_DIR"
+
+    echo "--- Starting RustFS Binary ---"
+    # Note: absolute path for data dir is usually safer for rustfs
+    RUST_LOG=error nohup $RUSTFS_BINARY server \
+        --address "127.0.0.1:$RUSTFS_PORT" \
+        --access-key "$RUSTFS_ROOT_KEY" \
+        --secret-key "$RUSTFS_ROOT_SECRET" \
+        --console-enable \
+        "$(pwd)/$DATA_DIR" > "$LOG_FILE" 2>&1 &
+    RUSTFS_PID=$!
+    disown $RUSTFS_PID
+    echo $RUSTFS_PID > .rustfs.pid
+
+    echo "Waiting for RustFS to initialize..."
+    for i in {1..30}; do
+        if curl -s "http://127.0.0.1:$RUSTFS_PORT" > /dev/null; then
+            break
+        fi
+        if ! ps -p $RUSTFS_PID > /dev/null; then
+            echo "Error: RustFS failed to start. Check $LOG_FILE"
+            exit 1
+        fi
+        sleep 1
+    done
+
+    echo "Configuring RustFS buckets and keys..."
+    $RC_BINARY alias set local "http://127.0.0.1:$RUSTFS_PORT" "$RUSTFS_ROOT_KEY" "$RUSTFS_ROOT_SECRET" > /dev/null
+    
+    # Create Admin Key
+    ADMIN_ACCESS="admin-key"
+    ADMIN_SECRET="admin-secret-123"
+    $RC_BINARY admin user add local "$ADMIN_ACCESS" "$ADMIN_SECRET" > /dev/null || true
+    $RC_BINARY admin policy attach local readwrite --user "$ADMIN_ACCESS" > /dev/null || true
+
+    # Create User Key
+    USER_ACCESS="user-key"
+    USER_SECRET="user-secret-123"
+    $RC_BINARY admin user add local "$USER_ACCESS" "$USER_SECRET" > /dev/null || true
+    $RC_BINARY admin policy attach local readwrite --user "$USER_ACCESS" > /dev/null || true
+
+    # Create Bucket
+    $RC_BINARY mb "local/$BUCKET_NAME" > /dev/null || true
+
+    echo "--- Starting CORS Proxy (Port 8889) ---"
+    export TARGET_PORT=$RUSTFS_PORT
+    touch proxy.log
+    chmod 666 proxy.log
+    nohup node scripts/proxy.js >> proxy.log 2>&1 &
+    PROXY_PID=$!
+    disown $PROXY_PID
+    echo $PROXY_PID > .proxy.pid
+
+    echo "Updating Config Files..."
+    JSON_CONFIG="{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"rustfs\",
+    \"accessKeyId\": \"$USER_ACCESS\",
+    \"secretAccessKey\": \"$USER_SECRET\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}"
+    echo "$JSON_CONFIG" > "$SOCIAL_CONFIG"
+    echo "$JSON_CONFIG" > "$BANKY_CONFIG"
+
+    # Also save admin config for reference/manual testing
+    echo "{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"rustfs\",
+    \"accessKeyId\": \"$ADMIN_ACCESS\",
+    \"secretAccessKey\": \"$ADMIN_SECRET\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}" > "demo/social/admin_config.json"
+
+    echo "--- Building Demo Apps ---"
+    npm run build:social
+    npm run build:banky
+
+    echo "--- Starting Social Web Server (Port 8888) ---"
+    nohup python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social > social_web.log 2>&1 &
+    SOCIAL_PID=$!
+    disown $SOCIAL_PID
+    echo $SOCIAL_PID > .social_web.pid
+
+    echo "--- Starting Banky Web Server (Port 8887) ---"
+    nohup python3 -m http.server 8887 --bind 127.0.0.1 --directory demo/banky > banky_web.log 2>&1 &
+    BANKY_PID=$!
+    disown $BANKY_PID
+    echo $BANKY_PID > .banky_web.pid
+
+    echo "------------------------------------------------"
+    echo "RustFS Development environment is ready!"
+    echo "RustFS S3 API (Direct):  http://127.0.0.1:9000"
+    echo "RustFS S3 API (Proxy):   http://127.0.0.1:8889"
+    echo "Social Demo App:         http://127.0.0.1:8888"
+    echo "Banky Demo App:          http://127.0.0.1:8887"
+    echo ""
+    echo "ADMIN CREDENTIALS (for manual testing):"
+    echo "Access Key: $ADMIN_ACCESS"
+    echo "Secret Key: $ADMIN_SECRET"
+    echo "------------------------------------------------"
+    echo "Use './devrustfs.sh stop' to shut down services."
+}
+
+function stop() {
+    echo "Stopping services and cleaning up..."
+    
+    [ -f .social_web.pid ] && kill $(cat .social_web.pid) 2>/dev/null && rm .social_web.pid || true
+    [ -f .banky_web.pid ] && kill $(cat .banky_web.pid) 2>/dev/null && rm .banky_web.pid || true
+    [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid || true
+    [ -f .rustfs.pid ] && kill $(cat .rustfs.pid) 2>/dev/null && rm .rustfs.pid || true
+    
+    # Backup cleanup - more specific to avoid self-kill
+    pkill -9 -u $(whoami) -x rustfs 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "node scripts/proxy.js" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "python3 -m http.server 8888" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "python3 -m http.server 8887" 2>/dev/null || true
+
+    echo "Removing temporary data..."
+    rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "proxy.log" "rustfs_startup.log" 2>/dev/null || true
+
+    RESET_CONFIG="{
+    \"endpoint\": \"http://127.0.0.1:8889\",
+    \"region\": \"rustfs\",
+    \"accessKeyId\": \"YOUR_ACCESS_KEY\",
+    \"secretAccessKey\": \"YOUR_SECRET_KEY\",
+    \"bucketName\": \"your-bucket-name\"
+}"
+
+    if [ -f "$SOCIAL_CONFIG" ]; then
+        echo "Resetting $SOCIAL_CONFIG..."
+        echo "$RESET_CONFIG" > "$SOCIAL_CONFIG"
+    fi
+    if [ -f "$BANKY_CONFIG" ]; then
+        echo "Resetting $BANKY_CONFIG..."
+        echo "$RESET_CONFIG" > "$BANKY_CONFIG"
+    fi
+}
+
+case "$1" in
+    dev) dev ;;
+    stop) stop ;;
+    *) echo "Usage: $0 {dev|stop}"; exit 1 ;;
+esac
