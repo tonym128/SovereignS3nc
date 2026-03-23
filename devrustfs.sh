@@ -71,13 +71,55 @@ function dev() {
     ADMIN_ACCESS="admin-key"
     ADMIN_SECRET="admin-secret-123"
     $RC_BINARY admin user add local "$ADMIN_ACCESS" "$ADMIN_SECRET" > /dev/null || true
-    $RC_BINARY admin policy attach local readwrite --user "$ADMIN_ACCESS" > /dev/null || true
+    
+    # Create Admin Policy
+    cat <<EOF > admin-policy.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["s3:*"],
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/sov-social/*"]
+        }
+    ]
+}
+EOF
+    $RC_BINARY admin policy create local sov-admin admin-policy.json > /dev/null || true
+    $RC_BINARY admin policy attach local sov-admin --user "$ADMIN_ACCESS" > /dev/null || true
+    rm admin-policy.json
 
     # Create User Key
     USER_ACCESS="user-key"
     USER_SECRET="user-secret-123"
     $RC_BINARY admin user add local "$USER_ACCESS" "$USER_SECRET" > /dev/null || true
-    $RC_BINARY admin policy attach local readwrite --user "$USER_ACCESS" > /dev/null || true
+    
+    # Create User Policy (Restricted from admin prefix except for reports)
+    cat <<EOF > user-policy.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["s3:*"],
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/sov-social/*"]
+        },
+        {
+            "Effect": "Deny",
+            "Action": ["s3:*"],
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/sov-social/admin/*"]
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["s3:PutObject"],
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/sov-social/admin/data/reports/*"]
+        }
+    ]
+}
+EOF
+    $RC_BINARY admin policy create local sov-user user-policy.json > /dev/null || true
+    $RC_BINARY admin policy attach local sov-user --user "$USER_ACCESS" > /dev/null || true
+    rm user-policy.json
 
     # Create Bucket
     $RC_BINARY mb "local/$BUCKET_NAME" > /dev/null || true

@@ -8,3 +8,4 @@ garage_data/
 *.pid
 test-results/
 garage_local.toml
+rustfs_data/
