@@ -434,7 +434,13 @@ export class SovereignS3nc extends EventEmitter {
             // 2. Global Discovery & Registration
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
-            await this.discoverAndFollowUsers(today);
+            
+            if (this.config.autoFollowDiscoveredUsers !== false) {
+                const userList = await this.discoverUsers();
+                if (userList) {
+                    await this.autoFollowUsers(userList);
+                }
+            }
 
             // 3. Sync Followed Users (Per-User Logic)
             await this.syncFollowedUsers(today);
@@ -995,8 +1001,8 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
-    private async discoverAndFollowUsers(today: string) {
-        if (!this.globalRemote) return;
+    public async discoverUsers(): Promise<{ userId: string, publicKey: string }[] | null> {
+        if (!this.globalRemote) return null;
         const remotePath = 'users.json';
         let remoteData: Uint8Array | null = null;
         try {
@@ -1004,13 +1010,21 @@ export class SovereignS3nc extends EventEmitter {
             if (result && result.data) remoteData = result.data;
         } catch (e: any) {
             Logger.warn('[Sync] Failed to download global registry (offline?)', e.message);
-            return;
+            return null;
         }
         
-        if (!remoteData) return;
+        if (!remoteData) return null;
 
         try {
-            const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(remoteData));
+            return JSON.parse(new TextDecoder().decode(remoteData));
+        } catch (e) {
+            Logger.warn('[Sync] Failed to parse global registry', e);
+            return null;
+        }
+    }
+
+    public async autoFollowUsers(userList: { userId: string, publicKey: string }[]) {
+        try {
             const following = await this.storage.getFollowing();
             const followingIds = following.map(u => u.userId);
 
@@ -1026,7 +1040,7 @@ export class SovereignS3nc extends EventEmitter {
                 }
             }
         } catch (e) {
-            Logger.warn('[Sync] Failed to discover users', e);
+            Logger.warn('[Sync] autoFollowUsers failed', e);
         }
     }
 

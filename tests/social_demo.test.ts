@@ -91,8 +91,9 @@ describe('Social Demo Full Functionality', () => {
         await alice.sov.sync();
         await bob.sov.sync();
 
-        // 2. Friendship (Bob follows Alice)
+        // 2. Friendship (Bob follows Alice, Alice follows Bob)
         await bob.sov.follow('alice');
+        await alice.sov.follow('bob');
         const following = await bob.sov.getFollowing();
         expect(following.find(u => u.userId === 'alice')).toBeDefined();
 

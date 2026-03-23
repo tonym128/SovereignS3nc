@@ -87,7 +87,10 @@ describe('Browser-based Social Sync', () => {
         // 2. Alice syncs to upload data and register in users.json
         await alice.sov.sync();
 
-        // 3. Bob syncs - should discover Alice and pull her data
+        // Bob follows Alice explicitly
+        await bob.sov.follow('alice');
+
+        // 3. Bob syncs - should pull her data
         console.log('Bob syncing...');
         await bob.sov.sync();
 

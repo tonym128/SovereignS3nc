@@ -317,6 +317,7 @@ const App = () => {
                 offline: currentConfig.syncMode === 'offline',
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
                 password: currentConfig.password,
+                autoFollowDiscoveredUsers: false,
                 debug: DEBUG
             }, remoteAdapter, factory);
 
@@ -644,7 +645,7 @@ const App = () => {
             discoveryMapRef.current = newDiscoveryMap;
         }
 
-        const followingList = await v.getFollowing();
+        const followingList = await activeSov.getFollowing();
         setFollowing(followingList);
 
         const dates: string[] = [];
@@ -719,7 +720,7 @@ const App = () => {
             });
         }
 
-        const groupsList = await v.getGroups();
+        const groupsList = await activeSov.getGroups();
         setGroups(groupsList);
 
         // Refresh selected group from list to get updated member statuses
@@ -738,7 +739,7 @@ const App = () => {
                         // Check if metadata actually changed or if we need to update our local role/status
                         // For simplicity, we just join/update if it's from a member
                         if (groupInfo.members.find((mb: any) => mb.userId === m.senderId)) {
-                            await v.joinGroup(groupInfo);
+                            await activeSov.joinGroup(groupInfo);
                         }
                     }
                 } catch(e) {}

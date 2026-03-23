@@ -91862,7 +91862,12 @@ ${toHex(hashedRequest)}`;
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
-            await this.discoverAndFollowUsers(today);
+            if (this.config.autoFollowDiscoveredUsers !== false) {
+              const userList = await this.discoverUsers();
+              if (userList) {
+                await this.autoFollowUsers(userList);
+              }
+            }
             await this.syncFollowedUsers(today);
             await this.syncGroups(today);
             await this.syncGenericFiles("public/blobs/");
@@ -92312,8 +92317,8 @@ ${toHex(hashedRequest)}`;
             return [];
           }
         }
-        async discoverAndFollowUsers(today) {
-          if (!this.globalRemote) return;
+        async discoverUsers() {
+          if (!this.globalRemote) return null;
           const remotePath = "users.json";
           let remoteData = null;
           try {
@@ -92321,11 +92326,18 @@ ${toHex(hashedRequest)}`;
             if (result && result.data) remoteData = result.data;
           } catch (e2) {
             Logger.warn("[Sync] Failed to download global registry (offline?)", e2.message);
-            return;
+            return null;
           }
-          if (!remoteData) return;
+          if (!remoteData) return null;
           try {
-            const userList = JSON.parse(new TextDecoder().decode(remoteData));
+            return JSON.parse(new TextDecoder().decode(remoteData));
+          } catch (e2) {
+            Logger.warn("[Sync] Failed to parse global registry", e2);
+            return null;
+          }
+        }
+        async autoFollowUsers(userList) {
+          try {
             const following = await this.storage.getFollowing();
             const followingIds = following.map((u2) => u2.userId);
             for (const user of userList) {
@@ -92338,7 +92350,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           } catch (e2) {
-            Logger.warn("[Sync] Failed to discover users", e2);
+            Logger.warn("[Sync] autoFollowUsers failed", e2);
           }
         }
         async syncFollowedUsers(today) {
