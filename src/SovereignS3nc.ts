@@ -86,7 +86,7 @@ export class SovereignS3nc extends EventEmitter {
             storeId: 'data'
         });
 
-        // Root Remote - Access to appId/
+        // Root Remote - Access to appId/ (Strictly appId only)
         this.rootRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
             userId: '',
@@ -211,8 +211,9 @@ export class SovereignS3nc extends EventEmitter {
             await this.ensureGlobalRegistration();
         }
 
-        // Fetch blacklist immediately on startup
+        // Fetch blacklist and admin key immediately on startup
         await this.syncBlacklist();
+        await this.syncAdminKey();
 
         Logger.info('[Sovereign] Initialization complete.');
     }
@@ -232,6 +233,23 @@ export class SovereignS3nc extends EventEmitter {
             }
         } catch (e) {
             // No blacklist found, which is fine
+        }
+    }
+
+    /**
+     * Downloads the admin's public key for E2EE reports.
+     */
+    public async syncAdminKey() {
+        if (!this.adminRemote) return;
+        try {
+            const result = await this.adminRemote.downloadFile('public_key.json');
+            if (result && result.data) {
+                const data = JSON.parse(new TextDecoder().decode(result.data));
+                this.config.adminPublicKey = data.publicKey;
+                Logger.info('[Sync] Discovered Admin Public Key.');
+            }
+        } catch (e) {
+            // No admin key found, which is fine
         }
     }
 
@@ -451,31 +469,8 @@ export class SovereignS3nc extends EventEmitter {
                 await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
             }
 
-            // Sync all module files (recursively find all .db and .json files in modules)
-            const publicModuleFiles = await this.storage.listFiles('public/modules/');
-            for (const file of publicModuleFiles) {
-                if (file.endsWith('.db') || file.endsWith('.json')) {
-                    const relativePath = file.replace('public/', '');
-                    await this.syncGenericFile(relativePath, 'public');
-                }
-            }
-            const privateModuleFiles = await this.storage.listFiles('private/modules/');
-            for (const file of privateModuleFiles) {
-                if (file.endsWith('.db') || file.endsWith('.json')) {
-                    const relativePath = file.replace('private/', '');
-                    await this.syncGenericFile(relativePath, 'private');
-                }
-            }
-
-            // Sync all group files
-            const groupFiles = await this.storage.listFiles('public/groups/');
-            for (const file of groupFiles) {
-                const relativePath = file.replace('public/', '');
-                await this.syncGenericFile(relativePath, 'public');
-            }
-
+            // 2. Sync User Profile and Global Registry
             await this.syncUserFile();
-            // 2. Global Discovery & Registration
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
             
@@ -492,15 +487,13 @@ export class SovereignS3nc extends EventEmitter {
             // 4. Sync Groups (Multi-writer Logic)
             await this.syncGroups(today);
 
-            // 5. Sync Blobs and other files
-            await this.syncGenericFiles('public/blobs/');
-            await this.syncGenericFiles('public/dms/');
-            await this.syncGenericFiles('public/modules/');
-            await this.syncGenericFiles('public/groups/');
-            await this.syncGenericFiles('private/blobs/');
-            await this.syncGenericFiles('private/dms/');
-            await this.syncGenericFiles('private/modules/');
-            await this.syncGenericFiles('private/groups/');
+            // 5. Sync Blobs and generic files from the local manifest
+            const manifest = await this.generateManifest();
+            for (const blobPath of manifest.blobs) {
+                const type = blobPath.startsWith('public/') ? 'public' : 'private';
+                const relativePath = blobPath.substring(type.length + 1);
+                await this.syncGenericFile(relativePath, type);
+            }
 
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
@@ -523,14 +516,15 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private async generateManifest(): Promise<SovereignManifest> {
-        const publicFiles = await this.storage.listFiles('public/');
-        Logger.debug(`[Sync] generateManifest: Scanning ${publicFiles.length} files`);
+        const allFiles = await this.storage.listFiles('');
+        Logger.debug(`[Sync] generateManifest: Scanning ${allFiles.length} files`);
         const manifest: SovereignManifest = {
             updatedAt: Date.now(),
             userId: this.config.paths.userId,
             modules: {},
             dms: {},
-            groups: {}
+            groups: {},
+            blobs: []
         };
 
         const profileData = await this.storage.getPublicUserFile();
@@ -538,55 +532,50 @@ export class SovereignS3nc extends EventEmitter {
             manifest.profileHash = this.calculateHashedContent(profileData);
         }
 
-        for (const file of publicFiles) {
-            if (file === 'public/user.json') continue;
-            if (file === 'public/manifest.json') continue;
+        for (const file of allFiles) {
+            if (file.includes('user.json')) continue;
+            if (file.includes('manifest.json')) continue;
+            if (file.includes('.probe')) continue;
 
             const parts = file.split('/');
+            const fileName = parts[parts.length - 1];
             
-            // Base public DB: public/{date}.db
-            if (parts.length === 2 && file.endsWith('.db')) {
-                const dateStr = parts[1].replace('.db', '');
+            // 1. Track in structured manifest sections for PULL discovery
+            
+            // Base DB: {type}/{date}.db
+            if (parts.length === 2 && fileName.endsWith('.db')) {
+                const dateStr = fileName.replace('.db', '');
                 if (!manifest.modules['core']) manifest.modules['core'] = [];
-                manifest.modules['core'].push(dateStr);
-                continue;
+                if (!manifest.modules['core'].includes(dateStr)) manifest.modules['core'].push(dateStr);
             }
 
-            if (file.startsWith('public/modules/')) {
-                // Module file: public/modules/{moduleName}/{date}.db
+            // Module data: {type}/modules/{moduleName}/{date}.db
+            else if (file.includes('/modules/') && fileName.endsWith('.db')) {
+                const moduleName = parts[2];
                 if (parts.length === 4) {
-                    const moduleName = parts[2];
-                    const fileName = parts[3];
-                    if (fileName.endsWith('.db')) {
-                        const dateStr = fileName.replace('.db', '');
-                        if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
-                        manifest.modules[moduleName].push(dateStr);
-                    }
+                    const dateStr = fileName.replace('.db', '');
+                    if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
+                    if (!manifest.modules[moduleName].includes(dateStr)) manifest.modules[moduleName].push(dateStr);
                 } 
-                // DM file: public/modules/{moduleName}/dms/{recipientId}/{date}.db
+                // DM file: {type}/modules/{moduleName}/dms/{recipientId}/{date}.db
                 else if (parts.length === 6 && parts[3] === 'dms') {
-                    const moduleName = parts[2];
                     const recipientId = parts[4];
-                    const fileName = parts[5];
-                    if (fileName.endsWith('.db')) {
-                        const dateStr = fileName.replace('.db', '');
-                        if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
-                        manifest.dms[recipientId].push(dateStr);
-                    }
+                    const dateStr = fileName.replace('.db', '');
+                    if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
+                    if (!manifest.dms[recipientId].includes(dateStr)) manifest.dms[recipientId].push(dateStr);
                 }
             }
 
-            // Group data: public/groups/{groupId}/{date}.db
-            if (file.startsWith('public/groups/') && parts.length === 4) {
+            // Group data: {type}/groups/{groupId}/{date}.db
+            else if (file.includes('/groups/') && fileName.endsWith('.db')) {
                 const groupId = parts[2];
-                const fileName = parts[3];
-                if (fileName.endsWith('.db')) {
-                    const dateStr = fileName.replace('.db', '');
-                    if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
-                    manifest.groups[groupId].push(dateStr);
-                    Logger.debug(`[Sync] Manifest adding group ${groupId} date ${dateStr}`);
-                }
+                const dateStr = fileName.replace('.db', '');
+                if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
+                if (!manifest.groups[groupId].includes(dateStr)) manifest.groups[groupId].push(dateStr);
             }
+
+            // 2. ALWAYS add to blobs list for PUSH synchronization
+            manifest.blobs.push(file);
         }
         return manifest;
     }
@@ -865,23 +854,26 @@ export class SovereignS3nc extends EventEmitter {
             const activeRemote = type === 'public' ? this.publicRemote : this.remote;
             if (!activeRemote) return;
             const key = type === 'private' ? this.config.encryptionKey : undefined;
-            const fullPath = `${type}/${relativePath}`;
+            
+            // Ensure fullPath reflects the storage path (public/...)
+            const fullPath = relativePath.startsWith(`${type}/`) ? relativePath : `${type}/${relativePath}`;
+            const s3Path = fullPath;
 
             const localData = await this.storage.getFile(fullPath);
             if (!localData) return;
 
             const localHash = this.calculateHashedContent(localData, key);
             const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
-            const remoteHash = await activeRemote.getFileHash(relativePath);
+            const remoteHash = await activeRemote.getFileHash(s3Path);
 
             if (localHash !== remoteHash || remoteHash === null) {
                 Logger.info(`[Sync] Uploading generic file: ${fullPath}`);
                 let uploadData = localData;
                 if (key) uploadData = await this.encrypt(localData, key);
-                const etag = await activeRemote.uploadFile(relativePath, uploadData, localHash);
+                const etag = await activeRemote.uploadFile(s3Path, uploadData, localHash);
                 if (etag) await this.storage.setGenericRemoteHashCache(fullPath, etag);
             } else if (!cachedEtag && remoteHash) {
-                const remoteEtag = await activeRemote.getFileEtag(relativePath);
+                const remoteEtag = await activeRemote.getFileEtag(s3Path);
                 if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
             }
         } catch (e: any) {

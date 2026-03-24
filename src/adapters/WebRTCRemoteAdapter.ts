@@ -20,8 +20,8 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     private pendingRequests: Map<string, (res: PeerMessage) => void> = new Map();
     public storage?: any; // Reference to Sovereign storage for purge operations
 
-    constructor(userId: string) {
-        this.peerId = peerId;
+    constructor(userId: string, prefix: string = '') {
+        this.peerId = userId;
         this.prefix = prefix;
         if (this.prefix && !this.prefix.endsWith('/')) {
             this.prefix += '/';
@@ -116,7 +116,7 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
         }
     }
 
-    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+    async uploadFile(path: string, data: Uint8Array, hash?: string, metadata?: Record<string, string>): Promise<string | null> {
         const key = this.getKey(path);
         // Fallback hash if not provided
         const fileHash = hash || Buffer.from(data).toString('hex').substring(0, 16); 
@@ -136,6 +136,11 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
         Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
         this.broadcast(msg);
         return etag;
+    }
+
+    async getFileMetadata(path: string, key: string): Promise<string | null> {
+        // Metadata not yet supported in P2P cache
+        return null;
     }
 
     async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 3000): Promise<DownloadResult | null> {

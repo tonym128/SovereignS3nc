@@ -15,7 +15,7 @@
             "Effect": "Allow",
             "Action": [
                 "s3:GetObject",
-                "s3:ListBucket"
+                "s3:PutObject"
             ],
             "Resource": [
                 "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/global/*"
@@ -38,11 +38,11 @@
             ]
         },
         {
-            "Sid": "DenyAdminData",
-            "Effect": "Deny",
-            "Action": "s3:*",
+            "Sid": "AllowReadAdminPublicKey",
+            "Effect": "Allow",
+            "Action": "s3:GetObject",
             "Resource": [
-                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/admin/data/*"
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/admin/data/public_key.json"
             ]
         }
     ]

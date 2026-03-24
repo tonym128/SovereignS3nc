@@ -35,11 +35,15 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     this.bucket = config.bucketName;
     
     // Construct prefix, ignoring empty parts to support root-level access
-    const pathParts = [paths.appId, paths.userId, paths.storeId].filter(p => p && p.trim() !== '');
-    this.prefix = pathParts.length > 0 ? `${pathParts.join('/')}/` : '';
+    const pathParts = [paths.appId, paths.userId, paths.storeId].filter(p => p !== undefined && p !== null && p.trim() !== '');
+    if (pathParts.length > 0) {
+        this.prefix = `${pathParts.join('/')}/`;
+    } else {
+        this.prefix = '';
+    }
   }
 
-  async uploadFile(path: string, data: Uint8Array, providedHash?: string): Promise<string | null> {
+  async uploadFile(path: string, data: Uint8Array, providedHash?: string, customMetadata?: Record<string, string>): Promise<string | null> {
     const key = this.getKey(path);
     Logger.debug(`[S3] Uploading to key: ${key}`);
     
@@ -63,7 +67,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       Key: key,
       Body: data,
       Metadata: {
-          'hash': hash
+          'hash': hash,
+          ...(customMetadata || {})
       }
     }));
     return response.ETag || null;
@@ -176,6 +181,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       }
   }
 
+  async getFileMetadata(path: string, key: string): Promise<string | null> {
+      const fullKey = this.getKey(path);
+      try {
+          const response = await this.client.send(new HeadObjectCommand({
+              Bucket: this.bucket,
+              Key: fullKey
+          }));
+          return response.Metadata?.[key] || null;
+      } catch (e: any) {
+          return null;
+      }
+  }
+
   async canWrite(path: string): Promise<boolean> {
       const key = this.getKey(path.endsWith('/') ? `${path}.probe` : `${path}/.probe`);
       try {
@@ -195,7 +213,12 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   }
 
   async listFiles(prefix: string): Promise<string[]> {
-      const fullPrefix = this.getKey(prefix);
+      // Ensure we don't double-prefix
+      let fullPrefix = prefix;
+      if (!prefix.startsWith(this.prefix)) {
+          fullPrefix = this.getKey(prefix);
+      }
+      
       const keys: string[] = [];
       let continuationToken: string | undefined = undefined;
 
@@ -212,8 +235,13 @@ export class S3RemoteAdapter implements IRemoteAdapter {
                   for (const item of response.Contents) {
                       if (item.Key) {
                           // Strip the adapter prefix to return relative paths
-                          const relativePath = item.Key.substring(this.prefix.length);
-                          keys.push(relativePath);
+                          const relativePath = item.Key.startsWith(this.prefix) 
+                            ? item.Key.substring(this.prefix.length) 
+                            : item.Key;
+                            
+                          if (relativePath && relativePath !== '') {
+                              keys.push(relativePath);
+                          }
                       }
                   }
               }

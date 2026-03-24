@@ -1,7 +1,7 @@
 {
     "endpoint": "http://127.0.0.1:8889",
     "region": "rustfs",
-    "accessKeyId": "YOUR_ACCESS_KEY",
-    "secretAccessKey": "YOUR_SECRET_KEY",
-    "bucketName": "your-bucket-name"
+    "accessKeyId": "user-key",
+    "secretAccessKey": "user-secret-123",
+    "bucketName": "sovereign-demo"
 }

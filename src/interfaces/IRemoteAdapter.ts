@@ -5,10 +5,11 @@ export interface DownloadResult {
 }
 
 export interface IRemoteAdapter {
-  uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null>; // Returns ETag
+  uploadFile(path: string, data: Uint8Array, hash?: string, metadata?: Record<string, string>): Promise<string | null>; // Returns ETag
   downloadFile(path: string, ifNoneMatch?: string, timeout?: number): Promise<DownloadResult | null>;
   getFileHash(path: string): Promise<string | null>;
   getFileEtag(path: string): Promise<string | null>;
+  getFileMetadata?(path: string, key: string): Promise<string | null>;
 
   /**
    * Check if the current adapter has write permissions for a specific path or prefix.

@@ -15,7 +15,7 @@ import initSqlJs from 'sql.js';
 
 class MockRemote implements IRemoteAdapter {
     files: Map<string, {data: Uint8Array, hash: string, etag: string}> = new Map();
-    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+    async uploadFile(path: string, data: Uint8Array, hash?: string, metadata?: Record<string, string>): Promise<string | null> {
         const h = hash || crypto.createHash('sha256').update(data).digest('hex');
         const etag = `"${Math.random().toString(36).substring(7)}"`;
         this.files.set(path, { data, hash: h, etag });
@@ -27,12 +27,14 @@ class MockRemote implements IRemoteAdapter {
     }
     async getFileHash(path: string): Promise<string | null> { return this.files.get(path)?.hash || null; }
     async getFileEtag(path: string): Promise<string | null> { return this.files.get(path)?.etag || null; }
+    async getFileMetadata(path: string, key: string): Promise<string | null> { return null; }
 
     async canWrite(path: string): Promise<boolean> { return true; }
     async listFiles(prefix: string): Promise<string[]> {
         return Array.from(this.files.keys()).filter(k => k.startsWith(prefix));
     }
     async deleteFile(path: string): Promise<void> { this.files.delete(path); }
+    async purge(): Promise<void> { this.files.clear(); }
 }
 
 describe('BankyManager Unit Tests', () => {

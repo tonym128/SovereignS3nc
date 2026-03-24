@@ -3988,15 +3988,15 @@
           return error;
         }
         function describeBuiltInComponentFrame(name) {
-          if (void 0 === prefix2)
+          if (void 0 === prefix)
             try {
               throw Error();
             } catch (x2) {
               var match = x2.stack.trim().match(/\n( *(at )?)/);
-              prefix2 = match && match[1] || "";
+              prefix = match && match[1] || "";
               suffix = -1 < x2.stack.indexOf("\n    at") ? " (<anonymous>)" : -1 < x2.stack.indexOf("@") ? "@unknown:0:0" : "";
             }
-          return "\n" + prefix2 + name + suffix;
+          return "\n" + prefix + name + suffix;
         }
         function describeNativeComponentFrame(fn, construct) {
           if (!fn || reentry) return "";
@@ -4675,8 +4675,8 @@
                   node.removeAttribute(name);
                   return;
                 case "boolean":
-                  var prefix3 = name.toLowerCase().slice(0, 5);
-                  if ("data-" !== prefix3 && "aria-" !== prefix3) {
+                  var prefix2 = name.toLowerCase().slice(0, 5);
+                  if ("data-" !== prefix2 && "aria-" !== prefix2) {
                     node.removeAttribute(name);
                     return;
                   }
@@ -6182,11 +6182,11 @@
           }
           return kind;
         }
-        function addObjectToProperties(object, properties, indent, prefix3) {
+        function addObjectToProperties(object, properties, indent, prefix2) {
           for (var key in object)
-            hasOwnProperty.call(object, key) && "_" !== key[0] && addValueToProperties(key, object[key], properties, indent, prefix3);
+            hasOwnProperty.call(object, key) && "_" !== key[0] && addValueToProperties(key, object[key], properties, indent, prefix2);
         }
-        function addValueToProperties(propertyName, value, properties, indent, prefix3) {
+        function addValueToProperties(propertyName, value, properties, indent, prefix2) {
           switch (typeof value) {
             case "object":
               if (null === value) {
@@ -6206,7 +6206,7 @@
                     break;
                   }
                   properties.push([
-                    prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
+                    prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
                     "<" + typeName2
                   ]);
                   null !== key && addValueToProperties(
@@ -6214,7 +6214,7 @@
                     key,
                     properties,
                     indent + 1,
-                    prefix3
+                    prefix2
                   );
                   propertyName = false;
                   for (var propKey in value)
@@ -6223,7 +6223,7 @@
                       value[propKey],
                       properties,
                       indent + 1,
-                      prefix3
+                      prefix2
                     );
                   properties.push([
                     "",
@@ -6239,7 +6239,7 @@
                     break;
                   } else if (propKey === ENTRIES_ARRAY) {
                     properties.push([
-                      prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
+                      prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
                       ""
                     ]);
                     for (propertyName = 0; propertyName < value.length; propertyName++)
@@ -6248,7 +6248,7 @@
                         typeName2[1],
                         properties,
                         indent + 1,
-                        prefix3
+                        prefix2
                       );
                     return;
                   }
@@ -6260,7 +6260,7 @@
                       value.value,
                       properties,
                       indent,
-                      prefix3
+                      prefix2
                     ), properties.length > typeName2) {
                       properties = properties[typeName2];
                       properties[1] = "Promise<" + (properties[1] || "Object") + ">";
@@ -6271,7 +6271,7 @@
                     value.reason,
                     properties,
                     indent,
-                    prefix3
+                    prefix2
                   ), properties.length > typeName2)) {
                     properties = properties[typeName2];
                     properties[1] = "Rejected Promise<" + properties[1] + ">";
@@ -6285,10 +6285,10 @@
                 }
                 "Object" === typeName2 && (propKey = Object.getPrototypeOf(value)) && "function" === typeof propKey.constructor && (typeName2 = propKey.constructor.name);
                 properties.push([
-                  prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
+                  prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
                   "Object" === typeName2 ? 3 > indent ? "" : "\u2026" : typeName2
                 ]);
-                3 > indent && addObjectToProperties(value, properties, indent + 1, prefix3);
+                3 > indent && addObjectToProperties(value, properties, indent + 1, prefix2);
                 return;
               }
             case "function":
@@ -6307,7 +6307,7 @@
               value = String(value);
           }
           properties.push([
-            prefix3 + "\xA0\xA0".repeat(indent) + propertyName,
+            prefix2 + "\xA0\xA0".repeat(indent) + propertyName,
             value
           ]);
         }
@@ -20505,7 +20505,7 @@
         var fiberStack = [];
         var index$jscomp$0 = -1, contextStackCursor = createCursor(null), contextFiberStackCursor = createCursor(null), rootInstanceStackCursor = createCursor(null), hostTransitionProviderCursor = createCursor(null), disabledDepth = 0, prevLog, prevInfo, prevWarn, prevError, prevGroup, prevGroupCollapsed, prevGroupEnd;
         disabledLog.__reactDisabledLog = true;
-        var prefix2, suffix, reentry = false;
+        var prefix, suffix, reentry = false;
         var componentFrameCache = new ("function" === typeof WeakMap ? WeakMap : Map)();
         var current = null, isRendering = false, hasOwnProperty = Object.prototype.hasOwnProperty, scheduleCallback$3 = Scheduler.unstable_scheduleCallback, cancelCallback$1 = Scheduler.unstable_cancelCallback, shouldYield = Scheduler.unstable_shouldYield, requestPaint = Scheduler.unstable_requestPaint, now$1 = Scheduler.unstable_now, getCurrentPriorityLevel = Scheduler.unstable_getCurrentPriorityLevel, ImmediatePriority = Scheduler.unstable_ImmediatePriority, UserBlockingPriority = Scheduler.unstable_UserBlockingPriority, NormalPriority$1 = Scheduler.unstable_NormalPriority, LowPriority = Scheduler.unstable_LowPriority, IdlePriority = Scheduler.unstable_IdlePriority, log$1 = Scheduler.log, unstable_setDisableYieldValue = Scheduler.unstable_setDisableYieldValue, rendererID = null, injectedHook = null, hasLoggedError = false, isDevToolsPresent = "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__, clz32 = Math.clz32 ? Math.clz32 : clz32Fallback, log2 = Math.log, LN2 = Math.LN2, nextTransitionUpdateLane = 256, nextTransitionDeferredLane = 262144, nextRetryLane = 4194304, DiscreteEventPriority = 2, ContinuousEventPriority = 8, DefaultEventPriority = 32, IdleEventPriority = 268435456, randomKey = Math.random().toString(36).slice(2), internalInstanceKey = "__reactFiber$" + randomKey, internalPropsKey = "__reactProps$" + randomKey, internalContainerInstanceKey = "__reactContainer$" + randomKey, internalEventHandlersKey = "__reactEvents$" + randomKey, internalEventHandlerListenersKey = "__reactListeners$" + randomKey, internalEventHandlesSetKey = "__reactHandles$" + randomKey, internalRootNodeResourcesKey = "__reactResources$" + randomKey, internalHoistableMarker = "__reactMarker$" + randomKey, allNativeEvents = /* @__PURE__ */ new Set(), registrationNameDependencies = {}, possibleRegistrationNames = {}, hasReadOnlyValue = {
           button: true,
@@ -73486,9 +73486,9 @@ ${toHex(hashedRequest)}`;
         }
         getXmlnsAttribute(ns, parentXmlns) {
           const traits = ns.getMergedTraits();
-          const [prefix2, xmlns] = traits.xmlNamespace ?? [];
+          const [prefix, xmlns] = traits.xmlNamespace ?? [];
           if (xmlns && xmlns !== parentXmlns) {
-            return [prefix2 ? `xmlns:${prefix2}` : "xmlns", xmlns];
+            return [prefix ? `xmlns:${prefix}` : "xmlns", xmlns];
           }
           return [void 0, void 0];
         }
@@ -77880,8 +77880,8 @@ ${toHex(hashedRequest)}`;
         if (appId) {
           defaultUserAgent.push(escapeUserAgent([`app`, `${appId}`]));
         }
-        const prefix2 = getUserAgentPrefix();
-        const sdkUserAgentValue = (prefix2 ? [prefix2] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
+        const prefix = getUserAgentPrefix();
+        const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
         const normalUAValue = [
           ...defaultUserAgent.filter((section) => section.startsWith("aws-sdk-")),
           ...customUserAgent
@@ -77903,12 +77903,12 @@ ${toHex(hashedRequest)}`;
         const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
         const version = userAgentPair[1]?.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
         const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
-        const prefix2 = name.substring(0, prefixSeparatorIndex);
+        const prefix = name.substring(0, prefixSeparatorIndex);
         let uaName = name.substring(prefixSeparatorIndex + 1);
-        if (prefix2 === "api") {
+        if (prefix === "api") {
           uaName = uaName.toLowerCase();
         }
-        return [prefix2, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+        return [prefix, uaName, version].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
           switch (index) {
             case 0:
               return item;
@@ -90451,8 +90451,8 @@ ${toHex(hashedRequest)}`;
         static setLevel(level) {
           this.level = level;
         }
-        static setPrefix(prefix2) {
-          this.prefix = prefix2;
+        static setPrefix(prefix) {
+          this.prefix = prefix;
         }
         static debug(message, ...args) {
           if (this.level <= 0 /* DEBUG */) {
@@ -90509,10 +90509,14 @@ ${toHex(hashedRequest)}`;
           });
           Logger.debug(`[S3] Client created for ${paths.userId}`);
           this.bucket = config.bucketName;
-          const pathParts = [paths.appId, paths.userId, paths.storeId].filter((p2) => p2 && p2.trim() !== "");
-          this.prefix = pathParts.length > 0 ? `${pathParts.join("/")}/` : "";
+          const pathParts = [paths.appId, paths.userId, paths.storeId].filter((p2) => p2 !== void 0 && p2 !== null && p2.trim() !== "");
+          if (pathParts.length > 0) {
+            this.prefix = `${pathParts.join("/")}/`;
+          } else {
+            this.prefix = "";
+          }
         }
-        async uploadFile(path2, data, providedHash) {
+        async uploadFile(path2, data, providedHash, customMetadata) {
           const key = this.getKey(path2);
           Logger.debug(`[S3] Uploading to key: ${key}`);
           let hash = providedHash;
@@ -90532,7 +90536,8 @@ ${toHex(hashedRequest)}`;
             Key: key,
             Body: data,
             Metadata: {
-              "hash": hash
+              "hash": hash,
+              ...customMetadata || {}
             }
           }));
           return response.ETag || null;
@@ -90623,6 +90628,18 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
+        async getFileMetadata(path2, key) {
+          const fullKey = this.getKey(path2);
+          try {
+            const response = await this.client.send(new HeadObjectCommand({
+              Bucket: this.bucket,
+              Key: fullKey
+            }));
+            return response.Metadata?.[key] || null;
+          } catch (e2) {
+            return null;
+          }
+        }
         async canWrite(path2) {
           const key = this.getKey(path2.endsWith("/") ? `${path2}.probe` : `${path2}/.probe`);
           try {
@@ -90638,8 +90655,11 @@ ${toHex(hashedRequest)}`;
             return false;
           }
         }
-        async listFiles(prefix2) {
-          const fullPrefix = this.getKey(prefix2);
+        async listFiles(prefix) {
+          let fullPrefix = prefix;
+          if (!prefix.startsWith(this.prefix)) {
+            fullPrefix = this.getKey(prefix);
+          }
           const keys = [];
           let continuationToken = void 0;
           try {
@@ -90654,8 +90674,10 @@ ${toHex(hashedRequest)}`;
               if (response.Contents) {
                 for (const item of response.Contents) {
                   if (item.Key) {
-                    const relativePath = item.Key.substring(this.prefix.length);
-                    keys.push(relativePath);
+                    const relativePath = item.Key.startsWith(this.prefix) ? item.Key.substring(this.prefix.length) : item.Key;
+                    if (relativePath && relativePath !== "") {
+                      keys.push(relativePath);
+                    }
                   }
                 }
               }
@@ -90663,7 +90685,7 @@ ${toHex(hashedRequest)}`;
               hasMore = response.IsTruncated || false;
             }
           } catch (e2) {
-            Logger.warn(`[S3] Failed to list files for prefix ${prefix2}: ${e2.message}`);
+            Logger.warn(`[S3] Failed to list files for prefix ${prefix}: ${e2.message}`);
           }
           return keys;
         }
@@ -90839,14 +90861,14 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async listFiles(prefix2) {
+        async listFiles(prefix) {
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
               const request = store.getAllKeys();
               request.onsuccess = () => {
                 const allKeys = request.result;
-                resolve(allKeys.filter((k2) => k2.startsWith(prefix2)));
+                resolve(allKeys.filter((k2) => k2.startsWith(prefix)));
               };
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91510,8 +91532,8 @@ ${toHex(hashedRequest)}`;
             await fs.unlink(fullPath);
           }
         }
-        async listFiles(prefix2) {
-          const fullPrefix = this.getFilePath(prefix2);
+        async listFiles(prefix) {
+          const fullPrefix = this.getFilePath(prefix);
           if (!await fs.pathExists(fullPrefix)) return [];
           const files = [];
           const walk = async (dir) => {
@@ -91523,7 +91545,7 @@ ${toHex(hashedRequest)}`;
                 await walk(fullPath);
               } else {
                 const relativePath = path.relative(this.filesDir, fullPath);
-                if (relativePath.startsWith(prefix2)) {
+                if (relativePath.startsWith(prefix)) {
                   files.push(relativePath);
                 }
               }
@@ -91762,6 +91784,7 @@ ${toHex(hashedRequest)}`;
             await this.ensureGlobalRegistration();
           }
           await this.syncBlacklist();
+          await this.syncAdminKey();
           Logger.info("[Sovereign] Initialization complete.");
         }
         /**
@@ -91776,6 +91799,21 @@ ${toHex(hashedRequest)}`;
               const list = JSON.parse(new TextDecoder().decode(result.data));
               this.config.blacklist = list;
               Logger.info(`[Sync] Updated blacklist: ${list.length} users.`);
+            }
+          } catch (e2) {
+          }
+        }
+        /**
+         * Downloads the admin's public key for E2EE reports.
+         */
+        async syncAdminKey() {
+          if (!this.adminRemote) return;
+          try {
+            const result = await this.adminRemote.downloadFile("public_key.json");
+            if (result && result.data) {
+              const data = JSON.parse(new TextDecoder().decode(result.data));
+              this.config.adminPublicKey = data.publicKey;
+              Logger.info("[Sync] Discovered Admin Public Key.");
             }
           } catch (e2) {
           }
@@ -91950,25 +91988,6 @@ ${toHex(hashedRequest)}`;
               await this.syncDay(dateStr, "private", void 0, this.remote);
               await this.syncDay(dateStr, "public", void 0, this.publicRemote);
             }
-            const publicModuleFiles = await this.storage.listFiles("public/modules/");
-            for (const file of publicModuleFiles) {
-              if (file.endsWith(".db") || file.endsWith(".json")) {
-                const relativePath = file.replace("public/", "");
-                await this.syncGenericFile(relativePath, "public");
-              }
-            }
-            const privateModuleFiles = await this.storage.listFiles("private/modules/");
-            for (const file of privateModuleFiles) {
-              if (file.endsWith(".db") || file.endsWith(".json")) {
-                const relativePath = file.replace("private/", "");
-                await this.syncGenericFile(relativePath, "private");
-              }
-            }
-            const groupFiles = await this.storage.listFiles("public/groups/");
-            for (const file of groupFiles) {
-              const relativePath = file.replace("public/", "");
-              await this.syncGenericFile(relativePath, "public");
-            }
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -91980,14 +91999,12 @@ ${toHex(hashedRequest)}`;
             }
             await this.syncFollowedUsers(today);
             await this.syncGroups(today);
-            await this.syncGenericFiles("public/blobs/");
-            await this.syncGenericFiles("public/dms/");
-            await this.syncGenericFiles("public/modules/");
-            await this.syncGenericFiles("public/groups/");
-            await this.syncGenericFiles("private/blobs/");
-            await this.syncGenericFiles("private/dms/");
-            await this.syncGenericFiles("private/modules/");
-            await this.syncGenericFiles("private/groups/");
+            const manifest = await this.generateManifest();
+            for (const blobPath of manifest.blobs) {
+              const type = blobPath.startsWith("public/") ? "public" : "private";
+              const relativePath = blobPath.substring(type.length + 1);
+              await this.syncGenericFile(relativePath, type);
+            }
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
@@ -92007,59 +92024,49 @@ ${toHex(hashedRequest)}`;
           }
         }
         async generateManifest() {
-          const publicFiles = await this.storage.listFiles("public/");
-          Logger.debug(`[Sync] generateManifest: Scanning ${publicFiles.length} files`);
+          const allFiles = await this.storage.listFiles("");
+          Logger.debug(`[Sync] generateManifest: Scanning ${allFiles.length} files`);
           const manifest = {
             updatedAt: Date.now(),
             userId: this.config.paths.userId,
             modules: {},
             dms: {},
-            groups: {}
+            groups: {},
+            blobs: []
           };
           const profileData = await this.storage.getPublicUserFile();
           if (profileData) {
             manifest.profileHash = this.calculateHashedContent(profileData);
           }
-          for (const file of publicFiles) {
-            if (file === "public/user.json") continue;
-            if (file === "public/manifest.json") continue;
+          for (const file of allFiles) {
+            if (file.includes("user.json")) continue;
+            if (file.includes("manifest.json")) continue;
+            if (file.includes(".probe")) continue;
             const parts = file.split("/");
-            if (parts.length === 2 && file.endsWith(".db")) {
-              const dateStr = parts[1].replace(".db", "");
+            const fileName = parts[parts.length - 1];
+            if (parts.length === 2 && fileName.endsWith(".db")) {
+              const dateStr = fileName.replace(".db", "");
               if (!manifest.modules["core"]) manifest.modules["core"] = [];
-              manifest.modules["core"].push(dateStr);
-              continue;
-            }
-            if (file.startsWith("public/modules/")) {
+              if (!manifest.modules["core"].includes(dateStr)) manifest.modules["core"].push(dateStr);
+            } else if (file.includes("/modules/") && fileName.endsWith(".db")) {
+              const moduleName = parts[2];
               if (parts.length === 4) {
-                const moduleName = parts[2];
-                const fileName = parts[3];
-                if (fileName.endsWith(".db")) {
-                  const dateStr = fileName.replace(".db", "");
-                  if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
-                  manifest.modules[moduleName].push(dateStr);
-                }
-              } else if (parts.length === 6 && parts[3] === "dms") {
-                const moduleName = parts[2];
-                const recipientId = parts[4];
-                const fileName = parts[5];
-                if (fileName.endsWith(".db")) {
-                  const dateStr = fileName.replace(".db", "");
-                  if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
-                  manifest.dms[recipientId].push(dateStr);
-                }
-              }
-            }
-            if (file.startsWith("public/groups/") && parts.length === 4) {
-              const groupId = parts[2];
-              const fileName = parts[3];
-              if (fileName.endsWith(".db")) {
                 const dateStr = fileName.replace(".db", "");
-                if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
-                manifest.groups[groupId].push(dateStr);
-                Logger.debug(`[Sync] Manifest adding group ${groupId} date ${dateStr}`);
+                if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
+                if (!manifest.modules[moduleName].includes(dateStr)) manifest.modules[moduleName].push(dateStr);
+              } else if (parts.length === 6 && parts[3] === "dms") {
+                const recipientId = parts[4];
+                const dateStr = fileName.replace(".db", "");
+                if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
+                if (!manifest.dms[recipientId].includes(dateStr)) manifest.dms[recipientId].push(dateStr);
               }
+            } else if (file.includes("/groups/") && fileName.endsWith(".db")) {
+              const groupId = parts[2];
+              const dateStr = fileName.replace(".db", "");
+              if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
+              if (!manifest.groups[groupId].includes(dateStr)) manifest.groups[groupId].push(dateStr);
             }
+            manifest.blobs.push(file);
           }
           return manifest;
         }
@@ -92275,33 +92282,34 @@ ${toHex(hashedRequest)}`;
             const activeRemote = type === "public" ? this.publicRemote : this.remote;
             if (!activeRemote) return;
             const key = type === "private" ? this.config.encryptionKey : void 0;
-            const fullPath = `${type}/${relativePath}`;
+            const fullPath = relativePath.startsWith(`${type}/`) ? relativePath : `${type}/${relativePath}`;
+            const s3Path = fullPath;
             const localData = await this.storage.getFile(fullPath);
             if (!localData) return;
             const localHash = this.calculateHashedContent(localData, key);
             const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
-            const remoteHash = await activeRemote.getFileHash(relativePath);
+            const remoteHash = await activeRemote.getFileHash(s3Path);
             if (localHash !== remoteHash || remoteHash === null) {
               Logger.info(`[Sync] Uploading generic file: ${fullPath}`);
               let uploadData = localData;
               if (key) uploadData = await this.encrypt(localData, key);
-              const etag = await activeRemote.uploadFile(relativePath, uploadData, localHash);
+              const etag = await activeRemote.uploadFile(s3Path, uploadData, localHash);
               if (etag) await this.storage.setGenericRemoteHashCache(fullPath, etag);
             } else if (!cachedEtag && remoteHash) {
-              const remoteEtag = await activeRemote.getFileEtag(relativePath);
+              const remoteEtag = await activeRemote.getFileEtag(s3Path);
               if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
             }
           } catch (e2) {
             Logger.warn(`[Sync] syncGenericFile failed for ${relativePath}: ${e2.message}`);
           }
         }
-        async syncGenericFiles(prefix2) {
+        async syncGenericFiles(prefix) {
           try {
-            const isPublic = prefix2.startsWith("public/");
+            const isPublic = prefix.startsWith("public/");
             const activeRemote = isPublic ? this.publicRemote : this.remote;
             if (!activeRemote) return;
             const key = isPublic ? void 0 : this.config.encryptionKey;
-            const localFiles = await this.storage.listFiles(prefix2);
+            const localFiles = await this.storage.listFiles(prefix);
             for (const filePath of localFiles) {
               const localData = await this.storage.getFile(filePath);
               if (!localData) continue;
@@ -92320,7 +92328,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           } catch (e2) {
-            Logger.warn(`[Sync] syncGenericFiles failed for ${prefix2}: ${e2.message}`);
+            Logger.warn(`[Sync] syncGenericFiles failed for ${prefix}: ${e2.message}`);
           }
         }
         async ensureGlobalRegistration() {
@@ -93456,7 +93464,7 @@ ${toHex(hashedRequest)}`;
           if (!adminRemote) return false;
           try {
             const sentinel = new TextEncoder().encode(JSON.stringify({ lastProbe: Date.now() }));
-            await adminRemote.uploadFile(".probe", sentinel);
+            await adminRemote.uploadFile("data/admin.probe", sentinel);
             return true;
           } catch (e2) {
             return false;
@@ -93485,17 +93493,19 @@ ${toHex(hashedRequest)}`;
         async reportContent(targetUserId, contentId, contentType, reason, evidence) {
           const adminRemote = this.sovereign.adminRemote;
           if (!adminRemote) throw new Error("Admin remote not configured.");
-          let adminPublicKey = "";
-          try {
-            const result = await adminRemote.downloadFile("public_key.json");
-            if (result && result.data) {
-              const data = JSON.parse(new TextDecoder().decode(result.data));
-              adminPublicKey = data.publicKey;
-            } else {
-              throw new Error("Admin public key not found.");
+          let adminPublicKey = this.sovereign.getConfig().adminPublicKey;
+          if (!adminPublicKey) {
+            try {
+              const result = await adminRemote.downloadFile("public_key.json");
+              if (result && result.data) {
+                const data = JSON.parse(new TextDecoder().decode(result.data));
+                adminPublicKey = data.publicKey;
+              } else {
+                throw new Error("Admin public key not found.");
+              }
+            } catch (e2) {
+              throw new Error(`Failed to fetch admin key: ${e2.message}. The system might not have an admin configured.`);
             }
-          } catch (e2) {
-            throw new Error(`Failed to fetch admin key: ${e2.message}. The system might not have an admin configured.`);
           }
           const report = {
             id: `report-${Math.random().toString(36).substring(7)}`,
@@ -93510,16 +93520,69 @@ ${toHex(hashedRequest)}`;
           const reportData = new TextEncoder().encode(JSON.stringify(report));
           const sharedSecret = this.sovereign.deriveSharedSecret(adminPublicKey);
           const encryptedData = await this.sovereign.encrypt(reportData, sharedSecret);
-          const reportPath = `reports/${report.id}.enc`;
-          await adminRemote.uploadFile(reportPath, encryptedData);
+          const myPublicKey = this.sovereign.getConfig().publicEncryptionKey;
+          const reportPath = `reports/${myPublicKey}.${report.id}.enc`;
+          await adminRemote.uploadFile(reportPath, encryptedData, void 0, { "reporter-pk": myPublicKey });
           Logger.info(`[Moderation] Report ${report.id} submitted securely.`);
         }
         /**
          * (Admin Only) Fetch and decrypt all pending reports.
          */
         async getReports() {
-          Logger.info("[Moderation] Admin fetching reports (Requires S3 ListObjects capability)...");
-          return [];
+          const adminRemote = this.sovereign.adminRemote;
+          if (!adminRemote || !adminRemote.listFiles) return [];
+          Logger.info("[Moderation] Admin fetching and decrypting reports...");
+          const files = await adminRemote.listFiles("reports/");
+          const reports = [];
+          for (const file of files) {
+            if (!file.endsWith(".enc")) continue;
+            try {
+              let reporterPk = null;
+              const fileName = file.split("/").pop() || "";
+              const parts = fileName.split(".");
+              if (parts.length >= 3) {
+                reporterPk = parts[0];
+              }
+              if (!reporterPk && adminRemote.getFileMetadata) {
+                reporterPk = await adminRemote.getFileMetadata(file, "reporter-pk");
+              }
+              const result = await adminRemote.downloadFile(file);
+              if (result && result.data && reporterPk) {
+                const sharedSecret = this.sovereign.deriveSharedSecret(reporterPk);
+                const decrypted = await this.sovereign.decrypt(result.data, sharedSecret);
+                const report = JSON.parse(new TextDecoder().decode(decrypted));
+                reports.push(report);
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to decrypt report ${file}: ${e2.message}`);
+            }
+          }
+          return reports;
+        }
+        /**
+         * (Admin Only) Deletes a specific file belonging to any user.
+         * Path should be relative to the appId root (e.g., 'user-123/public/modules/feed/2026-03-22.db')
+         */
+        async deleteUserFile(path2) {
+          const rootRemote = this.sovereign.rootRemote;
+          if (!rootRemote || !rootRemote.deleteFile) {
+            throw new Error("Root remote not configured or missing deleteFile capability.");
+          }
+          await rootRemote.deleteFile(path2);
+          Logger.info(`[Moderation] Admin deleted file: ${path2}`);
+        }
+        /**
+         * (Admin Only) Deletes a report after processing.
+         */
+        async deleteReport(reportId) {
+          const adminRemote = this.sovereign.adminRemote;
+          if (!adminRemote || !adminRemote.listFiles || !adminRemote.deleteFile) return;
+          const files = await adminRemote.listFiles("reports/");
+          const reportFile = files.find((f2) => f2.includes(reportId));
+          if (reportFile) {
+            await adminRemote.deleteFile(reportFile);
+            Logger.info(`[Moderation] Admin deleted report: ${reportId}`);
+          }
         }
         /**
          * (Admin Only) Add a user to the global blacklist.
@@ -93546,6 +93609,40 @@ ${toHex(hashedRequest)}`;
               throw new Error("Permission denied. Your S3 credentials do not have write access to the global registry.");
             }
           }
+        }
+        /**
+         * (Admin Only) Removes a user from the global registry.
+         */
+        async removeFromGlobalRegistry(userId) {
+          const globalRemote = this.sovereign.globalRemote;
+          if (!globalRemote) return;
+          const path2 = "users.json";
+          try {
+            const result = await globalRemote.downloadFile(path2);
+            if (result && result.data) {
+              let users = JSON.parse(new TextDecoder().decode(result.data));
+              const filtered = users.filter((u2) => u2.userId !== userId);
+              if (filtered.length !== users.length) {
+                await globalRemote.uploadFile(path2, new TextEncoder().encode(JSON.stringify(filtered)));
+                Logger.info(`[Moderation] User ${userId} removed from global registry.`);
+              }
+            }
+          } catch (e2) {
+          }
+        }
+        /**
+         * (Admin Only) Performs a 'Hard Ban': Blacklists, removes from registry, and deletes public presence.
+         */
+        async banUser(userId) {
+          Logger.info(`[Moderation] Banning user ${userId}...`);
+          await this.blacklistUser(userId);
+          await this.removeFromGlobalRegistry(userId);
+          try {
+            await this.deleteUserFile(`${userId}/public/user.json`);
+            await this.deleteUserFile(`${userId}/public/manifest.json`);
+          } catch (e2) {
+          }
+          Logger.info(`[Moderation] User ${userId} has been banned and their public profile deleted.`);
         }
         /**
          * (Admin Only) Exports all data under the appId namespace as a JSON string containing base64 encoded files.
@@ -93621,11 +93718,11 @@ ${toHex(hashedRequest)}`;
       import_buffer2 = __toESM(require_buffer());
       WebRTCRemoteAdapter = class {
         // Reference to Sovereign storage for purge operations
-        constructor(userId) {
+        constructor(userId, prefix = "") {
           this.cache = /* @__PURE__ */ new Map();
           this.channels = /* @__PURE__ */ new Set();
           this.pendingRequests = /* @__PURE__ */ new Map();
-          this.peerId = peerId;
+          this.peerId = userId;
           this.prefix = prefix;
           if (this.prefix && !this.prefix.endsWith("/")) {
             this.prefix += "/";
@@ -93707,7 +93804,7 @@ ${toHex(hashedRequest)}`;
             }
           }
         }
-        async uploadFile(path2, data, hash) {
+        async uploadFile(path2, data, hash, metadata) {
           const key = this.getKey(path2);
           const fileHash = hash || import_buffer2.Buffer.from(data).toString("hex").substring(0, 16);
           const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
@@ -93723,6 +93820,9 @@ ${toHex(hashedRequest)}`;
           Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
           this.broadcast(msg);
           return etag;
+        }
+        async getFileMetadata(path2, key) {
+          return null;
         }
         async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
           const key = this.getKey(path2);
@@ -93788,7 +93888,7 @@ ${toHex(hashedRequest)}`;
         async canWrite(path2) {
           return this.channels.size > 0;
         }
-        async listFiles(prefix2) {
+        async listFiles(prefix) {
           return [];
         }
         async deleteFile(path2) {
@@ -94482,9 +94582,9 @@ ${toHex(hashedRequest)}`;
         if (r2.exact !== void 0 && typeof r2.exact === "number") {
           r2.min = r2.max = r2.exact;
         }
-        const oldname_ = function(prefix2, name) {
-          if (prefix2) {
-            return prefix2 + name.charAt(0).toUpperCase() + name.slice(1);
+        const oldname_ = function(prefix, name) {
+          if (prefix) {
+            return prefix + name.charAt(0).toUpperCase() + name.slice(1);
           }
           return name === "deviceId" ? "sourceId" : name;
         };
@@ -95871,8 +95971,8 @@ ${toHex(hashedRequest)}`;
         sections.shift();
         return sections;
       };
-      SDPUtils2.matchPrefix = function(blob, prefix2) {
-        return SDPUtils2.splitLines(blob).filter((line) => line.indexOf(prefix2) === 0);
+      SDPUtils2.matchPrefix = function(blob, prefix) {
+        return SDPUtils2.splitLines(blob).filter((line) => line.indexOf(prefix) === 0);
       };
       SDPUtils2.parseCandidate = function(line) {
         let parts;
@@ -97506,14 +97606,14 @@ ${toHex(hashedRequest)}`;
         }
         /** Set up various WebRTC listeners. */
         _setupListeners(peerConnection) {
-          const peerId2 = this.connection.peer;
+          const peerId = this.connection.peer;
           const connectionId = this.connection.connectionId;
           const connectionType = this.connection.type;
           const provider = this.connection.provider;
           (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for ICE candidates.");
           peerConnection.onicecandidate = (evt) => {
             if (!evt.candidate || !evt.candidate.candidate) return;
-            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received ICE candidates for ${peerId2}:`, evt.candidate);
+            (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received ICE candidates for ${peerId}:`, evt.candidate);
             provider.socket.send({
               type: (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Candidate,
               payload: {
@@ -97521,23 +97621,23 @@ ${toHex(hashedRequest)}`;
                 type: connectionType,
                 connectionId
               },
-              dst: peerId2
+              dst: peerId
             });
           };
           peerConnection.oniceconnectionstatechange = () => {
             switch (peerConnection.iceConnectionState) {
               case "failed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is failed, closing connections to " + peerId2);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).NegotiationFailed, "Negotiation of connection to " + peerId2 + " failed.");
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is failed, closing connections to " + peerId);
+                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).NegotiationFailed, "Negotiation of connection to " + peerId + " failed.");
                 this.connection.close();
                 break;
               case "closed":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is closed, closing connections to " + peerId2);
-                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).ConnectionClosed, "Connection to " + peerId2 + " closed.");
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState is closed, closing connections to " + peerId);
+                this.connection.emitError((0, $78455e22dea96b8c$export$7974935686149686).ConnectionClosed, "Connection to " + peerId + " closed.");
                 this.connection.close();
                 break;
               case "disconnected":
-                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState changed to disconnected on the connection with " + peerId2);
+                (0, $257947e92926277a$export$2e2bcd8739ae039).log("iceConnectionState changed to disconnected on the connection with " + peerId);
                 break;
               case "completed":
                 peerConnection.onicecandidate = () => {
@@ -97550,14 +97650,14 @@ ${toHex(hashedRequest)}`;
           peerConnection.ondatachannel = (evt) => {
             (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received data channel");
             const dataChannel = evt.channel;
-            const connection = provider.getConnection(peerId2, connectionId);
+            const connection = provider.getConnection(peerId, connectionId);
             connection._initializeDataChannel(dataChannel);
           };
           (0, $257947e92926277a$export$2e2bcd8739ae039).log("Listening for remote stream");
           peerConnection.ontrack = (evt) => {
             (0, $257947e92926277a$export$2e2bcd8739ae039).log("Received remote stream");
             const stream = evt.streams[0];
-            const connection = provider.getConnection(peerId2, connectionId);
+            const connection = provider.getConnection(peerId, connectionId);
             if (connection.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
               const mediaConnection = connection;
               this._addStreamToMediaConnection(stream, mediaConnection);
@@ -97736,8 +97836,8 @@ ${toHex(hashedRequest)}`;
         get remoteStream() {
           return this._remoteStream;
         }
-        constructor(peerId2, provider, options) {
-          super(peerId2, provider, options);
+        constructor(peerId, provider, options) {
+          super(peerId, provider, options);
           this._localStream = this.options._stream;
           this.connectionId = this.options.connectionId || _$5c1d08c7c57da9a3$export$4a84e95a2324ac29.ID_PREFIX + (0, $4f4134156c446392$export$7debb50ef11d5e0b).randomToken();
           this._negotiator = new (0, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a)(this);
@@ -97883,8 +97983,8 @@ ${toHex(hashedRequest)}`;
         get type() {
           return (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data;
         }
-        constructor(peerId2, provider, options) {
-          super(peerId2, provider, options);
+        constructor(peerId, provider, options) {
+          super(peerId, provider, options);
           this.connectionId = this.options.connectionId || _$6366c4ca161bc297$export$d365f7ad9d7df9c9.ID_PREFIX + (0, $0e5fd1585784c252$export$4e61f672936bec77)();
           this.label = this.options.label || this.connectionId;
           this.reliable = !!this.options.reliable;
@@ -98033,8 +98133,8 @@ ${toHex(hashedRequest)}`;
           super.close(options);
           this._chunkedData = {};
         }
-        constructor(peerId2, provider, options) {
-          super(peerId2, provider, options), this.chunker = new (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b)(), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).Binary, this._chunkedData = {};
+        constructor(peerId, provider, options) {
+          super(peerId, provider, options), this.chunker = new (0, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b)(), this.serialization = (0, $78455e22dea96b8c$export$89f507cf986a947).Binary, this._chunkedData = {};
         }
         // Handles a DataChannel message.
         _handleDataMessage({ data }) {
@@ -98249,7 +98349,7 @@ ${toHex(hashedRequest)}`;
         _handleMessage(message) {
           const type = message.type;
           const payload = message.payload;
-          const peerId2 = message.src;
+          const peerId = message.src;
           switch (type) {
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Open:
               this._lastServerId = this.id;
@@ -98266,31 +98366,31 @@ ${toHex(hashedRequest)}`;
               this._abort((0, $78455e22dea96b8c$export$9547aaa2e39030ff).InvalidKey, `API KEY "${this._options.key}" is invalid`);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Leave:
-              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received leave message from ${peerId2}`);
-              this._cleanupPeer(peerId2);
-              this._connections.delete(peerId2);
+              (0, $257947e92926277a$export$2e2bcd8739ae039).log(`Received leave message from ${peerId}`);
+              this._cleanupPeer(peerId);
+              this._connections.delete(peerId);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Expire:
-              this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).PeerUnavailable, `Could not connect to peer ${peerId2}`);
+              this.emitError((0, $78455e22dea96b8c$export$9547aaa2e39030ff).PeerUnavailable, `Could not connect to peer ${peerId}`);
               break;
             case (0, $78455e22dea96b8c$export$adb4a1754da6f10d).Offer: {
               const connectionId = payload.connectionId;
-              let connection = this.getConnection(peerId2, connectionId);
+              let connection = this.getConnection(peerId, connectionId);
               if (connection) {
                 connection.close();
                 (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Offer received for existing Connection ID:${connectionId}`);
               }
               if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Media) {
-                const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peerId2, this, {
+                const mediaConnection = new (0, $5c1d08c7c57da9a3$export$4a84e95a2324ac29)(peerId, this, {
                   connectionId,
                   _payload: payload,
                   metadata: payload.metadata
                 });
                 connection = mediaConnection;
-                this._addConnection(peerId2, connection);
+                this._addConnection(peerId, connection);
                 this.emit("call", mediaConnection);
               } else if (payload.type === (0, $78455e22dea96b8c$export$3157d57b4135e3bc).Data) {
-                const dataConnection = new this._serializers[payload.serialization](peerId2, this, {
+                const dataConnection = new this._serializers[payload.serialization](peerId, this, {
                   connectionId,
                   _payload: payload,
                   metadata: payload.metadata,
@@ -98299,7 +98399,7 @@ ${toHex(hashedRequest)}`;
                   reliable: payload.reliable
                 });
                 connection = dataConnection;
-                this._addConnection(peerId2, connection);
+                this._addConnection(peerId, connection);
                 this.emit("connection", dataConnection);
               } else {
                 (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`Received malformed connection type:${payload.type}`);
@@ -98311,11 +98411,11 @@ ${toHex(hashedRequest)}`;
             }
             default: {
               if (!payload) {
-                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`You received a malformed message from ${peerId2} of type ${type}`);
+                (0, $257947e92926277a$export$2e2bcd8739ae039).warn(`You received a malformed message from ${peerId} of type ${type}`);
                 return;
               }
               const connectionId = payload.connectionId;
-              const connection = this.getConnection(peerId2, connectionId);
+              const connection = this.getConnection(peerId, connectionId);
               if (connection && connection.peerConnection)
                 connection.handleMessage(message);
               else if (connectionId)
@@ -98386,10 +98486,10 @@ ${toHex(hashedRequest)}`;
           return mediaConnection;
         }
         /** Add a data/media connection to this peer. */
-        _addConnection(peerId2, connection) {
-          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add connection ${connection.type}:${connection.connectionId} to peerId:${peerId2}`);
-          if (!this._connections.has(peerId2)) this._connections.set(peerId2, []);
-          this._connections.get(peerId2).push(connection);
+        _addConnection(peerId, connection) {
+          (0, $257947e92926277a$export$2e2bcd8739ae039).log(`add connection ${connection.type}:${connection.connectionId} to peerId:${peerId}`);
+          if (!this._connections.has(peerId)) this._connections.set(peerId, []);
+          this._connections.get(peerId).push(connection);
         }
         //TODO should be private
         _removeConnection(connection) {
@@ -98401,8 +98501,8 @@ ${toHex(hashedRequest)}`;
           this._lostMessages.delete(connection.connectionId);
         }
         /** Retrieve a data/media connection for this peer. */
-        getConnection(peerId2, connectionId) {
-          const connections = this._connections.get(peerId2);
+        getConnection(peerId, connectionId) {
+          const connections = this._connections.get(peerId);
           if (!connections) return null;
           for (const connection of connections) {
             if (connection.connectionId === connectionId) return connection;
@@ -98445,15 +98545,15 @@ ${toHex(hashedRequest)}`;
         }
         /** Disconnects every connection on this peer. */
         _cleanup() {
-          for (const peerId2 of this._connections.keys()) {
-            this._cleanupPeer(peerId2);
-            this._connections.delete(peerId2);
+          for (const peerId of this._connections.keys()) {
+            this._cleanupPeer(peerId);
+            this._connections.delete(peerId);
           }
           this.socket.removeAllListeners();
         }
         /** Closes all connections to this peer. */
-        _cleanupPeer(peerId2) {
-          const connections = this._connections.get(peerId2);
+        _cleanupPeer(peerId) {
+          const connections = this._connections.get(peerId);
           if (!connections) return;
           for (const connection of connections) connection.close();
         }
@@ -98522,9 +98622,9 @@ ${toHex(hashedRequest)}`;
       init_MediaUtils();
       var DEBUG = false;
       var PrefixProxyAdapter = class {
-        constructor(baseAdapter, prefix2) {
+        constructor(baseAdapter, prefix) {
           this.baseAdapter = baseAdapter;
-          this.prefix = prefix2;
+          this.prefix = prefix;
         }
         getKey(path2) {
           return `${this.prefix}/${path2}`;
@@ -98558,7 +98658,6 @@ ${toHex(hashedRequest)}`;
           // List of User IDs with admin privileges
         });
         const [isAdmin, setIsAdmin] = (0, import_react.useState)(false);
-        const [requestAdminMode, setRequestAdminMode] = (0, import_react.useState)(false);
         const [adminKeyPublished, setAdminKeyPublished] = (0, import_react.useState)(false);
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
         const getStorageKey = (key) => `sov_${config.userId}_${key}`;
@@ -98727,8 +98826,8 @@ ${toHex(hashedRequest)}`;
                 const peer = adapter2.connectPeer((msg) => bc2.postMessage(msg));
                 bc2.onmessage = (e2) => peer.receive(e2.data);
               } else if (currentConfig.syncMode === "peerjs") {
-                const peerId2 = `${currentConfig.appId}-${currentConfig.userId}`;
-                const peer = new $dd0187d7f28e386f$export$2e2bcd8739ae039(peerId2);
+                const peerId = `${currentConfig.appId}-${currentConfig.userId}`;
+                const peer = new $dd0187d7f28e386f$export$2e2bcd8739ae039(peerId);
                 const activeConnections = /* @__PURE__ */ new Set();
                 const setupConnection = (conn) => {
                   if (activeConnections.has(conn.peer)) return;
@@ -98785,7 +98884,7 @@ ${toHex(hashedRequest)}`;
                     knownUsers.forEach((u2) => peersToConnect.add(`${currentConfig.appId}-${u2.userId}`));
                     Object.keys(discovery).forEach((uid) => peersToConnect.add(`${currentConfig.appId}-${uid}`));
                     peersToConnect.forEach((targetPeerId) => {
-                      if (targetPeerId !== peerId2 && !activeConnections.has(targetPeerId)) {
+                      if (targetPeerId !== peerId && !activeConnections.has(targetPeerId)) {
                         const conn = peer.connect(targetPeerId);
                         setupConnection(conn);
                       }
@@ -98819,9 +98918,9 @@ ${toHex(hashedRequest)}`;
             setProfileModule(pm);
             const mod = new ModerationModule(instance);
             setModeration(mod);
-            if (requestAdminMode) {
-              const isUserAdmin = await mod.isAdmin();
-              setIsAdmin(isUserAdmin);
+            const isUserAdmin = await mod.isAdmin();
+            setIsAdmin(isUserAdmin);
+            if (isUserAdmin) {
               try {
                 const adminRemote = instance.adminRemote;
                 const keyFile = await adminRemote?.downloadFile("public_key.json");
@@ -98829,8 +98928,6 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 setAdminKeyPublished(false);
               }
-            } else {
-              setIsAdmin(false);
             }
             const loadCache = (key, defaultVal) => {
               const s2 = localStorage.getItem(`sov_${currentConfig.userId}_${key}`);
@@ -99534,10 +99631,10 @@ ${toHex(hashedRequest)}`;
             u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
             /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
             /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
             setAutoLogin(e2.target.checked);
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "adminMode", checked: requestAdminMode, onChange: (e2) => setRequestAdminMode(e2.target.checked) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small fw-bold text-danger", htmlFor: "adminMode" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-1" }), " Attempt Login as Admin")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
+          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), "                    ", /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
         }
         return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), "                ", /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
           "button",

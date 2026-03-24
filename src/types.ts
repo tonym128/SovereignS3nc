@@ -32,6 +32,7 @@ export interface SovereignConfig {
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
   autoFollowDiscoveredUsers?: boolean; // Default: true (set to false to disable auto-following everyone in global registry)
   blacklist?: string[]; // Global blacklist of User IDs to ignore
+  adminPublicKey?: string; // Public key of the application admin for E2EE reports
   debug?: boolean; // Enable verbose logging
 }
 
@@ -41,6 +42,7 @@ export interface SovereignManifest {
     modules: Record<string, string[]>; // moduleName -> [dateStr, ...]
     dms: Record<string, string[]>;     // recipientId -> [dateStr, ...]
     groups: Record<string, string[]>;  // groupId -> [dateStr, ...]
+    blobs: string[];                   // List of blob hashes or paths
     profileHash?: string;
 }
 

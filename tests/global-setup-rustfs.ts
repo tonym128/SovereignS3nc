@@ -5,8 +5,8 @@ async function globalSetup() {
   try {
     // We use bash to run the devrustfs script which handles stopping and starting everything
     execSync('bash devrustfs.sh dev', { stdio: 'inherit' });
-    // Give it a few seconds to be fully ready
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    // Give it more time to be fully ready (Metadata/IAM init)
+    await new Promise(resolve => setTimeout(resolve, 10000));
     console.log('--- Global Setup (RustFS): Dev Environment Ready ---');
   } catch (error) {
     console.error('--- Global Setup (RustFS): Failed to start dev environment ---', error);

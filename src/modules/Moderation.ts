@@ -25,9 +25,10 @@ export class ModerationModule {
         if (!adminRemote) return false;
         
         try {
-            // Probe: Try to write a small sentinel file to verify write access
+            // Probe: Try to write to the protected 'data' subfolder
+            // Regular users only have access to 'reports/' and the public key
             const sentinel = new TextEncoder().encode(JSON.stringify({ lastProbe: Date.now() }));
-            await adminRemote.uploadFile('.probe', sentinel);
+            await adminRemote.uploadFile('data/admin.probe', sentinel);
             return true;
         } catch (e: any) {
             // 403 Forbidden or 405 Method Not Allowed means we are NOT an admin
@@ -60,18 +61,21 @@ export class ModerationModule {
         const adminRemote = (this.sovereign as any).adminRemote;
         if (!adminRemote) throw new Error("Admin remote not configured.");
 
-        // 1. Fetch Admin Public Key
-        let adminPublicKey = '';
-        try {
-            const result = await adminRemote.downloadFile('public_key.json');
-            if (result && result.data) {
-                const data = JSON.parse(new TextDecoder().decode(result.data));
-                adminPublicKey = data.publicKey;
-            } else {
-                throw new Error("Admin public key not found.");
+        // 1. Get Admin Public Key (Try cache first, then S3)
+        let adminPublicKey = this.sovereign.getConfig().adminPublicKey;
+        
+        if (!adminPublicKey) {
+            try {
+                const result = await adminRemote.downloadFile('public_key.json');
+                if (result && result.data) {
+                    const data = JSON.parse(new TextDecoder().decode(result.data));
+                    adminPublicKey = data.publicKey;
+                } else {
+                    throw new Error("Admin public key not found.");
+                }
+            } catch (e: any) {
+                throw new Error(`Failed to fetch admin key: ${e.message}. The system might not have an admin configured.`);
             }
-        } catch (e: any) {
-            throw new Error(`Failed to fetch admin key: ${e.message}. The system might not have an admin configured.`);
         }
 
         // 2. Prepare Report
@@ -89,12 +93,15 @@ export class ModerationModule {
         const reportData = new TextEncoder().encode(JSON.stringify(report));
 
         // 3. Encrypt Report for Admin
-        const sharedSecret = this.sovereign.deriveSharedSecret(adminPublicKey);
+        const sharedSecret = this.sovereign.deriveSharedSecret(adminPublicKey!);
         const encryptedData = await this.sovereign.encrypt(reportData, sharedSecret);
 
         // 4. Upload to Admin Remote
-        const reportPath = `reports/${report.id}.enc`;
-        await adminRemote.uploadFile(reportPath, encryptedData);
+        const myPublicKey = this.sovereign.getConfig().publicEncryptionKey;
+        // We include PK in filename as fallback for metadata-stripped backends (like RustFS)
+        const reportPath = `reports/${myPublicKey}.${report.id}.enc`;
+        
+        await adminRemote.uploadFile(reportPath, encryptedData, undefined, { 'reporter-pk': myPublicKey! });
         Logger.info(`[Moderation] Report ${report.id} submitted securely.`);
     }
 
@@ -102,12 +109,73 @@ export class ModerationModule {
      * (Admin Only) Fetch and decrypt all pending reports.
      */
     async getReports(): Promise<Report[]> {
-        // Since we don't have a listFiles in S3RemoteAdapter yet for arbitrary prefixes cleanly,
-        // we might have to rely on a manifest or an external crawler.
-        // For a true S3 implementation, you'd listObjectsV2 on `appId/admin/reports/`.
-        // We will simulate returning empty for now unless we implement listFiles on the remote adapter.
-        Logger.info('[Moderation] Admin fetching reports (Requires S3 ListObjects capability)...');
-        return []; 
+        const adminRemote = (this.sovereign as any).adminRemote;
+        if (!adminRemote || !adminRemote.listFiles) return [];
+
+        Logger.info('[Moderation] Admin fetching and decrypting reports...');
+        const files = await adminRemote.listFiles('reports/');
+        const reports: Report[] = [];
+
+        for (const file of files) {
+            if (!file.endsWith('.enc')) continue;
+            try {
+                // Try to get reporter PK from filename first (most reliable on RustFS)
+                // path is reports/PUBLIC_KEY.report-id.enc
+                let reporterPk: string | null = null;
+                const fileName = file.split('/').pop() || '';
+                const parts = fileName.split('.');
+                if (parts.length >= 3) {
+                    reporterPk = parts[0];
+                }
+
+                // Fallback to metadata if filename didn't work
+                if (!reporterPk && adminRemote.getFileMetadata) {
+                    reporterPk = await adminRemote.getFileMetadata(file, 'reporter-pk');
+                }
+                
+                const result = await adminRemote.downloadFile(file);
+                
+                if (result && result.data && reporterPk) {
+                    const sharedSecret = this.sovereign.deriveSharedSecret(reporterPk);
+                    const decrypted = await this.sovereign.decrypt(result.data, sharedSecret);
+                    const report: Report = JSON.parse(new TextDecoder().decode(decrypted));
+                    reports.push(report);
+                }
+            } catch (e: any) {
+                Logger.warn(`[Moderation] Failed to decrypt report ${file}: ${e.message}`);
+            }
+        }
+        return reports; 
+    }
+
+    /**
+     * (Admin Only) Deletes a specific file belonging to any user.
+     * Path should be relative to the appId root (e.g., 'user-123/public/modules/feed/2026-03-22.db')
+     */
+    async deleteUserFile(path: string) {
+        const rootRemote = (this.sovereign as any).rootRemote;
+        if (!rootRemote || !rootRemote.deleteFile) {
+            throw new Error("Root remote not configured or missing deleteFile capability.");
+        }
+        await rootRemote.deleteFile(path);
+        Logger.info(`[Moderation] Admin deleted file: ${path}`);
+    }
+
+    /**
+     * (Admin Only) Deletes a report after processing.
+     */
+    async deleteReport(reportId: string) {
+        const adminRemote = (this.sovereign as any).adminRemote;
+        if (!adminRemote || !adminRemote.listFiles || !adminRemote.deleteFile) return;
+
+        // Find the encrypted report file (it contains the PK in the name)
+        const files = await adminRemote.listFiles('reports/');
+        const reportFile = files.find((f: string) => f.includes(reportId));
+        
+        if (reportFile) {
+            await adminRemote.deleteFile(reportFile);
+            Logger.info(`[Moderation] Admin deleted report: ${reportId}`);
+        }
     }
 
     /**
@@ -137,6 +205,44 @@ export class ModerationModule {
                 throw new Error('Permission denied. Your S3 credentials do not have write access to the global registry.');
             }
         }
+    }
+
+    /**
+     * (Admin Only) Removes a user from the global registry.
+     */
+    async removeFromGlobalRegistry(userId: string) {
+        const globalRemote = (this.sovereign as any).globalRemote;
+        if (!globalRemote) return;
+
+        const path = 'users.json';
+        try {
+            const result = await globalRemote.downloadFile(path);
+            if (result && result.data) {
+                let users: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
+                const filtered = users.filter(u => u.userId !== userId);
+                if (filtered.length !== users.length) {
+                    await globalRemote.uploadFile(path, new TextEncoder().encode(JSON.stringify(filtered)));
+                    Logger.info(`[Moderation] User ${userId} removed from global registry.`);
+                }
+            }
+        } catch (e) {}
+    }
+
+    /**
+     * (Admin Only) Performs a 'Hard Ban': Blacklists, removes from registry, and deletes public presence.
+     */
+    async banUser(userId: string) {
+        Logger.info(`[Moderation] Banning user ${userId}...`);
+        await this.blacklistUser(userId);
+        await this.removeFromGlobalRegistry(userId);
+        
+        // Delete public profile and manifest to make content hard to find
+        try {
+            await this.deleteUserFile(`${userId}/public/user.json`);
+            await this.deleteUserFile(`${userId}/public/manifest.json`);
+        } catch (e) {}
+        
+        Logger.info(`[Moderation] User ${userId} has been banned and their public profile deleted.`);
     }
 
     /**
