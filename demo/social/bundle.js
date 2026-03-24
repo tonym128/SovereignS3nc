@@ -99270,6 +99270,13 @@ ${toHex(hashedRequest)}`;
           }
           const groupsList = await activeSov.getGroups();
           setGroups(groupsList);
+          if (isAdmin && moderation) {
+            try {
+              const pendingReports = await moderation.getReports();
+              setReports(pendingReports);
+            } catch (e2) {
+            }
+          }
           if (selectedGroup) {
             const updated = groupsList.find((g2) => g2.id === selectedGroup.id);
             if (updated) setSelectedGroup(updated);
@@ -99776,7 +99783,13 @@ Then provide the user with the generated credentials.`, "Provisioning Instructio
               }
             }
           }, "BURN IT TO THE GROUND");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-fire me-2" }), " BURN IT TO THE GROUND")))))), /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mt-2 mb-3" }, "Abuse Reports"), /* @__PURE__ */ import_react.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger", onClick: () => {
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-fire me-2" }), " BURN IT TO THE GROUND")))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mt-2 mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0 flex-grow-1" }, "Abuse Reports"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary", onClick: async () => {
+          if (moderation) {
+            const r2 = await moderation.getReports();
+            setReports(r2);
+            showAlert(`Fetched ${r2.length} reports.`);
+          }
+        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Refresh")), /* @__PURE__ */ import_react.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger", onClick: () => {
           if (moderation) {
             moderation.blacklistUser(report.targetUserId).catch((e2) => showAlert("Error: " + e2.message));
           }

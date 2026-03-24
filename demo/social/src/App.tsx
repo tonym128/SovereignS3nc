@@ -747,6 +747,13 @@ const App = () => {
         const groupsList = await activeSov.getGroups();
         setGroups(groupsList);
 
+        if (isAdmin && moderation) {
+            try {
+                const pendingReports = await moderation.getReports();
+                setReports(pendingReports);
+            } catch (e) {}
+        }
+
         // Refresh selected group from list to get updated member statuses
         if (selectedGroup) {
             const updated = groupsList.find(g => g.id === selectedGroup.id);
@@ -1890,7 +1897,18 @@ const App = () => {
                                     </div>
                                 </div>
 
-                                <h5 className="fw-bold mt-2 mb-3">Abuse Reports</h5>
+                                <div className="d-flex align-items-center mt-2 mb-3">
+                                    <h5 className="fw-bold mb-0 flex-grow-1">Abuse Reports</h5>
+                                    <button className="btn btn-sm btn-outline-secondary" onClick={async () => {
+                                        if (moderation) {
+                                            const r = await moderation.getReports();
+                                            setReports(r);
+                                            showAlert(`Fetched ${r.length} reports.`);
+                                        }
+                                    }}>
+                                        <i className="bi bi-arrow-repeat me-1"></i> Refresh
+                                    </button>
+                                </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover align-middle">
                                         <thead className="table-light">
