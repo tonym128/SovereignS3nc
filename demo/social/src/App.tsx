@@ -63,6 +63,7 @@ const App = () => {
     const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
     const [moderation, setModeration] = useState<ModerationModule | null>(null);
     const [reports, setReports] = useState<Report[]>([]);
+    const [previewPost, setPreviewPost] = useState<Post | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
     const [following, setFollowing] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<any[]>([]);
@@ -1933,11 +1934,18 @@ const App = () => {
                                                         <td><span className="badge bg-info">{report.contentType}</span></td>
                                                         <td className="small">{report.reason}</td>
                                                         <td>
-                                                            <button className="btn btn-sm btn-danger" onClick={() => {
-                                                                if (moderation) {
-                                                                    (moderation as any).blacklistUser(report.targetUserId).catch((e: any) => showAlert('Error: ' + e.message));
-                                                                }
-                                                            }}>Ban</button>
+                                                            <div className="d-flex gap-2">
+                                                                {report.evidence && (
+                                                                    <button className="btn btn-sm btn-outline-primary" onClick={() => setPreviewPost(report.evidence)}>
+                                                                        <i className="bi bi-eye"></i> View
+                                                                    </button>
+                                                                )}
+                                                                <button className="btn btn-sm btn-danger" onClick={() => {
+                                                                    if (moderation) {
+                                                                        (moderation as any).blacklistUser(report.targetUserId).catch((e: any) => showAlert('Error: ' + e.message));
+                                                                    }
+                                                                }}>Ban</button>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))
@@ -1966,6 +1974,25 @@ const App = () => {
                 onLeave={handleLeaveGroup}
                 currentUserId={config.userId}
             />
+
+            {previewPost && (
+                <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 2000 }}>
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content shadow-lg border-0 rounded-4">
+                            <div className="modal-header border-0 pb-0">
+                                <h5 className="modal-title fw-bold text-primary">Reported Content Preview</h5>
+                                <button type="button" className="btn-close" onClick={() => setPreviewPost(null)}></button>
+                            </div>
+                            <div className="modal-body py-4">
+                                <PostItem post={previewPost} allPosts={[]} />
+                            </div>
+                            <div className="modal-footer border-0 pt-0">
+                                <button type="button" className="btn btn-secondary rounded-pill px-4" onClick={() => setPreviewPost(null)}>Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
