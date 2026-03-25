@@ -130,7 +130,7 @@ describe('FeedModule Unit Tests', () => {
 
     describe('Group Functionality', () => {
         const groupId = 'group1';
-        const sharedKey = 'shared-secret-key';
+        const sharedKey = '0'.repeat(64);
 
         beforeEach(async () => {
             const group = {

@@ -59,7 +59,7 @@ describe('MessagingModule Unit Tests', () => {
         await sov.init();
         
         // Mock core primitives
-        jest.spyOn(sov, 'deriveSharedSecret').mockReturnValue(new Uint8Array(32));
+        jest.spyOn(sov, 'deriveSharedSecret').mockReturnValue('0'.repeat(64));
         jest.spyOn(sov, 'encrypt').mockResolvedValue(new Uint8Array([1, 2, 3]));
         jest.spyOn(sov, 'decrypt').mockResolvedValue(new TextEncoder().encode(JSON.stringify({
             id: 'msg1', content: 'hello', timestamp: Date.now(), senderId: 'bob', recipientId: 'alice'

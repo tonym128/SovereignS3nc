@@ -41,6 +41,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     } else {
         this.prefix = '';
     }
+    Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
   }
 
   async uploadFile(path: string, data: Uint8Array, providedHash?: string, customMetadata?: Record<string, string>): Promise<string | null> {
@@ -119,7 +120,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         Logger.debug(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e.name} - ${e.message}`);
         
         if (statusCode === 403) {
-            Logger.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
+            Logger.debug(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist yet.`);
             return null;
         }
         if (e.name === 'NoSuchKey' || statusCode === 404) {

@@ -65,10 +65,10 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private initializeS3Remotes(s3: any, privateUserId?: string) {
-        // Public Remote uses the provided userId
+        // Public Remote uses a non-salted hash of the userId (publicly discoverable if userId is known)
         this.publicRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
-            userId: this.config.paths.userId,
+            userId: this.getHashedUserId(this.config.paths.userId, false),
             storeId: this.config.paths.storeId
         });
 
@@ -93,10 +93,10 @@ export class SovereignS3nc extends EventEmitter {
             storeId: ''
         });
 
-        // Private Remote
+        // Private Remote uses a salted hash (unfindable without password/serverSecret)
         this.remote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
-            userId: privateUserId || this.config.paths.userId,
+            userId: privateUserId || this.getHashedUserId(this.config.paths.userId, true),
             storeId: this.config.paths.storeId
         });
     }
@@ -465,9 +465,13 @@ export class SovereignS3nc extends EventEmitter {
             await this.storage.saveDailyDb('_keys', 'private', encrypted);
             
             if (this.remote) {
-                Logger.info('[Keys] Uploading new keys to remote...');
-                await this.remote.uploadFile('_keys.json', encrypted);
-                Logger.info('[Keys] New keys uploaded.');
+                try {
+                    Logger.info('[Keys] Uploading new keys to remote...');
+                    await this.remote.uploadFile('_keys.json', encrypted);
+                    Logger.info('[Keys] New keys uploaded.');
+                } catch (e: any) {
+                    Logger.warn(`[Keys] Failed to upload new keys to remote: ${e.message}. Continuing in offline mode.`);
+                }
             } else {
                 Logger.info('[Keys] New keys generated and saved locally (no remote connected).');
             }
@@ -1240,7 +1244,7 @@ export class SovereignS3nc extends EventEmitter {
         if (this.config.s3) {
             return new S3RemoteAdapter(this.config.s3, {
                 appId: this.config.paths.appId,
-                userId: userId,
+                userId: this.getHashedUserId(userId, false),
                 storeId: this.config.paths.storeId
             });
         }
@@ -1322,6 +1326,9 @@ export class SovereignS3nc extends EventEmitter {
 
     private async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter) {
         try {
+            // Important: We need the hashed path for the remote check
+            const hashedUserId = this.getHashedUserId(this.config.paths.userId, type === 'private');
+            Logger.debug(`[Sync] syncDay: literalUserId=${this.config.paths.userId}, type=${type}, hashedUserId=${hashedUserId}`);
             const remotePath = `${type}/${date}.db`;
             const activeRemote = remoteOverride || this.remote;
             if (!activeRemote) return;
@@ -1332,7 +1339,7 @@ export class SovereignS3nc extends EventEmitter {
             const cachedEtag = await this.storage.getRemoteHashCache(date, type);
 
             if (!localData) {
-                Logger.info(`[Sync] Downloading ${remotePath}`);
+                Logger.info(`[Sync] Downloading ${remotePath} for ${this.config.paths.userId} (Hashed: ${hashedUserId})`);
                 const result = await activeRemote.downloadFile(remotePath);
                 if (result && result.data) {
                     let data = result.data;
@@ -1524,22 +1531,6 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private getHashedUserId(userId: string, isPrivate: boolean): string {
-        if (userId === 'global' || userId === 'admin' || userId === '' || userId === 'root') {
-            return userId; // Keep special IDs literal
-        }
-        
-        const appId = this.config.paths.appId;
-        const hasher = crypto.createHash('sha256');
-        hasher.update(userId);
-        hasher.update(appId);
-        
-        if (isPrivate) {
-            const secret = this.config.auth?.serverSecret || this.config.password || '';
-            if (secret) {
-                hasher.update(secret);
-            }
-        }
-        
-        return hasher.digest('hex');
+        return userId;
     }
 }

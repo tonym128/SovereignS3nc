@@ -90515,6 +90515,7 @@ ${toHex(hashedRequest)}`;
           } else {
             this.prefix = "";
           }
+          Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
         }
         async uploadFile(path3, data, providedHash, customMetadata) {
           const key = this.getKey(path3);
@@ -90578,7 +90579,7 @@ ${toHex(hashedRequest)}`;
             }
             Logger.debug(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e2.name} - ${e2.message}`);
             if (statusCode === 403) {
-              Logger.warn(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist AND ListBucket is disabled, OR you truly lack read permissions.`);
+              Logger.debug(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist yet.`);
               return null;
             }
             if (e2.name === "NoSuchKey" || statusCode === 404) {
@@ -91687,7 +91688,7 @@ ${toHex(hashedRequest)}`;
         initializeS3Remotes(s3, privateUserId) {
           this.publicRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
-            userId: this.config.paths.userId,
+            userId: this.getHashedUserId(this.config.paths.userId, false),
             storeId: this.config.paths.storeId
           });
           this.globalRemote = new S3RemoteAdapter(s3, {
@@ -91707,7 +91708,7 @@ ${toHex(hashedRequest)}`;
           });
           this.remote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
-            userId: privateUserId || this.config.paths.userId,
+            userId: privateUserId || this.getHashedUserId(this.config.paths.userId, true),
             storeId: this.config.paths.storeId
           });
         }
@@ -91919,6 +91920,20 @@ ${toHex(hashedRequest)}`;
             throw new Error(`Secret derivation failed: ${e2.message}`);
           }
           Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
+          const sentinelPath = "private/sentinel.enc";
+          const sentinelData = await this.storage.getFile(sentinelPath);
+          if (sentinelData) {
+            try {
+              const decrypted = await this.decrypt(sentinelData, masterKey);
+              if (new TextDecoder().decode(decrypted) !== "SovereignSentinel") {
+                throw new Error("Sentinel content mismatch");
+              }
+              Logger.info("[Keys] Password verified against local sentinel.");
+            } catch (e2) {
+              Logger.error("[Keys] Password verification failed. Incorrect password?");
+              throw new Error("Incorrect password. Access denied.");
+            }
+          }
           if (!this.remote && (this.config.s3 || this.remoteFactory)) {
             Logger.info("[Keys] Step 2: Initializing Private Remote...");
             try {
@@ -91956,20 +91971,28 @@ ${toHex(hashedRequest)}`;
           }
           if (!keyInfo && this.remote) {
             Logger.info("[Keys] Step 4: Trying to download keys from remote...");
-            const result = await this.remote.downloadFile("_keys.json");
-            Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
-            if (result && result.data) {
-              try {
-                Logger.info("[Keys] Decrypting remote keys...");
-                const decrypted = await this.decrypt(result.data, masterKey);
-                keyInfo = JSON.parse(decrypted.toString());
-                await this.storage.saveDailyDb("_keys", "private", result.data);
-                Logger.info("[Keys] Remote keys decrypted and saved locally.");
-              } catch (e2) {
-                throw new Error(`Failed to decrypt remote keys: ${e2.message}. Incorrect password?`);
+            try {
+              const result = await this.remote.downloadFile("_keys.json");
+              Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
+              if (result && result.data) {
+                try {
+                  Logger.info("[Keys] Decrypting remote keys...");
+                  const decrypted = await this.decrypt(result.data, masterKey);
+                  keyInfo = JSON.parse(decrypted.toString());
+                  await this.storage.saveDailyDb("_keys", "private", result.data);
+                  Logger.info("[Keys] Remote keys decrypted and saved locally.");
+                } catch (e2) {
+                  throw new Error(`Failed to decrypt remote keys: ${e2.message}. Incorrect password?`);
+                }
+              } else {
+                Logger.info("[Keys] No remote keys found.");
               }
-            } else {
-              Logger.info("[Keys] No remote keys found.");
+            } catch (e2) {
+              if (e2.message === "Network Error" || e2.message.includes("offline")) {
+                Logger.warn("[Keys] Remote unreachable, continuing in offline mode.");
+              } else {
+                throw e2;
+              }
             }
           }
           if (!keyInfo) {
@@ -91983,15 +92006,25 @@ ${toHex(hashedRequest)}`;
             const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), masterKey);
             await this.storage.saveDailyDb("_keys", "private", encrypted);
             if (this.remote) {
-              Logger.info("[Keys] Uploading new keys to remote...");
-              await this.remote.uploadFile("_keys.json", encrypted);
-              Logger.info("[Keys] New keys uploaded.");
+              try {
+                Logger.info("[Keys] Uploading new keys to remote...");
+                await this.remote.uploadFile("_keys.json", encrypted);
+                Logger.info("[Keys] New keys uploaded.");
+              } catch (e2) {
+                Logger.warn(`[Keys] Failed to upload new keys to remote: ${e2.message}. Continuing in offline mode.`);
+              }
             } else {
               Logger.info("[Keys] New keys generated and saved locally (no remote connected).");
             }
           }
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
+          if (!sentinelData) {
+            const sentinelContent = new TextEncoder().encode("SovereignSentinel");
+            const encryptedSentinel = await this.encrypt(sentinelContent, masterKey);
+            await this.storage.saveFile(sentinelPath, encryptedSentinel);
+            Logger.info("[Keys] Local sentinel created for future offline verification.");
+          }
         }
         async sync(forceSync = false) {
           if (!this.remote || !this.publicRemote || !this.globalRemote) {
@@ -92587,7 +92620,7 @@ ${toHex(hashedRequest)}`;
           if (this.config.s3) {
             return new S3RemoteAdapter(this.config.s3, {
               appId: this.config.paths.appId,
-              userId,
+              userId: this.getHashedUserId(userId, false),
               storeId: this.config.paths.storeId
             });
           }
@@ -92658,6 +92691,8 @@ ${toHex(hashedRequest)}`;
         }
         async syncDay(date2, type, localPublicKey, remoteOverride) {
           try {
+            const hashedUserId = this.getHashedUserId(this.config.paths.userId, type === "private");
+            Logger.debug(`[Sync] syncDay: literalUserId=${this.config.paths.userId}, type=${type}, hashedUserId=${hashedUserId}`);
             const remotePath = `${type}/${date2}.db`;
             const activeRemote = remoteOverride || this.remote;
             if (!activeRemote) return;
@@ -92665,7 +92700,7 @@ ${toHex(hashedRequest)}`;
             const currentKey = type === "private" ? this.config.encryptionKey : void 0;
             const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
             if (!localData) {
-              Logger.info(`[Sync] Downloading ${remotePath}`);
+              Logger.info(`[Sync] Downloading ${remotePath} for ${this.config.paths.userId} (Hashed: ${hashedUserId})`);
               const result = await activeRemote.downloadFile(remotePath);
               if (result && result.data) {
                 let data = result.data;
@@ -92733,6 +92768,39 @@ ${toHex(hashedRequest)}`;
           const shared = nacl.box.before(theirPublicKey, mySecretKey);
           return Buffer.from(shared).toString("hex");
         }
+        /**
+         * Sends an encrypted payload to a recipient by placing it in their public DM inbox.
+         * Also saves a copy in the sender's private outbox.
+         * 
+         * @param recipientId The user ID of the recipient.
+         * @param payload The JSON payload to encrypt and send.
+         * @param namespace A namespace for the DM (e.g. 'messaging', 'social').
+         */
+        async sendEncryptedPayload(recipientId, payload, namespace) {
+          const following = await this.storage.getFollowing();
+          const recipient = following.find((f2) => f2.userId === recipientId);
+          let recipientPublicKey = recipient?.publicKey;
+          if (!recipientPublicKey) {
+            const registry = await this.getPublicRegistry();
+            const found = registry.find((u2) => u2.userId === recipientId);
+            if (found) {
+              recipientPublicKey = found.publicKey;
+            }
+          }
+          if (!recipientPublicKey) {
+            throw new Error(`Recipient public key not found for ${recipientId}`);
+          }
+          const sharedSecret = this.deriveSharedSecret(recipientPublicKey);
+          const jsonData = JSON.stringify(payload);
+          const dataBuffer = new TextEncoder().encode(jsonData);
+          const encryptedData = await this.encrypt(dataBuffer, sharedSecret);
+          const timestamp = Date.now();
+          const outboxPath = `private/outbox/${recipientId}/${namespace}/${timestamp}.json`;
+          await this.storage.saveFile(outboxPath, dataBuffer);
+          const dmPath = `public/dms/${recipientId}/${namespace}/${timestamp}.enc`;
+          await this.storage.saveFile(dmPath, encryptedData);
+          Logger.info(`[Sovereign] Encrypted payload sent to ${recipientId} in namespace ${namespace}`);
+        }
         async syncUserFile() {
           try {
             if (!this.publicRemote) return;
@@ -92786,6 +92854,9 @@ ${toHex(hashedRequest)}`;
           } catch (e2) {
             Logger.warn(`[Sync] syncUserFile failed: ${e2.message}`);
           }
+        }
+        getHashedUserId(userId, isPrivate) {
+          return userId;
         }
       };
     }

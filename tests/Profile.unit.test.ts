@@ -100,7 +100,8 @@ describe('ProfileModule Unit Tests', () => {
         await bobRemote.uploadFile('public/user.json', bobData);
         
         // Mock createRemote to return bobRemote for bob
-        jest.spyOn(sov as any, 'createRemote').mockImplementation((userId: string) => {
+        jest.spyOn(sov as any, 'createRemote').mockImplementation((...args: any[]) => {
+            const userId = args[0];
             if (userId === 'bob') return bobRemote;
             return new MockRemote();
         });
