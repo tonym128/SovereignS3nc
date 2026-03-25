@@ -326,6 +326,8 @@ const App = () => {
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
                 password: currentConfig.password,
                 autoFollowDiscoveredUsers: false,
+                useWorker: false,
+                workerUrl: 'sync-worker.js',
                 debug: DEBUG
             }, remoteAdapter, factory);
 
@@ -593,11 +595,13 @@ const App = () => {
         if (!sov || !feed || syncing || !isConnected) return;
         setSyncing(true);
         try {
+            if (DEBUG) console.log('[App] Starting sync (delegated to worker)...');
             await sov.sync();
             if (profileModule) await profileModule.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
             await loadData(sov, feed, messaging, profileModule);
         } catch (e) {
+            if (DEBUG) console.error('[App] Sync failed:', e);
         } finally {
             setSyncing(false);
         }

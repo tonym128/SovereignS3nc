@@ -87,7 +87,9 @@ const App = () => {
             // Use the config loaded from config.json if available, otherwise start offline
             const instance = new SovereignS3nc({
                 ...config,
-                offline: !config.s3
+                offline: !config.s3,
+                useWorker: false,
+                workerUrl: 'sync-worker.js'
             });
             await instance.init();
             setSov(instance);
@@ -178,9 +180,14 @@ const App = () => {
     const sync = async () => {
         if (!sov || !banky) return;
         setSyncing(true);
-        await sov.sync();
-        await loadData(sov, banky);
-        setSyncing(false);
+        try {
+            await sov.sync();
+            await loadData(sov, banky);
+        } catch (e) {
+            console.error('[Banky] Sync failed:', e);
+        } finally {
+            setSyncing(false);
+        }
     };
 
     const handleCreateAccount = async () => {

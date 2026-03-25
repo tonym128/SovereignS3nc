@@ -35,6 +35,8 @@ export interface SovereignConfig {
   blacklist?: string[]; // Global blacklist of User IDs to ignore
   adminPublicKey?: string; // Public key of the application admin for E2EE reports
   debug?: boolean; // Enable verbose logging
+  useWorker?: boolean; // Enable background sync via Web Worker
+  workerUrl?: string; // Path to the compiled worker.js
 }
 
 export interface SovereignManifest {

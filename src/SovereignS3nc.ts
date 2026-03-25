@@ -7,6 +7,7 @@ import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
 import { EventEmitter } from 'events';
+import { SyncWorkerProxy } from './worker/SyncWorkerProxy';
 
 export class SovereignS3nc extends EventEmitter {
     public static readonly VERSION = '3.0.0';
@@ -20,6 +21,7 @@ export class SovereignS3nc extends EventEmitter {
     private remoteFactory?: (userId: string) => IRemoteAdapter;
     private registeredModules: ModuleDefinition[] = [];
     private isSyncing: boolean = false;
+    private syncWorker?: SyncWorkerProxy;
 
     constructor(
         config: SovereignConfig, 
@@ -236,6 +238,20 @@ export class SovereignS3nc extends EventEmitter {
 
         Logger.info(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
         await this.storage.init();
+
+        // Initialize Background Worker if enabled
+        if (this.config.useWorker && this.config.workerUrl) {
+            Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
+            this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+            this.syncWorker.on('update', (data) => {
+                this.emit('update', data);
+                if (data.moduleName) {
+                    this.emit(`${data.moduleName}:update`, data);
+                }
+            });
+            await this.syncWorker.init(this.config);
+        }
+
         if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
             Logger.info('[Sovereign] Initializing keys...');
             await this.initKeys();
@@ -631,6 +647,11 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     async sync(forceSync: boolean = false) {
+        if (this.syncWorker) {
+            Logger.info('[Sovereign] Delegating sync to background worker...');
+            return this.syncWorker.sync(forceSync);
+        }
+
         if (!this.remote || !this.publicRemote || !this.globalRemote) {
             Logger.info('[Sovereign] Remote not connected, skipping sync.');
             return;
