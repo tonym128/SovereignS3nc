@@ -77,6 +77,25 @@ const feed = new FeedModule(sovereign);
 await feed.createPost("My first decentralized post!");
 ```
 
+## Documentation
+
+For detailed information on configuring, deploying, and using SovereignS3nc, please refer to the documentation in the `docs/` directory:
+
+- **Core Concepts**
+  - [API Reference](docs/api.md) - Detailed API documentation for the core library and modules.
+  - [Data Model](docs/data-model.md) - Understanding how SovereignS3nc structures data on S3.
+  - [Gemini CLI Skill](docs/gemini-skill.md) - A guide for AI-assisted development with SovereignS3nc.
+
+- **Setup & Deployment**
+  - [RustFS Setup](docs/rustfs.md) - **Recommended** high-performance local S3 development environment.
+  - [AWS S3 Setup](docs/aws.md) - Configuring AWS IAM policies and buckets.
+  - [Oracle OCI Setup](docs/oci.md) - Using Oracle Object Storage with S3 compatibility.
+  - [PeerJS Setup](docs/peerjs.md) - Setting up the signaling server for WebRTC.
+  - [WebRTC Setup](docs/webrtc.md) - Enabling P2P browser-to-browser synchronization.
+
+- **Security**
+  - [S3 Isolation Policy](Setup/GENERIC_S3_POLICY.json) - Template for bucket-level user isolation.
+
 ## Storage Adapters
 
 The library automatically selects the best storage adapter for your environment:

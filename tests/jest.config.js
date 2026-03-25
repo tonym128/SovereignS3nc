@@ -5,6 +5,7 @@ module.exports = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  testMatch: ["**/*.test.ts"],
+  testMatch: ["<rootDir>/tests/**/*.test.ts"],
   testPathIgnorePatterns: ["/node_modules/", "\\.spec\\.ts$", "\\.integration\\.ts$"],
+  rootDir: '..',
 };
