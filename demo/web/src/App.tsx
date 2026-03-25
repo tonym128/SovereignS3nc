@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { ProfileModule } from '../../../src/modules/Profile';
 import { FeedModule, Post } from '../../../src/modules/Feed';
+import { MessagingModule, Message } from '../../../src/modules/Messaging';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
 
@@ -23,7 +24,10 @@ const App = () => {
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [feed, setFeed] = useState<FeedModule | null>(null);
     const [profileModule, setProfileModule] = useState<ProfileModule | null>(null);
+    const [messaging, setMessaging] = useState<MessagingModule | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [activeChat, setActiveChat] = useState<string | null>(null);
     const [following, setFollowing] = useState<any[]>([]);
     const [allUsers, setAllUsers] = useState<any[]>([]);
     const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
@@ -114,8 +118,10 @@ const App = () => {
             setSov(instance);
             const fm = new FeedModule(instance);
             const pm = new ProfileModule(instance);
+            const mm = new MessagingModule(instance);
             setFeed(fm);
             setProfileModule(pm);
+            setMessaging(mm);
             setProfile(await pm.getProfile());
             setIsLoggedIn(true);
             
@@ -123,7 +129,7 @@ const App = () => {
             setTimeout(() => {
                 instance.sync().then(() => {
                     console.log('Initial sync complete');
-                    loadPosts(instance, fm, pm);
+                    loadData(instance, fm, pm, mm);
                 });
             }, 100);
         } catch (e: any) {
@@ -161,8 +167,10 @@ const App = () => {
             setSov(instance);
             const fm = new FeedModule(instance);
             const pm = new ProfileModule(instance);
+            const mm = new MessagingModule(instance);
             setFeed(fm);
             setProfileModule(pm);
+            setMessaging(mm);
             setProfile(await pm.getProfile());
             setIsLoggedIn(true);
         } catch (e) {
@@ -230,7 +238,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        if (isLoggedIn) loadPosts();
+        if (isLoggedIn) loadData();
     }, [isLoggedIn]);
 
     const handlePost = async () => {
@@ -238,14 +246,14 @@ const App = () => {
         await feed.post(newPost, true, newImage || undefined);
         setNewPost('');
         setNewPostImage(null);
-        await loadPosts();
+        await loadData();
     };
 
     const handleComment = async (parent: Post) => {
         const content = prompt('Your comment:');
         if (!content || !feed) return;
         await feed.comment(parent.id, parent.userId, content);
-        await loadPosts();
+        await loadData();
     };
 
     const sync = async () => {
@@ -255,7 +263,7 @@ const App = () => {
             await sov.sync();
             await profileModule.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
-            await loadPosts();
+            await loadData();
         } finally {
             setSyncing(false);
         }
@@ -267,18 +275,19 @@ const App = () => {
         try {
             await sov.follow(id);
             alert(`Now following ${id}. Please click Sync to pull their latest data.`);
-            await loadPosts();
+            await loadData();
         } catch (e: any) {
             alert(`Error: ${e.message}`);
         }
     };
 
-    const loadPosts = async (v?: SovereignS3nc, fm?: FeedModule, pm?: ProfileModule) => {
+    const loadData = async (v?: SovereignS3nc, fm?: FeedModule, pm?: ProfileModule, mm?: MessagingModule) => {
         const activeSov = v || sov;
         const activeFeed = fm || feed;
         const activeProfile = pm || profileModule;
+        const activeMessaging = mm || messaging;
         if (!activeFeed || !activeSov) return;
-        console.log('[Demo] Refreshing feed...');
+        console.log('[Demo] Refreshing data...');
         
         // 1. Get registry for sidebar
         const registry = await activeSov.getPublicRegistry();
@@ -315,6 +324,12 @@ const App = () => {
         allPosts.sort((a, b) => b.timestamp - a.timestamp);
         console.log(`[Demo] Total feed items: ${allPosts.length}`);
         setPosts(allPosts);
+
+        // 6. Load messages
+        if (activeMessaging) {
+            const allMessages = await activeMessaging.getInboxMessages(7);
+            setMessages(allMessages);
+        }
     };
 
     const UserAvatar = ({ userId }: { userId: string }) => {
@@ -403,6 +418,51 @@ const App = () => {
         );
     };
 
+    const renderChat = (recipientId: string) => {
+        const chatMessages = messages
+            .filter(m => (m.senderId === recipientId && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === recipientId))
+            .sort((a, b) => a.timestamp - b.timestamp);
+
+        const sendMessage = async () => {
+            const content = (document.getElementById('msg-input') as HTMLTextAreaElement).value;
+            if (!content || !messaging) return;
+            await messaging.sendDirectMessage(recipientId, content);
+            (document.getElementById('msg-input') as HTMLTextAreaElement).value = '';
+            await loadData();
+        };
+
+        return (
+            <div className="chat-view">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <button className="btn btn-sm btn-link p-0" onClick={() => setActiveChat(null)}>← Back to Feed</button>
+                    <h5 className="mb-0">Chat with {recipientId}</h5>
+                    <div style={{width: '20px'}}></div>
+                </div>
+                <div className="card mb-3" style={{height: '400px', overflowY: 'auto', display: 'flex', flexDirection: 'column-reverse'}}>
+                    <div className="p-3">
+                        {chatMessages.map(m => (
+                            <div key={m.id} className={`mb-2 d-flex ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
+                                <div className={`p-2 rounded ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light'}`} style={{maxWidth: '80% shadow-sm'}}>
+                                    <div className="small mb-1" style={{fontSize: '0.7rem', opacity: 0.8}}>{new Date(m.timestamp).toLocaleTimeString()}</div>
+                                    <div>{m.content}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="input-group">
+                    <textarea id="msg-input" className="form-control" placeholder="Type a message..." rows={2} onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                        }
+                    }}></textarea>
+                    <button className="btn btn-primary" onClick={sendMessage}>Send</button>
+                </div>
+            </div>
+        );
+    };
+
     if (!isLoggedIn) {
         return (
             <div className="container mt-5" style={{maxWidth: '500px'}}>
@@ -478,7 +538,7 @@ const App = () => {
                         {syncing ? 'Syncing...' : 'Sync Everything'}
                     </button>
                     {lastSyncTime && <div className="text-center small text-success mb-2">Last Sync: {lastSyncTime}</div>}
-                    <button className="btn btn-sm btn-outline-info w-100 mb-2" onClick={loadPosts}>
+                    <button className="btn btn-sm btn-outline-info w-100 mb-2" onClick={() => loadData()}>
                         Refresh Feed
                     </button>
                     <button className="btn btn-xs btn-outline-warning w-100 mb-3" onClick={() => sov?.testPermissions()}>
@@ -487,6 +547,18 @@ const App = () => {
                     <button className="btn btn-outline-secondary w-100 mb-3" onClick={handleFollow}>
                         Follow User
                     </button>
+                    <hr/>
+                    <h6>Direct Messages ({messages.length})</h6>
+                    <div className="list-group list-group-flush mb-3" style={{maxHeight: '200px', overflowY: 'auto'}}>
+                        {Array.from(new Set(messages.map(m => m.senderId === config.userId ? m.recipientId : m.senderId))).map(userId => (
+                            <button key={userId} className={`list-group-item list-group-item-action bg-transparent px-2 border-0 small ${activeChat === userId ? 'fw-bold text-primary' : ''}`} 
+                                    onClick={() => setActiveChat(userId)}>
+                                {userId}
+                            </button>
+                        ))}
+                        {messages.length === 0 && <p className="text-muted small">No messages yet.</p>}
+                    </div>
+
                     <hr/>
                     <h6>Following ({following.length})</h6>
                     <div className="list-group list-group-flush mb-3" style={{maxHeight: '200px', overflowY: 'auto'}}>
@@ -508,7 +580,7 @@ const App = () => {
                                 {!following.find(f => f.userId === u.userId) && u.userId !== config.userId && (
                                     <button className="btn btn-xs btn-link p-0" onClick={async () => {
                                         await sov.follow(u.userId);
-                                        loadPosts();
+                                        loadData();
                                     }}>Follow</button>
                                 )}
                             </div>
@@ -517,19 +589,23 @@ const App = () => {
                     <p className="text-muted small border-top pt-2">Zero Knowledge Sync Active</p>
                 </div>
                 <div className="col-md-6 p-4">
-                    <div className="card p-3 mb-4">
-                        <textarea className="form-control mb-2" placeholder="What's on your mind?" value={newPost} onChange={e => setNewPost(e.target.value)} />
-                        {newImage && <img src={newImage} className="img-thumbnail mb-2" style={{maxHeight: '200px'}} />}
-                        <div className="d-flex justify-content-between align-items-center">
-                            <input type="file" className="form-control form-control-sm w-50" onChange={handleImageChange} />
-                            <button className="btn btn-primary" onClick={handlePost}>Post</button>
-                        </div>
-                    </div>
-                    
-                    <div className="feed-container">
-                        {posts.filter(p => !p.parentId).map(p => renderPost(p))}
-                        {posts.length === 0 && <div className="text-center text-muted mt-5">Your feed is empty. Post something or sync to discover others!</div>}
-                    </div>
+                    {activeChat ? renderChat(activeChat) : (
+                        <>
+                            <div className="card p-3 mb-4">
+                                <textarea className="form-control mb-2" placeholder="What's on your mind?" value={newPost} onChange={e => setNewPost(e.target.value)} />
+                                {newImage && <img src={newImage} className="img-thumbnail mb-2" style={{maxHeight: '200px'}} />}
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <input type="file" className="form-control form-control-sm w-50" onChange={handleImageChange} />
+                                    <button className="btn btn-primary" onClick={handlePost}>Post</button>
+                                </div>
+                            </div>
+                            
+                            <div className="feed-container">
+                                {posts.filter(p => !p.parentId).map(p => renderPost(p))}
+                                {posts.length === 0 && <div className="text-center text-muted mt-5">Your feed is empty. Post something or sync to discover others!</div>}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
