@@ -4,13 +4,21 @@ This document defines the standardized naming schemes and schemas for both local
 
 ## 1. Universal Path Schemes
 
-SovereignS3nc uses a unified path structure across local and remote storage. All paths are relative to the user's root: `${appId}/${userId}/${storeId}/`.
+SovereignS3nc uses a unified path structure across local and remote storage. 
+
+### Remote Storage Paths
+Remote paths depend on whether they are public or private:
+- **Public**: `${appId}/${userId}/${storeId}/public/...`
+- **Private**: `${appId}/${hashedUserId}/${storeId}/private/...`
+
+The `${hashedUserId}` is a salted SHA-256 hash of the `userId`, `appId`, and a `serverSecret` (or password fallback).
 
 ### Core System Files
 | Path | Type | Description | Schema/Format |
 | :--- | :--- | :--- | :--- |
 | `public/user.json` | Public | Public user profile | `Profile` (JSON) |
-| `followed/{userId}/public/user.json` | Local Cache | Cached profile of followed user | `Profile` (JSON) |
+| `public/manifest.json`| Public | Discovery manifest of all user databases | `SovereignManifest` (JSON) |
+| `private/sentinel.enc`| Private | Encrypted sentinel for offline login | Encrypted Binary |
 | `private/_keys.json` | Private | Encrypted E2EE keypair | `EncryptedKeys` (JSON) |
 | `users.json` | Global | Global discovery registry | `Array<{userId, publicKey}>` |
 
@@ -27,9 +35,8 @@ Modules use namespaced paths: `{type}/modules/{moduleName}/{subPath}`.
 | Path | Type | Description | Format |
 | :--- | :--- | :--- | :--- |
 | `public/modules/social/{date}.db` | Public | Public posts and likes | SQLite |
-| `public/modules/social/dms/{recipientId}/{date}.db` | Public | Encrypted DM Inbox for recipient | SQLite |
-| `private/modules/social/dms/outbox/{date}.db` | Private | User's own sent messages | SQLite |
-| `followed/{userId}/modules/social/dms/{myId}/{date}.db` | Local Cache | My DMs from followed user | SQLite |
+| `public/dms/{recipientId}/{ns}/{ts}.enc` | Public | Encrypted DM Inbox for recipient | Encrypted JSON |
+| `private/outbox/{recipientId}/{ns}/{ts}.json` | Private | User's own sent messages | JSON |
 
 ### Media & Blobs
 | Path | Type | Description | Format |

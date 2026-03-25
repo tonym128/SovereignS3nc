@@ -28,12 +28,32 @@ await sovereign.init();
 | `encrypt(data, key)` | Symmetrically or asymmetrically encrypts data. |
 | `decrypt(data, key)` | Symmetrically or asymmetrically decrypts data. |
 | `deriveSharedSecret(pk)` | Derives a shared secret using X25519 (Diffie-Hellman) for DMs. |
+| `sendEncryptedPayload(id, payload, ns)` | Sends an E2EE payload to a recipient via their public inbox. |
 | `follow(userId)` | Adds a user to the follow graph and begins syncing their public data. |
-| `unfollow(userId)` | Removes a user from the follow graph. |
 
 ---
 
-## 2. Building Custom Modules
+## 3. Admin CLI
+
+SovereignS3nc includes an administrative CLI for managing the application state.
+
+### Commands
+| Command | Description |
+| :--- | :--- |
+| `list-reports` | List all user-submitted abuse reports. |
+| `ban-user <userId>` | Blacklist a user by their ID. |
+| `export-data` | Perform a full backup of all accessible data. |
+| `burn-it-to-the-ground` | **Destructive**: Delete all data from the remote backend. |
+
+### Usage
+```bash
+npm run admin-cli -- list-reports
+```
+
+---
+
+## 4. Storage Architecture
+
 
 Modules allow you to build specialized features (like a Feed, Messaging, or a Wiki) while leveraging the library's core sync and security engines.
 

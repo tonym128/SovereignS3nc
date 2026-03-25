@@ -7,7 +7,9 @@
             "Action": "s3:*",
             "Resource": [
                 "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${userId}",
-                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${userId}/*"
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${userId}/*",
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${hashedUserId}",
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/${hashedUserId}/*"
             ]
         },
         {
@@ -26,7 +28,8 @@
             "Effect": "Allow",
             "Action": "s3:GetObject",
             "Resource": [
-                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/*/public/*"
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/*/public/*",
+                "arn:aws:s3:::YOUR_BUCKET_NAME/${appId}/*/manifest.json"
             ]
         },
         {

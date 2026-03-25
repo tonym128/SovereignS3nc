@@ -107,7 +107,7 @@ The library automatically selects the best storage adapter for your environment:
 SovereignS3nc uses a two-tier security model to balance user privacy with application moderation:
 
 - **User Keys**: Individual S3 credentials scoped to `${appId}/${userId}/`. Users have full control over their own data but cannot access other users' private prefixes.
-- **Admin Keys**: High-privilege credentials with write access to `${appId}/admin/`. Admins can publish a public key for E2EE abuse reports, manage a global blacklist, and perform app-wide data exports.
+- **Admin Keys**: High-privilege credentials with write access to `${appId}/admin/`. Admins can use the [Admin CLI](docs/api.md#admin-cli) to manage reports, blacklist users, and perform app-wide data exports.
 
 ### Prefix-Based Isolation
 For production deployments, we recommend enforcing path isolation at the S3 bucket policy level. See `Setup/GENERIC_S3_POLICY.json` for a template that secures your bucket while allowing users to sync and report abuse safely.
@@ -122,6 +122,7 @@ SovereignS3nc operates on a **Daily-DB** pattern:
 
 ## Security
 
-- **Private GUID**: Your private data is stored at a deterministic path derived from your password, making it "unfindable" by others.
+- **Private GUID**: Your private data is stored at a deterministic path derived from your password using a salted SHA-256 hash, making it "unfindable" by others.
 - **Identity Keys**: Uses `tweetnacl` to generate X25519 keys from your password.
 - **Shared Secrets**: DMs use Diffie-Hellman Key Exchange to derive shared secrets, ensuring only the sender and recipient can read the content.
+- **Offline Verification**: Passwords are verified against a local encrypted sentinel during offline login.
