@@ -65,27 +65,19 @@ export class FeedModule {
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string, sharedKey?: string): Promise<any> {
+        if (type === 'group' && groupId && sharedKey) {
+            return this.db.getGroupStore(groupId, this.MODULE_NAME, date, sharedKey);
+        }
+
         let dbPath: string;
         if (type === 'followed') {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
-        } else if (type === 'group' && groupId) {
-            dbPath = `public/groups/${groupId}/${date}.db`;
         } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
         }
             
         let data = await this.db.getStorage().getFile(dbPath);
         
-        // Handle Group Decryption
-        if (data && type === 'group' && sharedKey) {
-            try {
-                data = await this.db.decrypt(data, sharedKey);
-            } catch (e: any) {
-                Logger.warn(`[Feed] Failed to decrypt group DB: ${e.message}`);
-                data = null; 
-            }
-        }
-
         // @ts-ignore
         const initSqlJs = (globalThis as any).initSqlJs;
         const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});

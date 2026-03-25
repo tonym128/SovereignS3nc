@@ -105,28 +105,20 @@ export class BankyManager {
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group' | 'meta', groupId?: string, sharedKey?: string): Promise<any> {
+        if (type === 'group' && groupId && sharedKey) {
+            return this.db.getGroupStore(groupId, this.MODULE_NAME, date, sharedKey);
+        }
+
         let dbPath: string;
         if (type === 'followed') {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
-        } else if (type === 'group' && groupId) {
-            dbPath = `public/groups/${groupId}/${date}.db`;
         } else if (type === 'meta') {
             dbPath = `private/modules/${this.MODULE_NAME}/meta.db`;
         } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
         }
-            
+
         let data = await this.db.getStorage().getFile(dbPath);
-        
-        // Handle Group Decryption
-        if (data && type === 'group' && sharedKey) {
-            try {
-                data = await this.db.decrypt(data, sharedKey);
-            } catch (e: any) {
-                console.warn(`[Banky] Failed to decrypt group DB: ${e.message}`);
-                data = null; 
-            }
-        }
 
         const initSqlJs = (globalThis as any).initSqlJs;
         if (!initSqlJs) {
@@ -143,7 +135,6 @@ export class BankyManager {
 
         return db;
     }
-
     private async saveDb(db: any, date: string, type: 'private' | 'public' | 'group' | 'meta', groupId?: string, sharedKey?: string) {
         const binary = db.export();
         let dbPath: string;

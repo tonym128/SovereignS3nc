@@ -179,6 +179,35 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
+    /**
+     * Unified orchestration for group databases.
+     * Fetches, decrypts, and applies the given module schema to a group's daily database.
+     */
+    public async getGroupStore(groupId: string, schema: string, date: string, sharedKey?: string): Promise<any> {
+        const dbPath = `public/groups/${groupId}/${date}.db`;
+        let data = await this.getStorage().getFile(dbPath);
+
+        // Handle Group Decryption
+        if (data && sharedKey) {
+            try {
+                data = await this.decrypt(data, sharedKey);
+            } catch (e: any) {
+                Logger.warn(`[SovereignS3nc] Failed to decrypt group DB: ${e.message}`);
+                data = null; 
+            }
+        }
+
+        // @ts-ignore
+        const initSqlJs = (globalThis as any).initSqlJs;
+        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        const db = new sqliteInstance.Database(data || undefined);
+
+        // Use Core Schema Management
+        this.applyModuleSchema(db, schema);
+
+        return db;
+    }
+
     async init() {
         if (!this.storage) {
             const isBrowser = typeof globalThis !== 'undefined' && typeof (globalThis as any).indexedDB !== 'undefined';

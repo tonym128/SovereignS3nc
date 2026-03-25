@@ -91774,6 +91774,27 @@ ${toHex(hashedRequest)}`;
             }
           }
         }
+        /**
+         * Unified orchestration for group databases.
+         * Fetches, decrypts, and applies the given module schema to a group's daily database.
+         */
+        async getGroupStore(groupId, schema, date2, sharedKey) {
+          const dbPath = `public/groups/${groupId}/${date2}.db`;
+          let data = await this.getStorage().getFile(dbPath);
+          if (data && sharedKey) {
+            try {
+              data = await this.decrypt(data, sharedKey);
+            } catch (e2) {
+              Logger.warn(`[SovereignS3nc] Failed to decrypt group DB: ${e2.message}`);
+              data = null;
+            }
+          }
+          const initSqlJs = globalThis.initSqlJs;
+          const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+          const db = new sqliteInstance.Database(data || void 0);
+          this.applyModuleSchema(db, schema);
+          return db;
+        }
         async init() {
           if (!this.storage) {
             const isBrowser = typeof globalThis !== "undefined" && typeof globalThis.indexedDB !== "undefined";
@@ -92776,7 +92797,6 @@ ${toHex(hashedRequest)}`;
     "src/modules/Feed.ts"() {
       "use strict";
       import_polyfills673 = __toESM(require_polyfills());
-      init_Logger();
       FEED_MODULE_DEFINITION = {
         name: "feed",
         tables: [
@@ -92823,23 +92843,16 @@ ${toHex(hashedRequest)}`;
           this.db.registerModule(FEED_MODULE_DEFINITION);
         }
         async getDb(date2, type, groupId, sharedKey) {
+          if (type === "group" && groupId && sharedKey) {
+            return this.db.getGroupStore(groupId, this.MODULE_NAME, date2, sharedKey);
+          }
           let dbPath;
           if (type === "followed") {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed");
-          } else if (type === "group" && groupId) {
-            dbPath = `public/groups/${groupId}/${date2}.db`;
           } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           }
           let data = await this.db.getStorage().getFile(dbPath);
-          if (data && type === "group" && sharedKey) {
-            try {
-              data = await this.db.decrypt(data, sharedKey);
-            } catch (e2) {
-              Logger.warn(`[Feed] Failed to decrypt group DB: ${e2.message}`);
-              data = null;
-            }
-          }
           const initSqlJs = globalThis.initSqlJs;
           const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           const db = new sqliteInstance.Database(data || void 0);

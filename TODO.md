@@ -4,9 +4,9 @@
 - [x] **Utility Extraction: `MediaUtils`**
     - [x] Move `compressImage` from `SocialManager` to `src/utils/MediaUtils.ts`.
     - [x] Add environment gating for DOM-dependent code (Browser vs Node).
-- [ ] **Core: Group Store Orchestration**
-    - [ ] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
-    - [ ] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
+- [x] **Core: Group Store Orchestration**
+    - [x] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
+    - [x] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
 - [ ] **Core: P2P Messaging Primitive**
     - [ ] Implement `db.sendEncryptedPayload(recipientId, payload, namespace)` in `SovereignS3nc`.
     - [ ] Move "Outbox + Encrypted Public Inbox" logic from `SocialManager._saveAndSendDM`.
