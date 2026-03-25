@@ -25,6 +25,7 @@ export interface SovereignConfig {
       privatePassphrase?: string;
       publicPassphrase?: string;
       publicSalt?: string;
+      serverSecret?: string;
   };
   encryptionKey?: string; // Private key (Runtime)
   publicEncryptionKey?: string; // Public key (Runtime)
@@ -85,5 +86,6 @@ export interface SovereignAddress {
   userId: string;
   publicPassphrase?: string; // Optional: Required if the user uses Zero Knowledge encryption
   publicSalt?: string;
+      serverSecret?: string;
 }
 

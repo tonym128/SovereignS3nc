@@ -1490,4 +1490,24 @@ export class SovereignS3nc extends EventEmitter {
             Logger.warn(`[Sync] syncUserFile failed: ${e.message}`);
         }
     }
+
+    private getHashedUserId(userId: string, isPrivate: boolean): string {
+        if (userId === 'global' || userId === 'admin' || userId === '' || userId === 'root') {
+            return userId; // Keep special IDs literal
+        }
+        
+        const appId = this.config.paths.appId;
+        const hasher = crypto.createHash('sha256');
+        hasher.update(userId);
+        hasher.update(appId);
+        
+        if (isPrivate) {
+            const secret = this.config.auth?.serverSecret || this.config.password || '';
+            if (secret) {
+                hasher.update(secret);
+            }
+        }
+        
+        return hasher.digest('hex');
+    }
 }
