@@ -21,7 +21,10 @@ esbuild.build({
         'assert': 'assert',
         'process': 'process/browser'
     },
+    external: ['fs', 'fs-extra'],
     inject: ['./demo/web/src/polyfills.js'],
+}).then(() => {
+    console.log('Build successful!');
 }).catch((e) => {
     console.error(e);
     process.exit(1)
