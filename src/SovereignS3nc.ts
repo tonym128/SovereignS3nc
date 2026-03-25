@@ -1377,6 +1377,54 @@ export class SovereignS3nc extends EventEmitter {
         const shared = nacl.box.before(theirPublicKey, mySecretKey);
         return Buffer.from(shared).toString('hex');
     }
+
+    /**
+     * Sends an encrypted payload to a recipient by placing it in their public DM inbox.
+     * Also saves a copy in the sender's private outbox.
+     * 
+     * @param recipientId The user ID of the recipient.
+     * @param payload The JSON payload to encrypt and send.
+     * @param namespace A namespace for the DM (e.g. 'messaging', 'social').
+     */
+    public async sendEncryptedPayload(recipientId: string, payload: any, namespace: string) {
+        // 1. Get recipient public key
+        const following = await this.storage.getFollowing();
+        const recipient = following.find(f => f.userId === recipientId);
+        let recipientPublicKey = recipient?.publicKey;
+
+        if (!recipientPublicKey) {
+            // Try global registry
+            const registry = await this.getPublicRegistry();
+            const found = registry.find(u => u.userId === recipientId);
+            if (found) {
+                recipientPublicKey = found.publicKey;
+            }
+        }
+
+        if (!recipientPublicKey) {
+            throw new Error(`Recipient public key not found for ${recipientId}`);
+        }
+
+        // 2. Derive shared secret
+        const sharedSecret = this.deriveSharedSecret(recipientPublicKey);
+
+        // 3. Encrypt payload
+        const jsonData = JSON.stringify(payload);
+        const dataBuffer = new TextEncoder().encode(jsonData);
+        const encryptedData = await this.encrypt(dataBuffer, sharedSecret);
+
+        const timestamp = Date.now();
+        
+        // 4. Save to private outbox: private/outbox/{recipientId}/{namespace}/{timestamp}.json
+        const outboxPath = `private/outbox/${recipientId}/${namespace}/${timestamp}.json`;
+        await this.storage.saveFile(outboxPath, dataBuffer);
+
+        // 5. Place in recipient's public inbox: public/dms/{recipientId}/{namespace}/{timestamp}.enc
+        const dmPath = `public/dms/${recipientId}/${namespace}/${timestamp}.enc`;
+        await this.storage.saveFile(dmPath, encryptedData);
+
+        Logger.info(`[Sovereign] Encrypted payload sent to ${recipientId} in namespace ${namespace}`);
+    }
     
     private async syncUserFile() {
         try {

@@ -304,4 +304,65 @@ describe('SovereignS3nc Unit Tests', () => {
             await (sov as any).ensureGlobalRegistration();
         });
     });
+
+    describe('sendEncryptedPayload', () => {
+        let alice: SovereignS3nc;
+        let bob: SovereignS3nc;
+        let aliceRemote: MockRemote;
+        let bobRemote: MockRemote;
+
+        beforeEach(async () => {
+            aliceRemote = new MockRemote();
+            bobRemote = new MockRemote();
+
+            const aliceConfig = { paths: { appId: 'test', userId: 'alice', storeId: 'main' }, password: 'alice-password' };
+            const bobConfig = { paths: { appId: 'test', userId: 'bob', storeId: 'main' }, password: 'bob-password' };
+
+            alice = new SovereignS3nc(aliceConfig, aliceRemote, (uid) => uid === 'bob' ? bobRemote : aliceRemote);
+            bob = new SovereignS3nc(bobConfig, bobRemote, (uid) => uid === 'alice' ? aliceRemote : bobRemote);
+
+            await alice.init();
+            await bob.init();
+
+            // Alice follows Bob to get his public key (simulated discovery)
+            const registry = [
+                { userId: 'alice', publicKey: alice.getConfig().publicEncryptionKey! },
+                { userId: 'bob', publicKey: bob.getConfig().publicEncryptionKey! }
+            ];
+            const registryData = new TextEncoder().encode(JSON.stringify(registry));
+            await aliceRemote.uploadFile('users.json', registryData);
+            await bobRemote.uploadFile('users.json', registryData);
+
+            await alice.follow('bob');
+            await bob.follow('alice');
+        });
+
+        test('should encrypt and send payload to recipient inbox', async () => {
+            const payload = { message: 'Hello Bob!', type: 'chat' };
+            const namespace = 'chat';
+
+            await alice.sendEncryptedPayload('bob', payload, namespace);
+
+            // 1. Check Alice's outbox
+            const aliceFiles = await (alice as any).storage.listFiles('private/outbox/bob/chat/');
+            expect(aliceFiles.length).toBe(1);
+            const outboxData = await (alice as any).storage.getFile(aliceFiles[0]);
+            expect(JSON.parse(new TextDecoder().decode(outboxData))).toEqual(payload);
+
+            // 2. Check Alice's public DM inbox (which Bob will pull from)
+            const alicePublicFiles = await (alice as any).storage.listFiles('public/dms/bob/chat/');
+            expect(alicePublicFiles.length).toBe(1);
+            const encryptedData = await (alice as any).storage.getFile(alicePublicFiles[0]);
+            
+            // 3. Verify Bob can decrypt it
+            const sharedSecret = bob.deriveSharedSecret(alice.getConfig().publicEncryptionKey!);
+            const decrypted = await bob.decrypt(encryptedData!, sharedSecret);
+            expect(JSON.parse(new TextDecoder().decode(decrypted))).toEqual(payload);
+        });
+
+        test('should throw error if recipient public key is unknown', async () => {
+            await expect(alice.sendEncryptedPayload('charlie', { msg: 'hi' }, 'test'))
+                .rejects.toThrow('Recipient public key not found for charlie');
+        });
+    });
 });
