@@ -8,7 +8,7 @@
     - [x] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
     - [x] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
 - [ ] **Core: P2P Messaging Primitive**
-    - [ ] Implement `db.sendEncryptedPayload(recipientId, payload, namespace)` in `SovereignS3nc`.
+    - [x] Implement `db.sendEncryptedPayload(recipientId, payload, namespace)` in `SovereignS3nc`.
     - [ ] Move "Outbox + Encrypted Public Inbox" logic from `SocialManager._saveAndSendDM`.
 - [ ] **Core: Identity Discovery Lifecycle**
     - [ ] Integrate `syncOtherProfiles` logic into `SovereignS3nc.sync()` or a new `db.discover()`.
