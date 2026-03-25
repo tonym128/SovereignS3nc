@@ -92856,7 +92856,19 @@ ${toHex(hashedRequest)}`;
           }
         }
         getHashedUserId(userId, isPrivate) {
-          return userId;
+          if (!isPrivate || userId === "global" || userId === "admin" || userId === "" || userId === "root") {
+            return userId;
+          }
+          const appId = this.config.paths.appId;
+          const secret = this.config.auth?.serverSecret || this.config.password || "";
+          if (!secret) {
+            return userId;
+          }
+          const hasher = crypto4.createHash("sha256");
+          hasher.update(userId);
+          hasher.update(appId);
+          hasher.update(secret);
+          return hasher.digest("hex");
         }
       };
     }

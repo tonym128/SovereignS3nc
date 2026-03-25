@@ -1531,6 +1531,23 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     private getHashedUserId(userId: string, isPrivate: boolean): string {
-        return userId;
+        if (!isPrivate || userId === 'global' || userId === 'admin' || userId === '' || userId === 'root') {
+            return userId; // Public and special system paths remain literal for discovery/admin access
+        }
+        
+        // Private paths are obscured using a salted hash
+        const appId = this.config.paths.appId;
+        const secret = this.config.auth?.serverSecret || this.config.password || '';
+        
+        if (!secret) {
+            return userId; // Fallback to literal if no secret is available yet (e.g. before init)
+        }
+
+        const hasher = crypto.createHash('sha256');
+        hasher.update(userId);
+        hasher.update(appId);
+        hasher.update(secret);
+        
+        return hasher.digest('hex');
     }
 }
