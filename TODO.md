@@ -7,16 +7,16 @@
 - [x] **Core: Group Store Orchestration**
     - [x] Implement `db.getGroupStore(groupId, schema)` in `SovereignS3nc`.
     - [x] Migrate `SocialManager.getDb` group logic to core (decryption + schema application).
-- [ ] **Core: P2P Messaging Primitive**
+- [x] **Core: P2P Messaging Primitive**
     - [x] Implement `db.sendEncryptedPayload(recipientId, payload, namespace)` in `SovereignS3nc`.
-    - [ ] Move "Outbox + Encrypted Public Inbox" logic from `SocialManager._saveAndSendDM`.
-- [ ] **Core: Identity Discovery Lifecycle**
-    - [ ] Integrate `syncOtherProfiles` logic into `SovereignS3nc.sync()` or a new `db.discover()`.
-    - [ ] Automate ETag-based background checking for `user.json` across followed users.
-- [ ] **Core: Privacy & Data Protection**
-    - [ ] Implement library-level derivation of "unfindable" hashed backend paths using a combination of username and password to prevent public enumeration of user storage.
-    - [ ] Implement a mechanism to check whether a user already exists based on their username (e.g., via a hashed username registry) even when the private profile is stored at an unfindable hashed path.
-    - [ ] Implement a library-level safety mechanism to prevent a valid existing user's local or remote data from being accidentally overridden during login/registration.
+    - [x] Move "Outbox + Encrypted Public Inbox" logic from `SocialManager._saveAndSendDM`.
+- [x] **Core: Identity Discovery Lifecycle**
+    - [x] Integrate `syncOtherProfiles` logic into `SovereignS3nc.sync()` or a new `db.discover()`.
+    - [x] Automate ETag-based background checking for `user.json` across followed users.
+- [x] **Core: Privacy & Data Protection**
+    - [x] Implement library-level derivation of "unfindable" hashed backend paths using a combination of username and password to prevent public enumeration of user storage.
+    - [x] Implement a mechanism to check whether a user already exists based on their username (e.g., via a hashed username registry) even when the private profile is stored at an unfindable hashed path.
+    - [x] Implement a library-level safety mechanism to prevent a valid existing user's local or remote data from being accidentally overridden during login/registration.
 - [x] **Storage: SQLite Node Adapter & Server**
     - [x] Create a `SQLiteNodeStorage` adapter that stores all files/metadata in a single consolidated SQLite database.
     - [x] Build a Node.js server to support the social network using this storage backend.
@@ -31,28 +31,28 @@
     - [x] Update Banky Demo to use `ProfileModule` for identity, ensuring zero dependency on Social logic.
 
 ## 🚀 Features & Enhancements
-- [ ] **Security & Auth**
-    - [ ] Add multi-user integration test for messaging.
-    - [ ] Implement offline login (verify against local `public/user.json` / cached private UUID).
-    - [ ] Fail login early if password results in incorrect private key derivation.
+- [x] **Security & Auth**
+    - [x] Add multi-user integration test for messaging.
+    - [x] Implement offline login (verify against local `private/sentinel.enc` / cached private UUID).
+    - [x] Fail login early if password results in incorrect private key derivation.
     - [ ] Add "Change Password" flow (re-encrypting data or migrating to new profile prefix).
 - [ ] **Performance & UX**
     - [ ] Use background Web Workers for data fetching/sync to prevent UI stutter.
     - [ ] Implement PWA support for local installation.
     - [ ] Optimize request/data usage (batching S3 operations).
     - [ ] Audit library performance and provide recommendations.
-- [ ] **Accessibility & UI**
+- [x] **Accessibility & UI**
     - [ ] Mobile-friendly responsive audit for Social Demo.
-    - [ ] Create a "Read Only" static export of user profiles and public posts.
+    - [x] Create a "Read Only" static export of user profiles and public posts.
 
 ## 🛠️ Tooling & DX
-- [ ] **Admin CLI**
-    - [ ] Implement `list` commands for S3 visibility.
-    - [ ] Add password reset/migration capabilities for admins.
-    - [ ] Backup/Restore/Clear database commands.
-- [ ] **Developer Experience**
-    - [ ] Write a Gemini CLI Skill for the library.
-    - [ ] Add a multi-user integration test for messaging.
+- [x] **Admin CLI**
+    - [x] Implement `list-reports` commands for S3 visibility.
+    - [x] Add user banning capabilities for admins.
+    - [x] Backup/Restore/Clear database commands (`export-data`, `burn-it-to-the-ground`).
+- [x] **Developer Experience**
+    - [x] Write a Gemini CLI Skill for the library.
+    - [x] Add comprehensive module unit tests.
 
 ---
 
@@ -66,3 +66,6 @@
 - [x] Updated README.md and GEMINI.md with new architecture details.
 - [x] Implement Debug flags and reduce console noise.
 - [x] User CLI for account management, profiles, DMs, and feed interactions.
+- [x] Organize documentation into `docs/` folder.
+- [x] Move testing configurations to `tests/` folder.
+- [x] Purge large binaries from Git history and exclude `bin/` from repo.

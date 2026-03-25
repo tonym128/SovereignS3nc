@@ -91683,7 +91683,7 @@ ${toHex(hashedRequest)}`;
           }
         }
         static {
-          this.VERSION = "2.0.1";
+          this.VERSION = "3.0.0";
         }
         initializeS3Remotes(s3, privateUserId) {
           this.publicRemote = new S3RemoteAdapter(s3, {
@@ -91920,20 +91920,6 @@ ${toHex(hashedRequest)}`;
             throw new Error(`Secret derivation failed: ${e2.message}`);
           }
           Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0, 8)}...`);
-          const sentinelPath = "private/sentinel.enc";
-          const sentinelData = await this.storage.getFile(sentinelPath);
-          if (sentinelData) {
-            try {
-              const decrypted = await this.decrypt(sentinelData, masterKey);
-              if (new TextDecoder().decode(decrypted) !== "SovereignSentinel") {
-                throw new Error("Sentinel content mismatch");
-              }
-              Logger.info("[Keys] Password verified against local sentinel.");
-            } catch (e2) {
-              Logger.error("[Keys] Password verification failed. Incorrect password?");
-              throw new Error("Incorrect password. Access denied.");
-            }
-          }
           if (!this.remote && (this.config.s3 || this.remoteFactory)) {
             Logger.info("[Keys] Step 2: Initializing Private Remote...");
             try {
@@ -91950,7 +91936,48 @@ ${toHex(hashedRequest)}`;
               Logger.error("[Keys] Remote initialization failed:", e2.message);
             }
           }
-          Logger.info("[Keys] Step 3: Checking local storage for keys...");
+          const sentinelPath = "private/sentinel.enc";
+          let sentinelData = await this.storage.getFile(sentinelPath);
+          let verified = false;
+          if (sentinelData) {
+            try {
+              const decrypted = await this.decrypt(sentinelData, masterKey);
+              if (new TextDecoder().decode(decrypted) !== "SovereignSentinel") {
+                throw new Error("Sentinel content mismatch");
+              }
+              Logger.info("[Keys] Password verified against local sentinel.");
+              verified = true;
+            } catch (e2) {
+              Logger.error("[Keys] Password verification failed. Incorrect password?");
+              throw new Error("Incorrect password. Access denied.");
+            }
+          }
+          if (!verified && this.remote) {
+            Logger.info("[Keys] Local sentinel missing. Checking remote sentinel for cross-device verification...");
+            try {
+              const result = await this.remote.downloadFile("sentinel.enc");
+              if (result && result.data) {
+                const decrypted = await this.decrypt(result.data, masterKey);
+                if (new TextDecoder().decode(decrypted) !== "SovereignSentinel") {
+                  throw new Error("Remote sentinel content mismatch");
+                }
+                Logger.info("[Keys] Password verified against remote sentinel.");
+                await this.storage.saveFile(sentinelPath, result.data);
+                sentinelData = result.data;
+                verified = true;
+              } else {
+                Logger.info("[Keys] No remote sentinel found. Proceeding (may be a new account).");
+              }
+            } catch (e2) {
+              if (e2.message === "Network Error" || e2.message.includes("offline")) {
+                Logger.warn("[Keys] Remote unreachable for sentinel check, continuing.");
+              } else {
+                Logger.error("[Keys] Remote sentinel verification failed. Incorrect password?");
+                throw new Error("Incorrect password. Access denied.");
+              }
+            }
+          }
+          Logger.info("[Keys] Step 4: Checking local storage for keys...");
           let keyInfo = null;
           let localKeyData = null;
           try {
@@ -91970,7 +91997,7 @@ ${toHex(hashedRequest)}`;
             }
           }
           if (!keyInfo && this.remote) {
-            Logger.info("[Keys] Step 4: Trying to download keys from remote...");
+            Logger.info("[Keys] Step 5: Trying to download keys from remote...");
             try {
               const result = await this.remote.downloadFile("_keys.json");
               Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
@@ -91996,7 +92023,7 @@ ${toHex(hashedRequest)}`;
             }
           }
           if (!keyInfo) {
-            Logger.info("[Keys] Step 5: Generating new persistent E2EE key pair.");
+            Logger.info("[Keys] Step 6: Generating new persistent E2EE key pair.");
             const pair = nacl.box.keyPair();
             keyInfo = {
               privateKey: Buffer.from(pair.secretKey).toString("hex"),
@@ -92023,7 +92050,20 @@ ${toHex(hashedRequest)}`;
             const sentinelContent = new TextEncoder().encode("SovereignSentinel");
             const encryptedSentinel = await this.encrypt(sentinelContent, masterKey);
             await this.storage.saveFile(sentinelPath, encryptedSentinel);
+            sentinelData = encryptedSentinel;
             Logger.info("[Keys] Local sentinel created for future offline verification.");
+          }
+          if (this.remote) {
+            try {
+              const remoteCheck = await this.remote.getFileHash("sentinel.enc");
+              if (!remoteCheck) {
+                Logger.info("[Keys] Uploading sentinel to remote...");
+                await this.remote.uploadFile("sentinel.enc", sentinelData);
+                Logger.info("[Keys] Remote sentinel uploaded.");
+              }
+            } catch (e2) {
+              Logger.warn(`[Keys] Failed to ensure remote sentinel: ${e2.message}`);
+            }
           }
         }
         async sync(forceSync = false) {
