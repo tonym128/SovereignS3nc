@@ -366,22 +366,6 @@ export class SovereignS3nc extends EventEmitter {
         
         Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0,8)}...`);
 
-        // Offline Login Verification Check
-        const sentinelPath = 'private/sentinel.enc';
-        const sentinelData = await this.storage.getFile(sentinelPath);
-        if (sentinelData) {
-            try {
-                const decrypted = await this.decrypt(sentinelData, masterKey);
-                if (new TextDecoder().decode(decrypted) !== 'SovereignSentinel') {
-                    throw new Error('Sentinel content mismatch');
-                }
-                Logger.info('[Keys] Password verified against local sentinel.');
-            } catch (e: any) {
-                Logger.error('[Keys] Password verification failed. Incorrect password?');
-                throw new Error('Incorrect password. Access denied.');
-            }
-        }
-
         // 2. Initialize the Private Remote with the secret GUID (if config exists)
         if (!this.remote && (this.config.s3 || this.remoteFactory)) {
             Logger.info('[Keys] Step 2: Initializing Private Remote...');
@@ -401,8 +385,55 @@ export class SovereignS3nc extends EventEmitter {
             }
         }
 
-        // 3. Try to load keys from local private storage
-        Logger.info('[Keys] Step 3: Checking local storage for keys...');
+        // 3. Password Verification (Local or Remote Sentinel)
+        const sentinelPath = 'private/sentinel.enc';
+        let sentinelData = await this.storage.getFile(sentinelPath);
+        let verified = false;
+
+        if (sentinelData) {
+            try {
+                const decrypted = await this.decrypt(sentinelData, masterKey);
+                if (new TextDecoder().decode(decrypted) !== 'SovereignSentinel') {
+                    throw new Error('Sentinel content mismatch');
+                }
+                Logger.info('[Keys] Password verified against local sentinel.');
+                verified = true;
+            } catch (e: any) {
+                Logger.error('[Keys] Password verification failed. Incorrect password?');
+                throw new Error('Incorrect password. Access denied.');
+            }
+        }
+
+        // If not verified locally, try remote sentinel (New Device case)
+        if (!verified && this.remote) {
+            Logger.info('[Keys] Local sentinel missing. Checking remote sentinel for cross-device verification...');
+            try {
+                const result = await this.remote.downloadFile('sentinel.enc');
+                if (result && result.data) {
+                    const decrypted = await this.decrypt(result.data, masterKey);
+                    if (new TextDecoder().decode(decrypted) !== 'SovereignSentinel') {
+                        throw new Error('Remote sentinel content mismatch');
+                    }
+                    Logger.info('[Keys] Password verified against remote sentinel.');
+                    // Save locally for future offline verification
+                    await this.storage.saveFile(sentinelPath, result.data);
+                    sentinelData = result.data;
+                    verified = true;
+                } else {
+                    Logger.info('[Keys] No remote sentinel found. Proceeding (may be a new account).');
+                }
+            } catch (e: any) {
+                if (e.message === 'Network Error' || e.message.includes('offline')) {
+                    Logger.warn('[Keys] Remote unreachable for sentinel check, continuing.');
+                } else {
+                    Logger.error('[Keys] Remote sentinel verification failed. Incorrect password?');
+                    throw new Error('Incorrect password. Access denied.');
+                }
+            }
+        }
+
+        // 4. Try to load keys from local private storage
+        Logger.info('[Keys] Step 4: Checking local storage for keys...');
         let keyInfo: { privateKey: string, publicKey: string } | null = null;
         let localKeyData: Uint8Array | null = null;
         try {
@@ -423,9 +454,9 @@ export class SovereignS3nc extends EventEmitter {
             }
         }
 
-        // 4. If not found locally, try remote (at the Private GUID path)
+        // 5. If not found locally, try remote (at the Private GUID path)
         if (!keyInfo && this.remote) {
-            Logger.info('[Keys] Step 4: Trying to download keys from remote...');
+            Logger.info('[Keys] Step 5: Trying to download keys from remote...');
             try {
                 const result = await this.remote.downloadFile('_keys.json');
                 Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
@@ -451,9 +482,9 @@ export class SovereignS3nc extends EventEmitter {
             }
         }
 
-        // 5. Generate new keys if still not found
+        // 6. Generate new keys if still not found
         if (!keyInfo) {
-            Logger.info('[Keys] Step 5: Generating new persistent E2EE key pair.');
+            Logger.info('[Keys] Step 6: Generating new persistent E2EE key pair.');
             const pair = nacl.box.keyPair();
             keyInfo = { 
                 privateKey: Buffer.from(pair.secretKey).toString('hex'), 
@@ -480,12 +511,26 @@ export class SovereignS3nc extends EventEmitter {
         this.config.encryptionKey = keyInfo.privateKey;
         this.config.publicEncryptionKey = keyInfo.publicKey;
 
-        // Save sentinel for offline verification if not already present
+        // 7. Ensure sentinel exists locally and remotely
         if (!sentinelData) {
             const sentinelContent = new TextEncoder().encode('SovereignSentinel');
             const encryptedSentinel = await this.encrypt(sentinelContent, masterKey);
             await this.storage.saveFile(sentinelPath, encryptedSentinel);
+            sentinelData = encryptedSentinel;
             Logger.info('[Keys] Local sentinel created for future offline verification.');
+        }
+
+        if (this.remote) {
+            try {
+                const remoteCheck = await this.remote.getFileHash('sentinel.enc');
+                if (!remoteCheck) {
+                    Logger.info('[Keys] Uploading sentinel to remote...');
+                    await this.remote.uploadFile('sentinel.enc', sentinelData);
+                    Logger.info('[Keys] Remote sentinel uploaded.');
+                }
+            } catch (e: any) {
+                Logger.warn(`[Keys] Failed to ensure remote sentinel: ${e.message}`);
+            }
         }
     }
 

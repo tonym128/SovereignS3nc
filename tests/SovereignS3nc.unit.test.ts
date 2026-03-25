@@ -156,7 +156,7 @@ describe('SovereignS3nc Unit Tests', () => {
             delete (wrongConfig as any).publicEncryptionKey;
 
             const sov2 = new SovereignS3nc(wrongConfig, mockRemote);
-            await expect(sov2.init()).rejects.toThrow('Failed to decrypt remote keys');
+            await expect(sov2.init()).rejects.toThrow('Incorrect password. Access denied.');
             });    });
 
     describe('Syncing', () => {
@@ -256,14 +256,20 @@ describe('SovereignS3nc Unit Tests', () => {
         });
     });
 
-    describe('Offline Login Verification', () => {
-        test('should create a sentinel file on first initialization', async () => {
+    describe('Offline & Remote Login Verification', () => {
+        test('should create and upload a sentinel file on first initialization', async () => {
             const sov = new SovereignS3nc(config, mockRemote);
             await sov.init();
             
+            // Local check
             const sentinel = await (sov as any).storage.getFile('private/sentinel.enc');
             expect(sentinel).toBeDefined();
             expect(sentinel.length).toBeGreaterThan(0);
+
+            // Remote check
+            const remoteSentinel = mockRemote.files.get('sentinel.enc');
+            expect(remoteSentinel).toBeDefined();
+            expect(remoteSentinel?.data).toEqual(sentinel);
         });
 
         test('should allow offline initialization with correct password', async () => {
@@ -291,6 +297,35 @@ describe('SovereignS3nc Unit Tests', () => {
                 password: 'wrong-password',
                 debug: false
             };
+            const sov2 = new SovereignS3nc(wrongConfig, mockRemote);
+            
+            await expect(sov2.init()).rejects.toThrow('Incorrect password. Access denied.');
+        });
+
+        test('should allow verification against remote sentinel on a new device', async () => {
+            // 1. Setup on device 1
+            const sov1 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov1.init();
+
+            // 2. New device (empty local storage, but same remote)
+            (global as any).indexedDB = new IDBFactory();
+            const sov2 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov2.init();
+            
+            // Should have downloaded and saved sentinel locally
+            const localSentinel = await (sov2 as any).storage.getFile('private/sentinel.enc');
+            expect(localSentinel).toBeDefined();
+            expect(localSentinel).toEqual(mockRemote.files.get('sentinel.enc')?.data);
+        });
+
+        test('should fail remote verification on new device with incorrect password', async () => {
+            // 1. Setup on device 1
+            const sov1 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov1.init();
+
+            // 2. New device with WRONG password
+            (global as any).indexedDB = new IDBFactory();
+            const wrongConfig = { ...config, password: 'wrong-password' };
             const sov2 = new SovereignS3nc(wrongConfig, mockRemote);
             
             await expect(sov2.init()).rejects.toThrow('Incorrect password. Access denied.');
