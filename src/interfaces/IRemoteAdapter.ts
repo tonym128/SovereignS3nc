@@ -22,6 +22,11 @@ export interface IRemoteAdapter {
   listFiles?(prefix: string): Promise<string[]>;
 
   /**
+   * Delete a file from the remote storage.
+   */
+  deleteFile?(path: string): Promise<void>;
+
+  /**
    * Permanently delete all data associated with the current appId/scope.
    */
   purge?(): Promise<void>;
