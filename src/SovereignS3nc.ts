@@ -59,6 +59,12 @@ export class SovereignS3nc extends EventEmitter {
             }
         } else if (config.s3) {
             this.initializeS3Remotes(config.s3);
+        } else if (remoteFactory) {
+            // New fallback: Initialize public/global/admin remotes using factory even if private ID is not yet known
+            this.publicRemote = remoteFactory(this.getHashedUserId(this.config.paths.userId, false));
+            this.globalRemote = remoteFactory('global');
+            this.adminRemote = remoteFactory('admin');
+            this.rootRemote = remoteFactory('root');
         } else if (!config.offline) {
             Logger.warn('[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.');
         }
@@ -532,6 +538,96 @@ export class SovereignS3nc extends EventEmitter {
                 Logger.warn(`[Keys] Failed to ensure remote sentinel: ${e.message}`);
             }
         }
+    }
+
+    public async changePassword(oldPassword: string, newPassword: string): Promise<void> {
+        if (!this.config.password || this.config.password !== oldPassword) {
+            throw new Error('Incorrect old password.');
+        }
+
+        Logger.info('[ChangePassword] Starting password change procedure...');
+        const publicUserId = this.config.paths.userId;
+
+        // 1. Derive NEW secrets
+        const newMasterKey = crypto.pbkdf2Sync(newPassword, publicUserId + '-master', 1000, 32, 'sha256').toString('hex');
+        const newPrivateId = crypto.pbkdf2Sync(newPassword, publicUserId + '-private-id', 1000, 32, 'sha256').toString('hex');
+
+        // 2. Re-encrypt local sentinel
+        const sentinelPath = 'private/sentinel.enc';
+        const sentinelContent = new TextEncoder().encode('SovereignSentinel');
+        const encryptedSentinel = await this.encrypt(sentinelContent, newMasterKey);
+        await this.storage.saveFile(sentinelPath, encryptedSentinel);
+
+        // 3. Re-encrypt keys
+        if (!this.config.encryptionKey || !this.config.publicEncryptionKey) {
+            throw new Error('Identity keys are not loaded in memory.');
+        }
+        const keyInfo = { 
+            privateKey: this.config.encryptionKey, 
+            publicKey: this.config.publicEncryptionKey 
+        };
+        const encryptedKeys = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), newMasterKey);
+        await this.storage.saveDailyDb('_keys', 'private', encryptedKeys);
+
+        // 4. Migrate Remote Data
+        if (this.remote) {
+            Logger.info('[ChangePassword] Migrating remote data to new private prefix...');
+            
+            let newRemote: IRemoteAdapter | undefined;
+            if (this.remoteFactory) {
+                newRemote = this.remoteFactory(newPrivateId);
+            } else if (this.config.s3) {
+                // S3RemoteAdapter requires s3 config
+                // Wait, S3RemoteAdapter is imported from adapters
+                // Actually, initializeS3Remotes has a factory-like way or we can just instantiate it
+                const S3RemoteAdapterClass = this.remote.constructor as any;
+                try {
+                    newRemote = new S3RemoteAdapterClass(this.config.s3, {
+                        appId: this.config.paths.appId,
+                        userId: newPrivateId,
+                        storeId: this.config.paths.storeId
+                    });
+                } catch (e: any) {
+                    Logger.warn(`[ChangePassword] Failed to dynamically create new S3RemoteAdapter: ${e.message}`);
+                }
+            }
+
+            if (newRemote) {
+                // Upload new keys
+                await newRemote.uploadFile('_keys.json', encryptedKeys);
+
+                if (this.remote.listFiles) {
+                    const files = await this.remote.listFiles('');
+                    for (const file of files) {
+                        if (file === '_keys.json') continue; // Handled
+                        
+                        const result = await this.remote.downloadFile(file);
+                        if (result && result.data) {
+                            await newRemote.uploadFile(file, result.data);
+                        }
+                    }
+                    
+                    // Cleanup old remote
+                    if (this.remote.purge) {
+                        await this.remote.purge();
+                    } else if ((this.remote as any).deleteFile) {
+                        for (const file of files) {
+                            await (this.remote as any).deleteFile(file);
+                        }
+                    }
+                } else {
+                    Logger.warn('[ChangePassword] Remote adapter lacks listFiles capability. Data not migrated automatically.');
+                }
+                
+                this.remote = newRemote;
+            } else {
+                throw new Error('Failed to create new remote adapter for migration.');
+            }
+        }
+
+        // 5. Update config
+        this.config.password = newPassword;
+        Logger.info('[ChangePassword] Password changed successfully.');
     }
 
     async sync(forceSync: boolean = false) {
