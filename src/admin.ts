@@ -63,11 +63,16 @@ export async function run(args: string[]) {
     if (!command || command === 'help') {
         console.log(`
 SovereignS3nc Admin CLI - Usage:
-  list-reports
-  ban-user <userId>
-  export-data [outputPath]
-  import-data <path>
-  burn-it-to-the-ground
+  list-users                List all users in the system
+  list-files [prefix]       List all files, optionally filtered by prefix
+  list-reports              List pending moderation reports
+  ban-user <userId>         Ban a user and purge their data
+  backup [outputPath]       Export all system data to a JSON file
+  restore <path>            Import system data from a JSON file
+  reset                     PERMANENTLY delete all data from S3
+  export-data [outputPath]  (Legacy) Same as backup
+  import-data <path>        (Legacy) Same as restore
+  burn-it-to-the-ground     (Legacy) Same as reset
         `);
         return;
     }
@@ -82,6 +87,21 @@ SovereignS3nc Admin CLI - Usage:
         const { sov, moderation } = await initSovereign(user);
 
         switch (command) {
+            case 'list-users':
+                const users = await moderation.listUsers();
+                console.log('\n--- System Users ---');
+                users.forEach(u => console.log(`- ${u}`));
+                console.log(`Total: ${users.length} users.`);
+                break;
+
+            case 'list-files':
+                const prefix = args[1] || '';
+                const files = await moderation.listFiles(prefix);
+                console.log(`\n--- Files (Prefix: "${prefix}") ---`);
+                files.forEach(f => console.log(f));
+                console.log(`Total: ${files.length} files.`);
+                break;
+
             case 'list-reports':
                 const reports = await moderation.getReports();
                 console.log(`\n--- Pending Reports (${reports.length}) ---`);
@@ -103,6 +123,7 @@ SovereignS3nc Admin CLI - Usage:
                 console.log(`User ${targetUserId} has been banned.`);
                 break;
 
+            case 'backup':
             case 'export-data':
                 const outputPath = args[1] || 'export.json';
                 const data = await moderation.exportAllData();
@@ -110,10 +131,11 @@ SovereignS3nc Admin CLI - Usage:
                 console.log(`All data exported to ${outputPath}`);
                 break;
 
+            case 'restore':
             case 'import-data':
                 const importPath = args[1];
                 if (!importPath) {
-                    console.error('Usage: import-data <path>');
+                    console.error('Usage: restore <path>');
                     return;
                 }
                 const importData = await fs.readFile(importPath, 'utf8');
@@ -121,6 +143,7 @@ SovereignS3nc Admin CLI - Usage:
                 console.log('Data imported successfully.');
                 break;
 
+            case 'reset':
             case 'burn-it-to-the-ground':
                 await moderation.burnItToTheGround();
                 console.log('Operation complete. Everything is gone.');
