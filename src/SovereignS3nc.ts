@@ -366,6 +366,22 @@ export class SovereignS3nc extends EventEmitter {
         
         Logger.info(`[Keys] Derived Private GUID for ${publicUserId}: ${privateId.substring(0,8)}...`);
 
+        // Offline Login Verification Check
+        const sentinelPath = 'private/sentinel.enc';
+        const sentinelData = await this.storage.getFile(sentinelPath);
+        if (sentinelData) {
+            try {
+                const decrypted = await this.decrypt(sentinelData, masterKey);
+                if (new TextDecoder().decode(decrypted) !== 'SovereignSentinel') {
+                    throw new Error('Sentinel content mismatch');
+                }
+                Logger.info('[Keys] Password verified against local sentinel.');
+            } catch (e: any) {
+                Logger.error('[Keys] Password verification failed. Incorrect password?');
+                throw new Error('Incorrect password. Access denied.');
+            }
+        }
+
         // 2. Initialize the Private Remote with the secret GUID (if config exists)
         if (!this.remote && (this.config.s3 || this.remoteFactory)) {
             Logger.info('[Keys] Step 2: Initializing Private Remote...');
@@ -410,20 +426,28 @@ export class SovereignS3nc extends EventEmitter {
         // 4. If not found locally, try remote (at the Private GUID path)
         if (!keyInfo && this.remote) {
             Logger.info('[Keys] Step 4: Trying to download keys from remote...');
-            const result = await this.remote.downloadFile('_keys.json');
-            Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
-            if (result && result.data) {
-                try {
-                    Logger.info('[Keys] Decrypting remote keys...');
-                    const decrypted = await this.decrypt(result.data, masterKey);
-                    keyInfo = JSON.parse(decrypted.toString());
-                    await this.storage.saveDailyDb('_keys', 'private', result.data);
-                    Logger.info('[Keys] Remote keys decrypted and saved locally.');
-                } catch (e: any) {
-                    throw new Error(`Failed to decrypt remote keys: ${e.message}. Incorrect password?`);
+            try {
+                const result = await this.remote.downloadFile('_keys.json');
+                Logger.info(`[Keys] Remote key data download complete. Found: ${!!result?.data}`);
+                if (result && result.data) {
+                    try {
+                        Logger.info('[Keys] Decrypting remote keys...');
+                        const decrypted = await this.decrypt(result.data, masterKey);
+                        keyInfo = JSON.parse(decrypted.toString());
+                        await this.storage.saveDailyDb('_keys', 'private', result.data);
+                        Logger.info('[Keys] Remote keys decrypted and saved locally.');
+                    } catch (e: any) {
+                        throw new Error(`Failed to decrypt remote keys: ${e.message}. Incorrect password?`);
+                    }
+                } else {
+                    Logger.info('[Keys] No remote keys found.');
                 }
-            } else {
-                Logger.info('[Keys] No remote keys found.');
+            } catch (e: any) {
+                if (e.message === 'Network Error' || e.message.includes('offline')) {
+                    Logger.warn('[Keys] Remote unreachable, continuing in offline mode.');
+                } else {
+                    throw e;
+                }
             }
         }
 
@@ -451,6 +475,14 @@ export class SovereignS3nc extends EventEmitter {
 
         this.config.encryptionKey = keyInfo.privateKey;
         this.config.publicEncryptionKey = keyInfo.publicKey;
+
+        // Save sentinel for offline verification if not already present
+        if (!sentinelData) {
+            const sentinelContent = new TextEncoder().encode('SovereignSentinel');
+            const encryptedSentinel = await this.encrypt(sentinelContent, masterKey);
+            await this.storage.saveFile(sentinelPath, encryptedSentinel);
+            Logger.info('[Keys] Local sentinel created for future offline verification.');
+        }
     }
 
     async sync(forceSync: boolean = false) {
