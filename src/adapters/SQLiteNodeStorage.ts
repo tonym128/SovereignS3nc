@@ -71,6 +71,10 @@ export class SQLiteNodeStorage implements IStorage {
         await this.saveFile(`${type}/${date}.db`, data);
     }
 
+    async deleteDailyDb(date: string, type: 'private' | 'public'): Promise<void> {
+        await this.deleteFile(`${type}/${date}.db`);
+    }
+
     async getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null> {
         const res = this.db.exec("SELECT hash FROM files WHERE path = ?", [`${type}/${date}.db`]);
         if (res.length > 0 && res[0].values.length > 0) {

@@ -210,6 +210,7 @@ EOF
     echo "Secret Key: $ADMIN_SECRET"
     echo "------------------------------------------------"
     echo "Use './dev.sh stop' to shut down services."
+    echo "To restart, use './dev.sh start'"
 }
 
 function stop() {
@@ -249,7 +250,7 @@ function stop() {
 }
 
 case "$1" in
-    dev) dev ;;
+    start) dev ;;
     stop) stop ;;
-    *) echo "Usage: $0 {dev|stop}"; exit 1 ;;
+    *) echo "Usage: $0 {start|stop}"; exit 1 ;;
 esac

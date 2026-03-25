@@ -81,6 +81,19 @@ export class IndexedDBStorage implements IStorage {
         });
     }
 
+    async deleteDailyDb(date: string, type: 'private' | 'public' | 'followed'): Promise<void> {
+        return new Promise((resolve, reject) => {
+            try {
+                const store = this.getStore('files', 'readwrite');
+                const request = store.delete(`${type}/${date}`);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
     async getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null> {
         const data = await this.getDailyDb(date, type);
         if (!data) return null;

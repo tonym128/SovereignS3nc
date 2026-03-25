@@ -13,7 +13,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest -c jest.integration.config.js",
     "test:docker": "NODE_OPTIONS=--experimental-vm-modules jest -c jest.integration.config.js",
-    "setup:test-env": "bash dev.sh dev",
+    "setup:test-env": "bash dev.sh start",
     "test:demo": "NODE_OPTIONS=--experimental-vm-modules jest -c jest.demo.config.js",
     "test:shopping": "NODE_OPTIONS=--experimental-vm-modules jest -c jest.shopping.config.js",
     "test:browser": "NODE_OPTIONS=--experimental-vm-modules npx playwright test",

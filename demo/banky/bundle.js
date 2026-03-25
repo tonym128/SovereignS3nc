@@ -90796,6 +90796,18 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
+        async deleteDailyDb(date2, type) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.delete(`${type}/${date2}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
         async getDailyDbHash(date2, type) {
           const data = await this.getDailyDb(date2, type);
           if (!data) return null;
@@ -91503,6 +91515,12 @@ ${toHex(hashedRequest)}`;
           await fs.ensureDir(path.dirname(filePath));
           await fs.writeFile(filePath, data);
         }
+        async deleteDailyDb(date2, type) {
+          const filePath = this.getFilePath(`${type}/${date2}.db`);
+          if (await fs.pathExists(filePath)) {
+            await fs.unlink(filePath);
+          }
+        }
         async getDailyDbHash(date2, type) {
           const data = await this.getDailyDb(date2, type);
           if (!data) return null;
@@ -91954,7 +91972,7 @@ ${toHex(hashedRequest)}`;
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
         }
-        async sync() {
+        async sync(forceSync = false) {
           if (!this.remote || !this.publicRemote || !this.globalRemote) {
             Logger.info("[Sovereign] Remote not connected, skipping sync.");
             return;
@@ -91965,7 +91983,10 @@ ${toHex(hashedRequest)}`;
           }
           this.isSyncing = true;
           try {
-            const lastSync = await this.storage.getLastSyncDate();
+            if (forceSync) {
+              Logger.info("[Sync] FORCE SYNC initiated. Bypassing ETag cache.");
+            }
+            const lastSync = forceSync ? null : await this.storage.getLastSyncDate();
             const today = _SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
             let currentDate;
             if (lastSync) {
@@ -92569,6 +92590,11 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e2.message}`);
               }
+            } else if (!result) {
+              Logger.info(`[Sync] File ${remotePath} missing on remote for ${userId}. Deleting local copy.`);
+              await this.storage.deleteFile(localPath);
+              await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, "");
+              return true;
             }
           } catch (e2) {
             Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e2.message}`);
@@ -92592,6 +92618,10 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
+            } else if (!result) {
+              Logger.info(`[Sync] Followed file ${userId}/${date2} missing on remote. Deleting local copy.`);
+              await this.storage.deleteDailyDb(`${userId}/${date2}`, "followed");
+              await this.storage.setRemoteHashCache(`${userId}:${date2}`, "followed", "");
             } else if (result?.notModified) {
               Logger.info(`[Sync] Skipping download for ${userId}/${date2}, etags match.`);
             }

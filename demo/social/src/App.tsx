@@ -1940,15 +1940,18 @@ const App = () => {
                                                                     </button>
                                                                 )}
                                                                 <button title="Delete Post Only" className="btn btn-sm btn-outline-danger" onClick={async () => {
-                                                                    if (moderation && report.evidence) {
+                                                                    if (moderation && report.evidence && sov) {
                                                                         try {
                                                                             // Module DB path: userId/storeId/public/modules/name/date.db
                                                                             const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
                                                                             const path = `${report.targetUserId}/social/public/modules/feed/${today}.db`;
                                                                             await moderation.deleteUserFile(path);
                                                                             await moderation.deleteReport(report.id);
-                                                                            const r = await moderation.getReports();
-                                                                            setReports(r);
+                                                                            
+                                                                            // Force sync to clear from admin's local followed cache
+                                                                            await sov.sync(true);
+                                                                            await loadData(sov);
+                                                                            
                                                                             showAlert('Post deleted and report closed.');
                                                                         } catch (e: any) { showAlert(e.message); }
                                                                     }
@@ -1956,12 +1959,15 @@ const App = () => {
                                                                     <i className="bi bi-trash"></i>
                                                                 </button>
                                                                 <button title="Ban User" className="btn btn-sm btn-danger" onClick={async () => {
-                                                                    if (moderation) {
+                                                                    if (moderation && sov) {
                                                                         try {
                                                                             await moderation.banUser(report.targetUserId);
                                                                             await moderation.deleteReport(report.id);
-                                                                            const r = await moderation.getReports();
-                                                                            setReports(r);
+                                                                            
+                                                                            // Force sync to update everything
+                                                                            await sov.sync(true);
+                                                                            await loadData(sov);
+                                                                            
                                                                             showAlert('User banned and all data purged.');
                                                                         } catch (e: any) { showAlert(e.message); }
                                                                     }

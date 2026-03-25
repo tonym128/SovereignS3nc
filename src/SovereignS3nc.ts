@@ -424,7 +424,7 @@ export class SovereignS3nc extends EventEmitter {
         this.config.publicEncryptionKey = keyInfo.publicKey;
     }
 
-    async sync() {
+    async sync(forceSync: boolean = false) {
         if (!this.remote || !this.publicRemote || !this.globalRemote) {
             Logger.info('[Sovereign] Remote not connected, skipping sync.');
             return;
@@ -436,8 +436,12 @@ export class SovereignS3nc extends EventEmitter {
         }
         this.isSyncing = true;
         try {
+            if (forceSync) {
+                Logger.info('[Sync] FORCE SYNC initiated. Bypassing ETag cache.');
+            }
+
             // 1. Sync My Data (Private & Public)
-            const lastSync = await this.storage.getLastSyncDate();
+            const lastSync = forceSync ? null : await this.storage.getLastSyncDate();
             const today = SovereignS3nc.getDateStr(new Date()); // Now UTC
             
             let currentDate: Date;
@@ -1202,6 +1206,12 @@ export class SovereignS3nc extends EventEmitter {
                 } catch (e: any) {
                     Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e.message}`);
                 }
+            } else if (!result) {
+                // File deleted on remote! Clear local copy.
+                Logger.info(`[Sync] File ${remotePath} missing on remote for ${userId}. Deleting local copy.`);
+                await this.storage.deleteFile(localPath);
+                await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, '');
+                return true; // Content changed (deleted)
             }
         } catch (e: any) {
             Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e.message}`);
@@ -1229,6 +1239,11 @@ export class SovereignS3nc extends EventEmitter {
                 } catch (e: any) {
                     Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date}). Error: ${e.message}`);
                 }
+            } else if (!result) {
+                // File deleted on remote (Moderated)
+                Logger.info(`[Sync] Followed file ${userId}/${date} missing on remote. Deleting local copy.`);
+                await this.storage.deleteDailyDb(`${userId}/${date}`, 'followed' as any);
+                await this.storage.setRemoteHashCache(`${userId}:${date}`, 'followed' as any, '');
             } else if (result?.notModified) {
                 Logger.info(`[Sync] Skipping download for ${userId}/${date}, etags match.`);
             }

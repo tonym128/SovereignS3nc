@@ -23,6 +23,11 @@ export interface IStorage {
   saveDailyDb(date: string, type: 'private' | 'public', data: Uint8Array): Promise<void>;
 
   /**
+   * Delete a daily SQLite database file.
+   */
+  deleteDailyDb(date: string, type: 'private' | 'public'): Promise<void>;
+
+  /**
    * Calculate/Get the hash of the local daily DB file.
    */
   getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null>;

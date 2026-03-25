@@ -90796,6 +90796,18 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
+        async deleteDailyDb(date2, type) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("files", "readwrite");
+              const request = store.delete(`${type}/${date2}`);
+              request.onsuccess = () => resolve();
+              request.onerror = () => reject(request.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
         async getDailyDbHash(date2, type) {
           const data = await this.getDailyDb(date2, type);
           if (!data) return null;
@@ -91503,6 +91515,12 @@ ${toHex(hashedRequest)}`;
           await fs.ensureDir(path.dirname(filePath));
           await fs.writeFile(filePath, data);
         }
+        async deleteDailyDb(date2, type) {
+          const filePath = this.getFilePath(`${type}/${date2}.db`);
+          if (await fs.pathExists(filePath)) {
+            await fs.unlink(filePath);
+          }
+        }
         async getDailyDbHash(date2, type) {
           const data = await this.getDailyDb(date2, type);
           if (!data) return null;
@@ -91954,7 +91972,7 @@ ${toHex(hashedRequest)}`;
           this.config.encryptionKey = keyInfo.privateKey;
           this.config.publicEncryptionKey = keyInfo.publicKey;
         }
-        async sync() {
+        async sync(forceSync = false) {
           if (!this.remote || !this.publicRemote || !this.globalRemote) {
             Logger.info("[Sovereign] Remote not connected, skipping sync.");
             return;
@@ -91965,7 +91983,10 @@ ${toHex(hashedRequest)}`;
           }
           this.isSyncing = true;
           try {
-            const lastSync = await this.storage.getLastSyncDate();
+            if (forceSync) {
+              Logger.info("[Sync] FORCE SYNC initiated. Bypassing ETag cache.");
+            }
+            const lastSync = forceSync ? null : await this.storage.getLastSyncDate();
             const today = _SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
             let currentDate;
             if (lastSync) {
@@ -92569,6 +92590,11 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 Logger.warn(`[Sync] Failed to process ${remotePath} from ${userId}: ${e2.message}`);
               }
+            } else if (!result) {
+              Logger.info(`[Sync] File ${remotePath} missing on remote for ${userId}. Deleting local copy.`);
+              await this.storage.deleteFile(localPath);
+              await this.storage.setGenericRemoteHashCache(`${userId}:${remotePath}`, "");
+              return true;
             }
           } catch (e2) {
             Logger.warn(`[Sync] pullUserFile failed for ${userId}/${remotePath}: ${e2.message}`);
@@ -92592,6 +92618,10 @@ ${toHex(hashedRequest)}`;
               } catch (e2) {
                 Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
+            } else if (!result) {
+              Logger.info(`[Sync] Followed file ${userId}/${date2} missing on remote. Deleting local copy.`);
+              await this.storage.deleteDailyDb(`${userId}/${date2}`, "followed");
+              await this.storage.setRemoteHashCache(`${userId}:${date2}`, "followed", "");
             } else if (result?.notModified) {
               Logger.info(`[Sync] Skipping download for ${userId}/${date2}, etags match.`);
             }
@@ -99793,26 +99823,26 @@ ${toHex(hashedRequest)}`;
             showAlert(`Fetched ${r2.length} reports.`);
           }
         } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Refresh")), /* @__PURE__ */ import_react.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, report.evidence && /* @__PURE__ */ import_react.default.createElement("button", { title: "View Content", className: "btn btn-sm btn-outline-primary", onClick: () => setPreviewPost(report.evidence) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-eye" })), /* @__PURE__ */ import_react.default.createElement("button", { title: "Delete Post Only", className: "btn btn-sm btn-outline-danger", onClick: async () => {
-          if (moderation && report.evidence) {
+          if (moderation && report.evidence && sov) {
             try {
               const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
               const path2 = `${report.targetUserId}/social/public/modules/feed/${today}.db`;
               await moderation.deleteUserFile(path2);
               await moderation.deleteReport(report.id);
-              const r2 = await moderation.getReports();
-              setReports(r2);
+              await sov.sync(true);
+              await loadData(sov);
               showAlert("Post deleted and report closed.");
             } catch (e2) {
               showAlert(e2.message);
             }
           }
         } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash" })), /* @__PURE__ */ import_react.default.createElement("button", { title: "Ban User", className: "btn btn-sm btn-danger", onClick: async () => {
-          if (moderation) {
+          if (moderation && sov) {
             try {
               await moderation.banUser(report.targetUserId);
               await moderation.deleteReport(report.id);
-              const r2 = await moderation.getReports();
-              setReports(r2);
+              await sov.sync(true);
+              await loadData(sov);
               showAlert("User banned and all data purged.");
             } catch (e2) {
               showAlert(e2.message);

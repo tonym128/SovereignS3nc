@@ -55,6 +55,13 @@ export class NodeStorage implements IStorage {
         await fs.writeFile(filePath, data);
     }
 
+    async deleteDailyDb(date: string, type: 'private' | 'public'): Promise<void> {
+        const filePath = this.getFilePath(`${type}/${date}.db`);
+        if (await fs.pathExists(filePath)) {
+            await fs.unlink(filePath);
+        }
+    }
+
     async getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null> {
         const data = await this.getDailyDb(date, type);
         if (!data) return null;

@@ -6,7 +6,7 @@ set -e
 
 CONFIG="demo/social/config.json"
 if [ ! -f "$CONFIG" ]; then
-    echo "Error: $CONFIG not found. Run ./dev.sh dev first."
+    echo "Error: $CONFIG not found. Run ./dev.sh start first."
     exit 1
 fi
 

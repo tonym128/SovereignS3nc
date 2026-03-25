@@ -4,7 +4,7 @@ async function globalSetup() {
   console.log('--- Global Setup (RustFS): Restarting Dev Environment ---');
   try {
     // We use bash to run the dev script which handles stopping and starting everything
-    execSync('bash dev.sh dev', { stdio: 'inherit' });
+    execSync('bash dev.sh start', { stdio: 'inherit' });
     // Give it more time to be fully ready (Metadata/IAM init)
     await new Promise(resolve => setTimeout(resolve, 10000));
     console.log('--- Global Setup (RustFS): Dev Environment Ready ---');
