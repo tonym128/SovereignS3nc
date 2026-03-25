@@ -256,6 +256,37 @@ export class ModerationModule {
     }
 
     /**
+     * (Admin Only) Lists all unique user IDs present in the appId namespace.
+     */
+    async listUsers(): Promise<string[]> {
+        const rootRemote = (this.sovereign as any).rootRemote;
+        if (!rootRemote || !rootRemote.listFiles) {
+            throw new Error("Root remote not configured or missing listFiles capability.");
+        }
+        
+        const files = await rootRemote.listFiles('');
+        const users = new Set<string>();
+        for (const file of files) {
+            const parts = file.split('/');
+            if (parts.length > 0 && parts[0] !== '') {
+                users.add(parts[0]);
+            }
+        }
+        return Array.from(users).sort();
+    }
+
+    /**
+     * (Admin Only) Lists all files in the appId namespace, optionally filtered by prefix.
+     */
+    async listFiles(prefix: string = ''): Promise<string[]> {
+        const rootRemote = (this.sovereign as any).rootRemote;
+        if (!rootRemote || !rootRemote.listFiles) {
+            throw new Error("Root remote not configured or missing listFiles capability.");
+        }
+        return await rootRemote.listFiles(prefix);
+    }
+
+    /**
      * (Admin Only) Exports all data under the appId namespace as a JSON string containing base64 encoded files.
      */
     async exportAllData(): Promise<string> {

@@ -36,6 +36,30 @@ describe('Admin CLI Unit Tests', () => {
         (fs.readFile as unknown as jest.Mock).mockResolvedValue('{}');
     });
 
+    test('list-users calls listUsers and logs them', async () => {
+        mockModeration.listUsers.mockResolvedValue(['user1', 'user2']);
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        
+        await run(['list-users']);
+        
+        expect(mockModeration.listUsers).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('user1'));
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('user2'));
+        consoleSpy.mockRestore();
+    });
+
+    test('list-files calls listFiles with prefix and logs them', async () => {
+        mockModeration.listFiles.mockResolvedValue(['file1.db', 'file2.db']);
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        
+        await run(['list-files', 'some-prefix']);
+        
+        expect(mockModeration.listFiles).toHaveBeenCalledWith('some-prefix');
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('file1.db'));
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('file2.db'));
+        consoleSpy.mockRestore();
+    });
+
     test('list-reports calls getReports and logs them', async () => {
         const mockReports = [
             { id: '1', reporterId: 'u1', targetUserId: 'u2', contentType: 'post', reason: 'spam' }
@@ -59,27 +83,37 @@ describe('Admin CLI Unit Tests', () => {
         consoleSpy.mockRestore();
     });
 
-    test('export-data calls exportAllData and writes to file', async () => {
+    test('backup calls exportAllData and writes to file', async () => {
         mockModeration.exportAllData.mockResolvedValue('{"foo":"bar"}');
         const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
         
-        await run(['export-data', 'my-export.json']);
+        await run(['backup', 'my-backup.json']);
         
         expect(mockModeration.exportAllData).toHaveBeenCalled();
-        expect(fs.writeFile as unknown as jest.Mock).toHaveBeenCalledWith('my-export.json', '{"foo":"bar"}');
-        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('exported to my-export.json'));
+        expect(fs.writeFile as unknown as jest.Mock).toHaveBeenCalledWith('my-backup.json', '{"foo":"bar"}');
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('exported to my-backup.json'));
         consoleSpy.mockRestore();
     });
 
-    test('import-data calls importAllData', async () => {
+    test('restore calls importAllData', async () => {
         (fs.readFile as unknown as jest.Mock).mockResolvedValue('{"data":"dump"}');
         const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
         
-        await run(['import-data', 'my-import.json']);
+        await run(['restore', 'my-restore.json']);
         
-        expect(fs.readFile as unknown as jest.Mock).toHaveBeenCalledWith('my-import.json', 'utf8');
+        expect(fs.readFile as unknown as jest.Mock).toHaveBeenCalledWith('my-restore.json', 'utf8');
         expect(mockModeration.importAllData).toHaveBeenCalledWith('{"data":"dump"}');
         expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('imported successfully'));
+        consoleSpy.mockRestore();
+    });
+
+    test('reset calls burnItToTheGround', async () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        
+        await run(['reset']);
+        
+        expect(mockModeration.burnItToTheGround).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Operation complete'));
         consoleSpy.mockRestore();
     });
 
