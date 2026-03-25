@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - RUSTFS_ACCESS_KEY=rustfsroot
+      - RUSTFS_SECRET_KEY=rustfsrootsecret
+      - RUST_LOG=error
+    volumes:
+      - rustfs_data:/data
+
+  # Helper service to initialize RustFS with keys and buckets
+  rustfs-setup:
+    image: alpine:latest
+    depends_on:
+      - rustfs
+    volumes:
+      - ../../bin:/bin_host
+    entrypoint: /bin/sh -c "sleep 5 && /bin_host/rc alias set local http://rustfs:9000 rustfsroot rustfsrootsecret && /bin_host/rc admin user add local admin-key admin-secret-123 && /bin_host/rc admin user add local user-key user-secret-123 && /bin_host/rc mb local/sovereign-demo"
+
+  social-demo:
+    build:
+      context: ../../
+      dockerfile: demo/docker/Dockerfile
+    ports:
+      - "8888:8888"
+      - "8889:8889"
+    depends_on:
+      - rustfs
+      - rustfs-setup
+    environment:
+      - TARGET_HOST=rustfs
+      - TARGET_PORT=9000
+
+volumes:
+  rustfs_data:

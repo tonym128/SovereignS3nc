@@ -1,6 +1,6 @@
 # SovereignS3nc
 
-A decentralized, offline-first data storage and synchronization library designed to connect client applications directly to any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, Garage, etc.).
+A decentralized, offline-first data storage and synchronization library designed to connect client applications directly to any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, RustFS, etc.).
 
 ## Overview
 
@@ -33,7 +33,7 @@ import { SovereignS3nc } from 'sovereigns3nc';
 const sovereign = new SovereignS3nc({
   s3: {
     region: 'us-east-1',
-    endpoint: 'https://...', // For Garage/Minio/OCI/S3
+    endpoint: 'https://...', // For RustFS/Minio/OCI/S3
     credentials: {
       accessKeyId: '...',
       secretAccessKey: '...'

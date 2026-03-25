@@ -1,6 +1,6 @@
 export interface S3Config {
   region: string;
-  endpoint?: string; // For custom providers like Garage or OCI
+  endpoint?: string; // For custom providers like RustFS or OCI
   credentials: {
     accessKeyId: string;
     secretAccessKey: string;

@@ -1820,9 +1820,8 @@ const App = () => {
                                                         if (uid) {
                                                             // In a real application, this would call your backend API
                                                             // e.g., POST /api/admin/provision { userId: uid }
-                                                            // For the demo, we show the Garage CLI command needed.
-                                                            const cmd = `garage key create sov-${uid} && garage bucket allow ${config.bucketName} --read --write --owner --key <ACCESS_KEY>`;
-                                                            showAlert(`To provision ${uid} in Garage S3, run:\n\n${cmd}\n\nThen provide the user with the generated credentials.`, 'Provisioning Instructions');
+                                                            // For the demo, we show the provisioning instruction.
+                                                            showAlert(`To provision ${uid} in your S3 backend, ensure they have a key with read/write access to their prefixed paths and the global registry.`, 'Provisioning Instructions');
                                                         }
                                                     });
                                                 }}>
@@ -1936,15 +1935,44 @@ const App = () => {
                                                         <td>
                                                             <div className="d-flex gap-2">
                                                                 {report.evidence && (
-                                                                    <button className="btn btn-sm btn-outline-primary" onClick={() => setPreviewPost(report.evidence)}>
-                                                                        <i className="bi bi-eye"></i> View
+                                                                    <button title="View Content" className="btn btn-sm btn-outline-primary" onClick={() => setPreviewPost(report.evidence)}>
+                                                                        <i className="bi bi-eye"></i>
                                                                     </button>
                                                                 )}
-                                                                <button className="btn btn-sm btn-danger" onClick={() => {
-                                                                    if (moderation) {
-                                                                        (moderation as any).blacklistUser(report.targetUserId).catch((e: any) => showAlert('Error: ' + e.message));
+                                                                <button title="Delete Post Only" className="btn btn-sm btn-outline-danger" onClick={async () => {
+                                                                    if (moderation && report.evidence) {
+                                                                        try {
+                                                                            // Module DB path: userId/storeId/public/modules/name/date.db
+                                                                            const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
+                                                                            const path = `${report.targetUserId}/social/public/modules/feed/${today}.db`;
+                                                                            await moderation.deleteUserFile(path);
+                                                                            await moderation.deleteReport(report.id);
+                                                                            const r = await moderation.getReports();
+                                                                            setReports(r);
+                                                                            showAlert('Post deleted and report closed.');
+                                                                        } catch (e: any) { showAlert(e.message); }
                                                                     }
-                                                                }}>Ban</button>
+                                                                }}>
+                                                                    <i className="bi bi-trash"></i>
+                                                                </button>
+                                                                <button title="Ban User" className="btn btn-sm btn-danger" onClick={async () => {
+                                                                    if (moderation) {
+                                                                        try {
+                                                                            await moderation.banUser(report.targetUserId);
+                                                                            await moderation.deleteReport(report.id);
+                                                                            const r = await moderation.getReports();
+                                                                            setReports(r);
+                                                                            showAlert('User banned and all data purged.');
+                                                                        } catch (e: any) { showAlert(e.message); }
+                                                                    }
+                                                                }}><i className="bi bi-person-x"></i> Ban</button>
+                                                                <button title="Ignore Report" className="btn btn-sm btn-light" onClick={async () => {
+                                                                    if (moderation) {
+                                                                        await moderation.deleteReport(report.id);
+                                                                        const r = await moderation.getReports();
+                                                                        setReports(r);
+                                                                    }
+                                                                }}><i className="bi bi-x-lg"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>

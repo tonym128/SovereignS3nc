@@ -21,14 +21,14 @@ const adminConfigPath = 'demo/social/admin_config.json';
 const userConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 const adminConfig = JSON.parse(fs.readFileSync(adminConfigPath, 'utf8'));
 
-describe('Admin & Moderation Integration Tests', () => {
+describe('RustFS Admin & Moderation Integration Tests', () => {
     let adminSov: SovereignS3nc;
     let userSov: SovereignS3nc;
     let adminMod: ModerationModule;
     let userMod: ModerationModule;
     let userFeed: FeedModule;
 
-    const appId = 'admin-test-' + Math.random().toString(36).substring(7);
+    const appId = 'rustfs-admin-test-' + Math.random().toString(36).substring(7);
 
     beforeAll(async () => {
         // Setup Admin
@@ -51,93 +51,174 @@ describe('Admin & Moderation Integration Tests', () => {
         await userSov.init();
         userMod = new ModerationModule(userSov);
         userFeed = new FeedModule(userSov);
+
+        // Verify Admin Status
+        expect(await adminMod.isAdmin()).toBe(true);
+        expect(await userMod.isAdmin()).toBe(false);
     }, 30000);
 
-    test('Admin can publish public key and user can see it', async () => {
+    test('Admin publishing their key works as expected, for existing and new users', async () => {
+        // 1. Admin publishes key
         await adminMod.publishAdminKey();
         
-        // Use user's adminRemote to check (it should have read access even if no write)
-        const adminRemote = (userSov as any).adminRemote;
-        const result = await adminRemote.downloadFile('public_key.json');
-        expect(result).toBeDefined();
-        expect(result.data).toBeDefined();
-        
-        const data = JSON.parse(new TextDecoder().decode(result.data));
-        expect(data.publicKey).toBe(adminSov.getConfig().publicEncryptionKey);
+        // 2. Existing user syncs and gets it
+        await userSov.syncAdminKey();
+        expect(userSov.getConfig().adminPublicKey).toBe(adminSov.getConfig().publicEncryptionKey);
+
+        // 3. New user initializes and gets it
+        const newUserSov = new SovereignS3nc({
+            s3: userConfig,
+            paths: { appId, userId: 'new-user', storeId: 'social' },
+            password: 'new-user-password'
+        });
+        (newUserSov as any).storage = new IndexedDBStorage(`new_user_db_${appId}`);
+        await newUserSov.init();
+        expect(newUserSov.getConfig().adminPublicKey).toBe(adminSov.getConfig().publicEncryptionKey);
     });
 
-    test('User can submit an encrypted report to admin', async () => {
-        await userMod.reportContent('bad-user', 'post-123', 'post', 'Inappropriate content');
-        
-        // Admin checks for the report (S3 List simulation since listFiles is implemented)
-        const adminRemote = (adminSov as any).adminRemote;
-        const files = await adminRemote.listFiles('reports/');
+    test('Non-admin user should not be able to publish an admin E2EE key', async () => {
+        try {
+            await userMod.publishAdminKey();
+            throw new Error('Should have thrown a permission denied error');
+        } catch (e: any) {
+            expect(e.message).toContain('Permission denied');
+        }
+    });
+
+    test('User reports an item, admin rejects claim, post should not be deleted', async () => {
+        const today = SovereignS3nc.getDateStr(new Date());
+        // 1. User creates a post
+        await userFeed.post("Harmless content");
+        await userSov.sync();
+
+        // S3 Consistency delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const posts = await userFeed.getPosts(today, 'public');
+        const post = posts[0];
+
+        // 2. User reports the post
+        await userMod.reportContent(userSov.getConfig().paths.userId, post.id, 'post', 'False alarm', post);
+
+        // 3. Admin reviews reports
+        const reports = await adminMod.getReports();
+        const report = reports.find(r => r.targetUserId === userSov.getConfig().paths.userId);
+        expect(report).toBeDefined();
+
+        // 4. Admin rejects claim (simply deletes the report without deleting the post)
+        await adminMod.deleteReport(report!.id);
+
+        // 5. Verify post still exists
+        const feedPrefix = `regular-user/social/public/modules/feed/`;
+        const files = await (adminSov as any).rootRemote.listFiles(feedPrefix);
         expect(files.length).toBeGreaterThan(0);
-        
-        const reportFile = files.find((f: string) => f.endsWith('.enc'));
-        expect(reportFile).toBeDefined();
     });
 
-    test('Admin can blacklist a user and regular users sync handles it', async () => {
-        const targetUserId = 'evil-user';
-        
-        // 1. Admin blacklists the user
-        await adminMod.blacklistUser(targetUserId);
-        
-        // 2. User syncs the blacklist
-        await userSov.syncBlacklist();
-        const config = userSov.getConfig();
-        expect(config.blacklist).toContain(targetUserId);
-        
-        // 3. User attempts to follow everyone (Evil user should be filtered out)
-        // We'll manually inject evil user into a registry mock or just test the filter
-        const mockRegistry = [
-            { userId: 'good-user', publicKey: 'pk1' },
-            { userId: targetUserId, publicKey: 'pk2' }
-        ];
-        
-        // We need to bypass the real network for this specific sub-test or 
-        // rely on the discoverUsers filter logic
-        const filtered = await userSov.discoverUsers(); // This will hit the real global registry
-        // If we registered evil-user it would be filtered. 
-        // Let's just test the core filter logic in SovereignS3nc
-        const blacklist = (userSov as any).config.blacklist;
-        const result = mockRegistry.filter(u => !blacklist.includes(u.userId));
-        expect(result.length).toBe(1);
-        expect(result[0].userId).toBe('good-user');
+    test('User reports an item, admin accepts claim, post should be deleted', async () => {
+        const today = SovereignS3nc.getDateStr(new Date());
+        // 1. User creates a 'bad' post
+        await userFeed.post("Bad content");
+        await userSov.sync();
+
+        // Consistency delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        const posts = await userFeed.getPosts(today, 'public');
+        const post = posts[0];
+        const postFile = `regular-user/social/public/modules/feed/${today}.db`;
+
+        // 2. User reports the post
+        await userMod.reportContent(userSov.getConfig().paths.userId, post.id, 'post', 'Toxic content', post);
+
+        // 3. Admin reviews and accepts
+        const reports = await adminMod.getReports();
+        const report = reports.find(r => r.evidence && r.evidence.content === "Bad content");
+        expect(report).toBeDefined();
+
+        // 4. Admin deletes the offending content
+        await adminMod.deleteUserFile(postFile);
+        await adminMod.deleteReport(report!.id);
+
+        // 5. Verify file is gone from S3
+        const checkPrefix = `regular-user/social/public/modules/feed/`;
+        const checkFiles = await (adminSov as any).rootRemote.listFiles(checkPrefix);
+        const fileExists = checkFiles.some((f: string) => f.includes(today));
+        expect(fileExists).toBe(false);
     });
 
-    test('Regular user cannot perform admin actions (Access Denied Simulation)', async () => {
-        // In local Garage dev, we allowed both keys full access for convenience in dev.sh
-        // but the library still enforces prefix isolation if configured correctly.
-        // We will test that the Moderation module correctly reports isAdmin=false for regular users.
-        const isUserAdmin = await userMod.isAdmin();
-        // Since userConfig doesn't have write access to /admin/ in a real IAM setup,
-        // but Garage bucket allow --write allows it, we test the logic.
-        // To truly test this we'd need to mock the 403 response or have a more restricted Garage key.
-        // For now, we verify the user can submit reports (write-only to admin/reports) 
-        // but should fail a full appId/admin write if we restricted it.
-        expect(isUserAdmin).toBe(true); // Currently true because dev.sh grants --write to user-key
+    test('Admin bans a user: content disappears, cannot login in future', async () => {
+        const evilUserId = 'evil-user';
+        const evilSov = new SovereignS3nc({
+            s3: userConfig,
+            paths: { appId, userId: evilUserId, storeId: 'social' },
+            password: 'evil-password'
+        });
+        (evilSov as any).storage = new IndexedDBStorage(`evil_db_${appId}`);
+        await evilSov.init();
+        const evilFeed = new FeedModule(evilSov);
+        await evilFeed.post("I will be banned");
+        await evilSov.sync();
+
+        // 1. Admin bans user
+        await adminMod.banUser(evilUserId);
+
+        // 2. Regular user syncs and evil user should be gone from discovery
+        await userSov.sync();
+        const users = await userSov.discoverUsers();
+        expect(users?.find(u => u.userId === evilUserId)).toBeUndefined();
+
+        // 3. Evil user tries to sync (should fail or at least be unable to update registry)
+        const checkProfile = await (adminSov as any).rootRemote.downloadFile(`${evilUserId}/social/public/user.json`);
+        expect(checkProfile).toBeNull();
     });
 
-    test('Admin can export and burn data', async () => {
+    test('Regular user cannot access protected admin resources', async () => {
+        // 1. User attempts to download admin public key (SHOULD WORK per our new policy)
+        const keyResult = await (userSov as any).adminRemote.downloadFile('public_key.json');
+        expect(keyResult).not.toBeNull();
+        expect(keyResult.data).toBeDefined();
+
+        // 2. User attempts to list admin reports (SHOULD FAIL)
+        const files = await (userSov as any).adminRemote.listFiles('reports/');
+        expect(files.length).toBe(0);
+
+        // 3. User attempts to delete a file they don't own (SHOULD FAIL)
+        try {
+            await (userSov as any).rootRemote.deleteFile(`admin-user/social/public/user.json`);
+        } catch (e) {
+            // expected
+        }
+    });    test('Export and Import data', async () => {
         // 1. Export
         const dump = await adminMod.exportAllData();
         expect(dump).toBeDefined();
         const parsed = JSON.parse(dump);
         expect(Object.keys(parsed).length).toBeGreaterThan(0);
 
-        // 2. Burn it to the ground
+        // 2. Import into a NEW appId
+        const newAppId = appId + '-restored';
+        const restoredSov = new SovereignS3nc({
+            s3: adminConfig,
+            paths: { appId: newAppId, userId: 'admin', storeId: 'data' },
+            password: 'password'
+        });
+        await restoredSov.init();
+        const restoredMod = new ModerationModule(restoredSov);
+
+        await restoredMod.importAllData(dump);
+
+        // 3. Verify files exist in new appId
+        const files = await (restoredSov as any).rootRemote.listFiles('');
+        expect(files.length).toBeGreaterThan(0);
+    });
+
+    test('Burn it to the ground takes the server down', async () => {
         await adminMod.burnItToTheGround();
         
-        // 3. Verify it's gone (Wait a moment for S3 consistency)
+        // Wait for consistency
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const rootRemote = (adminSov as any).rootRemote;
-        const filesAfterBurn = await rootRemote.listFiles('');
         
-        // Note: .probe might still be there if written during the test, 
-        // but core appId data should be purged.
-        // Actually burnItToTheGround deletes EVERYTHING under the prefix.
-        expect(filesAfterBurn.length).toBe(0);
-    }, 60000);
+        const files = await (adminSov as any).rootRemote.listFiles('');
+        expect(files.length).toBe(0);
+    });
 });

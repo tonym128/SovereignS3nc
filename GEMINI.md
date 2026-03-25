@@ -1,7 +1,7 @@
 # SovereignS3nc Project Context for Gemini
 
 ## Project Overview
-**SovereignS3nc** is a generic, offline-first data storage library written in TypeScript. It is designed to sync JSON-serializable data, media blobs, and localized SQLite databases with any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, Garage, etc.).
+**SovereignS3nc** is a generic, offline-first data storage library written in TypeScript. It is designed to sync JSON-serializable data, media blobs, and localized SQLite databases with any S3-compatible object storage (AWS S3, Oracle OCI, MinIO, RustFS, etc.).
 
 ### Key Features
 - **Offline-First**: Operates on local storage (`IndexedDB` in the browser) and syncs asynchronously when connectivity is available.
@@ -45,7 +45,7 @@
 - `npm run build`: Runs `tsc` (CommonJS), `build:esm` (ES Modules), and `build:global` (Browser Global).
 - `npm run build:social`: Rebuilds the social demo application.
 - `npm test`: Runs Jest unit tests.
-- `npm run test:integration`: Runs live Garage S3-backed integration tests.
+- `npm run test:integration`: Runs live RustFS S3-backed integration tests.
 - `npm run test:browser`: Runs Playwright multi-user browser tests.
 
 ### Directory Structure

@@ -127,7 +127,7 @@ SovereignS3nc CLI - Usage:
                         endpoint, 
                         credentials: { accessKeyId, secretAccessKey }, 
                         bucketName, 
-                        region: 'garage' 
+                        region: 'rustfs' 
                     };
                     const profile: UserProfile = { userId, password, s3Config, lastLogin: Date.now() };
                     await saveProfile(profile);

@@ -1,5 +1,5 @@
 {
-    "endpoint": "http://127.0.0.1:8889",
+    "endpoint": "http://127.0.0.1:9000",
     "region": "rustfs",
     "accessKeyId": "admin-key",
     "secretAccessKey": "admin-secret-123",

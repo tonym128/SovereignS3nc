@@ -229,20 +229,30 @@ export class ModerationModule {
     }
 
     /**
-     * (Admin Only) Performs a 'Hard Ban': Blacklists, removes from registry, and deletes public presence.
+     * (Admin Only) Performs a 'Hard Ban': Blacklists, removes from registry, and deletes ALL associated data.
      */
     async banUser(userId: string) {
         Logger.info(`[Moderation] Banning user ${userId}...`);
+        
+        // 1. Social Ban
         await this.blacklistUser(userId);
         await this.removeFromGlobalRegistry(userId);
         
-        // Delete public profile and manifest to make content hard to find
-        try {
-            await this.deleteUserFile(`${userId}/public/user.json`);
-            await this.deleteUserFile(`${userId}/public/manifest.json`);
-        } catch (e) {}
+        // 2. Infrastructure Wipe (Delete everything under userId/ prefix)
+        const rootRemote = (this.sovereign as any).rootRemote;
+        if (rootRemote && rootRemote.listFiles && rootRemote.deleteFile) {
+            try {
+                const userFiles = await rootRemote.listFiles(`${userId}/`);
+                for (const file of userFiles) {
+                    await rootRemote.deleteFile(file);
+                }
+                Logger.info(`[Moderation] Deleted ${userFiles.length} files for banned user ${userId}.`);
+            } catch (e: any) {
+                Logger.warn(`[Moderation] Failed to wipe infrastructure for user ${userId}: ${e.message}`);
+            }
+        }
         
-        Logger.info(`[Moderation] User ${userId} has been banned and their public profile deleted.`);
+        Logger.info(`[Moderation] User ${userId} has been banned and their data purged.`);
     }
 
     /**

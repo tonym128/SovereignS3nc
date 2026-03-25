@@ -21,7 +21,7 @@ async function main() {
             CORSRules: [
                 {
                     AllowedHeaders: [
-                        "Access-Control-Allow-Headers",
+                        "*",
                         "Authorization",
                         "Content-Type",
                         "X-Amz-Content-Sha256",
@@ -30,7 +30,21 @@ async function main() {
                         "X-Amz-Meta-Hash",
                         "x-amz-meta-hash",
                         "Metadata",
-                        "*"
+                        "If-None-Match",
+                        "If-Modified-Since",
+                        "Range",
+                        "Origin",
+                        "Accept",
+                        "x-amz-id-2",
+                        "x-amz-request-id",
+                        "x-amz-checksum-mode",
+                        "x-amz-checksum-crc32",
+                        "x-amz-checksum-crc32c",
+                        "x-amz-checksum-sha1",
+                        "x-amz-checksum-sha256",
+                        "x-amz-sdk-checksum-algorithm",
+                        "amz-sdk-invocation-id",
+                        "amz-sdk-request"
                     ],
                     AllowedMethods: ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
                     AllowedOrigins: ["*"],
@@ -40,7 +54,12 @@ async function main() {
                         "x-amz-id-2", 
                         "x-amz-request-id",
                         "Content-Length",
-                        "Content-Type"
+                        "Content-Type",
+                        "x-amz-checksum-mode",
+                        "x-amz-checksum-crc32",
+                        "x-amz-checksum-crc32c",
+                        "x-amz-checksum-sha1",
+                        "x-amz-checksum-sha256"
                     ],
                     MaxAgeSeconds: 3000
                 }
