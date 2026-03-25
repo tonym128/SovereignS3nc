@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "sov": "dist/cli.js"
+    "sov": "dist/cli.js",
+    "sov-admin": "dist/admin.js"
   },
   "module": "dist/sovereigns3nc.esm.js",
   "unpkg": "dist/sovereigns3nc.global.js",
@@ -22,7 +23,8 @@
     "build:social": "node demo/social/build.js",
     "build:banky": "node demo/banky/build.js",
     "build": "tsc && npm run build:esm && npm run build:global",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "admin-cli": "ts-node src/admin.ts"
   },
   "keywords": [],
   "author": "",
