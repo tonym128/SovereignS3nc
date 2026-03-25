@@ -256,6 +256,60 @@ describe('SovereignS3nc Unit Tests', () => {
         });
     });
 
+    describe('Offline Login Verification', () => {
+        test('should create a sentinel file on first initialization', async () => {
+            const sov = new SovereignS3nc(config, mockRemote);
+            await sov.init();
+            
+            const sentinel = await (sov as any).storage.getFile('private/sentinel.enc');
+            expect(sentinel).toBeDefined();
+            expect(sentinel.length).toBeGreaterThan(0);
+        });
+
+        test('should allow offline initialization with correct password', async () => {
+            // 1. Initial online setup to create sentinel
+            const sov1 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov1.init();
+
+            // 2. Offline initialization with SAME password
+            mockRemote.isOffline = true;
+            // Create a new instance with same storage (simulated by same config/IDB)
+            const sov2 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov2.init();
+            expect(sov2).toBeDefined();
+        });
+
+        test('should fail offline initialization with incorrect password', async () => {
+            // 1. Initial online setup to create sentinel
+            const sov1 = new SovereignS3nc({ ...config }, mockRemote);
+            await sov1.init();
+
+            // 2. Offline initialization with WRONG password
+            mockRemote.isOffline = true;
+            const wrongConfig = { 
+                paths: { ...config.paths },
+                password: 'wrong-password',
+                debug: false
+            };
+            const sov2 = new SovereignS3nc(wrongConfig, mockRemote);
+            
+            await expect(sov2.init()).rejects.toThrow('Incorrect password. Access denied.');
+        });
+
+        test('should not fail if no sentinel exists (first time offline)', async () => {
+            // No sentinel exists yet in this fresh IDBFactory
+            mockRemote.isOffline = true;
+            const sov = new SovereignS3nc({ ...config }, mockRemote);
+            // It should proceed and not throw because we now catch Network Error in initKeys
+            await sov.init();
+            expect(sov).toBeDefined();
+            
+            // Should have created a sentinel now
+            const sentinel = await (sov as any).storage.getFile('private/sentinel.enc');
+            expect(sentinel).toBeDefined();
+        });
+    });
+
     describe('Following', () => {
         test('should follow and unfollow users', async () => {
             const sov = new SovereignS3nc(config, mockRemote);
