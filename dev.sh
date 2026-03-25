@@ -217,15 +217,18 @@ function stop() {
     
     [ -f .social_web.pid ] && kill $(cat .social_web.pid) 2>/dev/null && rm .social_web.pid || true
     [ -f .banky_web.pid ] && kill $(cat .banky_web.pid) 2>/dev/null && rm .banky_web.pid || true
+    [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid || true
     [ -f .rustfs.pid ] && kill $(cat .rustfs.pid) 2>/dev/null && rm .rustfs.pid || true
     
     # Backup cleanup - more specific to avoid self-kill
-    pkill -9 -u $(whoami) -x rustfs 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "./bin/rustfs" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8888" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8887" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "node scripts/proxy.js" 2>/dev/null || true
 
     echo "Removing temporary data..."
-    rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "rustfs_startup.log" 2>/dev/null || true
+    rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "rustfs_startup.log" "proxy.log" ".proxy.pid" ".rustfs.pid" ".social_web.pid" ".banky_web.pid" 2>/dev/null || true
+    rm -rf "demo-runtime" 2>/dev/null || true
 
     RESET_CONFIG="{
     \"endpoint\": \"http://127.0.0.1:$RUSTFS_PORT\",
