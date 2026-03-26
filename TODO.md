@@ -37,36 +37,37 @@
     - [x] Fail login early if password results in incorrect private key derivation.
     - [x] Implement `changePassword` core logic (data migration and re-encryption).
     - [x] **UI**: Add "Change Password" flow to Social and Banky demo apps.
-- [ ] **Performance & UX**
+- [x] **Performance & UX**
     - [x] Implement background Web Workers for sync.
-    - [ ] Make Web Workers the default seamless experience in demos (currently opt-in).
+    - [x] Make Web Workers the default seamless experience in demos (currently opt-in).
     - [x] Implement PWA support (`manifest.json` + Service Worker) for local installation.
     - [x] Audit library performance and provide benchmarks for sync latency and storage overhead.
 - [x] **Accessibility & UI**
-    - [ ] Mobile-friendly responsive audit for Social Demo.
+    - [x] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
-- [ ] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
+- [x] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
 
 ## 🧪 Testing & Validation
-- [ ] **Integration Testing**
+- [x] **Integration Testing**
     - [x] Implement real WebRTC/PeerJS integration tests with a live signaling server.
     - [x] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [x] **Admin & Moderation**
     - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
 - [x] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
-- [ ] Add integration tests for complex group permissions and member removal/revocation edge cases.
+- [x] Add integration tests for complex group permissions and member removal/revocation edge cases.
+- [x] **Storage Migration Tests**: Verify data consistency and integrity when switching between `IndexedDBStorage` and `SQLiteNodeStorage`.
 
 ## 📚 Documentation & Infrastructure
 - [x] **Security & Whitepaper**
     - [x] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
-- [ ] **Deployment & DX**
+- [x] **Deployment & DX**
     - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
     - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.
-    - [ ] Remove npm publish from GitHub Workflows.
+    - [x] Remove npm publish from GitHub Workflows.
 
 ## User Generated TODO's
 - [x] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
@@ -88,6 +89,4 @@
 - [x] Organize documentation into `docs/` folder.
 - [x] Move testing configurations to `tests/` folder.
 - [x] Purge large binaries from Git history and exclude `bin/` from repo.
-- [x] Update Social and Banky demos to use granular modules.
-arge binaries from Git history and exclude `bin/` from repo.
 - [x] Update Social and Banky demos to use granular modules.

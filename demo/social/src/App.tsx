@@ -1414,7 +1414,7 @@ const App = () => {
                         <span className="badge bg-secondary ms-2 fs-6 align-middle fw-normal" title="S3 Cloud">S3</span>
                     )}
                 </a>
-                <div className="mx-auto d-flex align-items-center">
+                <div className="mx-auto d-flex align-items-center mobile-hide">
                     <button data-testid="nav-home" className={`btn mx-2 position-relative ${currentTab === 'feed' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('feed')}>
                         Home
                         {unreadCounts.feed > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.feed}</span>}
@@ -1427,8 +1427,9 @@ const App = () => {
                         Messages
                         {unreadCounts.messages > 0 && <span data-testid="unread-badge" className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.messages}</span>}
                     </button>
-                    <button data-testid="nav-rooms" className={`btn mx-2 ${currentTab === 'rooms' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('rooms')}>
+                    <button data-testid="nav-rooms" className={`btn mx-2 position-relative ${currentTab === 'rooms' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('rooms')}>
                         Rooms
+                        {unreadCounts.rooms > 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{unreadCounts.rooms}</span>}
                     </button>
                     <button data-testid="nav-profile" className={`btn mx-2 ${currentTab === 'profile' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('profile')}>
                         Profile
@@ -1438,9 +1439,10 @@ const App = () => {
                            Admin
                        </button>
                     )}
-                    </div>                <div className="d-flex align-items-center">
+                </div>
+                <div className="d-flex align-items-center">
                     {config.syncMode === 'offline' && (
-                        <button className="btn btn-sm btn-primary rounded-pill me-3" onClick={handleConnectRemote}>
+                        <button className="btn btn-sm btn-primary rounded-pill me-3 mobile-hide" onClick={handleConnectRemote}>
                             <i className="bi bi-cloud-upload me-1"></i> Connect Remote
                         </button>
                     )}
@@ -1450,18 +1452,53 @@ const App = () => {
                     >
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
                     </button>
-                    <UserAvatar userId={config.userId} size={32} />
-                    <button className="btn btn-sm btn-outline-secondary ms-3" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
+                    <div className="mobile-hide d-flex align-items-center">
+                        <UserAvatar userId={config.userId} size={32} />
+                    </div>
+                    <button className="btn btn-sm btn-outline-secondary ms-2" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
                         {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
                     <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
                 </div>
             </nav>
 
+            <div className="bottom-nav d-md-none">
+                <a href="#" className={`bottom-nav-item ${currentTab === 'feed' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('feed'); }}>
+                    <i className="bi bi-house"></i>
+                    <span>Home</span>
+                    {unreadCounts.feed > 0 && <span className="badge rounded-pill bg-danger">{unreadCounts.feed}</span>}
+                </a>
+                <a href="#" className={`bottom-nav-item ${currentTab === 'friends' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('friends'); }}>
+                    <i className="bi bi-people"></i>
+                    <span>Friends</span>
+                    {unreadCounts.friends > 0 && <span className="badge rounded-pill bg-danger">{unreadCounts.friends}</span>}
+                </a>
+                <a href="#" className={`bottom-nav-item ${currentTab === 'messages' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('messages'); }}>
+                    <i className="bi bi-chat-dots"></i>
+                    <span>Chat</span>
+                    {unreadCounts.messages > 0 && <span className="badge rounded-pill bg-danger">{unreadCounts.messages}</span>}
+                </a>
+                <a href="#" className={`bottom-nav-item ${currentTab === 'rooms' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('rooms'); }}>
+                    <i className="bi bi-grid"></i>
+                    <span>Rooms</span>
+                    {unreadCounts.rooms > 0 && <span className="badge rounded-pill bg-danger">{unreadCounts.rooms}</span>}
+                </a>
+                <a href="#" className={`bottom-nav-item ${currentTab === 'profile' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('profile'); }}>
+                    <i className="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+                {isAdmin && (
+                    <a href="#" className={`bottom-nav-item ${currentTab === 'admin' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('admin'); }}>
+                        <i className="bi bi-shield-lock"></i>
+                        <span>Admin</span>
+                    </a>
+                )}
+            </div>
+
             <div className="container mt-4">
                 <div className="row justify-content-center">
                     {currentTab === 'feed' && (
-                        <div className="feed-container">
+                        <div className="feed-container mobile-full-width">
                             <div className="card post-card p-3 mb-4">
                                 <div className="d-flex mb-3">
                                     <UserAvatar userId={config.userId} />
@@ -1490,7 +1527,7 @@ const App = () => {
                     )}
 
                     {currentTab === 'friends' && (
-                        <div className="col-md-8">
+                        <div className="col-md-8 mobile-full-width">
                             <div className="card p-3 mb-4 shadow-sm border-0">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <h5 className="fw-bold mb-0">Discover People</h5>
@@ -1528,9 +1565,9 @@ const App = () => {
 
                     {currentTab === 'messages' && (
                         <div className="col-md-10">
-                            <div className="card shadow-sm border-0" style={{height: '70vh'}}>
+                            <div className="card shadow-sm border-0 mobile-full-width" style={{height: '75vh'}}>
                                 <div className="row g-0 h-100">
-                                    <div className="col-4 border-end overflow-y-auto">
+                                    <div className={`col-md-4 border-end overflow-y-auto h-100 ${selectedUser ? 'mobile-hide' : ''}`}>
                                         <div className="p-3 border-bottom bg-light d-flex justify-content-between align-items-center">
                                             <h5 className="mb-0">Chats</h5>
                                             <button className="btn btn-sm btn-outline-primary rounded-circle" onClick={handleNewChat} style={{display:'none'}}>+</button>
@@ -1544,8 +1581,9 @@ const App = () => {
                                                         chatUsers.push({ userId: otherId } as any);
                                                     }
                                                 });
+                                                if (chatUsers.length === 0) return <div className="p-4 text-center text-muted small">No conversations yet. Follow someone to start chatting!</div>;
                                                 return chatUsers.map(user => (
-                                                    <button key={user.userId} data-testid={`chat-item-${user.userId}`} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? 'bg-light' : ''}`} onClick={() => setSelectedUser(user.userId)}>
+                                                    <button key={user.userId} data-testid={`chat-item-${user.userId}`} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedUser === user.userId ? 'bg-light' : ''}`} onClick={() => setSelectedUser(user.userId)}>
                                                         <div className="d-flex align-items-center flex-grow-1 overflow-hidden">
                                                             <UserAvatar userId={user.userId} />
                                                             {isUserAnAdmin(user.userId) && <span className="ms-1 badge bg-danger" style={{fontSize: '0.6rem'}}>Admin</span>}
@@ -1556,12 +1594,15 @@ const App = () => {
                                             })()}
                                         </div>
                                     </div>
-                                    <div className="col-8 d-flex flex-column h-100 overflow-hidden">
+                                    <div className={`col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedUser ? 'mobile-hide' : ''}`}>
                                         {selectedUser ? (
                                             <>
                                                 <div className="p-3 border-bottom bg-light d-flex align-items-center">
+                                                    <button className="btn btn-sm btn-light rounded-circle me-3 d-md-none" onClick={() => setSelectedUser(null)}>
+                                                        <i className="bi bi-arrow-left"></i>
+                                                    </button>
                                                     <UserAvatar userId={selectedUser} />
-                                                    {isUserAnAdmin(selectedUser) && <span className="ms-2 badge bg-danger">Official Administrator</span>}
+                                                    {isUserAnAdmin(selectedUser) && <span className="ms-2 badge bg-danger mobile-hide">Official Administrator</span>}
                                                 </div>
                                                 <div className="flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse">
                                                     {messages
@@ -1571,7 +1612,7 @@ const App = () => {
                                                             const isAdminMsg = m.senderId !== config.userId && isUserAnAdmin(m.senderId);
                                                             return (
                                                                 <div key={m.id} data-testid="message-bubble" className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
-                                                                    <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : isAdminMsg ? 'border border-danger bg-light text-dark shadow-sm' : 'bg-light text-dark'}`} style={{maxWidth: '75%', ...(isAdminMsg ? {borderWidth: '2px'} : {})}}>
+                                                                    <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : isAdminMsg ? 'border border-danger bg-light text-dark shadow-sm' : 'bg-light text-dark'}`} style={{maxWidth: '85%', ...(isAdminMsg ? {borderWidth: '2px'} : {})}}>
                                                                         {isAdminMsg && <div className="badge bg-danger mb-1" style={{fontSize: '0.65rem'}}><i className="bi bi-shield-check me-1"></i>Admin Action</div>}
                                                                         {m.isDeleted ? (
                                                                             <i className="small opacity-75">Message deleted</i>
@@ -1581,8 +1622,6 @@ const App = () => {
                                                                                 {(() => {
                                                                                     try {
                                                                                         const info = JSON.parse(m.content.substring(13));
-                                                                                        const myStatus = info.members.find((mb: any) => mb.userId === config.userId)?.status;
-                                                                                        // Check if we already have this group locally and what our status is
                                                                                         const localGroup = groups.find(g => g.id === info.id);
                                                                                         const localStatus = localGroup?.members.find((mb: any) => mb.userId === config.userId)?.status;
                                                                                         
@@ -1648,19 +1687,21 @@ const App = () => {
 
                     {currentTab === 'rooms' && (
                         <div className="col-md-10">
-                            <div className="card shadow-sm border-0" style={{height: '70vh'}}>
+                            <div className="card shadow-sm border-0 mobile-full-width" style={{height: '75vh'}}>
                                 <div className="row g-0 h-100">
-                                    <div className="col-4 border-end overflow-y-auto">
+                                    <div className={`col-md-4 border-end overflow-y-auto h-100 ${selectedGroup ? 'mobile-hide' : ''}`}>
                                         <div className="p-3 border-bottom bg-light d-flex justify-content-between align-items-center">
                                             <h5 className="mb-0">Rooms</h5>
                                             <button className="btn btn-sm btn-primary rounded-pill" onClick={handleCreateGroup}>+</button>
                                         </div>
                                         <div className="list-group list-group-flush">
-                                            {groups.map(group => {
+                                            {groups.length === 0 ? (
+                                                <div className="p-4 text-center text-muted small">No rooms yet. Create one to start collaborating!</div>
+                                            ) : groups.map(group => {
                                                 const me = group.members.find((mb: any) => mb.userId === config.userId);
                                                 const isPending = me?.status === 'pending';
                                                 return (
-                                                    <button key={group.id} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedGroup?.id === group.id ? 'bg-light' : ''}`} onClick={() => setSelectedGroup(group)}>
+                                                    <button key={group.id} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedGroup?.id === group.id ? 'bg-light' : ''}`} onClick={() => setSelectedGroup(group)}>
                                                         <div className="fw-bold text-truncate">{group.name}</div>
                                                         {isPending && <span className="badge rounded-pill bg-warning text-dark">Invite</span>}
                                                         {!isPending && group.createdAt > (lastViewed.roomChat?.[group.id] || 0) && <span className="badge rounded-pill bg-primary">New</span>}
@@ -1669,14 +1710,19 @@ const App = () => {
                                             })}
                                         </div>
                                     </div>
-                                    <div className="col-8 d-flex flex-column h-100 overflow-hidden">
+                                    <div className={`col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedGroup ? 'mobile-hide' : ''}`}>
                                         {selectedGroup ? (
                                             <>
                                                 <div className="p-3 border-bottom bg-light">
                                                     <div className="d-flex justify-content-between align-items-center mb-2">
-                                                        <h6 className="mb-0 fw-bold">{selectedGroup.name}</h6>
+                                                        <div className="d-flex align-items-center">
+                                                            <button className="btn btn-sm btn-light rounded-circle me-3 d-md-none" onClick={() => setSelectedGroup(null)}>
+                                                                <i className="bi bi-arrow-left"></i>
+                                                            </button>
+                                                            <h6 className="mb-0 fw-bold">{selectedGroup.name}</h6>
+                                                        </div>
                                                         <div className="d-flex align-items-center gap-2">
-                                                            <div className="small text-muted">{new Date(selectedGroup.createdAt).toLocaleDateString()}</div>
+                                                            <div className="small text-muted mobile-hide">{new Date(selectedGroup.createdAt).toLocaleDateString()}</div>
                                                             {(selectedGroup.members.find((m: any) => m.userId === config.userId)?.role === 'owner' || selectedGroup.members.find((m: any) => m.userId === config.userId)?.role === 'admin') && (
                                                                 <button className="btn btn-sm btn-outline-primary rounded-pill py-0 px-2" style={{fontSize: '0.7rem'}} onClick={handleManageMembers}>Manage</button>
                                                             )}
@@ -1748,7 +1794,7 @@ const App = () => {
                                                                                         );
                                                                                     })()}
                                                                                 </div>
-                                                                                <div className={`ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? 'border border-danger' : ''}`} style={{display:'inline-block', maxWidth:'90%', ...(isAdminGroupPost ? {borderWidth: '2px'} : {})}}>
+                                                                                <div className={`ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? 'border border-danger' : ''}`} style={{display:'inline-block', maxWidth:'95%', ...(isAdminGroupPost ? {borderWidth: '2px'} : {})}}>
                                                                                     {p.image && <BlobImage path={p.image} userId={p.userId} />}
                                                                                     <div>{p.content}</div>
                                                                                 </div>
@@ -1787,7 +1833,7 @@ const App = () => {
                     )}
 
                     {currentTab === 'profile' && (
-                        <div className="col-md-6">
+                        <div className="col-md-6 mobile-full-width">
                             <div className="card p-4 shadow-sm border-0">
                                 <h4 className="mb-4 fw-bold">Edit Profile</h4>
                                 
@@ -1861,7 +1907,7 @@ const App = () => {
                     )}
 
                     {currentTab === 'admin' && isAdmin && (
-                        <div className="col-md-10">
+                        <div className="col-md-10 mobile-full-width">
                             <div className="card p-4 shadow-sm border-0 mb-4">
                                 <h4 className="mb-4 fw-bold text-danger"><i className="bi bi-shield-lock me-2"></i>Admin Dashboard</h4>
                                 

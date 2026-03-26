@@ -1,31 +1,34 @@
-# SovereignS3nc Parallel Worktrees (Batch 4)
+# SovereignS3nc Parallel Worktrees (Batch 5)
 
 | ID | Task | Target File(s) | Status |
 | :--- | :--- | :--- | :--- |
-| WT-16 | **Node.js Image Compression** | `src/utils/MediaUtils.ts`, `package.json` | Completed |
-| WT-17 | **Web Worker Default UX** | `demo/social/src/App.tsx`, `demo/banky/src/Banky.ts` | Completed |
-| WT-18 | **CI Performance Benchmarking** | `.github/workflows/perf-check.yml`, `scripts/perf-audit.ts` | Completed |
-| WT-19 | **Live WebRTC Tests** | `tests/WebRTCRemoteAdapter.live.test.ts` | Completed |
-| WT-20 | **Module Developer Tutorial** | `docs/module-tutorial.md`, `demo/todo-module/` | Completed |
+| WT-21 | **Remove npm publish from CI** | `.github/workflows/ci.yml` | Completed |
+| WT-22 | **Social Demo Mobile Audit** | `demo/social/src/App.tsx` | Completed |
+| WT-23 | **Social Demo Mobile Fixes** | `demo/social/src/App.tsx`, `demo/social/index.html` | Completed |
+| WT-24 | **Complex Group Permission Tests** | `tests/GroupPermissions.integration.ts` | Completed |
+| WT-25 | **Member Revocation Tests** | `tests/MemberRevocation.integration.ts` | Completed |
+| WT-26 | **Storage Migration Tests** | `tests/StorageMigration.integration.ts` | Completed |
 
 ## Completed Objectives
 
-### WT-16: Node.js Image Compression
-- Implemented a Node.js-compatible fallback for `MediaUtils.compressImage` using the `jimp` library.
-- Verified both browser (canvas) and Node.js environments work as expected.
+### WT-21: Remove npm publish from CI
+- Renamed `npm-publish.yml` to `ci.yml`.
+- Removed the `npm publish` step to prevent accidental releases.
 
-### WT-17: Web Worker Default UX
-- Updated Social and Banky demos to use `SyncWorkerProxy` by default.
-- Implemented seamless fallback to the main thread in `SovereignS3nc.ts`.
+### WT-22 & WT-23: Social Demo Mobile-friendly Audit & Fixes
+- Performed audit and implemented responsive layout fixes.
+- Added a mobile-friendly bottom navigation bar.
+- Optimized multi-column layouts for single-column mobile view.
 
-### WT-18: CI Performance Benchmarking
-- Created a GitHub Action workflow to audit performance on every PR.
-- Updated `scripts/perf-audit.ts` to fail the build if sync latency (>2300ms) or memory (>172.5MB) exceeds a 15% threshold.
+### WT-24: Complex Group Permission Tests
+- Implemented integration tests in `tests/GroupPermissions.integration.ts`.
+- Validated role-based moderation (Owner/Admin delete member posts).
+- Verified member access restrictions.
 
-### WT-19: Live WebRTC Tests
-- Implemented a test suite in `tests/WebRTCRemoteAdapter.live.test.ts` using real `peerjs` connections.
-- Validated P2P data gossip and download across a live network signaling server.
+### WT-25: Member Revocation Tests
+- Implemented integration tests in `tests/MemberRevocation.integration.ts`.
+- Confirmed that removed members are excluded from future sync operations.
 
-### WT-20: Module Developer Tutorial
-- Authored a comprehensive `docs/module-tutorial.md` for third-party developers.
-- Provided a reference "Todo List" module in `demo/todo-module/` with full CRUD operations.
+### WT-26: Storage Migration Tests
+- Implemented `tests/StorageMigration.integration.ts`.
+- Validated that data is preserved when switching between `IndexedDBStorage` and `SQLiteNodeStorage` adapters via S3 sync and manual file copying.
