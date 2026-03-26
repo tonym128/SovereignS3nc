@@ -69677,6 +69677,12 @@ ${toHex(hashedRequest)}`;
           return this.sendMessage("SYNC", { forceSync });
         }
         /**
+         * Registers a module definition in the worker.
+         */
+        async registerModule(definition) {
+          return this.sendMessage("REGISTER_MODULE", definition);
+        }
+        /**
          * Terminates the worker.
          */
         terminate() {
@@ -70416,6 +70422,9 @@ ${toHex(hashedRequest)}`;
           if (!this.registeredModules.find((m2) => m2.name === definition.name)) {
             this.registeredModules.push(definition);
           }
+          if (this.syncWorker) {
+            this.syncWorker.registerModule(definition).catch((e2) => Logger.warn("[Sovereign] Failed to register module in worker", e2));
+          }
         }
         /**
          * Emits a change event for a specific module and path.
@@ -70497,18 +70506,24 @@ ${toHex(hashedRequest)}`;
           Logger.info(`[Sovereign] v${_SovereignS3nc.VERSION} Initializing storage...`);
           await this.storage.init();
           if (this.config.useWorker && this.config.workerUrl) {
-            Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
-            this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
-            this.syncWorker.on("update", (data) => {
-              this.emit("update", data);
-              if (data.moduleName) {
-                this.emit(`${data.moduleName}:update`, data);
-              }
-            });
-            this.syncWorker.on("conflict", (data) => {
-              this.emit("conflict", data);
-            });
-            await this.syncWorker.init(this.config);
+            try {
+              Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
+              this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+              this.syncWorker.on("update", (data) => {
+                this.emit("update", data);
+                if (data.moduleName) {
+                  this.emit(`${data.moduleName}:update`, data);
+                }
+              });
+              this.syncWorker.on("conflict", (data) => {
+                this.emit("conflict", data);
+              });
+              await this.syncWorker.init(this.config);
+            } catch (e2) {
+              Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e2.message}`);
+              this.syncWorker = void 0;
+              this.config.useWorker = false;
+            }
           }
           if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
             Logger.info("[Sovereign] Initializing keys...");
@@ -71194,20 +71209,55 @@ ${toHex(hashedRequest)}`;
           }
           for (const group4 of groups) {
             Logger.info(`[Sync] Syncing group ${group4.name} (${group4.id})`);
+            const isOwner = group4.members.find((m2) => m2.userId === this.config.paths.userId)?.role === "owner";
+            if (isOwner && this.publicRemote) {
+              const infoData = new TextEncoder().encode(JSON.stringify(group4));
+              const encryptedInfo = await this.encrypt(infoData, group4.sharedKey);
+              await this.publicRemote.uploadFile(`public/groups/${group4.id}/info.enc`, encryptedInfo);
+            }
+            const owner = group4.members.find((m2) => m2.role === "owner");
+            if (owner && owner.userId !== this.config.paths.userId) {
+              const remoteInfoPath = `public/groups/${group4.id}/info.enc`;
+              const localInfoPath = `followed/${owner.userId}/groups/${group4.id}/info.enc`;
+              const changed = await this.pullUserFile(owner.userId, remoteInfoPath, "", localInfoPath, false);
+              if (changed) {
+                const encryptedData = await this.storage.getFile(localInfoPath);
+                if (encryptedData) {
+                  try {
+                    const decrypted = await this.decrypt(encryptedData, group4.sharedKey);
+                    const updatedGroup = JSON.parse(new TextDecoder().decode(decrypted));
+                    await this.updateGroup(updatedGroup);
+                    Object.assign(group4, updatedGroup);
+                  } catch (e2) {
+                    Logger.warn(`[Sync] Failed to decrypt group info update: ${e2.message}`);
+                  }
+                }
+              }
+            }
+            const me = group4.members.find((m2) => m2.userId === this.config.paths.userId);
+            if (!me || me.status === "left" || me.status === "declined") {
+              Logger.info(`[Sync] Skipping group ${group4.id} sync: I am no longer an active member.`);
+              continue;
+            }
             const myStatusPath = `public/groups/${group4.id}/status.json`;
             const myStatusData = await this.storage.getFile(myStatusPath);
-            if (myStatusData) {
+            if (myStatusData && this.publicRemote) {
+              await this.publicRemote.uploadFile(myStatusPath, myStatusData);
             }
+            let anyMemberStatusChanged = false;
             for (const member2 of group4.members) {
               if (member2.userId === this.config.paths.userId) continue;
               const remoteStatusPath = `public/groups/${group4.id}/status.json`;
               const localStatusPath = `followed/${member2.userId}/groups/${group4.id}/status.json`;
-              await this.pullUserFile(member2.userId, remoteStatusPath, "", localStatusPath, false);
+              const statusChanged = await this.pullUserFile(member2.userId, remoteStatusPath, "", localStatusPath, false);
               const statusData = await this.storage.getFile(localStatusPath);
               if (statusData) {
                 try {
                   const { status } = JSON.parse(new TextDecoder().decode(statusData));
-                  member2.status = status;
+                  if (member2.status !== status) {
+                    member2.status = status;
+                    anyMemberStatusChanged = true;
+                  }
                 } catch (e2) {
                 }
               }
@@ -71225,6 +71275,9 @@ ${toHex(hashedRequest)}`;
                   }
                 }
               }
+            }
+            if (anyMemberStatusChanged) {
+              await this.updateGroup(group4);
             }
           }
         }
@@ -71653,12 +71706,11 @@ ${toHex(hashedRequest)}`;
             if (result && !result.notModified && result.data) {
               let data = result.data;
               try {
-                data = await this.decrypt(data, publicKey);
                 await this.storage.saveDailyDb(`${userId}/${date2}`, "followed", data);
                 if (result.etag) await this.storage.setRemoteHashCache(`${userId}:${date2}`, "followed", result.etag);
                 Logger.info(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
               } catch (e2) {
-                Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date2}). Error: ${e2.message}`);
+                Logger.warn(`[Sync] Failed to process followed content from ${userId} (${date2}). Error: ${e2.message}`);
               }
             } else if (!result) {
               Logger.info(`[Sync] Followed file ${userId}/${date2} missing on remote. Deleting local copy.`);
@@ -71945,6 +71997,16 @@ ${toHex(hashedRequest)}`;
       var import_polyfills674 = __toESM(require_polyfills());
       init_SovereignS3nc();
       init_Logger();
+      if (typeof importScripts !== "undefined" && typeof self.initSqlJs === "undefined") {
+        try {
+          importScripts("https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js");
+          self.SQL_CONFIG = {
+            locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+          };
+        } catch (e2) {
+          console.error("[SyncWorker] Failed to load sql.js in worker context:", e2);
+        }
+      }
       var sovereign = null;
       self.onmessage = async (event) => {
         const { type, payload, id } = event.data;
@@ -71961,6 +72023,12 @@ ${toHex(hashedRequest)}`;
             case "TERMINATE":
               sovereign = null;
               self.postMessage({ id, type: "TERMINATED" });
+              break;
+            case "REGISTER_MODULE":
+              if (sovereign) {
+                sovereign.registerModule(payload);
+              }
+              self.postMessage({ id, type: "REGISTER_MODULE_SUCCESS" });
               break;
             case "RESOLVE_CONFLICT":
               if (sovereign) {

@@ -2,6 +2,7 @@
 import { SovereignS3nc } from '../src/SovereignS3nc';
 import { FeedModule } from '../src/modules/Feed';
 import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
+import { IRemoteAdapter, DownloadResult } from '../src/interfaces/IRemoteAdapter';
 import { GroupMember, SovereignGroup } from '../src/types';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
@@ -13,6 +14,57 @@ import initSqlJs from 'sql.js';
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
 (global as any).initSqlJs = initSqlJs;
+
+// Shared storage for all mock remotes
+const sharedFiles = new Map<string, { data: Uint8Array, hash: string, etag: string }>();
+
+class MockRemote implements IRemoteAdapter {
+    constructor(private files: Map<string, any>, private prefix: string) {}
+    
+    private getKey(path: string) {
+        const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+        return `${this.prefix}/${cleanPath}`.replace(/\/+/g, '/');
+    }
+
+    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+        const key = this.getKey(path);
+        const h = hash || crypto.createHash('sha256').update(data).digest('hex');
+        const etag = `"${Math.random().toString(36).substring(7)}"`;
+        this.files.set(key, { data, hash: h, etag });
+        return etag;
+    }
+
+    async downloadFile(path: string, ifNoneMatch?: string): Promise<DownloadResult | null> {
+        const key = this.getKey(path);
+        const entry = this.files.get(key);
+        if (!entry) return null;
+        if (ifNoneMatch && ifNoneMatch === entry.etag) {
+            return { data: null, etag: entry.etag, notModified: true };
+        }
+        return { data: entry.data, etag: entry.etag };
+    }
+
+    async getFileHash(path: string): Promise<string | null> {
+        return this.files.get(this.getKey(path))?.hash || null;
+    }
+
+    async getFileEtag(path: string): Promise<string | null> {
+        return this.files.get(this.getKey(path))?.etag || null;
+    }
+
+    async canWrite(path: string): Promise<boolean> { return true; }
+
+    async listFiles(prefix: string): Promise<string[]> {
+        const fullPrefix = this.getKey(prefix);
+        return Array.from(this.files.keys())
+            .filter(k => k.startsWith(fullPrefix))
+            .map(k => k.substring(this.prefix.length + 1));
+    }
+
+    async deleteFile(path: string): Promise<void> {
+        this.files.delete(this.getKey(path));
+    }
+}
 
 describe('Group Permissions Integration Tests', () => {
     let aliceSov: SovereignS3nc;
@@ -28,11 +80,18 @@ describe('Group Permissions Integration Tests', () => {
     const appId = 'group-perm-test-' + Math.random().toString(36).substring(7);
     const storeId = 'social';
 
+    const remoteFactory = (uid: string) => {
+        if (uid === 'global') return new MockRemote(sharedFiles, `${appId}/global/users`);
+        return new MockRemote(sharedFiles, `${appId}/${uid}/${storeId}`);
+    };
+
     const setupUser = async (userId: string, password: string) => {
+        // We simulate how SovereignS3nc handles hashing if we don't provide a remote directly
+        // But for Mock, we'll just use the userId as a simple prefix
         const sov = new SovereignS3nc({
             paths: { appId, userId, storeId },
             password
-        });
+        }, remoteFactory(userId), remoteFactory);
         (sov as any).storage = new IndexedDBStorage(`${userId}_db_${appId}`);
         await sov.init();
         const feed = new FeedModule(sov);
@@ -83,6 +142,7 @@ describe('Group Permissions Integration Tests', () => {
     }, 30000);
 
     test('Group creation and basic read/write access', async () => {
+        const today = SovereignS3nc.getDateStr(new Date());
         // 1. Alice creates a group with Bob and Charlie
         const members: GroupMember[] = [
             { userId: 'alice', publicKey: aliceSov.getConfig().publicEncryptionKey!, role: 'owner' },
@@ -96,9 +156,10 @@ describe('Group Permissions Integration Tests', () => {
         await aliceSov.sync();
 
         // 3. Bob and Charlie join and sync
-        // In a real scenario, they'd receive a notification. Here we manually give them the group info.
         await bobSov.joinGroup(group);
+        await bobSov.respondToGroup(group.id, 'joined');
         await charlieSov.joinGroup(group);
+        await charlieSov.respondToGroup(group.id, 'joined');
 
         await bobSov.sync();
         await charlieSov.sync();
@@ -172,7 +233,7 @@ describe('Group Permissions Integration Tests', () => {
         await aliceSov.sync();
         await bobSov.sync();
 
-        // 4. Verify post is STILL VISIBLE for Alice and Bob (Charlie's moderation is ignored because he's just a member)
+        // 4. Verify post is STILL VISIBLE for Alice and Bob
         const alicePostsAfter = await aliceFeed.getGroupPosts(group.id, today);
         expect(alicePostsAfter.find(p => p.id === alicePost!.id)).toBeDefined();
 
@@ -198,45 +259,16 @@ describe('Group Permissions Integration Tests', () => {
         // 3. Charlie tries to sync
         await charlieSov.sync();
 
-        // 4. Charlie should NOT see the new post (Alice stopped pulling from him, but more importantly, Alice stopped pushing metadata updates to him)
-        // Actually, the current sync logic pulls from ALL members in local info.json.
-        // If Charlie was removed from Alice's info.json, Alice won't pull from Charlie.
-        // But Charlie still has the old info.json and the sharedKey.
-        
-        // Wait, if Charlie still has the sharedKey, he can still decrypt the group's DB if he can find it on S3.
-        // The group DB is at `public/groups/${groupId}/${date}.db` under EACH member's prefix?
-        // Let's check SovereignS3nc.ts L1172:
-        // const remotePath = `public/groups/${group.id}/${dateStr}.db`;
-        // const localPath = `followed/${member.userId}/groups/${group.id}/${dateStr}.db`;
-        // It pulls from `member.userId`. 
-        
-        // If Alice removes Charlie, Alice won't pull from Charlie.
-        // But Bob might still have Charlie in HIS info.json if he hasn't synced Alice's metadata update.
-        
-        // To truly revoke Charlie, Alice (owner) should rotate the sharedKey.
-        // But the current implementation doesn't seem to support key rotation.
-        
-        // Let's see what happens in the current implementation.
+        // 4. Charlie should NOT see the new post
         const charliePostsAfter = await charlieFeed.getGroupPosts(group.id, today);
-        // Charlie can still see his local copy, and if he manually pulls from Alice, he could see it.
-        // But Charlie's sync() only pulls from members in HIS info.json.
+        expect(charliePostsAfter.find(p => p.content === "Secret post without Charlie")).toBeUndefined();
         
-        // If Alice removes Charlie, and Bob syncs Alice's metadata, then Bob also removes Charlie.
-        // Eventually, nobody pulls from Charlie.
-        // But Charlie can still pull from Alice/Bob if they are in HIS info.json.
-        
-        // This is a known limitation of simple shared keys.
-        // However, I should test that Charlie is indeed removed from the membership list for others.
         await bobSov.sync();
         const bobGroup = (await bobSov.getGroups()).find(g => g.id === group.id);
         expect(bobGroup!.members.find(m => m.userId === 'charlie')).toBeUndefined();
     });
 
     test('Nested groups (Simulated via membership)', async () => {
-        // Concept: Group B includes Group A's members.
-        // Since we don't have explicit support, we'll simulate it by Alice (owner of both)
-        // adding all members of Group A to Group B.
-        
         const groupA = await aliceSov.createGroup('Group A', [
             { userId: 'alice', publicKey: aliceSov.getConfig().publicEncryptionKey!, role: 'owner' },
             { userId: 'bob', publicKey: bobSov.getConfig().publicEncryptionKey!, role: 'member' }
@@ -245,7 +277,6 @@ describe('Group Permissions Integration Tests', () => {
         const groupB = await aliceSov.createGroup('Group B', [
             { userId: 'alice', publicKey: aliceSov.getConfig().publicEncryptionKey!, role: 'owner' },
             { userId: 'charlie', publicKey: charlieSov.getConfig().publicEncryptionKey!, role: 'member' },
-            // Nested Group A members
             ...groupA.members.filter(m => m.userId !== 'alice')
         ]);
         

@@ -29,6 +29,9 @@
     - [x] Create `src/modules/Profile.ts`, `src/modules/Messaging.ts`, `src/modules/Feed.ts`.
     - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper.
     - [x] Replace all `SocialManager` usage in CLI, Server, and Demos.
+- [ ] **Ergonomics & Initialization**
+    - [ ] Constructor Refactoring: Implement a static factory method `SovereignS3nc.create(...)` to eliminate the need for an explicit `init()` call.
+    - [ ] MediaUtils Cleanup: Replace temporary `console.log` debug statements with the project's internal `Logger`.
 
 ## 🚀 Features & Enhancements
 - [x] **Security & Auth**
@@ -43,10 +46,14 @@
     - [x] Implement PWA support (`manifest.json` + Service Worker) for local installation.
     - [x] Audit library performance and provide benchmarks for sync latency and storage overhead.
 - [x] **Accessibility & UI**
-    - [x] Mobile-friendly responsive audit for Social Demo.
+    - [ ] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
+    - [ ] **UI Implementation**: Add "Export Static Website" button to the Social Demo profile screen to trigger the static export process.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
+    - [ ] **UI Implementation**: Add Conflict Resolution UI to Social and Banky demos to expose the `pendingConflicts` mechanism to users.
 - [x] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
+- [ ] **PWA & Offline**
+    - [ ] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
 
 ## 🧪 Testing & Validation
 - [x] **Integration Testing**
@@ -55,16 +62,19 @@
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [x] **Admin & Moderation**
     - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
-- [x] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
-- [x] Add integration tests for complex group permissions and member removal/revocation edge cases.
-- [x] **Storage Migration Tests**: Verify data consistency and integrity when switching between `IndexedDBStorage` and `SQLiteNodeStorage`.
+- [ ] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
+- [ ] Add integration tests for complex group permissions and member removal/revocation edge cases.
+- [ ] **Storage Migration Tests**: Verify data consistency and integrity when switching between `IndexedDBStorage` and `SQLiteNodeStorage`.
 
 ## 📚 Documentation & Infrastructure
 - [x] **Security & Whitepaper**
     - [x] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
+    - [ ] **Formal Whitepaper**: Formalize security documentation into a full whitepaper with formal threat modeling and cryptographic proofs.
 - [x] **Deployment & DX**
     - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
+    - [ ] **Provider Recipes**: Add specific configuration "recipes" for Cloudflare R2 and Backblaze B2 (ETag/CORS specificities).
     - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
+    - [ ] **Cloud-Native Templates**: Create Helm charts or Terraform modules for scaling in Kubernetes and serverless environments.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.
     - [x] Remove npm publish from GitHub Workflows.

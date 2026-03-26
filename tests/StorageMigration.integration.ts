@@ -5,6 +5,7 @@ import { MessagingModule } from '../src/modules/Messaging';
 import { ProfileModule } from '../src/modules/Profile';
 import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
 import { SQLiteNodeStorage } from '../src/adapters/SQLiteNodeStorage';
+import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
 import initSqlJs from 'sql.js';
@@ -18,6 +19,28 @@ import * as path from 'path';
 (global as any).TextDecoder = TextDecoder;
 (global as any).initSqlJs = initSqlJs;
 
+class MockRemote implements IRemoteAdapter {
+    files: Map<string, {data: Uint8Array, hash: string, etag: string}> = new Map();
+    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+        const h = hash || crypto.createHash('sha256').update(data).digest('hex');
+        const etag = `"${Math.random().toString(36).substring(7)}"`;
+        this.files.set(path, { data, hash: h, etag });
+        return etag;
+    }
+    async downloadFile(path: string, ifNoneMatch?: string): Promise<any | null> {
+        const entry = this.files.get(path);
+        if (!entry) return null;
+        if (ifNoneMatch && ifNoneMatch === entry.etag) return { data: null, etag: entry.etag, notModified: true };
+        return { data: entry.data, etag: entry.etag };
+    }
+    async getFileHash(path: string): Promise<string | null> { return this.files.get(path)?.hash || null; }
+    async getFileEtag(path: string): Promise<string | null> { return this.files.get(path)?.etag || null; }
+    async canWrite(path: string): Promise<boolean> { return true; }
+    async listFiles(prefix: string): Promise<string[]> { return Array.from(this.files.keys()).filter(k => k.startsWith(prefix)); }
+    async deleteFile(path: string): Promise<void> { this.files.delete(path); }
+    async getFileMetadata(path: string, key: string): Promise<string | null> { return null; }
+}
+
 describe('Storage Migration Integration Tests', () => {
     const appId = 'migration-test-' + Math.random().toString(36).substring(7);
     const userId = 'alice';
@@ -27,6 +50,7 @@ describe('Storage Migration Integration Tests', () => {
     const sqliteDbPath = path.join(__dirname, '../test-results/migration_test.sqlite');
 
     beforeAll(async () => {
+        await fs.ensureDir(path.dirname(sqliteDbPath));
         await fs.remove(sqliteDbPath);
     });
 
@@ -35,11 +59,13 @@ describe('Storage Migration Integration Tests', () => {
     });
 
     test('Migrate data from IndexedDB to SQLite via S3 Sync', async () => {
+        const sharedRemote = new MockRemote();
+        
         // 1. Setup Alice with IndexedDB
         const aliceIDB = new SovereignS3nc({
             paths: { appId, userId, storeId },
             password
-        });
+        }, sharedRemote);
         (aliceIDB as any).storage = new IndexedDBStorage(`migration_test_idb`);
         await aliceIDB.init();
 
@@ -48,18 +74,15 @@ describe('Storage Migration Integration Tests', () => {
 
         // 2. Populate data in IndexedDB
         await feedIDB.post("Post 1 from IndexedDB", true);
-        await profileIDB.updateProfile({ name: "Alice", bio: "Testing migration" });
+        await profileIDB.updateProfile("Alice", "Testing migration");
         
-        // Sync to "remote" (we'll use the default fake remote if none provided, 
-        // but for integration we should ideally use a mock or real S3. 
-        // Here we'll rely on the library's internal consistency.)
         await aliceIDB.sync();
 
         // 3. Setup Alice with SQLite
         const aliceSQLite = new SovereignS3nc({
             paths: { appId, userId, storeId },
             password
-        });
+        }, sharedRemote);
         const sqliteStorage = new SQLiteNodeStorage(sqliteDbPath);
         (aliceSQLite as any).storage = sqliteStorage;
         await aliceSQLite.init();
@@ -67,16 +90,7 @@ describe('Storage Migration Integration Tests', () => {
         const feedSQLite = new FeedModule(aliceSQLite);
         const profileSQLite = new ProfileModule(aliceSQLite);
 
-        // 4. Sync from remote (S3) to SQLite
-        // Since both share the same appId/userId/storeId, they point to the same S3 prefix.
-        // But wait, they need to share the SAME remote adapter instance or state if it's mocked.
-        // In this test, they'll use the default S3RemoteAdapter which might fail if no config.
-        // Let's use a mock remote adapter to ensure they share the same "cloud".
-        
-        const mockRemote = (aliceIDB as any).globalRemote;
-        (aliceSQLite as any).globalRemote = mockRemote;
-        (aliceSQLite as any).privateRemote = (aliceIDB as any).privateRemote;
-
+        // 4. Sync from remote (Mock S3) to SQLite
         await aliceSQLite.sync();
 
         // 5. Verify data in SQLite matches original
@@ -104,7 +118,9 @@ describe('Storage Migration Integration Tests', () => {
         await feedIDB.post("Bob's local post", true);
 
         // 2. Manually copy all files from IDB to a new SQLite storage
-        const bobSQLiteStorage = new SQLiteNodeStorage(path.join(__dirname, '../test-results/bob_migration.sqlite'));
+        const bobSQLiteStoragePath = path.join(__dirname, '../test-results/bob_migration.sqlite');
+        await fs.remove(bobSQLiteStoragePath);
+        const bobSQLiteStorage = new SQLiteNodeStorage(bobSQLiteStoragePath);
         await bobSQLiteStorage.init();
 
         const allFiles = await idbStorage.listFiles('');
@@ -136,6 +152,6 @@ describe('Storage Migration Integration Tests', () => {
         expect(posts.length).toBe(1);
         expect(posts[0].content).toBe("Bob's local post");
         
-        await fs.remove(path.join(__dirname, '../test-results/bob_migration.sqlite'));
+        await fs.remove(bobSQLiteStoragePath);
     });
 });

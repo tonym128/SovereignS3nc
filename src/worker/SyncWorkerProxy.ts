@@ -40,6 +40,13 @@ export class SyncWorkerProxy extends EventEmitter {
     }
 
     /**
+     * Registers a module definition in the worker.
+     */
+    async registerModule(definition: any): Promise<void> {
+        return this.sendMessage('REGISTER_MODULE', definition);
+    }
+
+    /**
      * Terminates the worker.
      */
     terminate() {

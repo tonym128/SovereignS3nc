@@ -3,9 +3,7 @@ import { test, expect, BrowserContext, Page } from '@playwright/test';
 // Helper to log in a user
 async function loginUser(page: Page, userId: string, password: string) {
     page.on('console', msg => {
-        if (msg.type() === 'error' || msg.text().includes('[S3]') || msg.text().includes('[Login]')) {
-            console.log(`BROWSER [${userId}]: ${msg.text()}`);
-        }
+        console.log(`BROWSER [${userId}]: ${msg.text()}`);
     });
     page.on('requestfailed', request => {
         console.log(`BROWSER [${userId}] REQUEST FAILED: ${request.url()} - ${request.failure()?.errorText}`);
@@ -91,8 +89,15 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
 
     // 5. Bob sees Alice's post & likes it
     await bobPage.click('button:has-text("Home")');
-    await bobPage.click('button:has-text("Sync")');
-    await expect(bobPage.locator(`text=Hello world, this is Alice!`)).toBeVisible({ timeout: 20000 });
+    
+    // Retry sync a few times in case Alice's upload was still in progress
+    const alicePost = bobPage.locator(`text=Hello world, this is Alice!`);
+    for (let i = 0; i < 5; i++) {
+        await bobPage.click('button:has-text("Sync")');
+        await bobPage.waitForTimeout(3000);
+        if (await alicePost.isVisible()) break;
+    }
+    await expect(alicePost).toBeVisible({ timeout: 5000 });
     
     await bobPage.click('button:has-text("Like")');
     await expect(bobPage.locator('button:has-text("Like (1)")')).toBeVisible();
@@ -113,14 +118,14 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
 
     // Bob checks messages badge
     await bobPage.getByTestId('nav-home').click();
-    for (let i = 0; i < 3; i++) {
-        await bobPage.click('button:has-text("Sync")');
-        await bobPage.waitForTimeout(2000);
-    }
-    
     const msgBadge = bobPage.getByTestId('unread-badge');
-    await expect(msgBadge).toBeVisible({ timeout: 15000 });
-    await expect(msgBadge).toHaveText('1');
+    for (let i = 0; i < 5; i++) {
+        await bobPage.click('button:has-text("Sync")');
+        await bobPage.waitForTimeout(3000);
+        if (await msgBadge.isVisible()) break;
+    }
+
+    await expect(msgBadge).toBeVisible({ timeout: 5000 });    await expect(msgBadge).toHaveText('1');
 
     // Bob reads & replies
     await bobPage.getByTestId('nav-messages').click();

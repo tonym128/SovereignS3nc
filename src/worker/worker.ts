@@ -43,6 +43,13 @@ self.onmessage = async (event: MessageEvent) => {
                 // Note: Actual termination is usually handled by the main thread calling worker.terminate()
                 break;
 
+            case 'REGISTER_MODULE':
+                if (sovereign) {
+                    sovereign.registerModule(payload);
+                }
+                self.postMessage({ id, type: 'REGISTER_MODULE_SUCCESS' });
+                break;
+
             case 'RESOLVE_CONFLICT':
                 if (sovereign) {
                     sovereign.resolveConflict(payload.conflictId, payload.choice);

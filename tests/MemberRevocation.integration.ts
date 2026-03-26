@@ -2,6 +2,7 @@
 import { SovereignS3nc } from '../src/SovereignS3nc';
 import { FeedModule } from '../src/modules/Feed';
 import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
+import { IRemoteAdapter, DownloadResult } from '../src/interfaces/IRemoteAdapter';
 import { GroupMember } from '../src/types';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
@@ -14,6 +15,57 @@ import initSqlJs from 'sql.js';
 (global as any).TextDecoder = TextDecoder;
 (global as any).initSqlJs = initSqlJs;
 
+// Shared storage for all mock remotes
+const sharedFiles = new Map<string, { data: Uint8Array, hash: string, etag: string }>();
+
+class MockRemote implements IRemoteAdapter {
+    constructor(private files: Map<string, any>, private prefix: string) {}
+    
+    private getKey(path: string) {
+        const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+        return `${this.prefix}/${cleanPath}`.replace(/\/+/g, '/');
+    }
+
+    async uploadFile(path: string, data: Uint8Array, hash?: string): Promise<string | null> {
+        const key = this.getKey(path);
+        const h = hash || crypto.createHash('sha256').update(data).digest('hex');
+        const etag = `"${Math.random().toString(36).substring(7)}"`;
+        this.files.set(key, { data, hash: h, etag });
+        return etag;
+    }
+
+    async downloadFile(path: string, ifNoneMatch?: string): Promise<DownloadResult | null> {
+        const key = this.getKey(path);
+        const entry = this.files.get(key);
+        if (!entry) return null;
+        if (ifNoneMatch && ifNoneMatch === entry.etag) {
+            return { data: null, etag: entry.etag, notModified: true };
+        }
+        return { data: entry.data, etag: entry.etag };
+    }
+
+    async getFileHash(path: string): Promise<string | null> {
+        return this.files.get(this.getKey(path))?.hash || null;
+    }
+
+    async getFileEtag(path: string): Promise<string | null> {
+        return this.files.get(this.getKey(path))?.etag || null;
+    }
+
+    async canWrite(path: string): Promise<boolean> { return true; }
+
+    async listFiles(prefix: string): Promise<string[]> {
+        const fullPrefix = this.getKey(prefix);
+        return Array.from(this.files.keys())
+            .filter(k => k.startsWith(fullPrefix))
+            .map(k => k.substring(this.prefix.length + 1));
+    }
+
+    async deleteFile(path: string): Promise<void> {
+        this.files.delete(this.getKey(path));
+    }
+}
+
 describe('Member Revocation Integration Tests', () => {
     let aliceSov: SovereignS3nc;
     let bobSov: SovereignS3nc;
@@ -22,11 +74,16 @@ describe('Member Revocation Integration Tests', () => {
     const appId = 'revocation-test-' + Math.random().toString(36).substring(7);
     const storeId = 'social';
 
+    const remoteFactory = (uid: string) => {
+        if (uid === 'global') return new MockRemote(sharedFiles, `${appId}/global/users`);
+        return new MockRemote(sharedFiles, `${appId}/${uid}/${storeId}`);
+    };
+
     const setupUser = async (userId: string, password: string) => {
         const sov = new SovereignS3nc({
             paths: { appId, userId, storeId },
             password
-        });
+        }, remoteFactory(userId), remoteFactory);
         (sov as any).storage = new IndexedDBStorage(`${userId}_db_${appId}`);
         await sov.init();
         return sov;
@@ -90,9 +147,7 @@ describe('Member Revocation Integration Tests', () => {
         expect(bobGroup!.members.find(m => m.userId === 'charlie')).toBeUndefined();
         expect(bobGroup!.members.length).toBe(2);
 
-        // 6. Charlie syncs - he still sees the old group state locally, but he won't get updates from Alice anymore
-        // because Alice removed him from the metadata she pushes.
-        // Also, Alice won't pull from Charlie anymore.
+        // 6. Charlie syncs - he still sees the old group state locally
         
         // 7. Verify Alice doesn't pull Charlie's new posts
         const charlieFeed = new FeedModule(charlieSov);

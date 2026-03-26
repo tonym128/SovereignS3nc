@@ -139,6 +139,10 @@ export class SovereignS3nc extends EventEmitter {
         if (!this.registeredModules.find(m => m.name === definition.name)) {
             this.registeredModules.push(definition);
         }
+
+        if (this.syncWorker) {
+            this.syncWorker.registerModule(definition).catch(e => Logger.warn('[Sovereign] Failed to register module in worker', e));
+        }
     }
 
     /**
@@ -1139,28 +1143,69 @@ export class SovereignS3nc extends EventEmitter {
         for (const group of groups) {
             Logger.info(`[Sync] Syncing group ${group.name} (${group.id})`);
             
-            // 1. Ensure my status is uploaded
-            const myStatusPath = `public/groups/${group.id}/status.json`;
-            const myStatusData = await this.storage.getFile(myStatusPath);
-            if (myStatusData) {
-                // syncGenericFiles handles public/groups/ prefix if added to sync()
+            const isOwner = group.members.find(m => m.userId === this.config.paths.userId)?.role === 'owner';
+
+            // 1. Owner: Push encrypted group info for others to discover updates
+            if (isOwner && this.publicRemote) {
+                const infoData = new TextEncoder().encode(JSON.stringify(group));
+                const encryptedInfo = await this.encrypt(infoData, group.sharedKey);
+                await this.publicRemote.uploadFile(`public/groups/${group.id}/info.enc`, encryptedInfo);
             }
 
-            // 2. Pull from other members
+            // 2. Member: Check for group info updates from owner
+            const owner = group.members.find(m => m.role === 'owner');
+            if (owner && owner.userId !== this.config.paths.userId) {
+                const remoteInfoPath = `public/groups/${group.id}/info.enc`;
+                const localInfoPath = `followed/${owner.userId}/groups/${group.id}/info.enc`;
+                const changed = await this.pullUserFile(owner.userId, remoteInfoPath, '', localInfoPath, false);
+                if (changed) {
+                    const encryptedData = await this.storage.getFile(localInfoPath);
+                    if (encryptedData) {
+                        try {
+                            const decrypted = await this.decrypt(encryptedData, group.sharedKey);
+                            const updatedGroup = JSON.parse(new TextDecoder().decode(decrypted));
+                            await this.updateGroup(updatedGroup);
+                            Object.assign(group, updatedGroup);
+                        } catch (e: any) {
+                            Logger.warn(`[Sync] Failed to decrypt group info update: ${e.message}`);
+                        }
+                    }
+                }
+            }
+
+            // 3. Skip if I am no longer a member (Revoked or Left)
+            const me = group.members.find(m => m.userId === this.config.paths.userId);
+            if (!me || me.status === 'left' || me.status === 'declined') {
+                Logger.info(`[Sync] Skipping group ${group.id} sync: I am no longer an active member.`);
+                continue;
+            }
+
+            // 4. Ensure my status is uploaded
+            const myStatusPath = `public/groups/${group.id}/status.json`;
+            const myStatusData = await this.storage.getFile(myStatusPath);
+            if (myStatusData && this.publicRemote) {
+                await this.publicRemote.uploadFile(myStatusPath, myStatusData);
+            }
+
+            // 4. Pull from other members
+            let anyMemberStatusChanged = false;
             for (const member of group.members) {
                 if (member.userId === this.config.paths.userId) continue;
 
                 // Pull Status FIRST
                 const remoteStatusPath = `public/groups/${group.id}/status.json`;
                 const localStatusPath = `followed/${member.userId}/groups/${group.id}/status.json`;
-                await this.pullUserFile(member.userId, remoteStatusPath, '', localStatusPath, false); // Status is public/unencrypted
+                const statusChanged = await this.pullUserFile(member.userId, remoteStatusPath, '', localStatusPath, false); // Status is public/unencrypted
 
                 // Refresh member status from newly pulled file
                 const statusData = await this.storage.getFile(localStatusPath);
                 if (statusData) {
                     try {
                         const { status } = JSON.parse(new TextDecoder().decode(statusData));
-                        member.status = status;
+                        if (member.status !== status) {
+                            member.status = status;
+                            anyMemberStatusChanged = true;
+                        }
                     } catch(e) {}
                 }
 
@@ -1174,7 +1219,6 @@ export class SovereignS3nc extends EventEmitter {
                             
                             Logger.debug(`[Sync] Group Pull: member=${member.userId}, remotePath=${remotePath}, localPath=${localPath}`);
 
-                            // Download but DON'T decrypt here - FeedModule handles Group Decryption with sharedKey
                             const changed = await this.pullUserFile(member.userId, remotePath, group.sharedKey, localPath, false);
                             if (changed) {
                                 this.emit(`group:${group.id}:update`, { userId: member.userId, dateStr });
@@ -1182,6 +1226,10 @@ export class SovereignS3nc extends EventEmitter {
                         }
                     }
                 }
+            }
+
+            if (anyMemberStatusChanged) {
+                await this.updateGroup(group);
             }
         }
     }
@@ -1695,12 +1743,11 @@ export class SovereignS3nc extends EventEmitter {
             if (result && !result.notModified && result.data) {
                 let data = result.data;
                 try {
-                    data = await this.decrypt(data, publicKey);
                     await this.storage.saveDailyDb(`${userId}/${date}`, 'followed' as any, data);
                     if (result.etag) await this.storage.setRemoteHashCache(`${userId}:${date}`, 'followed' as any, result.etag);
                     Logger.info(`[Sync] Pulled followed content for ${userId}: ${filePath}`);
                 } catch (e: any) {
-                    Logger.warn(`[Sync] Failed to decrypt followed content from ${userId} (${date}). Error: ${e.message}`);
+                    Logger.warn(`[Sync] Failed to process followed content from ${userId} (${date}). Error: ${e.message}`);
                 }
             } else if (!result) {
                 // File deleted on remote (Moderated)
