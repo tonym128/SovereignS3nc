@@ -68,7 +68,8 @@ export class SovereignS3nc extends EventEmitter {
             this.adminRemote = remoteFactory('admin');
             this.rootRemote = remoteFactory('root');
         } else if (!config.offline) {
-            Logger.warn('[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.');
+            // Default to offline mode if no remote or S3 config is provided
+            this.config.offline = true;
         }
     }
 
@@ -273,7 +274,7 @@ export class SovereignS3nc extends EventEmitter {
      * Downloads the global blacklist and updates local config.
      */
     public async syncBlacklist() {
-        if (!this.globalRemote) return;
+        if (!this.globalRemote || !this.config.s3) return;
         const path = 'blacklist.json';
         try {
             const result = await this.globalRemote.downloadFile(path);
@@ -291,7 +292,7 @@ export class SovereignS3nc extends EventEmitter {
      * Downloads the admin's public key for E2EE reports.
      */
     public async syncAdminKey() {
-        if (!this.adminRemote) return;
+        if (!this.adminRemote || !this.config.s3) return;
         try {
             const result = await this.adminRemote.downloadFile('public_key.json');
             if (result && result.data) {
