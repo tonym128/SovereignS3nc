@@ -48,7 +48,7 @@ const App = () => {
 
     const [autoLogin, setAutoLogin] = useState(localStorage.getItem('sov_auto_login') === 'true');
     const [autoSync, setAutoSync] = useState(localStorage.getItem('sov_auto_sync') !== 'false');
-    const [useWebWorkers, setUseWebWorkers] = useState(localStorage.getItem('sov_use_workers') === 'true');
+    const [useWebWorkers, setUseWebWorkers] = useState(localStorage.getItem('sov_use_workers') !== 'false');
     const [rememberedUsers, setRememberedUsers] = useState<any[]>(() => {
         const saved = localStorage.getItem('sov_remembered_users');
         return saved ? JSON.parse(saved) : [];

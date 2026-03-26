@@ -1,33 +1,31 @@
-# SovereignS3nc Parallel Worktrees (Batch 3)
+# SovereignS3nc Parallel Worktrees (Batch 4)
 
 | ID | Task | Target File(s) | Status |
 | :--- | :--- | :--- | :--- |
-| WT-11 | **Admin Deletion Sync** | `src/SovereignS3nc.ts`, `src/modules/Moderation.ts` | Completed |
-| WT-12 | **Admin Action UI** | `demo/social/src/App.tsx` | Completed |
-| WT-13 | **E2E Test Restoration** | `tests/multi_user_browser.spec.ts` | Completed |
-| WT-14 | **Performance Audit** | `scripts/perf-audit.ts` | Completed |
-| WT-15 | **IaC Templates** | `Setup/docker-compose.prod.yml` | Completed |
+| WT-16 | **Node.js Image Compression** | `src/utils/MediaUtils.ts`, `package.json` | Completed |
+| WT-17 | **Web Worker Default UX** | `demo/social/src/App.tsx`, `demo/banky/src/Banky.ts` | Completed |
+| WT-18 | **CI Performance Benchmarking** | `.github/workflows/perf-check.yml`, `scripts/perf-audit.ts` | Completed |
+| WT-19 | **Live WebRTC Tests** | `tests/WebRTCRemoteAdapter.live.test.ts` | Completed |
+| WT-20 | **Module Developer Tutorial** | `docs/module-tutorial.md`, `demo/todo-module/` | Completed |
 
 ## Completed Objectives
 
-### WT-11: Admin Deletion Sync
-- Implemented `processModerationRequests()` and `surgicalDeletePost()` in `SovereignS3nc.ts`.
-- Admins can send E2EE 'Delete Post' requests via `ModerationModule.requestPostDeletion()`.
-- Users automatically sanitize their local DB and re-upload upon verification of admin signature.
+### WT-16: Node.js Image Compression
+- Implemented a Node.js-compatible fallback for `MediaUtils.compressImage` using the `jimp` library.
+- Verified both browser (canvas) and Node.js environments work as expected.
 
-### WT-12: Admin Action UI
-- Updated `demo/social/src/App.tsx` to style admin posts and DMs with a red border and 'Admin Action' badge.
-- Ensured admin content is always fetched and displayed even if not followed.
+### WT-17: Web Worker Default UX
+- Updated Social and Banky demos to use `SyncWorkerProxy` by default.
+- Implemented seamless fallback to the main thread in `SovereignS3nc.ts`.
 
-### WT-13: E2E Test Restoration
-- Uncommented and fixed messaging tests in `tests/multi_user_browser.spec.ts`.
-- Added `data-testid` hooks to the Social Demo UI for stable Playwright testing.
+### WT-18: CI Performance Benchmarking
+- Created a GitHub Action workflow to audit performance on every PR.
+- Updated `scripts/perf-audit.ts` to fail the build if sync latency (>2300ms) or memory (>172.5MB) exceeds a 15% threshold.
 
-### WT-14: Performance Audit
-- Created `scripts/perf-audit.ts` to benchmark sync latency, memory (RSS), and storage overhead.
-- Validated performance for 1000 items across multiple Sovereign instances.
+### WT-19: Live WebRTC Tests
+- Implemented a test suite in `tests/WebRTCRemoteAdapter.live.test.ts` using real `peerjs` connections.
+- Validated P2P data gossip and download across a live network signaling server.
 
-### WT-15: IaC Templates
-- Created `Setup/docker-compose.prod.yml` with RustFS, PeerJS, and Nginx.
-- Automated bucket creation, IAM policies, and CORS via `Setup/init-rustfs.sh`.
-- Added `Setup/README.md` for production deployment instructions.
+### WT-20: Module Developer Tutorial
+- Authored a comprehensive `docs/module-tutorial.md` for third-party developers.
+- Provided a reference "Todo List" module in `demo/todo-module/` with full CRUD operations.

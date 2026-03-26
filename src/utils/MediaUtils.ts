@@ -5,7 +5,56 @@ export class MediaUtils {
      * Only works in browser environments where 'document' and 'Image' are available.
      */
     public static async compressImage(dataUrl: string, targetSizeBytes: number): Promise<string> {
-        if (typeof document === 'undefined') return dataUrl; 
+        if (typeof document === 'undefined') {
+            try {
+                // Node.js environment fallback using jimp
+                const Jimp = (await import('jimp')).default;
+                const matches = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+                if (!matches) {
+                    console.log('MediaUtils: No regex match');
+                    return dataUrl;
+                }
+                
+                const buffer = Buffer.from(matches[2], 'base64');
+                const image = await Jimp.read(buffer);
+                
+                let width = image.getWidth();
+                let height = image.getHeight();
+                const MAX_DIM = 1024;
+                let changed = false;
+                
+                if (width > MAX_DIM || height > MAX_DIM) {
+                    if (width > height) {
+                        height = (height / width) * MAX_DIM;
+                        width = MAX_DIM;
+                    } else {
+                        width = (width / height) * MAX_DIM;
+                        height = MAX_DIM;
+                    }
+                    image.resize(width, height);
+                    changed = true;
+                }
+                
+                let quality = 90;
+                let resultBuffer = await image.quality(quality).getBufferAsync(Jimp.MIME_JPEG);
+                
+                while (resultBuffer.length > targetSizeBytes && quality > 10) {
+                    quality -= 10;
+                    resultBuffer = await image.quality(quality).getBufferAsync(Jimp.MIME_JPEG);
+                    changed = true;
+                }
+
+                if (!changed && resultBuffer.length >= buffer.length) {
+                    return dataUrl;
+                }
+                
+                return `data:image/jpeg;base64,${resultBuffer.toString('base64')}`;
+            } catch (err) {
+                console.error('MediaUtils: Node.js image compression failed:', err);
+                // Return original on failure
+                return dataUrl;
+            }
+        }
         
         return new Promise((resolve, reject) => {
             const img = new Image();

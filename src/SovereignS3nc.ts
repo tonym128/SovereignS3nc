@@ -243,18 +243,24 @@ export class SovereignS3nc extends EventEmitter {
 
         // Initialize Background Worker if enabled
         if (this.config.useWorker && this.config.workerUrl) {
-            Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
-            this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
-            this.syncWorker.on('update', (data) => {
-                this.emit('update', data);
-                if (data.moduleName) {
-                    this.emit(`${data.moduleName}:update`, data);
-                }
-            });
-            this.syncWorker.on('conflict', (data) => {
-                this.emit('conflict', data);
-            });
-            await this.syncWorker.init(this.config);
+            try {
+                Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
+                this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+                this.syncWorker.on('update', (data) => {
+                    this.emit('update', data);
+                    if (data.moduleName) {
+                        this.emit(`${data.moduleName}:update`, data);
+                    }
+                });
+                this.syncWorker.on('conflict', (data) => {
+                    this.emit('conflict', data);
+                });
+                await this.syncWorker.init(this.config);
+            } catch (e: any) {
+                Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e.message}`);
+                this.syncWorker = undefined;
+                this.config.useWorker = false;
+            }
         }
 
         if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {

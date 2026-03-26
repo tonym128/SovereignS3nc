@@ -88,7 +88,7 @@ const App = () => {
             const instance = new SovereignS3nc({
                 ...config,
                 offline: !config.s3,
-                useWorker: false,
+                useWorker: true,
                 workerUrl: 'sync-worker.js'
             });
             await instance.init();

@@ -8,25 +8,42 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 
 // --- Polyfills ---
-(global as any).crypto = crypto.webcrypto;
+if (!(globalThis as any).crypto) {
+    Object.defineProperty(globalThis, 'crypto', {
+        value: crypto.webcrypto,
+        writable: true,
+        configurable: true
+    });
+}
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
 
 /**
  * A simple in-memory remote for shared sync between instances.
  */
+const sharedMockFiles = new Map<string, {data: Uint8Array, hash: string, etag: string}>();
+
 class MockRemote implements IRemoteAdapter {
-    files: Map<string, {data: Uint8Array, hash: string, etag: string}> = new Map();
+    constructor(public prefix: string = '') {}
+
+    private getKey(filePath: string): string {
+        if (this.prefix && !filePath.startsWith(this.prefix)) {
+            return `${this.prefix}/${filePath}`;
+        }
+        return filePath;
+    }
 
     async uploadFile(filePath: string, data: Uint8Array, hash?: string): Promise<string | null> {
+        const key = this.getKey(filePath);
         const h = hash || crypto.createHash('sha256').update(data).digest('hex');
         const etag = `"${Math.random().toString(36).substring(7)}"`;
-        this.files.set(filePath, { data, hash: h, etag });
+        sharedMockFiles.set(key, { data, hash: h, etag });
         return etag;
     }
 
     async downloadFile(filePath: string, ifNoneMatch?: string): Promise<any | null> {
-        const entry = this.files.get(filePath);
+        const key = this.getKey(filePath);
+        const entry = sharedMockFiles.get(key);
         if (!entry) return null;
         if (ifNoneMatch && ifNoneMatch === entry.etag) {
             return { data: null, etag: entry.etag, notModified: true };
@@ -35,11 +52,13 @@ class MockRemote implements IRemoteAdapter {
     }
 
     async getFileHash(filePath: string): Promise<string | null> {
-        return this.files.get(filePath)?.hash || null;
+        const key = this.getKey(filePath);
+        return sharedMockFiles.get(key)?.hash || null;
     }
 
     async getFileEtag(filePath: string): Promise<string | null> {
-        return this.files.get(filePath)?.etag || null;
+        const key = this.getKey(filePath);
+        return sharedMockFiles.get(key)?.etag || null;
     }
 
     async canWrite(filePath: string): Promise<boolean> {
@@ -47,11 +66,15 @@ class MockRemote implements IRemoteAdapter {
     }
 
     async listFiles(prefix: string): Promise<string[]> {
-        return Array.from(this.files.keys()).filter(k => k.startsWith(prefix));
+        const fullPrefix = this.getKey(prefix);
+        return Array.from(sharedMockFiles.keys())
+            .filter(k => k.startsWith(fullPrefix))
+            .map(k => this.prefix ? k.substring(this.prefix.length + 1) : k);
     }
 
     async deleteFile(filePath: string): Promise<void> {
-        this.files.delete(filePath);
+        const key = this.getKey(filePath);
+        sharedMockFiles.delete(key);
     }
 }
 
@@ -62,8 +85,7 @@ async function runAudit() {
     }
     await fs.ensureDir(TEMP_DIR);
 
-    const remote = new MockRemote();
-    const remoteFactory = (userId: string) => remote;
+    const remoteFactory = (prefix: string) => new MockRemote(prefix);
 
     const appId = 'perf-audit-app';
     const password = 'secure-password';
@@ -89,7 +111,7 @@ async function runAudit() {
         paths: { appId, userId: 'alice', storeId: 'main' },
         password,
         debug: false
-    }, remote, remoteFactory, undefined, aliceStorage);
+    }, undefined, remoteFactory, undefined, aliceStorage);
     await alice.init();
     const aliceFeed = new FeedModule(alice);
 
@@ -185,8 +207,27 @@ async function runAudit() {
     console.log(`Bob SQLite storage size: ${(bobDbSize / 1024 / 1024).toFixed(2)} MB`);
     console.log('---------------------------------\n');
 
+    // --- Threshold Checks (WT-18) ---
+    const BASELINE_SYNC_MS = 2000; 
+    const BASELINE_MEMORY_MB = 150; 
+    const THRESHOLD = 1.15;
+
+    let hasFailure = false;
+    if (bobSyncDuration > BASELINE_SYNC_MS * THRESHOLD) {
+        console.error(`PERF FAILURE: Sync latency exceeded threshold (${bobSyncDuration}ms > ${BASELINE_SYNC_MS * THRESHOLD}ms)`);
+        hasFailure = true;
+    }
+    if ((peakMemory / 1024 / 1024) > BASELINE_MEMORY_MB * THRESHOLD) {
+        console.error(`PERF FAILURE: Memory usage exceeded threshold (${(peakMemory / 1024 / 1024).toFixed(2)}MB > ${BASELINE_MEMORY_MB * THRESHOLD}MB)`);
+        hasFailure = true;
+    }
+
     // Clean up
     await fs.remove(TEMP_DIR);
+
+    if (hasFailure) {
+        process.exit(1);
+    }
 }
 
 runAudit().catch(err => {

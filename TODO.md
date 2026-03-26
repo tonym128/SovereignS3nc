@@ -46,14 +46,17 @@
     - [ ] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
+- [ ] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
 
 ## 🧪 Testing & Validation
 - [ ] **Integration Testing**
-    - [ ] Implement real WebRTC/PeerJS integration tests with a live signaling server.
+    - [x] Implement real WebRTC/PeerJS integration tests with a live signaling server.
     - [x] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [x] **Admin & Moderation**
     - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
+- [x] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
+- [ ] Add integration tests for complex group permissions and member removal/revocation edge cases.
 
 ## 📚 Documentation & Infrastructure
 - [x] **Security & Whitepaper**
@@ -63,6 +66,7 @@
     - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.
+    - [ ] Remove npm publish from GitHub Workflows.
 
 ## User Generated TODO's
 - [x] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
@@ -84,4 +88,6 @@
 - [x] Organize documentation into `docs/` folder.
 - [x] Move testing configurations to `tests/` folder.
 - [x] Purge large binaries from Git history and exclude `bin/` from repo.
+- [x] Update Social and Banky demos to use granular modules.
+arge binaries from Git history and exclude `bin/` from repo.
 - [x] Update Social and Banky demos to use granular modules.

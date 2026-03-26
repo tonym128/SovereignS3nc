@@ -65,6 +65,7 @@
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "fake-indexeddb": "^6.2.5",
     "jest": "^30.2.0",
+    "jimp": "^0.22.12",
     "rimraf": "^6.1.2",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2"
