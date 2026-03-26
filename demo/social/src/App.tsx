@@ -98,6 +98,7 @@ const App = () => {
     const [reconnectDelay, setReconnectDelay] = useState(1000);
     const [unreadCounts, setUnreadCounts] = useState({ feed: 0, friends: 0, messages: 0, rooms: 0 });
     const [userUnreadCounts, setUserUnreadCounts] = useState<Record<string, number>>({});
+    const [conflict, setConflict] = useState<{ id: string, path: string, resolve: (choice: 'local' | 'remote' | 'abort') => void } | null>(null);
 
     const lastViewedRef = useRef(lastViewed);
     const discoveryMapRef = useRef(discoveryMap);
@@ -338,6 +339,9 @@ const App = () => {
             }, remoteAdapter, factory);
 
             await instance.init();
+            instance.on('conflict', (data: any) => {
+                setConflict(data);
+            });
             setSov(instance);
             
             const fm = new FeedModule(instance);
@@ -2058,6 +2062,17 @@ const App = () => {
                 </div>
             </div>
             <Dialog dialog={dialog} setDialog={setDialog} profileCache={profileCache} />
+            {conflict && (
+                <ConflictResolutionModal 
+                    conflict={conflict} 
+                    onResolve={(choice) => {
+                        if (conflict) {
+                            conflict.resolve(choice);
+                            setConflict(null);
+                        }
+                    }}
+                />
+            )}
             <MemberManagementModal 
                 show={showMemberManagement} 
                 onClose={() => setShowMemberManagement(false)} 
@@ -2088,6 +2103,34 @@ const App = () => {
                     </div>
                 </div>
             )}
+        </div>
+    );
+};
+
+const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort') => void }) => {
+    if (!conflict) return null;
+
+    return (
+        <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 3000 }}>
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content shadow-lg border-0 rounded-4">
+                    <div className="modal-header border-0 pb-0">
+                        <h5 className="modal-title fw-bold text-danger"><i className="bi bi-exclamation-triangle-fill me-2"></i>Sync Conflict</h5>
+                    </div>
+                    <div className="modal-body py-4">
+                        <p className="text-secondary">A conflict was detected during sync. How would you like to resolve it?</p>
+                        <div className="alert alert-light border small mb-0">
+                            <strong>File Path:</strong><br/>
+                            <code>{conflict.path}</code>
+                        </div>
+                    </div>
+                    <div className="modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2">
+                        <button type="button" className="btn btn-primary rounded-pill px-4" onClick={() => onResolve('local')}>Keep Local</button>
+                        <button type="button" className="btn btn-success rounded-pill px-4" onClick={() => onResolve('remote')}>Take Remote</button>
+                        <button type="button" className="btn btn-outline-secondary rounded-pill px-4" onClick={() => onResolve('abort')}>Skip</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

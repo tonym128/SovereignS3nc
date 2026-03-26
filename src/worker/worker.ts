@@ -30,6 +30,12 @@ self.onmessage = async (event: MessageEvent) => {
                 // Note: Actual termination is usually handled by the main thread calling worker.terminate()
                 break;
 
+            case 'RESOLVE_CONFLICT':
+                if (sovereign) {
+                    sovereign.resolveConflict(payload.conflictId, payload.choice);
+                }
+                break;
+
             default:
                 console.warn(`[SyncWorker] Unknown message type: ${type}`);
         }
@@ -53,6 +59,11 @@ async function handleInit(config: SovereignConfig) {
     // Forward update events back to the main thread
     sovereign.on('update', (data) => {
         self.postMessage({ type: 'EVENT_UPDATE', payload: data });
+    });
+
+    sovereign.on('conflict', (data) => {
+        // Forward conflict to main thread
+        self.postMessage({ type: 'EVENT_CONFLICT', payload: { id: data.id, path: data.path } });
     });
 
     await sovereign.init();

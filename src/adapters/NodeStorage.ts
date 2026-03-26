@@ -97,6 +97,15 @@ export class NodeStorage implements IStorage {
         }
     }
 
+    async getFileTimestamp(filePath: string): Promise<number | null> {
+        const fullPath = this.getFilePath(filePath);
+        if (await fs.pathExists(fullPath)) {
+            const stat = await fs.stat(fullPath);
+            return stat.mtimeMs;
+        }
+        return null;
+    }
+
     async listFiles(prefix: string): Promise<string[]> {
         const fullPrefix = this.getFilePath(prefix);
         if (!(await fs.pathExists(fullPrefix))) return [];

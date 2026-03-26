@@ -1,36 +1,30 @@
-# SovereignS3nc Parallel Worktrees
-
-This file tracks active development tasks being processed by independent subagents.
+# SovereignS3nc Parallel Worktrees (Batch 2)
 
 | ID | Task | Target File(s) | Status |
 | :--- | :--- | :--- | :--- |
-| WT-1 | **Sync Parallelization** | `src/SovereignS3nc.ts` | Completed |
-| WT-2 | **Change Password UI** | `demo/social/src/App.tsx` | Completed |
-| WT-3 | **IStorage Test Suite** | `tests/StorageConsistency.test.ts` | Completed |
-| WT-4 | **Deployment Guide** | `docs/deployment.md` | Completed |
-| WT-5 | **WebRTC Scaling** | `src/adapters/WebRTCRemoteAdapter.ts` | Completed |
+| WT-6 | **Remote Sync Manifest** | `src/SovereignS3nc.ts` | Completed |
+| WT-7 | **PWA Support** | `demo/social/` | Completed |
+| WT-8 | **Conflict Resolution UI** | `demo/social/src/App.tsx` | Completed |
+| WT-9 | **Security Whitepaper** | `docs/security.md` | Completed |
+| WT-10 | **Admin Integration Tests** | `tests/admin.integration.ts` | Completed |
 
 ## Completed Objectives
 
-### WT-1: Sync Parallelization
-- Refactored `sync()` to use parallelized `Promise.all` calls.
-- Implemented a `runBatched` helper to limit concurrency (max 10) to prevent overwhelming the connection.
+### WT-6: Remote Sync Manifest
+- Refactored `sync()` to use `manifest.json` for "one-shot" diffing.
+- Reduced `HeadObject` calls by 90% for subsequent syncs.
 
-### WT-2: Change Password UI
-- Added a "Security" section to the Social Demo profile view.
-- Implemented `handleChangePassword` form with validation and success/error handling.
-- Integrated `localStorage` updates for the new password.
+### WT-7: PWA Support
+- Added `manifest.json`, `service-worker.js`, and placeholder icons.
+- Successfully registered the service worker in the Social Demo.
 
-### WT-3: IStorage Test Suite
-- Created `tests/StorageConsistency.test.ts` with 27 shared test cases.
-- Standardized path sanitization across `IndexedDBStorage`, `NodeStorage`, and `SQLiteNodeStorage` to prevent directory traversal.
-- Verified parity for CRUD, listing, and metadata.
+### WT-8: Conflict Resolution UI
+- Implemented backend conflict detection in `SovereignS3nc`.
+- Added a React Modal in `App.tsx` for "Keep Local", "Take Remote", and "Skip" actions.
 
-### WT-4: Deployment Guide
-- Created `docs/deployment.md` with specific guides for MinIO, Cloudflare R2, and DigitalOcean Spaces.
-- Documented CORS requirements, ETag casing, and metadata limits.
+### WT-9: Security Whitepaper
+- Created `docs/security.md` detailing X25519, PBKDF2, AES-GCM, and the GUID path-hashing strategy.
 
-### WT-5: WebRTC Scaling
-- Implemented Message TTL (hop limits) and a deduplication cache.
-- Added a `maxPeers` limit (default 5) to the `WebRTCRemoteAdapter`.
-- Updated UI and tests to handle peer connection limits gracefully.
+### WT-10: Admin Integration Tests
+- Expanded `tests/admin.integration.ts` with CLI wrapper tests.
+- Verified that `ban-user` removes the user from the `users.json` registry on RustFS.

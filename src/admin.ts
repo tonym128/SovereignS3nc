@@ -12,7 +12,7 @@ const initSqlJs = require('sql.js');
 (global as any).TextEncoder = require('util').TextEncoder;
 (global as any).TextDecoder = require('util').TextDecoder;
 
-const APP_ID = 'sov-social';
+const APP_ID = process.env.SOV_APP_ID || 'sov-social';
 const HOME_DIR = process.env.HOME || process.env.USERPROFILE || '.';
 const CLI_DATA_DIR = path.join(HOME_DIR, '.sovereigns3nc-cli');
 

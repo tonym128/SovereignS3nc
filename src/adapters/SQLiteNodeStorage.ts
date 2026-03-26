@@ -120,6 +120,15 @@ export class SQLiteNodeStorage implements IStorage {
         await this.persist();
     }
 
+    async getFileTimestamp(filePath: string): Promise<number | null> {
+        const sanitizedPath = this.sanitizePath(filePath);
+        const res = this.db.exec("SELECT updatedAt FROM files WHERE path = ?", [sanitizedPath]);
+        if (res.length > 0 && res[0].values.length > 0) {
+            return res[0].values[0][0];
+        }
+        return null;
+    }
+
     async listFiles(prefix: string): Promise<string[]> {
         const sanitizedPrefix = this.sanitizePath(prefix);
         const res = this.db.exec("SELECT path FROM files WHERE path LIKE ?", [`${sanitizedPrefix}%`]);

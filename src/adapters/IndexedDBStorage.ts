@@ -73,12 +73,18 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async saveDailyDb(date: string, type: 'private' | 'public' | 'followed', data: Uint8Array): Promise<void> {
+        const path = this.sanitizePath(`${type}/${date}`);
         return new Promise((resolve, reject) => {
             try {
-                const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, this.sanitizePath(`${type}/${date}`));
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
+                const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
+                const filesStore = tx.objectStore('files');
+                const metadataStore = tx.objectStore('metadata');
+                
+                filesStore.put(data, path);
+                metadataStore.put(Date.now(), `timestamp:${path}`);
+                
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
             } catch (e) {
                 reject(e);
             }
@@ -86,12 +92,18 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async deleteDailyDb(date: string, type: 'private' | 'public' | 'followed'): Promise<void> {
+        const path = this.sanitizePath(`${type}/${date}`);
         return new Promise((resolve, reject) => {
             try {
-                const store = this.getStore('files', 'readwrite');
-                const request = store.delete(this.sanitizePath(`${type}/${date}`));
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
+                const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
+                const filesStore = tx.objectStore('files');
+                const metadataStore = tx.objectStore('metadata');
+                
+                filesStore.delete(path);
+                metadataStore.delete(`timestamp:${path}`);
+                
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
             } catch (e) {
                 reject(e);
             }
@@ -99,35 +111,17 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null> {
-        const data = await this.getDailyDb(date, type);
+        const data = await this.getDailyDb(date, type as any);
         if (!data) return null;
         return this.hash(data);
     }
 
     async getPublicUserFile(): Promise<Uint8Array | null> {
-        return new Promise((resolve, reject) => {
-            try {
-                const store = this.getStore('files');
-                const request = store.get('public/user.json');
-                request.onsuccess = () => resolve(request.result || null);
-                request.onerror = () => reject(request.error);
-            } catch (e) {
-                reject(e);
-            }
-        });
+        return this.getFile('public/user.json');
     }
 
     async savePublicUserFile(data: Uint8Array): Promise<void> {
-        return new Promise((resolve, reject) => {
-            try {
-                const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, 'public/user.json');
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
-            } catch (e) {
-                reject(e);
-            }
-        });
+        await this.saveFile('public/user.json', data);
     }
 
     async getFile(path: string): Promise<Uint8Array | null> {
@@ -144,12 +138,18 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async saveFile(path: string, data: Uint8Array): Promise<void> {
+        const sanitizedPath = this.sanitizePath(path);
         return new Promise((resolve, reject) => {
             try {
-                const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, this.sanitizePath(path));
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
+                const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
+                const filesStore = tx.objectStore('files');
+                const metadataStore = tx.objectStore('metadata');
+                
+                filesStore.put(data, sanitizedPath);
+                metadataStore.put(Date.now(), `timestamp:${sanitizedPath}`);
+                
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
             } catch (e) {
                 reject(e);
             }
@@ -157,11 +157,30 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async deleteFile(path: string): Promise<void> {
+        const sanitizedPath = this.sanitizePath(path);
         return new Promise((resolve, reject) => {
             try {
-                const store = this.getStore('files', 'readwrite');
-                const request = store.delete(this.sanitizePath(path));
-                request.onsuccess = () => resolve();
+                const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
+                const filesStore = tx.objectStore('files');
+                const metadataStore = tx.objectStore('metadata');
+                
+                filesStore.delete(sanitizedPath);
+                metadataStore.delete(`timestamp:${sanitizedPath}`);
+                
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    async getFileTimestamp(path: string): Promise<number | null> {
+        return new Promise((resolve, reject) => {
+            try {
+                const store = this.getStore('metadata');
+                const request = store.get(`timestamp:${this.sanitizePath(path)}`);
+                request.onsuccess = () => resolve(request.result || null);
                 request.onerror = () => reject(request.error);
             } catch (e) {
                 reject(e);

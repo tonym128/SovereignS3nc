@@ -47,6 +47,7 @@ export interface SovereignManifest {
     groups: Record<string, string[]>;  // groupId -> [dateStr, ...]
     blobs: string[];                   // List of blob hashes or paths
     profileHash?: string;
+    files?: Record<string, { hash: string, updatedAt: number }>;
 }
 
 export interface GroupMember {

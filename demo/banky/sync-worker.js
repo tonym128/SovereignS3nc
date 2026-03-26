@@ -69342,11 +69342,14 @@ ${toHex(hashedRequest)}`;
           const tx = this.db.transaction(name, mode);
           return tx.objectStore(name);
         }
+        sanitizePath(filePath) {
+          return filePath.replace(/\.\./g, "").replace(/^\/+/, "");
+        }
         async getDailyDb(date2, type) {
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
-              const request = store.get(`${type}/${date2}`);
+              const request = store.get(this.sanitizePath(`${type}/${date2}`));
               request.onsuccess = () => resolve(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -69355,24 +69358,32 @@ ${toHex(hashedRequest)}`;
           });
         }
         async saveDailyDb(date2, type, data) {
+          const path2 = this.sanitizePath(`${type}/${date2}`);
           return new Promise((resolve, reject) => {
             try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, `${type}/${date2}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
+              const tx = this.db.transaction(["files", "metadata"], "readwrite");
+              const filesStore = tx.objectStore("files");
+              const metadataStore = tx.objectStore("metadata");
+              filesStore.put(data, path2);
+              metadataStore.put(Date.now(), `timestamp:${path2}`);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => reject(tx.error);
             } catch (e2) {
               reject(e2);
             }
           });
         }
         async deleteDailyDb(date2, type) {
+          const path2 = this.sanitizePath(`${type}/${date2}`);
           return new Promise((resolve, reject) => {
             try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.delete(`${type}/${date2}`);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
+              const tx = this.db.transaction(["files", "metadata"], "readwrite");
+              const filesStore = tx.objectStore("files");
+              const metadataStore = tx.objectStore("metadata");
+              filesStore.delete(path2);
+              metadataStore.delete(`timestamp:${path2}`);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => reject(tx.error);
             } catch (e2) {
               reject(e2);
             }
@@ -69384,34 +69395,16 @@ ${toHex(hashedRequest)}`;
           return this.hash(data);
         }
         async getPublicUserFile() {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files");
-              const request = store.get("public/user.json");
-              request.onsuccess = () => resolve(request.result || null);
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
+          return this.getFile("public/user.json");
         }
         async savePublicUserFile(data) {
-          return new Promise((resolve, reject) => {
-            try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, "public/user.json");
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
-            } catch (e2) {
-              reject(e2);
-            }
-          });
+          await this.saveFile("public/user.json", data);
         }
         async getFile(path2) {
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
-              const request = store.get(path2);
+              const request = store.get(this.sanitizePath(path2));
               request.onsuccess = () => resolve(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -69420,23 +69413,43 @@ ${toHex(hashedRequest)}`;
           });
         }
         async saveFile(path2, data) {
+          const sanitizedPath = this.sanitizePath(path2);
           return new Promise((resolve, reject) => {
             try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.put(data, path2);
-              request.onsuccess = () => resolve();
-              request.onerror = () => reject(request.error);
+              const tx = this.db.transaction(["files", "metadata"], "readwrite");
+              const filesStore = tx.objectStore("files");
+              const metadataStore = tx.objectStore("metadata");
+              filesStore.put(data, sanitizedPath);
+              metadataStore.put(Date.now(), `timestamp:${sanitizedPath}`);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => reject(tx.error);
             } catch (e2) {
               reject(e2);
             }
           });
         }
         async deleteFile(path2) {
+          const sanitizedPath = this.sanitizePath(path2);
           return new Promise((resolve, reject) => {
             try {
-              const store = this.getStore("files", "readwrite");
-              const request = store.delete(path2);
-              request.onsuccess = () => resolve();
+              const tx = this.db.transaction(["files", "metadata"], "readwrite");
+              const filesStore = tx.objectStore("files");
+              const metadataStore = tx.objectStore("metadata");
+              filesStore.delete(sanitizedPath);
+              metadataStore.delete(`timestamp:${sanitizedPath}`);
+              tx.oncomplete = () => resolve();
+              tx.onerror = () => reject(tx.error);
+            } catch (e2) {
+              reject(e2);
+            }
+          });
+        }
+        async getFileTimestamp(path2) {
+          return new Promise((resolve, reject) => {
+            try {
+              const store = this.getStore("metadata");
+              const request = store.get(`timestamp:${this.sanitizePath(path2)}`);
+              request.onsuccess = () => resolve(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
               reject(e2);
@@ -69444,13 +69457,14 @@ ${toHex(hashedRequest)}`;
           });
         }
         async listFiles(prefix) {
+          const sanitizedPrefix = this.sanitizePath(prefix);
           return new Promise((resolve, reject) => {
             try {
               const store = this.getStore("files");
               const request = store.getAllKeys();
               request.onsuccess = () => {
                 const allKeys = request.result;
-                resolve(allKeys.filter((k2) => k2.startsWith(prefix)));
+                resolve(allKeys.filter((k2) => k2.startsWith(sanitizedPrefix)));
               };
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -69681,6 +69695,15 @@ ${toHex(hashedRequest)}`;
           const { id, type, payload, error } = event.data;
           if (type === "EVENT_UPDATE") {
             this.emit("update", payload);
+            return;
+          }
+          if (type === "EVENT_CONFLICT") {
+            this.emit("conflict", {
+              ...payload,
+              resolve: (choice) => {
+                this.worker.postMessage({ type: "RESOLVE_CONFLICT", payload: { conflictId: payload.id, choice } });
+              }
+            });
             return;
           }
           const pending = this.pendingPromises.get(id);
@@ -70141,7 +70164,7 @@ ${toHex(hashedRequest)}`;
           await fs.writeJson(this.metadataPath, metadata);
         }
         getFilePath(filePath) {
-          const safePath = filePath.replace(/\.\./g, "");
+          const safePath = filePath.replace(/\.\./g, "").replace(/^\/+/, "");
           return path.join(this.filesDir, safePath);
         }
         async getDailyDb(date2, type) {
@@ -70190,6 +70213,14 @@ ${toHex(hashedRequest)}`;
           if (await fs.pathExists(fullPath)) {
             await fs.unlink(fullPath);
           }
+        }
+        async getFileTimestamp(filePath) {
+          const fullPath = this.getFilePath(filePath);
+          if (await fs.pathExists(fullPath)) {
+            const stat2 = await fs.stat(fullPath);
+            return stat2.mtimeMs;
+          }
+          return null;
         }
         async listFiles(prefix) {
           const fullPrefix = this.getFilePath(prefix);
@@ -70299,6 +70330,7 @@ ${toHex(hashedRequest)}`;
           super();
           this.registeredModules = [];
           this.isSyncing = false;
+          this.pendingConflicts = /* @__PURE__ */ new Map();
           this.config = config;
           this.remoteFactory = remoteFactory;
           Logger.setLevel(config.debug ? 0 /* DEBUG */ : 2 /* WARN */);
@@ -70325,7 +70357,7 @@ ${toHex(hashedRequest)}`;
             this.adminRemote = remoteFactory("admin");
             this.rootRemote = remoteFactory("root");
           } else if (!config.offline) {
-            Logger.warn("[Sovereign] No S3 configuration provided and offline flag not set. Operating in local-only mode until connectRemote() is called.");
+            this.config.offline = true;
           }
         }
         static {
@@ -70488,7 +70520,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the global blacklist and updates local config.
          */
         async syncBlacklist() {
-          if (!this.globalRemote) return;
+          if (!this.globalRemote || !this.config.s3) return;
           const path2 = "blacklist.json";
           try {
             const result = await this.globalRemote.downloadFile(path2);
@@ -70504,7 +70536,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the admin's public key for E2EE reports.
          */
         async syncAdminKey() {
-          if (!this.adminRemote) return;
+          if (!this.adminRemote || !this.config.s3) return;
           try {
             const result = await this.adminRemote.downloadFile("public_key.json");
             if (result && result.data) {
@@ -70827,10 +70859,11 @@ ${toHex(hashedRequest)}`;
               iterDate.setUTCDate(iterDate.getUTCDate() + 1);
             }
             const sortedDates = Array.from(syncDates).sort();
-            for (const dateStr of sortedDates) {
-              await this.syncDay(dateStr, "private", void 0, this.remote);
-              await this.syncDay(dateStr, "public", void 0, this.publicRemote);
-            }
+            const dateTasks = sortedDates.flatMap((dateStr) => [
+              () => this.syncDay(dateStr, "private", void 0, this.remote),
+              () => this.syncDay(dateStr, "public", void 0, this.publicRemote)
+            ]);
+            await this.runBatched(dateTasks, 10);
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -70843,11 +70876,12 @@ ${toHex(hashedRequest)}`;
             await this.syncFollowedUsers(today);
             await this.syncGroups(today);
             const manifest = await this.generateManifest();
-            for (const blobPath of manifest.blobs) {
+            const blobTasks = manifest.blobs.map((blobPath) => {
               const type = blobPath.startsWith("public/") ? "public" : "private";
               const relativePath = blobPath.substring(type.length + 1);
-              await this.syncGenericFile(relativePath, type);
-            }
+              return () => this.syncGenericFile(relativePath, type);
+            });
+            await this.runBatched(blobTasks, 10);
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
@@ -70875,7 +70909,8 @@ ${toHex(hashedRequest)}`;
             modules: {},
             dms: {},
             groups: {},
-            blobs: []
+            blobs: [],
+            files: {}
           };
           const profileData = await this.storage.getPublicUserFile();
           if (profileData) {
@@ -70889,6 +70924,14 @@ ${toHex(hashedRequest)}`;
             if (file.includes(".probe")) continue;
             const parts = file.split("/");
             const fileName = parts[parts.length - 1];
+            const data = await this.storage.getFile(file);
+            if (data) {
+              const type = file.startsWith("public/") ? "public" : "private";
+              const key = type === "private" ? this.config.encryptionKey : void 0;
+              const hash = this.calculateHashedContent(data, key);
+              const updatedAt = await this.storage.getFileTimestamp(file) || Date.now();
+              manifest.files[file] = { hash, updatedAt };
+            }
             if (parts.length === 2 && fileName.endsWith(".db")) {
               const dateStr = fileName.replace(".db", "");
               if (!manifest.modules["core"]) manifest.modules["core"] = [];
@@ -71469,26 +71512,54 @@ ${toHex(hashedRequest)}`;
             let localData = await this.storage.getDailyDb(date2, type);
             const currentKey = type === "private" ? this.config.encryptionKey : void 0;
             const cachedEtag = await this.storage.getRemoteHashCache(date2, type);
+            const cachedSyncHash = await this.storage.getGenericRemoteHashCache(`sync_hash:${remotePath}`);
             if (!localData) {
               Logger.info(`[Sync] Downloading ${remotePath} for ${this.config.paths.userId} (Hashed: ${hashedUserId})`);
               const result = await activeRemote.downloadFile(remotePath);
               if (result && result.data) {
                 let data = result.data;
+                const remoteHash = await activeRemote.getFileHash(remotePath);
                 if (currentKey) {
                   data = await this.decrypt(data, currentKey);
                 }
                 await this.storage.saveDailyDb(date2, type, data);
                 if (result.etag) await this.storage.setRemoteHashCache(date2, type, result.etag);
+                if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
               }
             } else {
               const localHash = this.calculateHashedContent(localData, currentKey);
               const remoteHash = await activeRemote.getFileHash(remotePath);
               if (localHash === remoteHash) {
-                if (!cachedEtag) {
+                if (!cachedEtag || !cachedSyncHash) {
                   const remoteEtag = await activeRemote.getFileEtag(remotePath);
                   if (remoteEtag) await this.storage.setRemoteHashCache(date2, type, remoteEtag);
+                  if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
                 }
                 return;
+              }
+              if (cachedSyncHash && remoteHash !== cachedSyncHash && localHash !== cachedSyncHash) {
+                Logger.warn(`[Sync] Conflict detected for ${remotePath}`);
+                const result = await activeRemote.downloadFile(remotePath);
+                if (result && result.data) {
+                  let remoteData = result.data;
+                  if (currentKey) {
+                    try {
+                      remoteData = await this.decrypt(remoteData, currentKey);
+                    } catch (e2) {
+                      Logger.error(`[Sync] Failed to decrypt remote conflict file: ${e2.message}`);
+                    }
+                  }
+                  const choice = await this.handleConflict(remotePath, localData, remoteData);
+                  if (choice === "remote") {
+                    localData = remoteData;
+                    await this.storage.saveDailyDb(date2, type, localData);
+                    if (result.etag) await this.storage.setRemoteHashCache(date2, type, result.etag);
+                    if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
+                    return;
+                  } else if (choice === "abort") {
+                    throw new Error("Sync aborted by user due to conflict");
+                  }
+                }
               }
               Logger.info(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
               let uploadData = localData;
@@ -71497,9 +71568,30 @@ ${toHex(hashedRequest)}`;
               }
               const etag = await activeRemote.uploadFile(remotePath, uploadData, localHash);
               if (etag) await this.storage.setRemoteHashCache(date2, type, etag);
+              await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, localHash);
             }
           } catch (e2) {
             Logger.warn(`[Sync] syncDay failed for ${date2}/${type}: ${e2.message}`);
+            if (e2.message.includes("Sync aborted")) throw e2;
+          }
+        }
+        async handleConflict(path2, localData, remoteData) {
+          return new Promise((resolve) => {
+            const conflictId = Math.random().toString(36).substring(7);
+            this.pendingConflicts.set(conflictId, resolve);
+            this.emit("conflict", {
+              id: conflictId,
+              path: path2,
+              localData,
+              remoteData
+            });
+          });
+        }
+        resolveConflict(conflictId, choice) {
+          const resolve = this.pendingConflicts.get(conflictId);
+          if (resolve) {
+            this.pendingConflicts.delete(conflictId);
+            resolve(choice);
           }
         }
         calculateHashedContent(data, key) {
@@ -71643,6 +71735,18 @@ ${toHex(hashedRequest)}`;
           hasher.update(secret);
           return hasher.digest("hex");
         }
+        async runBatched(tasks, limit) {
+          const results = new Array(tasks.length);
+          let currentIndex = 0;
+          const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+            while (currentIndex < tasks.length) {
+              const index = currentIndex++;
+              results[index] = await tasks[index]();
+            }
+          });
+          await Promise.all(workers);
+          return results;
+        }
       };
     }
   });
@@ -71670,6 +71774,11 @@ ${toHex(hashedRequest)}`;
               sovereign = null;
               self.postMessage({ id, type: "TERMINATED" });
               break;
+            case "RESOLVE_CONFLICT":
+              if (sovereign) {
+                sovereign.resolveConflict(payload.conflictId, payload.choice);
+              }
+              break;
             default:
               console.warn(`[SyncWorker] Unknown message type: ${type}`);
           }
@@ -71688,6 +71797,9 @@ ${toHex(hashedRequest)}`;
         sovereign = new SovereignS3nc(workerConfig);
         sovereign.on("update", (data) => {
           self.postMessage({ type: "EVENT_UPDATE", payload: data });
+        });
+        sovereign.on("conflict", (data) => {
+          self.postMessage({ type: "EVENT_CONFLICT", payload: { id: data.id, path: data.path } });
         });
         await sovereign.init();
         Logger.info("[SyncWorker] Initialization complete.");

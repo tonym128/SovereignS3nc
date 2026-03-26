@@ -22,7 +22,7 @@
     - [x] Build a Node.js server using this backend.
 - [x] **Core: Sync Optimization**
     - [x] Parallelize S3 operations in `sync()` using `Promise.all` for improved performance.
-    - [ ] Implement a remote `manifest.json` for "one-shot" diffing of the entire remote state.
+    - [x] Implement a remote `manifest.json` for "one-shot" diffing of the entire remote state.
 - [x] **WebRTC: Gossip Scaling**
     - [x] Optimize gossip protocol for larger networks (e.g., DHT-lite or neighbor-limited broadcasts).
 - [x] Modules: Granular Decomposition
@@ -40,24 +40,24 @@
 - [ ] **Performance & UX**
     - [x] Implement background Web Workers for sync.
     - [ ] Make Web Workers the default seamless experience in demos (currently opt-in).
-    - [ ] Implement PWA support (`manifest.json` + Service Worker) for local installation.
+    - [x] Implement PWA support (`manifest.json` + Service Worker) for local installation.
     - [ ] Audit library performance and provide benchmarks for sync latency and storage overhead.
 - [ ] **Accessibility & UI**
     - [ ] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
-    - [ ] Implement a Conflict Resolution UI for modules to handle concurrent edits.
+    - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
 
 ## 🧪 Testing & Validation
 - [ ] **Integration Testing**
     - [ ] Implement real WebRTC/PeerJS integration tests with a live signaling server.
     - [ ] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
-- [ ] **Admin & Moderation**
-    - [ ] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
+- [x] **Admin & Moderation**
+    - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
 
 ## 📚 Documentation & Infrastructure
-- [ ] **Security & Whitepaper**
-    - [ ] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
+- [x] **Security & Whitepaper**
+    - [x] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
 - [ ] **Deployment & DX**
     - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
     - [ ] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.

@@ -58,6 +58,11 @@ export interface IStorage {
   deleteFile(path: string): Promise<void>;
 
   /**
+   * Get the modification timestamp of a file.
+   */
+  getFileTimestamp(path: string): Promise<number | null>;
+
+  /**
    * List all files in a prefix.
    */
   listFiles(prefix: string): Promise<string[]>;

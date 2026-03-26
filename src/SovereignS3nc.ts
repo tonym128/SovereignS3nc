@@ -22,6 +22,7 @@ export class SovereignS3nc extends EventEmitter {
     private registeredModules: ModuleDefinition[] = [];
     private isSyncing: boolean = false;
     private syncWorker?: SyncWorkerProxy;
+    private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort') => void> = new Map();
 
     constructor(
         config: SovereignConfig, 
@@ -249,6 +250,9 @@ export class SovereignS3nc extends EventEmitter {
                 if (data.moduleName) {
                     this.emit(`${data.moduleName}:update`, data);
                 }
+            });
+            this.syncWorker.on('conflict', (data) => {
+                this.emit('conflict', data);
             });
             await this.syncWorker.init(this.config);
         }
@@ -668,6 +672,20 @@ export class SovereignS3nc extends EventEmitter {
                 Logger.info('[Sync] FORCE SYNC initiated. Bypassing ETag cache.');
             }
 
+            // 0. Download Remote Manifest for diffing
+            let remoteManifest: SovereignManifest | null = null;
+            if (this.publicRemote && !forceSync) {
+                try {
+                    const result = await this.publicRemote.downloadFile('manifest.json');
+                    if (result && result.data) {
+                        remoteManifest = JSON.parse(new TextDecoder().decode(result.data));
+                        Logger.info('[Sync] Remote manifest downloaded for diffing.');
+                    }
+                } catch (e) {
+                    Logger.debug('[Sync] No remote manifest found.');
+                }
+            }
+
             // 1. Sync My Data (Private & Public)
             const lastSync = forceSync ? null : await this.storage.getLastSyncDate();
             const today = SovereignS3nc.getDateStr(new Date()); // Now UTC
@@ -696,13 +714,13 @@ export class SovereignS3nc extends EventEmitter {
             
             const sortedDates = Array.from(syncDates).sort();
             const dateTasks = sortedDates.flatMap(dateStr => [
-                () => this.syncDay(dateStr, 'private', undefined, this.remote),
-                () => this.syncDay(dateStr, 'public', undefined, this.publicRemote)
+                () => this.syncDay(dateStr, 'private', undefined, this.remote, remoteManifest),
+                () => this.syncDay(dateStr, 'public', undefined, this.publicRemote, remoteManifest)
             ]);
             await this.runBatched(dateTasks, 10);
 
             // 2. Sync User Profile and Global Registry
-            await this.syncUserFile();
+            await this.syncUserFile(remoteManifest);
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
             
@@ -719,13 +737,31 @@ export class SovereignS3nc extends EventEmitter {
             // 4. Sync Groups (Multi-writer Logic)
             await this.syncGroups(today);
 
-            // 5. Sync Blobs and generic files from the local manifest
-            const manifest = await this.generateManifest();
-            const blobTasks = manifest.blobs.map(blobPath => {
-                const type = blobPath.startsWith('public/') ? 'public' : 'private';
-                const relativePath = blobPath.substring(type.length + 1);
-                return () => this.syncGenericFile(relativePath, type);
-            });
+            // 5. Sync Blobs and generic files
+            const localManifest = await this.generateManifest();
+            const allFilePaths = new Set([
+                ...localManifest.blobs,
+                ...(remoteManifest && remoteManifest.files ? Object.keys(remoteManifest.files) : [])
+            ]);
+
+            const blobTasks = Array.from(allFilePaths).map(filePath => {
+                if (filePath.includes('user.json') || filePath.includes('manifest.json') || 
+                    filePath.includes('_keys.json') || filePath.includes('sentinel.enc') ||
+                    filePath.includes('.probe')) {
+                    return null;
+                }
+                
+                const parts = filePath.split('/');
+                if (parts.length === 2 && filePath.endsWith('.db')) {
+                    // Handled by syncDay
+                    return null;
+                }
+
+                const type = filePath.startsWith('public/') ? 'public' : 'private';
+                const relativePath = filePath.substring(type.length + 1);
+                return () => this.syncGenericFile(relativePath, type, remoteManifest);
+            }).filter(t => t !== null) as (() => Promise<void>)[];
+
             await this.runBatched(blobTasks, 10);
 
             await this.syncManifest();
@@ -757,7 +793,8 @@ export class SovereignS3nc extends EventEmitter {
             modules: {},
             dms: {},
             groups: {},
-            blobs: []
+            blobs: [],
+            files: {}
         };
 
         const profileData = await this.storage.getPublicUserFile();
@@ -773,6 +810,16 @@ export class SovereignS3nc extends EventEmitter {
             if (file.includes('.probe')) continue;
             const parts = file.split('/');
             const fileName = parts[parts.length - 1];
+
+            // Add to files map with hash and timestamp
+            const data = await this.storage.getFile(file);
+            if (data) {
+                const type = file.startsWith('public/') ? 'public' : 'private';
+                const key = type === 'private' ? this.config.encryptionKey : undefined;
+                const hash = this.calculateHashedContent(data, key);
+                const updatedAt = await this.storage.getFileTimestamp(file) || Date.now();
+                manifest.files![file] = { hash, updatedAt };
+            }
             
             // 1. Track in structured manifest sections for PULL discovery
             
@@ -1083,7 +1130,7 @@ export class SovereignS3nc extends EventEmitter {
         return null;
     }
 
-    private async syncGenericFile(relativePath: string, type: 'private' | 'public') {
+    private async syncGenericFile(relativePath: string, type: 'private' | 'public', remoteManifest?: SovereignManifest) {
         try {
             const activeRemote = type === 'public' ? this.publicRemote : this.remote;
             if (!activeRemote) return;
@@ -1093,25 +1140,78 @@ export class SovereignS3nc extends EventEmitter {
             const fullPath = relativePath.startsWith(`${type}/`) ? relativePath : `${type}/${relativePath}`;
             const s3Path = fullPath;
 
-            const localData = await this.storage.getFile(fullPath);
-            if (!localData) return;
+            let localData = await this.storage.getFile(fullPath);
+            const cachedSyncHash = await this.storage.getGenericRemoteHashCache(`sync_hash:${fullPath}`);
+            
+            let remoteHash = remoteManifest?.files?.[fullPath]?.hash;
+            if (remoteHash === undefined) {
+                remoteHash = await activeRemote.getFileHash(s3Path);
+            }
 
-            const localHash = this.calculateHashedContent(localData, key);
-            const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
-            const remoteHash = await activeRemote.getFileHash(s3Path);
+            if (!localData) {
+                if (remoteHash) {
+                    Logger.info(`[Sync] Downloading generic file: ${fullPath}`);
+                    const result = await activeRemote.downloadFile(s3Path);
+                    if (result && result.data) {
+                        let data = result.data;
+                        if (key) data = await this.decrypt(data, key);
+                        await this.storage.saveFile(fullPath, data);
+                        if (result.etag) await this.storage.setGenericRemoteHashCache(fullPath, result.etag);
+                        if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, remoteHash);
+                    }
+                }
+            } else {
+                const localHash = this.calculateHashedContent(localData, key);
 
-            if (localHash !== remoteHash || remoteHash === null) {
+                if (localHash === remoteHash) {
+                    const cachedEtag = await this.storage.getGenericRemoteHashCache(fullPath);
+                    if (!cachedEtag || !cachedSyncHash) {
+                        const remoteEtag = await activeRemote.getFileEtag(s3Path);
+                        if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
+                        if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, remoteHash);
+                    }
+                    return;
+                }
+
+                // Conflict Detection
+                if (cachedSyncHash && remoteHash !== cachedSyncHash && localHash !== cachedSyncHash) {
+                    Logger.warn(`[Sync] Conflict detected for ${fullPath}`);
+                    const result = await activeRemote.downloadFile(s3Path);
+                    if (result && result.data) {
+                        let remoteData = result.data;
+                        if (key) {
+                            try {
+                                remoteData = await this.decrypt(remoteData, key);
+                            } catch (e: any) {
+                                Logger.error(`[Sync] Failed to decrypt remote conflict file: ${e.message}`);
+                            }
+                        }
+                        
+                        const choice = await this.handleConflict(fullPath, localData, remoteData);
+                        if (choice === 'remote') {
+                            localData = remoteData;
+                            await this.storage.saveFile(fullPath, localData);
+                            if (result.etag) await this.storage.setGenericRemoteHashCache(fullPath, result.etag);
+                            if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, remoteHash);
+                            return;
+                        } else if (choice === 'abort') {
+                            Logger.info(`[Sync] Conflict for ${fullPath} skipped by user.`);
+                            return;
+                        }
+                        // If 'local', proceed to upload below
+                    }
+                }
+
                 Logger.info(`[Sync] Uploading generic file: ${fullPath}`);
                 let uploadData = localData;
                 if (key) uploadData = await this.encrypt(localData, key);
                 const etag = await activeRemote.uploadFile(s3Path, uploadData, localHash);
                 if (etag) await this.storage.setGenericRemoteHashCache(fullPath, etag);
-            } else if (!cachedEtag && remoteHash) {
-                const remoteEtag = await activeRemote.getFileEtag(s3Path);
-                if (remoteEtag) await this.storage.setGenericRemoteHashCache(fullPath, remoteEtag);
+                await this.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, localHash);
             }
         } catch (e: any) {
             Logger.warn(`[Sync] syncGenericFile failed for ${relativePath}: ${e.message}`);
+            if (e.message?.includes('Sync aborted')) throw e;
         }
     }
 
@@ -1489,7 +1589,7 @@ export class SovereignS3nc extends EventEmitter {
         return `${year}-${month}-${day}`;
     }
 
-    private async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter) {
+    private async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter, remoteManifest?: SovereignManifest) {
         try {
             // Important: We need the hashed path for the remote check
             const hashedUserId = this.getHashedUserId(this.config.paths.userId, type === 'private');
@@ -1502,29 +1602,71 @@ export class SovereignS3nc extends EventEmitter {
             // ONLY encrypt/decrypt private data. Public data is open for sharing.
             const currentKey = type === 'private' ? this.config.encryptionKey : undefined;
             const cachedEtag = await this.storage.getRemoteHashCache(date, type);
+            const cachedSyncHash = await this.storage.getGenericRemoteHashCache(`sync_hash:${remotePath}`);
 
             if (!localData) {
-                Logger.info(`[Sync] Downloading ${remotePath} for ${this.config.paths.userId} (Hashed: ${hashedUserId})`);
-                const result = await activeRemote.downloadFile(remotePath);
-                if (result && result.data) {
-                    let data = result.data;
-                    if (currentKey) {
-                        data = await this.decrypt(data, currentKey);
+                // Check manifest before downloading
+                const hasOnRemote = remoteManifest?.files?.[remotePath] !== undefined;
+                if (hasOnRemote || !remoteManifest) {
+                    Logger.info(`[Sync] Downloading ${remotePath} for ${this.config.paths.userId} (Hashed: ${hashedUserId})`);
+                    const result = await activeRemote.downloadFile(remotePath);
+                    if (result && result.data) {
+                        let data = result.data;
+                        const remoteHash = await activeRemote.getFileHash(remotePath);
+                        if (currentKey) {
+                            data = await this.decrypt(data, currentKey);
+                        }
+                        await this.storage.saveDailyDb(date, type, data);
+                        if (result.etag) await this.storage.setRemoteHashCache(date, type, result.etag);
+                        if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
                     }
-                    await this.storage.saveDailyDb(date, type, data);
-                    if (result.etag) await this.storage.setRemoteHashCache(date, type, result.etag);
                 }
             } else {
                 // Calculate hash including the key to force re-upload if key changes
                 const localHash = this.calculateHashedContent(localData, currentKey);
-                const remoteHash = await activeRemote.getFileHash(remotePath);
+                
+                // Use manifest to avoid per-file S3 request
+                let remoteHash = remoteManifest?.files?.[remotePath]?.hash;
+                if (remoteHash === undefined) {
+                    remoteHash = await activeRemote.getFileHash(remotePath);
+                }
                 
                 if (localHash === remoteHash) {
-                    if (!cachedEtag) {
+                    if (!cachedEtag || !cachedSyncHash) {
                         const remoteEtag = await activeRemote.getFileEtag(remotePath);
                         if (remoteEtag) await this.storage.setRemoteHashCache(date, type, remoteEtag);
+                        if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
                     }
                     return;
+                }
+
+                // Conflict Detection
+                if (cachedSyncHash && remoteHash !== cachedSyncHash && localHash !== cachedSyncHash) {
+                    Logger.warn(`[Sync] Conflict detected for ${remotePath}`);
+                    const result = await activeRemote.downloadFile(remotePath);
+                    if (result && result.data) {
+                        let remoteData = result.data;
+                        if (currentKey) {
+                            try {
+                                remoteData = await this.decrypt(remoteData, currentKey);
+                            } catch (e) {
+                                Logger.error(`[Sync] Failed to decrypt remote conflict file: ${e.message}`);
+                            }
+                        }
+                        
+                        const choice = await this.handleConflict(remotePath, localData, remoteData);
+                        if (choice === 'remote') {
+                            localData = remoteData;
+                            await this.storage.saveDailyDb(date, type, localData);
+                            if (result.etag) await this.storage.setRemoteHashCache(date, type, result.etag);
+                            if (remoteHash) await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
+                            return;
+                        } else if (choice === 'abort') {
+                            Logger.info(`[Sync] Conflict for ${remotePath} skipped by user.`);
+                            return;
+                        }
+                        // If 'local', proceed to upload below
+                    }
                 }
 
                 Logger.info(`[Sync] Uploading ${remotePath} (Reason: Content or Key change)`);
@@ -1534,9 +1676,32 @@ export class SovereignS3nc extends EventEmitter {
                 }
                 const etag = await activeRemote.uploadFile(remotePath, uploadData, localHash);
                 if (etag) await this.storage.setRemoteHashCache(date, type, etag);
+                await this.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, localHash);
             }
         } catch (e: any) {
             Logger.warn(`[Sync] syncDay failed for ${date}/${type}: ${e.message}`);
+            if (e.message.includes('Sync aborted')) throw e;
+        }
+    }
+
+    private async handleConflict(path: string, localData: Uint8Array, remoteData: Uint8Array): Promise<'local' | 'remote' | 'abort'> {
+        return new Promise((resolve) => {
+            const conflictId = Math.random().toString(36).substring(7);
+            this.pendingConflicts.set(conflictId, resolve);
+            this.emit('conflict', { 
+                id: conflictId,
+                path, 
+                localData, 
+                remoteData
+            });
+        });
+    }
+
+    public resolveConflict(conflictId: string, choice: 'local' | 'remote' | 'abort') {
+        const resolve = this.pendingConflicts.get(conflictId);
+        if (resolve) {
+            this.pendingConflicts.delete(conflictId);
+            resolve(choice);
         }
     }
 
@@ -1634,7 +1799,7 @@ export class SovereignS3nc extends EventEmitter {
         Logger.info(`[Sovereign] Encrypted payload sent to ${recipientId} in namespace ${namespace}`);
     }
     
-    private async syncUserFile() {
+    private async syncUserFile(remoteManifest?: SovereignManifest) {
         try {
             if (!this.publicRemote) return;
             const remotePath = 'public/user.json';
@@ -1680,7 +1845,10 @@ export class SovereignS3nc extends EventEmitter {
 
             // After potentially updating localData, ensure remote matches local if we kept local
             if (localData) {
-                const remoteHash = await this.publicRemote.getFileHash(remotePath);
+                let remoteHash = remoteManifest?.files?.[remotePath]?.hash;
+                if (remoteHash === undefined) {
+                    remoteHash = await this.publicRemote.getFileHash(remotePath);
+                }
                 const localHash = this.calculateHashedContent(localData, key);
                 
                 if (localHash !== remoteHash) {

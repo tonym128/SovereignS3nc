@@ -62,9 +62,19 @@ export class SyncWorkerProxy extends EventEmitter {
     private handleMessage(event: MessageEvent) {
         const { id, type, payload, error } = event.data;
 
-        // 1. Handle Events (No ID)
+        // 1. Handle Events (No ID or special event types)
         if (type === 'EVENT_UPDATE') {
             this.emit('update', payload);
+            return;
+        }
+
+        if (type === 'EVENT_CONFLICT') {
+            this.emit('conflict', {
+                ...payload,
+                resolve: (choice: 'local' | 'remote' | 'abort') => {
+                    this.worker!.postMessage({ type: 'RESOLVE_CONFLICT', payload: { conflictId: payload.id, choice } });
+                }
+            });
             return;
         }
 

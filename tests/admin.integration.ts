@@ -6,6 +6,8 @@ import { IndexedDBStorage } from '../src/adapters/IndexedDBStorage';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
 import * as fs from 'fs';
+import * as fsExtra from 'fs-extra';
+import * as path from 'path';
 import initSqlJs from 'sql.js';
 
 // --- Browser Polyfills ---
@@ -21,16 +23,23 @@ const adminConfigPath = 'demo/social/admin_config.json';
 const userConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
 const adminConfig = JSON.parse(fs.readFileSync(adminConfigPath, 'utf8'));
 
+// Setup Temp Home for CLI tests BEFORE importing src/admin
+const tempHome = path.join(__dirname, 'temp_home_' + Math.random().toString(36).substring(7));
+process.env.HOME = tempHome;
+fsExtra.ensureDirSync(path.join(tempHome, '.sovereigns3nc-cli'));
+
 describe('RustFS Admin & Moderation Integration Tests', () => {
     let adminSov: SovereignS3nc;
     let userSov: SovereignS3nc;
     let adminMod: ModerationModule;
     let userMod: ModerationModule;
     let userFeed: FeedModule;
+    let runAdmin: any;
 
-    const appId = 'rustfs-admin-test-' + Math.random().toString(36).substring(7);
+const appId = 'rustfs-admin-test-' + Math.random().toString(36).substring(7);
+process.env.SOV_APP_ID = appId;
 
-    beforeAll(async () => {
+beforeAll(async () => {
         // Setup Admin
         adminSov = new SovereignS3nc({
             s3: adminConfig,
@@ -52,10 +61,40 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         userMod = new ModerationModule(userSov);
         userFeed = new FeedModule(userSov);
 
+        // Setup CLI environment
+        const profile = {
+            userId: 'admin-user',
+            password: 'admin-password',
+            s3Config: { ...adminConfig, appId } // Include appId for the CLI to use the same one
+        };
+        // The CLI expects appId in paths, but src/admin.ts uses a hardcoded APP_ID = 'sov-social'
+        // Wait, I should check src/admin.ts again.
+        
+        await fsExtra.writeJson(path.join(tempHome, '.sovereigns3nc-cli', 'profiles.json'), {
+            'admin-user': profile
+        });
+        await fsExtra.writeJson(path.join(tempHome, '.sovereigns3nc-cli', 'current_user.json'), { 
+            userId: 'admin-user' 
+        });
+
+        // Import runAdmin after setting up HOME and profiles
+        runAdmin = (await import('../src/admin')).run;
+
         // Verify Admin Status
         expect(await adminMod.isAdmin()).toBe(true);
         expect(await userMod.isAdmin()).toBe(false);
     }, 30000);
+
+    afterAll(async () => {
+        await fsExtra.remove(tempHome);
+    });
+
+    test('Admin lists all users in the system', async () => {
+        const users = await adminMod.listUsers();
+        expect(users).toContain('admin-user');
+        expect(users).toContain('regular-user');
+        expect(users.length).toBeGreaterThanOrEqual(2);
+    });
 
     test('Admin publishing their key works as expected, for existing and new users', async () => {
         // 1. Admin publishes key
@@ -85,7 +124,7 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         }
     });
 
-    test('User reports an item, admin rejects claim, post should not be deleted', async () => {
+    test('User reports an item, admin reviews and rejects', async () => {
         const today = SovereignS3nc.getDateStr(new Date());
         // 1. User creates a post
         await userFeed.post("Harmless content");
@@ -146,7 +185,7 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         expect(fileExists).toBe(false);
     });
 
-    test('Admin bans a user: content disappears, cannot login in future', async () => {
+    test('Admin bans a user: content disappears, removed from users.json', async () => {
         const evilUserId = 'evil-user';
         const evilSov = new SovereignS3nc({
             s3: userConfig,
@@ -159,6 +198,12 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         await evilFeed.post("I will be banned");
         await evilSov.sync();
 
+        // Verify registered in global registry
+        const globalRemote = (adminSov as any).globalRemote;
+        const regBefore = await globalRemote.downloadFile('users.json');
+        const usersBefore = JSON.parse(new TextDecoder().decode(regBefore.data));
+        expect(usersBefore.find((u: any) => u.userId === evilUserId)).toBeDefined();
+
         // 1. Admin bans user
         await adminMod.banUser(evilUserId);
 
@@ -170,6 +215,11 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         // 3. Evil user tries to sync (should fail or at least be unable to update registry)
         const checkProfile = await (adminSov as any).rootRemote.downloadFile(`${evilUserId}/social/public/user.json`);
         expect(checkProfile).toBeNull();
+
+        // 4. Verify removed from global registry
+        const regAfter = await globalRemote.downloadFile('users.json');
+        const usersAfter = JSON.parse(new TextDecoder().decode(regAfter.data));
+        expect(usersAfter.find((u: any) => u.userId === evilUserId)).toBeUndefined();
     });
 
     test('Regular user cannot access protected admin resources', async () => {
@@ -188,7 +238,9 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         } catch (e) {
             // expected
         }
-    });    test('Export and Import data', async () => {
+    });
+
+    test('Export and Import data', async () => {
         // 1. Export
         const dump = await adminMod.exportAllData();
         expect(dump).toBeDefined();
@@ -212,13 +264,57 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
         expect(files.length).toBeGreaterThan(0);
     });
 
-    test('Burn it to the ground takes the server down', async () => {
-        await adminMod.burnItToTheGround();
-        
-        // Wait for consistency
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        const files = await (adminSov as any).rootRemote.listFiles('');
-        expect(files.length).toBe(0);
+    describe('Admin CLI wrapper tests (run function)', () => {
+        test('CLI list-users works', async () => {
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            await runAdmin(['list-users']);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('System Users'));
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('admin-user'));
+            consoleSpy.mockRestore();
+        });
+
+        test('CLI list-reports works', async () => {
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            await runAdmin(['list-reports']);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Pending Reports'));
+            consoleSpy.mockRestore();
+        });
+
+        test('CLI ban-user works and removes from registry', async () => {
+            // Setup another user to ban
+            const banMeId = 'ban-me-cli';
+            const banMeSov = new SovereignS3nc({
+                s3: userConfig,
+                paths: { appId, userId: banMeId, storeId: 'social' },
+                password: 'password'
+            });
+            (banMeSov as any).storage = new IndexedDBStorage(`ban_me_db_${appId}`);
+            await banMeSov.init();
+            await banMeSov.sync();
+
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            await runAdmin(['ban-user', banMeId]);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining(`User ${banMeId} has been banned`));
+            consoleSpy.mockRestore();
+
+            // Verify they are gone from registry
+            const globalRemote = (adminSov as any).globalRemote;
+            const regResult = await globalRemote.downloadFile('users.json');
+            const users = JSON.parse(new TextDecoder().decode(regResult.data));
+            expect(users.find((u: any) => u.userId === banMeId)).toBeUndefined();
+        });
+
+        test('CLI burn-it-to-the-ground works', async () => {
+            const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+            await runAdmin(['burn-it-to-the-ground']);
+            expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Everything is gone'));
+            consoleSpy.mockRestore();
+
+            // Verify
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const files = await (adminSov as any).rootRemote.listFiles('');
+            expect(files.length).toBe(0);
+        });
     });
 });
+
