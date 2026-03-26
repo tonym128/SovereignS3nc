@@ -41,8 +41,8 @@
     - [x] Implement background Web Workers for sync.
     - [ ] Make Web Workers the default seamless experience in demos (currently opt-in).
     - [x] Implement PWA support (`manifest.json` + Service Worker) for local installation.
-    - [ ] Audit library performance and provide benchmarks for sync latency and storage overhead.
-- [ ] **Accessibility & UI**
+    - [x] Audit library performance and provide benchmarks for sync latency and storage overhead.
+- [x] **Accessibility & UI**
     - [ ] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
@@ -50,7 +50,7 @@
 ## 🧪 Testing & Validation
 - [ ] **Integration Testing**
     - [ ] Implement real WebRTC/PeerJS integration tests with a live signaling server.
-    - [ ] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
+    - [x] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [x] **Admin & Moderation**
     - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
@@ -60,14 +60,14 @@
     - [x] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
 - [ ] **Deployment & DX**
     - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
-    - [ ] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
+    - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.
 
 ## User Generated TODO's
-- [ ] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
-- [ ] When a admin deletes a post, it deletes the entire day, but the user re-uploads on their next upload without deleting the post from their store. Put a mechanism in place for the user to delete that post and reupload their data (E2EE message forcing a delete)
-- [ ] If an admin sends a E2EE user message for action, the message should be displayed with formatting to indicate what action the admin took on them.
+- [x] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
+- [x] When a admin deletes a post, it deletes the entire day, but the user re-uploads on their next upload without deleting the post from their store. Put a mechanism in place for the user to delete that post and reupload their data (E2EE message forcing a delete)
+- [x] If an admin sends a E2EE user message for action, the message should be displayed with formatting to indicate what action the admin took on them.
 
 ---
 

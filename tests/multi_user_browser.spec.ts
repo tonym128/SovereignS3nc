@@ -80,34 +80,34 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     await alicePage.getByTestId('nav-messages').click();
     await alicePage.waitForTimeout(2000); // Give React time to render the tab
     
-    // // Send message
-    // await alicePage.getByTestId('message-input').fill('Hey Bob, Alice here!');
-    // await alicePage.getByTestId('message-send-btn').click();
-    // await alicePage.waitForTimeout(3000); // Wait for sync/upload
+    // Send message
+    await alicePage.getByTestId('message-input').fill('Hey Bob, Alice here!');
+    await alicePage.getByTestId('message-send-btn').click();
+    await alicePage.waitForTimeout(3000); // Wait for sync/upload
 
-    // // Bob checks messages badge
-    // await bobPage.getByTestId('nav-home').click();
-    // for (let i = 0; i < 3; i++) {
-    //     await bobPage.click('button:has-text("Sync")');
-    //     await bobPage.waitForTimeout(2000);
-    // }
+    // Bob checks messages badge
+    await bobPage.getByTestId('nav-home').click();
+    for (let i = 0; i < 3; i++) {
+        await bobPage.click('button:has-text("Sync")');
+        await bobPage.waitForTimeout(2000);
+    }
     
-    // const msgBadge = bobPage.getByTestId('unread-badge');
-    // await expect(msgBadge).toBeVisible({ timeout: 15000 });
-    // await expect(msgBadge).toHaveText('1');
+    const msgBadge = bobPage.getByTestId('unread-badge');
+    await expect(msgBadge).toBeVisible({ timeout: 15000 });
+    await expect(msgBadge).toHaveText('1');
 
-    // // Bob reads & replies
-    // await bobPage.getByTestId('nav-messages').click();
-    // await bobPage.getByTestId(`chat-item-${aliceId}`).click();
-    // await expect(bobPage.getByTestId('message-bubble').filter({ hasText: 'Hey Bob, Alice here!' })).toBeVisible();
+    // Bob reads & replies
+    await bobPage.getByTestId('nav-messages').click();
+    await bobPage.getByTestId(`chat-item-${aliceId}`).click();
+    await expect(bobPage.getByTestId('message-bubble').filter({ hasText: 'Hey Bob, Alice here!' })).toBeVisible();
     
-    // await bobPage.getByTestId('message-input').fill('Received you loud and clear, Alice!');
-    // await bobPage.getByTestId('message-send-btn').click();
-    // await bobPage.waitForTimeout(3000);
+    await bobPage.getByTestId('message-input').fill('Received you loud and clear, Alice!');
+    await bobPage.getByTestId('message-send-btn').click();
+    await bobPage.waitForTimeout(3000);
 
-    // // Alice sees reply
-    // await alicePage.click('button:has-text("Sync")');
-    // await expect(alicePage.getByTestId('message-bubble').filter({ hasText: 'Received you loud and clear, Alice!' })).toBeVisible({ timeout: 15000 });
+    // Alice sees reply
+    await alicePage.click('button:has-text("Sync")');
+    await expect(alicePage.getByTestId('message-bubble').filter({ hasText: 'Received you loud and clear, Alice!' })).toBeVisible({ timeout: 15000 });
 
     // 7. Threading (Back on Home tab)
     await alicePage.getByTestId('nav-home').click();

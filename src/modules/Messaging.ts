@@ -169,6 +169,18 @@ export class MessagingModule {
         const messages: Message[] = [];
         const following = await this.db.getFollowing();
         
+        const usersToCheck = [...following];
+        const config = this.db.getConfig();
+        if (config.adminPublicKey && !usersToCheck.find(u => u.userId === 'admin')) {
+            const startDate = new Date();
+            startDate.setUTCDate(startDate.getUTCDate() - 7);
+            usersToCheck.push({ 
+                userId: 'admin', 
+                publicKey: config.adminPublicKey,
+                lastSync: SovereignS3nc.getDateStr(startDate)
+            });
+        }
+
         const dates: string[] = [];
         for (let i = 0; i < days; i++) {
             const d = new Date();
@@ -182,7 +194,7 @@ export class MessagingModule {
 
         const myId = this.db.getConfig().paths.userId;
 
-        for (const user of following) {
+        for (const user of usersToCheck) {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
 
             for (const date of dates) {

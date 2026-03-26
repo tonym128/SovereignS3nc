@@ -256,6 +256,41 @@ export class ModerationModule {
     }
 
     /**
+     * (Admin Only) Request a user to delete a specific post.
+     * This is an E2EE request sent to the user's public prefix.
+     */
+    async requestPostDeletion(targetUserId: string, postId: string, date: string) {
+        const rootRemote = (this.sovereign as any).rootRemote;
+        if (!rootRemote) throw new Error("Root remote not configured.");
+
+        // 1. Get Target User Public Key
+        const registry = await this.sovereign.getPublicRegistry();
+        const user = registry.find(u => u.userId === targetUserId);
+        if (!user || !user.publicKey) throw new Error(`User ${targetUserId} not found or has no public key.`);
+
+        // 2. Prepare Request
+        const request = {
+            action: 'delete_post',
+            module: 'feed',
+            postId,
+            date,
+            timestamp: Date.now()
+        };
+
+        const requestData = new TextEncoder().encode(JSON.stringify(request));
+
+        // 3. Encrypt Request for User
+        const sharedSecret = this.sovereign.deriveSharedSecret(user.publicKey);
+        const encryptedData = await this.sovereign.encrypt(requestData, sharedSecret);
+
+        // 4. Upload to User's Public Prefix
+        // Path: [targetUserId]/public/moderation/requests/[postId].enc
+        const path = `${targetUserId}/public/moderation/requests/${postId}.enc`;
+        await rootRemote.uploadFile(path, encryptedData);
+        Logger.info(`[Moderation] Deletion request for post ${postId} sent to user ${targetUserId}.`);
+    }
+
+    /**
      * (Admin Only) Lists all unique user IDs present in the appId namespace.
      * Combines literal directory names, global registry entries, and hashed private folders.
      */

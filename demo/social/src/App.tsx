@@ -36,7 +36,8 @@ const App = () => {
         appId: 'sov-social',
         userId: 'user-' + Math.random().toString(36).substring(7),
         password: 'password123',
-        admins: [] as string[] // List of User IDs with admin privileges
+        admins: [] as string[], // List of User IDs with admin privileges
+        adminPublicKey: '' // Public key of the official admin
     });
 
     const [isAdmin, setIsAdmin] = useState(false);
@@ -343,6 +344,12 @@ const App = () => {
                 setConflict(data);
             });
             setSov(instance);
+
+            // Update config with discovered admin key
+            const finalConfig = instance.getConfig();
+            if (finalConfig.adminPublicKey) {
+                setConfig(prev => ({ ...prev, adminPublicKey: finalConfig.adminPublicKey! }));
+            }
             
             const fm = new FeedModule(instance);
             setFeed(fm);
@@ -710,6 +717,11 @@ const App = () => {
         const followingList = await activeSov.getFollowing();
         setFollowing(followingList);
 
+        const usersToFetchPosts = [...followingList];
+        if (config.adminPublicKey && !usersToFetchPosts.find(u => u.userId === 'admin')) {
+            usersToFetchPosts.push({ userId: 'admin' } as any);
+        }
+
         const dates: string[] = [];
         const currentLookbackDays = lookbackDaysRef.current;
         for (let i = 0; i < currentLookbackDays; i++) {
@@ -721,7 +733,7 @@ const App = () => {
         let allPosts: Post[] = [];
         for (const date of dates) {
             allPosts = [...allPosts, ...(await activeFeed.getPosts(date, 'public'))];
-            for (const user of followingList) {
+            for (const user of usersToFetchPosts) {
                 allPosts = [...allPosts, ...(await activeFeed.getPosts(`${user.userId}/${date}`, 'followed'))];
             }
         }
@@ -1210,6 +1222,13 @@ const App = () => {
         return <span className={className || 'fw-bold'}>{userData?.name || userId}</span>;
     };
 
+    const isUserAnAdmin = (userId: string) => {
+        if (userId === 'admin') return true;
+        if (!config.adminPublicKey) return false;
+        const user = allUsers.find(u => u.userId === userId);
+        return user && user.publicKey === config.adminPublicKey;
+    };
+
     const handleReportPost = async (post: Post) => {
         showPrompt('Reason for reporting this post:', async (reason) => {
             if (reason && moderation) {
@@ -1226,12 +1245,14 @@ const App = () => {
     const PostItem = ({ post, allPosts, depth = 0 }: { post: Post, allPosts: Post[], depth?: number }) => {
         const replies = allPosts.filter(p => p.parentId === post.id);
         const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
+        const isAdminPost = post.userId !== config.userId && isUserAnAdmin(post.userId);
         
         return (
             <div className={`mb-3 ${depth > 0 ? 'ms-4 border-start ps-3 mt-2' : ''}`}>
-                <div key={post.id} className={`card post-card p-3 ${isNew ? 'border-primary shadow-sm' : ''}`} style={isNew ? {borderWidth: '2px', backgroundColor: '#f0f7ff'} : {}}>
+                <div key={post.id} className={`card post-card p-3 ${isAdminPost ? 'border-danger shadow-sm' : isNew ? 'border-primary shadow-sm' : ''}`} style={isAdminPost ? {borderWidth: '2px'} : isNew ? {borderWidth: '2px', backgroundColor: '#f0f7ff'} : {}}>
                     <div className="d-flex align-items-center mb-3">
                         <UserAvatar userId={post.userId} />
+                        {isAdminPost && <span className="ms-2 badge bg-danger"><i className="bi bi-shield-check me-1"></i>Admin Action</span>}
                         <div className="ms-2 flex-grow-1">
                             <div className="text-muted x-small">
                                 {new Date(post.timestamp).toLocaleString()}
@@ -1515,12 +1536,24 @@ const App = () => {
                                             <button className="btn btn-sm btn-outline-primary rounded-circle" onClick={handleNewChat} style={{display:'none'}}>+</button>
                                         </div>
                                         <div className="list-group list-group-flush">
-                                            {following.map(user => (
-                                                <button key={user.userId} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? 'bg-light' : ''}`} onClick={() => setSelectedUser(user.userId)}>
-                                                    <UserAvatar userId={user.userId} />
-                                                    {userUnreadCounts[user.userId] > 0 && <span className="badge rounded-pill bg-primary">{userUnreadCounts[user.userId]}</span>}
-                                                </button>
-                                            ))}
+                                            {(() => {
+                                                const chatUsers = [...following];
+                                                messages.forEach(m => {
+                                                    const otherId = m.senderId === config.userId ? m.recipientId : m.senderId;
+                                                    if (!chatUsers.find(u => u.userId === otherId)) {
+                                                        chatUsers.push({ userId: otherId } as any);
+                                                    }
+                                                });
+                                                return chatUsers.map(user => (
+                                                    <button key={user.userId} data-testid={`chat-item-${user.userId}`} className={`list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? 'bg-light' : ''}`} onClick={() => setSelectedUser(user.userId)}>
+                                                        <div className="d-flex align-items-center flex-grow-1 overflow-hidden">
+                                                            <UserAvatar userId={user.userId} />
+                                                            {isUserAnAdmin(user.userId) && <span className="ms-1 badge bg-danger" style={{fontSize: '0.6rem'}}>Admin</span>}
+                                                        </div>
+                                                        {userUnreadCounts[user.userId] > 0 && <span className="badge rounded-pill bg-primary">{userUnreadCounts[user.userId]}</span>}
+                                                    </button>
+                                                ));
+                                            })()}
                                         </div>
                                     </div>
                                     <div className="col-8 d-flex flex-column h-100 overflow-hidden">
@@ -1528,65 +1561,70 @@ const App = () => {
                                             <>
                                                 <div className="p-3 border-bottom bg-light d-flex align-items-center">
                                                     <UserAvatar userId={selectedUser} />
+                                                    {isUserAnAdmin(selectedUser) && <span className="ms-2 badge bg-danger">Official Administrator</span>}
                                                 </div>
                                                 <div className="flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse">
                                                     {messages
                                                         .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
                                                         .sort((a,b) => b.timestamp - a.timestamp)
-                                                        .map((m) => (
-                                                            <div key={m.id} className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
-                                                                <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : 'bg-light text-dark'}`} style={{maxWidth: '75%'}}>
-                                                                    {m.isDeleted ? (
-                                                                        <i className="small opacity-75">Message deleted</i>
-                                                                    ) : m.content.startsWith('INVITE_GROUP:') ? (
-                                                                        <div className="p-2 border rounded bg-white text-dark">
-                                                                            <div className="fw-bold text-primary mb-1">Group Invitation</div>
-                                                                            {(() => {
-                                                                                try {
-                                                                                    const info = JSON.parse(m.content.substring(13));
-                                                                                    const myStatus = info.members.find((mb: any) => mb.userId === config.userId)?.status;
-                                                                                    // Check if we already have this group locally and what our status is
-                                                                                    const localGroup = groups.find(g => g.id === info.id);
-                                                                                    const localStatus = localGroup?.members.find((mb: any) => mb.userId === config.userId)?.status;
-                                                                                    
-                                                                                    return (
-                                                                                        <>
-                                                                                            <div className="small mb-2">
-                                                                                                <b>{m.senderId}</b> invited you to join <b>{info.name}</b>.
-                                                                                            </div>
-                                                                                            {localStatus === 'joined' ? (
-                                                                                                <span className="badge bg-success w-100">Joined</span>
-                                                                                            ) : localStatus === 'declined' ? (
-                                                                                                <span className="badge bg-secondary w-100">Declined</span>
-                                                                                            ) : (
-                                                                                                <div className="d-flex gap-2">
-                                                                                                    <button className="btn btn-sm btn-success flex-grow-1" onClick={() => handleAcceptGroup(info)}>Accept</button>
-                                                                                                    <button className="btn btn-sm btn-outline-danger flex-grow-1" onClick={() => handleDeclineGroup(info)}>Decline</button>
+                                                        .map((m) => {
+                                                            const isAdminMsg = m.senderId !== config.userId && isUserAnAdmin(m.senderId);
+                                                            return (
+                                                                <div key={m.id} data-testid="message-bubble" className={`d-flex mb-2 ${m.senderId === config.userId ? 'justify-content-end' : 'justify-content-start'}`}>
+                                                                    <div className={`p-2 rounded-4 px-3 ${m.senderId === config.userId ? 'bg-primary text-white' : isAdminMsg ? 'border border-danger bg-light text-dark shadow-sm' : 'bg-light text-dark'}`} style={{maxWidth: '75%', ...(isAdminMsg ? {borderWidth: '2px'} : {})}}>
+                                                                        {isAdminMsg && <div className="badge bg-danger mb-1" style={{fontSize: '0.65rem'}}><i className="bi bi-shield-check me-1"></i>Admin Action</div>}
+                                                                        {m.isDeleted ? (
+                                                                            <i className="small opacity-75">Message deleted</i>
+                                                                        ) : m.content.startsWith('INVITE_GROUP:') ? (
+                                                                            <div className="p-2 border rounded bg-white text-dark">
+                                                                                <div className="fw-bold text-primary mb-1">Group Invitation</div>
+                                                                                {(() => {
+                                                                                    try {
+                                                                                        const info = JSON.parse(m.content.substring(13));
+                                                                                        const myStatus = info.members.find((mb: any) => mb.userId === config.userId)?.status;
+                                                                                        // Check if we already have this group locally and what our status is
+                                                                                        const localGroup = groups.find(g => g.id === info.id);
+                                                                                        const localStatus = localGroup?.members.find((mb: any) => mb.userId === config.userId)?.status;
+                                                                                        
+                                                                                        return (
+                                                                                            <>
+                                                                                                <div className="small mb-2">
+                                                                                                    <b>{m.senderId}</b> invited you to join <b>{info.name}</b>.
                                                                                                 </div>
-                                                                                            )}
-                                                                                        </>
-                                                                                    );
-                                                                                } catch(e) { return <span>Invalid Invite</span>; }
-                                                                            })()}
-                                                                        </div>
-                                                                    ) : (
-                                                                        <>
-                                                                            {m.image && <BlobImage path={m.image} userId={m.senderId} />}
-                                                                            <div>{m.content}</div>
-                                                                        </>
-                                                                    )}
-                                                                    <div style={{fontSize: '0.6rem'}} className="mt-1 opacity-75 d-flex justify-content-between">
-                                                                        <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
-                                                                        {m.senderId === config.userId && !m.isDeleted && (
-                                                                            <span className="ms-2">
-                                                                                <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
-                                                                                <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
-                                                                            </span>
+                                                                                                {localStatus === 'joined' ? (
+                                                                                                    <span className="badge bg-success w-100">Joined</span>
+                                                                                                ) : localStatus === 'declined' ? (
+                                                                                                    <span className="badge bg-secondary w-100">Declined</span>
+                                                                                                ) : (
+                                                                                                    <div className="d-flex gap-2">
+                                                                                                        <button className="btn btn-sm btn-success flex-grow-1" onClick={() => handleAcceptGroup(info)}>Accept</button>
+                                                                                                        <button className="btn btn-sm btn-outline-danger flex-grow-1" onClick={() => handleDeclineGroup(info)}>Decline</button>
+                                                                                                    </div>
+                                                                                                )}
+                                                                                            </>
+                                                                                        );
+                                                                                    } catch(e) { return <span>Invalid Invite</span>; }
+                                                                                })()}
+                                                                            </div>
+                                                                        ) : (
+                                                                            <>
+                                                                                {m.image && <BlobImage path={m.image} userId={m.senderId} />}
+                                                                                <div>{m.content}</div>
+                                                                            </>
                                                                         )}
+                                                                        <div style={{fontSize: '0.6rem'}} className={`mt-1 ${m.senderId === config.userId ? 'opacity-75' : 'text-muted'} d-flex justify-content-between`}>
+                                                                            <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
+                                                                            {m.senderId === config.userId && !m.isDeleted && (
+                                                                                <span className="ms-2">
+                                                                                    <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
+                                                                                    <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        ))
+                                                            );
+                                                        })
                                                     }
                                                 </div>
                                                 <div className="p-3 border-top bg-light">
@@ -1594,8 +1632,8 @@ const App = () => {
                                                     <div className="input-group">
                                                         <input type="file" ref={msgFileRef} className="d-none" id="msgFile" onChange={(e)=>handleImageChange(e, true)} />
                                                         <label htmlFor="msgFile" className="btn btn-outline-secondary rounded-pill me-2">📷</label>
-                                                        <input className="form-control rounded-pill" placeholder="Type a message..." value={msgInput} onChange={e => setMsgInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSendMessage()} />
-                                                        <button className="btn btn-primary rounded-pill ms-2" onClick={handleSendMessage}>Send</button>
+                                                        <input data-testid="message-input" className="form-control rounded-pill" placeholder="Type a message..." value={msgInput} onChange={e => setMsgInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSendMessage()} />
+                                                        <button data-testid="message-send-btn" className="btn btn-primary rounded-pill ms-2" onClick={handleSendMessage}>Send</button>
                                                     </div>
                                                 </div>
                                             </>
@@ -1669,52 +1707,56 @@ const App = () => {
                                                     <div className="d-flex flex-column">
                                                         {groupPosts
                                                             .sort((a,b) => a.timestamp - b.timestamp)
-                                                            .map((p) => (
-                                                                <div key={p.id} className={`mb-3 ${p.type === 'system' ? 'text-center' : ''}`}>
-                                                                    {p.type === 'system' ? (
-                                                                        <div className="x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block">
-                                                                            <UserAvatar userId={p.userId} size={16} /> <span className="ms-1">{p.content}</span>
-                                                                        </div>
-                                                                    ) : (
-                                                                        <>
-                                                                            <div className="d-flex align-items-center justify-content-between mb-1">
-                                                                                <div className="d-flex align-items-center">
-                                                                                    <UserAvatar userId={p.userId} size={24} />
-                                                                                    <span className="ms-2 x-small text-muted">{new Date(p.timestamp).toLocaleString()}</span>
-                                                                                    {p.isEdited && <span className="ms-2 x-small text-muted italic">(edited)</span>}
+                                                            .map((p) => {
+                                                                const isAdminGroupPost = p.userId !== config.userId && isUserAnAdmin(p.userId);
+                                                                return (
+                                                                    <div key={p.id} className={`mb-3 ${p.type === 'system' ? 'text-center' : ''}`}>
+                                                                        {p.type === 'system' ? (
+                                                                            <div className="x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block">
+                                                                                <UserAvatar userId={p.userId} size={16} /> <span className="ms-1">{p.content}</span>
+                                                                            </div>
+                                                                        ) : (
+                                                                            <>
+                                                                                <div className="d-flex align-items-center justify-content-between mb-1">
+                                                                                    <div className="d-flex align-items-center">
+                                                                                        <UserAvatar userId={p.userId} size={24} />
+                                                                                        {isAdminGroupPost && <span className="badge bg-danger ms-2" style={{fontSize: '0.65rem'}}><i className="bi bi-shield-check me-1"></i>Admin Action</span>}
+                                                                                        <span className="ms-2 x-small text-muted">{new Date(p.timestamp).toLocaleString()}</span>
+                                                                                        {p.isEdited && <span className="ms-2 x-small text-muted italic">(edited)</span>}
+                                                                                    </div>
+                                                                                    {(() => {
+                                                                                        const isAuthor = p.userId === config.userId;
+                                                                                        const myRole = selectedGroup.members.find((m: any) => m.userId === config.userId)?.role;
+                                                                                        const canDelete = isAuthor || myRole === 'owner' || myRole === 'admin';
+                                                                                        
+                                                                                        if (!isAuthor && !canDelete) return null;
+                                                                                        
+                                                                                        return (
+                                                                                            <div className="dropdown">
+                                                                                                <button className="btn btn-link btn-sm text-muted p-0" type="button" data-bs-toggle="dropdown">
+                                                                                                    <i className="bi bi-three-dots-vertical"></i>
+                                                                                                </button>
+                                                                                                <ul className="dropdown-menu dropdown-menu-end shadow-sm border-0 small">
+                                                                                                    {isAuthor && (
+                                                                                                        <li><button className="dropdown-item py-1" onClick={() => handleEditGroupPost(p)}>Edit</button></li>
+                                                                                                    )}
+                                                                                                    {canDelete && (
+                                                                                                        <li><button className="dropdown-item py-1 text-danger" onClick={() => handleDeleteGroupPost(p)}>Delete</button></li>
+                                                                                                    )}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        );
+                                                                                    })()}
                                                                                 </div>
-                                                                                {(() => {
-                                                                                    const isAuthor = p.userId === config.userId;
-                                                                                    const myRole = selectedGroup.members.find((m: any) => m.userId === config.userId)?.role;
-                                                                                    const canDelete = isAuthor || myRole === 'owner' || myRole === 'admin';
-                                                                                    
-                                                                                    if (!isAuthor && !canDelete) return null;
-                                                                                    
-                                                                                    return (
-                                                                                        <div className="dropdown">
-                                                                                            <button className="btn btn-link btn-sm text-muted p-0" type="button" data-bs-toggle="dropdown">
-                                                                                                <i className="bi bi-three-dots-vertical"></i>
-                                                                                            </button>
-                                                                                            <ul className="dropdown-menu dropdown-menu-end shadow-sm border-0 small">
-                                                                                                {isAuthor && (
-                                                                                                    <li><button className="dropdown-item py-1" onClick={() => handleEditGroupPost(p)}>Edit</button></li>
-                                                                                                )}
-                                                                                                {canDelete && (
-                                                                                                    <li><button className="dropdown-item py-1 text-danger" onClick={() => handleDeleteGroupPost(p)}>Delete</button></li>
-                                                                                                )}
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    );
-                                                                                })()}
-                                                                            </div>
-                                                                            <div className="ms-4 p-2 rounded bg-light shadow-sm" style={{display:'inline-block', maxWidth:'90%'}}>
-                                                                                {p.image && <BlobImage path={p.image} userId={p.userId} />}
-                                                                                <div>{p.content}</div>
-                                                                            </div>
-                                                                        </>
-                                                                    )}
-                                                                </div>
-                                                            ))
+                                                                                <div className={`ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? 'border border-danger' : ''}`} style={{display:'inline-block', maxWidth:'90%', ...(isAdminGroupPost ? {borderWidth: '2px'} : {})}}>
+                                                                                    {p.image && <BlobImage path={p.image} userId={p.userId} />}
+                                                                                    <div>{p.content}</div>
+                                                                                </div>
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            })
                                                         }
                                                     </div>
                                                 </div>

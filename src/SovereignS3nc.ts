@@ -764,11 +764,103 @@ export class SovereignS3nc extends EventEmitter {
 
             await this.runBatched(blobTasks, 10);
 
+            await this.processModerationRequests();
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
         } finally {
             this.isSyncing = false;
         }
+    }
+
+    /**
+     * Checks for and processes any pending moderation requests from the admin.
+     * Uses config.adminPublicKey for E2EE verification.
+     */
+    public async processModerationRequests() {
+        const adminPublicKey = this.config.adminPublicKey;
+        if (!adminPublicKey) {
+            Logger.debug('[Moderation] No admin public key found, skipping request check.');
+            return;
+        }
+
+        const requestDir = 'public/moderation/requests/';
+        const files = await this.storage.listFiles(requestDir);
+        
+        if (files.length === 0) return;
+
+        Logger.info(`[Moderation] Found ${files.length} moderation requests.`);
+        const sharedSecret = this.deriveSharedSecret(adminPublicKey);
+
+        for (const file of files) {
+            if (!file.endsWith('.enc')) continue;
+
+            try {
+                const encryptedData = await this.storage.getFile(file);
+                if (!encryptedData) continue;
+
+                const decrypted = await this.decrypt(encryptedData, sharedSecret);
+                const request = JSON.parse(new TextDecoder().decode(decrypted));
+
+                if (request.action === 'delete_post') {
+                    Logger.warn(`[Moderation] ADMIN REQUEST: Deleting post ${request.postId} from date ${request.date}`);
+                    
+                    // 1. Perform surgical delete from local SQLite
+                    const modified = await this.surgicalDeletePost(request.postId, request.date);
+                    
+                    // 2. Cleanup request files locally and remotely
+                    await this.storage.deleteFile(file);
+                    if (this.publicRemote && (this.publicRemote as any).deleteFile) {
+                        try {
+                            await (this.publicRemote as any).deleteFile(file);
+                        } catch (e) {}
+                    }
+                    
+                    // 3. Re-upload the modified daily DBs if any change was made
+                    if (modified) {
+                        for (const type of ['public', 'private'] as const) {
+                            const relativePath = `modules/feed/${request.date}.db`;
+                            await this.syncGenericFile(relativePath, type, null);
+                        }
+                    }
+                }
+            } catch (e: any) {
+                Logger.warn(`[Moderation] Failed to process request ${file}: ${e.message}`);
+            }
+        }
+    }
+
+    private async surgicalDeletePost(postId: string, date: string): Promise<boolean> {
+        let anyModified = false;
+        const types: ('public' | 'private')[] = ['public', 'private'];
+        
+        for (const type of types) {
+            const dbPath = this.getModulePath('feed', `${date}.db`, type);
+            const data = await this.storage.getFile(dbPath);
+            if (!data) continue;
+
+            try {
+                // @ts-ignore
+                const initSqlJs = (globalThis as any).initSqlJs;
+                const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+                const db = new sqliteInstance.Database(data);
+                
+                // Check if table exists
+                const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+                if (tableCheck.length > 0) {
+                    db.run('DELETE FROM posts WHERE id = ?', [postId]);
+                    if (db.getRowsModified() > 0) {
+                        const binary = db.export();
+                        await this.storage.saveFile(dbPath, binary);
+                        anyModified = true;
+                        Logger.info(`[Moderation] Deleted post ${postId} from ${dbPath}`);
+                    }
+                }
+                db.close();
+            } catch (e: any) {
+                Logger.warn(`[Moderation] Failed to surgically delete post from ${dbPath}: ${e.message}`);
+            }
+        }
+        return anyModified;
     }
 
     public async syncManifest() {
@@ -1417,9 +1509,22 @@ export class SovereignS3nc extends EventEmitter {
 
     private async syncFollowedUsers(today: string) {
         const following = await this.storage.getFollowing();
+        const usersToSync = [...following];
+
+        // Always check for admin messages/notifications even if not explicitly followed
+        if (this.config.adminPublicKey && !usersToSync.find(u => u.userId === 'admin')) {
+            const startDate = new Date();
+            startDate.setUTCDate(startDate.getUTCDate() - 7);
+            usersToSync.push({
+                userId: 'admin',
+                publicKey: this.config.adminPublicKey,
+                lastSync: SovereignS3nc.getDateStr(startDate)
+            });
+        }
+
         const blacklist = this.config.blacklist || [];
 
-        for (const user of following) {
+        for (const user of usersToSync) {
             if (blacklist.includes(user.userId)) {
                 Logger.info(`[Sync] Skipping blacklisted user ${user.userId}`);
                 continue;
