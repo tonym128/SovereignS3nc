@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  rustfs:
+    image: rustfs/rustfs:latest
+    restart: always
+    environment:
+      - RUSTFS_ACCESS_KEY=${RUSTFS_ACCESS_KEY:-rustfsroot}
+      - RUSTFS_SECRET_KEY=${RUSTFS_SECRET_KEY:-rustfsrootsecret}
+      - RUST_LOG=error
+    volumes:
+      - rustfs_data:/data
+    # Expose only to the internal network. Nginx handles external access.
+
+  peerjs:
+    build:
+      context: ./PeerJS
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - PORT=9000
+    # Expose only to the internal network. Nginx handles external access.
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - rustfs
+      - peerjs
+
+  # One-off setup container to initialize RustFS
+  rustfs-setup:
+    image: node:20-alpine
+    depends_on:
+      - rustfs
+    volumes:
+      - ..:/app
+    working_dir: /app
+    environment:
+      - RUSTFS_ENDPOINT=http://rustfs:9000
+      - RUSTFS_ROOT_KEY=${RUSTFS_ACCESS_KEY:-rustfsroot}
+      - RUSTFS_ROOT_SECRET=${RUSTFS_SECRET_KEY:-rustfsrootsecret}
+      - BUCKET_NAME=sovereign-demo
+      - ADMIN_ACCESS=admin-key
+      - ADMIN_SECRET=admin-secret-123
+      - USER_ACCESS=user-key
+      - USER_SECRET=user-secret-123
+    entrypoint: /bin/sh Setup/init-rustfs.sh
+
+volumes:
+  rustfs_data:
