@@ -1321,10 +1321,22 @@ const App = () => {
                     <input className="form-control mb-2" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
                     <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
                     
-                    <div className="form-check mb-4">
+                    <div className="form-check mb-2">
                         <input className="form-check-input" type="checkbox" id="autoLogin" checked={autoLogin} onChange={e => { setAutoLogin(e.target.checked); localStorage.setItem('sov_auto_login', e.target.checked.toString()); }} />
                         <label className="form-check-label small" htmlFor="autoLogin">Auto-login next time</label>
-                    </div>                    <button className="btn btn-sov w-100 py-2 fs-5 mb-3" onClick={login}>Log In</button>
+                    </div>
+                    
+                    <div className="form-check mb-2">
+                        <input className="form-check-input" type="checkbox" id="autoSyncCheck" checked={autoSync} onChange={e => setAutoSync(e.target.checked)} />
+                        <label className="form-check-label small" htmlFor="autoSyncCheck">Enable Background Sync (60s)</label>
+                    </div>
+
+                    <div className="form-check mb-4">
+                        <input className="form-check-input" type="checkbox" id="useWebWorkers" checked={useWebWorkers} onChange={e => setUseWebWorkers(e.target.checked)} />
+                        <label className="form-check-label small" htmlFor="useWebWorkers">Use Web Workers (Performance)</label>
+                    </div>
+
+                    <button className="btn btn-sov w-100 py-2 fs-5 mb-3" onClick={login}>Log In</button>
                     
                     <div className="text-center mt-3">
                         <button className="btn btn-link btn-sm text-danger text-decoration-none" onClick={resetLocalData}>Reset Local Data</button>

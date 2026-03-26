@@ -92315,6 +92315,8 @@ ${toHex(hashedRequest)}`;
           for (const file of allFiles) {
             if (file.includes("user.json")) continue;
             if (file.includes("manifest.json")) continue;
+            if (file.includes("_keys.json")) continue;
+            if (file.includes("sentinel.enc")) continue;
             if (file.includes(".probe")) continue;
             const parts = file.split("/");
             const fileName = parts[parts.length - 1];
@@ -92964,6 +92966,9 @@ ${toHex(hashedRequest)}`;
           if (!this.config.encryptionKey) throw new Error("Identity key not initialized");
           const mySecretKey = Buffer.from(this.config.encryptionKey, "hex");
           const theirPublicKey = Buffer.from(otherPublicKey, "hex");
+          if (theirPublicKey.length !== 32) {
+            throw new Error(`Invalid public key size: expected 32 bytes, got ${theirPublicKey.length}. Key: ${otherPublicKey.substring(0, 10)}...`);
+          }
           const shared = nacl.box.before(theirPublicKey, mySecretKey);
           return Buffer.from(shared).toString("hex");
         }
