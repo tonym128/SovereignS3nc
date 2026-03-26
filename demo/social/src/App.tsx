@@ -46,6 +46,8 @@ const App = () => {
     const getStorageKey = (key: string) => `sov_${config.userId}_${key}`;
 
     const [autoLogin, setAutoLogin] = useState(localStorage.getItem('sov_auto_login') === 'true');
+    const [autoSync, setAutoSync] = useState(localStorage.getItem('sov_auto_sync') !== 'false');
+    const [useWebWorkers, setUseWebWorkers] = useState(localStorage.getItem('sov_use_workers') === 'true');
     const [rememberedUsers, setRememberedUsers] = useState<any[]>(() => {
         const saved = localStorage.getItem('sov_remembered_users');
         return saved ? JSON.parse(saved) : [];
@@ -326,7 +328,7 @@ const App = () => {
                 paths: { appId: currentConfig.appId, userId: currentConfig.userId, storeId: 'social' },
                 password: currentConfig.password,
                 autoFollowDiscoveredUsers: false,
-                useWorker: false,
+                useWorker: useWebWorkers,
                 workerUrl: 'sync-worker.js',
                 debug: DEBUG
             }, remoteAdapter, factory);
@@ -628,12 +630,12 @@ const App = () => {
     }, [selectedUser, currentTab]);
 
     useEffect(() => {
-        if (!isLoggedIn || !sov || !feed) return;
+        if (!isLoggedIn || !sov || !feed || !autoSync) return;
         const interval = setInterval(() => {
             sync();
-        }, 15000);
+        }, 60000);
         return () => clearInterval(interval);
-    }, [isLoggedIn, sov, feed]);
+    }, [isLoggedIn, sov, feed, autoSync]);
 
     const lookbackDaysRef = useRef(lookbackDays);
     useEffect(() => { lookbackDaysRef.current = lookbackDays; }, [lookbackDays]);
@@ -1327,12 +1329,12 @@ const App = () => {
                     </div>
                     
                     <div className="form-check mb-2">
-                        <input className="form-check-input" type="checkbox" id="autoSyncCheck" checked={autoSync} onChange={e => setAutoSync(e.target.checked)} />
+                        <input className="form-check-input" type="checkbox" id="autoSyncCheck" checked={autoSync} onChange={e => { setAutoSync(e.target.checked); localStorage.setItem('sov_auto_sync', e.target.checked.toString()); }} />
                         <label className="form-check-label small" htmlFor="autoSyncCheck">Enable Background Sync (60s)</label>
                     </div>
 
                     <div className="form-check mb-4">
-                        <input className="form-check-input" type="checkbox" id="useWebWorkers" checked={useWebWorkers} onChange={e => setUseWebWorkers(e.target.checked)} />
+                        <input className="form-check-input" type="checkbox" id="useWebWorkers" checked={useWebWorkers} onChange={e => { setUseWebWorkers(e.target.checked); localStorage.setItem('sov_use_workers', e.target.checked.toString()); }} />
                         <label className="form-check-label small" htmlFor="useWebWorkers">Use Web Workers (Performance)</label>
                     </div>
 

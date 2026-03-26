@@ -46,7 +46,9 @@ self.onmessage = async (event: MessageEvent) => {
 async function handleInit(config: SovereignConfig) {
     Logger.info('[SyncWorker] Initializing SovereignS3nc instance...');
     // Ensure we are in a worker context (browser)
-    sovereign = new SovereignS3nc(config);
+    // IMPORTANT: Disable useWorker for the instance INSIDE the worker to avoid infinite recursion
+    const workerConfig = { ...config, useWorker: false };
+    sovereign = new SovereignS3nc(workerConfig);
     
     // Forward update events back to the main thread
     sovereign.on('update', (data) => {

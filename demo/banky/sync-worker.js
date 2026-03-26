@@ -1987,9 +1987,10 @@
       "use strict";
       var import_buffer = __toESM(require_buffer());
       var import_process = __toESM(require_browser());
-      window.Buffer = import_buffer.Buffer;
-      window.process = import_process.default;
-      window.global = window;
+      var g2 = typeof window !== "undefined" ? window : self;
+      g2.Buffer = import_buffer.Buffer;
+      g2.process = import_process.default;
+      g2.global = g2;
     }
   });
 
@@ -71683,7 +71684,8 @@ ${toHex(hashedRequest)}`;
       };
       async function handleInit(config) {
         Logger.info("[SyncWorker] Initializing SovereignS3nc instance...");
-        sovereign = new SovereignS3nc(config);
+        const workerConfig = { ...config, useWorker: false };
+        sovereign = new SovereignS3nc(workerConfig);
         sovereign.on("update", (data) => {
           self.postMessage({ type: "EVENT_UPDATE", payload: data });
         });

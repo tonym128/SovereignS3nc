@@ -1987,9 +1987,10 @@
       "use strict";
       var import_buffer2 = __toESM(require_buffer());
       var import_process = __toESM(require_browser());
-      window.Buffer = import_buffer2.Buffer;
-      window.process = import_process.default;
-      window.global = window;
+      var g2 = typeof window !== "undefined" ? window : self;
+      g2.Buffer = import_buffer2.Buffer;
+      g2.process = import_process.default;
+      g2.global = g2;
     }
   });
 
