@@ -118,7 +118,8 @@ EOF
                         "*/user-*/*",
                         "*/alice-*/*",
                         "*/bob-*/*",
-                        "*/global/*"
+                        "*/global/*",
+                        "*/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]*/*"
                     ]
                 }
             }
@@ -134,7 +135,8 @@ EOF
                 "arn:aws:s3:::$BUCKET_NAME/*/user-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/alice-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/bob-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/global/*"
+                "arn:aws:s3:::$BUCKET_NAME/*/global/*",
+                "arn:aws:s3:::$BUCKET_NAME/*/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]*/*"
             ]
         },
         {

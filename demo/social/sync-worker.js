@@ -1991,6 +1991,31 @@
       g2.Buffer = import_buffer.Buffer;
       g2.process = import_process.default;
       g2.global = g2;
+      if (typeof g2.DOMParser === "undefined") {
+        class DOMParser2 {
+          parseFromString(str, type) {
+            return {
+              getElementsByTagName: (tagName) => {
+                const regex = new RegExp(`<${tagName}[^>]*>([^]*?)<\\/${tagName}>`, "g");
+                const matches = [];
+                let match;
+                while ((match = regex.exec(str)) !== null) {
+                  matches.push({
+                    textContent: match[1],
+                    childNodes: [{ textContent: match[1] }]
+                  });
+                }
+                return matches;
+              },
+              querySelector: (selector) => null,
+              documentElement: {
+                tagName: "Error"
+              }
+            };
+          }
+        }
+        g2.DOMParser = DOMParser2;
+      }
     }
   });
 
