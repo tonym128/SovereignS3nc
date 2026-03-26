@@ -87,11 +87,11 @@ export class SovereignS3nc extends EventEmitter {
             storeId: 'users'
         });
 
-        // Admin Remote - Access to appId/admin
+        // Admin Remote - Access to appId/admin/
         this.adminRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
             userId: 'admin',
-            storeId: 'data'
+            storeId: ''
         });
 
         // Root Remote - Access to appId/ (Strictly appId only)

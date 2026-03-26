@@ -91777,7 +91777,7 @@ ${toHex(hashedRequest)}`;
           this.adminRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
             userId: "admin",
-            storeId: "data"
+            storeId: ""
           });
           this.rootRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,

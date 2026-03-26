@@ -118,8 +118,12 @@ EOF
                         "*/user-*/*",
                         "*/alice-*/*",
                         "*/bob-*/*",
-                        "*/global/*",
-                        "*/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]*/*"
+                        "*/global/*"
+                    ]
+                },
+                "StringNotLike": {
+                    "s3:prefix": [
+                        "*/admin/*"
                     ]
                 }
             }
@@ -136,20 +140,28 @@ EOF
                 "arn:aws:s3:::$BUCKET_NAME/*/alice-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/bob-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/global/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]*/*"
+                "arn:aws:s3:::$BUCKET_NAME/*/*/*"
+            ]
+        },
+        {
+            "Sid": "DenyAdminData",
+            "Effect": "Deny",
+            "Action": ["s3:*"],
+            "Resource": [
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/data/*"
             ]
         },
         {
             "Sid": "AllowAdminReporting",
             "Effect": "Allow",
             "Action": ["s3:PutObject"],
-            "Resource": ["arn:aws:s3:::$BUCKET_NAME/*/admin/data/reports/*"]
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/*/admin/reports/*"]
         },
         {
             "Sid": "AllowAdminPublicKey",
             "Effect": "Allow",
             "Action": ["s3:GetObject"],
-            "Resource": ["arn:aws:s3:::$BUCKET_NAME/*/admin/data/public_key.json"]
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME/*/admin/public_key.json"]
         }
     ]
 }

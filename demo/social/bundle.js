@@ -1991,26 +1991,58 @@
       g2.Buffer = import_buffer3.Buffer;
       g2.process = import_process.default;
       g2.global = g2;
+      if (typeof g2.Node === "undefined") {
+        g2.Node = {
+          ELEMENT_NODE: 1,
+          ATTRIBUTE_NODE: 2,
+          TEXT_NODE: 3,
+          CDATA_SECTION_NODE: 4,
+          ENTITY_REFERENCE_NODE: 5,
+          ENTITY_NODE: 6,
+          PROCESSING_INSTRUCTION_NODE: 7,
+          COMMENT_NODE: 8,
+          DOCUMENT_NODE: 9,
+          DOCUMENT_TYPE_NODE: 10,
+          DOCUMENT_FRAGMENT_NODE: 11,
+          NOTATION_NODE: 12
+        };
+      }
       if (typeof g2.DOMParser === "undefined") {
         class DOMParser2 {
           parseFromString(str, type) {
+            const createNode = (tagName, content) => {
+              const node = {
+                tagName,
+                nodeName: tagName,
+                textContent: content,
+                nodeValue: content,
+                nodeType: 1,
+                attributes: [],
+                childNodes: content ? [{
+                  nodeValue: content,
+                  textContent: content,
+                  nodeType: 3,
+                  "#text": content
+                  // Support some simple XML-to-JSON mappers
+                }] : [],
+                getElementsByTagName: (name) => {
+                  const regex = new RegExp(`<${name}[^>]*>([^]*?)<\\/${name}>`, "g");
+                  const results = [];
+                  let match;
+                  while ((match = regex.exec(content)) !== null) {
+                    results.push(createNode(name, match[1]));
+                  }
+                  return results;
+                },
+                querySelector: (selector) => null
+              };
+              return node;
+            };
+            const rootNode = createNode("root", str);
             return {
-              getElementsByTagName: (tagName) => {
-                const regex = new RegExp(`<${tagName}[^>]*>([^]*?)<\\/${tagName}>`, "g");
-                const matches = [];
-                let match;
-                while ((match = regex.exec(str)) !== null) {
-                  matches.push({
-                    textContent: match[1],
-                    childNodes: [{ textContent: match[1] }]
-                  });
-                }
-                return matches;
-              },
-              querySelector: (selector) => null,
-              documentElement: {
-                tagName: "Error"
-              }
+              ...rootNode,
+              documentElement: rootNode,
+              body: rootNode
             };
           }
         }
@@ -91802,7 +91834,7 @@ ${toHex(hashedRequest)}`;
           this.adminRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
             userId: "admin",
-            storeId: "data"
+            storeId: ""
           });
           this.rootRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
