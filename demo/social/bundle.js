@@ -92316,10 +92316,11 @@ ${toHex(hashedRequest)}`;
               iterDate.setUTCDate(iterDate.getUTCDate() + 1);
             }
             const sortedDates = Array.from(syncDates).sort();
-            for (const dateStr of sortedDates) {
-              await this.syncDay(dateStr, "private", void 0, this.remote);
-              await this.syncDay(dateStr, "public", void 0, this.publicRemote);
-            }
+            const dateTasks = sortedDates.flatMap((dateStr) => [
+              () => this.syncDay(dateStr, "private", void 0, this.remote),
+              () => this.syncDay(dateStr, "public", void 0, this.publicRemote)
+            ]);
+            await this.runBatched(dateTasks, 10);
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -92332,11 +92333,12 @@ ${toHex(hashedRequest)}`;
             await this.syncFollowedUsers(today);
             await this.syncGroups(today);
             const manifest = await this.generateManifest();
-            for (const blobPath of manifest.blobs) {
+            const blobTasks = manifest.blobs.map((blobPath) => {
               const type = blobPath.startsWith("public/") ? "public" : "private";
               const relativePath = blobPath.substring(type.length + 1);
-              await this.syncGenericFile(relativePath, type);
-            }
+              return () => this.syncGenericFile(relativePath, type);
+            });
+            await this.runBatched(blobTasks, 10);
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
@@ -93131,6 +93133,18 @@ ${toHex(hashedRequest)}`;
           hasher.update(appId);
           hasher.update(secret);
           return hasher.digest("hex");
+        }
+        async runBatched(tasks, limit) {
+          const results = new Array(tasks.length);
+          let currentIndex = 0;
+          const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+            while (currentIndex < tasks.length) {
+              const index = currentIndex++;
+              results[index] = await tasks[index]();
+            }
+          });
+          await Promise.all(workers);
+          return results;
         }
       };
     }
@@ -94140,16 +94154,32 @@ ${toHex(hashedRequest)}`;
       init_Logger();
       import_buffer2 = __toESM(require_buffer());
       WebRTCRemoteAdapter = class {
-        // Reference to Sovereign storage for purge operations
-        constructor(userId, prefix = "") {
+        constructor(userId, prefix = "", config = {}) {
           this.cache = /* @__PURE__ */ new Map();
           this.channels = /* @__PURE__ */ new Set();
           this.pendingRequests = /* @__PURE__ */ new Map();
+          this.seenMessages = /* @__PURE__ */ new Set();
+          this.seenMessagesQueue = [];
           this.peerId = userId;
           this.prefix = prefix;
           if (this.prefix && !this.prefix.endsWith("/")) {
             this.prefix += "/";
           }
+          this.maxPeers = config.maxPeers ?? 5;
+          this.defaultTTL = config.ttl ?? 5;
+          this.maxSeenMessages = config.maxSeenMessages ?? 1e3;
+        }
+        markMessageAsSeen(msgId) {
+          if (this.seenMessages.has(msgId)) return;
+          this.seenMessages.add(msgId);
+          this.seenMessagesQueue.push(msgId);
+          if (this.seenMessagesQueue.length > this.maxSeenMessages) {
+            const oldest = this.seenMessagesQueue.shift();
+            if (oldest) this.seenMessages.delete(oldest);
+          }
+        }
+        generateMsgId() {
+          return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
         }
         getKey(path2) {
           return `${this.prefix}${path2}`;
@@ -94160,6 +94190,10 @@ ${toHex(hashedRequest)}`;
          * @returns A receiver function to be called when a message is received from the peer.
          */
         connectPeer(sendFn) {
+          if (this.channels.size >= this.maxPeers) {
+            Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
+            return null;
+          }
           const channel = { send: sendFn };
           this.channels.add(channel);
           return {
@@ -94175,6 +94209,12 @@ ${toHex(hashedRequest)}`;
           try {
             const msg = JSON.parse(msgStr);
             const key = msg.path;
+            if (msg.msgId) {
+              if (this.seenMessages.has(msg.msgId)) {
+                return;
+              }
+              this.markMessageAsSeen(msg.msgId);
+            }
             if (msg.type === "push") {
               if (msg.data && msg.hash && msg.etag) {
                 const dataBuffer = import_buffer2.Buffer.from(msg.data, "base64");
@@ -94182,7 +94222,14 @@ ${toHex(hashedRequest)}`;
                 if (!existing || existing.etag !== msg.etag) {
                   this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
                   Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
-                  this.broadcast(msg, sourceChannel);
+                  const ttl = msg.ttl ?? this.defaultTTL;
+                  if (ttl > 0) {
+                    const forwardMsg = {
+                      ...msg,
+                      ttl: ttl - 1
+                    };
+                    this.broadcast(forwardMsg, sourceChannel);
+                  }
                 }
               }
             } else if (msg.type === "request") {
@@ -94238,9 +94285,12 @@ ${toHex(hashedRequest)}`;
             hash: fileHash,
             etag,
             data: import_buffer2.Buffer.from(data).toString("base64"),
-            senderId: this.peerId
+            senderId: this.peerId,
+            msgId: this.generateMsgId(),
+            ttl: this.defaultTTL
           };
-          Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
+          this.markMessageAsSeen(msg.msgId);
+          Logger.debug(`[WebRTC] Broadcasting push for ${key} (msgId: ${msg.msgId})`);
           this.broadcast(msg);
           return etag;
         }
@@ -94295,8 +94345,11 @@ ${toHex(hashedRequest)}`;
               type: "request",
               path: key,
               reqId,
-              senderId: this.peerId
+              senderId: this.peerId,
+              msgId: this.generateMsgId(),
+              ttl: this.defaultTTL
             };
+            this.markMessageAsSeen(reqMsg.msgId);
             this.broadcast(reqMsg);
           });
         }
@@ -99127,6 +99180,8 @@ ${toHex(hashedRequest)}`;
         const groupFileRef = (0, import_react.useRef)(null);
         const [msgInput, setMsgInput] = (0, import_react.useState)("");
         const [selectedUser, setSelectedUser] = (0, import_react.useState)(null);
+        const [oldPassword, setOldPassword] = (0, import_react.useState)("");
+        const [newPassword, setNewPassword] = (0, import_react.useState)("");
         const [lookbackDays, setLookbackDays] = (0, import_react.useState)(5);
         const [isConnected, setIsConnected] = (0, import_react.useState)(true);
         const [manualDisconnect, setManualDisconnect] = (0, import_react.useState)(false);
@@ -99443,6 +99498,27 @@ ${toHex(hashedRequest)}`;
           setPosts([]);
           setFollowing([]);
           setMessages([]);
+        };
+        const handleChangePassword = async () => {
+          if (!sov || !oldPassword || !newPassword) {
+            showAlert("Please enter both old and new passwords.", "Validation Error");
+            return;
+          }
+          try {
+            await sov.changePassword(oldPassword, newPassword);
+            showAlert("Password changed successfully!", "Success");
+            setOldPassword("");
+            setNewPassword("");
+            const savedConfig = localStorage.getItem("sov_social_config");
+            if (savedConfig) {
+              const parsed = JSON.parse(savedConfig);
+              parsed.password = newPassword;
+              localStorage.setItem("sov_social_config", JSON.stringify(parsed));
+              setConfig(parsed);
+            }
+          } catch (e2) {
+            showAlert("Failed to change password: " + e2.message, "Error");
+          }
         };
         const resetLocalData = async () => {
           showConfirm("Clear all local data? This will forget your account and settings.", async () => {
@@ -100139,7 +100215,7 @@ ${toHex(hashedRequest)}`;
           await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+        } }, "Save Changes")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password."))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
           const uid = await new Promise((resolve) => showPrompt("Enter User ID to blacklist:", resolve));
           if (uid && moderation) {
             try {

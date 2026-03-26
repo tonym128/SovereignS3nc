@@ -55,11 +55,15 @@ export class IndexedDBStorage implements IStorage {
         return tx.objectStore(name);
     }
 
+    private sanitizePath(filePath: string): string {
+        return filePath.replace(/\.\./g, '').replace(/^\/+/, '');
+    }
+
     async getDailyDb(date: string, type: 'private' | 'public' | 'followed'): Promise<Uint8Array | null> {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files');
-                const request = store.get(`${type}/${date}`);
+                const request = store.get(this.sanitizePath(`${type}/${date}`));
                 request.onsuccess = () => resolve(request.result || null);
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -72,7 +76,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, `${type}/${date}`);
+                const request = store.put(data, this.sanitizePath(`${type}/${date}`));
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -85,7 +89,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files', 'readwrite');
-                const request = store.delete(`${type}/${date}`);
+                const request = store.delete(this.sanitizePath(`${type}/${date}`));
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -130,7 +134,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files');
-                const request = store.get(path);
+                const request = store.get(this.sanitizePath(path));
                 request.onsuccess = () => resolve(request.result || null);
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -143,7 +147,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, path);
+                const request = store.put(data, this.sanitizePath(path));
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -156,7 +160,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files', 'readwrite');
-                const request = store.delete(path);
+                const request = store.delete(this.sanitizePath(path));
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -166,13 +170,14 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async listFiles(prefix: string): Promise<string[]> {
+        const sanitizedPrefix = this.sanitizePath(prefix);
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files');
                 const request = store.getAllKeys();
                 request.onsuccess = () => {
                     const allKeys = request.result as string[];
-                    resolve(allKeys.filter(k => k.startsWith(prefix)));
+                    resolve(allKeys.filter(k => k.startsWith(sanitizedPrefix)));
                 };
                 request.onerror = () => reject(request.error);
             } catch (e) {

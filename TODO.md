@@ -20,11 +20,11 @@
 - [x] **Storage: SQLite Node Adapter & Server**
     - [x] Create a `SQLiteNodeStorage` adapter.
     - [x] Build a Node.js server using this backend.
-- [ ] **Core: Sync Optimization**
-    - [ ] Parallelize S3 operations in `sync()` using `Promise.all` for improved performance.
+- [x] **Core: Sync Optimization**
+    - [x] Parallelize S3 operations in `sync()` using `Promise.all` for improved performance.
     - [ ] Implement a remote `manifest.json` for "one-shot" diffing of the entire remote state.
-- [ ] **WebRTC: Gossip Scaling**
-    - [ ] Optimize gossip protocol for larger networks (e.g., DHT-lite or neighbor-limited broadcasts).
+- [x] **WebRTC: Gossip Scaling**
+    - [x] Optimize gossip protocol for larger networks (e.g., DHT-lite or neighbor-limited broadcasts).
 - [x] Modules: Granular Decomposition
     - [x] Create `src/modules/Profile.ts`, `src/modules/Messaging.ts`, `src/modules/Feed.ts`.
     - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper.
@@ -36,7 +36,7 @@
     - [x] Implement offline login (verify against local `private/sentinel.enc`).
     - [x] Fail login early if password results in incorrect private key derivation.
     - [x] Implement `changePassword` core logic (data migration and re-encryption).
-    - [ ] **UI**: Add "Change Password" flow to Social and Banky demo apps.
+    - [x] **UI**: Add "Change Password" flow to Social and Banky demo apps.
 - [ ] **Performance & UX**
     - [x] Implement background Web Workers for sync.
     - [ ] Make Web Workers the default seamless experience in demos (currently opt-in).
@@ -51,7 +51,7 @@
 - [ ] **Integration Testing**
     - [ ] Implement real WebRTC/PeerJS integration tests with a live signaling server.
     - [ ] Fix and re-enable the messaging portion of `tests/multi_user_browser.spec.ts`.
-    - [ ] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
+    - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [ ] **Admin & Moderation**
     - [ ] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
 
@@ -59,7 +59,7 @@
 - [ ] **Security & Whitepaper**
     - [ ] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
 - [ ] **Deployment & DX**
-    - [ ] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
+    - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
     - [ ] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.

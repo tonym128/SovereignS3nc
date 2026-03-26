@@ -63,20 +63,25 @@ export class SQLiteNodeStorage implements IStorage {
         await fs.writeFile(this.dbPath, data);
     }
 
+    private sanitizePath(filePath: string): string {
+        return filePath.replace(/\.\./g, '').replace(/^\/+/, '');
+    }
+
     async getDailyDb(date: string, type: 'private' | 'public'): Promise<Uint8Array | null> {
-        return this.getFile(`${type}/${date}.db`);
+        return this.getFile(this.sanitizePath(`${type}/${date}.db`));
     }
 
     async saveDailyDb(date: string, type: 'private' | 'public', data: Uint8Array): Promise<void> {
-        await this.saveFile(`${type}/${date}.db`, data);
+        await this.saveFile(this.sanitizePath(`${type}/${date}.db`), data);
     }
 
     async deleteDailyDb(date: string, type: 'private' | 'public'): Promise<void> {
-        await this.deleteFile(`${type}/${date}.db`);
+        await this.deleteFile(this.sanitizePath(`${type}/${date}.db`));
     }
 
     async getDailyDbHash(date: string, type: 'private' | 'public'): Promise<string | null> {
-        const res = this.db.exec("SELECT hash FROM files WHERE path = ?", [`${type}/${date}.db`]);
+        const sanitizedPath = this.sanitizePath(`${type}/${date}.db`);
+        const res = this.db.exec("SELECT hash FROM files WHERE path = ?", [sanitizedPath]);
         if (res.length > 0 && res[0].values.length > 0) {
             return res[0].values[0][0];
         }
@@ -92,7 +97,8 @@ export class SQLiteNodeStorage implements IStorage {
     }
 
     async getFile(filePath: string): Promise<Uint8Array | null> {
-        const res = this.db.exec("SELECT data FROM files WHERE path = ?", [filePath]);
+        const sanitizedPath = this.sanitizePath(filePath);
+        const res = this.db.exec("SELECT data FROM files WHERE path = ?", [sanitizedPath]);
         if (res.length > 0 && res[0].values.length > 0) {
             return res[0].values[0][0];
         }
@@ -100,20 +106,23 @@ export class SQLiteNodeStorage implements IStorage {
     }
 
     async saveFile(filePath: string, data: Uint8Array): Promise<void> {
+        const sanitizedPath = this.sanitizePath(filePath);
         const hash = crypto.createHash('sha256').update(data).digest('hex');
         const now = Date.now();
         this.db.run("INSERT OR REPLACE INTO files (path, data, hash, updatedAt) VALUES (?, ?, ?, ?)", 
-            [filePath, data, hash, now]);
+            [sanitizedPath, data, hash, now]);
         await this.persist();
     }
 
     async deleteFile(filePath: string): Promise<void> {
-        this.db.run("DELETE FROM files WHERE path = ?", [filePath]);
+        const sanitizedPath = this.sanitizePath(filePath);
+        this.db.run("DELETE FROM files WHERE path = ?", [sanitizedPath]);
         await this.persist();
     }
 
     async listFiles(prefix: string): Promise<string[]> {
-        const res = this.db.exec("SELECT path FROM files WHERE path LIKE ?", [`${prefix}%`]);
+        const sanitizedPrefix = this.sanitizePath(prefix);
+        const res = this.db.exec("SELECT path FROM files WHERE path LIKE ?", [`${sanitizedPrefix}%`]);
         if (res.length > 0) {
             return res[0].values.map((v: any) => v[0]);
         }
@@ -123,13 +132,13 @@ export class SQLiteNodeStorage implements IStorage {
     async getGenericRemoteHashCache(filePath: string): Promise<string | null> {
         const cache = await this.getMetadataValue('remoteHashCache');
         const parsed = JSON.parse(cache || '{}');
-        return parsed[filePath] || null;
+        return parsed[this.sanitizePath(filePath)] || null;
     }
 
     async setGenericRemoteHashCache(filePath: string, hash: string): Promise<void> {
         const cache = await this.getMetadataValue('remoteHashCache');
         const parsed = JSON.parse(cache || '{}');
-        parsed[filePath] = hash;
+        parsed[this.sanitizePath(filePath)] = hash;
         await this.setMetadataValue('remoteHashCache', JSON.stringify(parsed));
     }
 
@@ -151,7 +160,7 @@ export class SQLiteNodeStorage implements IStorage {
     }
 
     async saveFollowedDb(userId: string, date: string, data: Uint8Array): Promise<void> {
-        await this.saveFile(`followed/${userId}/${date}.db`, data);
+        await this.saveFile(this.sanitizePath(`followed/${userId}/${date}.db`), data);
     }
 
     async getFollowedDbHash(userId: string, date: string): Promise<string | null> {

@@ -694,11 +694,11 @@ export class SovereignS3nc extends EventEmitter {
             }
             
             const sortedDates = Array.from(syncDates).sort();
-            for (const dateStr of sortedDates) {
-                // Core data
-                await this.syncDay(dateStr, 'private', undefined, this.remote);
-                await this.syncDay(dateStr, 'public', undefined, this.publicRemote);
-            }
+            const dateTasks = sortedDates.flatMap(dateStr => [
+                () => this.syncDay(dateStr, 'private', undefined, this.remote),
+                () => this.syncDay(dateStr, 'public', undefined, this.publicRemote)
+            ]);
+            await this.runBatched(dateTasks, 10);
 
             // 2. Sync User Profile and Global Registry
             await this.syncUserFile();
@@ -720,11 +720,12 @@ export class SovereignS3nc extends EventEmitter {
 
             // 5. Sync Blobs and generic files from the local manifest
             const manifest = await this.generateManifest();
-            for (const blobPath of manifest.blobs) {
+            const blobTasks = manifest.blobs.map(blobPath => {
                 const type = blobPath.startsWith('public/') ? 'public' : 'private';
                 const relativePath = blobPath.substring(type.length + 1);
-                await this.syncGenericFile(relativePath, type);
-            }
+                return () => this.syncGenericFile(relativePath, type);
+            });
+            await this.runBatched(blobTasks, 10);
 
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
@@ -1716,5 +1717,18 @@ export class SovereignS3nc extends EventEmitter {
         hasher.update(secret);
         
         return hasher.digest('hex');
+    }
+
+    private async runBatched<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]> {
+        const results: T[] = new Array(tasks.length);
+        let currentIndex = 0;
+        const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+            while (currentIndex < tasks.length) {
+                const index = currentIndex++;
+                results[index] = await tasks[index]();
+            }
+        });
+        await Promise.all(workers);
+        return results;
     }
 }

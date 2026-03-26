@@ -36,8 +36,8 @@ export class NodeStorage implements IStorage {
     }
 
     private getFilePath(filePath: string): string {
-        // Sanitize path to prevent directory traversal
-        const safePath = filePath.replace(/\.\./g, '');
+        // Sanitize path to prevent directory traversal and leading slash issues
+        const safePath = filePath.replace(/\.\./g, '').replace(/^\/+/, '');
         return path.join(this.filesDir, safePath);
     }
 

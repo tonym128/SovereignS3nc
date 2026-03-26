@@ -9,8 +9,8 @@ describe('WebRTCRemoteAdapter Unit Tests', () => {
         peerB = new WebRTCRemoteAdapter('peerB');
 
         // Mock WebRTC DataChannel connection
-        const connAtoB = peerA.connectPeer((msg) => connBtoA.receive(msg));
-        const connBtoA = peerB.connectPeer((msg) => connAtoB.receive(msg));
+        const connAtoB = peerA.connectPeer((msg) => connBtoA!.receive(msg));
+        const connBtoA = peerB.connectPeer((msg) => connAtoB!.receive(msg));
     });
 
     test('should upload file and push to connected peers via gossip', async () => {
@@ -32,8 +32,8 @@ describe('WebRTCRemoteAdapter Unit Tests', () => {
         await peerA.uploadFile('late/file.txt', data);
 
         // Connect peer C to A
-        const connAtoC = peerA.connectPeer((msg) => connCtoA.receive(msg));
-        const connCtoA = peerC.connectPeer((msg) => connAtoC.receive(msg));
+        const connAtoC = peerA.connectPeer((msg) => connCtoA!.receive(msg));
+        const connCtoA = peerC.connectPeer((msg) => connAtoC!.receive(msg));
 
         // Now C requests it
         const cFile = await peerC.downloadFile('late/file.txt');

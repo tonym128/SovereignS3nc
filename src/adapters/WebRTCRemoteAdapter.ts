@@ -10,6 +10,14 @@ export interface PeerMessage {
     data?: string; // base64 encoded
     reqId?: string;
     senderId: string;
+    msgId?: string; // Unique ID for deduplication
+    ttl?: number;   // Hop limit
+}
+
+export interface WebRTCRemoteAdapterConfig {
+    maxPeers?: number;
+    ttl?: number;
+    maxSeenMessages?: number;
 }
 
 export class WebRTCRemoteAdapter implements IRemoteAdapter {
@@ -20,12 +28,36 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     private pendingRequests: Map<string, (res: PeerMessage) => void> = new Map();
     public storage?: any; // Reference to Sovereign storage for purge operations
 
-    constructor(userId: string, prefix: string = '') {
+    // Gossip Scaling & Safety
+    private maxPeers: number;
+    private defaultTTL: number;
+    private seenMessages: Set<string> = new Set();
+    private seenMessagesQueue: string[] = [];
+    private maxSeenMessages: number;
+
+    constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
         this.peerId = userId;
         this.prefix = prefix;
         if (this.prefix && !this.prefix.endsWith('/')) {
             this.prefix += '/';
         }
+        this.maxPeers = config.maxPeers ?? 5;
+        this.defaultTTL = config.ttl ?? 5;
+        this.maxSeenMessages = config.maxSeenMessages ?? 1000;
+    }
+
+    private markMessageAsSeen(msgId: string) {
+        if (this.seenMessages.has(msgId)) return;
+        this.seenMessages.add(msgId);
+        this.seenMessagesQueue.push(msgId);
+        if (this.seenMessagesQueue.length > this.maxSeenMessages) {
+            const oldest = this.seenMessagesQueue.shift();
+            if (oldest) this.seenMessages.delete(oldest);
+        }
+    }
+
+    private generateMsgId(): string {
+        return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
     }
 
     private getKey(path: string): string {
@@ -37,7 +69,11 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
      * @param sendFn A function that sends a string message to the peer.
      * @returns A receiver function to be called when a message is received from the peer.
      */
-    public connectPeer(sendFn: (msg: string) => void): { receive: (msg: string) => void } {
+    public connectPeer(sendFn: (msg: string) => void): { receive: (msg: string) => void } | null {
+        if (this.channels.size >= this.maxPeers) {
+            Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
+            return null;
+        }
         const channel = { send: sendFn };
         this.channels.add(channel);
         return {
@@ -58,17 +94,32 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
             const msg: PeerMessage = JSON.parse(msgStr);
             const key = msg.path;
 
+            // 1. Deduplication
+            if (msg.msgId) {
+                if (this.seenMessages.has(msg.msgId)) {
+                    return;
+                }
+                this.markMessageAsSeen(msg.msgId);
+            }
+
             if (msg.type === 'push') {
                 if (msg.data && msg.hash && msg.etag) {
                     const dataBuffer = Buffer.from(msg.data, 'base64');
                     const existing = this.cache.get(key);
                     // Extremely simplistic conflict resolution: if etag is different, accept it
-                    // In a real mesh network, you'd compare timestamps or logical clocks.
                     if (!existing || existing.etag !== msg.etag) { 
                         this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
                         Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
-                        // Gossip: forward to others except sender
-                        this.broadcast(msg, sourceChannel);
+                        
+                        // Gossip: forward to others except sender, if TTL allows
+                        const ttl = msg.ttl ?? this.defaultTTL;
+                        if (ttl > 1) {
+                            const forwardMsg: PeerMessage = {
+                                ...msg,
+                                ttl: ttl - 1
+                            };
+                            this.broadcast(forwardMsg, sourceChannel);
+                        }
                     }
                 }
             } else if (msg.type === 'request') {
@@ -130,10 +181,13 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
             hash: fileHash,
             etag,
             data: Buffer.from(data).toString('base64'),
-            senderId: this.peerId
+            senderId: this.peerId,
+            msgId: this.generateMsgId(),
+            ttl: this.defaultTTL
         };
         
-        Logger.debug(`[WebRTC] Broadcasting push for ${key}`);
+        this.markMessageAsSeen(msg.msgId!);
+        Logger.debug(`[WebRTC] Broadcasting push for ${key} (msgId: ${msg.msgId})`);
         this.broadcast(msg);
         return etag;
     }
@@ -203,8 +257,11 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
                 type: 'request',
                 path: key,
                 reqId,
-                senderId: this.peerId
+                senderId: this.peerId,
+                msgId: this.generateMsgId(),
+                ttl: this.defaultTTL
             };
+            this.markMessageAsSeen(reqMsg.msgId!);
             this.broadcast(reqMsg);
         });
     }

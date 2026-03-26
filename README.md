@@ -87,6 +87,7 @@ For detailed information on configuring, deploying, and using SovereignS3nc, ple
   - [Gemini CLI Skill](docs/gemini-skill.md) - A guide for AI-assisted development with SovereignS3nc.
 
 - **Setup & Deployment**
+  - [Deployment Guide](docs/deployment.md) - Detailed configuration for **MinIO**, **Cloudflare R2**, and **DigitalOcean Spaces**.
   - [RustFS Setup](docs/rustfs.md) - **Recommended** high-performance local S3 development environment.
   - [AWS S3 Setup](docs/aws.md) - Configuring AWS IAM policies and buckets.
   - [Oracle OCI Setup](docs/oci.md) - Using Oracle Object Storage with S3 compatibility.

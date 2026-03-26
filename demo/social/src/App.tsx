@@ -90,6 +90,8 @@ const App = () => {
     const groupFileRef = useRef<HTMLInputElement>(null);
     const [msgInput, setMsgInput] = useState('');
     const [selectedUser, setSelectedUser] = useState<string | null>(null);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [lookbackDays, setLookbackDays] = useState(5);
     const [isConnected, setIsConnected] = useState(true);
     const [manualDisconnect, setManualDisconnect] = useState(false);
@@ -230,7 +232,9 @@ const App = () => {
                 if (currentConfig.syncMode === 'webrtc') {
                     const bc = new BroadcastChannel('sov-webrtc-mesh');
                     const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
-                    bc.onmessage = (e) => peer.receive(e.data);
+                    if (peer) {
+                        bc.onmessage = (e) => peer.receive(e.data);
+                    }
                 } else if (currentConfig.syncMode === 'peerjs') {
                     // Start PeerJS connection to public free cloud
                     const peerId = `${currentConfig.appId}-${currentConfig.userId}`;
@@ -462,6 +466,29 @@ const App = () => {
         setPosts([]);
         setFollowing([]);
         setMessages([]);
+    };
+
+    const handleChangePassword = async () => {
+        if (!sov || !oldPassword || !newPassword) {
+            showAlert('Please enter both old and new passwords.', 'Validation Error');
+            return;
+        }
+        try {
+            await sov.changePassword(oldPassword, newPassword);
+            showAlert('Password changed successfully!', 'Success');
+            setOldPassword('');
+            setNewPassword('');
+            // Update local config password if it was saved
+            const savedConfig = localStorage.getItem('sov_social_config');
+            if (savedConfig) {
+                const parsed = JSON.parse(savedConfig);
+                parsed.password = newPassword;
+                localStorage.setItem('sov_social_config', JSON.stringify(parsed));
+                setConfig(parsed);
+            }
+        } catch (e: any) {
+            showAlert('Failed to change password: ' + e.message, 'Error');
+        }
     };
 
     const resetLocalData = async () => {
@@ -1767,6 +1794,22 @@ const App = () => {
                                    showAlert('Profile updated!', 'Success');
                                 }}>Save Changes</button>
 
+                            </div>
+
+                            <div className="card p-4 shadow-sm border-0 mt-4">
+                                <h4 className="mb-4 fw-bold">Security</h4>
+                                <div className="mb-3">
+                                    <label className="form-label small fw-bold text-muted text-uppercase">Old Password</label>
+                                    <input className="form-control" type="password" value={oldPassword} onChange={e => setOldPassword(e.target.value)} placeholder="Enter old password" />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="form-label small fw-bold text-muted text-uppercase">New Password</label>
+                                    <input className="form-control" type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} placeholder="Enter new password" />
+                                </div>
+                                <button className="btn btn-danger w-100 py-2 fw-bold" onClick={handleChangePassword}>Change Password</button>
+                                <div className="mt-3 small text-muted">
+                                    <b>Note:</b> Changing your password will migrate your private data on the remote storage to a new path derived from your new password.
+                                </div>
                             </div>
                         </div>
                     )}

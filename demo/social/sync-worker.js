@@ -70884,10 +70884,11 @@ ${toHex(hashedRequest)}`;
               iterDate.setUTCDate(iterDate.getUTCDate() + 1);
             }
             const sortedDates = Array.from(syncDates).sort();
-            for (const dateStr of sortedDates) {
-              await this.syncDay(dateStr, "private", void 0, this.remote);
-              await this.syncDay(dateStr, "public", void 0, this.publicRemote);
-            }
+            const dateTasks = sortedDates.flatMap((dateStr) => [
+              () => this.syncDay(dateStr, "private", void 0, this.remote),
+              () => this.syncDay(dateStr, "public", void 0, this.publicRemote)
+            ]);
+            await this.runBatched(dateTasks, 10);
             await this.syncUserFile();
             await this.ensureGlobalRegistration();
             await this.updateFollowingPublicKeys();
@@ -70900,11 +70901,12 @@ ${toHex(hashedRequest)}`;
             await this.syncFollowedUsers(today);
             await this.syncGroups(today);
             const manifest = await this.generateManifest();
-            for (const blobPath of manifest.blobs) {
+            const blobTasks = manifest.blobs.map((blobPath) => {
               const type = blobPath.startsWith("public/") ? "public" : "private";
               const relativePath = blobPath.substring(type.length + 1);
-              await this.syncGenericFile(relativePath, type);
-            }
+              return () => this.syncGenericFile(relativePath, type);
+            });
+            await this.runBatched(blobTasks, 10);
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
@@ -71699,6 +71701,18 @@ ${toHex(hashedRequest)}`;
           hasher.update(appId);
           hasher.update(secret);
           return hasher.digest("hex");
+        }
+        async runBatched(tasks, limit) {
+          const results = new Array(tasks.length);
+          let currentIndex = 0;
+          const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+            while (currentIndex < tasks.length) {
+              const index = currentIndex++;
+              results[index] = await tasks[index]();
+            }
+          });
+          await Promise.all(workers);
+          return results;
         }
       };
     }
