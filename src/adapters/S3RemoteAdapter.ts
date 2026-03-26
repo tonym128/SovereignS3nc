@@ -220,6 +220,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
           fullPrefix = this.getKey(prefix);
       }
       
+      Logger.debug(`[S3] Listing files for prefix: ${fullPrefix} (original: ${prefix}, adapter prefix: ${this.prefix})`);
+      
       const keys: string[] = [];
       let continuationToken: string | undefined = undefined;
 

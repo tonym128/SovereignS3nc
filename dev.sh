@@ -108,23 +108,16 @@ EOF
             "Sid": "AllowListBucket",
             "Effect": "Allow",
             "Action": ["s3:ListBucket"],
+            "Resource": ["arn:aws:s3:::$BUCKET_NAME"]
+        },
+        {
+            "Sid": "DenyListAdmin",
+            "Effect": "Deny",
+            "Action": ["s3:ListBucket"],
             "Resource": ["arn:aws:s3:::$BUCKET_NAME"],
             "Condition": {
                 "StringLike": {
-                    "s3:prefix": [
-                        "*/regular-user/*",
-                        "*/new-user/*",
-                        "*/evil-user/*",
-                        "*/user-*/*",
-                        "*/alice-*/*",
-                        "*/bob-*/*",
-                        "*/global/*"
-                    ]
-                },
-                "StringNotLike": {
-                    "s3:prefix": [
-                        "*/admin/*"
-                    ]
+                    "s3:prefix": ["*/admin/*"]
                 }
             }
         },

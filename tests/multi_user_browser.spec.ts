@@ -7,6 +7,14 @@ async function loginUser(page: Page, userId: string, password: string) {
             console.log(`BROWSER [${userId}]: ${msg.text()}`);
         }
     });
+    page.on('requestfailed', request => {
+        console.log(`BROWSER [${userId}] REQUEST FAILED: ${request.url()} - ${request.failure()?.errorText}`);
+    });
+    page.on('response', response => {
+        if (response.status() >= 400) {
+            console.log(`BROWSER [${userId}] HTTP ERROR: ${response.url()} - Status ${response.status()}`);
+        }
+    });
     await page.goto('/');
     await page.waitForSelector('input[placeholder="User ID"]', { timeout: 15000 });
     await page.waitForTimeout(1000);
@@ -67,6 +75,20 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
         console.log("Already following or button in 'Following' state.");
     }
 
+    // 4.5 Alice follows Bob (so she can message him)
+    await alicePage.click('button:has-text("Friends")');
+    let aliceFollowBobBtn = alicePage.locator('.list-group-item').filter({ hasText: bobId }).locator('button:has-text("Follow")');
+    for (let i = 0; i < 5; i++) {
+        await alicePage.click('button:has-text("Sync")');
+        await alicePage.waitForTimeout(3000);
+        if (await aliceFollowBobBtn.isVisible()) break;
+        console.log(`Alice sync attempt ${i+1} for discovery of Bob...`);
+    }
+    if (await aliceFollowBobBtn.isVisible()) {
+        await aliceFollowBobBtn.click();
+        await expect(alicePage.locator('.list-group-item').filter({ hasText: bobId }).locator('button:has-text("Following")')).toBeVisible({ timeout: 10000 });
+    }
+
     // 5. Bob sees Alice's post & likes it
     await bobPage.click('button:has-text("Home")');
     await bobPage.click('button:has-text("Sync")');
@@ -79,6 +101,10 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     console.log(`Alice initiating chat with Bob (${bobId})...`);
     await alicePage.getByTestId('nav-messages').click();
     await alicePage.waitForTimeout(2000); // Give React time to render the tab
+    
+    // Select Bob's chat
+    await alicePage.getByTestId(`chat-item-${bobId}`).click();
+    await expect(alicePage.getByTestId('message-input')).toBeVisible({ timeout: 10000 });
     
     // Send message
     await alicePage.getByTestId('message-input').fill('Hey Bob, Alice here!');
@@ -106,8 +132,14 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     await bobPage.waitForTimeout(3000);
 
     // Alice sees reply
-    await alicePage.click('button:has-text("Sync")');
-    await expect(alicePage.getByTestId('message-bubble').filter({ hasText: 'Received you loud and clear, Alice!' })).toBeVisible({ timeout: 15000 });
+    const bobReply = alicePage.getByTestId('message-bubble').filter({ hasText: 'Received you loud and clear, Alice!' });
+    for (let i = 0; i < 10; i++) {
+        console.log(`Alice sync attempt ${i+1} for Bob's reply...`);
+        await alicePage.click('button:has-text("Sync")');
+        await alicePage.waitForTimeout(4000);
+        if (await bobReply.isVisible()) break;
+    }
+    await expect(bobReply).toBeVisible({ timeout: 5000 });
 
     // 7. Threading (Back on Home tab)
     await alicePage.getByTestId('nav-home').click();

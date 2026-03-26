@@ -9,11 +9,11 @@ import initSqlJs from 'sql.js';
 import * as fs from 'fs';
 
 // --- Browser Polyfills ---
-(global as any).indexedDB = new IDBFactory();
-(global as any).crypto = crypto.webcrypto;
-(global as any).TextEncoder = TextEncoder;
-(global as any).TextDecoder = TextDecoder;
-(global as any).initSqlJs = initSqlJs;
+(globalThis as any).indexedDB = new IDBFactory();
+(globalThis as any).crypto = crypto.webcrypto;
+(globalThis as any).TextEncoder = TextEncoder;
+(globalThis as any).TextDecoder = TextDecoder;
+(globalThis as any).initSqlJs = initSqlJs;
 
 const configPath = 'demo/social/config.json';
 const adminConfigPath = 'demo/social/admin_config.json';
@@ -32,7 +32,8 @@ describe('Moderation Surgical Deletion Sync Integration Tests', () => {
         adminSov = new SovereignS3nc({
             s3: { ...adminConfig, appId },
             paths: { appId, userId: 'admin-user', storeId: 'social' },
-            password: 'admin-password'
+            password: 'admin-password',
+            debug: true
         });
         (adminSov as any).storage = new IndexedDBStorage(`admin_db_${appId}`);
         await adminSov.init();
@@ -43,7 +44,8 @@ describe('Moderation Surgical Deletion Sync Integration Tests', () => {
         userSov = new SovereignS3nc({
             s3: { ...userConfig, appId },
             paths: { appId, userId: 'regular-user', storeId: 'social' },
-            password: 'user-password'
+            password: 'user-password',
+            debug: true
         });
         (userSov as any).storage = new IndexedDBStorage(`user_db_${appId}`);
         await userSov.init();

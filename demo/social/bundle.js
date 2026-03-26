@@ -90719,6 +90719,7 @@ ${toHex(hashedRequest)}`;
           if (!prefix.startsWith(this.prefix)) {
             fullPrefix = this.getKey(prefix);
           }
+          Logger.debug(`[S3] Listing files for prefix: ${fullPrefix} (original: ${prefix}, adapter prefix: ${this.prefix})`);
           const keys = [];
           let continuationToken = void 0;
           try {
@@ -92398,11 +92399,101 @@ ${toHex(hashedRequest)}`;
               return () => this.syncGenericFile(relativePath, type, remoteManifest);
             }).filter((t8) => t8 !== null);
             await this.runBatched(blobTasks, 10);
+            await this.processModerationRequests();
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
             this.isSyncing = false;
           }
+        }
+        /**
+         * Checks for and processes any pending moderation requests from the admin.
+         * Uses config.adminPublicKey for E2EE verification.
+         */
+        async processModerationRequests() {
+          const adminPublicKey = this.config.adminPublicKey;
+          if (!adminPublicKey) {
+            Logger.debug("[Moderation] No admin public key found, skipping request check.");
+            return;
+          }
+          const requestDir = "public/moderation/requests/";
+          if (this.publicRemote && this.publicRemote.listFiles) {
+            try {
+              const remoteFiles = await this.publicRemote.listFiles(requestDir);
+              for (const remotePath of remoteFiles) {
+                const localData = await this.storage.getFile(remotePath);
+                if (!localData) {
+                  Logger.info(`[Moderation] Downloading remote request: ${remotePath}`);
+                  const result = await this.publicRemote.downloadFile(remotePath);
+                  if (result && result.data) {
+                    await this.storage.saveFile(remotePath, result.data);
+                  }
+                }
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to discover remote requests: ${e2.message}`);
+            }
+          }
+          const files = await this.storage.listFiles(requestDir);
+          if (files.length === 0) return;
+          Logger.info(`[Moderation] Found ${files.length} moderation requests.`);
+          const sharedSecret = this.deriveSharedSecret(adminPublicKey);
+          for (const file of files) {
+            if (!file.endsWith(".enc")) continue;
+            try {
+              const encryptedData = await this.storage.getFile(file);
+              if (!encryptedData) continue;
+              const decrypted = await this.decrypt(encryptedData, sharedSecret);
+              const request = JSON.parse(new TextDecoder().decode(decrypted));
+              if (request.action === "delete_post") {
+                Logger.warn(`[Moderation] ADMIN REQUEST: Deleting post ${request.postId} from date ${request.date}`);
+                const modified = await this.surgicalDeletePost(request.postId, request.date);
+                await this.storage.deleteFile(file);
+                if (this.publicRemote && this.publicRemote.deleteFile) {
+                  try {
+                    await this.publicRemote.deleteFile(file);
+                  } catch (e2) {
+                  }
+                }
+                if (modified) {
+                  for (const type of ["public", "private"]) {
+                    const relativePath = `modules/feed/${request.date}.db`;
+                    await this.syncGenericFile(relativePath, type, null);
+                  }
+                }
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to process request ${file}: ${e2.message}`);
+            }
+          }
+        }
+        async surgicalDeletePost(postId, date2) {
+          let anyModified = false;
+          const types = ["public", "private"];
+          for (const type of types) {
+            const dbPath = this.getModulePath("feed", `${date2}.db`, type);
+            const data = await this.storage.getFile(dbPath);
+            if (!data) continue;
+            try {
+              const initSqlJs = globalThis.initSqlJs;
+              const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+              const db = new sqliteInstance.Database(data);
+              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+              if (tableCheck.length > 0) {
+                db.run("DELETE FROM posts WHERE id = ?", [postId]);
+                if (db.getRowsModified() > 0) {
+                  const binary = db.export();
+                  await this.storage.saveFile(dbPath, binary);
+                  anyModified = true;
+                  Logger.info(`[Moderation] Deleted post ${postId} from ${dbPath}`);
+                }
+              }
+              db.close();
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to surgically delete post from ${dbPath}: ${e2.message}`);
+            }
+          }
+          return anyModified;
         }
         async syncManifest() {
           if (!this.publicRemote) return;
@@ -92437,6 +92528,7 @@ ${toHex(hashedRequest)}`;
             if (file.includes("_keys.json")) continue;
             if (file.includes("sentinel.enc")) continue;
             if (file.includes(".probe")) continue;
+            if (file.startsWith("followed/")) continue;
             const parts = file.split("/");
             const fileName = parts[parts.length - 1];
             const data = await this.storage.getFile(file);
@@ -92925,8 +93017,18 @@ ${toHex(hashedRequest)}`;
         }
         async syncFollowedUsers(today) {
           const following = await this.storage.getFollowing();
+          const usersToSync = [...following];
+          if (this.config.adminPublicKey && !usersToSync.find((u2) => u2.userId === "admin")) {
+            const startDate = /* @__PURE__ */ new Date();
+            startDate.setUTCDate(startDate.getUTCDate() - 7);
+            usersToSync.push({
+              userId: "admin",
+              publicKey: this.config.adminPublicKey,
+              lastSync: _SovereignS3nc.getDateStr(startDate)
+            });
+          }
           const blacklist = this.config.blacklist || [];
-          for (const user of following) {
+          for (const user of usersToSync) {
             if (blacklist.includes(user.userId)) {
               Logger.info(`[Sync] Skipping blacklisted user ${user.userId}`);
               continue;
@@ -93660,6 +93762,7 @@ ${toHex(hashedRequest)}`;
     "src/modules/Messaging.ts"() {
       "use strict";
       import_polyfills675 = __toESM(require_polyfills());
+      init_SovereignS3nc();
       MessagingModule = class {
         constructor(db) {
           this.db = db;
@@ -93776,6 +93879,17 @@ ${toHex(hashedRequest)}`;
         async getInboxMessages(days = 5) {
           const messages = [];
           const following = await this.db.getFollowing();
+          const usersToCheck = [...following];
+          const config = this.db.getConfig();
+          if (config.adminPublicKey && !usersToCheck.find((u2) => u2.userId === "admin")) {
+            const startDate = /* @__PURE__ */ new Date();
+            startDate.setUTCDate(startDate.getUTCDate() - 7);
+            usersToCheck.push({
+              userId: "admin",
+              publicKey: config.adminPublicKey,
+              lastSync: SovereignS3nc.getDateStr(startDate)
+            });
+          }
           const dates = [];
           for (let i2 = 0; i2 < days; i2++) {
             const d2 = /* @__PURE__ */ new Date();
@@ -93785,7 +93899,7 @@ ${toHex(hashedRequest)}`;
           const initSqlJs = globalThis.initSqlJs;
           const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
           const myId = this.db.getConfig().paths.userId;
-          for (const user of following) {
+          for (const user of usersToCheck) {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
             for (const date2 of dates) {
               const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date2}.db`, "followed");
@@ -94228,6 +94342,31 @@ ${toHex(hashedRequest)}`;
             }
           }
           Logger.info(`[Moderation] User ${userId} has been banned and their data purged.`);
+        }
+        /**
+         * (Admin Only) Request a user to delete a specific post.
+         * This is an E2EE request sent to the user's public prefix.
+         */
+        async requestPostDeletion(targetUserId, postId, date2) {
+          const rootRemote = this.sovereign.rootRemote;
+          if (!rootRemote) throw new Error("Root remote not configured.");
+          const registry = await this.sovereign.getPublicRegistry();
+          const user = registry.find((u2) => u2.userId === targetUserId);
+          if (!user || !user.publicKey) throw new Error(`User ${targetUserId} not found or has no public key.`);
+          const request = {
+            action: "delete_post",
+            module: "feed",
+            postId,
+            date: date2,
+            timestamp: Date.now()
+          };
+          const requestData = new TextEncoder().encode(JSON.stringify(request));
+          const sharedSecret = this.sovereign.deriveSharedSecret(user.publicKey);
+          const encryptedData = await this.sovereign.encrypt(requestData, sharedSecret);
+          const storeId = this.sovereign.getConfig().paths.storeId;
+          const path2 = `${targetUserId}/${storeId}/public/moderation/requests/${postId}.enc`;
+          await rootRemote.uploadFile(path2, encryptedData);
+          Logger.info(`[Moderation] Deletion request for post ${postId} sent to user ${targetUserId}.`);
         }
         /**
          * (Admin Only) Lists all unique user IDs present in the appId namespace.
@@ -99320,8 +99459,10 @@ ${toHex(hashedRequest)}`;
           appId: "sov-social",
           userId: "user-" + Math.random().toString(36).substring(7),
           password: "password123",
-          admins: []
+          admins: [],
           // List of User IDs with admin privileges
+          adminPublicKey: ""
+          // Public key of the official admin
         });
         const [isAdmin, setIsAdmin] = (0, import_react.useState)(false);
         const [adminKeyPublished, setAdminKeyPublished] = (0, import_react.useState)(false);
@@ -99589,6 +99730,10 @@ ${toHex(hashedRequest)}`;
               setConflict(data);
             });
             setSov(instance);
+            const finalConfig = instance.getConfig();
+            if (finalConfig.adminPublicKey) {
+              setConfig((prev) => ({ ...prev, adminPublicKey: finalConfig.adminPublicKey }));
+            }
             const fm = new FeedModule(instance);
             setFeed(fm);
             const mm = new MessagingModule(instance);
@@ -99907,6 +100052,10 @@ ${toHex(hashedRequest)}`;
           }
           const followingList = await activeSov.getFollowing();
           setFollowing(followingList);
+          const usersToFetchPosts = [...followingList];
+          if (config.adminPublicKey && !usersToFetchPosts.find((u2) => u2.userId === "admin")) {
+            usersToFetchPosts.push({ userId: "admin" });
+          }
           const dates = [];
           const currentLookbackDays = lookbackDaysRef.current;
           for (let i2 = 0; i2 < currentLookbackDays; i2++) {
@@ -99917,7 +100066,7 @@ ${toHex(hashedRequest)}`;
           let allPosts = [];
           for (const date2 of dates) {
             allPosts = [...allPosts, ...await activeFeed.getPosts(date2, "public")];
-            for (const user of followingList) {
+            for (const user of usersToFetchPosts) {
               allPosts = [...allPosts, ...await activeFeed.getPosts(`${user.userId}/${date2}`, "followed")];
             }
           }
@@ -100303,6 +100452,12 @@ ${toHex(hashedRequest)}`;
           }, [userId, profileModule, lastSyncTime]);
           return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
         };
+        const isUserAnAdmin = (userId) => {
+          if (userId === "admin") return true;
+          if (!config.adminPublicKey) return false;
+          const user = allUsers.find((u2) => u2.userId === userId);
+          return user && user.publicKey === config.adminPublicKey;
+        };
         const handleReportPost = async (post) => {
           showPrompt("Reason for reporting this post:", async (reason) => {
             if (reason && moderation) {
@@ -100318,7 +100473,8 @@ ${toHex(hashedRequest)}`;
         const PostItem = ({ post, allPosts, depth = 0 }) => {
           const replies = allPosts.filter((p2) => p2.parentId === post.id);
           const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isNew ? "border-primary shadow-sm" : ""}`, style: isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))), post.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post) }, "Report Abuse"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
+          const isAdminPost = post.userId !== config.userId && isUserAnAdmin(post.userId);
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isAdminPost ? "border-danger shadow-sm" : isNew ? "border-primary shadow-sm" : ""}`, style: isAdminPost ? { borderWidth: "2px" } : isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), isAdminPost && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 badge bg-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))), post.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post) }, "Report Abuse"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
             "button",
             {
               className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
@@ -100371,27 +100527,42 @@ ${toHex(hashedRequest)}`;
         } }, "+ Add by ID")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
           const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
           return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, following.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId]))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser })), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light text-dark"}`, style: { maxWidth: "75%" } }, m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
-          try {
-            const info = JSON.parse(m2.content.substring(13));
-            const myStatus = info.members.find((mb) => mb.userId === config.userId)?.status;
-            const localGroup = groups.find((g2) => g2.id === info.id);
-            const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
-            return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
-          } catch (e2) {
-            return /* @__PURE__ */ import_react.default.createElement("span", null, "Invalid Invite");
-          }
-        })()) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: "mt-1 opacity-75 d-flex justify-content-between" }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}"))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, groups.map((group4) => {
+        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, (() => {
+          const chatUsers = [...following];
+          messages.forEach((m2) => {
+            const otherId = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
+            if (!chatUsers.find((u2) => u2.userId === otherId)) {
+              chatUsers.push({ userId: otherId });
+            }
+          });
+          return chatUsers.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, "data-testid": `chat-item-${user.userId}`, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), isUserAnAdmin(user.userId) && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-danger", style: { fontSize: "0.6rem" } }, "Admin")), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId])));
+        })())), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser }), isUserAnAdmin(selectedUser) && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 badge bg-danger" }, "Official Administrator")), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => {
+          const isAdminMsg = m2.senderId !== config.userId && isUserAnAdmin(m2.senderId);
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, "data-testid": "message-bubble", className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : isAdminMsg ? "border border-danger bg-light text-dark shadow-sm" : "bg-light text-dark"}`, style: { maxWidth: "75%", ...isAdminMsg ? { borderWidth: "2px" } : {} } }, isAdminMsg && /* @__PURE__ */ import_react.default.createElement("div", { className: "badge bg-danger mb-1", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
+            try {
+              const info = JSON.parse(m2.content.substring(13));
+              const myStatus = info.members.find((mb) => mb.userId === config.userId)?.status;
+              const localGroup = groups.find((g2) => g2.id === info.id);
+              const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
+              return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
+            } catch (e2) {
+              return /* @__PURE__ */ import_react.default.createElement("span", null, "Invalid Invite");
+            }
+          })()) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: `mt-1 ${m2.senderId === config.userId ? "opacity-75" : "text-muted"} d-flex justify-content-between` }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}")))));
+        })), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { "data-testid": "message-input", className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "message-send-btn", className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0", style: { height: "70vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-4 border-end overflow-y-auto" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, groups.map((group4) => {
           const me = group4.members.find((mb) => mb.userId === config.userId);
           const isPending = me?.status === "pending";
           return /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center ${selectedGroup?.id === group4.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group4) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, group4.name), isPending && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-warning text-dark" }, "Invite"), !isPending && group4.createdAt > (lastViewed.roomChat?.[group4.id] || 0) && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, "New"));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedGroup ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
-          const isAuthor = p2.userId === config.userId;
-          const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
-          const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
-          if (!isAuthor && !canDelete) return null;
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
-        })()), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-4 p-2 rounded bg-light shadow-sm", style: { display: "inline-block", maxWidth: "90%" } }, p2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react.default.createElement("div", null, p2.content))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
+        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-8 d-flex flex-column h-100 overflow-hidden" }, selectedGroup ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => {
+          const isAdminGroupPost = p2.userId !== config.userId && isUserAnAdmin(p2.userId);
+          return /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), isAdminGroupPost && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-danger ms-2", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
+            const isAuthor = p2.userId === config.userId;
+            const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
+            const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
+            if (!isAuthor && !canDelete) return null;
+            return /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
+          })()), /* @__PURE__ */ import_react.default.createElement("div", { className: `ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? "border border-danger" : ""}`, style: { display: "inline-block", maxWidth: "90%", ...isAdminGroupPost ? { borderWidth: "2px" } : {} } }, p2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react.default.createElement("div", null, p2.content))));
+        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
           setGroupImage(null);
           setGroupImagePreview(null);
           if (groupFileRef.current) groupFileRef.current.value = "";

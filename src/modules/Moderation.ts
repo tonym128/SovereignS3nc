@@ -284,8 +284,9 @@ export class ModerationModule {
         const encryptedData = await this.sovereign.encrypt(requestData, sharedSecret);
 
         // 4. Upload to User's Public Prefix
-        // Path: [targetUserId]/public/moderation/requests/[postId].enc
-        const path = `${targetUserId}/public/moderation/requests/${postId}.enc`;
+        // Path: [targetUserId]/[storeId]/public/moderation/requests/[postId].enc
+        const storeId = this.sovereign.getConfig().paths.storeId;
+        const path = `${targetUserId}/${storeId}/public/moderation/requests/${postId}.enc`;
         await rootRemote.uploadFile(path, encryptedData);
         Logger.info(`[Moderation] Deletion request for post ${postId} sent to user ${targetUserId}.`);
     }

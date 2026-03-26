@@ -69287,6 +69287,7 @@ ${toHex(hashedRequest)}`;
           if (!prefix.startsWith(this.prefix)) {
             fullPrefix = this.getKey(prefix);
           }
+          Logger.debug(`[S3] Listing files for prefix: ${fullPrefix} (original: ${prefix}, adapter prefix: ${this.prefix})`);
           const keys = [];
           let continuationToken = void 0;
           try {
@@ -70966,11 +70967,101 @@ ${toHex(hashedRequest)}`;
               return () => this.syncGenericFile(relativePath, type, remoteManifest);
             }).filter((t8) => t8 !== null);
             await this.runBatched(blobTasks, 10);
+            await this.processModerationRequests();
             await this.syncManifest();
             await this.storage.setLastSyncDate(today);
           } finally {
             this.isSyncing = false;
           }
+        }
+        /**
+         * Checks for and processes any pending moderation requests from the admin.
+         * Uses config.adminPublicKey for E2EE verification.
+         */
+        async processModerationRequests() {
+          const adminPublicKey = this.config.adminPublicKey;
+          if (!adminPublicKey) {
+            Logger.debug("[Moderation] No admin public key found, skipping request check.");
+            return;
+          }
+          const requestDir = "public/moderation/requests/";
+          if (this.publicRemote && this.publicRemote.listFiles) {
+            try {
+              const remoteFiles = await this.publicRemote.listFiles(requestDir);
+              for (const remotePath of remoteFiles) {
+                const localData = await this.storage.getFile(remotePath);
+                if (!localData) {
+                  Logger.info(`[Moderation] Downloading remote request: ${remotePath}`);
+                  const result = await this.publicRemote.downloadFile(remotePath);
+                  if (result && result.data) {
+                    await this.storage.saveFile(remotePath, result.data);
+                  }
+                }
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to discover remote requests: ${e2.message}`);
+            }
+          }
+          const files = await this.storage.listFiles(requestDir);
+          if (files.length === 0) return;
+          Logger.info(`[Moderation] Found ${files.length} moderation requests.`);
+          const sharedSecret = this.deriveSharedSecret(adminPublicKey);
+          for (const file of files) {
+            if (!file.endsWith(".enc")) continue;
+            try {
+              const encryptedData = await this.storage.getFile(file);
+              if (!encryptedData) continue;
+              const decrypted = await this.decrypt(encryptedData, sharedSecret);
+              const request = JSON.parse(new TextDecoder().decode(decrypted));
+              if (request.action === "delete_post") {
+                Logger.warn(`[Moderation] ADMIN REQUEST: Deleting post ${request.postId} from date ${request.date}`);
+                const modified = await this.surgicalDeletePost(request.postId, request.date);
+                await this.storage.deleteFile(file);
+                if (this.publicRemote && this.publicRemote.deleteFile) {
+                  try {
+                    await this.publicRemote.deleteFile(file);
+                  } catch (e2) {
+                  }
+                }
+                if (modified) {
+                  for (const type of ["public", "private"]) {
+                    const relativePath = `modules/feed/${request.date}.db`;
+                    await this.syncGenericFile(relativePath, type, null);
+                  }
+                }
+              }
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to process request ${file}: ${e2.message}`);
+            }
+          }
+        }
+        async surgicalDeletePost(postId, date2) {
+          let anyModified = false;
+          const types = ["public", "private"];
+          for (const type of types) {
+            const dbPath = this.getModulePath("feed", `${date2}.db`, type);
+            const data = await this.storage.getFile(dbPath);
+            if (!data) continue;
+            try {
+              const initSqlJs = globalThis.initSqlJs;
+              const sqliteInstance = await initSqlJs(globalThis.SQL_CONFIG || {});
+              const db = new sqliteInstance.Database(data);
+              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+              if (tableCheck.length > 0) {
+                db.run("DELETE FROM posts WHERE id = ?", [postId]);
+                if (db.getRowsModified() > 0) {
+                  const binary = db.export();
+                  await this.storage.saveFile(dbPath, binary);
+                  anyModified = true;
+                  Logger.info(`[Moderation] Deleted post ${postId} from ${dbPath}`);
+                }
+              }
+              db.close();
+            } catch (e2) {
+              Logger.warn(`[Moderation] Failed to surgically delete post from ${dbPath}: ${e2.message}`);
+            }
+          }
+          return anyModified;
         }
         async syncManifest() {
           if (!this.publicRemote) return;
@@ -71005,6 +71096,7 @@ ${toHex(hashedRequest)}`;
             if (file.includes("_keys.json")) continue;
             if (file.includes("sentinel.enc")) continue;
             if (file.includes(".probe")) continue;
+            if (file.startsWith("followed/")) continue;
             const parts = file.split("/");
             const fileName = parts[parts.length - 1];
             const data = await this.storage.getFile(file);
@@ -71493,8 +71585,18 @@ ${toHex(hashedRequest)}`;
         }
         async syncFollowedUsers(today) {
           const following = await this.storage.getFollowing();
+          const usersToSync = [...following];
+          if (this.config.adminPublicKey && !usersToSync.find((u2) => u2.userId === "admin")) {
+            const startDate = /* @__PURE__ */ new Date();
+            startDate.setUTCDate(startDate.getUTCDate() - 7);
+            usersToSync.push({
+              userId: "admin",
+              publicKey: this.config.adminPublicKey,
+              lastSync: _SovereignS3nc.getDateStr(startDate)
+            });
+          }
           const blacklist = this.config.blacklist || [];
-          for (const user of following) {
+          for (const user of usersToSync) {
             if (blacklist.includes(user.userId)) {
               Logger.info(`[Sync] Skipping blacklisted user ${user.userId}`);
               continue;

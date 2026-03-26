@@ -784,6 +784,27 @@ export class SovereignS3nc extends EventEmitter {
         }
 
         const requestDir = 'public/moderation/requests/';
+
+        // DISCOVERY: We need to list the REMOTE directory because we didn't upload these ourselves!
+        if (this.publicRemote && this.publicRemote.listFiles) {
+            try {
+                const remoteFiles = await this.publicRemote.listFiles(requestDir);
+                for (const remotePath of remoteFiles) {
+                    // Check if we already have it locally
+                    const localData = await this.storage.getFile(remotePath);
+                    if (!localData) {
+                        Logger.info(`[Moderation] Downloading remote request: ${remotePath}`);
+                        const result = await this.publicRemote.downloadFile(remotePath);
+                        if (result && result.data) {
+                            await this.storage.saveFile(remotePath, result.data);
+                        }
+                    }
+                }
+            } catch (e: any) {
+                Logger.warn(`[Moderation] Failed to discover remote requests: ${e.message}`);
+            }
+        }
+
         const files = await this.storage.listFiles(requestDir);
         
         if (files.length === 0) return;
@@ -899,6 +920,8 @@ export class SovereignS3nc extends EventEmitter {
             if (file.includes('_keys.json')) continue;
             if (file.includes('sentinel.enc')) continue;
             if (file.includes('.probe')) continue;
+            if (file.startsWith('followed/')) continue; // Don't sync other users' data back to our remote
+            
             const parts = file.split('/');
             const fileName = parts[parts.length - 1];
 
