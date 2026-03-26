@@ -10,7 +10,7 @@ import { EventEmitter } from 'events';
 import { SyncWorkerProxy } from './worker/SyncWorkerProxy';
 
 export class SovereignS3nc extends EventEmitter {
-    public static readonly VERSION = '3.0.0';
+    public static readonly VERSION = '3.1.0';
     private storage: IStorage;
     private remote?: IRemoteAdapter; // Private Remote (Optional for local-only)
     private publicRemote?: IRemoteAdapter;
@@ -803,7 +803,6 @@ export class SovereignS3nc extends EventEmitter {
         }
 
         for (const file of allFiles) {
-            if (file.includes('user.json')) continue;
             if (file.includes('manifest.json')) continue;
             if (file.includes('_keys.json')) continue;
             if (file.includes('sentinel.enc')) continue;
@@ -1130,7 +1129,7 @@ export class SovereignS3nc extends EventEmitter {
         return null;
     }
 
-    private async syncGenericFile(relativePath: string, type: 'private' | 'public', remoteManifest?: SovereignManifest) {
+    private async syncGenericFile(relativePath: string, type: 'private' | 'public', remoteManifest?: SovereignManifest | null) {
         try {
             const activeRemote = type === 'public' ? this.publicRemote : this.remote;
             if (!activeRemote) return;
@@ -1143,7 +1142,7 @@ export class SovereignS3nc extends EventEmitter {
             let localData = await this.storage.getFile(fullPath);
             const cachedSyncHash = await this.storage.getGenericRemoteHashCache(`sync_hash:${fullPath}`);
             
-            let remoteHash = remoteManifest?.files?.[fullPath]?.hash;
+            let remoteHash: string | null | undefined = remoteManifest?.files?.[fullPath]?.hash;
             if (remoteHash === undefined) {
                 remoteHash = await activeRemote.getFileHash(s3Path);
             }
@@ -1589,7 +1588,7 @@ export class SovereignS3nc extends EventEmitter {
         return `${year}-${month}-${day}`;
     }
 
-    private async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter, remoteManifest?: SovereignManifest) {
+    private async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter, remoteManifest?: SovereignManifest | null) {
         try {
             // Important: We need the hashed path for the remote check
             const hashedUserId = this.getHashedUserId(this.config.paths.userId, type === 'private');
@@ -1612,7 +1611,10 @@ export class SovereignS3nc extends EventEmitter {
                     const result = await activeRemote.downloadFile(remotePath);
                     if (result && result.data) {
                         let data = result.data;
-                        const remoteHash = await activeRemote.getFileHash(remotePath);
+                        let remoteHash: string | null | undefined = remoteManifest?.files?.[remotePath]?.hash;
+                        if (remoteHash === undefined) {
+                            remoteHash = await activeRemote.getFileHash(remotePath);
+                        }
                         if (currentKey) {
                             data = await this.decrypt(data, currentKey);
                         }
@@ -1626,7 +1628,7 @@ export class SovereignS3nc extends EventEmitter {
                 const localHash = this.calculateHashedContent(localData, currentKey);
                 
                 // Use manifest to avoid per-file S3 request
-                let remoteHash = remoteManifest?.files?.[remotePath]?.hash;
+                let remoteHash: string | null | undefined = remoteManifest?.files?.[remotePath]?.hash;
                 if (remoteHash === undefined) {
                     remoteHash = await activeRemote.getFileHash(remotePath);
                 }
@@ -1649,7 +1651,7 @@ export class SovereignS3nc extends EventEmitter {
                         if (currentKey) {
                             try {
                                 remoteData = await this.decrypt(remoteData, currentKey);
-                            } catch (e) {
+                            } catch (e: any) {
                                 Logger.error(`[Sync] Failed to decrypt remote conflict file: ${e.message}`);
                             }
                         }
@@ -1799,7 +1801,7 @@ export class SovereignS3nc extends EventEmitter {
         Logger.info(`[Sovereign] Encrypted payload sent to ${recipientId} in namespace ${namespace}`);
     }
     
-    private async syncUserFile(remoteManifest?: SovereignManifest) {
+    private async syncUserFile(remoteManifest?: SovereignManifest | null) {
         try {
             if (!this.publicRemote) return;
             const remotePath = 'public/user.json';
@@ -1845,7 +1847,7 @@ export class SovereignS3nc extends EventEmitter {
 
             // After potentially updating localData, ensure remote matches local if we kept local
             if (localData) {
-                let remoteHash = remoteManifest?.files?.[remotePath]?.hash;
+                let remoteHash: string | null | undefined = remoteManifest?.files?.[remotePath]?.hash;
                 if (remoteHash === undefined) {
                     remoteHash = await this.publicRemote.getFileHash(remotePath);
                 }

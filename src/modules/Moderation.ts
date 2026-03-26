@@ -257,21 +257,41 @@ export class ModerationModule {
 
     /**
      * (Admin Only) Lists all unique user IDs present in the appId namespace.
+     * Combines literal directory names, global registry entries, and hashed private folders.
      */
     async listUsers(): Promise<string[]> {
         const rootRemote = (this.sovereign as any).rootRemote;
+        const globalRemote = (this.sovereign as any).globalRemote;
         if (!rootRemote || !rootRemote.listFiles) {
             throw new Error("Root remote not configured or missing listFiles capability.");
         }
         
-        const files = await rootRemote.listFiles('');
         const users = new Set<string>();
+
+        // 1. Get from Global Registry (Source of truth for literal names)
+        if (globalRemote) {
+            try {
+                const result = await globalRemote.downloadFile('users.json');
+                if (result && result.data) {
+                    const registry: { userId: string }[] = JSON.parse(new TextDecoder().decode(result.data));
+                    registry.forEach(u => users.add(u.userId));
+                }
+            } catch (e) {}
+        }
+
+        // 2. Get from S3 Directory Listing (Finds literal names AND hashes)
+        const files = await rootRemote.listFiles('');
         for (const file of files) {
             const parts = file.split('/');
             if (parts.length > 0 && parts[0] !== '') {
                 users.add(parts[0]);
             }
         }
+
+        // Filter out system folders
+        users.delete('global');
+        users.delete('admin');
+
         return Array.from(users).sort();
     }
 

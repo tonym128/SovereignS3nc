@@ -64,6 +64,11 @@
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Add comprehensive module unit tests.
 
+## User Generated TODO's
+- [ ] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
+- [ ] When a admin deletes a post, it deletes the entire day, but the user re-uploads on their next upload without deleting the post from their store. Put a mechanism in place for the user to delete that post and reupload their data (E2EE message forcing a delete)
+- [ ] If an admin sends a E2EE user message for action, the message should be displayed with formatting to indicate what action the admin took on them.
+
 ---
 
 ## ✅ DONE

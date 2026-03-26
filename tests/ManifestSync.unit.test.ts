@@ -73,7 +73,7 @@ describe('Manifest Sync Unit Tests', () => {
             password: 'password123',
             debug: false
         };
-        Logger.setLevel(LogLevel.OFF);
+        Logger.setLevel(LogLevel.NONE);
     });
 
     test('should upload manifest after sync', async () => {

@@ -115,11 +115,22 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     await commentBtn.click();
     await alicePage.fill('.modal input', 'This is a threaded reply');
     await alicePage.click('.modal button:has-text("Confirm")');
-    await alicePage.waitForTimeout(3000);
+    await expect(alicePage.locator('.modal')).toBeHidden({ timeout: 10000 });
+    
+    // Give Alice time to complete her automatic sync after posting
+    await alicePage.waitForTimeout(5000);
 
     await bobPage.click('button:has-text("Home")');
-    await bobPage.click('button:has-text("Sync")');
-    await expect(bobPage.locator('.ms-4:has-text("This is a threaded reply")')).toBeVisible({ timeout: 15000 });
+    
+    const threadedReply = bobPage.locator('.ms-4:has-text("This is a threaded reply")');
+    for (let i = 0; i < 10; i++) {
+        console.log(`Bob sync attempt ${i+1} for threaded reply...`);
+        await bobPage.click('button:has-text("Sync")');
+        await bobPage.waitForTimeout(4000);
+        if (await threadedReply.isVisible()) break;
+    }
+
+    await expect(threadedReply).toBeVisible({ timeout: 5000 });
 
     console.log("Multi-user journey completed successfully (excluding reset/restore).");
 

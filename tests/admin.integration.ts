@@ -83,6 +83,10 @@ beforeAll(async () => {
         // Verify Admin Status
         expect(await adminMod.isAdmin()).toBe(true);
         expect(await userMod.isAdmin()).toBe(false);
+
+        // SYNC once for both to ensure public user.json is created (Literal path)
+        await adminSov.sync();
+        await userSov.sync();
     }, 30000);
 
     afterAll(async () => {
@@ -91,6 +95,8 @@ beforeAll(async () => {
 
     test('Admin lists all users in the system', async () => {
         const users = await adminMod.listUsers();
+        // It should contain literal names (because they synced public/user.json)
+        // and may contain hashes (private GUIDs)
         expect(users).toContain('admin-user');
         expect(users).toContain('regular-user');
         expect(users.length).toBeGreaterThanOrEqual(2);

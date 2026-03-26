@@ -87,7 +87,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         const command = new GetObjectCommand({
             Bucket: this.bucket,
             Key: key,
-            IfNoneMatch: ifNoneMatch
+            IfNoneMatch: (ifNoneMatch && ifNoneMatch !== '') ? ifNoneMatch : undefined
         });
         
         Logger.debug(`[S3] Step 4.2.1: Sending command to client for ${key}...`);

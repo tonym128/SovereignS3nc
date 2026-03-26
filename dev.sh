@@ -140,7 +140,7 @@ EOF
                 "arn:aws:s3:::$BUCKET_NAME/*/alice-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/bob-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/global/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/*/*"
+                "arn:aws:s3:::$BUCKET_NAME/*/*/social/*"
             ]
         },
         {
@@ -148,9 +148,19 @@ EOF
             "Effect": "Deny",
             "Action": ["s3:*"],
             "Resource": [
-                "arn:aws:s3:::$BUCKET_NAME/*/admin/data/*"
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/data/*",
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/admin.probe"
             ]
         },
+        {
+            "Sid": "DenyAdminKeyWrite",
+            "Effect": "Deny",
+            "Action": ["s3:PutObject", "s3:DeleteObject"],
+            "Resource": [
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/public_key.json"
+            ]
+        },
+
         {
             "Sid": "AllowAdminReporting",
             "Effect": "Allow",

@@ -63,7 +63,8 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files');
-                const request = store.get(this.sanitizePath(`${type}/${date}`));
+                const path = this.sanitizePath(`${type}/${date}.db`);
+                const request = store.get(path);
                 request.onsuccess = () => resolve(request.result || null);
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -73,7 +74,7 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async saveDailyDb(date: string, type: 'private' | 'public' | 'followed', data: Uint8Array): Promise<void> {
-        const path = this.sanitizePath(`${type}/${date}`);
+        const path = this.sanitizePath(`${type}/${date}.db`);
         return new Promise((resolve, reject) => {
             try {
                 const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
@@ -92,7 +93,7 @@ export class IndexedDBStorage implements IStorage {
     }
 
     async deleteDailyDb(date: string, type: 'private' | 'public' | 'followed'): Promise<void> {
-        const path = this.sanitizePath(`${type}/${date}`);
+        const path = this.sanitizePath(`${type}/${date}.db`);
         return new Promise((resolve, reject) => {
             try {
                 const tx = this.db!.transaction(['files', 'metadata'], 'readwrite');
@@ -287,7 +288,7 @@ export class IndexedDBStorage implements IStorage {
         return new Promise((resolve, reject) => {
             try {
                 const store = this.getStore('files', 'readwrite');
-                const request = store.put(data, `followed/${userId}/${date}`);
+                const request = store.put(data, `followed/${userId}/${date}.db`);
                 request.onsuccess = () => resolve();
                 request.onerror = () => reject(request.error);
             } catch (e) {
@@ -300,7 +301,7 @@ export class IndexedDBStorage implements IStorage {
         try {
             const data: Uint8Array | null = await new Promise((resolve, reject) => {
                 const store = this.getStore('files');
-                const request = store.get(`followed/${userId}/${date}`);
+                const request = store.get(`followed/${userId}/${date}.db`);
                 request.onsuccess = () => resolve(request.result || null);
                 request.onerror = () => reject(request.error);
             });
