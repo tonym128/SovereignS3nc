@@ -1,0 +1,35 @@
+{
+  "version_major": 0,
+  "version_minor": 0,
+  "backend": {
+    "provider": "gemini-cli",
+    "model": "gemini-2.5-flash",
+    "verbose": true
+  },
+  "execution": {
+    "mode": "worktree",
+    "validate_pre": "",
+    "validate_post": "go test ./...",
+    "cleanup_on_success": true,
+    "max_retries": 3,
+    "min_coverage": 0,
+    "enable_planning": true,
+    "auto_synthesize": true
+  },
+  "vcs": {
+    "repo_path": ".",
+    "auto_commit": true,
+    "auto_merge": false
+  },
+  "gitops": {
+    "enable_pr": false,
+    "remote_name": "origin",
+    "auto_push": false,
+    "pr_tool": "gh"
+  },
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": 0
+  }
+}
