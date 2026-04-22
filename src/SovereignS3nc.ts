@@ -288,7 +288,7 @@ export class SovereignS3nc extends EventEmitter {
      * Downloads the global blacklist and updates local config.
      */
     public async syncBlacklist() {
-        if (!this.globalRemote || !this.config.s3) return;
+        if (!this.globalRemote) return;
         const path = 'blacklist.json';
         try {
             const result = await this.globalRemote.downloadFile(path);
@@ -306,7 +306,7 @@ export class SovereignS3nc extends EventEmitter {
      * Downloads the admin's public key for E2EE reports.
      */
     public async syncAdminKey() {
-        if (!this.adminRemote || !this.config.s3) return;
+        if (!this.adminRemote) return;
         try {
             const result = await this.adminRemote.downloadFile('public_key.json');
             if (result && result.data) {
@@ -460,10 +460,10 @@ export class SovereignS3nc extends EventEmitter {
                     Logger.info('[Keys] No remote sentinel found. Proceeding (may be a new account).');
                 }
             } catch (e: any) {
-                if (e.message === 'Network Error' || e.message.includes('offline')) {
-                    Logger.warn('[Keys] Remote unreachable for sentinel check, continuing.');
+                if (e.message === 'Network Error' || e.message.includes('offline') || e.message.includes('Timeout') || e.name === 'AbortError') {
+                    Logger.warn(`[Keys] Remote unreachable for sentinel check (${e.message}), continuing.`);
                 } else {
-                    Logger.error('[Keys] Remote sentinel verification failed. Incorrect password?');
+                    Logger.error(`[Keys] Remote sentinel verification failed: ${e.message}`);
                     throw new Error('Incorrect password. Access denied.');
                 }
             }
