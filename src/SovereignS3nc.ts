@@ -24,6 +24,22 @@ export class SovereignS3nc extends EventEmitter {
     private syncWorker?: SyncWorkerProxy;
     private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort') => void> = new Map();
 
+    /**
+     * Static factory method to create and initialize a SovereignS3nc instance.
+     * This eliminates the need to call init() manually.
+     */
+    public static async create(
+        config: SovereignConfig, 
+        remote?: IRemoteAdapter, 
+        remoteFactory?: (userId: string) => IRemoteAdapter,
+        keys?: { privateKey: string, publicKey: string },
+        storage?: IStorage
+    ): Promise<SovereignS3nc> {
+        const instance = new SovereignS3nc(config, remote, remoteFactory, keys, storage);
+        await instance.init();
+        return instance;
+    }
+
     constructor(
         config: SovereignConfig, 
         remote?: IRemoteAdapter, 

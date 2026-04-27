@@ -29,9 +29,10 @@
     - [x] Create `src/modules/Profile.ts`, `src/modules/Messaging.ts`, `src/modules/Feed.ts`.
     - [x] Reduce `src/modules/Social.ts` to a thin composite wrapper.
     - [x] Replace all `SocialManager` usage in CLI, Server, and Demos.
-- [ ] **Ergonomics & Initialization**
-    - [ ] Constructor Refactoring: Implement a static factory method `SovereignS3nc.create(...)` to eliminate the need for an explicit `init()` call.
-    - [ ] MediaUtils Cleanup: Replace temporary `console.log` debug statements with the project's internal `Logger`.
+- [x] Ergonomics & Initialization
+    - [x] Constructor Refactoring: Implement a static factory method `SovereignS3nc.create(...)` to eliminate the need for an explicit `init()` call.
+    - [x] MediaUtils Cleanup: Replace temporary `console.log` debug statements with the project's internal `Logger`.
+
 
 ## 🚀 Features & Enhancements
 - [x] **Security & Auth**
@@ -45,12 +46,13 @@
     - [x] Make Web Workers the default seamless experience in demos (currently opt-in).
     - [x] Implement PWA support (`manifest.json` + Service Worker) for local installation.
     - [x] Audit library performance and provide benchmarks for sync latency and storage overhead.
+    - [x] **Error Resilience**: Added exponential backoff for S3 operations and smarter handling of `AbortController` timeouts.
 - [x] **Accessibility & UI**
     - [ ] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
     - [ ] **UI Implementation**: Add "Export Static Website" button to the Social Demo profile screen to trigger the static export process.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
-    - [ ] **UI Implementation**: Add Conflict Resolution UI to Social and Banky demos to expose the `pendingConflicts` mechanism to users.
+    - [x] **UI Implementation**: Add Conflict Resolution UI to Social and Banky demos to expose the `pendingConflicts` mechanism to users.
 - [x] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
 - [ ] **PWA & Offline**
     - [ ] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
@@ -76,6 +78,7 @@
     - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
     - [ ] **Cloud-Native Templates**: Create Helm charts or Terraform modules for scaling in Kubernetes and serverless environments.
     - [x] Write a Gemini CLI Skill for the library.
+    - [x] Modern Packaging: Implemented ESM/CJS dual-loading in `package.json`.
     - [x] Add comprehensive module unit tests.
     - [x] Remove npm publish from GitHub Workflows.
 

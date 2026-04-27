@@ -3,13 +3,21 @@
   "version": "3.1.0",
   "description": "",
   "main": "dist/index.js",
+  "module": "dist/sovereigns3nc.esm.js",
+  "unpkg": "dist/sovereigns3nc.global.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/sovereigns3nc.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "sov": "dist/cli.js",
     "sov-admin": "dist/admin.js"
   },
-  "module": "dist/sovereigns3nc.esm.js",
-  "unpkg": "dist/sovereigns3nc.global.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules jest -c tests/jest.config.js",
     "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest -c tests/jest.integration.config.js",

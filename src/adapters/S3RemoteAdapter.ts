@@ -44,6 +44,33 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
   }
 
+  /**
+   * Helper to execute S3 operations with exponential backoff.
+   */
+  private async withRetry<T>(operation: () => Promise<T>, label: string, maxRetries: number = 3): Promise<T> {
+    let lastError: any;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (e: any) {
+        lastError = e;
+        const statusCode = e.$metadata?.httpStatusCode;
+
+        // Don't retry for these status codes
+        if (statusCode === 403 || statusCode === 404 || statusCode === 304 || e.name === 'NoSuchKey') {
+          throw e;
+        }
+
+        if (attempt < maxRetries) {
+          const delay = Math.min(1000 * Math.pow(2, attempt) + Math.random() * 1000, 10000);
+          Logger.warn(`[S3] ${label} failed (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${Math.round(delay)}ms... Error: ${e.message}`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+    throw lastError;
+  }
+
   async uploadFile(path: string, data: Uint8Array, providedHash?: string, customMetadata?: Record<string, string>): Promise<string | null> {
     const key = this.getKey(path);
     Logger.debug(`[S3] Uploading to key: ${key}`);
@@ -63,7 +90,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         }
     }
     
-    const response = await this.client.send(new PutObjectCommand({
+    const response = await this.withRetry(() => this.client.send(new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
       Body: data,
@@ -71,63 +98,53 @@ export class S3RemoteAdapter implements IRemoteAdapter {
           'hash': hash,
           ...(customMetadata || {})
       }
-    }));
+    })), `Upload ${key}`);
     return response.ETag || null;
   }
 
   async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 15000): Promise<DownloadResult | null> {
     const key = this.getKey(path);
-    Logger.debug(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || 'none'}, timeout: ${timeout}ms)`);
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    Logger.debug(`[S3] Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || 'none'}, timeout: ${timeout}ms)`);
+    
+    return this.withRetry(async () => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-    try {
-        Logger.debug(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
-        
-        const command = new GetObjectCommand({
-            Bucket: this.bucket,
-            Key: key,
-            IfNoneMatch: (ifNoneMatch && ifNoneMatch !== '') ? ifNoneMatch : undefined
-        });
-        
-        Logger.debug(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
-        const response = await this.client.send(command, { abortSignal: controller.signal as any });
-        
-        clearTimeout(timeoutId); // Success, clear it
-        Logger.debug(`[S3] Step 4.3: Response received for ${key}.`);
-        if (!response.Body) {
-            return { data: null, etag: response.ETag || null };
-        }
-        
-        Logger.debug(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
-        const data = await response.Body.transformToByteArray();
-        Logger.debug(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
-        return { data, etag: response.ETag || null };
-    } catch (e: any) {
-        clearTimeout(timeoutId);
-        
-        const statusCode = e.$metadata?.httpStatusCode;
+        try {
+            const command = new GetObjectCommand({
+                Bucket: this.bucket,
+                Key: key,
+                IfNoneMatch: (ifNoneMatch && ifNoneMatch !== '') ? ifNoneMatch : undefined
+            });
+            
+            const response = await this.client.send(command, { abortSignal: controller.signal as any });
+            
+            clearTimeout(timeoutId);
+            if (!response.Body) {
+                return { data: null, etag: response.ETag || null };
+            }
+            
+            const data = await response.Body.transformToByteArray();
+            return { data, etag: response.ETag || null };
+        } catch (e: any) {
+            clearTimeout(timeoutId);
+            const statusCode = e.$metadata?.httpStatusCode;
 
-        if (statusCode === 304) {
-            Logger.debug(`[S3] File ${key} not modified (304).`);
-            return { data: null, etag: ifNoneMatch || null, notModified: true };
-        }
+            if (statusCode === 304) {
+                return { data: null, etag: ifNoneMatch || null, notModified: true };
+            }
 
-        if (e.name === 'AbortError') {
-            console.error(`[S3] Step 4.6: Request timed out for ${key}`);
-            throw new Error(`S3 Download Timeout for ${key}`);
+            if (e.name === 'AbortError') {
+                Logger.error(`[S3] Download timed out for ${key}`);
+                throw new Error(`S3 Download Timeout for ${key}`);
+            }
+
+            if (statusCode === 403 || e.name === 'NoSuchKey' || statusCode === 404) {
+                return null;
+            }
+            throw e;
         }
-        Logger.debug(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e.name} - ${e.message}`);
-        
-        if (statusCode === 403) {
-            Logger.debug(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist yet.`);
-            return null;
-        }
-        if (e.name === 'NoSuchKey' || statusCode === 404) {
-            return null;
-        }
-        throw e;
-    }
+    }, `Download ${key}`);
   }
 
   async getFileHash(path: string): Promise<string | null> {
@@ -140,10 +157,10 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
      const key = this.getKey(path);
      try {
-         const response = await this.client.send(new HeadObjectCommand({
+         const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
              Bucket: this.bucket,
              Key: key
-         }));
+         })), `GetHash ${key}`);
          
          const hash = response.Metadata?.hash || null;
          
@@ -168,10 +185,10 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   async getFileEtag(path: string): Promise<string | null> {
       const key = this.getKey(path);
       try {
-          const response = await this.client.send(new HeadObjectCommand({
+          const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
-          }));
+          })), `GetEtag ${key}`);
           return response.ETag || null;
       } catch (e: any) {
           const statusCode = e.$metadata?.httpStatusCode;
@@ -185,10 +202,10 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   async getFileMetadata(path: string, key: string): Promise<string | null> {
       const fullKey = this.getKey(path);
       try {
-          const response = await this.client.send(new HeadObjectCommand({
+          const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: fullKey
-          }));
+          })), `GetMetadata ${fullKey}`);
           return response.Metadata?.[key] || null;
       } catch (e: any) {
           return null;
@@ -200,12 +217,12 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       try {
           // Probe: Try to write a tiny hidden file to the path/prefix
           const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
-          await this.client.send(new PutObjectCommand({
+          await this.withRetry(() => this.client.send(new PutObjectCommand({
               Bucket: this.bucket,
               Key: key,
               Body: sentinel,
               ContentType: 'application/json'
-          }));
+          })), `WriteProbe ${key}`);
           return true;
       } catch (e: any) {
           // 403 Forbidden or 405 Method Not Allowed means we don't have write access
@@ -233,7 +250,9 @@ export class S3RemoteAdapter implements IRemoteAdapter {
                   Prefix: fullPrefix,
                   ContinuationToken: continuationToken
               });
-              const response: any = await this.client.send(command);
+              
+              const response: any = await this.withRetry(() => this.client.send(command), `ListObjects ${fullPrefix}`);
+              
               if (response.Contents) {
                   for (const item of response.Contents) {
                       if (item.Key) {
@@ -265,7 +284,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
               Bucket: this.bucket,
               Key: key
           });
-          await this.client.send(command);
+          await this.withRetry(() => this.client.send(command), `Delete ${key}`);
           Logger.debug(`[S3] Deleted file: ${key}`);
       } catch (e: any) {
           Logger.warn(`[S3] Failed to delete file ${key}: ${e.message}`);

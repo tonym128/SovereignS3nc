@@ -1,3 +1,4 @@
+import { Logger } from './Logger';
 
 export class MediaUtils {
     /**
@@ -11,7 +12,7 @@ export class MediaUtils {
                 const Jimp = (await import('jimp')).default;
                 const matches = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
                 if (!matches) {
-                    console.log('MediaUtils: No regex match');
+                    Logger.warn('[MediaUtils] No regex match for data URL');
                     return dataUrl;
                 }
                 
@@ -50,7 +51,7 @@ export class MediaUtils {
                 
                 return `data:image/jpeg;base64,${resultBuffer.toString('base64')}`;
             } catch (err) {
-                console.error('MediaUtils: Node.js image compression failed:', err);
+                Logger.error('[MediaUtils] Node.js image compression failed:', err);
                 // Return original on failure
                 return dataUrl;
             }

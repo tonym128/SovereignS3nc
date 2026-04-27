@@ -21,6 +21,7 @@ const App = () => {
     });
     
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [conflict, setConflict] = useState<{ id: string, path: string, resolve: (choice: 'local' | 'remote' | 'abort') => void } | null>(null);
     // ... rest of state
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [banky, setBanky] = useState<BankyManager | null>(null);
@@ -85,13 +86,17 @@ const App = () => {
         
         try {
             // Use the config loaded from config.json if available, otherwise start offline
-            const instance = new SovereignS3nc({
+            const instance = await SovereignS3nc.create({
                 ...config,
                 offline: !config.s3,
                 useWorker: true,
                 workerUrl: 'sync-worker.js'
             });
-            await instance.init();
+
+            instance.on('conflict', (data: any) => {
+                setConflict(data);
+            });
+
             setSov(instance);
             
             const bm = new BankyManager(instance);
@@ -844,6 +849,92 @@ const App = () => {
             
             {/* Dialog Component adapted from social demo */}
             <Dialog dialog={dialog} setDialog={setDialog} />
+
+            {conflict && (
+                <ConflictResolutionModal 
+                    conflict={conflict} 
+                    onResolve={(choice) => {
+                        if (conflict) {
+                            conflict.resolve(choice);
+                            setConflict(null);
+                        }
+                    }}
+                />
+            )}
+        </div>
+    );
+};
+
+const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort') => void }) => {
+    if (!conflict) return null;
+
+    const formatSize = (bytes: number) => {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+
+    const getPreview = (data: Uint8Array) => {
+        try {
+            const str = new TextDecoder().decode(data);
+            if (str.length > 200) return str.substring(0, 200) + '...';
+            return str;
+        } catch (e) {
+            return 'Binary Data';
+        }
+    };
+
+    return (
+        <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 3000 }}>
+            <div className="modal-dialog modal-dialog-centered modal-lg">
+                <div className="modal-content shadow-lg border-0 rounded-4">
+                    <div className="modal-header border-0 pb-0">
+                        <h5 className="modal-title fw-bold text-danger"><i className="bi bi-exclamation-triangle-fill me-2"></i>Sync Conflict</h5>
+                    </div>
+                    <div className="modal-body py-4">
+                        <p className="text-secondary">A conflict was detected during sync for the following file:</p>
+                        <div className="alert alert-light border small mb-4">
+                            <code>{conflict.path}</code>
+                        </div>
+
+                        <div className="row g-3">
+                            <div className="col-md-6">
+                                <div className="card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10">
+                                    <div className="card-body">
+                                        <h6 className="fw-bold text-primary mb-3">Local Version</h6>
+                                        <div className="small mb-2"><strong>Size:</strong> {formatSize(conflict.localData.length)}</div>
+                                        <div className="bg-white p-2 border rounded small" style={{ height: '120px', overflowY: 'auto' }}>
+                                            <pre className="mb-0 text-dark" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                                                {getPreview(conflict.localData)}
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="card h-100 border-success-subtle bg-success-subtle bg-opacity-10">
+                                    <div className="card-body">
+                                        <h6 className="fw-bold text-success mb-3">Remote Version</h6>
+                                        <div className="small mb-2"><strong>Size:</strong> {formatSize(conflict.remoteData.length)}</div>
+                                        <div className="bg-white p-2 border rounded small" style={{ height: '120px', overflowY: 'auto' }}>
+                                            <pre className="mb-0 text-dark" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+                                                {getPreview(conflict.remoteData)}
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2">
+                        <button type="button" className="btn btn-primary rounded-pill px-4" onClick={() => onResolve('local')}>Keep Local</button>
+                        <button type="button" className="btn btn-success rounded-pill px-4" onClick={() => onResolve('remote')}>Take Remote</button>
+                        <button type="button" className="btn btn-outline-secondary rounded-pill px-4" onClick={() => onResolve('abort')}>Skip for Now</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
