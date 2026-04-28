@@ -24,11 +24,11 @@
     "test:docker": "NODE_OPTIONS=--experimental-vm-modules jest -c tests/jest.integration.config.js",
     "setup:test-env": "bash dev.sh start",
     "test:browser": "NODE_OPTIONS=--experimental-vm-modules npx playwright test -c tests/playwright.config.ts",
-    "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
-    "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
+    "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
+    "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:social": "node demo/social/build.js",
     "build:banky": "node demo/banky/build.js",
-    "build": "tsc && npm run build:esm && npm run build:global",
+    "build": "rimraf dist && tsc && npm run build:esm && npm run build:global",
     "prepublishOnly": "npm run build",
     "admin-cli": "ts-node src/admin.ts"
   },
@@ -36,6 +36,13 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "GEMINI.md",
+    "AGENT.md"
+  ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.969.0",
     "@aws-sdk/util-utf8-node": "^3.259.0",

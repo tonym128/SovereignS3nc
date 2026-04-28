@@ -9,31 +9,68 @@ This guide provides a comprehensive overview of the SovereignS3nc API and instru
 The `SovereignS3nc` class is the main entry point for the library. It manages storage, synchronization, and security.
 
 ### Initialization
+
+The recommended way to initialize the library is using the static `create` factory method. This handles construction, local storage setup, and key derivation in one step.
+
 ```typescript
-const sovereign = new SovereignS3nc(config: SovereignConfig);
-await sovereign.init();
+const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 ```
 
-### Key Methods
+#### `SovereignConfig` Interface
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `s3` | `S3Config` | Configuration for S3-compatible remote storage. |
+| `offline` | `boolean` | If true, starts in offline mode without attempting remote connections. |
+| `paths` | `object` | Required: `{ appId: string, userId: string, storeId: string }` |
+| `password` | `string` | User's password for deriving E2EE identity keys. |
+| `useWorker` | `boolean` | If true, enables background synchronization via Web Worker. |
+| `workerUrl` | `string` | URL/Path to the `worker.js` file for background sync. |
+| `adminPublicKey` | `string` | Public key of the admin for sending encrypted abuse reports. |
+| `debug` | `boolean` | Enables verbose logging to the console. |
+
+### Core Methods
 
 | Method | Description |
 | :--- | :--- |
-| `init()` | Initializes local storage and derives E2EE keys from the password. |
-| `sync()` | Performs a two-way synchronization between local and remote storage. |
-| `getStorage()` | Returns the `IStorage` adapter for direct local file access. |
-| `getConfig()` | Returns the current configuration instance. |
+| `sync(force?: boolean)` | Performs a two-way synchronization. Returns a promise that resolves when complete. |
+| `getStorage()` | Returns the local `IStorage` adapter (IndexedDB or Node FS). |
+| `getConfig()` | Returns the active `SovereignConfig`. |
 | `registerModule(def)` | Registers a custom module definition (schema and migrations). |
-| `getModulePath(...)` | Generates a namespaced path for module data (e.g., `public/modules/feed/file.db`). |
-| `applyModuleSchema(db, name)` | Automatically applies SQLite tables and migrations to a database instance. |
-| `encrypt(data, key)` | Symmetrically or asymmetrically encrypts data. |
-| `decrypt(data, key)` | Symmetrically or asymmetrically decrypts data. |
-| `deriveSharedSecret(pk)` | Derives a shared secret using X25519 (Diffie-Hellman) for DMs. |
-| `sendEncryptedPayload(id, payload, ns)` | Sends an E2EE payload to a recipient via their public inbox. |
-| `follow(userId)` | Adds a user to the follow graph and begins syncing their public data. |
+| `follow(userId)` | Follows another user to begin syncing their public data. |
+| `unfollow(userId)` | Stops following a user. |
+| `getPublicRegistry()` | Retrieves the list of all discovered users from the global registry. |
+| `on(event, callback)` | Subscribe to events like `sync`, `conflict`, or `change`. |
+| `resolveConflict(id, choice)`| Resolves a pending sync conflict (`'local' \| 'remote' \| 'abort'`). |
 
 ---
 
-## 3. Admin CLI
+## 2. Module APIs
+
+SovereignS3nc includes high-level modules that provide specialized functionality.
+
+### `ProfileModule`
+Manage user identity and discovery.
+- `getProfile(userId)`: Returns the profile object for any user.
+- `updateProfile(name, bio, avatar?)`: Updates the current user's public profile.
+- `getFollowing()`: Returns the list of users the current user is following.
+
+### `MessagingModule`
+End-to-end encrypted direct messaging.
+- `getMessages(otherUserId)`: Retrieves chat history with a specific user.
+- `sendDirectMessage(toUserId, content, image?)`: Sends an E2EE message.
+- `deleteMessage(otherUserId, messageId)`: Marks a message as deleted on local and remote.
+
+### `FeedModule`
+Public social feeds and content sharing.
+- `getPosts(userId, date?)`: Retrieves posts for a user on a specific date.
+- `createPost(content, image?, parentId?)`: Creates a new public post or reply.
+- `likePost(userId, postId, date)`: Toggles a "like" on a specific post.
+- `getGroupPosts(groupId, date)`: Retrieves posts from a shared multi-writer group.
+
+---
+
+## 3. Custom Module Development
 
 SovereignS3nc includes an administrative CLI for managing the application state.
 

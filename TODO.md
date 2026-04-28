@@ -79,6 +79,7 @@
     - [ ] **Cloud-Native Templates**: Create Helm charts or Terraform modules for scaling in Kubernetes and serverless environments.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Modern Packaging: Implemented ESM/CJS dual-loading in `package.json`.
+    - [x] Create `AGENT.md` for AI Agent context and include it in the npm package.
     - [x] Add comprehensive module unit tests.
     - [x] Remove npm publish from GitHub Workflows.
 
@@ -97,6 +98,10 @@
 - [x] Image support in posts and DMs.
 - [x] UI: Reset file selection after upload.
 - [x] Updated README.md and GEMINI.md with new architecture details.
+- [x] Refactored documentation into `docs/api.md` with full config and module reference.
+- [x] Created `AGENT.md` for AI-agent-specific technical onboarding.
+- [x] Implemented `SovereignS3nc.create()` static factory for improved ergonomics.
+- [x] Standardized `package.json` with modern `exports` and `files` packaging.
 - [x] Implement Debug flags and reduce console noise.
 - [x] User CLI for account management, profiles, DMs, and feed interactions.
 - [x] Organize documentation into `docs/` folder.

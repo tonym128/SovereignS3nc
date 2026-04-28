@@ -29,11 +29,11 @@ npm install sovereigns3nc
 ```typescript
 import { SovereignS3nc } from 'sovereigns3nc';
 
-// 1. Configure SovereignS3nc
-const sovereign = new SovereignS3nc({
+// 1. Initialize (Automatically handles Construction, Key Derivation, and Local Storage)
+const sovereign = await SovereignS3nc.create({
   s3: {
     region: 'us-east-1',
-    endpoint: 'https://...', // For RustFS/Minio/OCI/S3
+    endpoint: 'https://...', // For RustFS/Minio/OCI/R2
     credentials: {
       accessKeyId: '...',
       secretAccessKey: '...'
@@ -47,13 +47,11 @@ const sovereign = new SovereignS3nc({
     storeId: 'main'
   },
   password: 'my-super-strong-password', // Used to derive E2EE Identity Keys
-  debug: true
+  useWorker: true, // Recommended: use background Web Worker for non-blocking sync
+  workerUrl: 'sync-worker.js'
 });
 
-// 2. Initialize (generates E2EE keypairs and connects to local storage)
-await sovereign.init();
-
-// 3. Sync changes (Pull updates from followed users & Push local changes)
+// 2. Sync changes (Pull updates from followed users & Push local changes)
 await sovereign.sync();
 ```
 
@@ -66,11 +64,11 @@ import { FeedModule, MessagingModule, ProfileModule } from 'sovereigns3nc';
 
 // Profile Management
 const profile = new ProfileModule(sovereign);
-await profile.updateProfile({ displayName: "Alice", bio: "Hello World" });
+await profile.updateProfile("Alice", "Hello World"); // Name, Bio
 
 // E2EE Messaging
 const messaging = new MessagingModule(sovereign);
-await messaging.sendMessage("bob-123", "Hey Bob, check this out!", "feed");
+await messaging.sendDirectMessage("bob-123", "Hey Bob, check this out!");
 
 // Social Feeds
 const feed = new FeedModule(sovereign);
