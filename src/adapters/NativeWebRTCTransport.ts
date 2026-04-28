@@ -61,7 +61,7 @@ export class NativeWebRTCTransport {
      */
     public async createOffer(): Promise<WebRTCSignalingData> {
         this.isInitiator = true;
-        const channel = this.pc.createDataChannel('sovereign-sync', { reliable: true });
+        const channel = this.pc.createDataChannel('sovereign-sync');
         this.setupDataChannel(channel);
 
         const offer = await this.pc.createOffer();

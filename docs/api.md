@@ -26,8 +26,11 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 | `password` | `string` | User's password for deriving E2EE identity keys. |
 | `useWorker` | `boolean` | If true, enables background synchronization via Web Worker. |
 | `workerUrl` | `string` | URL/Path to the `worker.js` file for background sync. |
+| `enablePeerExchange` | `boolean` | (WebRTC) If true, enables PEX (Peer Exchange) to discover and hand-shake with peers-of-peers automatically. |
 | `adminPublicKey` | `string` | Public key of the admin for sending encrypted abuse reports. |
 | `debug` | `boolean` | Enables verbose logging to the console. |
+
+> **Note on Reliability:** All S3 operations now include automatic **exponential backoff with jitter**. If a request fails due to a network glitch or rate limiting, the library will retry up to 3 times before failing.
 
 ### Core Methods
 

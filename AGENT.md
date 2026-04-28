@@ -48,6 +48,11 @@ await sov.registerModule(feed);
 - **Handle Backgrounding**: Use `useWorker: true` for UI responsiveness during large syncs.
 - **Conflict Strategy**: Always implement a UI for the `conflict` event to prevent data loss in multi-device scenarios.
 
+## 📈 Scaling & Resilience
+
+- **Automatic Retries**: All S3 operations implement exponential backoff with jitter (max 3 retries). This handles transient network failures and AWS/OCI rate limits.
+- **PEX (Peer Exchange)**: Enable `enablePeerExchange: true` in WebRTC mode to allow peers to automatically discover and handshake with each other. This turns a single manual QR scan into an auto-expanding mesh network.
+
 ## 📂 File Structure Map
 - `src/SovereignS3nc.ts`: Main entry point and orchestrator.
 - `src/adapters/`: Storage (IndexedDB/Node) and Remote (S3/WebRTC) implementations.
