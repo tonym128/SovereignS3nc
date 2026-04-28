@@ -1,90 +1,113 @@
-# SovereignS3nc WebRTC Setup Guide
+# SovereignS3nc WebRTC & P2P Guide
 
 WebRTC mode allows SovereignS3nc to operate as a peer-to-peer (P2P) mesh network, bypassing S3 storage for data exchange between users.
-
-There are two primary ways to use WebRTC with SovereignS3nc:
 
 ---
 
 ## 1. Local Mesh (Tab-to-Tab)
-Ideal for multiple tabs of the same application on the same browser, or local network discovery using the `BroadcastChannel` API.
+Ideal for multiple tabs of the same application on the same browser using the `BroadcastChannel` API.
 
-### Implementation Example:
+### Implementation:
 ```typescript
 import { SovereignS3nc, WebRTCRemoteAdapter } from 'sovereigns3nc';
 
 const userId = 'alice-123';
 const adapter = new WebRTCRemoteAdapter(userId);
-
-// Create a local mesh channel
 const bc = new BroadcastChannel('sov-mesh-local');
 
-// Connect the adapter to the broadcast channel
+// Link adapter to BroadcastChannel
 const peer = adapter.connectPeer((msg) => bc.postMessage(msg));
 bc.onmessage = (e) => peer.receive(e.data);
 
-const sov = new SovereignS3nc({
+const sov = await SovereignS3nc.create({
   paths: { appId: 'my-app', userId, storeId: 'main' },
   password: 'password'
 }, adapter);
-
-await sov.init();
 ```
 
 ---
 
-## 2. Global Mesh (Peer-to-Peer over Internet)
-For connecting users across different networks. This requires a **Signaling Server** to facilitate the initial handshake (Offer/Answer/ICE).
+## 2. Cloud Signaling (PeerJS)
+The easiest way to connect users across the internet. Uses a signaling server (like the public PeerJS cloud) to facilitate the handshake.
 
-### Step A: Start the Signaling Server
-SovereignS3nc includes a minimal signaling server in the `Setup/WebRTC` folder.
-```bash
-chmod +x Setup/WebRTC/run-signaling.sh
-./Setup/WebRTC/run-signaling.sh
+### Implementation:
+```typescript
+import Peer from 'peerjs';
+
+const peerId = `my-app-${userId}`;
+const peer = new Peer(peerId);
+
+peer.on('connection', (conn) => {
+    // Connect incoming PeerJS connection to Sovereign adapter
+    const sovPeer = adapter.connectPeer((msg) => conn.send(msg));
+    conn.on('data', (data) => sovPeer.receive(data as string));
+});
 ```
 
-### Step B: Client Configuration (Manual)
-To connect users over the internet, you must implement the signaling handshake logic in your application.
+---
+
+## 3. Serverless / Zero-Infrastructure (QR & BLE)
+For 100% off-grid or high-security scenarios where no signaling server is trusted.
+
+### Using `NativeWebRTCTransport`
+SovereignS3nc provides a native transport wrapper to manage raw WebRTC connections.
 
 ```typescript
-const signaling = new WebSocket('ws://your-signaling-server:8890');
-const adapter = new WebRTCRemoteAdapter(userId);
+import { NativeWebRTCTransport, SovereignS3nc } from 'sovereigns3nc';
 
-// 1. Connect new peers via signaling
-signaling.onmessage = async (event) => {
-    const data = JSON.parse(event.data);
-    if (data.type === 'offer') {
-        const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-        const channel = pc.createDataChannel('sov-sync');
-        
-        // Link the Data Channel to the SovereignS3nc Adapter
-        const peer = adapter.connectPeer((msg) => channel.send(msg));
-        channel.onmessage = (e) => peer.receive(e.data);
-        
-        // ... Complete RTC Handshake (Answer/ICE Candidates)
-    }
+const transport = new NativeWebRTCTransport(userId);
+
+// Initiator: Generate QR Code
+const offer = await transport.createOffer();
+showQRCode(JSON.stringify(offer));
+
+// Receiver: Scan QR Code
+const answer = await transport.handleOffer(scannedOffer.sdp);
+showQRCode(JSON.stringify(answer));
+
+// Finalize: Initiator scans answer
+await transport.handleAnswer(scannedAnswer.sdp);
+
+// Once connected, plug into Sovereign
+transport.onConnected = () => {
+    sovereign.connectNativeRTC(transport);
 };
 ```
 
+### Bluetooth Discovery (BLE)
+Use the `BLESignaling` utility to perform the handshake via Bluetooth Low Energy.
+
+```typescript
+import { BLESignaling } from 'sovereigns3nc';
+
+await BLESignaling.scanAndPair(async (offerStr) => {
+    const offer = JSON.parse(offerStr);
+    const answer = await transport.handleOffer(offer.sdp);
+    return JSON.stringify(answer);
+});
+```
+
 ---
 
-## 3. Zero-Infrastructure Signaling (No Server Required)
+## 4. Architecture: The Gossip Engine
+When using WebRTC, SovereignS3nc acts as a **Relay Node**. Even if you don't follow "User C," your browser may relay encrypted data between "User A" and "User B" if they are both connected to you.
 
-If you want to avoid hosting a signaling server entirely, you can use **Public WebTorrent Trackers**. These are "always-on" public servers that help peers find each other using the Bittorrent DHT.
+- **Deduplication**: The library ensures the same message is never processed or relayed twice using a `msgId` cache.
+- **TTL (Time To Live)**: Gossip messages are limited to 5 hops by default to prevent network congestion.
+- **Privacy**: Relay nodes cannot decrypt the data they are passing; only the intended recipient (or those with the module keys) can read the content.
 
-### Implementation Concept:
-You can use a library like `bittorrent-tracker` or `bugout` to find peers via public trackers:
-1. Announce your `appId + userId` to a list of public trackers (e.g., `wss://tracker.openwebtorrent.com`).
-2. The trackers return a list of other peers for the same ID.
-3. Establish WebRTC connections directly using the tracker's signaling relay.
+---
 
-This method allows for a truly decentralized "trackerless" mesh where no single entity owns the signaling infrastructure.
+## 5. Security & NAT Traversal
+For reliable connections across restrictive firewalls (Corporate/Mobile), you should provide a **TURN Server**.
 
-## 4. Security Considerations
-- **E2EE**: All data pushed or requested over WebRTC is still encrypted using the same `tweetnacl` X25519 identity keys used in S3 mode. Even if the signaling server is compromised, your data remains secure.
-- **STUN/TURN**: For production use across restrictive firewalls, you should provide your own **TURN Server** (e.g., [Coturn](https://github.com/coturn/coturn)) in the `RTCPeerConnection` configuration.
-
-## 4. Why use WebRTC mode?
-- **Zero Cloud Costs**: Data is exchanged directly between users without hitting an S3 bucket.
-- **Real-Time Sync**: P2P push messages provide near-instant updates across the mesh.
-- **Offline Mesh**: If users are on the same local network, they can sync even if the internet is down.
+```typescript
+const transport = new NativeWebRTCTransport(userId, [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { 
+        urls: 'turn:your-turn-server.com', 
+        username: 'user', 
+        credential: 'password' 
+    }
+]);
+```

@@ -3,6 +3,8 @@ import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, 
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
+import { WebRTCRemoteAdapter } from './adapters/WebRTCRemoteAdapter';
+import { NativeWebRTCTransport } from './adapters/NativeWebRTCTransport';
 import { IndexedDBStorage } from './adapters/IndexedDBStorage';
 import { Logger, LogLevel } from './utils/Logger';
 import * as crypto from 'crypto';
@@ -162,6 +164,20 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     /**
+     * Connects a native WebRTC transport to the internal gossip engine.
+     * Requires the active remote to be a WebRTCRemoteAdapter.
+     */
+    public connectNativeRTC(transport: NativeWebRTCTransport) {
+        if (this.publicRemote instanceof WebRTCRemoteAdapter) {
+            this.publicRemote.connectNativeTransport(transport);
+        } else if (this.remote instanceof WebRTCRemoteAdapter) {
+            this.remote.connectNativeTransport(transport);
+        } else {
+            Logger.warn('[Sovereign] Cannot connect native RTC: Active remote is not a WebRTCRemoteAdapter');
+        }
+    }
+
+    /**
      * Emits a change event for a specific module and path.
      * Useful for UI components to subscribe to updates.
      */
@@ -296,6 +312,68 @@ export class SovereignS3nc extends EventEmitter {
         // Fetch blacklist and admin key immediately on startup
         await this.syncBlacklist();
         await this.syncAdminKey();
+
+        // Configure PEX (Peer Exchange) if enabled and using WebRTC
+        if (this.config.enablePeerExchange) {
+            const adapters = [this.remote, this.publicRemote].filter(a => a instanceof WebRTCRemoteAdapter) as WebRTCRemoteAdapter[];
+            for (const adapter of adapters) {
+                adapter.enablePEX = true;
+                
+                // Listen for relayed signals from the mesh
+                adapter.on('signal_relay', async (from: string, signal: any) => {
+                    Logger.info(`[Sovereign] Processing relayed signal from ${from}`);
+                    const transport = new NativeWebRTCTransport(this.config.paths.userId);
+                    
+                    if (signal.type === 'offer') {
+                        const answer = await transport.handleOffer(signal.sdp);
+                        adapter.relaySignal(from, answer);
+                        
+                        transport.onConnected = () => {
+                            this.connectNativeRTC(transport);
+                            Logger.info(`[Sovereign] Auto-connected to peer ${from} via PEX relay`);
+                        };
+                    } else if (signal.type === 'answer') {
+                        // Handled by the pending transport instance that sent the offer
+                        this.emit('pex:signal', { from, signal });
+                    }
+                });
+
+                // Listen for peer lists to discover new potential neighbors
+                adapter.on('pex:peers', async (data: { from: string, peers: string[] }) => {
+                    const myId = this.config.paths.userId;
+                    const following = (await this.storage.getFollowing()).map(u => u.userId);
+                    
+                    for (const peerId of data.peers) {
+                        if (peerId !== myId && following.includes(peerId)) {
+                            // Try to connect to this followed user through the relay
+                            Logger.info(`[Sovereign] Attempting PEX handshake with ${peerId} via ${data.from}`);
+                            const transport = new NativeWebRTCTransport(myId);
+                            const offer = await transport.createOffer();
+                            adapter.relaySignal(peerId, offer);
+
+                            const signalHandler = (sigData: any) => {
+                                if (sigData.from === peerId && sigData.signal.type === 'answer') {
+                                    transport.handleAnswer(sigData.signal.sdp);
+                                    this.off('pex:signal', signalHandler);
+                                }
+                            };
+                            this.on('pex:signal', signalHandler);
+
+                            transport.onConnected = () => {
+                                this.connectNativeRTC(transport);
+                                Logger.info(`[Sovereign] Direct connection established with ${peerId} via PEX introduction`);
+                            };
+                        }
+                    }
+                });
+            }
+
+            // Trigger periodic peer exchange
+            setInterval(() => {
+                const adapters = [this.remote, this.publicRemote].filter(a => a instanceof WebRTCRemoteAdapter) as WebRTCRemoteAdapter[];
+                adapters.forEach(a => a.exchangePeers());
+            }, 60000);
+        }
 
         Logger.info('[Sovereign] Initialization complete.');
     }

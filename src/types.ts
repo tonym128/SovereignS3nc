@@ -32,6 +32,7 @@ export interface SovereignConfig {
   password?: string; // Used to decrypt the stored private key
   useManifest?: boolean; // Enable for "Blind Storage" (No List capability)
   autoFollowDiscoveredUsers?: boolean; // Default: true (set to false to disable auto-following everyone in global registry)
+  enablePeerExchange?: boolean; // If true, automatically tries to connect to peers of peers via existing connections
   blacklist?: string[]; // Global blacklist of User IDs to ignore
   adminPublicKey?: string; // Public key of the application admin for E2EE reports
   debug?: boolean; // Enable verbose logging
@@ -90,5 +91,12 @@ export interface SovereignAddress {
   publicPassphrase?: string; // Optional: Required if the user uses Zero Knowledge encryption
   publicSalt?: string;
       serverSecret?: string;
+}
+
+export interface WebRTCSignalingData {
+    type: 'offer' | 'answer' | 'candidate';
+    sdp?: string;
+    candidate?: RTCIceCandidateInit;
+    senderId: string;
 }
 

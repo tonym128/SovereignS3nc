@@ -54,7 +54,11 @@
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
     - [x] **UI Implementation**: Add Conflict Resolution UI to Social and Banky demos to expose the `pendingConflicts` mechanism to users.
 - [x] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).
-- [ ] **PWA & Offline**
+- [x] **PWA & Offline**
+    - [x] **Native WebRTC Transport**: Implemented `NativeWebRTCTransport` for serverless signaling (QR/Bluetooth foundation).
+    - [x] **QR Pairing UI**: Integrated QR generation and scanning into the Social Demo for 100% serverless, off-grid pairing.
+    - [x] **Web Bluetooth (Central)**: Added browser-side BLE scanning for pairing with headless/native peripherals.
+    - [x] **Peer Exchange (PEX)**: Implemented automated in-band signaling and peer discovery through existing connections.
     - [ ] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
 
 ## 🧪 Testing & Validation

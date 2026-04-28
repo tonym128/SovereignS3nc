@@ -42,10 +42,26 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 | `getPublicRegistry()` | Retrieves the list of all discovered users from the global registry. |
 | `on(event, callback)` | Subscribe to events like `sync`, `conflict`, or `change`. |
 | `resolveConflict(id, choice)`| Resolves a pending sync conflict (`'local' \| 'remote' \| 'abort'`). |
+| `connectNativeRTC(transport)`| Connects a `NativeWebRTCTransport` to the internal gossip engine. |
 
 ---
 
-## 2. Module APIs
+## 2. Advanced Transports & Signaling
+
+### `NativeWebRTCTransport`
+Used for serverless signaling (QR/BLE).
+- `createOffer()`: Generates an SDP Offer for the initiator.
+- `handleOffer(sdp)`: Accepts a remote offer and generates an SDP Answer.
+- `handleAnswer(sdp)`: Finalizes the handshake on the initiator side.
+- `onConnected`: Callback triggered when the direct data channel is open.
+
+### `BLESignaling`
+Utility for Bluetooth-based handshakes.
+- `scanAndPair(onOfferReceived)`: Scans for Sovereign BLE peripherals and handles the SDP exchange.
+
+---
+
+## 3. Module APIs
 
 SovereignS3nc includes high-level modules that provide specialized functionality.
 

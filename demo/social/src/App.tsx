@@ -12,6 +12,7 @@ import { Buffer } from 'buffer';
 import Peer from 'peerjs';
 
 import { MediaUtils } from '../../../src/utils/MediaUtils';
+import { PairingModal } from './PairingModal';
 
 const DEBUG = false;
 
@@ -48,6 +49,7 @@ const App = () => {
 
     const [autoLogin, setAutoLogin] = useState(localStorage.getItem('sov_auto_login') === 'true');
     const [autoSync, setAutoSync] = useState(localStorage.getItem('sov_auto_sync') !== 'false');
+    const [showPairing, setShowPairing] = useState(false);
     const [useWebWorkers, setUseWebWorkers] = useState(localStorage.getItem('sov_use_workers') !== 'false');
     const [rememberedUsers, setRememberedUsers] = useState<any[]>(() => {
         const saved = localStorage.getItem('sov_remembered_users');
@@ -1454,6 +1456,16 @@ const App = () => {
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
                     </button>
                     
+                    {(config.syncMode === 'webrtc' || config.syncMode === 'peerjs') && (
+                        <button 
+                            className="btn btn-sm btn-outline-primary rounded-pill me-2" 
+                            onClick={() => setShowPairing(true)}
+                            title="Direct QR Pair"
+                        >
+                            <i className="bi bi-qr-code-scan"></i> <span className="mobile-hide">Pair</span>
+                        </button>
+                    )}
+                    
                     <div className="d-flex align-items-center">
                         <UserAvatar userId={config.userId} size={32} />
                     </div>
@@ -2169,6 +2181,18 @@ const App = () => {
                 </div>
             </div>
             <Dialog dialog={dialog} setDialog={setDialog} profileCache={profileCache} />
+            {showPairing && (
+                <PairingModal 
+                    userId={config.userId} 
+                    onClose={() => setShowPairing(false)} 
+                    onConnected={(transport) => {
+                        if (sov) {
+                            sov.connectNativeRTC(transport);
+                        }
+                    }}
+                />
+            )}
+
             {conflict && (
                 <ConflictResolutionModal 
                     conflict={conflict} 

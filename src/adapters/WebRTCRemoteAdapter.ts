@@ -1,9 +1,11 @@
 import { IRemoteAdapter, DownloadResult } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
 import { Buffer } from 'buffer';
+import { NativeWebRTCTransport } from './NativeWebRTCTransport';
+import { EventEmitter } from 'events';
 
 export interface PeerMessage {
-    type: 'push' | 'request' | 'response' | 'not_found' | 'purge';
+    type: 'push' | 'request' | 'response' | 'not_found' | 'purge' | 'peer_list' | 'relay_signal';
     path: string;
     hash?: string;
     etag?: string;
@@ -12,6 +14,11 @@ export interface PeerMessage {
     senderId: string;
     msgId?: string; // Unique ID for deduplication
     ttl?: number;   // Hop limit
+    // PEX fields
+    peerList?: string[];
+    to?: string;
+    from?: string;
+    signal?: any;
 }
 
 export interface WebRTCRemoteAdapterConfig {
@@ -20,13 +27,18 @@ export interface WebRTCRemoteAdapterConfig {
     maxSeenMessages?: number;
 }
 
-export class WebRTCRemoteAdapter implements IRemoteAdapter {
+export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter {
     private cache: Map<string, { data: Uint8Array, hash: string, etag: string }> = new Map();
     private channels: Set<{ send: (msg: string) => void }> = new Set();
     private prefix: string;
     public peerId: string;
     private pendingRequests: Map<string, (res: PeerMessage) => void> = new Map();
     public storage?: any; // Reference to Sovereign storage for purge operations
+    
+    // PEX & Signal Relay
+    private channelsByUserId: Map<string, { send: (msg: string) => void }> = new Map();
+    public enablePEX: boolean = false;
+    public onSignalRelay?: (from: string, signal: any) => void;
 
     // Gossip Scaling & Safety
     private maxPeers: number;
@@ -36,6 +48,7 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     private maxSeenMessages: number;
 
     constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
+        super();
         this.peerId = userId;
         this.prefix = prefix;
         if (this.prefix && !this.prefix.endsWith('/')) {
@@ -44,6 +57,47 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
         this.maxPeers = config.maxPeers ?? 5;
         this.defaultTTL = config.ttl ?? 5;
         this.maxSeenMessages = config.maxSeenMessages ?? 1000;
+    }
+
+    /**
+     * Sends an SDP signal to a target peer through the mesh.
+     */
+    public relaySignal(to: string, signal: any) {
+        const msg: PeerMessage = {
+            type: 'relay_signal',
+            path: '',
+            senderId: this.peerId,
+            from: this.peerId,
+            to,
+            signal,
+            msgId: this.generateMsgId()
+        };
+        
+        const targetChannel = this.channelsByUserId.get(to);
+        if (targetChannel) {
+            targetChannel.send(JSON.stringify(msg));
+        } else {
+            this.broadcast(msg);
+        }
+    }
+
+    /**
+     * Broadcasts the current list of connected peers to the mesh.
+     */
+    public exchangePeers() {
+        if (!this.enablePEX) return;
+        
+        const peerList = Array.from(this.channelsByUserId.keys());
+        if (peerList.length === 0) return;
+
+        const msg: PeerMessage = {
+            type: 'peer_list',
+            path: '',
+            senderId: this.peerId,
+            peerList,
+            msgId: this.generateMsgId()
+        };
+        this.broadcast(msg);
     }
 
     private markMessageAsSeen(msgId: string) {
@@ -67,26 +121,48 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
     /**
      * Connects an RTCDataChannel (or any mock channel) to this adapter.
      * @param sendFn A function that sends a string message to the peer.
-     * @returns A receiver function to be called when a message is received from the peer.
+     * @param userId Optional: The user ID of the peer for direct signaling.
+     * @returns The channel object and a receiver function.
      */
-    public connectPeer(sendFn: (msg: string) => void): { receive: (msg: string) => void } | null {
+    public connectPeer(sendFn: (msg: string) => void, userId?: string): { channel: any, receive: (msg: string) => void } | null {
         if (this.channels.size >= this.maxPeers) {
             Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
             return null;
         }
         const channel = { send: sendFn };
         this.channels.add(channel);
+        if (userId) {
+            this.channelsByUserId.set(userId, channel);
+        }
         return {
+            channel,
             receive: (msg: string) => this.handleMessage(msg, channel)
         };
     }
 
     /**
+     * Connects a NativeWebRTCTransport directly to this adapter.
+     */
+    public connectNativeTransport(transport: NativeWebRTCTransport, userId?: string) {
+        const conn = this.connectPeer((msg) => transport.send(msg), userId);
+        if (conn) {
+            transport.onMessage = (msg) => conn.receive(msg);
+            transport.onDisconnected = () => this.disconnectPeer(conn.channel);
+        }
+    }
+
+    /**
      * Disconnects a channel.
      */
-    public disconnectPeer(receiver: { receive: (msg: string) => void }) {
-        // In a real scenario, we'd want a better way to match the channel, 
-        // but for now, we'll keep it simple. If needed, the caller can maintain state.
+    public disconnectPeer(channel: any) {
+        this.channels.delete(channel);
+        for (const [uid, ch] of this.channelsByUserId.entries()) {
+            if (ch === channel) {
+                this.channelsByUserId.delete(uid);
+                break;
+            }
+        }
+        Logger.debug(`[WebRTC] Peer disconnected. Active channels: ${this.channels.size}`);
     }
 
     private handleMessage(msgStr: string, sourceChannel: any) {
@@ -100,6 +176,35 @@ export class WebRTCRemoteAdapter implements IRemoteAdapter {
                     return;
                 }
                 this.markMessageAsSeen(msg.msgId);
+            }
+
+            // 2. Handle PEX Introductions (Signal Relay)
+            if (msg.type === 'relay_signal') {
+                if (msg.to === this.peerId) {
+                    Logger.info(`[WebRTC] Received relayed signal from ${msg.from}`);
+                    this.onSignalRelay?.(msg.from!, msg.signal);
+                } else {
+                    // Forward if TTL allows
+                    const ttl = msg.ttl ?? this.defaultTTL;
+                    if (ttl > 1) {
+                        const forwardMsg = { ...msg, ttl: ttl - 1 };
+                        const targetChannel = this.channelsByUserId.get(msg.to!);
+                        if (targetChannel) {
+                            targetChannel.send(JSON.stringify(forwardMsg));
+                        } else {
+                            this.broadcast(forwardMsg, sourceChannel);
+                        }
+                    }
+                }
+                return;
+            }
+
+            // 3. Handle Peer List exchange
+            if (msg.type === 'peer_list') {
+                if (this.enablePEX && msg.peerList) {
+                    this.emit('pex:peers', { from: msg.senderId, peers: msg.peerList });
+                }
+                return;
             }
 
             if (msg.type === 'push') {
