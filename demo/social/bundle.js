@@ -90575,6 +90575,29 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
         }
+        /**
+         * Helper to execute S3 operations with exponential backoff.
+         */
+        async withRetry(operation2, label, maxRetries = 3) {
+          let lastError;
+          for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+              return await operation2();
+            } catch (e2) {
+              lastError = e2;
+              const statusCode = e2.$metadata?.httpStatusCode;
+              if (statusCode === 403 || statusCode === 404 || statusCode === 304 || e2.name === "NoSuchKey") {
+                throw e2;
+              }
+              if (attempt < maxRetries) {
+                const delay = Math.min(1e3 * Math.pow(2, attempt) + Math.random() * 1e3, 1e4);
+                Logger.warn(`[S3] ${label} failed (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${Math.round(delay)}ms... Error: ${e2.message}`);
+                await new Promise((resolve2) => setTimeout(resolve2, delay));
+              }
+            }
+          }
+          throw lastError;
+        }
         async uploadFile(path2, data, providedHash, customMetadata) {
           const key = this.getKey(path2);
           Logger.debug(`[S3] Uploading to key: ${key}`);
@@ -90590,7 +90613,7 @@ ${toHex(hashedRequest)}`;
               hash = crypto2.createHash("sha256").update(data).digest("hex");
             }
           }
-          const response = await this.client.send(new PutObjectCommand({
+          const response = await this.withRetry(() => this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
             Body: data,
@@ -90598,53 +90621,44 @@ ${toHex(hashedRequest)}`;
               "hash": hash,
               ...customMetadata || {}
             }
-          }));
+          })), `Upload ${key}`);
           return response.ETag || null;
         }
         async downloadFile(path2, ifNoneMatch, timeout = 15e3) {
           const key = this.getKey(path2);
-          Logger.debug(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"}, timeout: ${timeout}ms)`);
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), timeout);
-          try {
-            Logger.debug(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
-            const command = new GetObjectCommand({
-              Bucket: this.bucket,
-              Key: key,
-              IfNoneMatch: ifNoneMatch && ifNoneMatch !== "" ? ifNoneMatch : void 0
-            });
-            Logger.debug(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
-            const response = await this.client.send(command, { abortSignal: controller.signal });
-            clearTimeout(timeoutId);
-            Logger.debug(`[S3] Step 4.3: Response received for ${key}.`);
-            if (!response.Body) {
-              return { data: null, etag: response.ETag || null };
+          Logger.debug(`[S3] Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"}, timeout: ${timeout}ms)`);
+          return this.withRetry(async () => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            try {
+              const command = new GetObjectCommand({
+                Bucket: this.bucket,
+                Key: key,
+                IfNoneMatch: ifNoneMatch && ifNoneMatch !== "" ? ifNoneMatch : void 0
+              });
+              const response = await this.client.send(command, { abortSignal: controller.signal });
+              clearTimeout(timeoutId);
+              if (!response.Body) {
+                return { data: null, etag: response.ETag || null };
+              }
+              const data = await response.Body.transformToByteArray();
+              return { data, etag: response.ETag || null };
+            } catch (e2) {
+              clearTimeout(timeoutId);
+              const statusCode = e2.$metadata?.httpStatusCode;
+              if (statusCode === 304) {
+                return { data: null, etag: ifNoneMatch || null, notModified: true };
+              }
+              if (e2.name === "AbortError") {
+                Logger.error(`[S3] Download timed out for ${key}`);
+                throw new Error(`S3 Download Timeout for ${key}`);
+              }
+              if (statusCode === 403 || e2.name === "NoSuchKey" || statusCode === 404) {
+                return null;
+              }
+              throw e2;
             }
-            Logger.debug(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
-            const data = await response.Body.transformToByteArray();
-            Logger.debug(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
-            return { data, etag: response.ETag || null };
-          } catch (e2) {
-            clearTimeout(timeoutId);
-            const statusCode = e2.$metadata?.httpStatusCode;
-            if (statusCode === 304) {
-              Logger.debug(`[S3] File ${key} not modified (304).`);
-              return { data: null, etag: ifNoneMatch || null, notModified: true };
-            }
-            if (e2.name === "AbortError") {
-              console.error(`[S3] Step 4.6: Request timed out for ${key}`);
-              throw new Error(`S3 Download Timeout for ${key}`);
-            }
-            Logger.debug(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e2.name} - ${e2.message}`);
-            if (statusCode === 403) {
-              Logger.debug(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist yet.`);
-              return null;
-            }
-            if (e2.name === "NoSuchKey" || statusCode === 404) {
-              return null;
-            }
-            throw e2;
-          }
+          }, `Download ${key}`);
         }
         async getFileHash(path2) {
           if (!this.supportsMetadataHash) {
@@ -90652,10 +90666,10 @@ ${toHex(hashedRequest)}`;
           }
           const key = this.getKey(path2);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
-            }));
+            })), `GetHash ${key}`);
             const hash = response.Metadata?.hash || null;
             if (!hash) {
               Logger.info(`[S3] Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
@@ -90674,10 +90688,10 @@ ${toHex(hashedRequest)}`;
         async getFileEtag(path2) {
           const key = this.getKey(path2);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
-            }));
+            })), `GetEtag ${key}`);
             return response.ETag || null;
           } catch (e2) {
             const statusCode = e2.$metadata?.httpStatusCode;
@@ -90690,10 +90704,10 @@ ${toHex(hashedRequest)}`;
         async getFileMetadata(path2, key) {
           const fullKey = this.getKey(path2);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: fullKey
-            }));
+            })), `GetMetadata ${fullKey}`);
             return response.Metadata?.[key] || null;
           } catch (e2) {
             return null;
@@ -90703,12 +90717,12 @@ ${toHex(hashedRequest)}`;
           const key = this.getKey(path2.endsWith("/") ? `${path2}.probe` : `${path2}/.probe`);
           try {
             const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
-            await this.client.send(new PutObjectCommand({
+            await this.withRetry(() => this.client.send(new PutObjectCommand({
               Bucket: this.bucket,
               Key: key,
               Body: sentinel,
               ContentType: "application/json"
-            }));
+            })), `WriteProbe ${key}`);
             return true;
           } catch (e2) {
             return false;
@@ -90730,7 +90744,7 @@ ${toHex(hashedRequest)}`;
                 Prefix: fullPrefix,
                 ContinuationToken: continuationToken
               });
-              const response = await this.client.send(command);
+              const response = await this.withRetry(() => this.client.send(command), `ListObjects ${fullPrefix}`);
               if (response.Contents) {
                 for (const item of response.Contents) {
                   if (item.Key) {
@@ -90756,7 +90770,7 @@ ${toHex(hashedRequest)}`;
               Bucket: this.bucket,
               Key: key
             });
-            await this.client.send(command);
+            await this.withRetry(() => this.client.send(command), `Delete ${key}`);
             Logger.debug(`[S3] Deleted file: ${key}`);
           } catch (e2) {
             Logger.warn(`[S3] Failed to delete file ${key}: ${e2.message}`);
@@ -91860,6 +91874,15 @@ ${toHex(hashedRequest)}`;
         static {
           this.VERSION = "3.1.0";
         }
+        /**
+         * Static factory method to create and initialize a SovereignS3nc instance.
+         * This eliminates the need to call init() manually.
+         */
+        static async create(config, remote, remoteFactory, keys, storage) {
+          const instance = new _SovereignS3nc(config, remote, remoteFactory, keys, storage);
+          await instance.init();
+          return instance;
+        }
         initializeS3Remotes(s3, privateUserId) {
           this.publicRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
@@ -92029,7 +92052,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the global blacklist and updates local config.
          */
         async syncBlacklist() {
-          if (!this.globalRemote || !this.config.s3) return;
+          if (!this.globalRemote) return;
           const path2 = "blacklist.json";
           try {
             const result = await this.globalRemote.downloadFile(path2);
@@ -92045,7 +92068,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the admin's public key for E2EE reports.
          */
         async syncAdminKey() {
-          if (!this.adminRemote || !this.config.s3) return;
+          if (!this.adminRemote) return;
           try {
             const result = await this.adminRemote.downloadFile("public_key.json");
             if (result && result.data) {
@@ -92167,10 +92190,10 @@ ${toHex(hashedRequest)}`;
                 Logger.info("[Keys] No remote sentinel found. Proceeding (may be a new account).");
               }
             } catch (e2) {
-              if (e2.message === "Network Error" || e2.message.includes("offline")) {
-                Logger.warn("[Keys] Remote unreachable for sentinel check, continuing.");
+              if (e2.message === "Network Error" || e2.message.includes("offline") || e2.message.includes("Timeout") || e2.name === "AbortError") {
+                Logger.warn(`[Keys] Remote unreachable for sentinel check (${e2.message}), continuing.`);
               } else {
-                Logger.error("[Keys] Remote sentinel verification failed. Incorrect password?");
+                Logger.error(`[Keys] Remote sentinel verification failed: ${e2.message}`);
                 throw new Error("Incorrect password. Access denied.");
               }
             }
@@ -108644,6 +108667,7 @@ ${toHex(hashedRequest)}`;
     "src/utils/MediaUtils.ts"() {
       "use strict";
       import_polyfills676 = __toESM(require_polyfills());
+      init_Logger();
       MediaUtils = class {
         /**
          * Compresses an image data URL to stay under a target size in bytes.
@@ -108655,7 +108679,7 @@ ${toHex(hashedRequest)}`;
               const Jimp = (await Promise.resolve().then(() => __toESM(require_jimp()))).default;
               const matches = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
               if (!matches) {
-                console.log("MediaUtils: No regex match");
+                Logger.warn("[MediaUtils] No regex match for data URL");
                 return dataUrl;
               }
               const buffer = Buffer.from(matches[2], "base64");
@@ -108687,7 +108711,7 @@ ${toHex(hashedRequest)}`;
               }
               return `data:image/jpeg;base64,${resultBuffer.toString("base64")}`;
             } catch (err) {
-              console.error("MediaUtils: Node.js image compression failed:", err);
+              Logger.error("[MediaUtils] Node.js image compression failed:", err);
               return dataUrl;
             }
           }
@@ -115215,14 +115239,15 @@ ${toHex(hashedRequest)}`;
             localStorage.setItem("sov_use_workers", e2.target.checked.toString());
           } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "useWebWorkers" }, "Use Web Workers (Performance)")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center mobile-hide" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms", unreadCounts.rooms > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-3 mobile-hide", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center mobile-hide" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms", unreadCounts.rooms > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-2 mobile-hide", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
           "button",
           {
-            className: `btn btn-link px-2 me-2 ${isConnected ? "text-success" : "text-danger"}`,
-            onClick: toggleConnection
+            className: `btn btn-link px-2 me-1 ${isConnected ? "text-success" : "text-danger"}`,
+            onClick: toggleConnection,
+            title: isConnected ? "Connected" : "Disconnected"
           },
           /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
-        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "mobile-hide d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2", onClick: sync, disabled: syncing || config.syncMode === "offline" }, syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "bottom-nav d-md-none" }, /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
+        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none", onClick: sync, disabled: syncing || config.syncMode === "offline", title: "Sync Now" }, /* @__PURE__ */ import_react.default.createElement("i", { className: `bi bi-arrow-repeat ${syncing ? "spin" : ""}` })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 mobile-hide", onClick: sync, disabled: syncing || config.syncMode === "offline" }, syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2 mobile-hide", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "bottom-nav d-md-none" }, /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("feed");
         } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-house" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Home"), unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "friends" ? "active" : ""}`, onClick: (e2) => {
@@ -115308,7 +115333,7 @@ ${toHex(hashedRequest)}`;
           await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password."))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+        } }, "Save Changes")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Account Actions"), config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-2" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
           const uid = await new Promise((resolve2) => showPrompt("Enter User ID to blacklist:", resolve2));
           if (uid && moderation) {
             try {
@@ -115449,7 +115474,32 @@ ${toHex(hashedRequest)}`;
       };
       var ConflictResolutionModal = ({ conflict, onResolve }) => {
         if (!conflict) return null;
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync. How would you like to resolve it?"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-light border small mb-0" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "File Path:"), /* @__PURE__ */ import_react.default.createElement("br", null), /* @__PURE__ */ import_react.default.createElement("code", null, conflict.path))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip")))));
+        const formatSize = (bytes) => {
+          if (bytes === 0) return "0 B";
+          const k2 = 1024;
+          const sizes = ["B", "KB", "MB"];
+          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
+          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
+        };
+        const isJson = (data) => {
+          try {
+            const str = new TextDecoder().decode(data);
+            JSON.parse(str);
+            return true;
+          } catch (e2) {
+            return false;
+          }
+        };
+        const getPreview = (data) => {
+          try {
+            const str = new TextDecoder().decode(data);
+            if (str.length > 200) return str.substring(0, 200) + "...";
+            return str;
+          } catch (e2) {
+            return "Binary Data";
+          }
+        };
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync for the following file:"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-light border small mb-4" }, /* @__PURE__ */ import_react.default.createElement("code", null, conflict.path)), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-primary mb-3" }, "Local Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.localData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.localData)))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-success mb-3" }, "Remote Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.remoteData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.remoteData)))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip for Now")))));
       };
       var MemberManagementModal = ({ show, onClose, group: group4, profileCache, onUpdateRole, onRemove, onAdd, onLeave, currentUserId }) => {
         if (!show || !group4) return null;

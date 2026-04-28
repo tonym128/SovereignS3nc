@@ -1442,23 +1442,30 @@ const App = () => {
                 </div>
                 <div className="d-flex align-items-center">
                     {config.syncMode === 'offline' && (
-                        <button className="btn btn-sm btn-primary rounded-pill me-3 mobile-hide" onClick={handleConnectRemote}>
+                        <button className="btn btn-sm btn-primary rounded-pill me-2 mobile-hide" onClick={handleConnectRemote}>
                             <i className="bi bi-cloud-upload me-1"></i> Connect Remote
                         </button>
                     )}
                     <button 
-                        className={`btn btn-link px-2 me-2 ${isConnected ? 'text-success' : 'text-danger'}`} 
+                        className={`btn btn-link px-2 me-1 ${isConnected ? 'text-success' : 'text-danger'}`} 
                         onClick={toggleConnection}
+                        title={isConnected ? 'Connected' : 'Disconnected'}
                     >
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
                     </button>
-                    <div className="mobile-hide d-flex align-items-center">
+                    
+                    <div className="d-flex align-items-center">
                         <UserAvatar userId={config.userId} size={32} />
                     </div>
-                    <button className="btn btn-sm btn-outline-secondary ms-2" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
+
+                    <button className="btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none" onClick={sync} disabled={syncing || config.syncMode === 'offline'} title="Sync Now">
+                        <i className={`bi bi-arrow-repeat ${syncing ? 'spin' : ''}`}></i>
+                    </button>
+
+                    <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
                         {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
-                    <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
+                    <button className="btn btn-sm btn-outline-danger ms-2 mobile-hide" onClick={logout}>Logout</button>
                 </div>
             </nav>
 
@@ -1902,6 +1909,18 @@ const App = () => {
                                 <div className="mt-3 small text-muted">
                                     <b>Note:</b> Changing your password will migrate your private data on the remote storage to a new path derived from your new password.
                                 </div>
+                            </div>
+
+                            <div className="card p-4 shadow-sm border-0 mt-4 d-md-none">
+                                <h4 className="mb-4 fw-bold">Account Actions</h4>
+                                {config.syncMode === 'offline' && (
+                                    <button className="btn btn-primary w-100 py-2 fw-bold mb-3" onClick={handleConnectRemote}>
+                                        <i className="bi bi-cloud-upload me-2"></i> Connect Remote
+                                    </button>
+                                )}
+                                <button className="btn btn-outline-danger w-100 py-2 fw-bold" onClick={logout}>
+                                    <i className="bi bi-box-arrow-right me-2"></i> Logout
+                                </button>
                             </div>
                         </div>
                     )}

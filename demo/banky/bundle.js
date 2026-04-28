@@ -90518,6 +90518,29 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
         }
+        /**
+         * Helper to execute S3 operations with exponential backoff.
+         */
+        async withRetry(operation2, label, maxRetries = 3) {
+          let lastError;
+          for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+              return await operation2();
+            } catch (e2) {
+              lastError = e2;
+              const statusCode = e2.$metadata?.httpStatusCode;
+              if (statusCode === 403 || statusCode === 404 || statusCode === 304 || e2.name === "NoSuchKey") {
+                throw e2;
+              }
+              if (attempt < maxRetries) {
+                const delay = Math.min(1e3 * Math.pow(2, attempt) + Math.random() * 1e3, 1e4);
+                Logger.warn(`[S3] ${label} failed (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${Math.round(delay)}ms... Error: ${e2.message}`);
+                await new Promise((resolve2) => setTimeout(resolve2, delay));
+              }
+            }
+          }
+          throw lastError;
+        }
         async uploadFile(path3, data, providedHash, customMetadata) {
           const key = this.getKey(path3);
           Logger.debug(`[S3] Uploading to key: ${key}`);
@@ -90533,7 +90556,7 @@ ${toHex(hashedRequest)}`;
               hash = crypto2.createHash("sha256").update(data).digest("hex");
             }
           }
-          const response = await this.client.send(new PutObjectCommand({
+          const response = await this.withRetry(() => this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
             Body: data,
@@ -90541,53 +90564,44 @@ ${toHex(hashedRequest)}`;
               "hash": hash,
               ...customMetadata || {}
             }
-          }));
+          })), `Upload ${key}`);
           return response.ETag || null;
         }
         async downloadFile(path3, ifNoneMatch, timeout = 15e3) {
           const key = this.getKey(path3);
-          Logger.debug(`[S3] Step 4.1: Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"}, timeout: ${timeout}ms)`);
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), timeout);
-          try {
-            Logger.debug(`[S3] Step 4.2: Creating GetObjectCommand for ${key}...`);
-            const command = new GetObjectCommand({
-              Bucket: this.bucket,
-              Key: key,
-              IfNoneMatch: ifNoneMatch && ifNoneMatch !== "" ? ifNoneMatch : void 0
-            });
-            Logger.debug(`[S3] Step 4.2.1: Sending command to client for ${key}...`);
-            const response = await this.client.send(command, { abortSignal: controller.signal });
-            clearTimeout(timeoutId);
-            Logger.debug(`[S3] Step 4.3: Response received for ${key}.`);
-            if (!response.Body) {
-              return { data: null, etag: response.ETag || null };
+          Logger.debug(`[S3] Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"}, timeout: ${timeout}ms)`);
+          return this.withRetry(async () => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            try {
+              const command = new GetObjectCommand({
+                Bucket: this.bucket,
+                Key: key,
+                IfNoneMatch: ifNoneMatch && ifNoneMatch !== "" ? ifNoneMatch : void 0
+              });
+              const response = await this.client.send(command, { abortSignal: controller.signal });
+              clearTimeout(timeoutId);
+              if (!response.Body) {
+                return { data: null, etag: response.ETag || null };
+              }
+              const data = await response.Body.transformToByteArray();
+              return { data, etag: response.ETag || null };
+            } catch (e2) {
+              clearTimeout(timeoutId);
+              const statusCode = e2.$metadata?.httpStatusCode;
+              if (statusCode === 304) {
+                return { data: null, etag: ifNoneMatch || null, notModified: true };
+              }
+              if (e2.name === "AbortError") {
+                Logger.error(`[S3] Download timed out for ${key}`);
+                throw new Error(`S3 Download Timeout for ${key}`);
+              }
+              if (statusCode === 403 || e2.name === "NoSuchKey" || statusCode === 404) {
+                return null;
+              }
+              throw e2;
             }
-            Logger.debug(`[S3] Step 4.4: Transforming body to byte array for ${key}...`);
-            const data = await response.Body.transformToByteArray();
-            Logger.debug(`[S3] Step 4.5: Download complete for ${key}. Size: ${data.length} bytes`);
-            return { data, etag: response.ETag || null };
-          } catch (e2) {
-            clearTimeout(timeoutId);
-            const statusCode = e2.$metadata?.httpStatusCode;
-            if (statusCode === 304) {
-              Logger.debug(`[S3] File ${key} not modified (304).`);
-              return { data: null, etag: ifNoneMatch || null, notModified: true };
-            }
-            if (e2.name === "AbortError") {
-              console.error(`[S3] Step 4.6: Request timed out for ${key}`);
-              throw new Error(`S3 Download Timeout for ${key}`);
-            }
-            Logger.debug(`[S3] Step 4.6: Download catch block for ${key}. Error: ${e2.name} - ${e2.message}`);
-            if (statusCode === 403) {
-              Logger.debug(`[S3] Access Denied (403) for ${key}. This usually means the file doesn't exist yet.`);
-              return null;
-            }
-            if (e2.name === "NoSuchKey" || statusCode === 404) {
-              return null;
-            }
-            throw e2;
-          }
+          }, `Download ${key}`);
         }
         async getFileHash(path3) {
           if (!this.supportsMetadataHash) {
@@ -90595,10 +90609,10 @@ ${toHex(hashedRequest)}`;
           }
           const key = this.getKey(path3);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
-            }));
+            })), `GetHash ${key}`);
             const hash = response.Metadata?.hash || null;
             if (!hash) {
               Logger.info(`[S3] Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
@@ -90617,10 +90631,10 @@ ${toHex(hashedRequest)}`;
         async getFileEtag(path3) {
           const key = this.getKey(path3);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: key
-            }));
+            })), `GetEtag ${key}`);
             return response.ETag || null;
           } catch (e2) {
             const statusCode = e2.$metadata?.httpStatusCode;
@@ -90633,10 +90647,10 @@ ${toHex(hashedRequest)}`;
         async getFileMetadata(path3, key) {
           const fullKey = this.getKey(path3);
           try {
-            const response = await this.client.send(new HeadObjectCommand({
+            const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
               Key: fullKey
-            }));
+            })), `GetMetadata ${fullKey}`);
             return response.Metadata?.[key] || null;
           } catch (e2) {
             return null;
@@ -90646,12 +90660,12 @@ ${toHex(hashedRequest)}`;
           const key = this.getKey(path3.endsWith("/") ? `${path3}.probe` : `${path3}/.probe`);
           try {
             const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
-            await this.client.send(new PutObjectCommand({
+            await this.withRetry(() => this.client.send(new PutObjectCommand({
               Bucket: this.bucket,
               Key: key,
               Body: sentinel,
               ContentType: "application/json"
-            }));
+            })), `WriteProbe ${key}`);
             return true;
           } catch (e2) {
             return false;
@@ -90673,7 +90687,7 @@ ${toHex(hashedRequest)}`;
                 Prefix: fullPrefix,
                 ContinuationToken: continuationToken
               });
-              const response = await this.client.send(command);
+              const response = await this.withRetry(() => this.client.send(command), `ListObjects ${fullPrefix}`);
               if (response.Contents) {
                 for (const item of response.Contents) {
                   if (item.Key) {
@@ -90699,7 +90713,7 @@ ${toHex(hashedRequest)}`;
               Bucket: this.bucket,
               Key: key
             });
-            await this.client.send(command);
+            await this.withRetry(() => this.client.send(command), `Delete ${key}`);
             Logger.debug(`[S3] Deleted file: ${key}`);
           } catch (e2) {
             Logger.warn(`[S3] Failed to delete file ${key}: ${e2.message}`);
@@ -91803,6 +91817,15 @@ ${toHex(hashedRequest)}`;
         static {
           this.VERSION = "3.1.0";
         }
+        /**
+         * Static factory method to create and initialize a SovereignS3nc instance.
+         * This eliminates the need to call init() manually.
+         */
+        static async create(config, remote, remoteFactory, keys, storage) {
+          const instance = new _SovereignS3nc(config, remote, remoteFactory, keys, storage);
+          await instance.init();
+          return instance;
+        }
         initializeS3Remotes(s3, privateUserId) {
           this.publicRemote = new S3RemoteAdapter(s3, {
             appId: this.config.paths.appId,
@@ -91972,7 +91995,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the global blacklist and updates local config.
          */
         async syncBlacklist() {
-          if (!this.globalRemote || !this.config.s3) return;
+          if (!this.globalRemote) return;
           const path3 = "blacklist.json";
           try {
             const result = await this.globalRemote.downloadFile(path3);
@@ -91988,7 +92011,7 @@ ${toHex(hashedRequest)}`;
          * Downloads the admin's public key for E2EE reports.
          */
         async syncAdminKey() {
-          if (!this.adminRemote || !this.config.s3) return;
+          if (!this.adminRemote) return;
           try {
             const result = await this.adminRemote.downloadFile("public_key.json");
             if (result && result.data) {
@@ -92110,10 +92133,10 @@ ${toHex(hashedRequest)}`;
                 Logger.info("[Keys] No remote sentinel found. Proceeding (may be a new account).");
               }
             } catch (e2) {
-              if (e2.message === "Network Error" || e2.message.includes("offline")) {
-                Logger.warn("[Keys] Remote unreachable for sentinel check, continuing.");
+              if (e2.message === "Network Error" || e2.message.includes("offline") || e2.message.includes("Timeout") || e2.name === "AbortError") {
+                Logger.warn(`[Keys] Remote unreachable for sentinel check (${e2.message}), continuing.`);
               } else {
-                Logger.error("[Keys] Remote sentinel verification failed. Incorrect password?");
+                Logger.error(`[Keys] Remote sentinel verification failed: ${e2.message}`);
                 throw new Error("Incorrect password. Access denied.");
               }
             }
@@ -108045,6 +108068,7 @@ ${toHex(hashedRequest)}`;
     "src/utils/MediaUtils.ts"() {
       "use strict";
       import_polyfills674 = __toESM(require_polyfills());
+      init_Logger();
       MediaUtils = class {
         /**
          * Compresses an image data URL to stay under a target size in bytes.
@@ -108056,7 +108080,7 @@ ${toHex(hashedRequest)}`;
               const Jimp = (await Promise.resolve().then(() => __toESM(require_jimp()))).default;
               const matches = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
               if (!matches) {
-                console.log("MediaUtils: No regex match");
+                Logger.warn("[MediaUtils] No regex match for data URL");
                 return dataUrl;
               }
               const buffer = Buffer.from(matches[2], "base64");
@@ -108088,7 +108112,7 @@ ${toHex(hashedRequest)}`;
               }
               return `data:image/jpeg;base64,${resultBuffer.toString("base64")}`;
             } catch (err) {
-              console.error("MediaUtils: Node.js image compression failed:", err);
+              Logger.error("[MediaUtils] Node.js image compression failed:", err);
               return dataUrl;
             }
           }
@@ -108959,6 +108983,7 @@ ${toHex(hashedRequest)}`;
           password: ""
         });
         const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
+        const [conflict, setConflict] = (0, import_react.useState)(null);
         const [sov, setSov] = (0, import_react.useState)(null);
         const [banky, setBanky] = (0, import_react.useState)(null);
         const [accounts, setAccounts] = (0, import_react.useState)([]);
@@ -109005,13 +109030,15 @@ ${toHex(hashedRequest)}`;
           e2.preventDefault();
           if (!config.paths.userId || !config.password) return;
           try {
-            const instance = new SovereignS3nc({
+            const instance = await SovereignS3nc.create({
               ...config,
               offline: !config.s3,
               useWorker: true,
               workerUrl: "sync-worker.js"
             });
-            await instance.init();
+            instance.on("conflict", (data) => {
+              setConflict(data);
+            });
             setSov(instance);
             const bm2 = new BankyManager(instance);
             setBanky(bm2);
@@ -109411,7 +109438,38 @@ ${toHex(hashedRequest)}`;
         } }, "Unfollow"))), following.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-4 text-muted" }, "You are not following anyone yet."))), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 border-0 shadow-sm" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Discover Friends"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, registry.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-search fs-4" })), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, u2.userId), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted" }, "Global Registry"))), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
           await sov?.follow(u2.userId);
           await sync();
-        } }, "Follow"))), registry.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-4 text-muted" }, "No new users discovered.")))))), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }));
+        } }, "Follow"))), registry.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-4 text-muted" }, "No new users discovered.")))))), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog }), conflict && /* @__PURE__ */ import_react.default.createElement(
+          ConflictResolutionModal,
+          {
+            conflict,
+            onResolve: (choice) => {
+              if (conflict) {
+                conflict.resolve(choice);
+                setConflict(null);
+              }
+            }
+          }
+        ));
+      };
+      var ConflictResolutionModal = ({ conflict, onResolve }) => {
+        if (!conflict) return null;
+        const formatSize = (bytes) => {
+          if (bytes === 0) return "0 B";
+          const k2 = 1024;
+          const sizes = ["B", "KB", "MB"];
+          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
+          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
+        };
+        const getPreview = (data) => {
+          try {
+            const str = new TextDecoder().decode(data);
+            if (str.length > 200) return str.substring(0, 200) + "...";
+            return str;
+          } catch (e2) {
+            return "Binary Data";
+          }
+        };
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync for the following file:"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-light border small mb-4" }, /* @__PURE__ */ import_react.default.createElement("code", null, conflict.path)), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-primary mb-3" }, "Local Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.localData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.localData)))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-success mb-3" }, "Remote Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.remoteData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.remoteData)))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip for Now")))));
       };
       var Dialog = ({ dialog, setDialog }) => {
         const [inputValue, setInputValue] = (0, import_react.useState)("");
