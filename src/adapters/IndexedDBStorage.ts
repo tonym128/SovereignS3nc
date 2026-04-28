@@ -16,8 +16,8 @@ export class IndexedDBStorage implements IStorage {
             try {
                 const request = indexedDB.open(this.dbName, 1);
 
-                request.onerror = (event) => {
-                    console.error('[IDB] Error opening database:', request.error);
+                request.onerror = () => {
+                    Logger.error('[IDB] Error opening database:', request.error);
                     reject(request.error);
                 };
 
