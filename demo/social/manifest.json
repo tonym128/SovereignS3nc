@@ -1,6 +1,8 @@
 {
   "short_name": "Sovereign Social",
   "name": "Sovereign Social PWA",
+  "description": "A decentralized, end-to-end encrypted social network powered by S3 and WebRTC.",
+  "categories": ["social", "productivity", "utilities"],
   "icons": [
     {
       "src": "icon-192.png",

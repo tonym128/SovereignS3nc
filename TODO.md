@@ -59,6 +59,8 @@
     - [x] **QR Pairing UI**: Integrated QR generation and scanning into the Social Demo for 100% serverless, off-grid pairing.
     - [x] **Web Bluetooth (Central)**: Added browser-side BLE scanning for pairing with headless/native peripherals.
     - [x] **Peer Exchange (PEX)**: Implemented automated in-band signaling and peer discovery through existing connections.
+    - [x] **PWA Audit & Fix**: Comprehensive caching for `sync-worker.js`, CDN assets, and SQL.js WASM; added iOS meta tags and "Offline" UI indicators.
+    - [ ] Add `screenshots` array to `manifest.json` (requires 1280x720 and 540x720 images).
     - [ ] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
 
 ## 🧪 Testing & Validation

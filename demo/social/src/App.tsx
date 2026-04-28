@@ -1443,6 +1443,9 @@ const App = () => {
                     )}
                 </div>
                 <div className="d-flex align-items-center">
+                    {!isConnected && (
+                        <span className="badge bg-secondary rounded-pill me-2">Offline Mode</span>
+                    )}
                     {config.syncMode === 'offline' && (
                         <button className="btn btn-sm btn-primary rounded-pill me-2 mobile-hide" onClick={handleConnectRemote}>
                             <i className="bi bi-cloud-upload me-1"></i> Connect Remote
