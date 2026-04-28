@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.byteLength = byteLength;
       exports2.toByteArray = toByteArray;
       exports2.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,7 +229,7 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var process2 = module2.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -2055,7 +2055,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -3028,7 +3028,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (false) {
         module2.exports = null;
       } else {
@@ -3041,7 +3041,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3301,7 +3301,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (false) {
         module2.exports = null;
       } else {
@@ -3314,7 +3314,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3360,7 +3360,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React = require_react(), Internals = {
+        var React2 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3378,7 +3378,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -3559,7 +3559,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module2.exports = null;
@@ -3573,7 +3573,7 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -4915,7 +4915,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React2.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20547,14 +20547,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React2 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23342,7 +23342,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React.version;
+          var isomorphicReactPackageVersion = React2.version;
           if ("19.2.4" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.4\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -23473,7 +23473,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module2.exports = null;
@@ -23486,7 +23486,7 @@
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -23546,7 +23546,7 @@
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -23584,7 +23584,7 @@
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module2.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -23618,7 +23618,7 @@
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -23641,22 +23641,22 @@
       var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
         return value !== value;
       };
-      function EventEmitter3() {
-        EventEmitter3.init.call(this);
+      function EventEmitter4() {
+        EventEmitter4.init.call(this);
       }
-      module2.exports = EventEmitter3;
+      module2.exports = EventEmitter4;
       module2.exports.once = once2;
-      EventEmitter3.EventEmitter = EventEmitter3;
-      EventEmitter3.prototype._events = void 0;
-      EventEmitter3.prototype._eventsCount = 0;
-      EventEmitter3.prototype._maxListeners = void 0;
+      EventEmitter4.EventEmitter = EventEmitter4;
+      EventEmitter4.prototype._events = void 0;
+      EventEmitter4.prototype._eventsCount = 0;
+      EventEmitter4.prototype._maxListeners = void 0;
       var defaultMaxListeners = 10;
       function checkListener(listener) {
         if (typeof listener !== "function") {
           throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
         }
       }
-      Object.defineProperty(EventEmitter3, "defaultMaxListeners", {
+      Object.defineProperty(EventEmitter4, "defaultMaxListeners", {
         enumerable: true,
         get: function() {
           return defaultMaxListeners;
@@ -23668,14 +23668,14 @@
           defaultMaxListeners = arg;
         }
       });
-      EventEmitter3.init = function() {
+      EventEmitter4.init = function() {
         if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
           this._events = /* @__PURE__ */ Object.create(null);
           this._eventsCount = 0;
         }
         this._maxListeners = this._maxListeners || void 0;
       };
-      EventEmitter3.prototype.setMaxListeners = function setMaxListeners(n2) {
+      EventEmitter4.prototype.setMaxListeners = function setMaxListeners(n2) {
         if (typeof n2 !== "number" || n2 < 0 || NumberIsNaN(n2)) {
           throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n2 + ".");
         }
@@ -23684,13 +23684,13 @@
       };
       function _getMaxListeners(that) {
         if (that._maxListeners === void 0)
-          return EventEmitter3.defaultMaxListeners;
+          return EventEmitter4.defaultMaxListeners;
         return that._maxListeners;
       }
-      EventEmitter3.prototype.getMaxListeners = function getMaxListeners() {
+      EventEmitter4.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter3.prototype.emit = function emit2(type) {
+      EventEmitter4.prototype.emit = function emit2(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++) args.push(arguments[i2]);
         var doError = type === "error";
@@ -23767,11 +23767,11 @@
         }
         return target;
       }
-      EventEmitter3.prototype.addListener = function addListener(type, listener) {
+      EventEmitter4.prototype.addListener = function addListener(type, listener) {
         return _addListener(this, type, listener, false);
       };
-      EventEmitter3.prototype.on = EventEmitter3.prototype.addListener;
-      EventEmitter3.prototype.prependListener = function prependListener(type, listener) {
+      EventEmitter4.prototype.on = EventEmitter4.prototype.addListener;
+      EventEmitter4.prototype.prependListener = function prependListener(type, listener) {
         return _addListener(this, type, listener, true);
       };
       function onceWrapper() {
@@ -23790,17 +23790,17 @@
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter3.prototype.once = function once3(type, listener) {
+      EventEmitter4.prototype.once = function once3(type, listener) {
         checkListener(listener);
         this.on(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter3.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+      EventEmitter4.prototype.prependOnceListener = function prependOnceListener(type, listener) {
         checkListener(listener);
         this.prependListener(type, _onceWrap(this, type, listener));
         return this;
       };
-      EventEmitter3.prototype.removeListener = function removeListener2(type, listener) {
+      EventEmitter4.prototype.removeListener = function removeListener2(type, listener) {
         var list, events, position, i2, originalListener;
         checkListener(listener);
         events = this._events;
@@ -23840,8 +23840,8 @@
         }
         return this;
       };
-      EventEmitter3.prototype.off = EventEmitter3.prototype.removeListener;
-      EventEmitter3.prototype.removeAllListeners = function removeAllListeners2(type) {
+      EventEmitter4.prototype.off = EventEmitter4.prototype.removeListener;
+      EventEmitter4.prototype.removeAllListeners = function removeAllListeners2(type) {
         var listeners2, events, i2;
         events = this._events;
         if (events === void 0)
@@ -23892,20 +23892,20 @@
           return unwrap ? [evlistener.listener || evlistener] : [evlistener];
         return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter3.prototype.listeners = function listeners2(type) {
+      EventEmitter4.prototype.listeners = function listeners2(type) {
         return _listeners(this, type, true);
       };
-      EventEmitter3.prototype.rawListeners = function rawListeners(type) {
+      EventEmitter4.prototype.rawListeners = function rawListeners(type) {
         return _listeners(this, type, false);
       };
-      EventEmitter3.listenerCount = function(emitter, type) {
+      EventEmitter4.listenerCount = function(emitter, type) {
         if (typeof emitter.listenerCount === "function") {
           return emitter.listenerCount(type);
         } else {
           return listenerCount2.call(emitter, type);
         }
       };
-      EventEmitter3.prototype.listenerCount = listenerCount2;
+      EventEmitter4.prototype.listenerCount = listenerCount2;
       function listenerCount2(type) {
         var events = this._events;
         if (events !== void 0) {
@@ -23918,7 +23918,7 @@
         }
         return 0;
       }
-      EventEmitter3.prototype.eventNames = function eventNames2() {
+      EventEmitter4.prototype.eventNames = function eventNames2() {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n2) {
@@ -23987,7 +23987,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = require_events().EventEmitter;
     }
   });
@@ -23996,7 +23996,7 @@
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -24052,7 +24052,7 @@
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module2.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -24064,7 +24064,7 @@
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Object;
     }
   });
@@ -24073,7 +24073,7 @@
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Error;
     }
   });
@@ -24082,7 +24082,7 @@
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = EvalError;
     }
   });
@@ -24091,7 +24091,7 @@
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = RangeError;
     }
   });
@@ -24100,7 +24100,7 @@
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = ReferenceError;
     }
   });
@@ -24109,7 +24109,7 @@
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = SyntaxError;
     }
   });
@@ -24118,7 +24118,7 @@
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = TypeError;
     }
   });
@@ -24127,7 +24127,7 @@
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = URIError;
     }
   });
@@ -24136,7 +24136,7 @@
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.abs;
     }
   });
@@ -24145,7 +24145,7 @@
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.floor;
     }
   });
@@ -24154,7 +24154,7 @@
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.max;
     }
   });
@@ -24163,7 +24163,7 @@
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.min;
     }
   });
@@ -24172,7 +24172,7 @@
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.pow;
     }
   });
@@ -24181,7 +24181,7 @@
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Math.round;
     }
   });
@@ -24190,7 +24190,7 @@
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -24201,7 +24201,7 @@
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module2.exports = function sign(number) {
         if ($isNaN(number) || number === 0) {
@@ -24216,7 +24216,7 @@
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -24225,7 +24225,7 @@
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -24242,7 +24242,7 @@
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -24259,7 +24259,7 @@
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module2.exports = function hasNativeSymbols() {
@@ -24284,7 +24284,7 @@
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -24293,7 +24293,7 @@
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module2.exports = $Object.getPrototypeOf || null;
     }
@@ -24303,7 +24303,7 @@
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -24380,7 +24380,7 @@
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module2.exports = Function.prototype.bind || implementation;
     }
@@ -24390,7 +24390,7 @@
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Function.prototype.call;
     }
   });
@@ -24399,7 +24399,7 @@
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Function.prototype.apply;
     }
   });
@@ -24408,7 +24408,7 @@
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -24417,7 +24417,7 @@
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -24430,7 +24430,7 @@
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -24448,7 +24448,7 @@
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -24480,7 +24480,7 @@
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -24501,7 +24501,7 @@
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -24513,7 +24513,7 @@
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -24845,7 +24845,7 @@
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -24869,7 +24869,7 @@
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -24897,7 +24897,7 @@
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -24967,7 +24967,7 @@
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -24987,7 +24987,7 @@
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -25001,7 +25001,7 @@
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -25034,7 +25034,7 @@
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -25153,7 +25153,7 @@
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -25214,7 +25214,7 @@
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = [
         "Float16Array",
         "Float32Array",
@@ -25236,7 +25236,7 @@
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module2.exports = function availableTypedArrays() {
@@ -25255,7 +25255,7 @@
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -25304,7 +25304,7 @@
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -25327,7 +25327,7 @@
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -25381,7 +25381,7 @@
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -25395,7 +25395,7 @@
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -25421,7 +25421,7 @@
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -25543,7 +25543,7 @@
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module2.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -25555,7 +25555,7 @@
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -25785,7 +25785,7 @@
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -25795,7 +25795,7 @@
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -26356,7 +26356,7 @@
   var require_buffer_list = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -26599,7 +26599,7 @@
   var require_destroy = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function destroy(err, cb2) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -26689,7 +26689,7 @@
   var require_errors_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -26799,7 +26799,7 @@
   var require_state = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -26824,7 +26824,7 @@
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -26863,7 +26863,7 @@
   var require_stream_writable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -27335,7 +27335,7 @@
   var require_stream_duplex = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -27428,7 +27428,7 @@
   // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -27487,7 +27487,7 @@
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer4.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -27726,7 +27726,7 @@
   var require_end_of_stream = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once2(callback) {
         var called = false;
@@ -27816,7 +27816,7 @@
   var require_async_iterator = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -27999,7 +27999,7 @@
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -28010,7 +28010,7 @@
   var require_stream_readable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -28744,7 +28744,7 @@
   var require_stream_transform = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -28846,7 +28846,7 @@
   var require_stream_passthrough = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -28864,7 +28864,7 @@
   var require_pipeline = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var eos;
       function once2(callback) {
         var called = false;
@@ -28949,7 +28949,7 @@
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -29028,7 +29028,7 @@
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -29117,7 +29117,7 @@
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -29246,7 +29246,7 @@
   // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/to-buffer/node_modules/isarray/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var toString = {}.toString;
       module2.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29258,7 +29258,7 @@
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -29276,7 +29276,7 @@
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -29341,7 +29341,7 @@
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -29360,7 +29360,7 @@
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module2.exports = { nextTick };
       } else {
@@ -29405,7 +29405,7 @@
   // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/isarray/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var toString = {}.toString;
       module2.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -29416,7 +29416,7 @@
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = require_events().EventEmitter;
     }
   });
@@ -29424,7 +29424,7 @@
   // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -29482,7 +29482,7 @@
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -29554,7 +29554,7 @@
   var require_BufferList = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -29633,7 +29633,7 @@
   var require_destroy2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb2) {
         var _this = this;
@@ -29703,7 +29703,7 @@
   var require_stream_writable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module2.exports = Writable;
       function CorkedRequest(state) {
@@ -30144,7 +30144,7 @@
   var require_stream_duplex2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -30222,7 +30222,7 @@
   var require_stream_readable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module2.exports = Readable;
       var isArray = require_isarray2();
@@ -30909,7 +30909,7 @@
   var require_stream_transform2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -31010,7 +31010,7 @@
   var require_stream_passthrough2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -31029,7 +31029,7 @@
   // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/readable-stream/readable-browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2 = module2.exports = require_stream_readable2();
       exports2.Stream = exports2;
       exports2.Readable = exports2;
@@ -31044,7 +31044,7 @@
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -31136,7 +31136,7 @@
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -31578,7 +31578,7 @@
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -31640,7 +31640,7 @@
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -31725,7 +31725,7 @@
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -31813,7 +31813,7 @@
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -31976,7 +31976,7 @@
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -32018,7 +32018,7 @@
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -32362,7 +32362,7 @@
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -32415,7 +32415,7 @@
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module2.exports[alg];
@@ -32437,7 +32437,7 @@
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -32533,7 +32533,7 @@
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -32563,7 +32563,7 @@
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -32604,7 +32604,7 @@
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module2.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -32616,7 +32616,7 @@
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -32832,7 +32832,7 @@
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = require_algorithms();
     }
   });
@@ -32841,7 +32841,7 @@
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module2.exports = function(iterations, keylen) {
@@ -32865,7 +32865,7 @@
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -32884,7 +32884,7 @@
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -32903,7 +32903,7 @@
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -33018,7 +33018,7 @@
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -33141,7 +33141,7 @@
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.pbkdf2 = require_async();
       exports2.pbkdf2Sync = require_sync_browser();
     }
@@ -33151,7 +33151,7 @@
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -33917,7 +33917,7 @@
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -33934,7 +33934,7 @@
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -34043,7 +34043,7 @@
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -34171,7 +34171,7 @@
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -34227,7 +34227,7 @@
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -34276,7 +34276,7 @@
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.utils = require_utils();
       exports2.Cipher = require_cipher();
       exports2.DES = require_des();
@@ -34288,7 +34288,7 @@
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -34344,7 +34344,7 @@
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -34357,7 +34357,7 @@
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -34372,7 +34372,7 @@
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports2.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -34391,7 +34391,7 @@
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -34426,7 +34426,7 @@
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -34452,7 +34452,7 @@
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -34494,7 +34494,7 @@
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -34514,7 +34514,7 @@
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -34536,7 +34536,7 @@
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer4 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -34768,7 +34768,7 @@
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -34791,7 +34791,7 @@
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
@@ -34966,7 +34966,7 @@
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var ZEROES = Buffer4.alloc(16, 0);
       function toArray(buf) {
@@ -35044,7 +35044,7 @@
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35147,7 +35147,7 @@
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -35175,7 +35175,7 @@
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -35218,7 +35218,7 @@
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -35315,7 +35315,7 @@
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer4 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -35425,7 +35425,7 @@
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -35443,7 +35443,7 @@
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2["des-ecb"] = {
         key: 8,
         iv: 0
@@ -35474,7 +35474,7 @@
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -35536,7 +35536,7 @@
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -38348,7 +38348,7 @@
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -41160,7 +41160,7 @@
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var r2;
       module2.exports = function rand(len) {
         if (!r2)
@@ -41218,7 +41218,7 @@
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var bn2 = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -41310,7 +41310,7 @@
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var randomBytes2 = require_browser2();
       module2.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -41447,7 +41447,7 @@
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -41594,7 +41594,7 @@
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -41634,7 +41634,7 @@
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -44527,7 +44527,7 @@
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes2 = require_browser2();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -44628,7 +44628,7 @@
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -47441,7 +47441,7 @@
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = exports2;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -47501,7 +47501,7 @@
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = exports2;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -47608,7 +47608,7 @@
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -47931,7 +47931,7 @@
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -48630,7 +48630,7 @@
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -48759,7 +48759,7 @@
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -49061,7 +49061,7 @@
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var curve = exports2;
       curve.base = require_base();
       curve.short = require_short();
@@ -49074,7 +49074,7 @@
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports2.inherits = inherits;
@@ -49320,7 +49320,7 @@
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -49400,7 +49400,7 @@
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -49447,7 +49447,7 @@
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49520,7 +49520,7 @@
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -49673,7 +49673,7 @@
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -49710,7 +49710,7 @@
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -50150,7 +50150,7 @@
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -50195,7 +50195,7 @@
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.sha1 = require__();
       exports2.sha224 = require__3();
       exports2.sha256 = require__2();
@@ -50208,7 +50208,7 @@
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -50650,7 +50650,7 @@
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -50691,7 +50691,7 @@
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var hash = exports2;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -50710,7 +50710,7 @@
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = {
         doubles: {
           step: 4,
@@ -51498,7 +51498,7 @@
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var curves = exports2;
       var hash = require_hash2();
       var curve = require_curve();
@@ -51675,7 +51675,7 @@
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -51770,7 +51770,7 @@
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -51865,7 +51865,7 @@
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -52021,7 +52021,7 @@
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -52229,7 +52229,7 @@
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -52304,7 +52304,7 @@
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -52355,7 +52355,7 @@
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -52444,7 +52444,7 @@
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var elliptic = exports2;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -52459,7 +52459,7 @@
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -55271,7 +55271,7 @@
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports2;
@@ -55325,7 +55325,7 @@
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -55426,7 +55426,7 @@
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer4 = require_buffer().Buffer;
@@ -55529,7 +55529,7 @@
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -56063,7 +56063,7 @@
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var base = exports2;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -56075,7 +56075,7 @@
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var constants = require_constants();
       exports2.tagClass = {
         0: "universal",
@@ -56122,7 +56122,7 @@
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var constants = exports2;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -56141,7 +56141,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -56405,7 +56405,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -56451,7 +56451,7 @@
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var decoders = exports2;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -56461,7 +56461,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -56693,7 +56693,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -56717,7 +56717,7 @@
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var encoders = exports2;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -56727,7 +56727,7 @@
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var asn1 = exports2;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -56742,7 +56742,7 @@
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -56822,7 +56822,7 @@
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports2.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -56956,7 +56956,7 @@
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -56994,7 +56994,7 @@
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -57123,7 +57123,7 @@
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
@@ -57278,7 +57278,7 @@
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -57369,7 +57369,7 @@
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream2 = require_readable_browser();
@@ -57450,7 +57450,7 @@
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -60262,7 +60262,7 @@
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module2.exports = function createECDH(curve) {
@@ -60381,7 +60381,7 @@
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer4 = require_safe_buffer().Buffer;
       module2.exports = function(seed, len) {
@@ -60405,7 +60405,7 @@
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       module2.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -60420,7 +60420,7 @@
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(module3, exports3) {
         "use strict";
         function assert(val, msg) {
@@ -63232,7 +63232,7 @@
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer4 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -63245,7 +63245,7 @@
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes2 = require_browser2();
       var createHash4 = require_browser4();
@@ -63338,7 +63338,7 @@
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -63445,7 +63445,7 @@
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.publicEncrypt = require_publicEncrypt();
       exports2.privateDecrypt = require_privateDecrypt();
       exports2.privateEncrypt = function privateEncrypt(key, buf) {
@@ -63461,7 +63461,7 @@
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -63564,7 +63564,7 @@
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       exports2.randomBytes = exports2.rng = exports2.pseudoRandomBytes = exports2.prng = require_browser2();
       exports2.createHash = exports2.Hash = require_browser4();
       exports2.createHmac = exports2.Hmac = require_browser5();
@@ -63642,7 +63642,7 @@
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports2, module2) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -90794,12 +90794,442 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // src/adapters/WebRTCRemoteAdapter.ts
+  var import_polyfills670, import_buffer, import_events, WebRTCRemoteAdapter;
+  var init_WebRTCRemoteAdapter = __esm({
+    "src/adapters/WebRTCRemoteAdapter.ts"() {
+      "use strict";
+      import_polyfills670 = __toESM(require_polyfills());
+      init_Logger();
+      import_buffer = __toESM(require_buffer());
+      import_events = __toESM(require_events());
+      WebRTCRemoteAdapter = class extends import_events.EventEmitter {
+        constructor(userId, prefix = "", config = {}) {
+          super();
+          this.cache = /* @__PURE__ */ new Map();
+          this.channels = /* @__PURE__ */ new Set();
+          this.pendingRequests = /* @__PURE__ */ new Map();
+          // Reference to Sovereign storage for purge operations
+          // PEX & Signal Relay
+          this.channelsByUserId = /* @__PURE__ */ new Map();
+          this.enablePEX = false;
+          this.seenMessages = /* @__PURE__ */ new Set();
+          this.seenMessagesQueue = [];
+          this.peerId = userId;
+          this.prefix = prefix;
+          if (this.prefix && !this.prefix.endsWith("/")) {
+            this.prefix += "/";
+          }
+          this.maxPeers = config.maxPeers ?? 5;
+          this.defaultTTL = config.ttl ?? 5;
+          this.maxSeenMessages = config.maxSeenMessages ?? 1e3;
+        }
+        /**
+         * Sends an SDP signal to a target peer through the mesh.
+         */
+        relaySignal(to, signal) {
+          const msg = {
+            type: "relay_signal",
+            path: "",
+            senderId: this.peerId,
+            from: this.peerId,
+            to,
+            signal,
+            msgId: this.generateMsgId()
+          };
+          const targetChannel = this.channelsByUserId.get(to);
+          if (targetChannel) {
+            targetChannel.send(JSON.stringify(msg));
+          } else {
+            this.broadcast(msg);
+          }
+        }
+        /**
+         * Broadcasts the current list of connected peers to the mesh.
+         */
+        exchangePeers() {
+          if (!this.enablePEX) return;
+          const peerList = Array.from(this.channelsByUserId.keys());
+          if (peerList.length === 0) return;
+          const msg = {
+            type: "peer_list",
+            path: "",
+            senderId: this.peerId,
+            peerList,
+            msgId: this.generateMsgId()
+          };
+          this.broadcast(msg);
+        }
+        markMessageAsSeen(msgId) {
+          if (this.seenMessages.has(msgId)) return;
+          this.seenMessages.add(msgId);
+          this.seenMessagesQueue.push(msgId);
+          if (this.seenMessagesQueue.length > this.maxSeenMessages) {
+            const oldest = this.seenMessagesQueue.shift();
+            if (oldest) this.seenMessages.delete(oldest);
+          }
+        }
+        generateMsgId() {
+          return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        }
+        getKey(path2) {
+          return `${this.prefix}${path2}`;
+        }
+        /**
+         * Connects an RTCDataChannel (or any mock channel) to this adapter.
+         * @param sendFn A function that sends a string message to the peer.
+         * @param userId Optional: The user ID of the peer for direct signaling.
+         * @returns The channel object and a receiver function.
+         */
+        connectPeer(sendFn, userId) {
+          if (this.channels.size >= this.maxPeers) {
+            Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
+            return null;
+          }
+          const channel = { send: sendFn };
+          this.channels.add(channel);
+          if (userId) {
+            this.channelsByUserId.set(userId, channel);
+          }
+          return {
+            channel,
+            receive: (msg) => this.handleMessage(msg, channel)
+          };
+        }
+        /**
+         * Connects a NativeWebRTCTransport directly to this adapter.
+         */
+        connectNativeTransport(transport, userId) {
+          const conn = this.connectPeer((msg) => transport.send(msg), userId);
+          if (conn) {
+            transport.onMessage = (msg) => conn.receive(msg);
+            transport.onDisconnected = () => this.disconnectPeer(conn.channel);
+          }
+        }
+        /**
+         * Disconnects a channel.
+         */
+        disconnectPeer(channel) {
+          this.channels.delete(channel);
+          for (const [uid, ch2] of this.channelsByUserId.entries()) {
+            if (ch2 === channel) {
+              this.channelsByUserId.delete(uid);
+              break;
+            }
+          }
+          Logger.debug(`[WebRTC] Peer disconnected. Active channels: ${this.channels.size}`);
+        }
+        handleMessage(msgStr, sourceChannel) {
+          try {
+            const msg = JSON.parse(msgStr);
+            const key = msg.path;
+            if (msg.msgId) {
+              if (this.seenMessages.has(msg.msgId)) {
+                return;
+              }
+              this.markMessageAsSeen(msg.msgId);
+            }
+            if (msg.type === "relay_signal") {
+              if (msg.to === this.peerId) {
+                Logger.info(`[WebRTC] Received relayed signal from ${msg.from}`);
+                this.onSignalRelay?.(msg.from, msg.signal);
+              } else {
+                const ttl = msg.ttl ?? this.defaultTTL;
+                if (ttl > 1) {
+                  const forwardMsg = { ...msg, ttl: ttl - 1 };
+                  const targetChannel = this.channelsByUserId.get(msg.to);
+                  if (targetChannel) {
+                    targetChannel.send(JSON.stringify(forwardMsg));
+                  } else {
+                    this.broadcast(forwardMsg, sourceChannel);
+                  }
+                }
+              }
+              return;
+            }
+            if (msg.type === "peer_list") {
+              if (this.enablePEX && msg.peerList) {
+                this.emit("pex:peers", { from: msg.senderId, peers: msg.peerList });
+              }
+              return;
+            }
+            if (msg.type === "push") {
+              if (msg.data && msg.hash && msg.etag) {
+                const dataBuffer = import_buffer.Buffer.from(msg.data, "base64");
+                const existing = this.cache.get(key);
+                if (!existing || existing.etag !== msg.etag) {
+                  this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
+                  Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
+                  const ttl = msg.ttl ?? this.defaultTTL;
+                  if (ttl > 1) {
+                    const forwardMsg = {
+                      ...msg,
+                      ttl: ttl - 1
+                    };
+                    this.broadcast(forwardMsg, sourceChannel);
+                  }
+                }
+              }
+            } else if (msg.type === "request") {
+              const entry = this.cache.get(key);
+              if (entry) {
+                const res = {
+                  type: "response",
+                  path: key,
+                  hash: entry.hash,
+                  etag: entry.etag,
+                  data: import_buffer.Buffer.from(entry.data).toString("base64"),
+                  reqId: msg.reqId,
+                  senderId: this.peerId
+                };
+                sourceChannel.send(JSON.stringify(res));
+              } else {
+                const res = {
+                  type: "not_found",
+                  path: key,
+                  reqId: msg.reqId,
+                  senderId: this.peerId
+                };
+                sourceChannel.send(JSON.stringify(res));
+              }
+            } else if (msg.type === "response" || msg.type === "not_found") {
+              if (msg.reqId && this.pendingRequests.has(msg.reqId)) {
+                this.pendingRequests.get(msg.reqId)(msg);
+              }
+            }
+          } catch (e2) {
+            Logger.warn(`[WebRTC] Failed to parse message: ${e2.message}`);
+          }
+        }
+        broadcast(msg, excludeChannel) {
+          const msgStr = JSON.stringify(msg);
+          for (const channel of this.channels) {
+            if (channel !== excludeChannel) {
+              try {
+                channel.send(msgStr);
+              } catch (e2) {
+              }
+            }
+          }
+        }
+        async uploadFile(path2, data, hash, metadata) {
+          const key = this.getKey(path2);
+          const fileHash = hash || import_buffer.Buffer.from(data).toString("hex").substring(0, 16);
+          const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
+          this.cache.set(key, { data, hash: fileHash, etag });
+          const msg = {
+            type: "push",
+            path: key,
+            hash: fileHash,
+            etag,
+            data: import_buffer.Buffer.from(data).toString("base64"),
+            senderId: this.peerId,
+            msgId: this.generateMsgId(),
+            ttl: this.defaultTTL
+          };
+          this.markMessageAsSeen(msg.msgId);
+          Logger.debug(`[WebRTC] Broadcasting push for ${key} (msgId: ${msg.msgId})`);
+          this.broadcast(msg);
+          return etag;
+        }
+        async getFileMetadata(path2, key) {
+          return null;
+        }
+        async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
+          const key = this.getKey(path2);
+          const local = this.cache.get(key);
+          if (local) {
+            if (ifNoneMatch && ifNoneMatch === local.etag) {
+              return { data: null, etag: local.etag, notModified: true };
+            }
+            return { data: local.data, etag: local.etag };
+          }
+          if (this.channels.size === 0) return null;
+          Logger.debug(`[WebRTC] Requesting ${key} from peers...`);
+          return new Promise((resolve2) => {
+            const reqId = Math.random().toString(36).substring(7);
+            const timer = setTimeout(() => {
+              this.pendingRequests.delete(reqId);
+              resolve2(null);
+            }, timeout);
+            let notFoundCount = 0;
+            const expectedCount = this.channels.size;
+            this.pendingRequests.set(reqId, (resMsg) => {
+              if (resMsg.type === "not_found") {
+                notFoundCount++;
+                if (notFoundCount >= expectedCount) {
+                  clearTimeout(timer);
+                  this.pendingRequests.delete(reqId);
+                  resolve2(null);
+                }
+                return;
+              }
+              clearTimeout(timer);
+              this.pendingRequests.delete(reqId);
+              if (resMsg.data && resMsg.hash && resMsg.etag) {
+                const dataBuffer = import_buffer.Buffer.from(resMsg.data, "base64");
+                const u8Data = new Uint8Array(dataBuffer);
+                this.cache.set(key, { data: u8Data, hash: resMsg.hash, etag: resMsg.etag });
+                if (ifNoneMatch && ifNoneMatch === resMsg.etag) {
+                  resolve2({ data: null, etag: resMsg.etag, notModified: true });
+                } else {
+                  resolve2({ data: u8Data, etag: resMsg.etag });
+                }
+              } else {
+                resolve2(null);
+              }
+            });
+            const reqMsg = {
+              type: "request",
+              path: key,
+              reqId,
+              senderId: this.peerId,
+              msgId: this.generateMsgId(),
+              ttl: this.defaultTTL
+            };
+            this.markMessageAsSeen(reqMsg.msgId);
+            this.broadcast(reqMsg);
+          });
+        }
+        async getFileHash(path2) {
+          const key = this.getKey(path2);
+          return this.cache.get(key)?.hash || null;
+        }
+        async getFileEtag(path2) {
+          const key = this.getKey(path2);
+          return this.cache.get(key)?.etag || null;
+        }
+        async canWrite(path2) {
+          return this.channels.size > 0;
+        }
+        async listFiles(prefix) {
+          return [];
+        }
+        async deleteFile(path2) {
+        }
+      };
+    }
+  });
+
+  // src/adapters/NativeWebRTCTransport.ts
+  var import_polyfills671, NativeWebRTCTransport;
+  var init_NativeWebRTCTransport = __esm({
+    "src/adapters/NativeWebRTCTransport.ts"() {
+      "use strict";
+      import_polyfills671 = __toESM(require_polyfills());
+      init_Logger();
+      NativeWebRTCTransport = class {
+        constructor(userId, iceServers = [{ urls: "stun:stun.l.google.com:19302" }]) {
+          this.userId = userId;
+          this.dc = null;
+          this.isInitiator = false;
+          this.pc = new RTCPeerConnection({ iceServers });
+          this.setupPeerConnection();
+        }
+        setupPeerConnection() {
+          this.pc.onicecandidate = (event) => {
+            if (event.candidate && this.onSignalingData) {
+              this.onSignalingData({
+                type: "candidate",
+                candidate: event.candidate.toJSON(),
+                senderId: this.userId
+              });
+            }
+          };
+          this.pc.onconnectionstatechange = () => {
+            Logger.debug(`[NativeWebRTC] Connection state: ${this.pc.connectionState}`);
+            if (this.pc.connectionState === "disconnected" || this.pc.connectionState === "failed") {
+              this.onDisconnected?.();
+            }
+          };
+          this.pc.ondatachannel = (event) => {
+            Logger.debug("[NativeWebRTC] Received remote data channel");
+            this.setupDataChannel(event.channel);
+          };
+        }
+        setupDataChannel(channel) {
+          this.dc = channel;
+          this.dc.onopen = () => {
+            Logger.info("[NativeWebRTC] Data channel OPEN");
+            this.onConnected?.();
+          };
+          this.dc.onmessage = (event) => {
+            this.onMessage?.(event.data);
+          };
+          this.dc.onclose = () => {
+            Logger.info("[NativeWebRTC] Data channel CLOSED");
+            this.onDisconnected?.();
+          };
+        }
+        /**
+         * Start the connection process as the initiator (e.g. show QR code).
+         */
+        async createOffer() {
+          this.isInitiator = true;
+          const channel = this.pc.createDataChannel("sovereign-sync");
+          this.setupDataChannel(channel);
+          const offer = await this.pc.createOffer();
+          await this.pc.setLocalDescription(offer);
+          return {
+            type: "offer",
+            sdp: offer.sdp,
+            senderId: this.userId
+          };
+        }
+        /**
+         * Respond to an offer as the receiver.
+         */
+        async handleOffer(offerSdp) {
+          this.isInitiator = false;
+          await this.pc.setRemoteDescription({ type: "offer", sdp: offerSdp });
+          const answer = await this.pc.createAnswer();
+          await this.pc.setLocalDescription(answer);
+          return {
+            type: "answer",
+            sdp: answer.sdp,
+            senderId: this.userId
+          };
+        }
+        /**
+         * Handle the answer from the receiver (Initiator only).
+         */
+        async handleAnswer(answerSdp) {
+          await this.pc.setRemoteDescription({ type: "answer", sdp: answerSdp });
+        }
+        /**
+         * Handle incoming ICE candidates from the peer.
+         */
+        async handleCandidate(candidate) {
+          try {
+            await this.pc.addIceCandidate(candidate);
+          } catch (e2) {
+            Logger.warn("[NativeWebRTC] Failed to add ICE candidate", e2);
+          }
+        }
+        /**
+         * Send data over the data channel.
+         */
+        send(msg) {
+          if (this.dc && this.dc.readyState === "open") {
+            this.dc.send(msg);
+          } else {
+            Logger.warn("[NativeWebRTC] Attempted to send message but data channel is not open");
+          }
+        }
+        close() {
+          this.dc?.close();
+          this.pc.close();
+        }
+      };
+    }
+  });
+
   // src/adapters/IndexedDBStorage.ts
-  var import_polyfills670, IndexedDBStorage;
+  var import_polyfills672, IndexedDBStorage;
   var init_IndexedDBStorage = __esm({
     "src/adapters/IndexedDBStorage.ts"() {
       "use strict";
-      import_polyfills670 = __toESM(require_polyfills());
+      import_polyfills672 = __toESM(require_polyfills());
       init_Logger();
       IndexedDBStorage = class {
         constructor(dbName = "sovereign_s3nc") {
@@ -90812,8 +91242,8 @@ ${toHex(hashedRequest)}`;
           return new Promise((resolve2, reject2) => {
             try {
               const request = indexedDB.open(this.dbName, 1);
-              request.onerror = (event) => {
-                console.error("[IDB] Error opening database:", request.error);
+              request.onerror = () => {
+                Logger.error("[IDB] Error opening database:", request.error);
                 reject2(request.error);
               };
               request.onsuccess = (event) => {
@@ -91145,13 +91575,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/worker/SyncWorkerProxy.ts
-  var import_polyfills671, import_events, SyncWorkerProxy;
+  var import_polyfills673, import_events2, SyncWorkerProxy;
   var init_SyncWorkerProxy = __esm({
     "src/worker/SyncWorkerProxy.ts"() {
       "use strict";
-      import_polyfills671 = __toESM(require_polyfills());
-      import_events = __toESM(require_events());
-      SyncWorkerProxy = class extends import_events.EventEmitter {
+      import_polyfills673 = __toESM(require_polyfills());
+      import_events2 = __toESM(require_events());
+      SyncWorkerProxy = class extends import_events2.EventEmitter {
         constructor(workerUrl) {
           super();
           this.workerUrl = workerUrl;
@@ -91234,7 +91664,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -91643,11 +92073,11 @@ ${toHex(hashedRequest)}`;
   __export(NodeStorage_exports, {
     NodeStorage: () => NodeStorage
   });
-  var import_polyfills672, fs, path, crypto3, NodeStorage;
+  var import_polyfills674, fs, path, crypto3, NodeStorage;
   var init_NodeStorage = __esm({
     "src/adapters/NodeStorage.ts"() {
       "use strict";
-      import_polyfills672 = __toESM(require_polyfills());
+      import_polyfills674 = __toESM(require_polyfills());
       fs = __toESM(__require("fs-extra"));
       path = __toESM(require_path_browserify());
       crypto3 = __toESM(require_crypto_browserify());
@@ -91824,19 +92254,21 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills673, nacl, crypto4, import_events2, SovereignS3nc;
+  var import_polyfills675, nacl, crypto4, import_events3, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
-      import_polyfills673 = __toESM(require_polyfills());
+      import_polyfills675 = __toESM(require_polyfills());
       nacl = __toESM(require_nacl_fast());
       init_S3RemoteAdapter();
+      init_WebRTCRemoteAdapter();
+      init_NativeWebRTCTransport();
       init_IndexedDBStorage();
       init_Logger();
       crypto4 = __toESM(require_crypto_browserify());
-      import_events2 = __toESM(require_events());
+      import_events3 = __toESM(require_events());
       init_SyncWorkerProxy();
-      SovereignS3nc = class _SovereignS3nc extends import_events2.EventEmitter {
+      SovereignS3nc = class _SovereignS3nc extends import_events3.EventEmitter {
         constructor(config, remote, remoteFactory, keys, storage) {
           super();
           this.registeredModules = [];
@@ -91936,6 +92368,19 @@ ${toHex(hashedRequest)}`;
           }
           if (this.syncWorker) {
             this.syncWorker.registerModule(definition).catch((e2) => Logger.warn("[Sovereign] Failed to register module in worker", e2));
+          }
+        }
+        /**
+         * Connects a native WebRTC transport to the internal gossip engine.
+         * Requires the active remote to be a WebRTCRemoteAdapter.
+         */
+        connectNativeRTC(transport) {
+          if (this.publicRemote instanceof WebRTCRemoteAdapter) {
+            this.publicRemote.connectNativeTransport(transport);
+          } else if (this.remote instanceof WebRTCRemoteAdapter) {
+            this.remote.connectNativeTransport(transport);
+          } else {
+            Logger.warn("[Sovereign] Cannot connect native RTC: Active remote is not a WebRTCRemoteAdapter");
           }
         }
         /**
@@ -92046,6 +92491,53 @@ ${toHex(hashedRequest)}`;
           }
           await this.syncBlacklist();
           await this.syncAdminKey();
+          if (this.config.enablePeerExchange) {
+            const adapters = [this.remote, this.publicRemote].filter((a2) => a2 instanceof WebRTCRemoteAdapter);
+            for (const adapter2 of adapters) {
+              adapter2.enablePEX = true;
+              adapter2.on("signal_relay", async (from, signal) => {
+                Logger.info(`[Sovereign] Processing relayed signal from ${from}`);
+                const transport = new NativeWebRTCTransport(this.config.paths.userId);
+                if (signal.type === "offer") {
+                  const answer = await transport.handleOffer(signal.sdp);
+                  adapter2.relaySignal(from, answer);
+                  transport.onConnected = () => {
+                    this.connectNativeRTC(transport);
+                    Logger.info(`[Sovereign] Auto-connected to peer ${from} via PEX relay`);
+                  };
+                } else if (signal.type === "answer") {
+                  this.emit("pex:signal", { from, signal });
+                }
+              });
+              adapter2.on("pex:peers", async (data) => {
+                const myId = this.config.paths.userId;
+                const following = (await this.storage.getFollowing()).map((u2) => u2.userId);
+                for (const peerId of data.peers) {
+                  if (peerId !== myId && following.includes(peerId)) {
+                    Logger.info(`[Sovereign] Attempting PEX handshake with ${peerId} via ${data.from}`);
+                    const transport = new NativeWebRTCTransport(myId);
+                    const offer = await transport.createOffer();
+                    adapter2.relaySignal(peerId, offer);
+                    const signalHandler = (sigData) => {
+                      if (sigData.from === peerId && sigData.signal.type === "answer") {
+                        transport.handleAnswer(sigData.signal.sdp);
+                        this.off("pex:signal", signalHandler);
+                      }
+                    };
+                    this.on("pex:signal", signalHandler);
+                    transport.onConnected = () => {
+                      this.connectNativeRTC(transport);
+                      Logger.info(`[Sovereign] Direct connection established with ${peerId} via PEX introduction`);
+                    };
+                  }
+                }
+              });
+            }
+            setInterval(() => {
+              const adapters2 = [this.remote, this.publicRemote].filter((a2) => a2 instanceof WebRTCRemoteAdapter);
+              adapters2.forEach((a2) => a2.exchangePeers());
+            }, 6e4);
+          }
           Logger.info("[Sovereign] Initialization complete.");
         }
         /**
@@ -93504,11 +93996,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Feed.ts
-  var import_polyfills674, FEED_MODULE_DEFINITION, FeedModule;
+  var import_polyfills676, FEED_MODULE_DEFINITION, FeedModule;
   var init_Feed = __esm({
     "src/modules/Feed.ts"() {
       "use strict";
-      import_polyfills674 = __toESM(require_polyfills());
+      import_polyfills676 = __toESM(require_polyfills());
       FEED_MODULE_DEFINITION = {
         name: "feed",
         tables: [
@@ -93832,11 +94324,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Messaging.ts
-  var import_polyfills675, MessagingModule;
+  var import_polyfills677, MessagingModule;
   var init_Messaging = __esm({
     "src/modules/Messaging.ts"() {
       "use strict";
-      import_polyfills675 = __toESM(require_polyfills());
+      import_polyfills677 = __toESM(require_polyfills());
       init_SovereignS3nc();
       MessagingModule = class {
         constructor(db) {
@@ -94048,7 +94540,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/jimp/browser/lib/jimp.js
   var require_jimp = __commonJS({
     "node_modules/jimp/browser/lib/jimp.js"(exports, module) {
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       (() => {
         var __webpack_modules__ = { 236: (t8, e2, r2) => {
           var i2 = r2(4618);
@@ -108662,11 +109154,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/utils/MediaUtils.ts
-  var import_polyfills676, MediaUtils;
+  var import_polyfills678, MediaUtils;
   var init_MediaUtils = __esm({
     "src/utils/MediaUtils.ts"() {
       "use strict";
-      import_polyfills676 = __toESM(require_polyfills());
+      import_polyfills678 = __toESM(require_polyfills());
       init_Logger();
       MediaUtils = class {
         /**
@@ -108759,11 +109251,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Profile.ts
-  var import_polyfills677, ProfileModule;
+  var import_polyfills679, ProfileModule;
   var init_Profile = __esm({
     "src/modules/Profile.ts"() {
       "use strict";
-      import_polyfills677 = __toESM(require_polyfills());
+      import_polyfills679 = __toESM(require_polyfills());
       init_Logger();
       init_MediaUtils();
       ProfileModule = class {
@@ -108869,13 +109361,13 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Moderation.ts
-  var import_polyfills678, import_buffer, ModerationModule;
+  var import_polyfills680, import_buffer2, ModerationModule;
   var init_Moderation = __esm({
     "src/modules/Moderation.ts"() {
       "use strict";
-      import_polyfills678 = __toESM(require_polyfills());
+      import_polyfills680 = __toESM(require_polyfills());
       init_Logger();
-      import_buffer = __toESM(require_buffer());
+      import_buffer2 = __toESM(require_buffer());
       ModerationModule = class {
         constructor(sovereign) {
           this.sovereign = sovereign;
@@ -109157,7 +109649,7 @@ ${toHex(hashedRequest)}`;
             try {
               const result = await rootRemote.downloadFile(file);
               if (result && result.data) {
-                exportData[file] = import_buffer.Buffer.from(result.data).toString("base64");
+                exportData[file] = import_buffer2.Buffer.from(result.data).toString("base64");
               }
             } catch (e2) {
               Logger.warn(`[Moderation] Failed to export file ${file}: ${e2.message}`);
@@ -109175,7 +109667,7 @@ ${toHex(hashedRequest)}`;
           const parsed = JSON.parse(jsonData);
           for (const [path2, base64Data] of Object.entries(parsed)) {
             try {
-              const data = import_buffer.Buffer.from(base64Data, "base64");
+              const data = import_buffer2.Buffer.from(base64Data, "base64");
               await rootRemote.uploadFile(path2, data);
             } catch (e2) {
               Logger.warn(`[Moderation] Failed to import file ${path2}: ${e2.message}`);
@@ -109206,234 +109698,6 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // src/adapters/WebRTCRemoteAdapter.ts
-  var import_polyfills679, import_buffer2, WebRTCRemoteAdapter;
-  var init_WebRTCRemoteAdapter = __esm({
-    "src/adapters/WebRTCRemoteAdapter.ts"() {
-      "use strict";
-      import_polyfills679 = __toESM(require_polyfills());
-      init_Logger();
-      import_buffer2 = __toESM(require_buffer());
-      WebRTCRemoteAdapter = class {
-        constructor(userId, prefix = "", config = {}) {
-          this.cache = /* @__PURE__ */ new Map();
-          this.channels = /* @__PURE__ */ new Set();
-          this.pendingRequests = /* @__PURE__ */ new Map();
-          this.seenMessages = /* @__PURE__ */ new Set();
-          this.seenMessagesQueue = [];
-          this.peerId = userId;
-          this.prefix = prefix;
-          if (this.prefix && !this.prefix.endsWith("/")) {
-            this.prefix += "/";
-          }
-          this.maxPeers = config.maxPeers ?? 5;
-          this.defaultTTL = config.ttl ?? 5;
-          this.maxSeenMessages = config.maxSeenMessages ?? 1e3;
-        }
-        markMessageAsSeen(msgId) {
-          if (this.seenMessages.has(msgId)) return;
-          this.seenMessages.add(msgId);
-          this.seenMessagesQueue.push(msgId);
-          if (this.seenMessagesQueue.length > this.maxSeenMessages) {
-            const oldest = this.seenMessagesQueue.shift();
-            if (oldest) this.seenMessages.delete(oldest);
-          }
-        }
-        generateMsgId() {
-          return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
-        }
-        getKey(path2) {
-          return `${this.prefix}${path2}`;
-        }
-        /**
-         * Connects an RTCDataChannel (or any mock channel) to this adapter.
-         * @param sendFn A function that sends a string message to the peer.
-         * @returns A receiver function to be called when a message is received from the peer.
-         */
-        connectPeer(sendFn) {
-          if (this.channels.size >= this.maxPeers) {
-            Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
-            return null;
-          }
-          const channel = { send: sendFn };
-          this.channels.add(channel);
-          return {
-            receive: (msg) => this.handleMessage(msg, channel)
-          };
-        }
-        /**
-         * Disconnects a channel.
-         */
-        disconnectPeer(receiver) {
-        }
-        handleMessage(msgStr, sourceChannel) {
-          try {
-            const msg = JSON.parse(msgStr);
-            const key = msg.path;
-            if (msg.msgId) {
-              if (this.seenMessages.has(msg.msgId)) {
-                return;
-              }
-              this.markMessageAsSeen(msg.msgId);
-            }
-            if (msg.type === "push") {
-              if (msg.data && msg.hash && msg.etag) {
-                const dataBuffer = import_buffer2.Buffer.from(msg.data, "base64");
-                const existing = this.cache.get(key);
-                if (!existing || existing.etag !== msg.etag) {
-                  this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
-                  Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
-                  const ttl = msg.ttl ?? this.defaultTTL;
-                  if (ttl > 1) {
-                    const forwardMsg = {
-                      ...msg,
-                      ttl: ttl - 1
-                    };
-                    this.broadcast(forwardMsg, sourceChannel);
-                  }
-                }
-              }
-            } else if (msg.type === "request") {
-              const entry = this.cache.get(key);
-              if (entry) {
-                const res = {
-                  type: "response",
-                  path: key,
-                  hash: entry.hash,
-                  etag: entry.etag,
-                  data: import_buffer2.Buffer.from(entry.data).toString("base64"),
-                  reqId: msg.reqId,
-                  senderId: this.peerId
-                };
-                sourceChannel.send(JSON.stringify(res));
-              } else {
-                const res = {
-                  type: "not_found",
-                  path: key,
-                  reqId: msg.reqId,
-                  senderId: this.peerId
-                };
-                sourceChannel.send(JSON.stringify(res));
-              }
-            } else if (msg.type === "response" || msg.type === "not_found") {
-              if (msg.reqId && this.pendingRequests.has(msg.reqId)) {
-                this.pendingRequests.get(msg.reqId)(msg);
-              }
-            }
-          } catch (e2) {
-            Logger.warn(`[WebRTC] Failed to parse message: ${e2.message}`);
-          }
-        }
-        broadcast(msg, excludeChannel) {
-          const msgStr = JSON.stringify(msg);
-          for (const channel of this.channels) {
-            if (channel !== excludeChannel) {
-              try {
-                channel.send(msgStr);
-              } catch (e2) {
-              }
-            }
-          }
-        }
-        async uploadFile(path2, data, hash, metadata) {
-          const key = this.getKey(path2);
-          const fileHash = hash || import_buffer2.Buffer.from(data).toString("hex").substring(0, 16);
-          const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
-          this.cache.set(key, { data, hash: fileHash, etag });
-          const msg = {
-            type: "push",
-            path: key,
-            hash: fileHash,
-            etag,
-            data: import_buffer2.Buffer.from(data).toString("base64"),
-            senderId: this.peerId,
-            msgId: this.generateMsgId(),
-            ttl: this.defaultTTL
-          };
-          this.markMessageAsSeen(msg.msgId);
-          Logger.debug(`[WebRTC] Broadcasting push for ${key} (msgId: ${msg.msgId})`);
-          this.broadcast(msg);
-          return etag;
-        }
-        async getFileMetadata(path2, key) {
-          return null;
-        }
-        async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
-          const key = this.getKey(path2);
-          const local = this.cache.get(key);
-          if (local) {
-            if (ifNoneMatch && ifNoneMatch === local.etag) {
-              return { data: null, etag: local.etag, notModified: true };
-            }
-            return { data: local.data, etag: local.etag };
-          }
-          if (this.channels.size === 0) return null;
-          Logger.debug(`[WebRTC] Requesting ${key} from peers...`);
-          return new Promise((resolve2) => {
-            const reqId = Math.random().toString(36).substring(7);
-            const timer = setTimeout(() => {
-              this.pendingRequests.delete(reqId);
-              resolve2(null);
-            }, timeout);
-            let notFoundCount = 0;
-            const expectedCount = this.channels.size;
-            this.pendingRequests.set(reqId, (resMsg) => {
-              if (resMsg.type === "not_found") {
-                notFoundCount++;
-                if (notFoundCount >= expectedCount) {
-                  clearTimeout(timer);
-                  this.pendingRequests.delete(reqId);
-                  resolve2(null);
-                }
-                return;
-              }
-              clearTimeout(timer);
-              this.pendingRequests.delete(reqId);
-              if (resMsg.data && resMsg.hash && resMsg.etag) {
-                const dataBuffer = import_buffer2.Buffer.from(resMsg.data, "base64");
-                const u8Data = new Uint8Array(dataBuffer);
-                this.cache.set(key, { data: u8Data, hash: resMsg.hash, etag: resMsg.etag });
-                if (ifNoneMatch && ifNoneMatch === resMsg.etag) {
-                  resolve2({ data: null, etag: resMsg.etag, notModified: true });
-                } else {
-                  resolve2({ data: u8Data, etag: resMsg.etag });
-                }
-              } else {
-                resolve2(null);
-              }
-            });
-            const reqMsg = {
-              type: "request",
-              path: key,
-              reqId,
-              senderId: this.peerId,
-              msgId: this.generateMsgId(),
-              ttl: this.defaultTTL
-            };
-            this.markMessageAsSeen(reqMsg.msgId);
-            this.broadcast(reqMsg);
-          });
-        }
-        async getFileHash(path2) {
-          const key = this.getKey(path2);
-          return this.cache.get(key)?.hash || null;
-        }
-        async getFileEtag(path2) {
-          const key = this.getKey(path2);
-          return this.cache.get(key)?.etag || null;
-        }
-        async canWrite(path2) {
-          return this.channels.size > 0;
-        }
-        async listFiles(prefix) {
-          return [];
-        }
-        async deleteFile(path2) {
-        }
-      };
-    }
-  });
-
   // node_modules/peerjs-js-binarypack/dist/binarypack.mjs
   function $e8379818650e2442$var$concatArrayBuffers(bufs) {
     let size = 0;
@@ -109457,10 +109721,10 @@ ${toHex(hashedRequest)}`;
     if (res instanceof Promise) return res.then(() => packer.getBuffer());
     return packer.getBuffer();
   }
-  var import_polyfills680, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
+  var import_polyfills681, $e8379818650e2442$export$93654d4f2d6cd524, $0cfd7828ad59115f$var$Unpacker, $0cfd7828ad59115f$export$b9ec4b114aa40074;
   var init_binarypack = __esm({
     "node_modules/peerjs-js-binarypack/dist/binarypack.mjs"() {
-      import_polyfills680 = __toESM(require_polyfills(), 1);
+      import_polyfills681 = __toESM(require_polyfills(), 1);
       $e8379818650e2442$export$93654d4f2d6cd524 = class {
         constructor() {
           this.encoder = new TextEncoder();
@@ -110090,11 +110354,11 @@ ${toHex(hashedRequest)}`;
     });
     return filteredResult;
   }
-  var import_polyfills681, logDisabled_, deprecationWarnings_;
+  var import_polyfills682, logDisabled_, deprecationWarnings_;
   var init_utils5 = __esm({
     "node_modules/webrtc-adapter/src/js/utils.js"() {
       "use strict";
-      import_polyfills681 = __toESM(require_polyfills());
+      import_polyfills682 = __toESM(require_polyfills());
       logDisabled_ = true;
       deprecationWarnings_ = true;
     }
@@ -110256,11 +110520,11 @@ ${toHex(hashedRequest)}`;
       };
     }
   }
-  var import_polyfills682, logging;
+  var import_polyfills683, logging;
   var init_getusermedia = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/getusermedia.js"() {
       "use strict";
-      import_polyfills682 = __toESM(require_polyfills());
+      import_polyfills683 = __toESM(require_polyfills());
       init_utils5();
       logging = log;
     }
@@ -110805,11 +111069,11 @@ ${toHex(hashedRequest)}`;
       return e2;
     });
   }
-  var import_polyfills683;
+  var import_polyfills684;
   var init_chrome_shim = __esm({
     "node_modules/webrtc-adapter/src/js/chrome/chrome_shim.js"() {
       "use strict";
-      import_polyfills683 = __toESM(require_polyfills());
+      import_polyfills684 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia();
     }
@@ -110864,11 +111128,11 @@ ${toHex(hashedRequest)}`;
       }
     }
   }
-  var import_polyfills684;
+  var import_polyfills685;
   var init_getusermedia2 = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getusermedia.js"() {
       "use strict";
-      import_polyfills684 = __toESM(require_polyfills());
+      import_polyfills685 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -110896,11 +111160,11 @@ ${toHex(hashedRequest)}`;
       return window2.navigator.mediaDevices.getUserMedia(constraints);
     };
   }
-  var import_polyfills685;
+  var import_polyfills686;
   var init_getdisplaymedia = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/getdisplaymedia.js"() {
       "use strict";
-      import_polyfills685 = __toESM(require_polyfills());
+      import_polyfills686 = __toESM(require_polyfills());
     }
   });
 
@@ -111147,11 +111411,11 @@ ${toHex(hashedRequest)}`;
       return origCreateAnswer.apply(this, arguments);
     };
   }
-  var import_polyfills686;
+  var import_polyfills687;
   var init_firefox_shim = __esm({
     "node_modules/webrtc-adapter/src/js/firefox/firefox_shim.js"() {
       "use strict";
-      import_polyfills686 = __toESM(require_polyfills());
+      import_polyfills687 = __toESM(require_polyfills());
       init_utils5();
       init_getusermedia2();
       init_getdisplaymedia();
@@ -111473,11 +111737,11 @@ ${toHex(hashedRequest)}`;
     }
     window2.AudioContext = window2.webkitAudioContext;
   }
-  var import_polyfills687;
+  var import_polyfills688;
   var init_safari_shim = __esm({
     "node_modules/webrtc-adapter/src/js/safari/safari_shim.js"() {
       "use strict";
-      import_polyfills687 = __toESM(require_polyfills());
+      import_polyfills688 = __toESM(require_polyfills());
       init_utils5();
     }
   });
@@ -111486,7 +111750,7 @@ ${toHex(hashedRequest)}`;
   var require_sdp = __commonJS({
     "node_modules/sdp/sdp.js"(exports2, module2) {
       "use strict";
-      var import_polyfills692 = __toESM(require_polyfills());
+      var import_polyfills695 = __toESM(require_polyfills());
       var SDPUtils2 = {};
       SDPUtils2.generateIdentifier = function() {
         return Math.random().toString(36).substring(2, 12);
@@ -112438,11 +112702,11 @@ ${toHex(hashedRequest)}`;
       return func.apply(this).then((d2) => nativeSetLocalDescription.apply(this, [d2]));
     };
   }
-  var import_polyfills688, import_sdp;
+  var import_polyfills689, import_sdp;
   var init_common_shim = __esm({
     "node_modules/webrtc-adapter/src/js/common_shim.js"() {
       "use strict";
-      import_polyfills688 = __toESM(require_polyfills());
+      import_polyfills689 = __toESM(require_polyfills());
       import_sdp = __toESM(require_sdp());
       init_utils5();
     }
@@ -112548,10 +112812,10 @@ ${toHex(hashedRequest)}`;
     }
     return adapter2;
   }
-  var import_polyfills689, sdp;
+  var import_polyfills690, sdp;
   var init_adapter_factory = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_factory.js"() {
-      import_polyfills689 = __toESM(require_polyfills());
+      import_polyfills690 = __toESM(require_polyfills());
       init_utils5();
       init_chrome_shim();
       init_firefox_shim();
@@ -112562,11 +112826,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // node_modules/webrtc-adapter/src/js/adapter_core.js
-  var import_polyfills690, adapter, adapter_core_default;
+  var import_polyfills691, adapter, adapter_core_default;
   var init_adapter_core = __esm({
     "node_modules/webrtc-adapter/src/js/adapter_core.js"() {
       "use strict";
-      import_polyfills690 = __toESM(require_polyfills());
+      import_polyfills691 = __toESM(require_polyfills());
       init_adapter_factory();
       adapter = adapterFactory({ window: typeof window === "undefined" ? void 0 : window });
       adapter_core_default = adapter;
@@ -112614,10 +112878,10 @@ ${toHex(hashedRequest)}`;
     this._events = new $c4dcfd1d1ea86647$var$Events();
     this._eventsCount = 0;
   }
-  var import_polyfills691, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
+  var import_polyfills692, $fcbcc7538a6776d5$export$f1c5f4c9cb95390b, $fb63e766cfafaab9$var$webRTCAdapter, $fb63e766cfafaab9$export$25be9502477c137d, $9a84a32bf0bf36bb$export$f35f128fd59ea256, $0e5fd1585784c252$export$4e61f672936bec77, $4f4134156c446392$var$DEFAULT_CONFIG, $4f4134156c446392$export$f8f26dd395d7e1bd, $4f4134156c446392$export$7debb50ef11d5e0b, $257947e92926277a$var$LOG_PREFIX, $257947e92926277a$var$Logger, $257947e92926277a$export$2e2bcd8739ae039, $c4dcfd1d1ea86647$exports, $c4dcfd1d1ea86647$var$has, $c4dcfd1d1ea86647$var$prefix, $78455e22dea96b8c$exports, $78455e22dea96b8c$export$3157d57b4135e3bc, $78455e22dea96b8c$export$9547aaa2e39030ff, $78455e22dea96b8c$export$7974935686149686, $78455e22dea96b8c$export$49ae800c114df41d, $78455e22dea96b8c$export$89f507cf986a947, $78455e22dea96b8c$export$3b5c4a4b6354f023, $78455e22dea96b8c$export$adb4a1754da6f10d, $520832d44ba058c8$export$83d89fbfd8236492, $8f5bfa60836d261d$export$4798917dbf149b79, $b82fb8fc0514bfc1$export$89e6bb5ad64bf4a, $23779d1881157a18$export$6a678e589c8a4542, $23779d1881157a18$export$98871882f492de82, $5045192fc6d387ba$export$23a2a68283c24d80, $5c1d08c7c57da9a3$export$4a84e95a2324ac29, $abf266641927cd89$export$2c4e825dc9120f87, $6366c4ca161bc297$export$d365f7ad9d7df9c9, $a229bedbcaa6ca23$export$ff7c9d4c11d94e8b, $9fcfddb3ae148f88$export$f0a5a64d5bb37108, $bbaee3f15f714663$export$6f88fe47d32c9c94, $817f931e3f9096cf$export$48880ac635f47186, $416260bce337df90$export$ecd1fc136c422448, $dd0187d7f28e386f$export$2e2bcd8739ae039;
   var init_bundler = __esm({
     "node_modules/peerjs/dist/bundler.mjs"() {
-      import_polyfills691 = __toESM(require_polyfills(), 1);
+      import_polyfills692 = __toESM(require_polyfills(), 1);
       init_binarypack();
       init_adapter_core();
       $fcbcc7538a6776d5$export$f1c5f4c9cb95390b = class {
@@ -114143,11 +114407,171 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // src/utils/BLESignaling.ts
+  var import_polyfills693, SOVEREIGN_SERVICE_UUID, SIGNAL_CHARACTERISTIC_UUID, BLESignaling;
+  var init_BLESignaling = __esm({
+    "src/utils/BLESignaling.ts"() {
+      "use strict";
+      import_polyfills693 = __toESM(require_polyfills());
+      init_Logger();
+      SOVEREIGN_SERVICE_UUID = "00005056-0000-1000-8000-00805f9b34fb";
+      SIGNAL_CHARACTERISTIC_UUID = "00005057-0000-1000-8000-00805f9b34fb";
+      BLESignaling = class {
+        /**
+         * Browser (Central) scans for a Sovereign Peripheral and performs a handshake.
+         */
+        static async scanAndPair(onOfferReceived) {
+          if (!navigator.bluetooth) {
+            throw new Error("Web Bluetooth is not supported in this browser.");
+          }
+          Logger.info("[BLE] Scanning for Sovereign devices...");
+          const device = await navigator.bluetooth.requestDevice({
+            filters: [{ services: [SOVEREIGN_SERVICE_UUID] }]
+          });
+          Logger.info(`[BLE] Found device: ${device.name}. Connecting...`);
+          const server = await device.gatt?.connect();
+          const service = await server?.getPrimaryService(SOVEREIGN_SERVICE_UUID);
+          const characteristic = await service?.getCharacteristic(SIGNAL_CHARACTERISTIC_UUID);
+          if (!characteristic) throw new Error("Signaling characteristic not found");
+          const offerValue = await characteristic.readValue();
+          const offerStr = new TextDecoder().decode(offerValue);
+          Logger.info("[BLE] Received WebRTC Offer via Bluetooth");
+          const answerStr = await onOfferReceived(offerStr);
+          const answerData = new TextEncoder().encode(answerStr);
+          if (answerData.length > 512) {
+            Logger.warn("[BLE] Answer SDP is large, attempting chunked write...");
+            await characteristic.writeValue(answerData);
+          } else {
+            await characteristic.writeValue(answerData);
+          }
+          Logger.info("[BLE] Handshake complete via Bluetooth");
+        }
+      };
+    }
+  });
+
+  // demo/social/src/PairingModal.tsx
+  var import_polyfills694, import_react, PairingModal;
+  var init_PairingModal = __esm({
+    "demo/social/src/PairingModal.tsx"() {
+      "use strict";
+      import_polyfills694 = __toESM(require_polyfills());
+      import_react = __toESM(require_react());
+      init_NativeWebRTCTransport();
+      init_BLESignaling();
+      PairingModal = ({ userId, onClose, onConnected }) => {
+        const [step, setStep] = (0, import_react.useState)("initial");
+        const [transport] = (0, import_react.useState)(() => new NativeWebRTCTransport(userId));
+        const [qrValue, setQrValue] = (0, import_react.useState)("");
+        const [error, setError] = (0, import_react.useState)("");
+        const canvasRef = (0, import_react.useRef)(null);
+        const scannerRef = (0, import_react.useRef)(null);
+        (0, import_react.useEffect)(() => {
+          return () => {
+            if (scannerRef.current) {
+              scannerRef.current.clear();
+            }
+          };
+        }, []);
+        (0, import_react.useEffect)(() => {
+          if (qrValue && canvasRef.current) {
+            window.QRCode.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error2) => {
+              if (error2) console.error("[QR] Error generating QR:", error2);
+            });
+          }
+        }, [qrValue, step]);
+        const handleCreateOffer = async () => {
+          setStep("connecting");
+          const offer = await transport.createOffer();
+          setQrValue(JSON.stringify(offer));
+          setStep("show-offer");
+          transport.onConnected = () => {
+            setStep("success");
+            setTimeout(() => {
+              onConnected(transport);
+              onClose();
+            }, 1500);
+          };
+        };
+        const startScanner = (onScan) => {
+          const scanner = new window.Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
+          scanner.render((decodedText) => {
+            scanner.clear();
+            onScan(decodedText);
+          }, (error2) => {
+          });
+          scannerRef.current = scanner;
+        };
+        const handleScanOffer = () => {
+          setStep("scan-offer");
+          setTimeout(() => {
+            startScanner(async (data) => {
+              try {
+                const offer = JSON.parse(data);
+                if (offer.type !== "offer") throw new Error("Not an offer");
+                const answer = await transport.handleOffer(offer.sdp);
+                setQrValue(JSON.stringify(answer));
+                setStep("show-answer");
+                transport.onConnected = () => {
+                  setStep("success");
+                  setTimeout(() => {
+                    onConnected(transport);
+                    onClose();
+                  }, 1500);
+                };
+              } catch (e2) {
+                alert("Invalid QR Code: " + e2);
+                setStep("initial");
+              }
+            });
+          }, 100);
+        };
+        const handleScanAnswer = () => {
+          setStep("scan-answer");
+          setTimeout(() => {
+            startScanner(async (data) => {
+              try {
+                const answer = JSON.parse(data);
+                if (answer.type !== "answer") throw new Error("Not an answer");
+                await transport.handleAnswer(answer.sdp);
+              } catch (e2) {
+                alert("Invalid QR Code: " + e2);
+                setStep("initial");
+              }
+            });
+          }, 100);
+        };
+        const handleBluetoothScan = async () => {
+          try {
+            setError("");
+            setStep("connecting");
+            await BLESignaling.scanAndPair(async (offerStr) => {
+              const offer = JSON.parse(offerStr);
+              const answer = await transport.handleOffer(offer.sdp);
+              transport.onConnected = () => {
+                setStep("success");
+                setTimeout(() => {
+                  onConnected(transport);
+                  onClose();
+                }, 1500);
+              };
+              return JSON.stringify(answer);
+            });
+          } catch (e2) {
+            setError(e2.message);
+            setStep("initial");
+          }
+        };
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", style: { backgroundColor: "rgba(0,0,0,0.8)", zIndex: 1e4 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content border-0 rounded-4 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header bg-primary text-white border-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-qr-code-scan me-2" }), "Direct Pairing"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close btn-close-white", onClick: onClose })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body p-4 text-center" }, error && /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-danger small py-2" }, error), step === "initial" && /* @__PURE__ */ import_react.default.createElement("div", { className: "py-3" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary mb-4" }, "Pair directly with another device without using a server or the internet."), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleCreateOffer }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-broadcast me-2" }), " 1. I am the INITIATOR (QR)"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleScanOffer }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-camera me-2" }), " 2. I am the RECEIVER (QR)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "divider text-muted small my-3" }, /* @__PURE__ */ import_react.default.createElement("span", null, "OR")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-dark w-100 py-3 fw-bold rounded-pill", onClick: handleBluetoothScan }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-bluetooth me-2" }), " Scan via Bluetooth"), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted extra-small mt-2", style: { fontSize: "0.7rem" } }, "* Bluetooth requires a Sovereign Peripheral (like a Headless Peer) to be advertising.")), step === "show-offer" && /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-3 text-primary" }, "SCAN ME"), /* @__PURE__ */ import_react.default.createElement("p", { className: "small text-muted mb-3" }, "Ask the other device to scan this QR code to start the handshake."), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3" }, /* @__PURE__ */ import_react.default.createElement("canvas", { ref: canvasRef })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-success w-100 py-2 rounded-pill fw-bold", onClick: handleScanAnswer }, "Next: Scan their Answer")), step === "scan-offer" && /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-3 text-primary" }, "SCAN INITIATOR"), /* @__PURE__ */ import_react.default.createElement("p", { className: "small text-muted mb-3" }, "Position the Initiator's QR code in the camera frame."), /* @__PURE__ */ import_react.default.createElement("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })), step === "show-answer" && /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-3 text-success" }, "SCAN MY ANSWER"), /* @__PURE__ */ import_react.default.createElement("p", { className: "small text-muted mb-3" }, "Initiator must scan this QR code to complete the pairing."), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3" }, /* @__PURE__ */ import_react.default.createElement("canvas", { ref: canvasRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-info py-2 small" }, "Waiting for connection...")), step === "scan-answer" && /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-3 text-primary" }, "SCAN RECEIVER'S ANSWER"), /* @__PURE__ */ import_react.default.createElement("p", { className: "small text-muted mb-3" }, "Final step: Scan the QR code shown on the Receiver's device."), /* @__PURE__ */ import_react.default.createElement("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })), (step === "connecting" || step === "success") && /* @__PURE__ */ import_react.default.createElement("div", { className: "py-5" }, step === "connecting" ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "spinner-border text-primary mb-3", role: "status" }), /* @__PURE__ */ import_react.default.createElement("p", { className: "fw-bold" }, "Initializing WebRTC...")) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill text-success", style: { fontSize: "4rem" } }), /* @__PURE__ */ import_react.default.createElement("p", { className: "fw-bold mt-3 h5" }, "Connection Established!"), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-muted small" }, "Devices are now syncing directly.")))))));
+      };
+    }
+  });
+
   // demo/social/src/App.tsx
   var require_App = __commonJS({
     "demo/social/src/App.tsx"() {
-      var import_polyfills692 = __toESM(require_polyfills());
-      var import_react = __toESM(require_react());
+      var import_polyfills695 = __toESM(require_polyfills());
+      var import_react2 = __toESM(require_react());
       var import_client2 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
@@ -114157,6 +114581,7 @@ ${toHex(hashedRequest)}`;
       init_WebRTCRemoteAdapter();
       init_bundler();
       init_MediaUtils();
+      init_PairingModal();
       var DEBUG = false;
       var PrefixProxyAdapter = class {
         constructor(baseAdapter, prefix) {
@@ -114180,7 +114605,7 @@ ${toHex(hashedRequest)}`;
         }
       };
       var App = () => {
-        const [config, setConfig] = (0, import_react.useState)({
+        const [config, setConfig] = (0, import_react2.useState)({
           syncMode: "s3",
           // Default to s3 for existing tests
           region: "ap-southeast-1",
@@ -114196,79 +114621,80 @@ ${toHex(hashedRequest)}`;
           adminPublicKey: ""
           // Public key of the official admin
         });
-        const [isAdmin, setIsAdmin] = (0, import_react.useState)(false);
-        const [adminKeyPublished, setAdminKeyPublished] = (0, import_react.useState)(false);
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
+        const [isAdmin, setIsAdmin] = (0, import_react2.useState)(false);
+        const [adminKeyPublished, setAdminKeyPublished] = (0, import_react2.useState)(false);
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react2.useState)(false);
         const getStorageKey = (key) => `sov_${config.userId}_${key}`;
-        const [autoLogin, setAutoLogin] = (0, import_react.useState)(localStorage.getItem("sov_auto_login") === "true");
-        const [autoSync, setAutoSync] = (0, import_react.useState)(localStorage.getItem("sov_auto_sync") !== "false");
-        const [useWebWorkers, setUseWebWorkers] = (0, import_react.useState)(localStorage.getItem("sov_use_workers") !== "false");
-        const [rememberedUsers, setRememberedUsers] = (0, import_react.useState)(() => {
+        const [autoLogin, setAutoLogin] = (0, import_react2.useState)(localStorage.getItem("sov_auto_login") === "true");
+        const [autoSync, setAutoSync] = (0, import_react2.useState)(localStorage.getItem("sov_auto_sync") !== "false");
+        const [showPairing, setShowPairing] = (0, import_react2.useState)(false);
+        const [useWebWorkers, setUseWebWorkers] = (0, import_react2.useState)(localStorage.getItem("sov_use_workers") !== "false");
+        const [rememberedUsers, setRememberedUsers] = (0, import_react2.useState)(() => {
           const saved = localStorage.getItem("sov_remembered_users");
           return saved ? JSON.parse(saved) : [];
         });
-        const [profileCache, setProfileCache] = (0, import_react.useState)({});
-        const [blobCache, setBlobCache] = (0, import_react.useState)({});
-        const [lastViewed, setLastViewed] = (0, import_react.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
-        const [highlights, setHighlights] = (0, import_react.useState)({ feed: 0, friends: 0 });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react.useState)({});
-        const [sov, setSov] = (0, import_react.useState)(null);
-        const [feed, setFeed] = (0, import_react.useState)(null);
-        const [messaging, setMessaging] = (0, import_react.useState)(null);
-        const [profileModule, setProfileModule] = (0, import_react.useState)(null);
-        const [moderation, setModeration] = (0, import_react.useState)(null);
-        const [reports, setReports] = (0, import_react.useState)([]);
-        const [previewPost, setPreviewPost] = (0, import_react.useState)(null);
-        const [posts, setPosts] = (0, import_react.useState)([]);
-        const [following, setFollowing] = (0, import_react.useState)([]);
-        const [allUsers, setAllUsers] = (0, import_react.useState)([]);
-        const [lastSyncTime, setLastSyncTime] = (0, import_react.useState)(null);
-        const [newPost, setNewPost] = (0, import_react.useState)("");
-        const [newImage, setNewPostImage] = (0, import_react.useState)(null);
-        const [newImagePreview, setNewImagePreview] = (0, import_react.useState)(null);
-        const [msgImage, setMsgImage] = (0, import_react.useState)(null);
-        const [msgImagePreview, setMsgImagePreview] = (0, import_react.useState)(null);
-        const postFileRef = (0, import_react.useRef)(null);
-        const msgFileRef = (0, import_react.useRef)(null);
-        const [profile, setProfile] = (0, import_react.useState)(null);
-        const [syncing, setSyncing] = (0, import_react.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react.useState)("feed");
-        const [messages, setMessages] = (0, import_react.useState)([]);
-        const [groups, setGroups] = (0, import_react.useState)([]);
-        const [selectedGroup, setSelectedGroup] = (0, import_react.useState)(null);
-        const [groupPosts, setGroupPosts] = (0, import_react.useState)([]);
-        const [groupInput, setGroupInput] = (0, import_react.useState)("");
-        const [groupImage, setGroupImage] = (0, import_react.useState)(null);
-        const [groupImagePreview, setGroupImagePreview] = (0, import_react.useState)(null);
-        const groupFileRef = (0, import_react.useRef)(null);
-        const [msgInput, setMsgInput] = (0, import_react.useState)("");
-        const [selectedUser, setSelectedUser] = (0, import_react.useState)(null);
-        const [oldPassword, setOldPassword] = (0, import_react.useState)("");
-        const [newPassword, setNewPassword] = (0, import_react.useState)("");
-        const [lookbackDays, setLookbackDays] = (0, import_react.useState)(5);
-        const [isConnected, setIsConnected] = (0, import_react.useState)(true);
-        const [manualDisconnect, setManualDisconnect] = (0, import_react.useState)(false);
-        const [reconnectDelay, setReconnectDelay] = (0, import_react.useState)(1e3);
-        const [unreadCounts, setUnreadCounts] = (0, import_react.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
-        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react.useState)({});
-        const [conflict, setConflict] = (0, import_react.useState)(null);
-        const lastViewedRef = (0, import_react.useRef)(lastViewed);
-        const discoveryMapRef = (0, import_react.useRef)(discoveryMap);
-        const currentTabRef = (0, import_react.useRef)(currentTab);
-        const selectedUserRef = (0, import_react.useRef)(selectedUser);
-        (0, import_react.useEffect)(() => {
+        const [profileCache, setProfileCache] = (0, import_react2.useState)({});
+        const [blobCache, setBlobCache] = (0, import_react2.useState)({});
+        const [lastViewed, setLastViewed] = (0, import_react2.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
+        const [highlights, setHighlights] = (0, import_react2.useState)({ feed: 0, friends: 0 });
+        const [discoveryMap, setDiscoveryMap] = (0, import_react2.useState)({});
+        const [sov, setSov] = (0, import_react2.useState)(null);
+        const [feed, setFeed] = (0, import_react2.useState)(null);
+        const [messaging, setMessaging] = (0, import_react2.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react2.useState)(null);
+        const [moderation, setModeration] = (0, import_react2.useState)(null);
+        const [reports, setReports] = (0, import_react2.useState)([]);
+        const [previewPost, setPreviewPost] = (0, import_react2.useState)(null);
+        const [posts, setPosts] = (0, import_react2.useState)([]);
+        const [following, setFollowing] = (0, import_react2.useState)([]);
+        const [allUsers, setAllUsers] = (0, import_react2.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react2.useState)(null);
+        const [newPost, setNewPost] = (0, import_react2.useState)("");
+        const [newImage, setNewPostImage] = (0, import_react2.useState)(null);
+        const [newImagePreview, setNewImagePreview] = (0, import_react2.useState)(null);
+        const [msgImage, setMsgImage] = (0, import_react2.useState)(null);
+        const [msgImagePreview, setMsgImagePreview] = (0, import_react2.useState)(null);
+        const postFileRef = (0, import_react2.useRef)(null);
+        const msgFileRef = (0, import_react2.useRef)(null);
+        const [profile, setProfile] = (0, import_react2.useState)(null);
+        const [syncing, setSyncing] = (0, import_react2.useState)(false);
+        const [currentTab, setCurrentTab] = (0, import_react2.useState)("feed");
+        const [messages, setMessages] = (0, import_react2.useState)([]);
+        const [groups, setGroups] = (0, import_react2.useState)([]);
+        const [selectedGroup, setSelectedGroup] = (0, import_react2.useState)(null);
+        const [groupPosts, setGroupPosts] = (0, import_react2.useState)([]);
+        const [groupInput, setGroupInput] = (0, import_react2.useState)("");
+        const [groupImage, setGroupImage] = (0, import_react2.useState)(null);
+        const [groupImagePreview, setGroupImagePreview] = (0, import_react2.useState)(null);
+        const groupFileRef = (0, import_react2.useRef)(null);
+        const [msgInput, setMsgInput] = (0, import_react2.useState)("");
+        const [selectedUser, setSelectedUser] = (0, import_react2.useState)(null);
+        const [oldPassword, setOldPassword] = (0, import_react2.useState)("");
+        const [newPassword, setNewPassword] = (0, import_react2.useState)("");
+        const [lookbackDays, setLookbackDays] = (0, import_react2.useState)(5);
+        const [isConnected, setIsConnected] = (0, import_react2.useState)(true);
+        const [manualDisconnect, setManualDisconnect] = (0, import_react2.useState)(false);
+        const [reconnectDelay, setReconnectDelay] = (0, import_react2.useState)(1e3);
+        const [unreadCounts, setUnreadCounts] = (0, import_react2.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
+        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react2.useState)({});
+        const [conflict, setConflict] = (0, import_react2.useState)(null);
+        const lastViewedRef = (0, import_react2.useRef)(lastViewed);
+        const discoveryMapRef = (0, import_react2.useRef)(discoveryMap);
+        const currentTabRef = (0, import_react2.useRef)(currentTab);
+        const selectedUserRef = (0, import_react2.useRef)(selectedUser);
+        (0, import_react2.useEffect)(() => {
           lastViewedRef.current = lastViewed;
         }, [lastViewed]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           discoveryMapRef.current = discoveryMap;
         }, [discoveryMap]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           currentTabRef.current = currentTab;
         }, [currentTab]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           selectedUserRef.current = selectedUser;
         }, [selectedUser]);
-        const [dialog, setDialog] = (0, import_react.useState)(null);
+        const [dialog, setDialog] = (0, import_react2.useState)(null);
         const showAlert = (message, title = "Notice") => {
           setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
         };
@@ -114313,27 +114739,27 @@ ${toHex(hashedRequest)}`;
         const toggleConnection = () => {
           setIsConnected((prev) => !prev);
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("profile_cache"), JSON.stringify(profileCache));
         }, [profileCache, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("blob_cache"), JSON.stringify(blobCache));
         }, [blobCache, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("discovery_map"), JSON.stringify(discoveryMap));
         }, [discoveryMap, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("last_viewed_v2"), JSON.stringify(lastViewed));
         }, [lastViewed, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("highlights"), JSON.stringify(highlights));
         }, [highlights, isLoggedIn]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           const savedConfig = localStorage.getItem("sov_social_config");
           if (savedConfig && autoLogin) {
             try {
@@ -114726,7 +115152,7 @@ ${toHex(hashedRequest)}`;
             setSyncing(false);
           }
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (isLoggedIn) {
             sync();
             if (currentTab === "feed" || currentTab === "friends") {
@@ -114735,7 +115161,7 @@ ${toHex(hashedRequest)}`;
             }
           }
         }, [currentTab]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (currentTab === "messages" && selectedUser) {
             setLastViewed((prev) => ({
               ...prev,
@@ -114744,15 +115170,15 @@ ${toHex(hashedRequest)}`;
             setUserUnreadCounts((prev) => ({ ...prev, [selectedUser]: 0 }));
           }
         }, [selectedUser, currentTab]);
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (!isLoggedIn || !sov || !feed || !autoSync) return;
           const interval = setInterval(() => {
             sync();
           }, 6e4);
           return () => clearInterval(interval);
         }, [isLoggedIn, sov, feed, autoSync]);
-        const lookbackDaysRef = (0, import_react.useRef)(lookbackDays);
-        (0, import_react.useEffect)(() => {
+        const lookbackDaysRef = (0, import_react2.useRef)(lookbackDays);
+        (0, import_react2.useEffect)(() => {
           lookbackDaysRef.current = lookbackDays;
         }, [lookbackDays]);
         const loadData = async (v2, fm, mm, pm) => {
@@ -114908,7 +115334,7 @@ ${toHex(hashedRequest)}`;
         const handleLoadMore = () => {
           setLookbackDays((prev) => prev + 5);
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (isLoggedIn) loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
         }, [lookbackDays]);
         const handleEditMessage = async (m2) => {
@@ -115038,7 +115464,7 @@ ${toHex(hashedRequest)}`;
           const members = [...selectedGroup.members];
           setShowMemberManagement(true);
         };
-        const [showMemberManagement, setShowMemberManagement] = (0, import_react.useState)(false);
+        const [showMemberManagement, setShowMemberManagement] = (0, import_react2.useState)(false);
         const updateMemberRole = async (userId, newRole) => {
           if (!sov || !selectedGroup) return;
           const updatedMembers = selectedGroup.members.map(
@@ -115130,14 +115556,14 @@ ${toHex(hashedRequest)}`;
             await sync();
           });
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           if (isLoggedIn && selectedGroup) {
             loadGroupPosts();
           }
         }, [selectedGroup, lastSyncTime, isLoggedIn]);
         const BlobImage = ({ path: path2, userId }) => {
-          const [src, setSrc] = (0, import_react.useState)(blobCache[path2]);
-          (0, import_react.useEffect)(() => {
+          const [src, setSrc] = (0, import_react2.useState)(blobCache[path2]);
+          (0, import_react2.useEffect)(() => {
             if (!src && sov) {
               sov.getBlob(path2, userId).then((data) => {
                 if (data) {
@@ -115152,12 +115578,12 @@ ${toHex(hashedRequest)}`;
               });
             }
           }, [path2, userId, sov]);
-          if (!src) return /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light p-5 text-center text-muted" }, "Loading image...");
-          return /* @__PURE__ */ import_react.default.createElement("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
+          if (!src) return /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-light p-5 text-center text-muted" }, "Loading image...");
+          return /* @__PURE__ */ import_react2.default.createElement("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
         };
         const UserAvatar = ({ userId, size = 40 }) => {
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
+          const [userData, setUserData] = (0, import_react2.useState)(profileCache[userId]);
+          (0, import_react2.useEffect)(() => {
             if (profileModule) {
               profileModule.getProfile(userId).then((p3) => {
                 if (p3 && (!userData || p3.updatedAt > (userData.updatedAt || 0) || p3.name !== userData.name || p3.avatar !== userData.avatar)) {
@@ -115168,11 +115594,11 @@ ${toHex(hashedRequest)}`;
             }
           }, [userId, profileModule, lastSyncTime]);
           const p2 = userData || { name: userId };
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, p2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" } }, userId[0].toUpperCase()), size > 30 && /* @__PURE__ */ import_react.default.createElement("span", { className: "fw-bold" }, p2.name || userId));
+          return /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, p2.avatar ? /* @__PURE__ */ import_react2.default.createElement("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" } }, userId[0].toUpperCase()), size > 30 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "fw-bold" }, p2.name || userId));
         };
         const UserName = ({ userId, className }) => {
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
+          const [userData, setUserData] = (0, import_react2.useState)(profileCache[userId]);
+          (0, import_react2.useEffect)(() => {
             if (profileModule) {
               profileModule.getProfile(userId).then((p2) => {
                 if (p2 && (!userData || p2.updatedAt > (userData.updatedAt || 0) || p2.name !== userData.name)) {
@@ -115182,7 +115608,7 @@ ${toHex(hashedRequest)}`;
               });
             }
           }, [userId, profileModule, lastSyncTime]);
-          return /* @__PURE__ */ import_react.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
+          return /* @__PURE__ */ import_react2.default.createElement("span", { className: className || "fw-bold" }, userData?.name || userId);
         };
         const isUserAnAdmin = (userId) => {
           if (userId === "admin") return true;
@@ -115206,7 +115632,7 @@ ${toHex(hashedRequest)}`;
           const replies = allPosts.filter((p2) => p2.parentId === post.id);
           const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
           const isAdminPost = post.userId !== config.userId && isUserAnAdmin(post.userId);
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isAdminPost ? "border-danger shadow-sm" : isNew ? "border-primary shadow-sm" : ""}`, style: isAdminPost ? { borderWidth: "2px" } : isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: post.userId }), isAdminPost && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 badge bg-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))), post.userId !== config.userId && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post) }, "Report Abuse"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react.default.createElement(
+          return /* @__PURE__ */ import_react2.default.createElement("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("div", { key: post.id, className: `card post-card p-3 ${isAdminPost ? "border-danger shadow-sm" : isNew ? "border-primary shadow-sm" : ""}`, style: isAdminPost ? { borderWidth: "2px" } : isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {} }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center mb-3" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: post.userId }), isAdminPost && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-2 badge bg-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted x-small" }, new Date(post.timestamp).toLocaleString(), post.isEdited && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-1 badge bg-light text-muted fw-normal" }, "Edited"), post.parentUserId && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-1" }, "replied to ", /* @__PURE__ */ import_react2.default.createElement(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown" }, "\u22EE"), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item", onClick: () => handleEditPost(post) }, "Edit")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post) }, "Delete"))), post.userId !== config.userId && /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post) }, "Report Abuse"))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, post.isDeleted ? /* @__PURE__ */ import_react2.default.createElement("i", { className: "text-muted small" }, "This post was deleted") : post.content), post.image && !post.isDeleted && /* @__PURE__ */ import_react2.default.createElement(BlobImage, { path: post.image, userId: post.userId }), /* @__PURE__ */ import_react2.default.createElement("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around" }, /* @__PURE__ */ import_react2.default.createElement(
             "button",
             {
               className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
@@ -115215,57 +115641,67 @@ ${toHex(hashedRequest)}`;
             },
             "Like ",
             post.likesCount ? `(${post.likesCount})` : ""
-          ), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleComment(post), disabled: post.isDeleted }, "Comment"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleShare(post), disabled: post.isDeleted }, "Share"))), replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: reply.id, post: reply, allPosts, depth: depth + 1 })));
+          ), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleComment(post), disabled: post.isDeleted }, "Comment"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleShare(post), disabled: post.isDeleted }, "Share"))), replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ import_react2.default.createElement(PostItem, { key: reply.id, post: reply, allPosts, depth: depth + 1 })));
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "text-primary text-center fw-bold mb-4" }, "Sovereign Social"), rememberedUsers.length > 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Switch Account"), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, rememberedUsers.map((u2) => /* @__PURE__ */ import_react.default.createElement(
+          return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container mt-5", style: { maxWidth: "500px" } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "text-primary text-center fw-bold mb-4" }, "Sovereign Social"), rememberedUsers.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Switch Account"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group" }, rememberedUsers.map((u2) => /* @__PURE__ */ import_react2.default.createElement(
             "button",
             {
               key: u2.userId,
               className: "list-group-item list-group-item-action d-flex align-items-center py-2",
               onClick: () => performLogin(u2.config)
             },
-            u2.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
-            /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
-            /* @__PURE__ */ import_react.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
-          )))), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+            u2.avatar ? /* @__PURE__ */ import_react2.default.createElement("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" } }, u2.userId[0].toUpperCase()),
+            /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold text-truncate" }, u2.name, u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted text-truncate" }, u2.userId)),
+            /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-primary small" }, "Login \u2192")
+          )))), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Sync Mode"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "btn-group w-100 mb-4 flex-wrap" }, /* @__PURE__ */ import_react2.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline" }, "Offline-First"), /* @__PURE__ */ import_react2.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeS3" }, "S3 Cloud"), /* @__PURE__ */ import_react2.default.createElement("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc" }, "WebRTC Mesh")), config.syncMode === "s3" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Connection Settings"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Account Credentials"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
             setAutoLogin(e2.target.checked);
             localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoSyncCheck", checked: autoSync, onChange: (e2) => {
+          } }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-check-label small", htmlFor: "autoLogin" }, "Auto-login next time")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-check mb-2" }, /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "autoSyncCheck", checked: autoSync, onChange: (e2) => {
             setAutoSync(e2.target.checked);
             localStorage.setItem("sov_auto_sync", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "autoSyncCheck" }, "Enable Background Sync (60s)")), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "useWebWorkers", checked: useWebWorkers, onChange: (e2) => {
+          } }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-check-label small", htmlFor: "autoSyncCheck" }, "Enable Background Sync (60s)")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-check mb-4" }, /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "useWebWorkers", checked: useWebWorkers, onChange: (e2) => {
             setUseWebWorkers(e2.target.checked);
             localStorage.setItem("sov_use_workers", e2.target.checked.toString());
-          } }), /* @__PURE__ */ import_react.default.createElement("label", { className: "form-check-label small", htmlFor: "useWebWorkers" }, "Use Web Workers (Performance)")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }));
+          } }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-check-label small", htmlFor: "useWebWorkers" }, "Use Web Workers (Performance)")), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login }, "Log In"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center mt-3" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData }, "Reset Local Data"))), /* @__PURE__ */ import_react2.default.createElement(Dialog, { dialog, setDialog, profileCache }));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react.default.createElement("div", { className: "mx-auto d-flex align-items-center mobile-hide" }, /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms", unreadCounts.rooms > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-2 mobile-hide", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container-fluid p-0" }, /* @__PURE__ */ import_react2.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" }, /* @__PURE__ */ import_react2.default.createElement("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#" }, "sov", config.syncMode === "webrtc" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)" }, "P2P Local") : config.syncMode === "peerjs" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)" }, "P2P Global") : /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud" }, "S3")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mx-auto d-flex align-items-center mobile-hide" }, /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed") }, "Home", unreadCounts.feed > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends") }, "Friends", unreadCounts.friends > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages") }, "Messages", unreadCounts.messages > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms") }, "Rooms", unreadCounts.rooms > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile") }, "Profile"), isAdmin && /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin") }, "Admin")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, !isConnected && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary rounded-pill me-2" }, "Offline Mode"), config.syncMode === "offline" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill me-2 mobile-hide", onClick: handleConnectRemote }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cloud-upload me-1" }), " Connect Remote"), /* @__PURE__ */ import_react2.default.createElement(
           "button",
           {
             className: `btn btn-link px-2 me-1 ${isConnected ? "text-success" : "text-danger"}`,
             onClick: toggleConnection,
             title: isConnected ? "Connected" : "Disconnected"
           },
-          /* @__PURE__ */ import_react.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
-        ), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId, size: 32 })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none", onClick: sync, disabled: syncing || config.syncMode === "offline", title: "Sync Now" }, /* @__PURE__ */ import_react.default.createElement("i", { className: `bi bi-arrow-repeat ${syncing ? "spin" : ""}` })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 mobile-hide", onClick: sync, disabled: syncing || config.syncMode === "offline" }, syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2 mobile-hide", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "bottom-nav d-md-none" }, /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
+          /* @__PURE__ */ import_react2.default.createElement("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } })
+        ), (config.syncMode === "webrtc" || config.syncMode === "peerjs") && /* @__PURE__ */ import_react2.default.createElement(
+          "button",
+          {
+            className: "btn btn-sm btn-outline-primary rounded-pill me-2",
+            onClick: () => setShowPairing(true),
+            title: "Direct QR Pair"
+          },
+          /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-qr-code-scan" }),
+          " ",
+          /* @__PURE__ */ import_react2.default.createElement("span", { className: "mobile-hide" }, "Pair")
+        ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: config.userId, size: 32 })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none", onClick: sync, disabled: syncing || config.syncMode === "offline", title: "Sync Now" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: `bi bi-arrow-repeat ${syncing ? "spin" : ""}` })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-secondary ms-2 mobile-hide", onClick: sync, disabled: syncing || config.syncMode === "offline" }, syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-danger ms-2 mobile-hide", onClick: logout }, "Logout"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "bottom-nav d-md-none" }, /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("feed");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-house" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Home"), unreadCounts.feed > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "friends" ? "active" : ""}`, onClick: (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-house" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Home"), unreadCounts.feed > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.feed)), /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "friends" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("friends");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-people" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Friends"), unreadCounts.friends > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "messages" ? "active" : ""}`, onClick: (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-people" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Friends"), unreadCounts.friends > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.friends)), /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "messages" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("messages");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-chat-dots" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Chat"), unreadCounts.messages > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "rooms" ? "active" : ""}`, onClick: (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-chat-dots" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Chat"), unreadCounts.messages > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.messages)), /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "rooms" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("rooms");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-grid" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Rooms"), unreadCounts.rooms > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "profile" ? "active" : ""}`, onClick: (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-grid" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Rooms"), unreadCounts.rooms > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-danger" }, unreadCounts.rooms)), /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "profile" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("profile");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Profile")), isAdmin && /* @__PURE__ */ import_react.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "admin" ? "active" : ""}`, onClick: (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Profile")), isAdmin && /* @__PURE__ */ import_react2.default.createElement("a", { href: "#", className: `bottom-nav-item ${currentTab === "admin" ? "active" : ""}`, onClick: (e2) => {
           e2.preventDefault();
           setCurrentTab("admin");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock" }), /* @__PURE__ */ import_react.default.createElement("span", null, "Admin"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react.default.createElement("div", { className: "feed-container mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-8 mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-lock" }), /* @__PURE__ */ import_react2.default.createElement("span", null, "Admin"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "container mt-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, currentTab === "feed" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "feed-container mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card post-card p-3 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: config.userId }), /* @__PURE__ */ import_react2.default.createElement("div", { className: "ms-2 flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }))), newImagePreview && /* @__PURE__ */ import_react2.default.createElement("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between border-top pt-2" }, /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sov px-4", onClick: handlePost }, "Post"))), posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ import_react2.default.createElement(PostItem, { key: post.id, post, allPosts: posts })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center mt-4 mb-5" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore }, "Load more history"))), currentTab === "friends" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-8 mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-3 mb-4 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-0" }, "Discover People"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
           showPrompt("Enter exact User ID to discover:", (uid) => {
             if (uid) {
               setDiscoveryMap((prev) => {
@@ -115275,10 +115711,10 @@ ${toHex(hashedRequest)}`;
               });
             }
           });
-        } }, "+ Add by ID")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
+        } }, "+ Add by ID")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
           const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
-        })))), currentTab === "messages" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedUser ? "mobile-hide" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, (() => {
+          return /* @__PURE__ */ import_react2.default.createElement("div", { key: u2.userId, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {} }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: u2.userId }), following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: () => sov?.unfollow(u2.userId).then(loadData) }, "Following") : /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: () => sov?.follow(u2.userId).then(loadData) }, "Follow"));
+        })))), currentTab === "messages" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedUser ? "mobile-hide" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "mb-0" }, "Chats"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" } }, "+")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, (() => {
           const chatUsers = [...following];
           messages.forEach((m2) => {
             const otherId = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
@@ -115286,38 +115722,38 @@ ${toHex(hashedRequest)}`;
               chatUsers.push({ userId: otherId });
             }
           });
-          if (chatUsers.length === 0) return /* @__PURE__ */ import_react.default.createElement("div", { className: "p-4 text-center text-muted small" }, "No conversations yet. Follow someone to start chatting!");
-          return chatUsers.map((user) => /* @__PURE__ */ import_react.default.createElement("button", { key: user.userId, "data-testid": `chat-item-${user.userId}`, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: user.userId }), isUserAnAdmin(user.userId) && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1 badge bg-danger", style: { fontSize: "0.6rem" } }, "Admin")), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId])));
-        })())), /* @__PURE__ */ import_react.default.createElement("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedUser ? "mobile-hide" : ""}` }, selectedUser ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedUser(null) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-left" })), /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: selectedUser }), isUserAnAdmin(selectedUser) && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 badge bg-danger mobile-hide" }, "Official Administrator")), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => {
+          if (chatUsers.length === 0) return /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-4 text-center text-muted small" }, "No conversations yet. Follow someone to start chatting!");
+          return chatUsers.map((user) => /* @__PURE__ */ import_react2.default.createElement("button", { key: user.userId, "data-testid": `chat-item-${user.userId}`, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center flex-grow-1 overflow-hidden" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: user.userId }), isUserAnAdmin(user.userId) && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-1 badge bg-danger", style: { fontSize: "0.6rem" } }, "Admin")), userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-primary" }, userUnreadCounts[user.userId])));
+        })())), /* @__PURE__ */ import_react2.default.createElement("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedUser ? "mobile-hide" : ""}` }, selectedUser ? /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedUser(null) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-arrow-left" })), /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: selectedUser }), isUserAnAdmin(selectedUser) && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-2 badge bg-danger mobile-hide" }, "Official Administrator")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => {
           const isAdminMsg = m2.senderId !== config.userId && isUserAnAdmin(m2.senderId);
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: m2.id, "data-testid": "message-bubble", className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : isAdminMsg ? "border border-danger bg-light text-dark shadow-sm" : "bg-light text-dark"}`, style: { maxWidth: "85%", ...isAdminMsg ? { borderWidth: "2px" } : {} } }, isAdminMsg && /* @__PURE__ */ import_react.default.createElement("div", { className: "badge bg-danger mb-1", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), m2.isDeleted ? /* @__PURE__ */ import_react.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
+          return /* @__PURE__ */ import_react2.default.createElement("div", { key: m2.id, "data-testid": "message-bubble", className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : isAdminMsg ? "border border-danger bg-light text-dark shadow-sm" : "bg-light text-dark"}`, style: { maxWidth: "85%", ...isAdminMsg ? { borderWidth: "2px" } : {} } }, isAdminMsg && /* @__PURE__ */ import_react2.default.createElement("div", { className: "badge bg-danger mb-1", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), m2.isDeleted ? /* @__PURE__ */ import_react2.default.createElement("i", { className: "small opacity-75" }, "Message deleted") : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-2 border rounded bg-white text-dark" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold text-primary mb-1" }, "Group Invitation"), (() => {
             try {
               const info = JSON.parse(m2.content.substring(13));
               const localGroup = groups.find((g2) => g2.id === info.id);
               const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
-              return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
+              return /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react2.default.createElement("b", null, m2.senderId), " invited you to join ", /* @__PURE__ */ import_react2.default.createElement("b", null, info.name), "."), localStatus === "joined" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-success w-100" }, "Joined") : localStatus === "declined" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-secondary w-100" }, "Declined") : /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info) }, "Accept"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info) }, "Decline")));
             } catch (e2) {
-              return /* @__PURE__ */ import_react.default.createElement("span", null, "Invalid Invite");
+              return /* @__PURE__ */ import_react2.default.createElement("span", null, "Invalid Invite");
             }
-          })()) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, m2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react.default.createElement("div", { style: { fontSize: "0.6rem" }, className: `mt-1 ${m2.senderId === config.userId ? "opacity-75" : "text-muted"} d-flex justify-content-between` }, /* @__PURE__ */ import_react.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}")))));
-        })), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react.default.createElement("input", { "data-testid": "message-input", className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react.default.createElement("button", { "data-testid": "message-send-btn", className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedGroup ? "mobile-hide" : ""}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group list-group-flush" }, groups.length === 0 ? /* @__PURE__ */ import_react.default.createElement("div", { className: "p-4 text-center text-muted small" }, "No rooms yet. Create one to start collaborating!") : groups.map((group4) => {
+          })()) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, m2.image && /* @__PURE__ */ import_react2.default.createElement(BlobImage, { path: m2.image, userId: m2.senderId }), /* @__PURE__ */ import_react2.default.createElement("div", null, m2.content)), /* @__PURE__ */ import_react2.default.createElement("div", { style: { fontSize: "0.6rem" }, className: `mt-1 ${m2.senderId === config.userId ? "opacity-75" : "text-muted"} d-flex justify-content-between` }, /* @__PURE__ */ import_react2.default.createElement("span", null, new Date(m2.timestamp).toLocaleTimeString(), " ", m2.isEdited && "(Edited)"), m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-2" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "cursor-pointer me-1", onClick: () => handleEditMessage(m2) }, "\u270E"), /* @__PURE__ */ import_react2.default.createElement("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2) }, "\u{1F5D1}")))));
+        })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-top bg-light" }, msgImagePreview && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react2.default.createElement("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }), /* @__PURE__ */ import_react2.default.createElement("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2" }, "\u{1F4F7}"), /* @__PURE__ */ import_react2.default.createElement("input", { "data-testid": "message-input", className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }), /* @__PURE__ */ import_react2.default.createElement("button", { "data-testid": "message-send-btn", className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage }, "Send")))) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a friend to start chatting"))))), currentTab === "rooms" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-0 h-100" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedGroup ? "mobile-hide" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "mb-0" }, "Rooms"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup }, "+")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, groups.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-4 text-center text-muted small" }, "No rooms yet. Create one to start collaborating!") : groups.map((group4) => {
           const me = group4.members.find((mb) => mb.userId === config.userId);
           const isPending = me?.status === "pending";
-          return /* @__PURE__ */ import_react.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedGroup?.id === group4.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group4) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold text-truncate" }, group4.name), isPending && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-warning text-dark" }, "Invite"), !isPending && group4.createdAt > (lastViewed.roomChat?.[group4.id] || 0) && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge rounded-pill bg-primary" }, "New"));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedGroup ? "mobile-hide" : ""}` }, selectedGroup ? /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedGroup(null) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-left" })), /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name)), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mobile-hide" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => {
+          return /* @__PURE__ */ import_react2.default.createElement("button", { key: group4.id, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedGroup?.id === group4.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group4) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold text-truncate" }, group4.name), isPending && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-warning text-dark" }, "Invite"), !isPending && group4.createdAt > (lastViewed.roomChat?.[group4.id] || 0) && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge rounded-pill bg-primary" }, "New"));
+        }))), /* @__PURE__ */ import_react2.default.createElement("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedGroup ? "mobile-hide" : ""}` }, selectedGroup ? /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-bottom bg-light" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedGroup(null) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-arrow-left" })), /* @__PURE__ */ import_react2.default.createElement("h6", { className: "mb-0 fw-bold" }, selectedGroup.name)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted mobile-hide" }, new Date(selectedGroup.createdAt).toLocaleDateString()), (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers }, "Manage"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-wrap gap-1" }, selectedGroup.members.map((m2) => /* @__PURE__ */ import_react2.default.createElement("span", { key: m2.userId, className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" } }, m2.userId, " (", m2.status || "pending", ")"))), selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "small fw-bold" }, "You have a pending invite to this room."), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup) }, "Accept"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup) }, "Decline")))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-column" }, groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => {
           const isAdminGroupPost = p2.userId !== config.userId && isUserAnAdmin(p2.userId);
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), isAdminGroupPost && /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-danger ms-2", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
+          return /* @__PURE__ */ import_react2.default.createElement("div", { key: p2.id, className: `mb-3 ${p2.type === "system" ? "text-center" : ""}` }, p2.type === "system" ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: p2.userId, size: 16 }), " ", /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-1" }, p2.content)) : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center justify-content-between mb-1" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement(UserAvatar, { userId: p2.userId, size: 24 }), isAdminGroupPost && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-danger ms-2", style: { fontSize: "0.65rem" } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-check me-1" }), "Admin Action"), /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-2 x-small text-muted" }, new Date(p2.timestamp).toLocaleString()), p2.isEdited && /* @__PURE__ */ import_react2.default.createElement("span", { className: "ms-2 x-small text-muted italic" }, "(edited)")), (() => {
             const isAuthor = p2.userId === config.userId;
             const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
             const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
             if (!isAuthor && !canDelete) return null;
-            return /* @__PURE__ */ import_react.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react.default.createElement("li", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
-          })()), /* @__PURE__ */ import_react.default.createElement("div", { className: `ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? "border border-danger" : ""}`, style: { display: "inline-block", maxWidth: "95%", ...isAdminGroupPost ? { borderWidth: "2px" } : {} } }, p2.image && /* @__PURE__ */ import_react.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react.default.createElement("div", null, p2.content))));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
+            return /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small" }, isAuthor && /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2) }, "Edit")), canDelete && /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2) }, "Delete"))));
+          })()), /* @__PURE__ */ import_react2.default.createElement("div", { className: `ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? "border border-danger" : ""}`, style: { display: "inline-block", maxWidth: "95%", ...isAdminGroupPost ? { borderWidth: "2px" } : {} } }, p2.image && /* @__PURE__ */ import_react2.default.createElement(BlobImage, { path: p2.image, userId: p2.userId }), /* @__PURE__ */ import_react2.default.createElement("div", null, p2.content))));
+        }))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "p-3 border-top bg-light" }, groupImagePreview && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-2 position-relative d-inline-block" }, /* @__PURE__ */ import_react2.default.createElement("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
           setGroupImage(null);
           setGroupImagePreview(null);
           if (groupFileRef.current) groupFileRef.current.value = "";
-        } }, "\xD7")), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-image" }), /* @__PURE__ */ import_react.default.createElement("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup }, "Post")))) : /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a room to start collaborating"))))), currentTab === "profile" && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
+        } }, "\xD7")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-image" }), /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup }, "Post")))) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted" }, "Select a room to start collaborating"))))), currentTab === "profile" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6 mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Edit Profile"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center mb-4" }, profile?.avatar ? /* @__PURE__ */ import_react2.default.createElement("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" } }, config.userId[0].toUpperCase()), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-sm btn-outline-primary rounded-pill" }, "Change Avatar", /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
           const file = e2.target.files?.[0];
           if (file) {
             const reader = new FileReader();
@@ -115326,14 +115762,14 @@ ${toHex(hashedRequest)}`;
             };
             reader.readAsDataURL(file);
           }
-        } })))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "User ID (Share this for P2P)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary", onClick: () => {
+        } })))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Display Name"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "User ID (Share this for P2P)"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react2.default.createElement("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-secondary", onClick: () => {
           navigator.clipboard.writeText(config.userId);
           showAlert("User ID copied!", "Clipboard");
-        } }, "Copy"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
+        } }, "Copy"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Bio"), /* @__PURE__ */ import_react2.default.createElement("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
           await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold" }, "Account Actions"), config.syncMode === "offline" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-upload me-2" }), " Connect Remote"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+        } }, "Save Changes")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react2.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Account Actions"), config.syncMode === "offline" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cloud-upload me-2" }), " Connect Remote"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
           const uid = await new Promise((resolve2) => showPrompt("Enter User ID to blacklist:", resolve2));
           if (uid && moderation) {
             try {
@@ -115344,12 +115780,12 @@ ${toHex(hashedRequest)}`;
               showAlert("Failed to blacklist: " + e2.message, "Error");
             }
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-x me-2" }), " Blacklist User"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-2", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person-x me-2" }), " Blacklist User"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-secondary w-100 mb-2", onClick: async () => {
           if (sov) {
             await sov.syncBlacklist();
             showAlert("Blacklist synchronized with cloud.");
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-2" }), " Sync Blacklist"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary w-100", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-arrow-repeat me-2" }), " Sync Blacklist"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-primary w-100", onClick: async () => {
           if (moderation) {
             try {
               await moderation.publishAdminKey();
@@ -115359,13 +115795,13 @@ ${toHex(hashedRequest)}`;
               showAlert("Failed to publish admin key: " + e2.message, "Error");
             }
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-key me-2" }), " Publish Admin Key")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-3" }, "Provision User S3 Keys"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted mb-3" }, "Generate dedicated S3 credentials for a new user to ensure infrastructure isolation."), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-key me-2" }), " Publish Admin Key")))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Provision User S3 Keys"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted mb-3" }, "Generate dedicated S3 credentials for a new user to ensure infrastructure isolation."), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary w-100 mb-2", onClick: async () => {
           showPrompt("Enter new User ID to provision:", (uid) => {
             if (uid) {
               showAlert(`To provision ${uid} in your S3 backend, ensure they have a key with read/write access to their prefixed paths and the global registry.`, "Provisioning Instructions");
             }
           });
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-plus-fill me-2" }), " Create User Keys"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-12" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card border-0 bg-light border-danger border-start border-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold text-danger mb-3" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Data Management (Root Access)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-3 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-primary", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person-plus-fill me-2" }), " Create User Keys"))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-12" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card border-0 bg-light border-danger border-start border-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold text-danger mb-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Data Management (Root Access)"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-3 flex-wrap" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-primary", onClick: async () => {
           if (moderation) {
             try {
               const data = await moderation.exportAllData();
@@ -115381,7 +115817,7 @@ ${toHex(hashedRequest)}`;
               showAlert("Export failed: " + e2.message, "Error");
             }
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-download me-2" }), " Export All Data"), /* @__PURE__ */ import_react.default.createElement("label", { className: "btn btn-outline-secondary mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-upload me-2" }), " Import Data", /* @__PURE__ */ import_react.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: async (e2) => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-download me-2" }), " Export All Data"), /* @__PURE__ */ import_react2.default.createElement("label", { className: "btn btn-outline-secondary mb-0" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-upload me-2" }), " Import Data", /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: async (e2) => {
           const file = e2.target.files?.[0];
           if (file && moderation) {
             const reader = new FileReader();
@@ -115397,7 +115833,7 @@ ${toHex(hashedRequest)}`;
             };
             reader.readAsText(file);
           }
-        } })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-danger ms-auto", onClick: () => {
+        } })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-danger ms-auto", onClick: () => {
           showConfirm("WARNING: This will permanently delete ALL user data, posts, and DMs for this App ID across the entire S3 bucket. This action CANNOT be undone. Are you absolutely sure?", async () => {
             if (moderation) {
               try {
@@ -115408,13 +115844,13 @@ ${toHex(hashedRequest)}`;
               }
             }
           }, "BURN IT TO THE GROUND");
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-fire me-2" }), " BURN IT TO THE GROUND")))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center mt-2 mb-3" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "fw-bold mb-0 flex-grow-1" }, "Abuse Reports"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-fire me-2" }), " BURN IT TO THE GROUND")))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center mt-2 mb-3" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-0 flex-grow-1" }, "Abuse Reports"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-secondary", onClick: async () => {
           if (moderation) {
             const r2 = await moderation.getReports();
             setReports(r2);
             showAlert(`Fetched ${r2.length} reports.`);
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Refresh")), /* @__PURE__ */ import_react.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react.default.createElement("tr", null, /* @__PURE__ */ import_react.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react.default.createElement("td", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, report.evidence && /* @__PURE__ */ import_react.default.createElement("button", { title: "View Content", className: "btn btn-sm btn-outline-primary", onClick: () => setPreviewPost(report.evidence) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-eye" })), /* @__PURE__ */ import_react.default.createElement("button", { title: "Delete Post Only", className: "btn btn-sm btn-outline-danger", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Refresh")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "table-responsive" }, /* @__PURE__ */ import_react2.default.createElement("table", { className: "table table-hover align-middle" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "table-light" }, /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("th", null, "Reporter"), /* @__PURE__ */ import_react2.default.createElement("th", null, "Target"), /* @__PURE__ */ import_react2.default.createElement("th", null, "Type"), /* @__PURE__ */ import_react2.default.createElement("th", null, "Reason"), /* @__PURE__ */ import_react2.default.createElement("th", null, "Actions"))), /* @__PURE__ */ import_react2.default.createElement("tbody", null, reports.length === 0 ? /* @__PURE__ */ import_react2.default.createElement("tr", null, /* @__PURE__ */ import_react2.default.createElement("td", { colSpan: 5, className: "text-center py-4 text-muted" }, "No pending reports found in this session.")) : reports.map((report) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: report.id }, /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(UserName, { userId: report.reporterId })), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement(UserName, { userId: report.targetUserId })), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-info" }, report.contentType)), /* @__PURE__ */ import_react2.default.createElement("td", { className: "small" }, report.reason), /* @__PURE__ */ import_react2.default.createElement("td", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-2" }, report.evidence && /* @__PURE__ */ import_react2.default.createElement("button", { title: "View Content", className: "btn btn-sm btn-outline-primary", onClick: () => setPreviewPost(report.evidence) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-eye" })), /* @__PURE__ */ import_react2.default.createElement("button", { title: "Delete Post Only", className: "btn btn-sm btn-outline-danger", onClick: async () => {
           if (moderation && report.evidence && sov) {
             try {
               const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
@@ -115428,7 +115864,7 @@ ${toHex(hashedRequest)}`;
               showAlert(e2.message);
             }
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-trash" })), /* @__PURE__ */ import_react.default.createElement("button", { title: "Ban User", className: "btn btn-sm btn-danger", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-trash" })), /* @__PURE__ */ import_react2.default.createElement("button", { title: "Ban User", className: "btn btn-sm btn-danger", onClick: async () => {
           if (moderation && sov) {
             try {
               await moderation.banUser(report.targetUserId);
@@ -115440,13 +115876,24 @@ ${toHex(hashedRequest)}`;
               showAlert(e2.message);
             }
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-person-x" }), " Ban"), /* @__PURE__ */ import_react.default.createElement("button", { title: "Ignore Report", className: "btn btn-sm btn-light", onClick: async () => {
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person-x" }), " Ban"), /* @__PURE__ */ import_react2.default.createElement("button", { title: "Ignore Report", className: "btn btn-sm btn-light", onClick: async () => {
           if (moderation) {
             await moderation.deleteReport(report.id);
             const r2 = await moderation.getReports();
             setReports(r2);
           }
-        } }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-x-lg" }))))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-info py-2 small mb-0" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-info-circle me-2" }), "Reports are encrypted with the Admin Public Key and stored in ", /* @__PURE__ */ import_react.default.createElement("code", null, config.appId, "/admin/reports/"), ". A background worker or Lambda is typically used to decrypt and aggregate these."))))), /* @__PURE__ */ import_react.default.createElement(Dialog, { dialog, setDialog, profileCache }), conflict && /* @__PURE__ */ import_react.default.createElement(
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-x-lg" }))))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-info py-2 small mb-0" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-info-circle me-2" }), "Reports are encrypted with the Admin Public Key and stored in ", /* @__PURE__ */ import_react2.default.createElement("code", null, config.appId, "/admin/reports/"), ". A background worker or Lambda is typically used to decrypt and aggregate these."))))), /* @__PURE__ */ import_react2.default.createElement(Dialog, { dialog, setDialog, profileCache }), showPairing && /* @__PURE__ */ import_react2.default.createElement(
+          PairingModal,
+          {
+            userId: config.userId,
+            onClose: () => setShowPairing(false),
+            onConnected: (transport) => {
+              if (sov) {
+                sov.connectNativeRTC(transport);
+              }
+            }
+          }
+        ), conflict && /* @__PURE__ */ import_react2.default.createElement(
           ConflictResolutionModal,
           {
             conflict,
@@ -115457,7 +115904,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           }
-        ), /* @__PURE__ */ import_react.default.createElement(
+        ), /* @__PURE__ */ import_react2.default.createElement(
           MemberManagementModal,
           {
             show: showMemberManagement,
@@ -115470,7 +115917,7 @@ ${toHex(hashedRequest)}`;
             onLeave: handleLeaveGroup,
             currentUserId: config.userId
           }
-        ), previewPost && /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Reported Content Preview"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: () => setPreviewPost(null) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement(PostItem, { post: previewPost, allPosts: [] })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-secondary rounded-pill px-4", onClick: () => setPreviewPost(null) }, "Close"))))));
+        ), previewPost && /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Reported Content Preview"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn-close", onClick: () => setPreviewPost(null) })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement(PostItem, { post: previewPost, allPosts: [] })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0" }, /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-secondary rounded-pill px-4", onClick: () => setPreviewPost(null) }, "Close"))))));
       };
       var ConflictResolutionModal = ({ conflict, onResolve }) => {
         if (!conflict) return null;
@@ -115499,27 +115946,27 @@ ${toHex(hashedRequest)}`;
             return "Binary Data";
           }
         };
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync for the following file:"), /* @__PURE__ */ import_react.default.createElement("div", { className: "alert alert-light border small mb-4" }, /* @__PURE__ */ import_react.default.createElement("code", null, conflict.path)), /* @__PURE__ */ import_react.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-primary mb-3" }, "Local Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.localData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.localData)))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "fw-bold text-success mb-3" }, "Remote Version"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.remoteData.length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.remoteData)))))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip for Now")))));
+        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync for the following file:"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-light border small mb-4" }, /* @__PURE__ */ import_react2.default.createElement("code", null, conflict.path)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold text-primary mb-3" }, "Local Version"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react2.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.localData.length)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react2.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.localData)))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold text-success mb-3" }, "Remote Version"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small mb-2" }, /* @__PURE__ */ import_react2.default.createElement("strong", null, "Size:"), " ", formatSize(conflict.remoteData.length)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" } }, /* @__PURE__ */ import_react2.default.createElement("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" } }, getPreview(conflict.remoteData)))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip for Now")))));
       };
       var MemberManagementModal = ({ show, onClose, group: group4, profileCache, onUpdateRole, onRemove, onAdd, onLeave, currentUserId }) => {
         if (!show || !group4) return null;
         const myRole = group4.members.find((m2) => m2.userId === currentUserId)?.role;
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Manage Members: ", group4.name), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: onClose })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react.default.createElement("h6", { className: "mb-0 fw-bold" }, "Group Members (", group4.members.length, ")"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd }, "+ Add Members")), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group" }, group4.members.map((member2) => {
+        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, "Manage Members: ", group4.name), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn-close", onClick: onClose })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "mb-0 fw-bold" }, "Group Members (", group4.members.length, ")"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd }, "+ Add Members")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group" }, group4.members.map((member2) => {
           const profile = profileCache[member2.userId];
           const isMe = member2.userId === currentUserId;
           const canManage = !isMe && (myRole === "owner" || myRole === "admin" && member2.role === "member");
-          return /* @__PURE__ */ import_react.default.createElement("div", { key: member2.userId, className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center" }, profile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" } }, member2.userId[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, profile?.name || member2.userId, " ", isMe && "(You)"), /* @__PURE__ */ import_react.default.createElement("div", { className: "small text-muted" }, /* @__PURE__ */ import_react.default.createElement("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2` }, member2.role), /* @__PURE__ */ import_react.default.createElement("span", { className: "text-capitalize" }, member2.status || "pending")))), canManage && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, member2.role === "member" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin") }, "Make Admin"), member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member") }, "Remove Admin"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
+          return /* @__PURE__ */ import_react2.default.createElement("div", { key: member2.userId, className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, profile?.avatar ? /* @__PURE__ */ import_react2.default.createElement("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" } }, member2.userId[0].toUpperCase()), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, profile?.name || member2.userId, " ", isMe && "(You)"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2` }, member2.role), /* @__PURE__ */ import_react2.default.createElement("span", { className: "text-capitalize" }, member2.status || "pending")))), canManage && /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-2" }, member2.role === "member" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin") }, "Make Admin"), member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member") }, "Remove Admin"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
             if (confirm(`Are you sure you want to remove ${member2.userId}?`)) onRemove(member2.userId);
           } }, "Remove")));
-        }))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between" }, myRole !== "owner" ? /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave }, "Leave Room") : /* @__PURE__ */ import_react.default.createElement("div", null), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose }, "Close")))));
+        }))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between" }, myRole !== "owner" ? /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave }, "Leave Room") : /* @__PURE__ */ import_react2.default.createElement("div", null), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose }, "Close")))));
       };
       var root = (0, import_client2.createRoot)(document.getElementById("root"));
-      root.render(/* @__PURE__ */ import_react.default.createElement(App, null));
+      root.render(/* @__PURE__ */ import_react2.default.createElement(App, null));
       var Dialog = ({ dialog, setDialog, profileCache }) => {
-        const [inputValue, setInputValue] = (0, import_react.useState)(dialog?.defaultValue || "");
-        const [selectedValues, setSelectedValues] = (0, import_react.useState)([]);
-        const [searchQuery, setSearchSearchQuery] = (0, import_react.useState)("");
-        const [configData, setConfigData] = (0, import_react.useState)({
+        const [inputValue, setInputValue] = (0, import_react2.useState)(dialog?.defaultValue || "");
+        const [selectedValues, setSelectedValues] = (0, import_react2.useState)([]);
+        const [searchQuery, setSearchSearchQuery] = (0, import_react2.useState)("");
+        const [configData, setConfigData] = (0, import_react2.useState)({
           syncMode: "s3",
           region: "us-east-1",
           endpoint: "",
@@ -115527,7 +115974,7 @@ ${toHex(hashedRequest)}`;
           secretAccessKey: "",
           bucketName: ""
         });
-        (0, import_react.useEffect)(() => {
+        (0, import_react2.useEffect)(() => {
           setInputValue(dialog?.defaultValue || "");
           setSelectedValues([]);
           setSearchSearchQuery("");
@@ -115541,7 +115988,7 @@ ${toHex(hashedRequest)}`;
         const filteredOptions = dialog.options?.filter(
           (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
         ) || [];
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.title), /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn-close", onClick: dialog.onCancel })), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.title), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn-close", onClick: dialog.onCancel })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react2.default.createElement(
           "input",
           {
             autoFocus: true,
@@ -115550,7 +115997,7 @@ ${toHex(hashedRequest)}`;
             onChange: (e2) => setInputValue(e2.target.value),
             onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
           }
-        ), dialog.type === "config" && /* @__PURE__ */ import_react.default.createElement("div", { className: "config-form" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label small fw-bold" }, "Sync Mode"), /* @__PURE__ */ import_react.default.createElement("select", { className: "form-select mb-3 rounded-pill", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }) }, /* @__PURE__ */ import_react.default.createElement("option", { value: "s3" }, "S3 Cloud"), /* @__PURE__ */ import_react.default.createElement("option", { value: "webrtc" }, "WebRTC Mesh")), configData.syncMode === "s3" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) }))), dialog.type === "multiselect" && /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement(
+        ), dialog.type === "config" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "config-form" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold" }, "Sync Mode"), /* @__PURE__ */ import_react2.default.createElement("select", { className: "form-select mb-3 rounded-pill", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }) }, /* @__PURE__ */ import_react2.default.createElement("option", { value: "s3" }, "S3 Cloud"), /* @__PURE__ */ import_react2.default.createElement("option", { value: "webrtc" }, "WebRTC Mesh")), configData.syncMode === "s3" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) }))), dialog.type === "multiselect" && /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement(
           "input",
           {
             type: "text",
@@ -115559,9 +116006,9 @@ ${toHex(hashedRequest)}`;
             value: searchQuery,
             onChange: (e2) => setSearchSearchQuery(e2.target.value)
           }
-        )), /* @__PURE__ */ import_react.default.createElement("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" } }, filteredOptions.length > 0 ? filteredOptions.map((opt) => {
+        )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" } }, filteredOptions.length > 0 ? filteredOptions.map((opt) => {
           const userProfile = profileCache[opt.value];
-          return /* @__PURE__ */ import_react.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer" }, /* @__PURE__ */ import_react.default.createElement(
+          return /* @__PURE__ */ import_react2.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer" }, /* @__PURE__ */ import_react2.default.createElement(
             "input",
             {
               type: "checkbox",
@@ -115569,8 +116016,8 @@ ${toHex(hashedRequest)}`;
               checked: selectedValues.includes(opt.value),
               onChange: () => toggleOption(opt.value)
             }
-          ), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex align-items-center flex-grow-1" }, userProfile?.avatar ? /* @__PURE__ */ import_react.default.createElement("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" } }, opt.value[0].toUpperCase()), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold small" }, userProfile?.name || opt.label), /* @__PURE__ */ import_react.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, opt.value))));
-        }) : /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center py-3 text-muted small" }, "No members found")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react.default.createElement(
+          ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center flex-grow-1" }, userProfile?.avatar ? /* @__PURE__ */ import_react2.default.createElement("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" } }, opt.value[0].toUpperCase()), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold small" }, userProfile?.name || opt.label), /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted", style: { fontSize: "0.7rem" } }, opt.value))));
+        }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center py-3 text-muted small" }, "No members found")))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0" }, dialog.type !== "alert" && /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel }, "Cancel"), /* @__PURE__ */ import_react2.default.createElement(
           "button",
           {
             type: "button",
