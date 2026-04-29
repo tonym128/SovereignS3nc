@@ -27,10 +27,19 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
 
     useEffect(() => {
         if (qrValue && canvasRef.current) {
-            // @ts-ignore - Loaded via CDN
-            window.QRCode.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error: any) => {
-                if (error) console.error('[QR] Error generating QR:', error);
-            });
+            const generateQR = () => {
+                // @ts-ignore - Loaded via CDN
+                const lib = window.QRCode || window.qrcode;
+                if (lib && lib.toCanvas) {
+                    lib.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error: any) => {
+                        if (error) console.error('[QR] Error generating QR:', error);
+                    });
+                } else {
+                    console.warn('[QR] QRCode library not yet available, retrying...');
+                    setTimeout(generateQR, 500);
+                }
+            };
+            generateQR();
         }
     }, [qrValue, step]);
 
@@ -50,15 +59,24 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
     };
 
     const startScanner = (onScan: (data: string) => void) => {
-        // @ts-ignore - Loaded via CDN
-        const scanner = new window.Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
-        scanner.render((decodedText: string) => {
-            scanner.clear();
-            onScan(decodedText);
-        }, (error: any) => {
-            // Silent errors while scanning
-        });
-        scannerRef.current = scanner;
+        const initScanner = () => {
+            // @ts-ignore - Loaded via CDN
+            const Lib = window.Html5QrcodeScanner;
+            if (Lib) {
+                const scanner = new Lib("reader", { fps: 10, qrbox: 250 }, false);
+                scanner.render((decodedText: string) => {
+                    scanner.clear();
+                    onScan(decodedText);
+                }, (error: any) => {
+                    // Silent errors while scanning
+                });
+                scannerRef.current = scanner;
+            } else {
+                console.warn('[QR] Scanner library not yet available, retrying...');
+                setTimeout(initScanner, 500);
+            }
+        };
+        initScanner();
     };
 
     const handleScanOffer = () => {
