@@ -50,7 +50,7 @@
 - [x] **Accessibility & UI**
     - [x] Mobile-friendly responsive audit for Social Demo.
     - [x] Create a "Read Only" static export of user profiles and public posts.
-    - [ ] **UI Implementation**: Add "Export Static Website" button to the Social Demo profile screen to trigger the static export process.
+    - [x] **UI Implementation**: Add "Export Static Website" button to the Social Demo profile screen to trigger the static export process.
     - [x] Implement a Conflict Resolution UI for modules to handle concurrent edits.
     - [x] **UI Implementation**: Add Conflict Resolution UI to Social and Banky demos to expose the `pendingConflicts` mechanism to users.
 - [x] Implement Node.js-native image compression fallback in MediaUtils (e.g., using sharp or jimp).

@@ -101,6 +101,7 @@ const App = () => {
     const [reconnectDelay, setReconnectDelay] = useState(1000);
     const [unreadCounts, setUnreadCounts] = useState({ feed: 0, friends: 0, messages: 0, rooms: 0 });
     const [userUnreadCounts, setUserUnreadCounts] = useState<Record<string, number>>({});
+    const [exportAllPosts, setExportAllPosts] = useState(false);
     const [conflict, setConflict] = useState<{ id: string, path: string, resolve: (choice: 'local' | 'remote' | 'abort') => void } | null>(null);
 
     const lastViewedRef = useRef(lastViewed);
@@ -1907,6 +1908,126 @@ const App = () => {
                                    await sync();
                                    showAlert('Profile updated!', 'Success');
                                 }}>Save Changes</button>
+
+                                <hr className="my-4" />
+                                
+                                <h5 className="fw-bold mb-3">Portable Archive</h5>
+                                <div className="small text-muted mb-3">
+                                    Export your profile and social feed as a single, standalone HTML file. 
+                                    All images will be embedded directly in the file so it can be viewed offline.
+                                </div>
+                                
+                                <div className="form-check mb-3">
+                                    <input className="form-check-input" type="checkbox" id="exportAllPosts" checked={exportAllPosts} onChange={e => setExportAllPosts(e.target.checked)} />
+                                    <label className="form-check-label small" htmlFor="exportAllPosts">
+                                        Include posts from everyone I follow (otherwise only my posts)
+                                    </label>
+                                </div>
+
+                                <button className="btn btn-outline-success w-100 py-2 fw-bold" onClick={async () => {
+                                    try {
+                                        showAlert('Generating static export... this may take a moment.', 'Exporting');
+                                        
+                                        // 1. Gather Profile and Posts
+                                        const exportProfile = profile;
+                                        const exportPosts = [...posts]
+                                            .filter(p => exportAllPosts || p.userId === config.userId)
+                                            .sort((a, b) => b.timestamp - a.timestamp);
+                                        
+                                        // 2. Helper to embed images as Base64
+                                        const embedImages = async (postList: any[]) => {
+                                            for (const post of postList) {
+                                                if (post.image && post.image.startsWith('public/blobs/')) {
+                                                    const blob = await sov?.getBlob(post.image, post.userId);
+                                                    if (blob) {
+                                                        const reader = new FileReader();
+                                                        const dataUrl = await new Promise<string>((resolve) => {
+                                                            reader.onload = (e) => resolve(e.target?.result as string);
+                                                            reader.readAsDataURL(new Blob([blob]));
+                                                        });
+                                                        post.image = dataUrl;
+                                                    }
+                                                }
+                                            }
+                                        };
+                                        
+                                        await embedImages(exportPosts);
+                                        
+                                        // 3. Generate HTML
+                                        const sanitize = (str: string) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+                                        
+                                        const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Archive - ${exportProfile?.name || config.userId}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .archive-header { background: white; padding: 2rem 0; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+        .avatar-large { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .post-card { background: white; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        .post-img { max-height: 500px; width: 100%; object-fit: contain; background: #000; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="archive-header">
+        <div class="container text-center">
+            ${exportProfile?.avatar ? `<img src="${exportProfile.avatar}" class="avatar-large mb-3">` : `<div class="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 3rem;">${config.userId[0].toUpperCase()}</div>`}
+            <h1 class="fw-bold">${sanitize(exportProfile?.name || config.userId)}</h1>
+            <p class="text-muted">${sanitize(exportProfile?.bio || 'No bio provided.')}</p>
+            <div class="badge bg-light text-dark border">${config.userId}</div>
+        </div>
+    </div>
+    
+    <div class="container pb-5" style="max-width: 700px;">
+        <h4 class="fw-bold mb-4">Feed Archive (${exportPosts.length} posts)</h4>
+        ${exportPosts.map(post => {
+            const postUser = allUsers.find(u => u.userId === post.userId);
+            const userName = postUser?.userId || post.userId;
+            const initials = userName[0].toUpperCase();
+            
+            return `
+            <div class="card post-card">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">${initials}</div>
+                        <div>
+                            <div class="fw-bold">${sanitize(userName)}</div>
+                            <div class="text-muted small">${new Date(post.timestamp).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <p style="white-space: pre-wrap;">${sanitize(post.content)}</p>
+                    ${post.image ? `<img src="${post.image}" class="post-img mt-2">` : ''}
+                </div>
+            </div>
+        `}).join('')}
+        
+        <div class="text-center text-muted mt-5 small">
+            Exported from SovereignS3nc on ${new Date().toLocaleString()}
+        </div>
+    </div>
+</body>
+</html>`;
+
+                                        // 4. Download
+                                        const blob = new Blob([htmlContent], { type: 'text/html' });
+                                        const url = URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = `sovereign_archive_\${config.userId}_\${new Date().toISOString().split('T')[0]}.html`;
+                                        a.click();
+                                        URL.revokeObjectURL(url);
+                                        
+                                        showAlert('Portable archive exported successfully!', 'Success');
+                                    } catch (e: any) {
+                                        showAlert('Export failed: ' + e.message, 'Error');
+                                    }
+                                }}>
+                                    <i className="bi bi-file-earmark-arrow-down me-2"></i> Export Static Website
+                                </button>
 
                             </div>
 

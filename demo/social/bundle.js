@@ -146390,6 +146390,7 @@ ${toHex(hashedRequest)}`;
         const [reconnectDelay, setReconnectDelay] = (0, import_react2.useState)(1e3);
         const [unreadCounts, setUnreadCounts] = (0, import_react2.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
         const [userUnreadCounts, setUserUnreadCounts] = (0, import_react2.useState)({});
+        const [exportAllPosts, setExportAllPosts] = (0, import_react2.useState)(false);
         const [conflict, setConflict] = (0, import_react2.useState)(null);
         const lastViewedRef = (0, import_react2.useRef)(lastViewed);
         const discoveryMapRef = (0, import_react2.useRef)(discoveryMap);
@@ -147482,7 +147483,95 @@ ${toHex(hashedRequest)}`;
           await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
           await sync();
           showAlert("Profile updated!", "Success");
-        } }, "Save Changes")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react2.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Account Actions"), config.syncMode === "offline" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cloud-upload me-2" }), " Connect Remote"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+        } }, "Save Changes"), /* @__PURE__ */ import_react2.default.createElement("hr", { className: "my-4" }), /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Portable Archive"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted mb-3" }, "Export your profile and social feed as a single, standalone HTML file. All images will be embedded directly in the file so it can be viewed offline."), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-check mb-3" }, /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-check-input", type: "checkbox", id: "exportAllPosts", checked: exportAllPosts, onChange: (e2) => setExportAllPosts(e2.target.checked) }), /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-check-label small", htmlFor: "exportAllPosts" }, "Include posts from everyone I follow (otherwise only my posts)")), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-success w-100 py-2 fw-bold", onClick: async () => {
+          try {
+            showAlert("Generating static export... this may take a moment.", "Exporting");
+            const exportProfile = profile;
+            const exportPosts = [...posts].filter((p2) => exportAllPosts || p2.userId === config.userId).sort((a3, b2) => b2.timestamp - a3.timestamp);
+            const embedImages = async (postList) => {
+              for (const post of postList) {
+                if (post.image && post.image.startsWith("public/blobs/")) {
+                  const blob2 = await sov?.getBlob(post.image, post.userId);
+                  if (blob2) {
+                    const reader = new FileReader();
+                    const dataUrl = await new Promise((resolve2) => {
+                      reader.onload = (e2) => resolve2(e2.target?.result);
+                      reader.readAsDataURL(new Blob([blob2]));
+                    });
+                    post.image = dataUrl;
+                  }
+                }
+              }
+            };
+            await embedImages(exportPosts);
+            const sanitize = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Archive - ${exportProfile?.name || config.userId}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .archive-header { background: white; padding: 2rem 0; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+        .avatar-large { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .post-card { background: white; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        .post-img { max-height: 500px; width: 100%; object-fit: contain; background: #000; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="archive-header">
+        <div class="container text-center">
+            ${exportProfile?.avatar ? `<img src="${exportProfile.avatar}" class="avatar-large mb-3">` : `<div class="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 3rem;">${config.userId[0].toUpperCase()}</div>`}
+            <h1 class="fw-bold">${sanitize(exportProfile?.name || config.userId)}</h1>
+            <p class="text-muted">${sanitize(exportProfile?.bio || "No bio provided.")}</p>
+            <div class="badge bg-light text-dark border">${config.userId}</div>
+        </div>
+    </div>
+    
+    <div class="container pb-5" style="max-width: 700px;">
+        <h4 class="fw-bold mb-4">Feed Archive (${exportPosts.length} posts)</h4>
+        ${exportPosts.map((post) => {
+              const postUser = allUsers.find((u2) => u2.userId === post.userId);
+              const userName = postUser?.userId || post.userId;
+              const initials = userName[0].toUpperCase();
+              return `
+            <div class="card post-card">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">${initials}</div>
+                        <div>
+                            <div class="fw-bold">${sanitize(userName)}</div>
+                            <div class="text-muted small">${new Date(post.timestamp).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <p style="white-space: pre-wrap;">${sanitize(post.content)}</p>
+                    ${post.image ? `<img src="${post.image}" class="post-img mt-2">` : ""}
+                </div>
+            </div>
+        `;
+            }).join("")}
+        
+        <div class="text-center text-muted mt-5 small">
+            Exported from SovereignS3nc on ${(/* @__PURE__ */ new Date()).toLocaleString()}
+        </div>
+    </div>
+</body>
+</html>`;
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+            const a2 = document.createElement("a");
+            a2.href = url;
+            a2.download = `sovereign_archive_\${config.userId}_\${new Date().toISOString().split('T')[0]}.html`;
+            a2.click();
+            URL.revokeObjectURL(url);
+            showAlert("Portable archive exported successfully!", "Success");
+          } catch (e2) {
+            showAlert("Export failed: " + e2.message, "Error");
+          }
+        } }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-file-earmark-arrow-down me-2" }), " Export Static Website")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Security"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "Old Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label small fw-bold text-muted text-uppercase" }, "New Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword }, "Change Password"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mt-3 small text-muted" }, /* @__PURE__ */ import_react2.default.createElement("b", null, "Note:"), " Changing your password will migrate your private data on the remote storage to a new path derived from your new password.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold" }, "Account Actions"), config.syncMode === "offline" && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cloud-upload me-2" }), " Connect Remote"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))), currentTab === "admin" && isAdmin && /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-10 mobile-full-width" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-4 fw-bold text-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-shield-lock me-2" }), "Admin Dashboard"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-secondary py-3 mb-4 border-0" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold mb-1" }, "Admin Status"), adminKeyPublished ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-success small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-check-circle-fill me-1" }), " Reporting is ACTIVE. Your public key is published.") : /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-warning small" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-1" }), " Reporting is INACTIVE. You must publish your admin key for users to send reports.")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-0 bg-light" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Governance"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
           const uid = await new Promise((resolve2) => showPrompt("Enter User ID to blacklist:", resolve2));
           if (uid && moderation) {
             try {
