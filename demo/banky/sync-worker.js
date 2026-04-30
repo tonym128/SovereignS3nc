@@ -69630,7 +69630,13 @@ ${toHex(hashedRequest)}`;
       import_polyfills671 = __toESM(require_polyfills());
       init_Logger();
       NativeWebRTCTransport = class {
-        constructor(userId, iceServers = [{ urls: "stun:stun.l.google.com:19302" }]) {
+        constructor(userId, iceServers = [
+          { urls: "stun:stun.l.google.com:19302" },
+          { urls: "stun:stun1.l.google.com:19302" },
+          { urls: "stun:stun2.l.google.com:19302" },
+          { urls: "stun:stun3.l.google.com:19302" },
+          { urls: "stun:stun4.l.google.com:19302" }
+        ]) {
           this.userId = userId;
           this.dc = null;
           this.isInitiator = false;
@@ -69673,6 +69679,37 @@ ${toHex(hashedRequest)}`;
           };
         }
         /**
+         * Helper to wait for ICE gathering to complete.
+         * This is required for "Vanilla ICE" (manual SDP exchange via QR/BLE) 
+         * where there is no back-channel for trickle ICE candidates.
+         */
+        waitForIceGathering() {
+          return new Promise((resolve) => {
+            if (this.pc.iceGatheringState === "complete") {
+              resolve();
+            } else {
+              const checkState5 = () => {
+                if (this.pc.iceGatheringState === "complete") {
+                  this.pc.removeEventListener("icegatheringstatechange", checkState5);
+                  resolve();
+                }
+              };
+              this.pc.addEventListener("icegatheringstatechange", checkState5);
+              const onCandidate = (event) => {
+                if (!event.candidate) {
+                  this.pc.removeEventListener("icecandidate", onCandidate);
+                  resolve();
+                }
+              };
+              this.pc.addEventListener("icecandidate", onCandidate);
+              setTimeout(() => {
+                this.pc.removeEventListener("icegatheringstatechange", checkState5);
+                resolve();
+              }, 5e3);
+            }
+          });
+        }
+        /**
          * Start the connection process as the initiator (e.g. show QR code).
          */
         async createOffer() {
@@ -69681,9 +69718,11 @@ ${toHex(hashedRequest)}`;
           this.setupDataChannel(channel);
           const offer = await this.pc.createOffer();
           await this.pc.setLocalDescription(offer);
+          Logger.debug("[NativeWebRTC] Waiting for ICE gathering...");
+          await this.waitForIceGathering();
           return {
             type: "offer",
-            sdp: offer.sdp,
+            sdp: this.pc.localDescription?.sdp || offer.sdp,
             senderId: this.userId
           };
         }
@@ -69695,9 +69734,11 @@ ${toHex(hashedRequest)}`;
           await this.pc.setRemoteDescription({ type: "offer", sdp: offerSdp });
           const answer = await this.pc.createAnswer();
           await this.pc.setLocalDescription(answer);
+          Logger.debug("[NativeWebRTC] Waiting for ICE gathering...");
+          await this.waitForIceGathering();
           return {
             type: "answer",
-            sdp: answer.sdp,
+            sdp: this.pc.localDescription?.sdp || answer.sdp,
             senderId: this.userId
           };
         }
@@ -70105,26 +70146,33 @@ ${toHex(hashedRequest)}`;
          */
         async init(config) {
           if (!this.worker) {
-            this.worker = new Worker(this.workerUrl);
-            this.worker.onmessage = this.handleMessage.bind(this);
-            this.worker.onerror = (err) => {
-              console.error("[SyncWorkerProxy] Worker error:", err);
-              this.emit("error", err);
-            };
+            try {
+              this.worker = new Worker(this.workerUrl);
+              this.worker.onmessage = this.handleMessage.bind(this);
+              this.worker.onerror = (err) => {
+                console.error("[SyncWorkerProxy] Worker error:", err);
+                if (this.listenerCount("error") > 0) {
+                  this.emit("error", err);
+                }
+              };
+            } catch (e2) {
+              console.error("[SyncWorkerProxy] Failed to create Worker:", e2);
+              throw e2;
+            }
           }
-          return this.sendMessage("INIT", config);
+          return this.sendMessage("INIT", config, 1e4);
         }
         /**
          * Triggers a sync operation in the worker.
          */
         async sync(forceSync = false) {
-          return this.sendMessage("SYNC", { forceSync });
+          return this.sendMessage("SYNC", { forceSync }, 6e4);
         }
         /**
          * Registers a module definition in the worker.
          */
         async registerModule(definition) {
-          return this.sendMessage("REGISTER_MODULE", definition);
+          return this.sendMessage("REGISTER_MODULE", definition, 5e3);
         }
         /**
          * Terminates the worker.
@@ -70135,11 +70183,29 @@ ${toHex(hashedRequest)}`;
             this.worker = null;
           }
         }
-        sendMessage(type, payload) {
+        sendMessage(type, payload, timeout = 0) {
           if (!this.worker) return Promise.reject(new Error("Worker not initialized"));
           const id = ++this.messageId;
           return new Promise((resolve, reject) => {
-            this.pendingPromises.set(id, { resolve, reject });
+            let timer = null;
+            if (timeout > 0) {
+              timer = setTimeout(() => {
+                if (this.pendingPromises.has(id)) {
+                  this.pendingPromises.delete(id);
+                  reject(new Error(`Worker request timed out (${type})`));
+                }
+              }, timeout);
+            }
+            this.pendingPromises.set(id, {
+              resolve: (res) => {
+                if (timer) clearTimeout(timer);
+                resolve(res);
+              },
+              reject: (err) => {
+                if (timer) clearTimeout(timer);
+                reject(err);
+              }
+            });
             this.worker.postMessage({ id, type, payload });
           });
         }
@@ -70974,23 +71040,34 @@ ${toHex(hashedRequest)}`;
           Logger.info(`[Sovereign] v${_SovereignS3nc.VERSION} Initializing storage...`);
           await this.storage.init();
           if (this.config.useWorker && this.config.workerUrl) {
-            try {
-              Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
-              this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
-              this.syncWorker.on("update", (data) => {
-                this.emit("update", data);
-                if (data.moduleName) {
-                  this.emit(`${data.moduleName}:update`, data);
-                }
-              });
-              this.syncWorker.on("conflict", (data) => {
-                this.emit("conflict", data);
-              });
-              await this.syncWorker.init(this.config);
-            } catch (e2) {
-              Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e2.message}`);
-              this.syncWorker = void 0;
+            const isCustom = !!this.remoteFactory || !!this.remote && !(this.remote instanceof S3RemoteAdapter);
+            if (isCustom) {
+              Logger.warn("[Sovereign] Custom remote adapters are not supported in background worker yet. Sync will fallback to main thread.");
               this.config.useWorker = false;
+            } else {
+              try {
+                Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
+                this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+                this.syncWorker.on("error", (err) => {
+                  Logger.warn("[Sovereign] Background worker error, disabling worker:", err);
+                  this.syncWorker = void 0;
+                  this.config.useWorker = false;
+                });
+                this.syncWorker.on("update", (data) => {
+                  this.emit("update", data);
+                  if (data.moduleName) {
+                    this.emit(`${data.moduleName}:update`, data);
+                  }
+                });
+                this.syncWorker.on("conflict", (data) => {
+                  this.emit("conflict", data);
+                });
+                await this.syncWorker.init(this.config);
+              } catch (e2) {
+                Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e2.message}`);
+                this.syncWorker = void 0;
+                this.config.useWorker = false;
+              }
             }
           }
           if (this.config.password && (!this.config.encryptionKey || !this.config.publicEncryptionKey)) {
@@ -71961,7 +72038,7 @@ ${toHex(hashedRequest)}`;
           let userList = [];
           let remoteData = null;
           try {
-            const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+            const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
             if (result && result.data) remoteData = result.data;
           } catch (e2) {
             Logger.warn(`[Sync] Could not reach global registry (offline?): ${e2.message}`);
@@ -72048,7 +72125,7 @@ ${toHex(hashedRequest)}`;
           if (!this.globalRemote) return [];
           Logger.info("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
-          const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+          const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
           if (!result || !result.data) return [];
           try {
             return JSON.parse(new TextDecoder().decode(result.data));
@@ -72061,7 +72138,7 @@ ${toHex(hashedRequest)}`;
           const remotePath = "users.json";
           let remoteData = null;
           try {
-            const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+            const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
             if (result && result.data) remoteData = result.data;
           } catch (e2) {
             Logger.warn("[Sync] Failed to download global registry (offline?)", e2.message);

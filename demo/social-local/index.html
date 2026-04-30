@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1877f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sovereign">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Sovereign Social</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { background: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding-bottom: 60px; }
+        @media (min-width: 768px) { body { padding-bottom: 0; } }
+        .post-card { margin-bottom: 1rem; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); background: white; }
+        .sidebar { background: white; border-right: 1px solid #dee2e6; height: 100vh; position: sticky; top: 0; overflow-y: auto; }
+        .profile-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        .feed-container { max-width: 680px; margin: 0 auto; }
+        .nav-link { color: #050505; font-weight: 500; }
+        .nav-link:hover { background: #f2f2f2; border-radius: 8px; }
+        .btn-sov { background-color: #1877f2; color: white; border: none; font-weight: 600; }
+        .btn-sov:hover { background-color: #166fe5; color: white; }
+        .post-input { background: #f0f2f5; border-radius: 20px; border: none; padding: 10px 15px; cursor: pointer; }
+        .post-input:hover { background: #e4e6e9; }
+        .online-dot { width: 12px; height: 12px; background: #31a24c; border-radius: 50%; border: 2px solid white; display: inline-block; }
+        
+        /* Mobile Specific Styles */
+        @media (max-width: 767px) {
+            .mobile-hide { display: none !important; }
+            .mobile-show { display: block !important; }
+            .mobile-full-width { width: 100% !important; max-width: 100% !important; }
+            .navbar-brand { font-size: 1.5rem !important; }
+            .card { border-radius: 0 !important; border-left: none !important; border-right: none !important; margin-bottom: 0.5rem !important; }
+            .container { padding-left: 0 !important; padding-right: 0 !important; margin-top: 1rem !important; }
+            .row { margin-left: 0 !important; margin-right: 0 !important; }
+            .col-md-8, .col-md-10, .col-md-6 { padding-left: 0 !important; padding-right: 0 !important; }
+            .feed-container { padding: 0 0.5rem; }
+            .navbar { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+            
+            /* Bottom Nav */
+            .bottom-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 60px;
+                background: white;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-top: 1px solid #dee2e6;
+                z-index: 1030;
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            .bottom-nav-item {
+                flex: 1;
+                text-align: center;
+                color: #65676b;
+                text-decoration: none;
+                font-size: 0.7rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+            .bottom-nav-item.active { color: #1877f2; }
+            .bottom-nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+            .bottom-nav-item .badge {
+                position: absolute;
+                top: 5px;
+                right: 25%;
+                padding: 0.25em 0.4em;
+                font-size: 0.6rem;
+            }
+        }
+        
+        .cursor-pointer { cursor: pointer; }
+        .x-small { font-size: 0.75rem; }
+        .italic { font-style: italic; }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <div id="root">
+        <div class="container mt-5 text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Initializing Sovereign Social...</p>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.SQL_CONFIG = {
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        };
+    </script>
+    <script src="bundle.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New version available, reload is usually handled by the user or automatically if safe
+                                    console.log('New version available, please refresh.');
+                                }
+                            });
+                        });
+                    }, (err) => {
+                        console.error('Service Worker registration failed:', err);
+                    });
+            });
+
+            // Handle automatic reload when the new service worker takes control
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    window.location.reload();
+                    refreshing = true;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
