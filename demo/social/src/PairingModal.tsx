@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import QRCode from 'qrcode';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import { NativeWebRTCTransport } from '../../../src/adapters/NativeWebRTCTransport';
 import { BLESignaling } from '../../../src/utils/BLESignaling';
 
@@ -26,21 +28,23 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
     }, []);
 
     useEffect(() => {
-        if (qrValue && canvasRef.current) {
-            const generateQR = () => {
-                // @ts-ignore - Loaded via CDN
-                const lib = window.QRCode || window.qrcode;
-                if (lib && lib.toCanvas) {
-                    lib.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error: any) => {
+        let active = true;
+        const generateQR = () => {
+            if (!active) return;
+            
+            if (qrValue && (step === 'show-offer' || step === 'show-answer')) {
+                if (canvasRef.current) {
+                    QRCode.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error: any) => {
                         if (error) console.error('[QR] Error generating QR:', error);
                     });
                 } else {
-                    console.warn('[QR] QRCode library not yet available, retrying...');
-                    setTimeout(generateQR, 500);
+                    // Retry if canvas is not yet available
+                    setTimeout(generateQR, 100);
                 }
-            };
-            generateQR();
-        }
+            }
+        };
+        generateQR();
+        return () => { active = false; };
     }, [qrValue, step]);
 
     const handleCreateOffer = async () => {
@@ -59,24 +63,14 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
     };
 
     const startScanner = (onScan: (data: string) => void) => {
-        const initScanner = () => {
-            // @ts-ignore - Loaded via CDN
-            const Lib = window.Html5QrcodeScanner;
-            if (Lib) {
-                const scanner = new Lib("reader", { fps: 10, qrbox: 250 }, false);
-                scanner.render((decodedText: string) => {
-                    scanner.clear();
-                    onScan(decodedText);
-                }, (error: any) => {
-                    // Silent errors while scanning
-                });
-                scannerRef.current = scanner;
-            } else {
-                console.warn('[QR] Scanner library not yet available, retrying...');
-                setTimeout(initScanner, 500);
-            }
-        };
-        initScanner();
+        const scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
+        scanner.render((decodedText: string) => {
+            scanner.clear();
+            onScan(decodedText);
+        }, (error: any) => {
+            // Silent errors while scanning
+        });
+        scannerRef.current = scanner;
     };
 
     const handleScanOffer = () => {
@@ -87,6 +81,7 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
                     const offer = JSON.parse(data);
                     if (offer.type !== 'offer') throw new Error('Not an offer');
                     
+                    setStep('connecting');
                     const answer = await transport.handleOffer(offer.sdp);
                     setQrValue(JSON.stringify(answer));
                     setStep('show-answer');
@@ -226,7 +221,8 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
                                 {step === 'connecting' ? (
                                     <>
                                         <div className="spinner-border text-primary mb-3" role="status"></div>
-                                        <p className="fw-bold">Initializing WebRTC...</p>
+                                        <p className="fw-bold">Establishing Secure Link...</p>
+                                        <p className="text-muted small">Gathering network routes and preparing handshake.</p>
                                     </>
                                 ) : (
                                     <>

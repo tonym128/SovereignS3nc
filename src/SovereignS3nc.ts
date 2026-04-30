@@ -279,23 +279,39 @@ export class SovereignS3nc extends EventEmitter {
 
         // Initialize Background Worker if enabled
         if (this.config.useWorker && this.config.workerUrl) {
-            try {
-                Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
-                this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
-                this.syncWorker.on('update', (data) => {
-                    this.emit('update', data);
-                    if (data.moduleName) {
-                        this.emit(`${data.moduleName}:update`, data);
-                    }
-                });
-                this.syncWorker.on('conflict', (data) => {
-                    this.emit('conflict', data);
-                });
-                await this.syncWorker.init(this.config);
-            } catch (e: any) {
-                Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e.message}`);
-                this.syncWorker = undefined;
+            // Warning: Custom adapters or factories are not yet supported in the background worker
+            // because they cannot be serialized across the worker boundary.
+            const isCustom = !!this.remoteFactory || (!!this.remote && !(this.remote instanceof S3RemoteAdapter));
+            
+            if (isCustom) {
+                Logger.warn('[Sovereign] Custom remote adapters are not supported in background worker yet. Sync will fallback to main thread.');
                 this.config.useWorker = false;
+            } else {
+                try {
+                    Logger.info(`[Sovereign] Initializing background sync worker: ${this.config.workerUrl}`);
+                    this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+                    
+                    this.syncWorker.on('error', (err) => {
+                        Logger.warn('[Sovereign] Background worker error, disabling worker:', err);
+                        this.syncWorker = undefined;
+                        this.config.useWorker = false;
+                    });
+
+                    this.syncWorker.on('update', (data) => {
+                        this.emit('update', data);
+                        if (data.moduleName) {
+                            this.emit(`${data.moduleName}:update`, data);
+                        }
+                    });
+                    this.syncWorker.on('conflict', (data) => {
+                        this.emit('conflict', data);
+                    });
+                    await this.syncWorker.init(this.config);
+                } catch (e: any) {
+                    Logger.warn(`[Sovereign] Failed to initialize background worker, falling back to main thread: ${e.message}`);
+                    this.syncWorker = undefined;
+                    this.config.useWorker = false;
+                }
             }
         }
 
@@ -1526,7 +1542,7 @@ export class SovereignS3nc extends EventEmitter {
         let remoteData: Uint8Array | null = null;
         
         try {
-            const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
+            const result = await this.globalRemote.downloadFile(remotePath, undefined, 5000);
             if (result && result.data) remoteData = result.data;
         } catch (e: any) {
             Logger.warn(`[Sync] Could not reach global registry (offline?): ${e.message}`);
@@ -1624,7 +1640,7 @@ export class SovereignS3nc extends EventEmitter {
         if (!this.globalRemote) return [];
         Logger.info('[Sovereign] Fetching public registry...');
         const remotePath = 'users.json';
-        const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
+        const result = await this.globalRemote.downloadFile(remotePath, undefined, 5000);
         if (!result || !result.data) return [];
         try {
             return JSON.parse(new TextDecoder().decode(result.data));
@@ -1638,7 +1654,7 @@ export class SovereignS3nc extends EventEmitter {
         const remotePath = 'users.json';
         let remoteData: Uint8Array | null = null;
         try {
-            const result = await this.globalRemote.downloadFile(remotePath, undefined, 30000);
+            const result = await this.globalRemote.downloadFile(remotePath, undefined, 5000);
             if (result && result.data) remoteData = result.data;
         } catch (e: any) {
             Logger.warn('[Sync] Failed to download global registry (offline?)', e.message);

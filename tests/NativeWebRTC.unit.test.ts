@@ -20,6 +20,10 @@ const mockDataChannel = {
     setRemoteDescription: jest.fn().mockResolvedValue(undefined),
     addIceCandidate: jest.fn().mockResolvedValue(undefined),
     close: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    iceGatheringState: 'complete',
+    localDescription: { sdp: 'v=0\r\ntest-sdp-complete' },
     onicecandidate: null,
     onconnectionstatechange: null,
     ondatachannel: null
@@ -33,12 +37,12 @@ describe('Native WebRTC & PEX Logic', () => {
         // 1. Alice creates offer
         const offer = await alice.createOffer();
         expect(offer.type).toBe('offer');
-        expect(offer.sdp).toContain('test-offer');
+        expect(offer.sdp).toContain('test-sdp-complete');
 
         // 2. Bob handles offer and creates answer
         const answer = await bob.handleOffer(offer.sdp!);
         expect(answer.type).toBe('answer');
-        expect(answer.sdp).toContain('test-answer');
+        expect(answer.sdp).toContain('test-sdp-complete');
 
         // 3. Alice handles answer
         await alice.handleAnswer(answer.sdp!);

@@ -12,7 +12,13 @@ export class NativeWebRTCTransport {
     public onMessage?: (msg: string) => void;
     public onDisconnected?: () => void;
 
-    constructor(private userId: string, iceServers: RTCIceServer[] = [{ urls: 'stun:stun.l.google.com:19302' }]) {
+    constructor(private userId: string, iceServers: RTCIceServer[] = [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' },
+        { urls: 'stun:stun3.l.google.com:19302' },
+        { urls: 'stun:stun4.l.google.com:19302' }
+    ]) {
         this.pc = new RTCPeerConnection({ iceServers });
         this.setupPeerConnection();
     }
@@ -57,6 +63,42 @@ export class NativeWebRTCTransport {
     }
 
     /**
+     * Helper to wait for ICE gathering to complete.
+     * This is required for "Vanilla ICE" (manual SDP exchange via QR/BLE) 
+     * where there is no back-channel for trickle ICE candidates.
+     */
+    private waitForIceGathering(): Promise<void> {
+        return new Promise((resolve) => {
+            if (this.pc.iceGatheringState === 'complete') {
+                resolve();
+            } else {
+                const checkState = () => {
+                    if (this.pc.iceGatheringState === 'complete') {
+                        this.pc.removeEventListener('icegatheringstatechange', checkState);
+                        resolve();
+                    }
+                };
+                this.pc.addEventListener('icegatheringstatechange', checkState);
+                
+                // End-of-candidates candidate also signals completion
+                const onCandidate = (event: RTCPeerConnectionIceEvent) => {
+                    if (!event.candidate) {
+                        this.pc.removeEventListener('icecandidate', onCandidate);
+                        resolve();
+                    }
+                };
+                this.pc.addEventListener('icecandidate', onCandidate);
+
+                // Safety timeout: 5 seconds is usually enough for local/STUN gathering
+                setTimeout(() => {
+                    this.pc.removeEventListener('icegatheringstatechange', checkState);
+                    resolve();
+                }, 5000);
+            }
+        });
+    }
+
+    /**
      * Start the connection process as the initiator (e.g. show QR code).
      */
     public async createOffer(): Promise<WebRTCSignalingData> {
@@ -67,9 +109,12 @@ export class NativeWebRTCTransport {
         const offer = await this.pc.createOffer();
         await this.pc.setLocalDescription(offer);
 
+        Logger.debug('[NativeWebRTC] Waiting for ICE gathering...');
+        await this.waitForIceGathering();
+
         return {
             type: 'offer',
-            sdp: offer.sdp,
+            sdp: this.pc.localDescription?.sdp || offer.sdp,
             senderId: this.userId
         };
     }
@@ -84,9 +129,12 @@ export class NativeWebRTCTransport {
         const answer = await this.pc.createAnswer();
         await this.pc.setLocalDescription(answer);
 
+        Logger.debug('[NativeWebRTC] Waiting for ICE gathering...');
+        await this.waitForIceGathering();
+
         return {
             type: 'answer',
-            sdp: answer.sdp,
+            sdp: this.pc.localDescription?.sdp || answer.sdp,
             senderId: this.userId
         };
     }

@@ -69687,7 +69687,13 @@ ${toHex(hashedRequest)}`;
       import_polyfills671 = __toESM(require_polyfills());
       init_Logger();
       NativeWebRTCTransport = class {
-        constructor(userId, iceServers = [{ urls: "stun:stun.l.google.com:19302" }]) {
+        constructor(userId, iceServers = [
+          { urls: "stun:stun.l.google.com:19302" },
+          { urls: "stun:stun1.l.google.com:19302" },
+          { urls: "stun:stun2.l.google.com:19302" },
+          { urls: "stun:stun3.l.google.com:19302" },
+          { urls: "stun:stun4.l.google.com:19302" }
+        ]) {
           this.userId = userId;
           this.dc = null;
           this.isInitiator = false;
@@ -69730,6 +69736,37 @@ ${toHex(hashedRequest)}`;
           };
         }
         /**
+         * Helper to wait for ICE gathering to complete.
+         * This is required for "Vanilla ICE" (manual SDP exchange via QR/BLE) 
+         * where there is no back-channel for trickle ICE candidates.
+         */
+        waitForIceGathering() {
+          return new Promise((resolve) => {
+            if (this.pc.iceGatheringState === "complete") {
+              resolve();
+            } else {
+              const checkState5 = () => {
+                if (this.pc.iceGatheringState === "complete") {
+                  this.pc.removeEventListener("icegatheringstatechange", checkState5);
+                  resolve();
+                }
+              };
+              this.pc.addEventListener("icegatheringstatechange", checkState5);
+              const onCandidate = (event) => {
+                if (!event.candidate) {
+                  this.pc.removeEventListener("icecandidate", onCandidate);
+                  resolve();
+                }
+              };
+              this.pc.addEventListener("icecandidate", onCandidate);
+              setTimeout(() => {
+                this.pc.removeEventListener("icegatheringstatechange", checkState5);
+                resolve();
+              }, 5e3);
+            }
+          });
+        }
+        /**
          * Start the connection process as the initiator (e.g. show QR code).
          */
         async createOffer() {
@@ -69738,9 +69775,11 @@ ${toHex(hashedRequest)}`;
           this.setupDataChannel(channel);
           const offer = await this.pc.createOffer();
           await this.pc.setLocalDescription(offer);
+          Logger.debug("[NativeWebRTC] Waiting for ICE gathering...");
+          await this.waitForIceGathering();
           return {
             type: "offer",
-            sdp: offer.sdp,
+            sdp: this.pc.localDescription?.sdp || offer.sdp,
             senderId: this.userId
           };
         }
@@ -69752,9 +69791,11 @@ ${toHex(hashedRequest)}`;
           await this.pc.setRemoteDescription({ type: "offer", sdp: offerSdp });
           const answer = await this.pc.createAnswer();
           await this.pc.setLocalDescription(answer);
+          Logger.debug("[NativeWebRTC] Waiting for ICE gathering...");
+          await this.waitForIceGathering();
           return {
             type: "answer",
-            sdp: answer.sdp,
+            sdp: this.pc.localDescription?.sdp || answer.sdp,
             senderId: this.userId
           };
         }
@@ -72018,7 +72059,7 @@ ${toHex(hashedRequest)}`;
           let userList = [];
           let remoteData = null;
           try {
-            const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+            const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
             if (result && result.data) remoteData = result.data;
           } catch (e2) {
             Logger.warn(`[Sync] Could not reach global registry (offline?): ${e2.message}`);
@@ -72105,7 +72146,7 @@ ${toHex(hashedRequest)}`;
           if (!this.globalRemote) return [];
           Logger.info("[Sovereign] Fetching public registry...");
           const remotePath = "users.json";
-          const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+          const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
           if (!result || !result.data) return [];
           try {
             return JSON.parse(new TextDecoder().decode(result.data));
@@ -72118,7 +72159,7 @@ ${toHex(hashedRequest)}`;
           const remotePath = "users.json";
           let remoteData = null;
           try {
-            const result = await this.globalRemote.downloadFile(remotePath, void 0, 3e4);
+            const result = await this.globalRemote.downloadFile(remotePath, void 0, 5e3);
             if (result && result.data) remoteData = result.data;
           } catch (e2) {
             Logger.warn("[Sync] Failed to download global registry (offline?)", e2.message);

@@ -8,6 +8,7 @@
 | WT-24 | **Complex Group Permission Tests** | `tests/GroupPermissions.integration.ts` | Completed |
 | WT-25 | **Member Revocation Tests** | `tests/MemberRevocation.integration.ts` | Completed |
 | WT-26 | **Storage Migration Tests** | `tests/StorageMigration.integration.ts` | Completed |
+| WT-27 | **Worker Robustness & Error Handling** | `src/worker/SyncWorkerProxy.ts`, `src/SovereignS3nc.ts` | Completed |
 
 ## Completed Objectives
 
@@ -32,3 +33,10 @@
 ### WT-26: Storage Migration Tests
 - Implemented `tests/StorageMigration.integration.ts`.
 - Validated that data is preserved when switching between `IndexedDBStorage` and `SQLiteNodeStorage` adapters via S3 sync and manual file copying.
+
+### WT-27: Worker Robustness & Error Handling
+- Added a 10-second timeout to worker initialization and 60-second timeout for sync operations.
+- Fixed unhandled global error when `sync-worker.js` fails to load (async `onerror`).
+- Implemented automatic fallback to main-thread sync if the worker fails or times out.
+- Added proactive warning and worker disabling for custom adapters (e.g. WebRTC) that cannot be serialized.
+- Expanded `tests/SyncWorker.unit.test.ts` to cover these failure modes.

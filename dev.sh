@@ -202,6 +202,7 @@ EOF
 
     echo "--- Building Demo Apps ---"
     npm run build:social
+    npm run build:social-local
     npm run build:banky
 
     echo "--- Starting Social Web Server (Port 8888) ---"
@@ -209,6 +210,12 @@ EOF
     SOCIAL_PID=$!
     disown $SOCIAL_PID
     echo $SOCIAL_PID > .social_web.pid
+
+    echo "--- Starting Social Local Web Server (Port 8886) ---"
+    nohup python3 -m http.server 8886 --bind 127.0.0.1 --directory demo/social-local > social_local_web.log 2>&1 &
+    SOCIAL_LOCAL_PID=$!
+    disown $SOCIAL_LOCAL_PID
+    echo $SOCIAL_LOCAL_PID > .social_local_web.pid
 
     echo "--- Starting Banky Web Server (Port 8887) ---"
     nohup python3 -m http.server 8887 --bind 127.0.0.1 --directory demo/banky > banky_web.log 2>&1 &
@@ -234,6 +241,7 @@ function stop() {
     echo "Stopping services and cleaning up..."
     
     [ -f .social_web.pid ] && kill $(cat .social_web.pid) 2>/dev/null && rm .social_web.pid || true
+    [ -f .social_local_web.pid ] && kill $(cat .social_local_web.pid) 2>/dev/null && rm .social_local_web.pid || true
     [ -f .banky_web.pid ] && kill $(cat .banky_web.pid) 2>/dev/null && rm .banky_web.pid || true
     [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid || true
     [ -f .rustfs.pid ] && kill $(cat .rustfs.pid) 2>/dev/null && rm .rustfs.pid || true
@@ -241,6 +249,7 @@ function stop() {
     # Backup cleanup - more specific to avoid self-kill
     pkill -9 -u $(whoami) -f "./bin/rustfs" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8888" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "python3 -m http.server 8886" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8887" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "node scripts/proxy.js" 2>/dev/null || true
 

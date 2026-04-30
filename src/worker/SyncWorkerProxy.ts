@@ -21,29 +21,37 @@ export class SyncWorkerProxy extends EventEmitter {
      */
     async init(config: SovereignConfig): Promise<void> {
         if (!this.worker) {
-            this.worker = new Worker(this.workerUrl);
-            this.worker.onmessage = this.handleMessage.bind(this);
-            this.worker.onerror = (err) => {
-                console.error('[SyncWorkerProxy] Worker error:', err);
-                this.emit('error', err);
-            };
+            try {
+                this.worker = new Worker(this.workerUrl);
+                this.worker.onmessage = this.handleMessage.bind(this);
+                this.worker.onerror = (err) => {
+                    console.error('[SyncWorkerProxy] Worker error:', err);
+                    // Avoid unhandled error event if no listeners
+                    if (this.listenerCount('error') > 0) {
+                        this.emit('error', err);
+                    }
+                };
+            } catch (e: any) {
+                console.error('[SyncWorkerProxy] Failed to create Worker:', e);
+                throw e;
+            }
         }
 
-        return this.sendMessage('INIT', config);
+        return this.sendMessage('INIT', config, 10000); // 10s timeout for init
     }
 
     /**
      * Triggers a sync operation in the worker.
      */
     async sync(forceSync: boolean = false): Promise<void> {
-        return this.sendMessage('SYNC', { forceSync });
+        return this.sendMessage('SYNC', { forceSync }, 60000); // 60s timeout for sync
     }
 
     /**
      * Registers a module definition in the worker.
      */
     async registerModule(definition: any): Promise<void> {
-        return this.sendMessage('REGISTER_MODULE', definition);
+        return this.sendMessage('REGISTER_MODULE', definition, 5000);
     }
 
     /**
@@ -56,12 +64,31 @@ export class SyncWorkerProxy extends EventEmitter {
         }
     }
 
-    private sendMessage(type: string, payload: any): Promise<any> {
+    private sendMessage(type: string, payload: any, timeout: number = 0): Promise<any> {
         if (!this.worker) return Promise.reject(new Error('Worker not initialized'));
 
         const id = ++this.messageId;
         return new Promise((resolve, reject) => {
-            this.pendingPromises.set(id, { resolve, reject });
+            let timer: any = null;
+            if (timeout > 0) {
+                timer = setTimeout(() => {
+                    if (this.pendingPromises.has(id)) {
+                        this.pendingPromises.delete(id);
+                        reject(new Error(`Worker request timed out (${type})`));
+                    }
+                }, timeout);
+            }
+
+            this.pendingPromises.set(id, { 
+                resolve: (res: any) => {
+                    if (timer) clearTimeout(timer);
+                    resolve(res);
+                }, 
+                reject: (err: any) => {
+                    if (timer) clearTimeout(timer);
+                    reject(err);
+                } 
+            });
             this.worker!.postMessage({ id, type, payload });
         });
     }
