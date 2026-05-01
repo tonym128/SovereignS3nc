@@ -168,6 +168,11 @@ export class SovereignS3nc extends EventEmitter {
      * Requires the active remote to be a WebRTCRemoteAdapter.
      */
     public connectNativeRTC(transport: NativeWebRTCTransport) {
+        if (this.config.enableP2PPairing === false) {
+            Logger.warn('[Sovereign] P2P Pairing is disabled in config. Connection rejected.');
+            return;
+        }
+
         if (this.publicRemote instanceof WebRTCRemoteAdapter) {
             this.publicRemote.connectNativeTransport(transport);
         } else if (this.remote instanceof WebRTCRemoteAdapter) {
@@ -276,6 +281,13 @@ export class SovereignS3nc extends EventEmitter {
 
         Logger.info(`[Sovereign] v${SovereignS3nc.VERSION} Initializing storage...`);
         await this.storage.init();
+
+        // Link storage to remotes (needed for persistent P2P seeding)
+        [this.remote, this.publicRemote, this.globalRemote].forEach(r => {
+            if (r instanceof WebRTCRemoteAdapter) {
+                r.storage = this.storage;
+            }
+        });
 
         // Initialize Background Worker if enabled
         if (this.config.useWorker && this.config.workerUrl) {
@@ -2158,6 +2170,32 @@ export class SovereignS3nc extends EventEmitter {
         } catch (e: any) {
             Logger.warn(`[Sync] syncUserFile failed: ${e.message}`);
         }
+    }
+
+    /**
+     * Returns statistics about the active WebRTC mesh network.
+     */
+    public getMeshStats() {
+        const adapters = [this.remote, this.publicRemote, this.globalRemote]
+            .filter(a => a instanceof WebRTCRemoteAdapter) as WebRTCRemoteAdapter[];
+        
+        const uniquePeers = new Set<string>();
+        let totalChannels = 0;
+
+        adapters.forEach(a => {
+            // @ts-ignore - access private channels for stats
+            const channelsByUserId = a.channelsByUserId as Map<string, any>;
+            // @ts-ignore
+            const allChannels = a.channels as Set<any>;
+            
+            channelsByUserId.forEach((_, id) => uniquePeers.add(id));
+            totalChannels += allChannels.size;
+        });
+        
+        return {
+            connectedPeers: Math.max(uniquePeers.size, totalChannels),
+            peerIds: Array.from(uniquePeers)
+        };
     }
 
     private getHashedUserId(userId: string, isPrivate: boolean): string {

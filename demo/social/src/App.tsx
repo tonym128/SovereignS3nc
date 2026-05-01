@@ -38,7 +38,8 @@ const App = () => {
         userId: 'user-' + Math.random().toString(36).substring(7),
         password: 'password123',
         admins: [] as string[], // List of User IDs with admin privileges
-        adminPublicKey: '' // Public key of the official admin
+        adminPublicKey: '', // Public key of the official admin
+        enableP2PPairing: new URLSearchParams(window.location.search).has('pairing') // Enable QR code and Bluetooth pairing functionality
     });
 
     const [isAdmin, setIsAdmin] = useState(false);
@@ -102,6 +103,8 @@ const App = () => {
     const [unreadCounts, setUnreadCounts] = useState({ feed: 0, friends: 0, messages: 0, rooms: 0 });
     const [userUnreadCounts, setUserUnreadCounts] = useState<Record<string, number>>({});
     const [exportAllPosts, setExportAllPosts] = useState(false);
+    const [meshStats, setMeshStats] = useState({ connectedPeers: 0, peerIds: [] as string[] });
+    const [meshLog, setMeshLog] = useState<{ time: number, msg: string }[]>([]);
     const [conflict, setConflict] = useState<{ id: string, path: string, resolve: (choice: 'local' | 'remote' | 'abort') => void } | null>(null);
 
     const lastViewedRef = useRef(lastViewed);
@@ -113,6 +116,23 @@ const App = () => {
     useEffect(() => { discoveryMapRef.current = discoveryMap; }, [discoveryMap]);
     useEffect(() => { currentTabRef.current = currentTab; }, [currentTab]);
     useEffect(() => { selectedUserRef.current = selectedUser; }, [selectedUser]);
+
+    useEffect(() => {
+        if (!sov) return;
+        const interval = setInterval(() => {
+            setMeshStats(sov.getMeshStats());
+        }, 3000);
+
+        const handleUpdate = (data: any) => {
+            setMeshLog(prev => [{ time: Date.now(), msg: `Mesh Update: ${data.path || data.moduleName}` }, ...prev].slice(0, 20));
+        };
+        sov.on('update', handleUpdate);
+
+        return () => {
+            clearInterval(interval);
+            sov.off('update', handleUpdate);
+        };
+    }, [sov]);
 
     const [dialog, setDialog] = useState<{
         title: string;
@@ -1437,6 +1457,9 @@ const App = () => {
                     <button data-testid="nav-profile" className={`btn mx-2 ${currentTab === 'profile' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('profile')}>
                         Profile
                     </button>
+                    <button data-testid="nav-mesh" className={`btn mx-2 ${currentTab === 'mesh' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('mesh')}>
+                        Mesh
+                    </button>
                     {isAdmin && (
                        <button data-testid="nav-admin" className={`btn mx-2 ${currentTab === 'admin' ? 'btn-light text-primary' : ''}`} onClick={() => setCurrentTab('admin')}>
                            Admin
@@ -1460,16 +1483,15 @@ const App = () => {
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{fontSize: '1.2rem'}}></i>
                     </button>
                     
-                    {(config.syncMode === 'webrtc' || config.syncMode === 'peerjs') && (
-                        <button 
-                            className="btn btn-sm btn-outline-primary rounded-pill me-2" 
+                    {config.enableP2PPairing && (config.syncMode === 'webrtc' || config.syncMode === 'peerjs') && (
+                        <button
+                            className="btn btn-sm btn-outline-primary rounded-pill me-2"
                             onClick={() => setShowPairing(true)}
                             title="Direct QR Pair"
                         >
                             <i className="bi bi-qr-code-scan"></i> <span className="mobile-hide">Pair</span>
                         </button>
-                    )}
-                    
+                    )}                    
                     <div className="d-flex align-items-center">
                         <UserAvatar userId={config.userId} size={32} />
                     </div>
@@ -1509,6 +1531,10 @@ const App = () => {
                 <a href="#" className={`bottom-nav-item ${currentTab === 'profile' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('profile'); }}>
                     <i className="bi bi-person"></i>
                     <span>Profile</span>
+                </a>
+                <a href="#" className={`bottom-nav-item ${currentTab === 'mesh' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('mesh'); }}>
+                    <i className="bi bi-node-plus"></i>
+                    <span>Mesh</span>
                 </a>
                 {isAdmin && (
                     <a href="#" className={`bottom-nav-item ${currentTab === 'admin' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('admin'); }}>
@@ -2057,6 +2083,56 @@ const App = () => {
                                 <button className="btn btn-outline-danger w-100 py-2 fw-bold" onClick={logout}>
                                     <i className="bi bi-box-arrow-right me-2"></i> Logout
                                 </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {currentTab === 'mesh' && (
+                        <div className="col-md-8">
+                            <div className="card p-4 shadow-sm border-0 mb-4">
+                                <h4 className="fw-bold mb-4"><i className="bi bi-node-plus me-2 text-primary"></i>P2P Mesh Network</h4>
+                                
+                                <div className="row text-center mb-4">
+                                    <div className="col-6">
+                                        <div className="p-3 bg-light rounded shadow-sm">
+                                            <div className="display-4 fw-bold text-primary">{meshStats.connectedPeers}</div>
+                                            <div className="text-muted small text-uppercase">Connected Peers</div>
+                                        </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="p-3 bg-light rounded shadow-sm">
+                                            <div className="display-4 fw-bold text-success">{config.syncMode === 'webrtc' || config.syncMode === 'peerjs' ? 'ON' : 'OFF'}</div>
+                                            <div className="text-muted small text-uppercase">Mesh Status</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h6 className="fw-bold mb-3">Gossip Activity Log</h6>
+                                <div className="bg-dark text-light p-3 rounded mb-4" style={{ height: '300px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.85rem' }}>
+                                    {meshLog.length === 0 && <div className="text-muted italic">Waiting for mesh activity...</div>}
+                                    {meshLog.map((log, i) => (
+                                        <div key={i} className="mb-1 border-bottom border-secondary pb-1">
+                                            <span className="text-info">[{new Date(log.time).toLocaleTimeString()}]</span> {log.msg}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <h6 className="fw-bold mb-2">Connected Peer IDs</h6>
+                                <div className="d-flex flex-wrap gap-2">
+                                    {meshStats.peerIds.length === 0 && <div className="text-muted small">No active peer IDs discovered.</div>}
+                                    {meshStats.peerIds.map(id => (
+                                        <span key={id} className="badge bg-light text-dark border small">{id}</span>
+                                    ))}
+                                </div>
+
+                                <div className="mt-4 pt-4 border-top">
+                                    <h6>Persistence Engine</h6>
+                                    <p className="small text-muted">
+                                        Your browser is acting as a persistent node in the mesh. 
+                                        Any data Alice or Bob requests that you have in local storage (IndexedDB) will be served automatically, 
+                                        even if the original author is offline.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     )}

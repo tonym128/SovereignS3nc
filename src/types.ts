@@ -38,6 +38,7 @@ export interface SovereignConfig {
   debug?: boolean; // Enable verbose logging
   useWorker?: boolean; // Enable background sync via Web Worker
   workerUrl?: string; // Path to the compiled worker.js
+  enableP2PPairing?: boolean; // Enable QR code and Bluetooth pairing functionality
 }
 
 export interface SovereignManifest {

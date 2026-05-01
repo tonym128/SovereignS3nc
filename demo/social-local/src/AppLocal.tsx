@@ -98,6 +98,7 @@ const App = () => {
         appId: 'sov-social-local',
         userId: 'local-' + Math.random().toString(36).substring(7),
         password: 'password123',
+        enableP2PPairing: new URLSearchParams(window.location.search).has('pairing')
     });
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -422,9 +423,11 @@ const App = () => {
             <nav className="navbar navbar-light bg-white shadow-sm sticky-top px-3">
                 <span className="navbar-brand text-primary fw-bold">sov <span className="badge bg-info fs-6 fw-normal">Local Mesh</span></span>
                 <div className="d-flex align-items-center">
-                    <button className="btn btn-outline-primary rounded-pill me-2" onClick={() => setShowPairing(true)}>
-                        <i className="bi bi-qr-code-scan"></i> Pair Device
-                    </button>
+                    {config.enableP2PPairing && (
+                        <button className="btn btn-outline-primary rounded-pill me-2" onClick={() => setShowPairing(true)}>
+                            <i className="bi bi-qr-code-scan"></i> Pair Device
+                        </button>
+                    )}
                     <UserAvatar userId={config.userId} profileCache={profileCache} resolveImage={resolveImage} size={32} />
                     <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
                 </div>

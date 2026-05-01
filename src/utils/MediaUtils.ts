@@ -9,7 +9,7 @@ export class MediaUtils {
         if (typeof document === 'undefined') {
             try {
                 // Node.js environment fallback using jimp
-                const Jimp = (await import('jimp')).default;
+                const { Jimp } = await import('jimp');
                 const matches = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
                 if (!matches) {
                     Logger.warn('[MediaUtils] No regex match for data URL');
@@ -19,8 +19,8 @@ export class MediaUtils {
                 const buffer = Buffer.from(matches[2], 'base64');
                 const image = await Jimp.read(buffer);
                 
-                let width = image.getWidth();
-                let height = image.getHeight();
+                let width = image.width;
+                let height = image.height;
                 const MAX_DIM = 1024;
                 let changed = false;
                 
@@ -32,16 +32,16 @@ export class MediaUtils {
                         width = (width / height) * MAX_DIM;
                         height = MAX_DIM;
                     }
-                    image.resize(width, height);
+                    image.resize({ w: width, h: height });
                     changed = true;
                 }
                 
                 let quality = 90;
-                let resultBuffer = await image.quality(quality).getBufferAsync(Jimp.MIME_JPEG);
+                let resultBuffer = await image.getBuffer("image/jpeg", { quality });
                 
                 while (resultBuffer.length > targetSizeBytes && quality > 10) {
                     quality -= 10;
-                    resultBuffer = await image.quality(quality).getBufferAsync(Jimp.MIME_JPEG);
+                    resultBuffer = await image.getBuffer("image/jpeg", { quality });
                     changed = true;
                 }
 

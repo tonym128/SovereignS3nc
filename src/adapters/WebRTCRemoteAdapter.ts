@@ -240,6 +240,48 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                         senderId: this.peerId
                     };
                     sourceChannel.send(JSON.stringify(res));
+                } else if (this.storage) {
+                    // SEEDING: Check local storage for the file
+                    // We must strip our own prefix to find it in local storage
+                    let storagePath = key;
+                    if (this.prefix && key.startsWith(this.prefix)) {
+                        storagePath = key.substring(this.prefix.length);
+                    }
+
+                    this.storage.getFile(storagePath).then((data: Uint8Array | null) => {
+                        if (data) {
+                            // Found in storage, serve it
+                            // Calculate a basic etag if missing
+                            const etag = `"${data.length}-${Date.now().toString(36)}"`;
+                            const res: PeerMessage = {
+                                type: 'response',
+                                path: key,
+                                hash: 'sha256-seeding', // We could calculate this but it's expensive
+                                etag,
+                                data: Buffer.from(data).toString('base64'),
+                                reqId: msg.reqId,
+                                senderId: this.peerId
+                            };
+                            sourceChannel.send(JSON.stringify(res));
+                        } else {
+                            // Truly not found
+                            const res: PeerMessage = {
+                                type: 'not_found',
+                                path: key,
+                                reqId: msg.reqId,
+                                senderId: this.peerId
+                            };
+                            sourceChannel.send(JSON.stringify(res));
+                        }
+                    }).catch(() => {
+                        const res: PeerMessage = {
+                            type: 'not_found',
+                            path: key,
+                            reqId: msg.reqId,
+                            senderId: this.peerId
+                        };
+                        sourceChannel.send(JSON.stringify(res));
+                    });
                 } else {
                     const res: PeerMessage = {
                         type: 'not_found',

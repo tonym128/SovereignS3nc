@@ -29,7 +29,7 @@
     "build:social": "node demo/social/build.js",
     "build:social-local": "node demo/social-local/build.js",
     "build:banky": "node demo/banky/build.js",
-    "build": "rimraf dist && tsc && npm run build:esm && npm run build:global",
+    "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build:esm && npm run build:global",
     "prepublishOnly": "npm run build",
     "admin-cli": "ts-node src/admin.ts"
   },
@@ -45,9 +45,9 @@
     "AGENT.md"
   ],
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.969.0",
+    "@aws-sdk/client-s3": "^3.1013.0",
     "@aws-sdk/util-utf8-node": "^3.259.0",
-    "@types/node": "^25.0.8",
+    "@types/node": "^25.6.0",
     "@types/qrcode": "^1.5.6",
     "assert": "^2.1.0",
     "buffer": "^6.0.3",
@@ -61,33 +61,33 @@
     "peerjs": "^1.5.5",
     "process": "^0.11.10",
     "qrcode": "^1.5.4",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "sql.js": "^1.13.0",
     "stream-browserify": "^3.0.0",
     "tweetnacl": "^1.0.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2"
   },
   "overrides": {
-    "fast-xml-parser": "5.5.8"
+    "fast-xml-parser": "^5.7.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "^1.59.1",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
-    "@types/sql.js": "^1.4.9",
+    "@types/sql.js": "^1.4.11",
     "@types/web-bluetooth": "^0.0.21",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.28.0",
     "esbuild-plugin-polyfill-node": "^0.3.0",
     "fake-indexeddb": "^6.2.5",
     "jest": "^30.2.0",
-    "jimp": "^0.22.12",
+    "jimp": "^1.6.1",
     "rimraf": "^6.1.2",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2"
   }
 }

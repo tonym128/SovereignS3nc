@@ -10,13 +10,13 @@ export class BLESignaling {
      * Browser (Central) scans for a Sovereign Peripheral and performs a handshake.
      */
     public static async scanAndPair(onOfferReceived: (offer: string) => Promise<string>): Promise<void> {
-        if (!navigator.bluetooth) {
+        if (!(navigator as any).bluetooth) {
             throw new Error('Web Bluetooth is not supported in this browser.');
         }
 
         Logger.info('[BLE] Scanning for Sovereign devices...');
         
-        const device = await navigator.bluetooth.requestDevice({
+        const device = await (navigator as any).bluetooth.requestDevice({
             filters: [{ services: [SOVEREIGN_SERVICE_UUID] }]
         });
 

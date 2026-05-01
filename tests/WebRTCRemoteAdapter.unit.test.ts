@@ -54,4 +54,46 @@ describe('WebRTCRemoteAdapter Unit Tests', () => {
         expect(bFile?.notModified).toBe(true);
         expect(bFile?.data).toBeNull();
     });
+
+    test('should serve file from storage if not in memory cache (seeding)', async () => {
+        const data = new Uint8Array([10, 11, 12]);
+        const path = 'stored/file.txt';
+        
+        // Mock storage for peerA
+        const mockStorage = {
+            getFile: jest.fn().mockResolvedValue(data)
+        };
+        peerA.storage = mockStorage;
+
+        // PeerB requests file from PeerA (A doesn't have it in memory cache)
+        const result = await peerB.downloadFile(path);
+        
+        expect(mockStorage.getFile).toHaveBeenCalledWith(path);
+        expect(result?.data).toEqual(data);
+        expect(result?.etag).toBeDefined();
+    });
+
+    test('should strip prefix when serving from storage', async () => {
+        const data = new Uint8Array([20, 21, 22]);
+        const prefix = 'app/user/store/';
+        const relativePath = 'public/data.json';
+        const fullPath = prefix + relativePath;
+
+        peerA = new WebRTCRemoteAdapter('peerA', prefix);
+        // Re-establish connection since we replaced peerA
+        const connAtoB = peerA.connectPeer((msg) => connBtoA!.receive(msg));
+        const connBtoA = peerB.connectPeer((msg) => connAtoB!.receive(msg));
+
+        const mockStorage = {
+            getFile: jest.fn().mockResolvedValue(data)
+        };
+        peerA.storage = mockStorage;
+
+        // PeerB requests using full path
+        const result = await peerB.downloadFile(fullPath);
+
+        // PeerA should have looked up the relative path in storage
+        expect(mockStorage.getFile).toHaveBeenCalledWith(relativePath);
+        expect(result?.data).toEqual(data);
+    });
 });

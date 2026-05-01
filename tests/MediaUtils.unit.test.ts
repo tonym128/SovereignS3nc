@@ -1,12 +1,13 @@
 import { MediaUtils } from '../src/utils/MediaUtils';
-import Jimp from 'jimp';
+import { Jimp } from 'jimp';
 
 describe('MediaUtils', () => {
     describe('compressImage', () => {
         it('should compress a large image in Node.js environment', async () => {
             // Create a 2000x2000 red image using Jimp to trigger resizing
-            const image = new Jimp(2000, 2000, 0xFF0000FF);
-            const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
+            // @ts-ignore
+            const image = new Jimp({ width: 2000, height: 2000, color: 0xFF0000FF });
+            const buffer = await image.getBuffer('image/png');
             const dataUrl = `data:image/png;base64,${buffer.toString('base64')}`;
             
             // Try to compress

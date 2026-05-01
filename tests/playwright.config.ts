@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: '.',
-  testIgnore: '**/*.test.ts',
+  testMatch: '**/*.spec.ts',
   globalSetup: require.resolve('./global-setup'),
   fullyParallel: false,
   forbidOnly: !!process.env.CI,

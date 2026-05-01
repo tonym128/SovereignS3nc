@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test';
 test('QR Code Generation Test', async ({ page }) => {
     page.on('console', msg => console.log('BROWSER:', msg.text()));
     
-    // Go to Social Local Demo
-    await page.goto('http://127.0.0.1:8886');
+    // Go to Social Local Demo with pairing enabled
+    await page.goto('http://127.0.0.1:8886?pairing');
     
     // Login
     await page.fill('input[placeholder="User ID"]', 'test-user');
