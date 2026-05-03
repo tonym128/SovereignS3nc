@@ -36,8 +36,16 @@ async function getCurrentUser(): Promise<any | null> {
 
 async function initSovereign(profile: any): Promise<{ 
     sov: SovereignS3nc, 
-    moderation: ModerationModule
+    moderation: ModerationModule,
+    auditLog: (command: string, target?: string) => void
 }> {
+    // Audit Logging
+    const auditLog = (command: string, target?: string) => {
+        const logPath = path.join(CLI_DATA_DIR, 'admin_audit.log');
+        const entry = `[${new Date().toISOString()}] ADMIN_ACTION: ${command} ${target || ''}\n`;
+        fs.appendFileSync(logPath, entry);
+    };
+
     const storagePath = path.join(CLI_DATA_DIR, 'storage', profile.userId);
     const storage = new NodeStorage(storagePath);
     
@@ -51,9 +59,12 @@ async function initSovereign(profile: any): Promise<{
     const sov = new SovereignS3nc(config, undefined, undefined, undefined, storage);
     await sov.init();
     
+    const moderation = new ModerationModule(sov);
+
     return { 
         sov, 
-        moderation: new ModerationModule(sov)
+        moderation,
+        auditLog
     };
 }
 
@@ -84,7 +95,29 @@ SovereignS3nc Admin CLI - Usage:
             return;
         }
 
-        const { sov, moderation } = await initSovereign(user);
+        const { sov, moderation, auditLog } = await initSovereign(user);
+
+        // Task: Admin Authentication
+        const DESTRUCTIVE_COMMANDS = ['ban-user', 'reset', 'burn-it-to-the-ground', 'restore', 'import-data'];
+        if (DESTRUCTIVE_COMMANDS.includes(command)) {
+            const readline = require('readline').createInterface({
+                input: process.stdin,
+                output: process.stdout
+            });
+
+            const password: string = await new Promise(resolve => {
+                readline.question('Confirm Admin Password: ', (ans: string) => {
+                    readline.close();
+                    resolve(ans);
+                });
+            });
+
+            if (password !== user.password) {
+                console.error('Authentication failed: Incorrect password.');
+                return;
+            }
+            console.log('Authentication successful.');
+        }
 
         switch (command) {
             case 'list-users':
@@ -119,6 +152,7 @@ SovereignS3nc Admin CLI - Usage:
                     console.error('Usage: ban-user <userId>');
                     return;
                 }
+                auditLog('ban-user', targetUserId);
                 await moderation.banUser(targetUserId);
                 console.log(`User ${targetUserId} has been banned.`);
                 break;
@@ -138,6 +172,7 @@ SovereignS3nc Admin CLI - Usage:
                     console.error('Usage: restore <path>');
                     return;
                 }
+                auditLog('restore', importPath);
                 const importData = await fs.readFile(importPath, 'utf8');
                 await moderation.importAllData(importData);
                 console.log('Data imported successfully.');
@@ -145,6 +180,7 @@ SovereignS3nc Admin CLI - Usage:
 
             case 'reset':
             case 'burn-it-to-the-ground':
+                auditLog('reset');
                 await moderation.burnItToTheGround();
                 console.log('Operation complete. Everything is gone.');
                 break;

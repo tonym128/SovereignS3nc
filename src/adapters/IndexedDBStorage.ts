@@ -57,7 +57,14 @@ export class IndexedDBStorage implements IStorage {
     }
 
     private sanitizePath(filePath: string): string {
-        return filePath.replace(/\.\./g, '').replace(/^\/+/, '');
+        // Task #26: Robust path sanitization
+        const parts = filePath.split(/[/\\]/);
+        const safeParts = [];
+        for (const part of parts) {
+            if (part === '..' || part === '.' || part === '') continue;
+            safeParts.push(part);
+        }
+        return safeParts.join('/');
     }
 
     async getDailyDb(date: string, type: 'private' | 'public' | 'followed'): Promise<Uint8Array | null> {

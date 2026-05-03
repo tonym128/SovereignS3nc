@@ -208,7 +208,7 @@ export class KeyManager {
         }
 
         // --- Load Identity Keys ---
-        let keyInfo: { privateKey: string, publicKey: string } | null = null;
+        let keyInfo: { privateKey: string, publicKey: string, signingPrivateKey?: string, signingPublicKey?: string } | null = null;
         let localKeyData: Uint8Array | null = null;
         try {
             localKeyData = await this.ctx.storage.getDailyDb('_keys', 'private'); 
@@ -253,10 +253,24 @@ export class KeyManager {
 
         if (!keyInfo) {
             const pair = nacl.box.keyPair();
+            const signPair = nacl.sign.keyPair();
             keyInfo = { 
                 privateKey: Buffer.from(pair.secretKey).toString('hex'), 
-                publicKey: Buffer.from(pair.publicKey).toString('hex') 
+                publicKey: Buffer.from(pair.publicKey).toString('hex'),
+                signingPrivateKey: Buffer.from(signPair.secretKey).toString('hex'),
+                signingPublicKey: Buffer.from(signPair.publicKey).toString('hex')
             };
+        }
+
+        // Migration: ensure signing keys exist for existing accounts
+        if (!keyInfo.signingPrivateKey) {
+            // Deterministically derive signing key from encryption key to avoid losing access to old data
+            // but for P2P it doesn't matter much as long as it is consistent.
+            // Better: use encryption private key as seed if possible.
+            const seed = Buffer.from(keyInfo.privateKey, 'hex');
+            const signPair = nacl.sign.keyPair.fromSeed(seed);
+            keyInfo.signingPrivateKey = Buffer.from(signPair.secretKey).toString('hex');
+            keyInfo.signingPublicKey = Buffer.from(signPair.publicKey).toString('hex');
         }
 
         // Ensure keys are stored in V2 format locally
@@ -274,8 +288,24 @@ export class KeyManager {
 
         this.ctx.config.encryptionKey = keyInfo.privateKey;
         this.ctx.config.publicEncryptionKey = keyInfo.publicKey;
+        (this.ctx.config as any).signingPrivateKey = keyInfo.signingPrivateKey;
+        (this.ctx.config as any).signingPublicKey = keyInfo.signingPublicKey;
         
         Logger.info('Keys', `Identity initialized (${isLegacy ? 'Legacy' : 'V2'}).`);
+    }
+
+    public sign(data: Uint8Array): Uint8Array {
+        const signingPrivateKey = (this.ctx.config as any).signingPrivateKey;
+        if (!signingPrivateKey) throw new AuthError('Signing key not initialized');
+        return nacl.sign.detached(data, Buffer.from(signingPrivateKey, 'hex'));
+    }
+
+    public verify(data: Uint8Array, signature: Uint8Array, publicKey: string): boolean {
+        try {
+            return nacl.sign.detached.verify(data, signature, Buffer.from(publicKey, 'hex'));
+        } catch (e) {
+            return false;
+        }
     }
 
     public async ensureKeysAreRemote() {

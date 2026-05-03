@@ -223,7 +223,10 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     public getModulePath(moduleName: string, subPath: string, type: 'private' | 'public' | 'followed'): string {
-        const cleanModule = moduleName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!/^[a-z0-9_-]+$/i.test(moduleName)) {
+            throw new ModuleError(moduleName, `Invalid module name: "${moduleName}". Only alphanumeric, underscore, and hyphen are allowed.`);
+        }
+        const cleanModule = moduleName.toLowerCase();
         if (type === 'followed') {
             const parts = subPath.split('/');
             const userId = parts.shift();
@@ -368,6 +371,14 @@ export class SovereignS3nc extends EventEmitter {
         [this.remote, this.publicRemote, this.globalRemote].forEach(r => {
             if (r instanceof WebRTCRemoteAdapter) {
                 r.storage = this.storage;
+                (r as any).sign = (data: Uint8Array) => this.keyManager.sign(data);
+                (r as any).verify = (data: Uint8Array, sig: Uint8Array, pk: string) => this.keyManager.verify(data, sig, pk);
+                (r as any).signingPublicKey = (this.config as any).signingPublicKey;
+                (r as any).getPublicKey = async (userId: string) => {
+                    const registry = await this.getPublicRegistry();
+                    const user = registry.find(u => u.userId === userId);
+                    return (user as any)?.signingPublicKey || null;
+                };
             }
         });
 
@@ -573,14 +584,15 @@ export class SovereignS3nc extends EventEmitter {
             const expectedHash = path.split('/').pop();
             const actualHash = this.calculateHashedContent(data);
             if (expectedHash !== actualHash) {
-                Logger.warn('Blob', `Hash mismatch for ${path}. Expected ${expectedHash}, got ${actualHash}`);
+                Logger.error('Sovereign', `Hash mismatch for blob ${path}. Expected ${expectedHash}, got ${actualHash}`);
+                throw new SyncError(`Blob corruption detected for ${path}`);
             }
 
-            await this.storage.saveFile(`followed/${userId}/${path}`, data);
+            await this.storage.saveFile(`${PATHS.FOLLOWED_PREFIX}${userId}/${path}`, data);
             return data;
-        }
-        return null;
-    }
+            }
+            return null;
+            }
 
     public async follow(userId: string) {
         const remotePath = 'users.json';

@@ -18,6 +18,8 @@ export interface PeerMessage {
     senderId: string;
     msgId?: string; // Unique ID for deduplication
     ttl?: number;   // Hop limit
+    signature?: string; // Hex encoded signature
+    signingPublicKey?: string; // Hex encoded signing public key
     // PEX fields
     peerList?: string[];
     to?: string;
@@ -30,6 +32,10 @@ export interface WebRTCRemoteAdapterConfig {
     ttl?: number;
     maxSeenMessages?: number;
     maxCacheSize?: number;
+    sign?: (data: Uint8Array) => Uint8Array;
+    verify?: (data: Uint8Array, signature: Uint8Array, publicKey: string) => boolean;
+    signingPublicKey?: string;
+    getPublicKey?: (userId: string) => Promise<string | null>;
 }
 
 export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter {
@@ -52,6 +58,12 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     private seenMessagesQueue: string[] = [];
     private maxSeenMessages: number;
 
+    // Security
+    private sign?: (data: Uint8Array) => Uint8Array;
+    private verify?: (data: Uint8Array, signature: Uint8Array, publicKey: string) => boolean;
+    private signingPublicKey?: string;
+    private getPublicKey?: (userId: string) => Promise<string | null>;
+
     constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
         super();
         this.peerId = userId;
@@ -63,6 +75,10 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         this.defaultTTL = config.ttl ?? DEFAULTS.RTC_TTL;
         this.maxSeenMessages = config.maxSeenMessages ?? DEFAULTS.RTC_MAX_SEEN_MESSAGES;
         this.cache = new LRUCache(config.maxCacheSize ?? DEFAULTS.RTC_MAX_CACHE_SIZE);
+        this.sign = config.sign;
+        this.verify = config.verify;
+        this.signingPublicKey = config.signingPublicKey;
+        this.getPublicKey = config.getPublicKey;
     }
 
     /**
@@ -171,10 +187,32 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         Logger.debug('WebRTC', `Peer disconnected. Active channels: ${this.channels.size}`);
     }
 
-    private handleMessage(msgStr: string, sourceChannel: any) {
+    private async handleMessage(msgStr: string, sourceChannel: any) {
         try {
             const msg: PeerMessage = JSON.parse(msgStr);
             const key = msg.path;
+
+            // 0. Security Verification
+            if (this.verify && msg.signature && msg.signingPublicKey) {
+                const messageToVerify = { ...msg };
+                delete (messageToVerify as any).signature;
+                const dataToVerify = new TextEncoder().encode(JSON.stringify(messageToVerify));
+                const signature = Buffer.from(msg.signature, 'hex');
+                
+                // If msg.senderId matches we should verify against its public key
+                // For now we trust msg.signingPublicKey if we don't have a better source
+                // but ideally we should check against a known public key for that senderId.
+                let knownPublicKey = msg.signingPublicKey;
+                if (this.getPublicKey && msg.senderId) {
+                    const fetched = await this.getPublicKey(msg.senderId);
+                    if (fetched) knownPublicKey = fetched;
+                }
+
+                if (!this.verify(dataToVerify, signature, knownPublicKey)) {
+                    Logger.warn('WebRTC', `Invalid signature from peer ${msg.senderId}. Dropping message.`);
+                    return;
+                }
+            }
 
             // 1. Deduplication
             if (msg.msgId) {
@@ -308,6 +346,12 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     }
 
     private broadcast(msg: PeerMessage, excludeChannel?: any) {
+        if (this.sign && this.signingPublicKey) {
+            msg.signingPublicKey = this.signingPublicKey;
+            const dataToSign = new TextEncoder().encode(JSON.stringify(msg));
+            msg.signature = Buffer.from(this.sign(dataToSign)).toString('hex');
+        }
+
         const msgStr = JSON.stringify(msg);
         for (const channel of this.channels) {
             if (channel !== excludeChannel) {

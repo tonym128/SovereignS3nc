@@ -4,10 +4,12 @@ import { ModerationModule } from '../src/modules/Moderation';
 import { SovereignS3nc } from '../src/SovereignS3nc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import readline from 'readline';
 
 jest.mock('../src/SovereignS3nc');
 jest.mock('../src/modules/Moderation');
 jest.mock('fs-extra');
+jest.mock('readline');
 
 describe('Admin CLI Unit Tests', () => {
     let mockSov: any;
@@ -34,6 +36,12 @@ describe('Admin CLI Unit Tests', () => {
         });
         (fs.writeFile as unknown as jest.Mock).mockResolvedValue(undefined);
         (fs.readFile as unknown as jest.Mock).mockResolvedValue('{}');
+
+        // Mock readline
+        (readline.createInterface as jest.Mock).mockReturnValue({
+            question: jest.fn().mockImplementation((q, cb) => cb('password')),
+            close: jest.fn()
+        });
     });
 
     test('list-users calls listUsers and logs them', async () => {
