@@ -6,13 +6,13 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🔴 P0 — Critical Security (Fix Immediately)
 
-- [ ] **Increase PBKDF2 iterations to ≥600,000** (`src/core/KeyManager.ts`)
+- [x] **Increase PBKDF2 iterations to ≥600,000** (`src/core/KeyManager.ts`)
   - Current: `crypto.pbkdf2Sync(password, ..., 1000, ...)` — OWASP recommends 600,000+ (2024)
   - At 1,000 iterations, offline brute-force is trivial (~30M passwords/sec on consumer hardware)
   - Also use a **random per-user salt** instead of deterministic `${userId}-master`
   - Store the random salt alongside encrypted data
 
-- [ ] **Replace `Math.random()` with `crypto.getRandomValues()` for all IDs** (multiple files)
+- [x] **Replace `Math.random()` with `crypto.getRandomValues()` for all IDs** (multiple files)
   - Affected: `Feed.ts` (post IDs), `MessagingModule.ts` (message IDs), `WebRTCRemoteAdapter.ts` (msgId, deduplication), `GroupManager.ts` (group IDs), `SovereignS3nc.ts` (conflict resolution IDs)
   - `Math.random()` is not cryptographically secure — predictable IDs enable message forgery
 
@@ -21,7 +21,7 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Anyone who clones the repo can access S3 buckets configured with these credentials
   - Move to `.env` file (gitignored) or environment variables
 
-- [ ] **Add authentication to Admin CLI** (`src/admin.ts`)
+- [x] **Add authentication to Admin CLI** (`src/admin.ts`)
   - Currently no password, MFA, or session token protection
   - Any user on the machine can run `sov-admin ban-user <userId>` and purge all data
   - Require explicit admin auth (password + optional MFA)
@@ -31,13 +31,13 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟡 P1 — High Security & Architecture Issues
 
-- [ ] **Default `autoFollowDiscoveredUsers` to `false`** (`src/types.ts`)
+- [x] **Default `autoFollowDiscoveredUsers` to `false`** (`src/types.ts`)
   - Currently defaults to `true` — automatically follows every user in the global registry
   - Pulls and stores all discovered users' data without consent
   - Makes social graph fully observable by S3 provider
   - Malicious users can flood registry to trigger unwanted syncs
 
-- [ ] **Cryptographically sign P2P messages** (`src/adapters/WebRTCRemoteAdapter.ts`)
+- [x] **Cryptographically sign P2P messages** (`src/adapters/WebRTCRemoteAdapter.ts`)
   - Peer-to-peer messages use unsigned `senderId` strings — any peer can spoof another's ID
   - Gossip protocol trusts all connected peers blindly
   - Sign all P2P messages using sender's X25519 private key (EdDSA/Ed25519)
@@ -60,7 +60,7 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Exposes encrypted payloads to MITM attacks on the wire
   - Add `requireTLS: boolean` config option; warn/error when using `http://` in production
 
-- [ ] **Fix path sanitization bypass** (`src/adapters/IndexedDBStorage.ts`)
+- [x] **Fix path sanitization bypass** (`src/adapters/IndexedDBStorage.ts`)
   ```typescript
   private sanitizePath(filePath: string): string {
       return filePath.replace(/\.\./g, '').replace(/^\/+/, '');
@@ -70,14 +70,14 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Split on `/`, filter out empty segments and `.`, `..`, then rejoin
   - Validate against an allowlist of prefixes
 
-- [ ] **Blob hash mismatch should reject data, not just warn** (`src/SovereignS3nc.ts`)
+- [x] **Blob hash mismatch should reject data, not just warn** (`src/SovereignS3nc.ts`)
   ```typescript
   if (expectedHash !== actualHash) { Logger.warn(...) } // continues to return data
   ```
   - Corrupted/untrusted blobs are still returned to the caller
   - Should throw an error and reject the data
 
-- [ ] **Add input validation on module names** (`src/SovereignS3nc.ts`)
+- [x] **Add input validation on module names** (`src/SovereignS3nc.ts`)
   ```typescript
   const cleanModule = moduleName.toLowerCase().replace(/[^a-z0-9]/g, '');
   ```
@@ -88,62 +88,62 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟡 P1 — UX Issues in Demos (High Impact)
 
-- [ ] **Fix conflict resolution UX** (all demo apps)
+- [x] **Fix conflict resolution UX** (all demo apps)
   - Shows raw binary/JSON data to users — incomprehensible for most
   - No semantic diff (e.g., "Post content changed from X to Y")
   - `abort` option leaves file in inconsistent state with no recovery path
   - Implement semantic diffs per module type; add "merge" strategy for non-conflicting fields
 
-- [ ] **Remove plaintext password storage from localStorage** (`demo/social/src/App.tsx`)
+- [x] **Remove plaintext password storage from localStorage** (`demo/social/src/App.tsx`)
   ```typescript
   localStorage.setItem('sov_social_config', JSON.stringify(currentConfig)); // includes password
   ```
   - Master password stored in plaintext — extractable by anyone with browser access
   - Use a session token derived from the password, or require re-entry for sensitive operations
 
-- [ ] **Add loading states during sync operations** (`demo/social/src/App.tsx`)
+- [x] **Add loading states during sync operations** (`demo/social/src/App.tsx`)
   - Sync can take seconds (especially first sync) but no visible indicator
   - Users may think app is frozen and refresh, losing unsaved input
   - Show "Syncing..." spinner or progress bar during `sov.sync()`
 
-- [ ] **Add notification for auto-sync arrivals** (`demo/social/src/App.tsx`)
+- [x] **Add notification for auto-sync arrivals** (`demo/social/src/App.tsx`)
   - Auto-sync runs every 60 seconds silently — users don't know new content arrived
   - Show toast/notification when auto-sync brings in new messages/posts
 
-- [ ] **Add financial input validation to Banky demo** (`demo/banky/src/App.tsx`)
+- [x] **Add financial input validation to Banky demo** (`demo/banky/src/App.tsx`)
   ```typescript
   const amount = parseFloat(amt); if (isNaN(amount)) return; // only checks NaN
   ```
   - Users can enter `-999999` as debit → credit of $999,999
   - Add positive-only validation for deposits, reasonable maximums, confirmation dialogs for large amounts
 
-- [ ] **Fix Banky demo Chart.js dependency** (`demo/banky/src/App.tsx`)
+- [x] **Fix Banky demo Chart.js dependency** (`demo/banky/src/App.tsx`)
   ```typescript
   chartInstance.current = new (window as any).Chart(ctx, ...)
   ```
   - Depends on global `Chart` object not imported or bundled — will fail in most environments
   - Import Chart.js properly or use a bundled canvas-based charting library
 
-- [ ] **Add empty-state guidance to all demos**
+- [x] **Add empty-state guidance to all demos**
   - Blank areas without guidance when no posts/messages/friends exist
   - Add contextual CTAs: "Follow someone to see their posts", "Scan QR code to connect"
 
-- [ ] **Add keyboard accessibility to demo UIs**
+- [x] **Add keyboard accessibility to demo UIs**
   - Custom dialog components don't trap focus or handle Escape key consistently
   - Many interactive elements lack proper ARIA labels and tabindex
   - Add focus trapping, Escape-to-close, full keyboard navigation
 
-- [ ] **Add image upload error feedback** (`demo/social/src/App.tsx`)
+- [x] **Add image upload error feedback** (`demo/social/src/App.tsx`)
   ```typescript
   try { dataUrl = await MediaUtils.compressImage(dataUrl, 100 * 1024); } catch (err) {} // silently ignored
   ```
   - Show error toast if compression fails; fall back to uncompressed with warning
 
-- [ ] **Add connection status indicator to local demo** (`demo/social-local/src/AppLocal.tsx`)
+- [x] **Add connection status indicator to local demo** (`demo/social-local/src/AppLocal.tsx`)
   - No visual indicator of P2P peer connections — users don't know if messages are being delivered
   - Show peer count and connection status in navbar (e.g., "🟢 3 peers connected")
 
-- [ ] **Add React Error Boundaries to all demos**
+- [x] **Add React Error Boundaries to all demos**
   - No error boundaries — any JS error crashes the entire UI with no recovery
   - Wrap each demo's main component in an Error Boundary showing a recoverable state
 
@@ -151,7 +151,7 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟡 P1 — Architecture & Reliability Issues
 
-- [ ] **Make sync truly offline-first** (`src/core/SyncOrchestrator.ts`)
+- [x] **Make sync truly offline-first** (`src/core/SyncOrchestrator.ts`)
   - `sync()` throws errors if remote is unreachable in many code paths
     (`ensureGlobalRegistration`, `updateFollowingPublicKeys`, etc.)
   - Should gracefully degrade to offline mode and queue operations for later retry
@@ -162,7 +162,7 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Implement per-peer rate limits, exponential backoff on re-broadcasts
   - Add "sync state" exchange instead of full data gossip for large datasets
 
-- [ ] **Optimize manifest generation** (`src/core/ManifestManager.ts`)
+- [x] **Optimize manifest generation** (`src/core/ManifestManager.ts`)
   ```typescript
   const allFiles = await this.ctx.storage.listFiles(''); // O(n) every sync
   ```
@@ -170,7 +170,7 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Incremental manifest: only scan files changed since last manifest
   - Cache previous manifest and diff against it
 
-- [ ] **Add error recovery for corrupted SQLite databases** (all modules)
+- [x] **Add error recovery for corrupted SQLite databases** (all modules)
   ```typescript
   } catch (e) {} // silently swallowed in Feed.ts, MessagingModule.ts, etc.
   ```
@@ -282,7 +282,7 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 | Category | Count | P0 | P1 | P2 | P3 |
 |----------|-------|----|----|----|----|
-| **Security** | 15 | 4 | 7 | 3 | 1 |
-| **UX (Demos)** | 9 | 0 | 0 | 0 | 9 |
-| **Architecture** | 6 | 0 | 6 | 0 | 0 |
+| **Security** | 15 | 1 | 3 | 3 | 1 |
+| **UX (Demos)** | 11 | 0 | 0 | 0 | 0 |
+| **Architecture** | 5 | 0 | 2 | 0 | 0 |
 | **Missing Features** | 8 | 0 | 0 | 8 | 0 |
