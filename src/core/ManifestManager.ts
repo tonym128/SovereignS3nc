@@ -32,8 +32,18 @@ export class ManifestManager {
     }
 
     public async generateManifest(): Promise<SovereignManifest> {
+        const cachePath = PATHS.MANIFEST_CACHE;
+        let cachedManifest: SovereignManifest | null = null;
+        try {
+            const cacheData = await this.ctx.storage.getFile(cachePath);
+            if (cacheData) {
+                cachedManifest = JSON.parse(new TextDecoder().decode(cacheData));
+            }
+        } catch (e) {}
+
         const allFiles = await this.ctx.storage.listFiles('');
-        Logger.debug('Sync', `generateManifest: Scanning ${allFiles.length} files`);
+        Logger.debug('Sync', `generateManifest: Scanning ${allFiles.length} files (Incremental)`);
+        
         const manifest: SovereignManifest = {
             updatedAt: Date.now(),
             userId: this.ctx.userId,
@@ -53,49 +63,64 @@ export class ManifestManager {
             if (file.includes(PATHS.MANIFEST)) continue;
             if (file.includes(PATHS.KEYS)) continue;
             if (file.includes(PATHS.SENTINEL)) continue;
+            if (file.includes(PATHS.MANIFEST_CACHE)) continue;
             if (file.includes('.probe')) continue;
             if (file.startsWith(PATHS.FOLLOWED_PREFIX)) continue; 
             
             const parts = file.split('/');
             const fileName = parts[parts.length - 1];
 
-            const data = await this.ctx.storage.getFile(file);
-            if (data) {
-                const type = file.startsWith(PATHS.PUBLIC_PREFIX) ? 'public' : 'private';
-                const key = type === 'private' ? this.ctx.getEncryptionKey() : undefined;
-                const hash = this.ctx.calculateHashedContent(data, key);
-                const updatedAt = await this.ctx.storage.getFileTimestamp(file) || Date.now();
-                manifest.files![file] = { hash, updatedAt };
-            }
-            
-            if (parts.length === 2 && fileName.endsWith(PATHS.DB_EXT)) {
-                const dateStr = fileName.replace(PATHS.DB_EXT, '');
-                if (!manifest.modules['core']) manifest.modules['core'] = [];
-                if (!manifest.modules['core'].includes(dateStr)) manifest.modules['core'].push(dateStr);
-            }
-            else if (file.includes(`/${PATHS.MODULES_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
-                const moduleName = parts[2];
-                if (parts.length === 4) {
-                    const dateStr = fileName.replace(PATHS.DB_EXT, '');
-                    if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
-                    if (!manifest.modules[moduleName].includes(dateStr)) manifest.modules[moduleName].push(dateStr);
-                } 
-                else if (parts.length === 6 && parts[3] === 'dms') {
-                    const recipientId = parts[4];
-                    const dateStr = fileName.replace(PATHS.DB_EXT, '');
-                    if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
-                    if (!manifest.dms[recipientId].includes(dateStr)) manifest.dms[recipientId].push(dateStr);
+            const updatedAt = await this.ctx.storage.getFileTimestamp(file) || Date.now();
+            let hash: string | undefined;
+
+            // Use cache if file hasn't changed
+            if (cachedManifest && cachedManifest.files![file] && cachedManifest.files![file].updatedAt >= updatedAt) {
+                hash = cachedManifest.files![file].hash;
+            } else {
+                const data = await this.ctx.storage.getFile(file);
+                if (data) {
+                    const type = file.startsWith(PATHS.PUBLIC_PREFIX) ? 'public' : 'private';
+                    const key = type === 'private' ? this.ctx.getEncryptionKey() : undefined;
+                    hash = this.ctx.calculateHashedContent(data, key);
                 }
             }
-            else if (file.includes(`/${PATHS.GROUPS_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
-                const groupId = parts[2];
-                const dateStr = fileName.replace(PATHS.DB_EXT, '');
-                if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
-                if (!manifest.groups[groupId].includes(dateStr)) manifest.groups[groupId].push(dateStr);
-            }
 
-            manifest.blobs.push(file);
+            if (hash) {
+                manifest.files![file] = { hash, updatedAt };
+                
+                if (parts.length === 2 && fileName.endsWith(PATHS.DB_EXT)) {
+                    const dateStr = fileName.replace(PATHS.DB_EXT, '');
+                    if (!manifest.modules['core']) manifest.modules['core'] = [];
+                    if (!manifest.modules['core'].includes(dateStr)) manifest.modules['core'].push(dateStr);
+                }
+                else if (file.includes(`/${PATHS.MODULES_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
+                    const moduleName = parts[2];
+                    if (parts.length === 4) {
+                        const dateStr = fileName.replace(PATHS.DB_EXT, '');
+                        if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
+                        if (!manifest.modules[moduleName].includes(dateStr)) manifest.modules[moduleName].push(dateStr);
+                    } 
+                    else if (parts.length === 6 && parts[3] === 'dms') {
+                        const recipientId = parts[4];
+                        const dateStr = fileName.replace(PATHS.DB_EXT, '');
+                        if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
+                        if (!manifest.dms[recipientId].includes(dateStr)) manifest.dms[recipientId].push(dateStr);
+                    }
+                }
+                else if (file.includes(`/${PATHS.GROUPS_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
+                    const groupId = parts[2];
+                    const dateStr = fileName.replace(PATHS.DB_EXT, '');
+                    if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
+                    if (!manifest.groups[groupId].includes(dateStr)) manifest.groups[groupId].push(dateStr);
+                }
+
+                manifest.blobs.push(file);
+            }
         }
+
+        // Save to local cache
+        await this.ctx.storage.saveFile(cachePath, new TextEncoder().encode(JSON.stringify(manifest)));
+
         return manifest;
     }
 

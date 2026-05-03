@@ -133,6 +133,15 @@ const App = () => {
     const msgFileRef = useRef<HTMLInputElement>(null);
     const profileFileRef = useRef<HTMLInputElement>(null);
     const [profile, setProfile] = useState<any>(null);
+    const [meshStats, setMeshStats] = useState({ connectedPeers: 0, peerIds: [] as string[] });
+
+    useEffect(() => {
+        if (!sov) return;
+        const interval = setInterval(() => {
+            setMeshStats(sov.getMeshStats());
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [sov]);
 
     const resolveImage = async (path?: string, userId?: string) => {
         if (!path || !sov) return null;
@@ -423,6 +432,10 @@ const App = () => {
             <nav className="navbar navbar-light bg-white shadow-sm sticky-top px-3">
                 <span className="navbar-brand text-primary fw-bold">sov <span className="badge bg-info fs-6 fw-normal">Local Mesh</span></span>
                 <div className="d-flex align-items-center">
+                    <div className="me-3 d-flex align-items-center gap-1 text-success fw-bold small">
+                        <i className="bi bi-broadcast"></i>
+                        <span>{meshStats.connectedPeers} peers</span>
+                    </div>
                     {config.enableP2PPairing && (
                         <button className="btn btn-outline-primary rounded-pill me-2" onClick={() => setShowPairing(true)}>
                             <i className="bi bi-qr-code-scan"></i> Pair Device

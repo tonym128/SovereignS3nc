@@ -85,7 +85,20 @@ export class FeedModule {
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        const db = new sqliteInstance.Database(data || undefined);
+        
+        let db: any;
+        try {
+            db = new sqliteInstance.Database(data || undefined);
+        } catch (e: any) {
+            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                Logger.error('Feed', `Database corruption detected at ${dbPath}. Deleting corrupted file.`);
+                await this.db.getStorage().deleteFile(dbPath);
+                // Return an empty DB for now, sync will recover it later
+                db = new sqliteInstance.Database();
+            } else {
+                throw e;
+            }
+        }
 
         // Use Core Schema Management
         this.db.applyModuleSchema(db, this.MODULE_NAME);

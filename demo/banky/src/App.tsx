@@ -7,6 +7,10 @@ import { BankyManager, BankAccount, Transaction, Goal } from './Banky';
 import { IRemoteAdapter, DownloadResult } from '../../../src/interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from '../../../src/adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from '../../../src/adapters/IndexedDBStorage';
+import { Chart, registerables } from 'chart.js';
+import { ErrorBoundary } from './ErrorBoundary';
+
+Chart.register(...registerables);
 
 const DEBUG = true;
 
@@ -253,13 +257,20 @@ const App = () => {
         setSelectedAccount({ ...selectedAccount, image: undefined });
     };
 
-    const handleAddTransaction = async (isCredit: boolean) => {
+    const handleAddTransaction = (isCredit: boolean) => {
         if (!banky || !selectedAccount) return;
         const type = isCredit ? 'Credit' : 'Debit';
         showPrompt(`Enter ${type} Amount:`, async (amt) => {
             const amount = parseFloat(amt);
-            if (isNaN(amount)) return;
-            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid positive amount.');
+                return;
+            }
+
+            if (amount > 10000) {
+                if (!window.confirm(`Are you sure you want to ${isCredit ? 'add' : 'withdraw'} $${amount.toLocaleString()}?`)) return;
+            }
+
             showPrompt(`Enter description for ${type}:`, async (desc) => {
                 if (desc) {
                     // Find if this is a shared account
@@ -304,7 +315,7 @@ const App = () => {
         const labels = sorted.map(tx => tx.date);
 
         // Render chart
-        chartInstance.current = new (window as any).Chart(ctx, {
+        chartInstance.current = new Chart(ctx, {
             type: 'line',
             data: {
                 labels,
@@ -991,4 +1002,8 @@ const Dialog = ({ dialog, setDialog }: any) => {
 };
 
 const root = createRoot(document.getElementById('root')!);
-root.render(<App />);
+root.render(
+    <ErrorBoundary>
+        <App />
+    </ErrorBoundary>
+);

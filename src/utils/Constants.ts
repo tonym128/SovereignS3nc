@@ -10,6 +10,7 @@ export const PATHS = {
     USERS_REGISTRY: 'users.json',
     BLACKLIST: 'blacklist.json',
     ADMIN_PUBLIC_KEY: 'public_key.json',
+    MANIFEST_CACHE: '.manifest_cache.json',
 
     // Directory prefixes
     PUBLIC_PREFIX: 'public/',

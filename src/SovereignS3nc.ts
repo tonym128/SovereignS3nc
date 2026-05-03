@@ -312,7 +312,19 @@ export class SovereignS3nc extends EventEmitter {
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError(schema, 'sql.js not found');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        const db = new sqliteInstance.Database(data || undefined);
+        
+        let db: any;
+        try {
+            db = new sqliteInstance.Database(data || undefined);
+        } catch (e: any) {
+            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                Logger.error('Sovereign', `Group database corruption detected at ${dbPath}. Deleting.`);
+                await this.getStorage().deleteFile(dbPath);
+                db = new sqliteInstance.Database();
+            } else {
+                throw e;
+            }
+        }
 
         this.applyModuleSchema(db, schema);
         return db;

@@ -52,7 +52,19 @@ export class MessagingModule {
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        const db = new sqliteInstance.Database(data || undefined);
+        
+        let db: any;
+        try {
+            db = new sqliteInstance.Database(data || undefined);
+        } catch (e: any) {
+            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                Logger.error('Messaging', `Database corruption detected at ${path}. Deleting corrupted file.`);
+                await this.db.getStorage().deleteFile(path);
+                db = new sqliteInstance.Database();
+            } else {
+                throw e;
+            }
+        }
 
         // Use Core Schema Management
         this.db.applyModuleSchema(db, this.MODULE_NAME);
@@ -100,7 +112,19 @@ export class MessagingModule {
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        const publicDb = new sqliteInstance.Database(publicDmData || undefined);
+        
+        let publicDb: any;
+        try {
+            publicDb = new sqliteInstance.Database(publicDmData || undefined);
+        } catch (e: any) {
+            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                Logger.error('Messaging', `Transport database corruption detected at ${publicDmPath}. Deleting.`);
+                await this.db.getStorage().deleteFile(publicDmPath);
+                publicDb = new sqliteInstance.Database();
+            } else {
+                throw e;
+            }
+        }
         
         // Manual Schema for DM transport (not part of declarative module schema as it is a transport db)
         publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
