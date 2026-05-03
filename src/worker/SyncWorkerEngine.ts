@@ -2,6 +2,7 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { SovereignConfig, ModuleDefinition } from '../types';
 import { Logger } from '../utils/Logger';
+import { SyncError } from '../utils/Errors';
 
 export interface WorkerMessage {
     type: string;
@@ -56,10 +57,10 @@ export class SyncWorkerEngine {
                     break;
 
                 default:
-                    Logger.warn(`[SyncWorkerEngine] Unknown message type: ${type}`);
+                    Logger.warn('Worker', `Unknown message type: ${type}`);
             }
         } catch (error: any) {
-            Logger.error(`[SyncWorkerEngine] Error handling ${type}:`, error);
+            Logger.error('Worker', `Error handling ${type}:`, error);
             this.postMessage({ 
                 id, 
                 type: 'ERROR', 
@@ -69,7 +70,7 @@ export class SyncWorkerEngine {
     }
 
     private async handleInit(config: SovereignConfig) {
-        Logger.info('[SyncWorkerEngine] Initializing SovereignS3nc instance...');
+        Logger.info('Worker', 'Initializing SovereignS3nc instance...');
         // Disable useWorker for the instance INSIDE the worker to avoid infinite recursion
         const workerConfig = { ...config, useWorker: false };
         this.sovereign = new SovereignS3nc(workerConfig);
@@ -85,17 +86,17 @@ export class SyncWorkerEngine {
         });
 
         await this.sovereign.init();
-        Logger.info('[SyncWorkerEngine] Initialization complete.');
+        Logger.info('Worker', 'Initialization complete.');
     }
 
     private async handleSync(payload: { forceSync?: boolean }) {
         if (!this.sovereign) {
-            throw new Error('Sovereign instance not initialized in worker');
+            throw new SyncError('Sovereign instance not initialized in worker');
         }
 
-        Logger.info('[SyncWorkerEngine] Starting background sync...');
+        Logger.info('Worker', 'Starting background sync...');
         await this.sovereign.sync(payload.forceSync);
-        Logger.info('[SyncWorkerEngine] Background sync complete.');
+        Logger.info('Worker', 'Background sync complete.');
     }
 
     /**

@@ -36,20 +36,20 @@ class SovereignNode {
     }
 
     async start() {
-        Logger.info(`[Server] Starting Sovereign Node for ${this.config.paths.userId}...`);
+        Logger.info('Server', `Starting Sovereign Node for ${this.config.paths.userId}...`);
         await this.sov.init();
 
         // Initial Sync
-        Logger.info('[Server] Performing initial sync...');
+        Logger.info('Server', 'Performing initial sync...');
         await this.sov.sync();
 
         // Setup background sync
         setInterval(async () => {
             try {
-                Logger.info('[Server] Running background sync...');
+                Logger.info('Server', 'Running background sync...');
                 await this.sov.sync();
             } catch (e: any) {
-                Logger.error(`[Server] Sync failed: ${e.message}`);
+                Logger.error('Server', `Sync failed: ${e.message}`);
             }
         }, this.syncInterval);
 
@@ -69,7 +69,7 @@ class SovereignNode {
                 res.end(JSON.stringify(status));
             } else if (req.url === '/sync') {
                 // Manual trigger
-                this.sov.sync().catch(e => Logger.error(`[Server] Manual sync failed: ${e.message}`));
+                this.sov.sync().catch(e => Logger.error('Server', `Manual sync failed: ${e.message}`));
                 res.writeHead(202);
                 res.end(JSON.stringify({ message: 'Sync triggered' }));
             } else {
@@ -79,7 +79,7 @@ class SovereignNode {
         });
 
         server.listen(this.port, () => {
-            Logger.info(`[Server] Status API listening on http://localhost:${this.port}/status`);
+            Logger.info('Server', `Status API listening on http://localhost:${this.port}/status`);
         });
     }
 }

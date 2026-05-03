@@ -41,9 +41,11 @@ describe('ProfileModule Unit Tests', () => {
     beforeEach(async () => {
         (global as any).indexedDB = new IDBFactory();
         mockRemote = new MockRemote();
+        const testId = Math.random().toString(36).substring(7);
         sov = new SovereignS3nc({
-            paths: { appId: 'test-app', userId: 'alice', storeId: 'main' },
-            password: 'password123'
+            paths: { appId: `test-app-${testId}`, userId: 'alice', storeId: 'main' },
+            password: 'password123',
+            localPersistencePath: `./test-data/profile-unit-${testId}`
         }, mockRemote);
         await sov.init();
         profileModule = new ProfileModule(sov);

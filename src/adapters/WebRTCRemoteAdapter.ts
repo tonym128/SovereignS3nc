@@ -3,6 +3,10 @@ import { Logger } from '../utils/Logger';
 import { Buffer } from 'buffer';
 import { NativeWebRTCTransport } from './NativeWebRTCTransport';
 import { EventEmitter } from 'events';
+import { LRUCache } from '../utils/LRUCache';
+import { DEFAULTS } from '../utils/Constants';
+import { NetworkError } from '../utils/Errors';
+import { env } from '../utils/Environment';
 
 export interface PeerMessage {
     type: 'push' | 'request' | 'response' | 'not_found' | 'purge' | 'peer_list' | 'relay_signal';
@@ -25,10 +29,11 @@ export interface WebRTCRemoteAdapterConfig {
     maxPeers?: number;
     ttl?: number;
     maxSeenMessages?: number;
+    maxCacheSize?: number;
 }
 
 export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter {
-    private cache: Map<string, { data: Uint8Array, hash: string, etag: string }> = new Map();
+    private cache: LRUCache<string, { data: Uint8Array, hash: string, etag: string }>;
     private channels: Set<{ send: (msg: string) => void }> = new Set();
     private prefix: string;
     public peerId: string;
@@ -54,9 +59,10 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         if (this.prefix && !this.prefix.endsWith('/')) {
             this.prefix += '/';
         }
-        this.maxPeers = config.maxPeers ?? 5;
-        this.defaultTTL = config.ttl ?? 5;
-        this.maxSeenMessages = config.maxSeenMessages ?? 1000;
+        this.maxPeers = config.maxPeers ?? DEFAULTS.RTC_MAX_PEERS;
+        this.defaultTTL = config.ttl ?? DEFAULTS.RTC_TTL;
+        this.maxSeenMessages = config.maxSeenMessages ?? DEFAULTS.RTC_MAX_SEEN_MESSAGES;
+        this.cache = new LRUCache(config.maxCacheSize ?? DEFAULTS.RTC_MAX_CACHE_SIZE);
     }
 
     /**
@@ -111,7 +117,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     }
 
     private generateMsgId(): string {
-        return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        return env.generateId(15) + Date.now().toString(36);
     }
 
     private getKey(path: string): string {
@@ -126,7 +132,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
      */
     public connectPeer(sendFn: (msg: string) => void, userId?: string): { channel: any, receive: (msg: string) => void } | null {
         if (this.channels.size >= this.maxPeers) {
-            Logger.warn(`[WebRTC] Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
+            Logger.warn('WebRTC', `Peer ${this.peerId} reached maxPeers (${this.maxPeers}). Rejecting connection.`);
             return null;
         }
         const channel = { send: sendFn };
@@ -162,7 +168,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                 break;
             }
         }
-        Logger.debug(`[WebRTC] Peer disconnected. Active channels: ${this.channels.size}`);
+        Logger.debug('WebRTC', `Peer disconnected. Active channels: ${this.channels.size}`);
     }
 
     private handleMessage(msgStr: string, sourceChannel: any) {
@@ -181,7 +187,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
             // 2. Handle PEX Introductions (Signal Relay)
             if (msg.type === 'relay_signal') {
                 if (msg.to === this.peerId) {
-                    Logger.info(`[WebRTC] Received relayed signal from ${msg.from}`);
+                    Logger.info('WebRTC', `Received relayed signal from ${msg.from}`);
                     this.onSignalRelay?.(msg.from!, msg.signal);
                 } else {
                     // Forward if TTL allows
@@ -214,7 +220,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                     // Extremely simplistic conflict resolution: if etag is different, accept it
                     if (!existing || existing.etag !== msg.etag) { 
                         this.cache.set(key, { data: new Uint8Array(dataBuffer), hash: msg.hash, etag: msg.etag });
-                        Logger.debug(`[WebRTC] Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
+                        Logger.debug('WebRTC', `Peer ${msg.senderId} pushed ${key}. Caching and forwarding.`);
                         
                         // Gossip: forward to others except sender, if TTL allows
                         const ttl = msg.ttl ?? this.defaultTTL;
@@ -297,7 +303,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                 }
             }
         } catch (e: any) {
-            Logger.warn(`[WebRTC] Failed to parse message: ${e.message}`);
+            Logger.warn('WebRTC', `Failed to parse message: ${e.message}`);
         }
     }
 
@@ -318,7 +324,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         const key = this.getKey(path);
         // Fallback hash if not provided
         const fileHash = hash || Buffer.from(data).toString('hex').substring(0, 16); 
-        const etag = `"${Date.now().toString()}-${Math.random().toString(36).substring(7)}"`;
+        const etag = `"${Date.now().toString()}-${env.generateId(12)}"`;
 
         this.cache.set(key, { data, hash: fileHash, etag });
 
@@ -334,7 +340,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         };
         
         this.markMessageAsSeen(msg.msgId!);
-        Logger.debug(`[WebRTC] Broadcasting push for ${key} (msgId: ${msg.msgId})`);
+        Logger.debug('WebRTC', `Broadcasting push for ${key} (msgId: ${msg.msgId})`);
         this.broadcast(msg);
         return etag;
     }
@@ -359,9 +365,9 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         // 2. Request from peers
         if (this.channels.size === 0) return null;
 
-        Logger.debug(`[WebRTC] Requesting ${key} from peers...`);
+        Logger.debug('WebRTC', `Requesting ${key} from peers...`);
         return new Promise((resolve) => {
-            const reqId = Math.random().toString(36).substring(7);
+            const reqId = env.generateId(12);
             
             const timer = setTimeout(() => {
                 this.pendingRequests.delete(reqId);

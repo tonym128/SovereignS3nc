@@ -8,6 +8,7 @@ export class NodeStorage implements IStorage {
     private baseDir: string;
     private metadataPath: string;
     private filesDir: string;
+    private metadataLock: Promise<void> = Promise.resolve();
 
     constructor(baseDir: string) {
         this.baseDir = baseDir;
@@ -33,6 +34,18 @@ export class NodeStorage implements IStorage {
 
     private async saveMetadata(metadata: any): Promise<void> {
         await fs.writeJson(this.metadataPath, metadata);
+    }
+
+    private async withMetadataLock<T>(operation: () => Promise<T>): Promise<T> {
+        const nextLock = this.metadataLock.then(async () => {
+            try {
+                return await operation();
+            } catch (e) {
+                throw e;
+            }
+        });
+        this.metadataLock = nextLock.then(() => {}, () => {});
+        return nextLock;
     }
 
     private getFilePath(filePath: string): string {
@@ -131,14 +144,18 @@ export class NodeStorage implements IStorage {
     }
 
     async getGenericRemoteHashCache(filePath: string): Promise<string | null> {
-        const metadata = await this.getMetadata();
-        return metadata.remoteHashCache[filePath] || null;
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            return metadata.remoteHashCache[filePath] || null;
+        });
     }
 
     async setGenericRemoteHashCache(filePath: string, hash: string): Promise<void> {
-        const metadata = await this.getMetadata();
-        metadata.remoteHashCache[filePath] = hash;
-        await this.saveMetadata(metadata);
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            metadata.remoteHashCache[filePath] = hash;
+            await this.saveMetadata(metadata);
+        });
     }
 
     async getRemoteHashCache(date: string, type: 'private' | 'public'): Promise<string | null> {
@@ -150,14 +167,18 @@ export class NodeStorage implements IStorage {
     }
 
     async getLastSyncDate(): Promise<string | null> {
-        const metadata = await this.getMetadata();
-        return metadata.lastSyncDate;
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            return metadata.lastSyncDate;
+        });
     }
 
     async setLastSyncDate(date: string): Promise<void> {
-        const metadata = await this.getMetadata();
-        metadata.lastSyncDate = date;
-        await this.saveMetadata(metadata);
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            metadata.lastSyncDate = date;
+            await this.saveMetadata(metadata);
+        });
     }
 
     async saveFollowedDb(userId: string, date: string, data: Uint8Array): Promise<void> {
@@ -176,33 +197,41 @@ export class NodeStorage implements IStorage {
     }
 
     async getFollowing(): Promise<FollowedUser[]> {
-        const metadata = await this.getMetadata();
-        return metadata.following;
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            return metadata.following;
+        });
     }
 
     async followUser(userId: string, lastSync: string, publicKey: string): Promise<void> {
-        const metadata = await this.getMetadata();
-        const index = metadata.following.findIndex((f: any) => f.userId === userId);
-        if (index >= 0) {
-            metadata.following[index] = { userId, lastSync, publicKey };
-        } else {
-            metadata.following.push({ userId, lastSync, publicKey });
-        }
-        await this.saveMetadata(metadata);
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            const index = metadata.following.findIndex((f: any) => f.userId === userId);
+            if (index >= 0) {
+                metadata.following[index] = { userId, lastSync, publicKey };
+            } else {
+                metadata.following.push({ userId, lastSync, publicKey });
+            }
+            await this.saveMetadata(metadata);
+        });
     }
 
     async unfollowUser(userId: string): Promise<void> {
-        const metadata = await this.getMetadata();
-        metadata.following = metadata.following.filter((f: any) => f.userId !== userId);
-        await this.saveMetadata(metadata);
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            metadata.following = metadata.following.filter((f: any) => f.userId !== userId);
+            await this.saveMetadata(metadata);
+        });
     }
 
     async updateFollowedUserSync(userId: string, date: string): Promise<void> {
-        const metadata = await this.getMetadata();
-        const index = metadata.following.findIndex((f: any) => f.userId === userId);
-        if (index >= 0) {
-            metadata.following[index].lastSync = date;
-            await this.saveMetadata(metadata);
-        }
+        return this.withMetadataLock(async () => {
+            const metadata = await this.getMetadata();
+            const index = metadata.following.findIndex((f: any) => f.userId === userId);
+            if (index >= 0) {
+                metadata.following[index].lastSync = date;
+                await this.saveMetadata(metadata);
+            }
+        });
     }
 }

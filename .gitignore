@@ -1,12 +1,54 @@
-node_modules
-dist
-.DS_Store
-*.log
-coverage
-demo/web/config.json
-garage_data/
-*.pid
-test-results/
-garage_local.toml
-rustfs_data/
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
 bin/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment and Secrets
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Tests and Coverage
+coverage/
+test-results/
+test-data/
+temp_perf_audit/
+.sovereigns3nc/
+
+# Local Dev / Runtime Data
+garage_data/
+rustfs_data/
+*.pid
+garage_local.toml
+demo/web/config.json
+.harkness_session.json
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.settings/
+.classpath

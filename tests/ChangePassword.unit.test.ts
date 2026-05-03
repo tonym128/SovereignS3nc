@@ -3,6 +3,7 @@ import { IRemoteAdapter } from '../src/interfaces/IRemoteAdapter';
 import { SovereignConfig } from '../src/types';
 import crypto from 'crypto';
 import { IDBFactory } from 'fake-indexeddb';
+import { DEFAULTS } from '../src/utils/Constants';
 
 // --- Polyfills ---
 (global as any).indexedDB = new IDBFactory();
@@ -69,15 +70,17 @@ describe('SovereignS3nc Change Password Tests', () => {
         remotes = new Map();
         remoteFactory = (userId: string) => {
             if (!remotes.has(userId)) {
-                remotes.set(userId, new MockRemote(userId));
+                remotes.set(userId, new MockRemote(userId + '/'));
             }
             return remotes.get(userId)!;
         };
 
+        const testId = Math.random().toString(36).substring(7);
         config = {
-            paths: { appId: 'test-app', userId: 'alice', storeId: 'main' },
-            password: 'oldPassword123',
-            debug: false
+            paths: { appId: `pw-test-${testId}`, userId: 'alice', storeId: 'main' },
+            password: 'password123',
+            debug: false,
+            localPersistencePath: `./test-data/pw-unit-${testId}`
         };
     });
 
@@ -86,7 +89,7 @@ describe('SovereignS3nc Change Password Tests', () => {
         await sov.init();
 
         // Check initial state
-        const oldPrivateId = crypto.pbkdf2Sync('oldPassword123', 'alice-private-id', 1000, 32, 'sha256').toString('hex');
+        const oldPrivateId = crypto.pbkdf2Sync('password123', 'alice-private-id', DEFAULTS.PBKDF2_ITERATIONS, 32, 'sha256').toString('hex');
         const oldRemote = remotes.get(oldPrivateId);
         expect(oldRemote).toBeDefined();
         expect(oldRemote?.files.has('_keys.json')).toBe(true);
@@ -101,10 +104,10 @@ describe('SovereignS3nc Change Password Tests', () => {
 
         // Change password
         const newPassword = 'newPassword456';
-        await sov.changePassword('oldPassword123', newPassword);
+        await sov.changePassword('password123', newPassword);
 
         // Check new state
-        const newPrivateId = crypto.pbkdf2Sync(newPassword, 'alice-private-id', 1000, 32, 'sha256').toString('hex');
+        const newPrivateId = crypto.pbkdf2Sync(newPassword, 'alice-private-id', DEFAULTS.PBKDF2_ITERATIONS, 32, 'sha256').toString('hex');
         const newRemote = remotes.get(newPrivateId);
         expect(newRemote).toBeDefined();
         expect(newRemote).not.toBe(oldRemote);

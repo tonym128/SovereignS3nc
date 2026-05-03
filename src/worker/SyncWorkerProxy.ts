@@ -1,6 +1,8 @@
 
 import { SovereignConfig } from '../types';
 import { EventEmitter } from 'events';
+import { DEFAULTS } from '../utils/Constants';
+import { SyncError } from '../utils/Errors';
 
 /**
  * SyncWorkerProxy manages a Web Worker from the main thread.
@@ -51,7 +53,7 @@ export class SyncWorkerProxy extends EventEmitter {
      * Registers a module definition in the worker.
      */
     async registerModule(definition: any): Promise<void> {
-        return this.sendMessage('REGISTER_MODULE', definition, 5000);
+        return this.sendMessage('REGISTER_MODULE', definition, DEFAULTS.NETWORK_TIMEOUT);
     }
 
     /**
@@ -65,7 +67,7 @@ export class SyncWorkerProxy extends EventEmitter {
     }
 
     private sendMessage(type: string, payload: any, timeout: number = 0): Promise<any> {
-        if (!this.worker) return Promise.reject(new Error('Worker not initialized'));
+        if (!this.worker) return Promise.reject(new SyncError('Worker not initialized'));
 
         const id = ++this.messageId;
         return new Promise((resolve, reject) => {
@@ -74,7 +76,7 @@ export class SyncWorkerProxy extends EventEmitter {
                 timer = setTimeout(() => {
                     if (this.pendingPromises.has(id)) {
                         this.pendingPromises.delete(id);
-                        reject(new Error(`Worker request timed out (${type})`));
+                        reject(new SyncError(`Worker request timed out (${type})`));
                     }
                 }, timeout);
             }
@@ -119,7 +121,7 @@ export class SyncWorkerProxy extends EventEmitter {
         this.pendingPromises.delete(id);
 
         if (type === 'ERROR') {
-            pending.reject(new Error(error));
+            pending.reject(new SyncError(error));
         } else {
             pending.resolve(payload);
         }

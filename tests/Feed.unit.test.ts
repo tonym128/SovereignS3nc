@@ -43,10 +43,12 @@ describe('FeedModule Unit Tests', () => {
     beforeEach(async () => {
         (global as any).indexedDB = new IDBFactory();
         mockRemote = new MockRemote();
+        const testId = Math.random().toString(36).substring(7);
         const config = {
-            paths: { appId: 'feed-test', userId: 'alice', storeId: 'main' },
+            paths: { appId: `feed-test-${testId}`, userId: 'alice', storeId: 'main' },
             password: 'password123',
-            debug: false
+            debug: false,
+            localPersistencePath: `./test-data/feed-unit-${testId}`
         };
         sov = new SovereignS3nc(config, mockRemote);
         await sov.init();

@@ -28,9 +28,8 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 | `workerUrl` | `string` | URL/Path to the `worker.js` file for background sync. |
 | `enablePeerExchange` | `boolean` | (WebRTC) If true, enables PEX (Peer Exchange) to discover and hand-shake with peers-of-peers automatically. |
 | `adminPublicKey` | `string` | Public key of the admin for sending encrypted abuse reports. |
+| `localPersistencePath` | `string` | Optional: Overrides the default Node.js storage path. |
 | `debug` | `boolean` | Enables verbose logging to the console. |
-
-> **Note on Reliability:** All S3 operations now include automatic **exponential backoff with jitter**. If a request fails due to a network glitch or rate limiting, the library will retry up to 3 times before failing.
 
 ### Core Methods
 
@@ -43,164 +42,118 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 | `follow(userId)` | Follows another user to begin syncing their public data. |
 | `unfollow(userId)` | Stops following a user. |
 | `getPublicRegistry()` | Retrieves the list of all discovered users from the global registry. |
-| `on(event, callback)` | Subscribe to events like `sync`, `conflict`, or `change`. |
+| `on(event, callback)` | Subscribe to events like `sync`, `conflict`, or `update`. |
 | `resolveConflict(id, choice)`| Resolves a pending sync conflict (`'local' \| 'remote' \| 'abort'`). |
-| `connectNativeRTC(transport)`| Connects a `NativeWebRTCTransport` to the internal gossip engine. |
+| `saveBlob(data, public?)` | Saves a binary blob and returns its deterministic path. |
+| `getBlob(path, userId?)` | Retrieves a blob from local storage or a remote peer/S3. |
 
 ---
 
-## 2. Advanced Transports & Signaling
+## 2. Module APIs
 
-### `NativeWebRTCTransport`
-Used for serverless signaling (QR/BLE).
-- `createOffer()`: Generates an SDP Offer for the initiator.
-- `handleOffer(sdp)`: Accepts a remote offer and generates an SDP Answer.
-- `handleAnswer(sdp)`: Finalizes the handshake on the initiator side.
-- `onConnected`: Callback triggered when the direct data channel is open.
-
-### `BLESignaling`
-Utility for Bluetooth-based handshakes.
-- `scanAndPair(onOfferReceived)`: Scans for Sovereign BLE peripherals and handles the SDP exchange.
-
----
-
-## 3. Module APIs
-
-SovereignS3nc includes high-level modules that provide specialized functionality.
+SovereignS3nc includes high-level modules that provide specialized social functionality.
 
 ### `ProfileModule`
-Manage user identity and discovery.
-- `getProfile(userId)`: Returns the profile object for any user.
-- `updateProfile(name, bio, avatar?)`: Updates the current user's public profile.
-- `getFollowing()`: Returns the list of users the current user is following.
+Manage user identity, avatars, and bios.
+
+- **`getProfile(userId?: string)`**: 
+  Returns a `Profile` object containing `name`, `bio`, `avatar` (Data URL), and `updatedAt`. If `userId` is omitted, returns the current user's profile.
+- **`updateProfile(name: string, bio: string, avatar?: string)`**: 
+  Updates the current user's public profile. Avatars are automatically compressed to stay under 100KB.
+  *Limits: Name max 100 chars, Bio max 1000 chars.*
+- **`getFollowing()`**: 
+  Returns an array of `FollowedUser` objects (`userId`, `publicKey`, `lastSync`).
+- **`syncOtherProfiles()`**: 
+  Triggers a background fetch of all followed users' `user.json` files.
 
 ### `MessagingModule`
-End-to-end encrypted direct messaging.
-- `getMessages(otherUserId)`: Retrieves chat history with a specific user.
-- `sendDirectMessage(toUserId, content, image?)`: Sends an E2EE message.
-- `deleteMessage(otherUserId, messageId)`: Marks a message as deleted on local and remote.
+End-to-end encrypted direct messaging using X25519 (tweetnacl) and AES-256-GCM.
+
+- **`sendDirectMessage(recipientId: string, content: string, image?: Uint8Array)`**: 
+  Sends an E2EE message. If an image is provided, it is uploaded as an encrypted blob.
+  *Limits: Content max 5000 chars.*
+- **`getInboxMessages(days: number = 5)`**: 
+  Retrieves and decrypts DM history for the last `X` days from all followed users.
+- **`editMessage(recipientId: string, messageId: string, date: string, newContent: string)`**: 
+  Overwrites a previously sent message.
+- **`deleteMessage(recipientId: string, messageId: string, date: string)`**: 
+  Marks a message as deleted for both sender and recipient.
 
 ### `FeedModule`
-Public social feeds and content sharing.
-- `getPosts(userId, date?)`: Retrieves posts for a user on a specific date.
-- `createPost(content, image?, parentId?)`: Creates a new public post or reply.
-- `likePost(userId, postId, date)`: Toggles a "like" on a specific post.
-- `getGroupPosts(groupId, date)`: Retrieves posts from a shared multi-writer group.
+Public social feeds with nested comments, likes, and image attachments.
 
----
+- **`post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string)`**: 
+  Creates a new post or a reply. Posts are stored in daily SQLite databases.
+  *Limits: Content max 10000 chars.*
+- **`getPosts(userId: string, date: string, type: 'public' | 'private' = 'public')`**: 
+  Retrieves all posts for a specific user and date.
+- **`likePost(userId: string, postId: string, date: string)`**: 
+  Toggles a "like" on a post. Likes are stored in the user's own daily DB.
+- **`getGroupPosts(groupId: string, date: string, sharedKey?: string)`**: 
+  Retrieves posts from a shared encrypted group.
 
-## 3. Custom Module Development
+### `ModerationModule` (Admin Only)
+Tooling for community management and data safety.
 
-SovereignS3nc includes an administrative CLI for managing the application state.
-
-### Commands
-| Command | Description |
-| :--- | :--- |
-| `list-reports` | List all user-submitted abuse reports. |
-| `ban-user <userId>` | Blacklist a user by their ID. |
-| `export-data` | Perform a full backup of all accessible data. |
-| `burn-it-to-the-ground` | **Destructive**: Delete all data from the remote backend. |
-
-### Usage
-```bash
-npm run admin-cli -- list-reports
-```
-
----
-
-## 4. Storage Architecture
-
-
-Modules allow you to build specialized features (like a Feed, Messaging, or a Wiki) while leveraging the library's core sync and security engines.
-
-### Step 1: Define the Module
-A module is defined by its name and its SQLite schema.
-
-```typescript
-import { ModuleDefinition } from './types';
-
-export const MY_MODULE_DEFINITION: ModuleDefinition = {
-    name: 'my_feature',
-    tables: [
-        {
-            name: 'items',
-            schema: `
-                id TEXT PRIMARY KEY,
-                title TEXT,
-                timestamp INTEGER
-            `
-        }
-    ],
-    migrations: [
-        {
-            version: 1,
-            sql: ['ALTER TABLE items ADD COLUMN description TEXT;']
-        }
-    ]
-};
-```
-
-### Step 2: Create the Module Class
-Your module class should wrap the `SovereignS3nc` instance and register itself during construction.
-
-```typescript
-export class MyModule {
-    constructor(private sov: SovereignS3nc) {
-        this.sov.registerModule(MY_MODULE_DEFINITION);
-    }
-
-    private async getDb(date: string) {
-        const path = this.sov.getModulePath('my_feature', `${date}.db`, 'public');
-        const data = await this.sov.getStorage().getFile(path);
-        
-        // Initialize SQL.js (ensure it's loaded in your environment)
-        const SQL = await initSqlJs(); 
-        const db = new SQL.Database(data || undefined);
-
-        // Apply core schema management
-        this.sov.applyModuleSchema(db, 'my_feature');
-        return db;
-    }
-}
-```
-
-### Step 3: Implement Business Logic
-Use the core API to save data and trigger synchronization.
-
-```typescript
-async addItem(title: string) {
-    const date = new Date().toISOString().split('T')[0];
-    const db = await this.getDb(date);
-    
-    db.run('INSERT INTO items (id, title, timestamp) VALUES (?, ?, ?)', 
-           [Math.random().toString(36), title, Date.now()]);
-
-    // Save back to storage
-    const binary = db.export();
-    const path = this.sov.getModulePath('my_feature', `${date}.db`, 'public');
-    await this.sov.getStorage().saveFile(path, binary);
-    
-    // Notify the UI
-    this.sov.onModuleUpdate('my_feature', path);
-}
-```
+- **`reportContent(targetUserId, contentId, contentType, reason, evidence?)`**: 
+  Submit an E2EE abuse report to the community admin.
+- **`getReports()`**: 
+  (Admin) Fetches and decrypts all pending reports.
+- **`blacklistUser(userId)`**: 
+  (Admin) Adds a user to the global `blacklist.json` to prevent others from following them.
+- **`banUser(userId)`**: 
+  (Admin) Hard-ban a user: blacklists them and deletes all their data from the S3 backend.
+- **`requestPostDeletion(targetUserId, postId, date)`**: 
+  (Admin) Sends a signed request to a user to delete a specific piece of content.
 
 ---
 
 ## 3. Storage Architecture
 
-SovereignS3nc follows a **Daily SQLite** pattern:
-*   **Public Data**: Stored in `public/modules/{module}/{YYYY-MM-DD}.db`.
-*   **Private Data**: Stored in `private/modules/{module}/{YYYY-MM-DD}.db` (encrypted symmetrically).
-*   **Followed Data**: Downloaded into `followed/{userId}/modules/{module}/{YYYY-MM-DD}.db`.
+SovereignS3nc follows a **Daily SQLite** pattern to ensure infinite scalability and easy conflict resolution.
 
-### Prefix Isolation
-The library enforces path-based isolation. Users only have read/write access to their own prefixes on S3, while the `Global Discovery` registry is shared in a `global/` prefix.
+- **Public Prefix**: `${appId}/${userId}/${storeId}/public/modules/${moduleName}/${YYYY-MM-DD}.db`
+- **Private Prefix**: `${appId}/${privateId}/${storeId}/private/modules/${moduleName}/${YYYY-MM-DD}.db`
+- **Followed Prefix**: `followed/${targetUserId}/modules/${moduleName}/${YYYY-MM-DD}.db`
+
+### Deterministic Blobs
+Blobs (images, files) are stored by their SHA-256 hash.
+- Path: `public/blobs/${sha256}` or `private/blobs/${sha256}`.
 
 ---
 
 ## 4. Security & Encryption
 
-*   **Asymmetric E2EE**: Used for Direct Messages. A shared secret is derived using `tweetnacl` (X25519) and the payload is encrypted using `AES-256-GCM`.
-*   **Symmetric Encryption**: Used for personal private data. The key is derived from the user's password using `PBKDF2`.
-*   **Identity**: Your `userId` is your public identifier. Your `publicKey` is stored in the global registry so others can send you encrypted DMs.
+- **Identity**: Identity keys are derived from the user's password using **PBKDF2-HMAC-SHA256**.
+- **Asymmetric E2EE**: DMs use **X25519 Diffie-Hellman** to derive a shared secret, followed by **AES-256-GCM** for the payload.
+- **Symmetric Encryption**: Private files are encrypted with a master key derived from the password.
+- **Path Isolation**: Users are isolated by S3 prefixes. Private data is stored under a "Private GUID" that is never shared, making it invisible even to other users of the same S3 bucket.
+
+---
+
+## 5. Custom Module Development
+
+To create a new module, define a `ModuleDefinition` and wrap the `SovereignS3nc` instance.
+
+```typescript
+const MY_MODULE_DEFINITION = {
+    name: 'wiki',
+    tables: [{
+        name: 'pages',
+        schema: 'id TEXT PRIMARY KEY, title TEXT, body TEXT'
+    }]
+};
+
+class WikiModule {
+    constructor(private sov: SovereignS3nc) {
+        this.sov.registerModule(MY_MODULE_DEFINITION);
+    }
+    
+    async savePage(title: string, body: string) {
+        const date = new Date().toISOString().split('T')[0];
+        const path = this.sov.getModulePath('wiki', `${date}.db`, 'public');
+        const db = await this.sov.getGroupStore('my-group', 'wiki', date); // Or regular getStorage().getFile()
+        // ... logic ...
+    }
+}
+```

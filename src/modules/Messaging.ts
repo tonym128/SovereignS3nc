@@ -1,6 +1,9 @@
 
 import { SovereignS3nc } from '../SovereignS3nc';
 import { Logger } from '../utils/Logger';
+import { env } from '../utils/Environment';
+import { ModuleError, AuthError } from '../utils/Errors';
+import { DEFAULTS } from '../utils/Constants';
 
 export interface Message {
     id: string;
@@ -45,9 +48,10 @@ export class MessagingModule {
         const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}.db`, 'private');
         const data = await this.db.getStorage().getFile(path);
         
-        // @ts-ignore - access global initSqlJs
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
         const db = new sqliteInstance.Database(data || undefined);
 
         // Use Core Schema Management
@@ -57,8 +61,12 @@ export class MessagingModule {
     }
 
     async sendDirectMessage(recipientId: string, content: string, image?: Uint8Array) {
+        if (content.length > DEFAULTS.MAX_MESSAGE_LENGTH) {
+            throw new ModuleError('messaging', `Message exceeds maximum length of ${DEFAULTS.MAX_MESSAGE_LENGTH} characters`);
+        }
+        
         const date = new Date().toISOString().split('T')[0];
-        const id = Math.random().toString(36).substring(7);
+        const id = env.generateId(12);
         const timestamp = Date.now();
         const senderId = this.db.getConfig().paths.userId;
 
@@ -88,9 +96,10 @@ export class MessagingModule {
         const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date}.db`, 'public');
         const publicDmData = await this.db.getStorage().getFile(publicDmPath);
         
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
         const publicDb = new sqliteInstance.Database(publicDmData || undefined);
         
         // Manual Schema for DM transport (not part of declarative module schema as it is a transport db)
@@ -107,7 +116,7 @@ export class MessagingModule {
             }
         }
 
-        if (!recipient || !recipient.publicKey) throw new Error('Recipient public key not found');
+        if (!recipient || !recipient.publicKey) throw new AuthError('Recipient public key not found');
 
         // E2EE: Derive shared secret from my Private Key + their Public Key
         const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
@@ -188,9 +197,10 @@ export class MessagingModule {
             dates.push(d.toISOString().split('T')[0]);
         }
 
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const myId = this.db.getConfig().paths.userId;
 

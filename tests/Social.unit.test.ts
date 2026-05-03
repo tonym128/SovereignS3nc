@@ -48,10 +48,12 @@ describe('Granular Module Unit Tests', () => {
     beforeEach(async () => {
         (global as any).indexedDB = new IDBFactory();
         mockRemote = new MockRemote();
+        const testId = Math.random().toString(36).substring(7);
         const config = {
-            paths: { appId: 'social-test', userId: 'alice', storeId: 'main' },
+            paths: { appId: `social-test-${testId}`, userId: 'alice', storeId: 'main' },
             password: 'password123',
-            debug: false
+            debug: false,
+            localPersistencePath: `./test-data/social-unit-${testId}`
         };
         sov = new SovereignS3nc(config, mockRemote);
         await sov.init();

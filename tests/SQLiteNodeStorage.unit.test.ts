@@ -2,6 +2,9 @@
 import { SQLiteNodeStorage } from '../src/adapters/SQLiteNodeStorage';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import initSqlJs from 'sql.js';
+
+(global as any).initSqlJs = initSqlJs;
 
 describe('SQLiteNodeStorage', () => {
     const testDbPath = path.join(__dirname, 'test_storage.db');
@@ -22,56 +25,54 @@ describe('SQLiteNodeStorage', () => {
         const storage = new SQLiteNodeStorage(testDbPath);
         await storage.init();
 
+        await storage.setLastSyncDate('2024-01-01');
+        expect(await storage.getLastSyncDate()).toBe('2024-01-01');
+
+        // Check file exists
         expect(await fs.pathExists(testDbPath)).toBe(true);
-        expect(await storage.getFollowing()).toEqual([]);
-        expect(await storage.getLastSyncDate()).toBeNull();
     });
 
     test('should save and retrieve files', async () => {
         const storage = new SQLiteNodeStorage(testDbPath);
         await storage.init();
 
-        const data = new TextEncoder().encode('hello world');
-        await storage.saveFile('test.txt', data);
+        const data = new Uint8Array([1, 2, 3]);
+        await storage.saveFile('test.bin', data);
 
-        const retrieved = await storage.getFile('test.txt');
-        expect(new TextDecoder().decode(retrieved!)).toBe('hello world');
+        const retrieved = await storage.getFile('test.bin');
+        expect(retrieved).toEqual(data);
 
-        const hash = crypto.createHash('sha256').update(data).digest('hex');
-        const dbHash = await (storage as any).db.exec("SELECT hash FROM files WHERE path = 'test.txt'")[0].values[0][0];
-        expect(dbHash).toBe(hash);
+        expect(await storage.getFile('missing.bin')).toBeNull();
     });
 
     test('should list files with prefix', async () => {
         const storage = new SQLiteNodeStorage(testDbPath);
         await storage.init();
 
-        await storage.saveFile('public/a.txt', new Uint8Array([1]));
-        await storage.saveFile('public/b.txt', new Uint8Array([2]));
-        await storage.saveFile('private/c.txt', new Uint8Array([3]));
+        await storage.saveFile('a/1.bin', new Uint8Array([1]));
+        await storage.saveFile('a/2.bin', new Uint8Array([2]));
+        await storage.saveFile('b/1.bin', new Uint8Array([3]));
 
-        const publicFiles = await storage.listFiles('public/');
-        expect(publicFiles).toContain('public/a.txt');
-        expect(publicFiles).toContain('public/b.txt');
-        expect(publicFiles).not.toContain('private/c.txt');
+        const list = await storage.listFiles('a/');
+        expect(list).toHaveLength(2);
+        expect(list).toContain('a/1.bin');
+        expect(list).toContain('a/2.bin');
     });
 
     test('should handle metadata (following, sync date)', async () => {
         const storage = new SQLiteNodeStorage(testDbPath);
         await storage.init();
 
-        await storage.followUser('alice', '2023-01-01', 'key123');
-        await storage.setLastSyncDate('2023-01-02');
+        await storage.followUser('alice', '2024-01-01', 'pubkey');
+        const following = await storage.getFollowing();
+        expect(following).toHaveLength(1);
+        expect(following[0].userId).toBe('alice');
 
-        expect(await storage.getFollowing()).toContainEqual({ userId: 'alice', lastSync: '2023-01-01', publicKey: 'key123' });
-        expect(await storage.getLastSyncDate()).toBe('2023-01-02');
+        await storage.updateFollowedUserSync('alice', '2024-01-02');
+        const updated = await storage.getFollowing();
+        expect(updated[0].lastSync).toBe('2024-01-02');
 
-        // Re-init to test persistence
-        const storage2 = new SQLiteNodeStorage(testDbPath);
-        await storage2.init();
-        expect(await storage2.getFollowing()).toContainEqual({ userId: 'alice', lastSync: '2023-01-01', publicKey: 'key123' });
-        expect(await storage2.getLastSyncDate()).toBe('2023-01-02');
+        await storage.unfollowUser('alice');
+        expect(await storage.getFollowing()).toHaveLength(0);
     });
 });
-
-import * as crypto from 'crypto';

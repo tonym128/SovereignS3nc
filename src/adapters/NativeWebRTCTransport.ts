@@ -46,14 +46,14 @@ export class NativeWebRTCTransport {
         };
 
         this.pc.onconnectionstatechange = () => {
-            Logger.debug(`[NativeWebRTC] Connection state: ${this.pc.connectionState}`);
+            Logger.debug('WebRTC', `Connection state: ${this.pc.connectionState}`);
             if (this.pc.connectionState === 'disconnected' || this.pc.connectionState === 'failed') {
                 this.onDisconnected?.();
             }
         };
 
         this.pc.ondatachannel = (event) => {
-            Logger.debug('[NativeWebRTC] Received remote data channel');
+            Logger.debug('WebRTC', 'Received remote data channel');
             this.setupDataChannel(event.channel);
         };
     }
@@ -61,14 +61,14 @@ export class NativeWebRTCTransport {
     private setupDataChannel(channel: RTCDataChannel) {
         this.dc = channel;
         this.dc.onopen = () => {
-            Logger.info('[NativeWebRTC] Data channel OPEN');
+            Logger.info('WebRTC', 'Data channel OPEN');
             this.onConnected?.();
         };
         this.dc.onmessage = (event) => {
             this.onMessage?.(event.data);
         };
         this.dc.onclose = () => {
-            Logger.info('[NativeWebRTC] Data channel CLOSED');
+            Logger.info('WebRTC', 'Data channel CLOSED');
             this.onDisconnected?.();
         };
     }
@@ -120,7 +120,7 @@ export class NativeWebRTCTransport {
         const offer = await this.pc.createOffer();
         await this.pc.setLocalDescription(offer);
 
-        Logger.debug('[NativeWebRTC] Waiting for ICE gathering...');
+        Logger.debug('WebRTC', 'Waiting for ICE gathering...');
         await this.waitForIceGathering();
 
         return {
@@ -140,7 +140,7 @@ export class NativeWebRTCTransport {
         const answer = await this.pc.createAnswer();
         await this.pc.setLocalDescription(answer);
 
-        Logger.debug('[NativeWebRTC] Waiting for ICE gathering...');
+        Logger.debug('WebRTC', 'Waiting for ICE gathering...');
         await this.waitForIceGathering();
 
         return {
@@ -164,7 +164,7 @@ export class NativeWebRTCTransport {
         try {
             await this.pc.addIceCandidate(candidate);
         } catch (e: any) {
-            Logger.warn('[NativeWebRTC] Failed to add ICE candidate', e);
+            Logger.warn('WebRTC', 'Failed to add ICE candidate', e);
         }
     }
 
@@ -175,7 +175,7 @@ export class NativeWebRTCTransport {
         if (this.dc && this.dc.readyState === 'open') {
             this.dc.send(msg);
         } else {
-            Logger.warn('[NativeWebRTC] Attempted to send message but data channel is not open');
+            Logger.warn('WebRTC', 'Attempted to send message but data channel is not open');
         }
     }
 

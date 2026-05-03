@@ -22,8 +22,7 @@ describe('SyncWorkerProxy', () => {
             postMessage: (msg: any) => {
                 // Simulate worker response
                 setTimeout(() => {
-                    // @ts-ignore
-                    proxy.handleMessage({ data: { id: msg.id, type: 'INIT_SUCCESS', payload: {} } } as any);
+                    (proxy as any).handleMessage({ data: { id: msg.id, type: 'INIT_SUCCESS', payload: {} } } as any);
                 }, 10);
             },
             terminate: jest.fn(),
@@ -47,8 +46,7 @@ describe('SyncWorkerProxy', () => {
             done();
         });
 
-        // @ts-ignore
-        proxy.handleMessage({ data: { type: 'EVENT_UPDATE', payload } } as any);
+        (proxy as any).handleMessage({ data: { type: 'EVENT_UPDATE', payload } } as any);
     });
 
     test('should timeout if worker does not respond', async () => {
@@ -63,8 +61,7 @@ describe('SyncWorkerProxy', () => {
         // Trigger worker creation
         proxy.init({} as any).catch(() => {});
 
-        // @ts-ignore
-        const promise = proxy.sendMessage('SYNC', {}, 100);
+        const promise = (proxy as any).sendMessage('SYNC', {}, 100);
         await expect(promise).rejects.toThrow('Worker request timed out');
     });
 
@@ -82,8 +79,7 @@ describe('SyncWorkerProxy', () => {
         
         // This should not throw even if we don't have an error listener
         expect(() => {
-            // @ts-ignore
-            mockWorker.onerror(new Error('Test error'));
+            (mockWorker as any).onerror(new Error('Test error'));
         }).not.toThrow();
     });
 
@@ -102,7 +98,6 @@ describe('SyncWorkerProxy', () => {
         });
 
         proxy.init({} as any).catch(() => {});
-        // @ts-ignore
-        mockWorker.onerror(new Error('Test error'));
+        (mockWorker as any).onerror(new Error('Test error'));
     });
 });

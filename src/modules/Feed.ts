@@ -2,6 +2,9 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { Logger } from '../utils/Logger';
 import { ModuleDefinition } from '../types';
+import { env } from '../utils/Environment';
+import { ModuleError } from '../utils/Errors';
+import { DEFAULTS } from '../utils/Constants';
 
 export interface Post {
     id: string;
@@ -78,9 +81,10 @@ export class FeedModule {
             
         let data = await this.db.getStorage().getFile(dbPath);
         
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
         const db = new sqliteInstance.Database(data || undefined);
 
         // Use Core Schema Management
@@ -90,11 +94,15 @@ export class FeedModule {
     }
 
     async post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string) {
+        if (content.length > DEFAULTS.MAX_POST_LENGTH) {
+            throw new ModuleError('feed', `Post exceeds maximum length of ${DEFAULTS.MAX_POST_LENGTH} characters`);
+        }
+        
         const date = new Date().toISOString().split('T')[0];
         const type = isPublic ? 'public' : 'private';
         const db = await this.getDb(date, type);
         
-        const id = Math.random().toString(36).substring(7);
+        const id = env.generateId(12);
         const timestamp = Date.now();
         const userId = this.db.getConfig().paths.userId;
 
@@ -169,9 +177,10 @@ export class FeedModule {
 
         let allPosts: Post[] = [];
 
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const data = await this.db.getStorage().getFile(dbPath);
         if (data) {
@@ -223,9 +232,10 @@ export class FeedModule {
             dates.push(d.toISOString().split('T')[0]);
         }
 
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const processDb = async (date: string, type: 'public' | 'followed') => {
             const dbPath = type === 'followed' 
@@ -268,7 +278,7 @@ export class FeedModule {
         const date = new Date().toISOString().split('T')[0];
         const db = await this.getDb(date, 'group', groupId, sharedKey);
         
-        const id = Math.random().toString(36).substring(7);
+        const id = env.generateId(12);
         const timestamp = Date.now();
         const userId = this.db.getConfig().paths.userId;
 
@@ -325,9 +335,10 @@ export class FeedModule {
         const posts: Post[] = [];
         const deletedPostIds = new Set<string>();
         
-        // @ts-ignore
-        const initSqlJs = (globalThis as any).initSqlJs;
-        const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
+        // Use env to get sql.js
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const groups = await this.db.getGroups();
         const group = groups.find(g => g.id === groupId);

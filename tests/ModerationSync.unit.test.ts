@@ -76,7 +76,8 @@ describe('Moderation Surgical Deletion Sync Integration Tests', () => {
     let userFeed: FeedModule;
     let globalFiles: Map<string, any>;
     let remoteFactory: (uid: string) => MockRemote;
-    const appId = 'mod-sync-test';
+    const testId = Math.random().toString(36).substring(7);
+    const appId = `mod-sync-test-${testId}`;
 
     beforeAll(async () => {
         globalFiles = new Map();
@@ -101,27 +102,25 @@ describe('Moderation Surgical Deletion Sync Integration Tests', () => {
             (r as any).files = globalFiles;
             return r;
         };
+// Setup Admin
+adminSov = new SovereignS3nc({
+    paths: { appId, userId: 'admin-user', storeId: 'social' },
+    password: 'admin-password',
+    debug: true
+}, undefined, remoteFactory);
+(adminSov as any).storage = new IndexedDBStorage(`admin_db_${appId}_${testId}`);
+await adminSov.init();
+adminMod = new ModerationModule(adminSov);
+await adminMod.publishAdminKey();
 
-        // Setup Admin
-        adminSov = new SovereignS3nc({
-            paths: { appId, userId: 'admin-user', storeId: 'social' },
-            password: 'admin-password',
-            debug: false
-        }, undefined, remoteFactory);
-        (adminSov as any).storage = new IndexedDBStorage(`admin_db_${appId}`);
-        await adminSov.init();
-        adminMod = new ModerationModule(adminSov);
-        await adminMod.publishAdminKey();
-
-        // Setup User
-        userSov = new SovereignS3nc({
-            paths: { appId, userId: 'regular-user', storeId: 'social' },
-            password: 'user-password',
-            debug: false
-        }, undefined, remoteFactory);
-        (userSov as any).storage = new IndexedDBStorage(`user_db_${appId}`);
-        await userSov.init();
-        userFeed = new FeedModule(userSov);
+// Setup User
+userSov = new SovereignS3nc({
+    paths: { appId, userId: 'regular-user', storeId: 'social' },
+    password: 'user-password',
+    debug: true
+}, undefined, remoteFactory);
+(userSov as any).storage = new IndexedDBStorage(`user_db_${appId}_${testId}`);
+await userSov.init();userFeed = new FeedModule(userSov);
 
         // Initial sync to exchange keys
         await adminSov.sync();

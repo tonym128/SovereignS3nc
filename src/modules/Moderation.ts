@@ -2,6 +2,9 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { Logger } from '../utils/Logger';
 import { Buffer } from 'buffer';
+import { PATHS } from '../utils/Constants';
+import { AuthError, SovereignError } from '../utils/Errors';
+import { env } from '../utils/Environment';
 
 export interface Report {
     id: string;
@@ -44,11 +47,11 @@ export class ModerationModule {
         const pk = this.sovereign.getConfig().publicEncryptionKey;
         if (adminRemote && pk) {
             try {
-                await adminRemote.uploadFile('public_key.json', new TextEncoder().encode(JSON.stringify({ publicKey: pk })));
-                Logger.info('[Moderation] Admin public key published.');
+                await adminRemote.uploadFile(PATHS.ADMIN_PUBLIC_KEY, new TextEncoder().encode(JSON.stringify({ publicKey: pk })));
+                Logger.info('Moderation', 'Admin public key published.');
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to publish admin key (Not an admin?): ${e.message}`);
-                throw new Error('Permission denied. You do not have admin S3 credentials.');
+                Logger.warn('Moderation', `Failed to publish admin key (Not an admin?): ${e.message}`);
+                throw new AuthError('Permission denied. You do not have admin S3 credentials.');
             }
         }
     }
@@ -59,28 +62,29 @@ export class ModerationModule {
      */
     async reportContent(targetUserId: string, contentId: string, contentType: 'post' | 'comment' | 'message', reason: string, evidence?: any) {
         const adminRemote = (this.sovereign as any).adminRemote;
-        if (!adminRemote) throw new Error("Admin remote not configured.");
+        if (!adminRemote) throw new SovereignError('CONFIG_ERROR', 'Admin remote not configured.');
 
         // 1. Get Admin Public Key (Try cache first, then S3)
         let adminPublicKey = this.sovereign.getConfig().adminPublicKey;
         
         if (!adminPublicKey) {
             try {
-                const result = await adminRemote.downloadFile('public_key.json');
+                const result = await adminRemote.downloadFile(PATHS.ADMIN_PUBLIC_KEY);
                 if (result && result.data) {
                     const data = JSON.parse(new TextDecoder().decode(result.data));
                     adminPublicKey = data.publicKey;
                 } else {
-                    throw new Error("Admin public key not found.");
+                    throw new AuthError('Admin public key not found.');
                 }
             } catch (e: any) {
-                throw new Error(`Failed to fetch admin key: ${e.message}. The system might not have an admin configured.`);
+                if (e instanceof AuthError) throw e;
+                throw new AuthError(`Failed to fetch admin key: ${e.message}. The system might not have an admin configured.`);
             }
         }
 
         // 2. Prepare Report
         const report: Report = {
-            id: `report-${Math.random().toString(36).substring(7)}`,
+            id: `report-${env.generateId(12)}`,
             reporterId: this.sovereign.getConfig().paths.userId,
             targetUserId,
             contentId,
@@ -102,7 +106,7 @@ export class ModerationModule {
         const reportPath = `reports/${myPublicKey}.${report.id}.enc`;
         
         await adminRemote.uploadFile(reportPath, encryptedData, undefined, { 'reporter-pk': myPublicKey! });
-        Logger.info(`[Moderation] Report ${report.id} submitted securely.`);
+        Logger.info('Moderation', `Report ${report.id} submitted securely.`);
     }
 
     /**
@@ -112,7 +116,7 @@ export class ModerationModule {
         const adminRemote = (this.sovereign as any).adminRemote;
         if (!adminRemote || !adminRemote.listFiles) return [];
 
-        Logger.info('[Moderation] Admin fetching and decrypting reports...');
+        Logger.info('Moderation', 'Admin fetching and decrypting reports...');
         const files = await adminRemote.listFiles('reports/');
         const reports: Report[] = [];
 
@@ -142,7 +146,7 @@ export class ModerationModule {
                     reports.push(report);
                 }
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to decrypt report ${file}: ${e.message}`);
+                Logger.warn('Moderation', `Failed to decrypt report ${file}: ${e.message}`);
             }
         }
         return reports; 
@@ -155,10 +159,10 @@ export class ModerationModule {
     async deleteUserFile(path: string) {
         const rootRemote = (this.sovereign as any).rootRemote;
         if (!rootRemote || !rootRemote.deleteFile) {
-            throw new Error("Root remote not configured or missing deleteFile capability.");
+            throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing deleteFile capability.');
         }
         await rootRemote.deleteFile(path);
-        Logger.info(`[Moderation] Admin deleted file: ${path}`);
+        Logger.info('Moderation', `Admin deleted file: ${path}`);
     }
 
     /**
@@ -174,7 +178,7 @@ export class ModerationModule {
         
         if (reportFile) {
             await adminRemote.deleteFile(reportFile);
-            Logger.info(`[Moderation] Admin deleted report: ${reportId}`);
+            Logger.info('Moderation', `Admin deleted report: ${reportId}`);
         }
     }
 
@@ -185,7 +189,7 @@ export class ModerationModule {
         const globalRemote = (this.sovereign as any).globalRemote;
         if (!globalRemote) return;
 
-        const path = 'blacklist.json';
+        const path = PATHS.BLACKLIST;
         let blacklist: string[] = [];
 
         try {
@@ -199,10 +203,10 @@ export class ModerationModule {
             blacklist.push(userId);
             try {
                 await globalRemote.uploadFile(path, new TextEncoder().encode(JSON.stringify(blacklist)));
-                Logger.info(`[Moderation] User ${userId} blacklisted.`);
+                Logger.info('Moderation', `User ${userId} blacklisted.`);
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to blacklist user (Not an admin?): ${e.message}`);
-                throw new Error('Permission denied. Your S3 credentials do not have write access to the global registry.');
+                Logger.warn('Moderation', `Failed to blacklist user (Not an admin?): ${e.message}`);
+                throw new AuthError('Permission denied. Your S3 credentials do not have write access to the global registry.');
             }
         }
     }
@@ -214,7 +218,7 @@ export class ModerationModule {
         const globalRemote = (this.sovereign as any).globalRemote;
         if (!globalRemote) return;
 
-        const path = 'users.json';
+        const path = PATHS.USERS_REGISTRY;
         try {
             const result = await globalRemote.downloadFile(path);
             if (result && result.data) {
@@ -222,7 +226,7 @@ export class ModerationModule {
                 const filtered = users.filter(u => u.userId !== userId);
                 if (filtered.length !== users.length) {
                     await globalRemote.uploadFile(path, new TextEncoder().encode(JSON.stringify(filtered)));
-                    Logger.info(`[Moderation] User ${userId} removed from global registry.`);
+                    Logger.info('Moderation', `User ${userId} removed from global registry.`);
                 }
             }
         } catch (e) {}
@@ -232,7 +236,7 @@ export class ModerationModule {
      * (Admin Only) Performs a 'Hard Ban': Blacklists, removes from registry, and deletes ALL associated data.
      */
     async banUser(userId: string) {
-        Logger.info(`[Moderation] Banning user ${userId}...`);
+        Logger.info('Moderation', `Banning user ${userId}...`);
         
         // 1. Social Ban
         await this.blacklistUser(userId);
@@ -246,13 +250,13 @@ export class ModerationModule {
                 for (const file of userFiles) {
                     await rootRemote.deleteFile(file);
                 }
-                Logger.info(`[Moderation] Deleted ${userFiles.length} files for banned user ${userId}.`);
+                Logger.info('Moderation', `Deleted ${userFiles.length} files for banned user ${userId}.`);
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to wipe infrastructure for user ${userId}: ${e.message}`);
+                Logger.warn('Moderation', `Failed to wipe infrastructure for user ${userId}: ${e.message}`);
             }
         }
         
-        Logger.info(`[Moderation] User ${userId} has been banned and their data purged.`);
+        Logger.info('Moderation', `User ${userId} has been banned and their data purged.`);
     }
 
     /**
@@ -261,12 +265,12 @@ export class ModerationModule {
      */
     async requestPostDeletion(targetUserId: string, postId: string, date: string) {
         const rootRemote = (this.sovereign as any).rootRemote;
-        if (!rootRemote) throw new Error("Root remote not configured.");
+        if (!rootRemote) throw new SovereignError('CONFIG_ERROR', 'Root remote not configured.');
 
         // 1. Get Target User Public Key
         const registry = await this.sovereign.getPublicRegistry();
         const user = registry.find(u => u.userId === targetUserId);
-        if (!user || !user.publicKey) throw new Error(`User ${targetUserId} not found or has no public key.`);
+        if (!user || !user.publicKey) throw new AuthError(`User ${targetUserId} not found or has no public key.`);
 
         // 2. Prepare Request
         const request = {
@@ -288,7 +292,7 @@ export class ModerationModule {
         const storeId = this.sovereign.getConfig().paths.storeId;
         const path = `${targetUserId}/${storeId}/public/moderation/requests/${postId}.enc`;
         await rootRemote.uploadFile(path, encryptedData);
-        Logger.info(`[Moderation] Deletion request for post ${postId} sent to user ${targetUserId}.`);
+        Logger.info('Moderation', `Deletion request for post ${postId} sent to user ${targetUserId}.`);
     }
 
     /**
@@ -299,7 +303,7 @@ export class ModerationModule {
         const rootRemote = (this.sovereign as any).rootRemote;
         const globalRemote = (this.sovereign as any).globalRemote;
         if (!rootRemote || !rootRemote.listFiles) {
-            throw new Error("Root remote not configured or missing listFiles capability.");
+            throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability.');
         }
         
         const users = new Set<string>();
@@ -307,7 +311,7 @@ export class ModerationModule {
         // 1. Get from Global Registry (Source of truth for literal names)
         if (globalRemote) {
             try {
-                const result = await globalRemote.downloadFile('users.json');
+                const result = await globalRemote.downloadFile(PATHS.USERS_REGISTRY);
                 if (result && result.data) {
                     const registry: { userId: string }[] = JSON.parse(new TextDecoder().decode(result.data));
                     registry.forEach(u => users.add(u.userId));
@@ -337,7 +341,7 @@ export class ModerationModule {
     async listFiles(prefix: string = ''): Promise<string[]> {
         const rootRemote = (this.sovereign as any).rootRemote;
         if (!rootRemote || !rootRemote.listFiles) {
-            throw new Error("Root remote not configured or missing listFiles capability.");
+            throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability.');
         }
         return await rootRemote.listFiles(prefix);
     }
@@ -348,10 +352,10 @@ export class ModerationModule {
     async exportAllData(): Promise<string> {
         const rootRemote = (this.sovereign as any).rootRemote;
         if (!rootRemote || !rootRemote.listFiles || !rootRemote.downloadFile) {
-            throw new Error("Root remote not configured or missing listFiles capability. Are you an admin?");
+            throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability. Are you an admin?');
         }
         
-        Logger.info('[Moderation] Exporting all data...');
+        Logger.info('Moderation', 'Exporting all data...');
         const files = await rootRemote.listFiles('');
         const exportData: Record<string, string> = {};
         
@@ -362,7 +366,7 @@ export class ModerationModule {
                     exportData[file] = Buffer.from(result.data).toString('base64');
                 }
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to export file ${file}: ${e.message}`);
+                Logger.warn('Moderation', `Failed to export file ${file}: ${e.message}`);
             }
         }
         
@@ -374,19 +378,19 @@ export class ModerationModule {
      */
     async importAllData(jsonData: string) {
         const rootRemote = (this.sovereign as any).rootRemote;
-        if (!rootRemote) throw new Error("Root remote not configured. Are you an admin?");
+        if (!rootRemote) throw new SovereignError('CONFIG_ERROR', 'Root remote not configured. Are you an admin?');
         
-        Logger.info('[Moderation] Importing data...');
+        Logger.info('Moderation', 'Importing data...');
         const parsed = JSON.parse(jsonData);
         for (const [path, base64Data] of Object.entries(parsed)) {
             try {
                 const data = Buffer.from(base64Data as string, 'base64');
                 await rootRemote.uploadFile(path, data);
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to import file ${path}: ${e.message}`);
+                Logger.warn('Moderation', `Failed to import file ${path}: ${e.message}`);
             }
         }
-        Logger.info('[Moderation] Data import complete.');
+        Logger.info('Moderation', 'Data import complete.');
     }
 
     /**
@@ -395,18 +399,18 @@ export class ModerationModule {
     async burnItToTheGround() {
         const rootRemote = (this.sovereign as any).rootRemote;
         if (!rootRemote || !rootRemote.listFiles || !rootRemote.deleteFile) {
-            throw new Error("Root remote not configured or missing deleteFile capability. Are you an admin?");
+            throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing deleteFile capability. Are you an admin?');
         }
 
-        Logger.info('[Moderation] Warning: Initiating Burn It To The Ground protocol...');
+        Logger.info('Moderation', 'Warning: Initiating Burn It To The Ground protocol...');
         const files = await rootRemote.listFiles('');
         for (const file of files) {
             try {
                 await rootRemote.deleteFile(file);
             } catch (e: any) {
-                Logger.warn(`[Moderation] Failed to delete ${file}: ${e.message}`);
+                Logger.warn('Moderation', `Failed to delete ${file}: ${e.message}`);
             }
         }
-        Logger.info('[Moderation] All data has been deleted from the remote backend.');
+        Logger.info('Moderation', 'All data has been deleted from the remote backend.');
     }
 }

@@ -2,6 +2,8 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { Logger } from '../utils/Logger';
 import { MediaUtils } from '../utils/MediaUtils';
+import { PATHS, DEFAULTS } from '../utils/Constants';
+import { ModuleError } from '../utils/Errors';
 
 export interface Profile {
     userId: string;
@@ -20,13 +22,20 @@ export class ProfileModule {
      * Updates the current user's profile.
      */
     async updateProfile(name: string, bio: string, avatar?: string) {
+        if (name.length > DEFAULTS.MAX_NAME_LENGTH) {
+            throw new ModuleError('profile', `Name exceeds maximum length of ${DEFAULTS.MAX_NAME_LENGTH} characters`);
+        }
+        if (bio.length > DEFAULTS.MAX_BIO_LENGTH) {
+            throw new ModuleError('profile', `Bio exceeds maximum length of ${DEFAULTS.MAX_BIO_LENGTH} characters`);
+        }
+        
         let finalAvatar = avatar;
         if (avatar && avatar.startsWith('data:image')) {
             try {
                 // Compress to stay under 100KB for the profile JSON
                 finalAvatar = await MediaUtils.compressImage(avatar, 100 * 1024);
             } catch (e: any) {
-                Logger.warn(`[Profile] Failed to compress avatar: ${e.message}`);
+                Logger.warn('Profile', `Failed to compress avatar: ${e.message}`);
             }
         }
         
@@ -42,7 +51,7 @@ export class ProfileModule {
         await this.db.getStorage().savePublicUserFile(data);
         
         // Notify of update (using its own namespace now)
-        this.db.emit(`${this.MODULE_NAME}:update`, { path: 'public/user.json' });
+        this.db.emit(`${this.MODULE_NAME}:update`, { path: PATHS.USER_PROFILE });
     }
 
     /**
@@ -73,16 +82,10 @@ export class ProfileModule {
     async syncOtherProfiles() {
         const following = await this.db.getFollowing();
         for (const user of following) {
-            // Use internal remote creation if available, or fallback
-            // Note: createRemote is private in SovereignS3nc currently, but we might need a public way or use sync logic.
-            // For now, let's assume we can access it if we're part of the core, or use a workaround.
-            // In Social.ts it was: const userRemote = (this.db as any).createRemote(user.userId);
-            
             try {
-                // @ts-ignore - access private for now or we might need to make it public in SovereignS3nc
                 const userRemote = this.db.createRemote(user.userId);
-                const cachedEtag = await this.db.getStorage().getGenericRemoteHashCache(`${user.userId}:public/user.json`);
-                const result = await userRemote.downloadFile('public/user.json', cachedEtag || undefined);
+                const cachedEtag = await this.db.getStorage().getGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`);
+                const result = await userRemote.downloadFile(PATHS.USER_PROFILE, cachedEtag || undefined);
                 
                 if (result && !result.notModified && result.data) {
                     const data = result.data;
@@ -103,13 +106,13 @@ export class ProfileModule {
                     await this.db.getStorage().saveFile(localPath, finalData);
                     
                     if (result.etag) {
-                        await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:public/user.json`, result.etag);
+                        await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`, result.etag);
                     }
                     
                     this.db.emit(`${this.MODULE_NAME}:update`, { path: localPath, userId: user.userId });
                 }
             } catch (e: any) {
-                Logger.debug(`[Profile] Failed to sync profile for ${user.userId}: ${e.message}`);
+                Logger.debug('Profile', `Failed to sync profile for ${user.userId}: ${e.message}`);
             }
         }
     }

@@ -45,12 +45,13 @@ describe('BankyManager Unit Tests', () => {
     beforeEach(async () => {
         (global as any).indexedDB = new IDBFactory();
         mockRemote = new MockRemote();
+        const testId = Math.random().toString(36).substring(7);
         const config = {
-            paths: { appId: 'banky-test', userId: 'alice', storeId: 'main' },
+            paths: { appId: `banky-test-${testId}`, userId: 'alice', storeId: 'main' },
             password: 'password123',
-            debug: false
+            localPersistencePath: `./test-data/banky-unit-${testId}`
         };
-        sov = new SovereignS3nc(config, mockRemote);
+        sov = new SovereignS3nc(config as any, mockRemote);
         await sov.init();
         banky = new BankyManager(sov);
     });

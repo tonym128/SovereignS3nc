@@ -14,13 +14,13 @@ export class BLESignaling {
             throw new Error('Web Bluetooth is not supported in this browser.');
         }
 
-        Logger.info('[BLE] Scanning for Sovereign devices...');
+        Logger.info('BLE', 'Scanning for Sovereign devices...');
         
         const device = await (navigator as any).bluetooth.requestDevice({
             filters: [{ services: [SOVEREIGN_SERVICE_UUID] }]
         });
 
-        Logger.info(`[BLE] Found device: ${device.name}. Connecting...`);
+        Logger.info('BLE', `Found device: ${device.name}. Connecting...`);
         const server = await device.gatt?.connect();
         const service = await server?.getPrimaryService(SOVEREIGN_SERVICE_UUID);
         const characteristic = await service?.getCharacteristic(SIGNAL_CHARACTERISTIC_UUID);
@@ -30,7 +30,7 @@ export class BLESignaling {
         // 1. Read Offer from Peripheral
         const offerValue = await characteristic.readValue();
         const offerStr = new TextDecoder().decode(offerValue);
-        Logger.info('[BLE] Received WebRTC Offer via Bluetooth');
+        Logger.info('BLE', 'Received WebRTC Offer via Bluetooth');
 
         // 2. Process Offer and generate Answer
         const answerStr = await onOfferReceived(offerStr);
@@ -41,13 +41,13 @@ export class BLESignaling {
         // BLE MTU is small (usually 20-512 bytes). 
         // We might need to write in chunks if the SDP is large.
         if (answerData.length > 512) {
-            Logger.warn('[BLE] Answer SDP is large, attempting chunked write...');
+            Logger.warn('BLE', 'Answer SDP is large, attempting chunked write...');
             // Simple chunked write implementation would go here
             await characteristic.writeValue(answerData);
         } else {
             await characteristic.writeValue(answerData);
         }
 
-        Logger.info('[BLE] Handshake complete via Bluetooth');
+        Logger.info('BLE', 'Handshake complete via Bluetooth');
     }
 }

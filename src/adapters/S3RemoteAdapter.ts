@@ -2,7 +2,9 @@ import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListOb
 import { S3Config } from '../types';
 import { IRemoteAdapter, DownloadResult } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
+import { env } from '../utils/Environment';
 import * as crypto from 'crypto';
+import { NetworkError } from '../utils/Errors';
 
 export class S3RemoteAdapter implements IRemoteAdapter {
   private client: S3Client;
@@ -12,7 +14,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private supportsMetadataHash: boolean = true; // Optimization flag for backends like RustFS
 
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
-    Logger.debug(`[S3] Initializing adapter for ${paths.userId}...`);
+    Logger.debug('S3', `Initializing adapter for ${paths.userId}...`);
     this.endpoint = config.endpoint || '';
     
     // Support both nested credentials object and flat config (from dev.sh)
@@ -31,7 +33,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         requestTimeout: 10000 
       }
     });
-    Logger.debug(`[S3] Client created for ${paths.userId}`);
+    Logger.debug('S3', `Client created for ${paths.userId}`);
     this.bucket = config.bucketName;
     
     // Construct prefix, ignoring empty parts to support root-level access
@@ -41,7 +43,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     } else {
         this.prefix = '';
     }
-    Logger.info(`[S3] Adapter initialized with prefix: ${this.prefix}`);
+    Logger.info('S3', `Adapter initialized with prefix: ${this.prefix}`);
   }
 
   /**
@@ -63,7 +65,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
         if (attempt < maxRetries) {
           const delay = Math.min(1000 * Math.pow(2, attempt) + Math.random() * 1000, 10000);
-          Logger.warn(`[S3] ${label} failed (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${Math.round(delay)}ms... Error: ${e.message}`);
+          Logger.warn('S3', `${label} failed (attempt ${attempt + 1}/${maxRetries + 1}). Retrying in ${Math.round(delay)}ms... Error: ${e.message}`);
           await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
@@ -73,19 +75,19 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async uploadFile(path: string, data: Uint8Array, providedHash?: string, customMetadata?: Record<string, string>): Promise<string | null> {
     const key = this.getKey(path);
-    Logger.debug(`[S3] Uploading to key: ${key}`);
+    Logger.debug('S3', `Uploading to key: ${key}`);
     
     let hash = providedHash;
     if (!hash) {
-        const browserCrypto = typeof globalThis !== 'undefined' ? (globalThis as any).crypto : null;
-        if (browserCrypto && browserCrypto.subtle) {
-            Logger.debug('[S3] Using SubtleCrypto for hashing');
-            const hashBuffer = await browserCrypto.subtle.digest('SHA-256', data);
+        const subtle = env.getSubtleCrypto();
+        if (subtle) {
+            Logger.debug('S3', 'Using SubtleCrypto for hashing');
+            const hashBuffer = await subtle.digest('SHA-256', data as any);
             hash = Array.from(new Uint8Array(hashBuffer))
                 .map((b: number) => b.toString(16).padStart(2, '0'))
                 .join('');
         } else {
-            Logger.debug('[S3] Using crypto-browserify for hashing');
+            Logger.debug('S3', 'Using crypto-browserify for hashing');
             hash = crypto.createHash('sha256').update(data).digest('hex');
         }
     }
@@ -104,7 +106,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
 
   async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 15000): Promise<DownloadResult | null> {
     const key = this.getKey(path);
-    Logger.debug(`[S3] Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || 'none'}, timeout: ${timeout}ms)`);
+    Logger.debug('S3', `Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || 'none'}, timeout: ${timeout}ms)`);
     
     return this.withRetry(async () => {
         const controller = new AbortController();
@@ -135,8 +137,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
             }
 
             if (e.name === 'AbortError') {
-                Logger.error(`[S3] Download timed out for ${key}`);
-                throw new Error(`S3 Download Timeout for ${key}`);
+                Logger.error('S3', `Download timed out for ${key}`);
+                throw new NetworkError(`S3 Download Timeout for ${key}`);
             }
 
             if (statusCode === 403 || e.name === 'NoSuchKey' || statusCode === 404) {
@@ -167,7 +169,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
          if (!hash) {
              // Backend exists but doesn't have our custom hash. 
              // Mark this connection as not supporting hashes to avoid future noise.
-             Logger.info(`[S3] Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
+             Logger.info('S3', `Metadata 'hash' missing for ${key}. Falling back to ETag for this session.`);
              this.supportsMetadataHash = false;
              return response.ETag || null;
          }
@@ -237,7 +239,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
           fullPrefix = this.getKey(prefix);
       }
       
-      Logger.debug(`[S3] Listing files for prefix: ${fullPrefix} (original: ${prefix}, adapter prefix: ${this.prefix})`);
+      Logger.debug('S3', `Listing files for prefix: ${fullPrefix} (original: ${prefix}, adapter prefix: ${this.prefix})`);
       
       const keys: string[] = [];
       let continuationToken: string | undefined = undefined;
@@ -271,7 +273,7 @@ export class S3RemoteAdapter implements IRemoteAdapter {
               hasMore = response.IsTruncated || false;
           }
       } catch (e: any) {
-          Logger.warn(`[S3] Failed to list files for prefix ${prefix}: ${e.message}`);
+          Logger.warn('S3', `Failed to list files for prefix ${prefix}: ${e.message}`);
       }
 
       return keys;
@@ -285,25 +287,25 @@ export class S3RemoteAdapter implements IRemoteAdapter {
               Key: key
           });
           await this.withRetry(() => this.client.send(command), `Delete ${key}`);
-          Logger.debug(`[S3] Deleted file: ${key}`);
+          Logger.debug('S3', `Deleted file: ${key}`);
       } catch (e: any) {
-          Logger.warn(`[S3] Failed to delete file ${key}: ${e.message}`);
+          Logger.warn('S3', `Failed to delete file ${key}: ${e.message}`);
       }
   }
 
   async purge(): Promise<void> {
-      Logger.info(`[S3] Purging all data in bucket ${this.bucket} under prefix ${this.prefix}...`);
-      const files = await this.listFiles('');
-      for (const file of files) {
-          await this.deleteFile(file);
-      }
-      Logger.info(`[S3] Purge complete. ${files.length} files deleted.`);
+    Logger.info('S3', `Purging all data in bucket ${this.bucket} under prefix ${this.prefix}...`);
+    const files = await this.listFiles('');
+    for (const file of files) {
+        await this.deleteFile(file);
+    }
+    Logger.info('S3', `Purge complete. ${files.length} files deleted.`);
   }
 
   private getKey(path: string): string {
       // Safety check: ensure path doesn't try to escape the prefix (e.g. via ../)
       if (path.includes('..')) {
-          throw new Error(`Security Violation: Path '${path}' contains parent directory references.`);
+          throw new NetworkError(`Security Violation: Path '${path}' contains parent directory references.`);
       }
       return `${this.prefix}${path}`;
   }

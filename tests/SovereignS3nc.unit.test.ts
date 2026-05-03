@@ -66,10 +66,12 @@ describe('SovereignS3nc Unit Tests', () => {
     beforeEach(() => {
         mockRemote = new MockRemote();
         (global as any).indexedDB = new IDBFactory();
+        const testId = Math.random().toString(36).substring(7);
         config = {
-            paths: { appId: 'test-app', userId: 'alice', storeId: 'main' },
+            paths: { appId: `test-app-${testId}`, userId: 'alice', storeId: 'main' },
             password: 'password123',
-            debug: false
+            debug: false,
+            localPersistencePath: `./test-data/sov-unit-${testId}/alice`
         };
     });
 
@@ -163,10 +165,10 @@ describe('SovereignS3nc Unit Tests', () => {
         test('should not sync if already syncing', async () => {
             const sov = new SovereignS3nc(config, mockRemote);
             await sov.init();
-            (sov as any).isSyncing = true;
+            (sov as any)._isSyncing = true;
             const loggerSpy = jest.spyOn(require('../src/utils/Logger').Logger, 'info');
             await sov.sync();
-            expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('Sync already in progress'));
+            expect(loggerSpy).toHaveBeenCalledWith('Sovereign', expect.stringContaining('Sync already in progress, skipping...'));
             loggerSpy.mockRestore();
         });
 
@@ -239,7 +241,11 @@ describe('SovereignS3nc Unit Tests', () => {
             await aliceSov.sync();
 
             // Bob wants Alice's blob
-            const bobConfig = { ...config, paths: { ...config.paths, userId: 'bob' } };
+            const bobConfig = { 
+                ...config, 
+                paths: { ...config.paths, userId: 'bob' },
+                localPersistencePath: config.localPersistencePath?.replace('alice', 'bob')
+            };
             // Factory to return Alice's remote when requested
             const factory = (uid: string) => uid === 'alice' ? aliceRemote : new MockRemote();
             const bobSov = new SovereignS3nc(bobConfig, new MockRemote(), factory);
@@ -295,7 +301,8 @@ describe('SovereignS3nc Unit Tests', () => {
             const wrongConfig = { 
                 paths: { ...config.paths },
                 password: 'wrong-password',
-                debug: false
+                debug: false,
+                localPersistencePath: config.localPersistencePath
             };
             const sov2 = new SovereignS3nc(wrongConfig, mockRemote);
             
@@ -403,12 +410,21 @@ describe('SovereignS3nc Unit Tests', () => {
         beforeEach(async () => {
             aliceRemote = new MockRemote();
             bobRemote = new MockRemote();
+            const testId = Math.random().toString(36).substring(7);
 
-            const aliceConfig = { paths: { appId: 'test', userId: 'alice', storeId: 'main' }, password: 'alice-password' };
-            const bobConfig = { paths: { appId: 'test', userId: 'bob', storeId: 'main' }, password: 'bob-password' };
+            const aliceConfig = { 
+                paths: { appId: `test-enc-${testId}`, userId: 'alice', storeId: 'main' }, 
+                password: 'alice-password',
+                localPersistencePath: `./test-data/alice-enc-${testId}`
+            };
+            const bobConfig = { 
+                paths: { appId: `test-enc-${testId}`, userId: 'bob', storeId: 'main' }, 
+                password: 'bob-password',
+                localPersistencePath: `./test-data/bob-enc-${testId}`
+            };
 
-            alice = new SovereignS3nc(aliceConfig, aliceRemote, (uid) => uid === 'bob' ? bobRemote : aliceRemote);
-            bob = new SovereignS3nc(bobConfig, bobRemote, (uid) => uid === 'alice' ? aliceRemote : bobRemote);
+            alice = new SovereignS3nc(aliceConfig as any, aliceRemote, (uid) => uid === 'bob' ? bobRemote : aliceRemote);
+            bob = new SovereignS3nc(bobConfig as any, bobRemote, (uid) => uid === 'alice' ? aliceRemote : bobRemote);
 
             await alice.init();
             await bob.init();
