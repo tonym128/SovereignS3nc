@@ -32,7 +32,7 @@ export interface SyncOrchestratorContext {
     encrypt: (data: Uint8Array, key: string) => Promise<Uint8Array>;
     decrypt: (data: Uint8Array, key: string) => Promise<Uint8Array>;
     calculateHashedContent: (data: Uint8Array, key?: string) => string;
-    handleConflict: (path: string, localData: Uint8Array, remoteData: Uint8Array) => Promise<'local' | 'remote' | 'abort'>;
+    handleConflict: (path: string, localData: Uint8Array, remoteData: Uint8Array) => Promise<'local' | 'remote' | 'abort' | { mergedData: Uint8Array }>;
     createRemote: (userId: string) => IRemoteAdapter;
     getModulePath: (moduleName: string, subPath: string, type: 'private' | 'public' | 'followed') => string;
     onModuleUpdate: (moduleName: string, path: string) => void;
@@ -221,6 +221,10 @@ export class SyncOrchestrator {
                             if (result.etag) await this.ctx.storage.setRemoteHashCache(date, type, result.etag);
                             if (remoteHash) await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, remoteHash);
                             return;
+                        } else if (typeof choice === 'object' && choice.mergedData) {
+                            localData = choice.mergedData;
+                            await this.ctx.storage.saveDailyDb(date, type, localData);
+                            // We don't have an ETag for merged data yet, so we'll upload it next
                         } else if (choice === 'abort') {
                             Logger.info('Sync', `Conflict for ${remotePath} skipped by user.`);
                             return;
@@ -506,6 +510,10 @@ export class SyncOrchestrator {
                             if (result.etag) await this.ctx.storage.setGenericRemoteHashCache(fullPath, result.etag);
                             if (remoteHash) await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, remoteHash);
                             return;
+                        } else if (typeof choice === 'object' && choice.mergedData) {
+                            localData = choice.mergedData;
+                            await this.ctx.storage.saveFile(fullPath, localData);
+                            // Upload merged version next
                         } else if (choice === 'abort') {
                             Logger.info('Sync', `Conflict for ${fullPath} skipped by user.`);
                             return;

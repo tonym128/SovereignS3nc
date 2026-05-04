@@ -14,15 +14,13 @@ export interface Message {
     image?: string;
     isEdited?: boolean;
     isDeleted?: boolean;
+    status?: 'sent' | 'delivered' | 'read';
 }
 
 export class MessagingModule {
     private readonly MODULE_NAME = 'messaging';
 
     constructor(private db: SovereignS3nc) {
-        // Registering a minimal definition if we want to use declarative schema, 
-        // but messaging currently uses a mix of transport-db and outbox-db.
-        // For now, we'll keep the social module's table names for compatibility.
         this.db.registerModule({
             name: this.MODULE_NAME,
             tables: [
@@ -36,19 +34,24 @@ export class MessagingModule {
                         recipientId TEXT,
                         image TEXT,
                         isEdited INTEGER DEFAULT 0,
-                        isDeleted INTEGER DEFAULT 0
+                        isDeleted INTEGER DEFAULT 0,
+                        status TEXT DEFAULT 'sent'
                     `
+                }
+            ],
+            migrations: [
+                {
+                    version: 2,
+                    sql: ['ALTER TABLE messages ADD COLUMN status TEXT DEFAULT "sent";']
                 }
             ]
         });
     }
 
     private async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
-        // We use a namespaced path for the new module
         const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}.db`, 'private');
         const data = await this.db.getStorage().getFile(path);
         
-        // Use env to get sql.js
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
@@ -58,7 +61,7 @@ export class MessagingModule {
             db = new sqliteInstance.Database(data || undefined);
         } catch (e: any) {
             if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
-                Logger.error('Messaging', `Database corruption detected at ${path}. Deleting corrupted file.`);
+                Logger.error('Messaging', `Database corruption detected at ${path}. Deleting.`);
                 await this.db.getStorage().deleteFile(path);
                 db = new sqliteInstance.Database();
             } else {
@@ -66,9 +69,26 @@ export class MessagingModule {
             }
         }
 
-        // Use Core Schema Management
         this.db.applyModuleSchema(db, this.MODULE_NAME);
+        return db;
+    }
 
+    private async getReceiptsDb(userId: string, date: string, type: 'public' | 'followed'): Promise<any> {
+        const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date}.db`, type);
+        const data = await this.db.getStorage().getFile(path);
+        
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+        
+        let db: any;
+        try {
+            db = new sqliteInstance.Database(data || undefined);
+        } catch (e: any) {
+            db = new sqliteInstance.Database();
+        }
+
+        db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
         return db;
     }
 
@@ -84,31 +104,27 @@ export class MessagingModule {
 
         let imagePath = null;
         if (image) {
-            imagePath = await this.db.saveBlob(image, true); // Use public blob for DM transport
+            imagePath = await this.db.saveBlob(image, true);
         }
 
-        const message: Message = { id, content, timestamp, senderId, recipientId, image: imagePath || undefined, isEdited: false, isDeleted: false };
+        const message: Message = { id, content, timestamp, senderId, recipientId, image: imagePath || undefined, isEdited: false, isDeleted: false, status: 'sent' };
         await this._saveAndSendDM(recipientId, message, date);
     }
 
     private async _saveAndSendDM(recipientId: string, message: Message, date: string) {
         // 1. Save to my Outbox (using my private key)
         const outboxDb = await this.getMessageDb(date, 'outbox');
-        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0]);
+        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || 'sent']);
 
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
         outboxDb.close();
 
         // 2. Send to Recipient's Public DM box (End-to-End Encrypted)
-        // Note: For compatibility, we might want to use the 'social' module's pathing for the transport layer 
-        // if we want to communicate with older versions, or just move to 'messaging'.
-        // The TODO says "Create src/modules/Messaging.ts for E2EE DM workflows (using core primitives)."
         const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date}.db`, 'public');
         const publicDmData = await this.db.getStorage().getFile(publicDmPath);
         
-        // Use env to get sql.js
         const initSqlJs = env.getSqlJs();
         if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
@@ -117,16 +133,9 @@ export class MessagingModule {
         try {
             publicDb = new sqliteInstance.Database(publicDmData || undefined);
         } catch (e: any) {
-            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
-                Logger.error('Messaging', `Transport database corruption detected at ${publicDmPath}. Deleting.`);
-                await this.db.getStorage().deleteFile(publicDmPath);
-                publicDb = new sqliteInstance.Database();
-            } else {
-                throw e;
-            }
+            publicDb = new sqliteInstance.Database();
         }
         
-        // Manual Schema for DM transport (not part of declarative module schema as it is a transport db)
         publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
 
         const registry = await this.db.getPublicRegistry();
@@ -142,7 +151,6 @@ export class MessagingModule {
 
         if (!recipient || !recipient.publicKey) throw new AuthError('Recipient public key not found');
 
-        // E2EE: Derive shared secret from my Private Key + their Public Key
         const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
         const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
         
@@ -172,9 +180,10 @@ export class MessagingModule {
             timestamp, 
             senderId, 
             recipientId, 
-            image: imagePath,
+            image: imagePath || undefined,
             isEdited: true,
-            isDeleted: false 
+            isDeleted: false,
+            status: 'sent'
         };
 
         await this._saveAndSendDM(recipientId, message, date);
@@ -192,27 +201,85 @@ export class MessagingModule {
             recipientId, 
             image: undefined,
             isEdited: false,
-            isDeleted: true 
+            isDeleted: true,
+            status: 'sent'
         };
 
         await this._saveAndSendDM(recipientId, message, date);
     }
 
+    async markAsRead(senderId: string, messageId: string, date: string) {
+        const db = await this.getReceiptsDb(senderId, date, 'public');
+        db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'read', Date.now()]);
+        
+        const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
+        await this.db.getStorage().saveFile(path, db.export());
+        db.close();
+        
+        this.db.emit(`${this.MODULE_NAME}:update`, { path });
+    }
+
+    async markBatchAsRead(senderId: string, messages: {id: string, date: string}[]) {
+        const dates = [...new Set(messages.map(m => m.date))];
+        for (const date of dates) {
+            const db = await this.getReceiptsDb(senderId, date, 'public');
+            const msgsForDate = messages.filter(m => m.date === date);
+            for (const m of msgsForDate) {
+                db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'read', Date.now()]);
+            }
+            const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
+            await this.db.getStorage().saveFile(path, db.export());
+            db.close();
+            this.db.emit(`${this.MODULE_NAME}:update`, { path });
+        }
+    }
+
+    async markAsDelivered(senderId: string, messageId: string, date: string) {
+        const db = await this.getReceiptsDb(senderId, date, 'public');
+        const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [messageId]);
+        if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read') {
+            db.close();
+            return;
+        }
+        
+        db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'delivered', Date.now()]);
+        
+        const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
+        await this.db.getStorage().saveFile(path, db.export());
+        db.close();
+        
+        this.db.emit(`${this.MODULE_NAME}:update`, { path });
+    }
+
+    async markBatchAsDelivered(senderId: string, messages: {id: string, date: string}[]) {
+        const dates = [...new Set(messages.map(m => m.date))];
+        for (const date of dates) {
+            const db = await this.getReceiptsDb(senderId, date, 'public');
+            const msgsForDate = messages.filter(m => m.date === date);
+            let changed = false;
+            for (const m of msgsForDate) {
+                const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [m.id]);
+                if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read')) {
+                    db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'delivered', Date.now()]);
+                    changed = true;
+                }
+            }
+            if (changed) {
+                const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
+                await this.db.getStorage().saveFile(path, db.export());
+                this.db.emit(`${this.MODULE_NAME}:update`, { path });
+            }
+            db.close();
+        }
+    }
+
     async getInboxMessages(days: number = 5): Promise<Message[]> {
         const messages: Message[] = [];
         const following = await this.db.getFollowing();
-        
-        const usersToCheck = [...following];
-        const config = this.db.getConfig();
-        if (config.adminPublicKey && !usersToCheck.find(u => u.userId === 'admin')) {
-            const startDate = new Date();
-            startDate.setUTCDate(startDate.getUTCDate() - 7);
-            usersToCheck.push({ 
-                userId: 'admin', 
-                publicKey: config.adminPublicKey,
-                lastSync: SovereignS3nc.getDateStr(startDate)
-            });
-        }
+        const myId = this.db.getConfig().paths.userId;
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const dates: string[] = [];
         for (let i = 0; i < days; i++) {
@@ -221,26 +288,49 @@ export class MessagingModule {
             dates.push(d.toISOString().split('T')[0]);
         }
 
-        // Use env to get sql.js
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-
-        const myId = this.db.getConfig().paths.userId;
-
-        for (const user of usersToCheck) {
-            const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
-
+        // 1. Pull Receipts and update local outbox
+        for (const user of following) {
             for (const date of dates) {
-                // Check new module path
-                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed');
+                const receiptPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/receipts/${myId}/${date}.db`, 'followed');
+                const receiptData = await this.db.getStorage().getFile(receiptPath);
+                if (receiptData) {
+                    const rdb = new sqliteInstance.Database(receiptData);
+                    try {
+                        const res = rdb.exec('SELECT messageId, status FROM receipts');
+                        if (res && res.length > 0) {
+                            const outboxDb = await this.getMessageDb(date, 'outbox');
+                            for (const row of res[0].values) {
+                                const [mid, status] = row;
+                                outboxDb.run(`
+                                    UPDATE messages SET status = ? 
+                                    WHERE id = ? AND (
+                                        (status = 'sent' AND ? IN ('delivered', 'read')) OR
+                                        (status = 'delivered' AND ? = 'read')
+                                    )
+                                `, [status, mid, status, status]);
+                            }
+                            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
+                            await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
+                            outboxDb.close();
+                        }
+                    } catch (e) {}
+                    rdb.close();
+                }
+            }
+        }
 
+        // 2. Fetch Incoming Messages
+        for (const user of following) {
+            const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
+            for (const date of dates) {
+                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed');
                 const data = await this.db.getStorage().getFile(localPath);
                 if (data) {
                     const db = new sqliteInstance.Database(data);
                     try {
                         const res = db.exec('SELECT encrypted_data FROM messages');
                         if (res && res.length > 0) {
+                            const newMsgsForUser: Message[] = [];
                             for (const row of res[0].values) {
                                 try {
                                     const decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecret);
@@ -249,8 +339,15 @@ export class MessagingModule {
                                         if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
                                         if (typeof (parsed as any).isDeleted === 'number') parsed.isDeleted = !!(parsed as any).isDeleted;
                                         messages.push(parsed);
+                                        newMsgsForUser.push(parsed);
                                     }
                                 } catch (e) {}
+                            }
+                            if (newMsgsForUser.length > 0) {
+                                await this.markBatchAsDelivered(user.userId, newMsgsForUser.map(m => ({
+                                    id: m.id,
+                                    date
+                                })));
                             }
                         }
                     } catch (e) {}
@@ -259,10 +356,9 @@ export class MessagingModule {
             }
         }
 
-        // Also check my own outbox
+        // 3. Fetch My Outbox
         for (const date of dates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-
             const data = await this.db.getStorage().getFile(outboxPath);
             if (data) {
                 const db = new sqliteInstance.Database(data);
@@ -288,7 +384,6 @@ export class MessagingModule {
             }
         }
 
-        // Deduplicate
         const msgMap = new Map<string, Message>();
         for (const m of messages) {
             const existing = msgMap.get(m.id);

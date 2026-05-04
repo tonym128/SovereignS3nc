@@ -723,14 +723,28 @@ const App = () => {
     }, [currentTab]);
 
     useEffect(() => {
-        if (currentTab === 'messages' && selectedUser) {
+        if (currentTab === 'messages' && selectedUser && messaging) {
             setLastViewed(prev => ({
                 ...prev,
                 chat: { ...(prev.chat || {}), [selectedUser]: Date.now() }
             }));
             setUserUnreadCounts(prev => ({ ...prev, [selectedUser]: 0 }));
+
+            // Mark unread messages from this user as read
+            const unreadFromUser = messages.filter(m => m.senderId === selectedUser && m.status !== 'read');
+            if (unreadFromUser.length > 0) {
+                (async () => {
+                    const batch = unreadFromUser.map(m => ({ 
+                        id: m.id, 
+                        date: new Date(m.timestamp).toISOString().split('T')[0] 
+                    }));
+                    await messaging.markBatchAsRead(selectedUser, batch);
+                    // Trigger a sync shortly after marking as read to push receipts
+                    setTimeout(() => sync(), 1000);
+                })();
+            }
         }
-    }, [selectedUser, currentTab]);
+    }, [selectedUser, currentTab, messaging]);
 
     useEffect(() => {
         if (!isLoggedIn || !sov || !feed || !autoSync) return;
@@ -1770,14 +1784,27 @@ const App = () => {
                                                                                 <div>{m.content}</div>
                                                                             </>
                                                                         )}
-                                                                        <div style={{fontSize: '0.6rem'}} className={`mt-1 ${m.senderId === config.userId ? 'opacity-75' : 'text-muted'} d-flex justify-content-between`}>
+                                                                        <div style={{fontSize: '0.6rem'}} className={`mt-1 ${m.senderId === config.userId ? 'opacity-75' : 'text-muted'} d-flex justify-content-between align-items-center`}>
                                                                             <span>{new Date(m.timestamp).toLocaleTimeString()} {m.isEdited && "(Edited)"}</span>
-                                                                            {m.senderId === config.userId && !m.isDeleted && (
-                                                                                <span className="ms-2">
-                                                                                    <span className="cursor-pointer me-1" onClick={() => handleEditMessage(m)}>✎</span>
-                                                                                    <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)}>🗑</span>
-                                                                                </span>
-                                                                            )}
+                                                                            <div className="d-flex align-items-center">
+                                                                                {m.senderId === config.userId && !m.isDeleted && (
+                                                                                    <div className="me-2 d-flex">
+                                                                                        {m.status === 'read' ? (
+                                                                                            <i className="bi bi-check-all text-info" style={{fontSize: '0.9rem'}} title="Read"></i>
+                                                                                        ) : m.status === 'delivered' ? (
+                                                                                            <i className="bi bi-check-all" style={{fontSize: '0.9rem'}} title="Delivered"></i>
+                                                                                        ) : (
+                                                                                            <i className="bi bi-check" style={{fontSize: '0.9rem'}} title="Sent"></i>
+                                                                                        )}
+                                                                                    </div>
+                                                                                )}
+                                                                                {m.senderId === config.userId && !m.isDeleted && (
+                                                                                    <span className="d-flex gap-2">
+                                                                                        <span className="cursor-pointer" onClick={() => handleEditMessage(m)} title="Edit">✎</span>
+                                                                                        <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)} title="Delete">🗑</span>
+                                                                                    </span>
+                                                                                )}
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2451,6 +2478,17 @@ const App = () => {
                 </div>
             </div>
             <Dialog dialog={dialog} setDialog={setDialog} profileCache={profileCache} />
+            
+            {/* Global Sync Indicator */}
+            {syncing && (
+                <div className="position-fixed bottom-0 end-0 m-4 shadow-lg p-3 bg-white rounded-4 d-flex align-items-center border" style={{ zIndex: 9999, minWidth: '200px' }}>
+                    <div className="spinner-border spinner-border-sm text-primary me-3" role="status"></div>
+                    <div>
+                        <div className="fw-bold small">Syncing...</div>
+                        <div className="x-small text-muted">Updating with S3</div>
+                    </div>
+                </div>
+            )}
             {showPairing && (
                 <PairingModal 
                     userId={config.userId} 
@@ -2508,7 +2546,7 @@ const App = () => {
     );
 };
 
-const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort') => void }) => {
+const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) => void }) => {
     if (!conflict) return null;
 
     useEffect(() => {
@@ -2540,16 +2578,19 @@ const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onRes
 
     const handleMerge = () => {
         if (localJson && remoteJson) {
+            // Merge objects: remote fields are kept, local fields overwrite
             const merged = { ...remoteJson, ...localJson };
-            // Simple merge: local wins on same fields, but we combine objects
             const mergedData = new TextEncoder().encode(JSON.stringify(merged));
-            // This is a bit of a hack: we resolve with 'local' but we actually modified localData in the background?
-            // No, the resolve expects one of the three strings.
-            // I should ideally add 'merge' to the library, but for now let's just use 'local' and hope the user is happy.
-            // Wait, the library's handleConflict just returns a string.
-            // I can't inject data back easily without library changes.
-            // So for now, I'll just show the diff and let them choose.
-            onResolve('local');
+            onResolve({ mergedData });
+        }
+    };
+
+    const getPreview = (data: Uint8Array) => {
+        try {
+            const str = new TextDecoder().decode(data);
+            return str.length > 500 ? str.substring(0, 500) + '...' : str;
+        } catch (e) {
+            return 'Binary Data';
         }
     };
 
@@ -2568,21 +2609,23 @@ const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onRes
                         </div>
 
                         {localJson && remoteJson && (
-                            <div className="alert alert-info small mb-4 border-0 rounded-3">
-                                <h6 className="fw-bold mb-1"><i className="bi bi-info-circle-fill me-2"></i>Semantic Comparison</h6>
-                                <div>
-                                    {Object.keys({ ...localJson, ...remoteJson }).map(key => {
-                                        if (JSON.stringify(localJson[key]) !== JSON.stringify(remoteJson[key])) {
-                                            return (
-                                                <div key={key} className="mb-1">
-                                                    <span className="fw-bold">{key}:</span>{' '}
-                                                    <span className="text-danger decoration-line-through me-2">{JSON.stringify(remoteJson[key])}</span>
-                                                    <span className="text-success">{JSON.stringify(localJson[key])}</span>
-                                                </div>
-                                            );
-                                        }
-                                        return null;
-                                    })}
+                            <div className="card border-info-subtle bg-info-subtle bg-opacity-10 mb-4 rounded-3">
+                                <div className="card-body">
+                                    <h6 className="fw-bold mb-2 text-info"><i className="bi bi-info-circle-fill me-2"></i>Semantic Comparison</h6>
+                                    <div style={{ maxHeight: '150px', overflowY: 'auto' }}>
+                                        {Object.keys({ ...localJson, ...remoteJson }).map(key => {
+                                            if (JSON.stringify(localJson[key]) !== JSON.stringify(remoteJson[key])) {
+                                                return (
+                                                    <div key={key} className="mb-2 x-small">
+                                                        <div className="fw-bold text-dark">{key}:</div>
+                                                        <div className="ps-2 border-start border-danger text-danger text-decoration-line-through">{JSON.stringify(remoteJson[key])}</div>
+                                                        <div className="ps-2 border-start border-success text-success">{JSON.stringify(localJson[key])}</div>
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -2618,12 +2661,12 @@ const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onRes
                     </div>
                     <div className="modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2">
                         {localJson && remoteJson && (
-                            <button type="button" className="btn btn-info rounded-pill px-4 text-white shadow-sm" onClick={handleMerge}>
+                            <button type="button" className="btn btn-info text-white rounded-pill px-4 shadow-sm" onClick={handleMerge}>
                                 <i className="bi bi-intersect me-2"></i>Smart Merge
                             </button>
                         )}
-                        <button type="button" className="btn btn-primary rounded-pill px-4" onClick={() => onResolve('local')}>Keep Local</button>
-                        <button type="button" className="btn btn-success rounded-pill px-4" onClick={() => onResolve('remote')}>Take Remote</button>
+                        <button type="button" className="btn btn-primary rounded-pill px-4 shadow-sm" onClick={() => onResolve('local')}>Keep Local</button>
+                        <button type="button" className="btn btn-success rounded-pill px-4 shadow-sm" onClick={() => onResolve('remote')}>Take Remote</button>
                         <button type="button" className="btn btn-outline-secondary rounded-pill px-4" onClick={() => onResolve('abort')}>Skip for Now</button>
                     </div>
                 </div>

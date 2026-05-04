@@ -57,12 +57,19 @@ export class IndexedDBStorage implements IStorage {
     }
 
     private sanitizePath(filePath: string): string {
-        // Task #26: Robust path sanitization
-        const parts = filePath.split(/[/\\]/);
-        const safeParts = [];
+        if (!filePath) return '';
+        // Robust path sanitization:
+        // 1. Convert backslashes to forward slashes and split
+        // 2. Resolve '..' and '.' parts while staying within "root"
+        const parts = filePath.replace(/\\/g, '/').split('/');
+        const safeParts: string[] = [];
         for (const part of parts) {
-            if (part === '..' || part === '.' || part === '') continue;
-            safeParts.push(part);
+            if (part === '.' || part === '') continue;
+            if (part === '..') {
+                safeParts.pop(); // Go up one level if possible, but never above root
+            } else {
+                safeParts.push(part);
+            }
         }
         return safeParts.join('/');
     }

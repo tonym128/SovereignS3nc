@@ -35,7 +35,7 @@ export class SovereignS3nc extends EventEmitter {
     private registeredModules: ModuleDefinition[] = [];
     private _isSyncing: boolean = false;
     private syncWorker?: SyncWorkerProxy;
-    private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort') => void> = new Map();
+    private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) => void> = new Map();
 
     // Manager instances
     private keyManager: KeyManager;
@@ -567,6 +567,15 @@ export class SovereignS3nc extends EventEmitter {
                     if (key) {
                         data = await this.decrypt(data, key);
                     }
+
+                    // Verify hash
+                    const expectedHash = path.split('/').pop();
+                    const actualHash = this.calculateHashedContent(data);
+                    if (expectedHash !== actualHash) {
+                        Logger.error('Sovereign', `Hash mismatch for own blob ${path}. Expected ${expectedHash}, got ${actualHash}`);
+                        throw new SyncError(`Blob corruption detected for ${path}`);
+                    }
+
                     await this.storage.saveFile(path, data);
                 }
             }
@@ -637,7 +646,7 @@ export class SovereignS3nc extends EventEmitter {
         return `${year}-${month}-${day}`;
     }
 
-    public resolveConflict(conflictId: string, choice: 'local' | 'remote' | 'abort') {
+    public resolveConflict(conflictId: string, choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) {
         const resolve = this.pendingConflicts.get(conflictId);
         if (resolve) {
             this.pendingConflicts.delete(conflictId);
@@ -645,7 +654,7 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
-    private async handleConflict(path: string, localData: Uint8Array, remoteData: Uint8Array): Promise<'local' | 'remote' | 'abort'> {
+    private async handleConflict(path: string, localData: Uint8Array, remoteData: Uint8Array): Promise<'local' | 'remote' | 'abort' | { mergedData: Uint8Array }> {
         return new Promise((resolve) => {
             const conflictId = env.generateId(12);
             this.pendingConflicts.set(conflictId, resolve);

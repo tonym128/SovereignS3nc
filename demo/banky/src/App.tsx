@@ -261,20 +261,24 @@ const App = () => {
         if (!banky || !selectedAccount) return;
         const type = isCredit ? 'Credit' : 'Debit';
         showPrompt(`Enter ${type} Amount:`, async (amt) => {
-            const amount = parseFloat(amt);
-            if (isNaN(amount) || amount <= 0) {
-                alert('Please enter a valid positive amount.');
+            const parsed = parseFloat(amt);
+            const amount = Math.abs(parsed); // Enforce positive for validation
+            
+            if (isNaN(parsed) || amount === 0) {
+                alert('Please enter a valid non-zero amount.');
                 return;
             }
 
-            if (amount > 10000) {
-                if (!window.confirm(`Are you sure you want to ${isCredit ? 'add' : 'withdraw'} $${amount.toLocaleString()}?`)) return;
+            // Confirm large amounts
+            if (amount > 1000) {
+                if (!window.confirm(`Are you sure you want to ${isCredit ? 'deposit' : 'spend'} $${amount.toLocaleString()}?`)) return;
             }
 
             showPrompt(`Enter description for ${type}:`, async (desc) => {
                 if (desc) {
                     // Find if this is a shared account
                     const shared = sharedAccounts.find(g => g.id === selectedAccount.id);
+                    // Use the absolute amount and negate if it's a debit (spend)
                     await banky.addTransaction(selectedAccount.id, desc, isCredit ? amount : -amount, 'other', undefined, shared?.id, shared?.sharedKey);
                     await sync();
                     loadTransactions(selectedAccount);
@@ -356,10 +360,15 @@ const App = () => {
             if (name) {
                 showPrompt('Enter Target Amount:', async (amount) => {
                     const target = parseFloat(amount);
-                    if (!isNaN(target)) {
+                    if (!isNaN(target) && target > 0) {
+                        if (target > 5000) {
+                            if (!window.confirm(`That's a big goal! Are you sure you want to set a target of $${target.toLocaleString()}?`)) return;
+                        }
                         await banky.createGoal(selectedAccount.id, name, target);
                         await sync();
                         loadTransactions(selectedAccount);
+                    } else {
+                        alert('Please enter a valid positive target amount.');
                     }
                 });
             }
@@ -370,8 +379,15 @@ const App = () => {
         if (!banky || !selectedAccount) return;
         const type = isContribute ? 'Contribute to' : 'Withdraw from';
         showPrompt(`Enter amount to ${type.toLowerCase()} ${goal.name}:`, async (amt) => {
-            const amount = parseFloat(amt);
-            if (isNaN(amount) || amount <= 0) return;
+            const amount = Math.abs(parseFloat(amt));
+            if (isNaN(amount) || amount <= 0) {
+                alert('Please enter a valid positive amount.');
+                return;
+            }
+
+            if (amount > 1000) {
+                if (!window.confirm(`Are you sure you want to transfer $${amount.toLocaleString()}?`)) return;
+            }
 
             const finalAmount = isContribute ? amount : -amount;
             const description = isContribute ? `Saved for ${goal.name}` : `Withdrew from ${goal.name}`;
@@ -392,9 +408,12 @@ const App = () => {
         if (!banky || !selectedAccount) return;
         // Basic prompt based allowance
         showPrompt('Enter weekly allowance amount (or 0 to disable):', async (amt) => {
-            const amount = parseFloat(amt);
+            const amount = Math.abs(parseFloat(amt));
             if (!isNaN(amount)) {
                 if (amount > 0) {
+                    if (amount > 500) {
+                        if (!window.confirm(`Set a weekly allowance of $${amount.toLocaleString()}?`)) return;
+                    }
                     await banky.updateAccountAllowance(selectedAccount.id, true, amount, 'weekly', Date.now() + 7 * 24 * 60 * 60 * 1000);
                     showAlert('Weekly allowance enabled.');
                 } else {
@@ -858,6 +877,19 @@ const App = () => {
             {/* Hidden file input for account images */}
             <input type="file" ref={accountFileRef} className="d-none" accept="image/*" onChange={handleAccountImageChange} />
             
+            {/* Sync Progress Indicator */}
+            {syncing && (
+                <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'rgba(255,255,255,0.7)', zIndex: 9999 }}>
+                    <div className="text-center bg-white p-4 rounded-4 shadow-lg border">
+                        <div className="spinner-border text-primary mb-3" role="status" style={{ width: '3rem', height: '3rem' }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <h5 className="fw-bold text-primary mb-0">Syncing with S3...</h5>
+                        <p className="text-muted small mt-2 mb-0">Please do not refresh the page.</p>
+                    </div>
+                </div>
+            )}
+
             {/* Dialog Component adapted from social demo */}
             <Dialog dialog={dialog} setDialog={setDialog} />
 
@@ -876,7 +908,7 @@ const App = () => {
     );
 };
 
-const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort') => void }) => {
+const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onResolve: (choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) => void }) => {
     if (!conflict) return null;
 
     const formatSize = (bytes: number) => {
@@ -887,13 +919,57 @@ const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onRes
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
-    const getPreview = (data: Uint8Array) => {
+    const tryParse = (data: Uint8Array) => {
         try {
-            const str = new TextDecoder().decode(data);
-            if (str.length > 200) return str.substring(0, 200) + '...';
-            return str;
+            return JSON.parse(new TextDecoder().decode(data));
         } catch (e) {
-            return 'Binary Data';
+            return null;
+        }
+    };
+
+    const localJson = tryParse(conflict.localData);
+    const remoteJson = tryParse(conflict.remoteData);
+
+    const handleMerge = () => {
+        if (localJson && remoteJson) {
+            const merged = { ...remoteJson, ...localJson };
+            const mergedData = new TextEncoder().encode(JSON.stringify(merged));
+            onResolve({ mergedData });
+        }
+    };
+
+    const getDiff = (local: Uint8Array, remote: Uint8Array) => {
+        try {
+            const localStr = new TextDecoder().decode(local);
+            const remoteStr = new TextDecoder().decode(remote);
+            
+            if (conflict.path.endsWith('.json')) {
+                const localObj = JSON.parse(localStr);
+                const remoteObj = JSON.parse(remoteStr);
+                
+                // Simple semantic diff
+                const diff: string[] = [];
+                const allKeys = new Set([...Object.keys(localObj), ...Object.keys(remoteObj)]);
+                
+                allKeys.forEach(key => {
+                    if (JSON.stringify(localObj[key]) !== JSON.stringify(remoteObj[key])) {
+                        diff.push(`Field "${key}" changed:`);
+                        diff.push(`  - Local:  ${JSON.stringify(localObj[key])}`);
+                        diff.push(`  + Remote: ${JSON.stringify(remoteObj[key])}`);
+                    }
+                });
+                
+                if (diff.length === 0) return "Files are identical in content but differ in metadata.";
+                return diff.join('\n');
+            }
+            
+            if (conflict.path.endsWith('.db')) {
+                return "Binary SQLite Database. Direct diff unavailable.\nUse 'Take Remote' if you suspect others have more recent data.";
+            }
+
+            return localStr.length > 500 ? localStr.substring(0, 500) + '...' : localStr;
+        } catch (e) {
+            return 'Binary Data (Unable to preview)';
         }
     };
 
@@ -910,36 +986,38 @@ const ConflictResolutionModal = ({ conflict, onResolve }: { conflict: any, onRes
                             <code>{conflict.path}</code>
                         </div>
 
+                        <div className="card border-warning-subtle bg-warning-subtle bg-opacity-10 mb-4">
+                            <div className="card-body">
+                                <h6 className="fw-bold text-warning mb-2">Semantic Diff Preview</h6>
+                                <pre className="x-small mb-0" style={{ maxHeight: '200px', overflowY: 'auto', whiteSpace: 'pre-wrap' }}>
+                                    {getDiff(conflict.localData, conflict.remoteData)}
+                                </pre>
+                            </div>
+                        </div>
+
                         <div className="row g-3">
                             <div className="col-md-6">
                                 <div className="card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10">
                                     <div className="card-body">
-                                        <h6 className="fw-bold text-primary mb-3">Local Version</h6>
-                                        <div className="small mb-2"><strong>Size:</strong> {formatSize(conflict.localData.length)}</div>
-                                        <div className="bg-white p-2 border rounded small" style={{ height: '120px', overflowY: 'auto' }}>
-                                            <pre className="mb-0 text-dark" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-                                                {getPreview(conflict.localData)}
-                                            </pre>
-                                        </div>
+                                        <h6 className="fw-bold text-primary mb-2">Local Version</h6>
+                                        <div className="small text-muted mb-0">Size: {formatSize(conflict.localData.length)}</div>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="card h-100 border-success-subtle bg-success-subtle bg-opacity-10">
                                     <div className="card-body">
-                                        <h6 className="fw-bold text-success mb-3">Remote Version</h6>
-                                        <div className="small mb-2"><strong>Size:</strong> {formatSize(conflict.remoteData.length)}</div>
-                                        <div className="bg-white p-2 border rounded small" style={{ height: '120px', overflowY: 'auto' }}>
-                                            <pre className="mb-0 text-dark" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-                                                {getPreview(conflict.remoteData)}
-                                            </pre>
-                                        </div>
+                                        <h6 className="fw-bold text-success mb-2">Remote Version</h6>
+                                        <div className="small text-muted mb-0">Size: {formatSize(conflict.remoteData.length)}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2">
+                        {localJson && remoteJson && (
+                            <button type="button" className="btn btn-info text-white rounded-pill px-4" onClick={handleMerge}>Auto Merge</button>
+                        )}
                         <button type="button" className="btn btn-primary rounded-pill px-4" onClick={() => onResolve('local')}>Keep Local</button>
                         <button type="button" className="btn btn-success rounded-pill px-4" onClick={() => onResolve('remote')}>Take Remote</button>
                         <button type="button" className="btn btn-outline-secondary rounded-pill px-4" onClick={() => onResolve('abort')}>Skip for Now</button>
