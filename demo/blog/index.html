@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Blog - Reader</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #fff; color: #1a1a1a; font-family: 'Georgia', serif; }
+        .blog-header { padding: 4rem 0; border-bottom: 1px solid #eee; margin-bottom: 3rem; text-align: center; }
+        .blog-title { font-size: 3.5rem; font-weight: 800; letter-spacing: -1px; }
+        .post-card { margin-bottom: 4rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .post-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #000; text-decoration: none; display: block; }
+        .post-title:hover { color: #333; }
+        .post-meta { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; font-family: sans-serif; }
+        .post-content { line-height: 1.8; font-size: 1.2rem; }
+        .post-image { width: 100%; border-radius: 4px; margin-bottom: 1.5rem; }
+        .reader-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        .navbar-brand { font-family: sans-serif; font-weight: 800; }
+    </style>
+</head>
+<body>
+    <div class="reader-controls">
+        <a href="editor.html" class="btn btn-outline-dark btn-sm">Go to Editor</a>
+    </div>
+
+    <div id="root"></div>
+
+    <script src="reader-bundle.js"></script>
+</body>
+</html>
