@@ -75,6 +75,16 @@ function dev() {
     ADMIN_SECRET="admin-secret-123"
     $RC_BINARY admin user add local "$ADMIN_ACCESS" "$ADMIN_SECRET" > /dev/null || true
     
+    # Create Blog Admin Key
+    BLOG_ADMIN_ACCESS="blog-admin"
+    BLOG_ADMIN_SECRET="blog-secret-789"
+    $RC_BINARY admin user add local "$BLOG_ADMIN_ACCESS" "$BLOG_ADMIN_SECRET" > /dev/null || true
+
+    # Create Blog Reader Key
+    BLOG_READER_ACCESS="blog-reader"
+    BLOG_READER_SECRET="blog-read-only-456"
+    $RC_BINARY admin user add local "$BLOG_READER_ACCESS" "$BLOG_READER_SECRET" > /dev/null || true
+
     # Create Admin Policy (Full bucket access for development)
     cat <<EOF > admin-policy.json
 {
@@ -95,6 +105,48 @@ EOF
     $RC_BINARY admin policy create local sov-admin admin-policy.json > /dev/null || true
     $RC_BINARY admin policy attach local sov-admin --user "$ADMIN_ACCESS" > /dev/null || true
     rm admin-policy.json
+
+    # Create Blog Admin Policy
+    cat <<EOF > blog-admin-policy.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["s3:*"],
+            "Resource": [
+                "arn:aws:s3:::$BUCKET_NAME",
+                "arn:aws:s3:::$BUCKET_NAME/*"
+            ]
+        }
+    ]
+}
+EOF
+    $RC_BINARY admin policy rm local sov-blog-admin > /dev/null || true
+    $RC_BINARY admin policy create local sov-blog-admin blog-admin-policy.json > /dev/null || true
+    $RC_BINARY admin policy attach local sov-blog-admin --user "$BLOG_ADMIN_ACCESS" > /dev/null || true
+    rm blog-admin-policy.json
+
+    # Create Blog Reader Policy (Read only, NO LISTING)
+    cat <<EOF > blog-reader-policy.json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["s3:GetObject"],
+            "Resource": [
+                "arn:aws:s3:::$BUCKET_NAME/*/author-*/*",
+                "arn:aws:s3:::$BUCKET_NAME/*/global/*"
+            ]
+        }
+    ]
+}
+EOF
+    $RC_BINARY admin policy rm local sov-blog-reader > /dev/null || true
+    $RC_BINARY admin policy create local sov-blog-reader blog-reader-policy.json > /dev/null || true
+    $RC_BINARY admin policy attach local sov-blog-reader --user "$BLOG_READER_ACCESS" > /dev/null || true
+    rm blog-reader-policy.json
 
     # Create User Key
     USER_ACCESS="user-key"

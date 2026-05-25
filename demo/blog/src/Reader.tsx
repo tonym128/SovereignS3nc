@@ -8,25 +8,40 @@ import DOMPurify from 'dompurify';
 const BlogPost = ({ post, getBlob, isDetail, onSelect }: { post: Post, getBlob: (path: string, userId: string) => Promise<string>, isDetail: boolean, onSelect?: () => void }) => {
     const data = JSON.parse(post.content);
     const [processedContent, setProcessedContent] = useState('');
+    const [processedSynopsis, setProcessedSynopsis] = useState('');
     
     useEffect(() => {
         const process = async () => {
-            let content = data.content;
-            const matches = content.match(/public\/blobs\/[a-f0-9]+/g);
-            if (matches) {
-                // Remove duplicates to avoid redundant fetches
-                const uniqueMatches = Array.from(new Set(matches));
-                for (const match of uniqueMatches) {
-                    const url = await getBlob(match, post.userId);
-                    if (url) content = content.split(match).join(url);
+            const resolver = async (text: string) => {
+                let result = text;
+                const matches = text.match(/public\/blobs\/[a-f0-9]+/g);
+                if (matches) {
+                    const uniqueMatches = Array.from(new Set(matches));
+                    for (const match of uniqueMatches) {
+                        const url = await getBlob(match, post.userId);
+                        if (url) result = result.split(match).join(url);
+                    }
                 }
-            }
-            setProcessedContent(content);
+                return result;
+            };
+
+            const full = await resolver(data.content);
+            setProcessedContent(full);
+
+            const syn = data.content.length > 300 ? data.content.substring(0, 300) + '...' : data.content;
+            const synProcessed = await resolver(syn);
+            setProcessedSynopsis(synProcessed);
         };
         process();
     }, [data.content, post.userId]);
 
-    const synopsis = data.content.length > 300 ? data.content.substring(0, 300) + '...' : data.content;
+    const purifyConfig = {
+        ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'img', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'code', 'pre', 'blockquote'],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
+        // Explicitly allow blob: URIs for images
+        ADD_ATTR: ['src'],
+        ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
+    };
 
     return (
         <article className="post-card">
@@ -38,10 +53,10 @@ const BlogPost = ({ post, getBlob, isDetail, onSelect }: { post: Post, getBlob: 
             </div>
             
             {isDetail ? (
-                <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedContent) as string) }} />
+                <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedContent) as string, purifyConfig) }} />
             ) : (
                 <div>
-                    <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(synopsis) as string) }} />
+                    <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedSynopsis) as string, purifyConfig) }} />
                     <button className="btn btn-link p-0 mt-2" onClick={onSelect}>Read More →</button>
                 </div>
             )}

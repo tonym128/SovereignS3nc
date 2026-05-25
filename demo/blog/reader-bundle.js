@@ -184474,23 +184474,37 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
       var BlogPost = ({ post, getBlob, isDetail, onSelect }) => {
         const data = JSON.parse(post.content);
         const [processedContent, setProcessedContent] = (0, import_react.useState)("");
+        const [processedSynopsis, setProcessedSynopsis] = (0, import_react.useState)("");
         (0, import_react.useEffect)(() => {
           const process4 = async () => {
-            let content = data.content;
-            const matches = content.match(/public\/blobs\/[a-f0-9]+/g);
-            if (matches) {
-              const uniqueMatches = Array.from(new Set(matches));
-              for (const match of uniqueMatches) {
-                const url = await getBlob(match, post.userId);
-                if (url) content = content.split(match).join(url);
+            const resolver = async (text2) => {
+              let result = text2;
+              const matches = text2.match(/public\/blobs\/[a-f0-9]+/g);
+              if (matches) {
+                const uniqueMatches = Array.from(new Set(matches));
+                for (const match of uniqueMatches) {
+                  const url = await getBlob(match, post.userId);
+                  if (url) result = result.split(match).join(url);
+                }
               }
-            }
-            setProcessedContent(content);
+              return result;
+            };
+            const full = await resolver(data.content);
+            setProcessedContent(full);
+            const syn = data.content.length > 300 ? data.content.substring(0, 300) + "..." : data.content;
+            const synProcessed = await resolver(syn);
+            setProcessedSynopsis(synProcessed);
           };
           process4();
         }, [data.content, post.userId]);
-        const synopsis = data.content.length > 300 ? data.content.substring(0, 300) + "..." : data.content;
-        return /* @__PURE__ */ import_react.default.createElement("article", { className: "post-card" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "post-title", onClick: onSelect, style: { cursor: onSelect ? "pointer" : "default" } }, data.title), /* @__PURE__ */ import_react.default.createElement("div", { className: "post-meta" }, /* @__PURE__ */ import_react.default.createElement("span", null, "Published on ", new Date(data.publishedAt).toLocaleDateString()), /* @__PURE__ */ import_react.default.createElement("span", { className: "mx-2" }, "\u2022"), /* @__PURE__ */ import_react.default.createElement("span", null, "By ", post.userId)), isDetail ? /* @__PURE__ */ import_react.default.createElement("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g7.parse(processedContent)) } }) : /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g7.parse(synopsis)) } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link p-0 mt-2", onClick: onSelect }, "Read More \u2192")));
+        const purifyConfig = {
+          ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "p", "br", "img", "h1", "h2", "h3", "ul", "ol", "li", "code", "pre", "blockquote"],
+          ALLOWED_ATTR: ["href", "src", "alt", "title", "class"],
+          // Explicitly allow blob: URIs for images
+          ADD_ATTR: ["src"],
+          ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
+        };
+        return /* @__PURE__ */ import_react.default.createElement("article", { className: "post-card" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "post-title", onClick: onSelect, style: { cursor: onSelect ? "pointer" : "default" } }, data.title), /* @__PURE__ */ import_react.default.createElement("div", { className: "post-meta" }, /* @__PURE__ */ import_react.default.createElement("span", null, "Published on ", new Date(data.publishedAt).toLocaleDateString()), /* @__PURE__ */ import_react.default.createElement("span", { className: "mx-2" }, "\u2022"), /* @__PURE__ */ import_react.default.createElement("span", null, "By ", post.userId)), isDetail ? /* @__PURE__ */ import_react.default.createElement("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g7.parse(processedContent), purifyConfig) } }) : /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", { className: "post-content", dangerouslySetInnerHTML: { __html: purify.sanitize(g7.parse(processedSynopsis), purifyConfig) } }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-link p-0 mt-2", onClick: onSelect }, "Read More \u2192")));
       };
       var Reader = () => {
         const [config3, setConfig] = (0, import_react.useState)({

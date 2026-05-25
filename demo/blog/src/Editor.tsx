@@ -266,6 +266,12 @@ const Editor = () => {
         }
     };
 
+    const purifyConfig = {
+        ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'img', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'code', 'pre', 'blockquote'],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class'],
+        ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
+    };
+
     if (!isLoggedIn) {
         return (
             <div className="container mt-5">
@@ -318,7 +324,7 @@ const Editor = () => {
                             <div className="p-3 bg-white rounded shadow-sm h-100 markdown-preview">
                                 <h3>{title || 'Preview'}</h3>
                                 <hr />
-                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedContent) as string) }} />
+                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedContent) as string, purifyConfig) }} />
                             </div>
                         </div>
                     </div>
