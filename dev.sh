@@ -7,6 +7,8 @@ set -e
 # Configuration
 SOCIAL_CONFIG="demo/social/config.json"
 BANKY_CONFIG="demo/banky/config.json"
+BOARD_CONFIG="demo/board/config.json"
+BLOG_CONFIG="demo/blog/config.json"
 BUCKET_NAME="sovereign-demo"
 RUSTFS_BINARY="./bin/rustfs"
 RC_BINARY="./bin/rc"
@@ -130,6 +132,7 @@ EOF
                 "arn:aws:s3:::$BUCKET_NAME/*/new-user/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/evil-user/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/user-*/*",
+                "arn:aws:s3:::$BUCKET_NAME/*/author-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/alice-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/bob-*/*",
                 "arn:aws:s3:::$BUCKET_NAME/*/global/*",
@@ -190,6 +193,8 @@ EOF
 }"
     echo "$JSON_CONFIG" > "$SOCIAL_CONFIG"
     echo "$JSON_CONFIG" > "$BANKY_CONFIG"
+    echo "$JSON_CONFIG" > "$BOARD_CONFIG"
+    echo "$JSON_CONFIG" > "$BLOG_CONFIG"
 
     # Also save admin config for reference/manual testing
     echo "{
@@ -204,6 +209,8 @@ EOF
     npm run build:social
     npm run build:social-local
     npm run build:banky
+    npm run build:board
+    npm run build:blog
 
     echo "--- Starting Social Web Server (Port 8888) ---"
     nohup python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social > social_web.log 2>&1 &
@@ -223,11 +230,25 @@ EOF
     disown $BANKY_PID
     echo $BANKY_PID > .banky_web.pid
 
+    echo "--- Starting Board Web Server (Port 8885) ---"
+    nohup python3 -m http.server 8885 --bind 127.0.0.1 --directory demo/board > board_web.log 2>&1 &
+    BOARD_PID=$!
+    disown $BOARD_PID
+    echo $BOARD_PID > .board_web.pid
+
+    echo "--- Starting Blog Web Server (Port 8884) ---"
+    nohup python3 -m http.server 8884 --bind 127.0.0.1 --directory demo/blog > blog_web.log 2>&1 &
+    BLOG_PID=$!
+    disown $BLOG_PID
+    echo $BLOG_PID > .blog_web.pid
+
     echo "------------------------------------------------"
     echo "RustFS Development environment is ready!"
     echo "RustFS S3 API:           http://127.0.0.1:9000"
     echo "Social Demo App:         http://127.0.0.1:8888"
     echo "Banky Demo App:          http://127.0.0.1:8887"
+    echo "Board Demo App:          http://127.0.0.1:8885"
+    echo "Blog Demo App:           http://127.0.0.1:8884"
     echo ""
     echo "ADMIN CREDENTIALS (for manual testing):"
     echo "Access Key: $ADMIN_ACCESS"
@@ -243,6 +264,8 @@ function stop() {
     [ -f .social_web.pid ] && kill $(cat .social_web.pid) 2>/dev/null && rm .social_web.pid || true
     [ -f .social_local_web.pid ] && kill $(cat .social_local_web.pid) 2>/dev/null && rm .social_local_web.pid || true
     [ -f .banky_web.pid ] && kill $(cat .banky_web.pid) 2>/dev/null && rm .banky_web.pid || true
+    [ -f .board_web.pid ] && kill $(cat .board_web.pid) 2>/dev/null && rm .board_web.pid || true
+    [ -f .blog_web.pid ] && kill $(cat .blog_web.pid) 2>/dev/null && rm .blog_web.pid || true
     [ -f .proxy.pid ] && kill $(cat .proxy.pid) 2>/dev/null && rm .proxy.pid || true
     [ -f .rustfs.pid ] && kill $(cat .rustfs.pid) 2>/dev/null && rm .rustfs.pid || true
     
@@ -251,10 +274,12 @@ function stop() {
     pkill -9 -u $(whoami) -f "python3 -m http.server 8888" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8886" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "python3 -m http.server 8887" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "python3 -m http.server 8885" 2>/dev/null || true
+    pkill -9 -u $(whoami) -f "python3 -m http.server 8884" 2>/dev/null || true
     pkill -9 -u $(whoami) -f "node scripts/proxy.js" 2>/dev/null || true
 
     echo "Removing temporary data..."
-    rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "rustfs_startup.log" "proxy.log" ".proxy.pid" ".rustfs.pid" ".social_web.pid" ".banky_web.pid" 2>/dev/null || true
+    rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "rustfs_startup.log" "proxy.log" ".proxy.pid" ".rustfs.pid" ".social_web.pid" ".banky_web.pid" ".board_web.pid" ".blog_web.pid" 2>/dev/null || true
     rm -rf "demo-runtime" 2>/dev/null || true
 
     RESET_CONFIG="{
@@ -272,6 +297,14 @@ function stop() {
     if [ -f "$BANKY_CONFIG" ]; then
         echo "Resetting $BANKY_CONFIG..."
         echo "$RESET_CONFIG" > "$BANKY_CONFIG"
+    fi
+    if [ -f "$BOARD_CONFIG" ]; then
+        echo "Resetting $BOARD_CONFIG..."
+        echo "$RESET_CONFIG" > "$BOARD_CONFIG"
+    fi
+    if [ -f "$BLOG_CONFIG" ]; then
+        echo "Resetting $BLOG_CONFIG..."
+        echo "$RESET_CONFIG" > "$BLOG_CONFIG"
     fi
 }
 

@@ -19,6 +19,12 @@
         .reader-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; }
         .navbar-brand { font-family: sans-serif; font-weight: 800; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script>
+        window.SQL_CONFIG = {
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        };
+    </script>
 </head>
 <body>
     <div class="reader-controls">

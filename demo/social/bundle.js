@@ -59340,24 +59340,24 @@ ${toHex(hashedRequest)}`;
           id: ""
         },
         sha256: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha256",
-          id: ""
+          id: "3031300d060960864801650304020105000420"
         },
         sha224: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha224",
-          id: ""
+          id: "302d300d06096086480165030402040500041c"
         },
         sha384: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha384",
-          id: ""
+          id: "3041300d060960864801650304020205000430"
         },
         sha512: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha512",
-          id: ""
+          id: "3051300d060960864801650304020305000440"
         },
         "DSA-SHA": {
           sign: "dsa",
@@ -91342,11 +91342,16 @@ ${toHex(hashedRequest)}`;
           return tx.objectStore(name);
         }
         sanitizePath(filePath) {
-          const parts = filePath.split(/[/\\]/);
+          if (!filePath) return "";
+          const parts = filePath.replace(/\\/g, "/").split("/");
           const safeParts = [];
           for (const part of parts) {
-            if (part === ".." || part === "." || part === "") continue;
-            safeParts.push(part);
+            if (part === "." || part === "") continue;
+            if (part === "..") {
+              safeParts.pop();
+            } else {
+              safeParts.push(part);
+            }
           }
           return safeParts.join("/");
         }
@@ -96502,6 +96507,12 @@ ${toHex(hashedRequest)}`;
                 if (key) {
                   data = await this.decrypt(data, key);
                 }
+                const expectedHash = path2.split("/").pop();
+                const actualHash = this.calculateHashedContent(data);
+                if (expectedHash !== actualHash) {
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+                  throw new SyncError(`Blob corruption detected for ${path2}`);
+                }
                 await this.storage.saveFile(path2, data);
               }
             }
@@ -96866,7 +96877,13 @@ ${toHex(hashedRequest)}`;
         }
         async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
           const db = await this.getDb(date2, "group", groupId, sharedKey);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          const userId = this.db.getConfig().paths.userId;
+          const sql = `
+            INSERT OR REPLACE INTO posts 
+            (id, content, timestamp, userId, isEdited, isDeleted) 
+            VALUES (?, ?, ?, ?, 1, 0)
+        `;
+          db.run(sql, [postId, newContent, Date.now(), userId]);
           const binary = db.export();
           const dbPath = `public/groups/${groupId}/${date2}.db`;
           const encrypted = await this.db.encrypt(binary, sharedKey);
@@ -96891,14 +96908,13 @@ ${toHex(hashedRequest)}`;
           this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async getGroupPosts(groupId, date2) {
-          const posts = [];
           const deletedPostIds = /* @__PURE__ */ new Set();
           const initSqlJs = env.getSqlJs();
           if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
           const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           const groups = await this.db.getGroups();
           const group3 = groups.find((g2) => g2.id === groupId);
-          if (!group3) return posts;
+          if (!group3) return [];
           const processModeration = (db, memberId) => {
             try {
               const memberRole = group3.members.find((m2) => m2.userId === memberId)?.role;
@@ -96912,6 +96928,7 @@ ${toHex(hashedRequest)}`;
             } catch (e2) {
             }
           };
+          const postsMap = /* @__PURE__ */ new Map();
           const processPosts = async (db) => {
             try {
               const res = db.exec("SELECT * FROM posts");
@@ -96926,10 +96943,13 @@ ${toHex(hashedRequest)}`;
                   });
                   return post;
                 });
-                const filtered = batch.filter((p2) => {
-                  return !p2.isDeleted && !deletedPostIds.has(p2.id);
+                batch.forEach((p2) => {
+                  if (p2.isDeleted || deletedPostIds.has(p2.id)) return;
+                  const existing = postsMap.get(p2.id);
+                  if (!existing || p2.timestamp > existing.timestamp) {
+                    postsMap.set(p2.id, p2);
+                  }
                 });
-                posts.push(...filtered);
               }
             } catch (e2) {
             }
@@ -96961,6 +96981,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           }
+          const posts = Array.from(postsMap.values());
           posts.sort((a2, b2) => b2.timestamp - a2.timestamp);
           return posts;
         }

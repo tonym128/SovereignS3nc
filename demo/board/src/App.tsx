@@ -89,18 +89,27 @@ const App = () => {
         if (!sov || !newBoardName) return;
         setSyncing(true);
         try {
+            console.log('Creating board:', newBoardName);
+            const pubKey = sov.getConfig().publicEncryptionKey;
+            if (!pubKey) throw new Error('Identity keys not initialized');
+
             const members = [{
                 userId: config.userId,
-                publicKey: sov.getConfig().publicEncryptionKey!,
+                publicKey: pubKey,
                 role: 'owner' as const
             }];
+            
             const group = await sov.createGroup(newBoardName, members);
-            setGroups([...groups, group]);
+            console.log('Board created:', group);
+            
+            const updatedGroups = [...groups, group];
+            setGroups(updatedGroups);
             setSelectedGroup(group);
-            setShowCreateBoard(false);
             setNewBoardName('');
             await sov.sync();
+            console.log('Sync complete after board creation');
         } catch (err) {
+            console.error('Failed to create board', err);
             alert('Failed to create board: ' + (err as Error).message);
         } finally {
             setSyncing(false);
@@ -108,25 +117,38 @@ const App = () => {
     };
 
     const loadTasks = async () => {
-        if (!boardModule || !selectedGroup) return;
-        const today = new Date().toISOString().split('T')[0];
-        const posts = await boardModule.getGroupPosts(selectedGroup.id, today);
-        setTasks(posts);
+        if (!boardModule || !selectedGroup || typeof selectedGroup === 'string') return;
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            const posts = await boardModule.getGroupPosts(selectedGroup.id, today);
+            setTasks(posts);
+        } catch (err) {
+            console.error('Failed to load tasks', err);
+        }
     };
 
     const addTask = async (column: string) => {
+        if (!selectedGroup || typeof selectedGroup === 'string') {
+            alert('Please select or create a board first.');
+            return;
+        }
         const title = prompt('Task Title');
-        if (!title || !boardModule || !selectedGroup) return;
+        if (!title || !boardModule) return;
         
-        await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
-            title,
-            column,
-            priority: 'medium',
-            createdAt: Date.now()
-        }));
-        
-        await loadTasks();
-        sov?.sync();
+        try {
+            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
+                title,
+                column,
+                priority: 'medium',
+                createdAt: Date.now()
+            }));
+            
+            await loadTasks();
+            sov?.sync();
+        } catch (err) {
+            console.error('Failed to add task', err);
+            alert('Failed to add task: ' + (err as Error).message);
+        }
     };
 
     const moveTask = async (task: Post, newColumn: string) => {
@@ -199,8 +221,11 @@ const App = () => {
                 <span className="navbar-brand">SOVEREIGN BOARD</span>
                 <div className="ms-auto d-flex align-items-center gap-3">
                     <select className="form-select form-select-sm bg-dark text-white border-secondary" 
-                        value={selectedGroup?.id || ''} 
-                        onChange={e => setSelectedGroup(groups.find(g => g.id === e.target.value))}>
+                        value={typeof selectedGroup === 'string' ? selectedGroup : (selectedGroup?.id || '')} 
+                        onChange={e => {
+                            if (e.target.value === 'new') setSelectedGroup('new');
+                            else setSelectedGroup(groups.find(g => g.id === e.target.value));
+                        }}>
                         {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
                         <option value="new">+ Create New Board</option>
                     </select>

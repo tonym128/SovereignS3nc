@@ -2,31 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { SovereignS3nc } from '../../../src/SovereignS3nc';
 import { FeedModule, Post } from '../../../src/modules/Feed';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
-const BlogPost = ({ post, getBlob }: { post: Post, getBlob: (path: string, userId: string) => Promise<string> }) => {
+const BlogPost = ({ post, getBlob, isDetail, onSelect }: { post: Post, getBlob: (path: string, userId: string) => Promise<string>, isDetail: boolean, onSelect?: () => void }) => {
     const data = JSON.parse(post.content);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [processedContent, setProcessedContent] = useState('');
     
     useEffect(() => {
-        if (post.image) {
-            getBlob(post.image, post.userId).then(setImageUrl);
-        }
-    }, [post.image]);
+        const process = async () => {
+            let content = data.content;
+            const matches = content.match(/public\/blobs\/[a-f0-9]+/g);
+            if (matches) {
+                // Remove duplicates to avoid redundant fetches
+                const uniqueMatches = Array.from(new Set(matches));
+                for (const match of uniqueMatches) {
+                    const url = await getBlob(match, post.userId);
+                    if (url) content = content.split(match).join(url);
+                }
+            }
+            setProcessedContent(content);
+        };
+        process();
+    }, [data.content, post.userId]);
+
+    const synopsis = data.content.length > 300 ? data.content.substring(0, 300) + '...' : data.content;
 
     return (
         <article className="post-card">
-            <h2 className="post-title">{data.title}</h2>
+            <h2 className="post-title" onClick={onSelect} style={{ cursor: onSelect ? 'pointer' : 'default' }}>{data.title}</h2>
             <div className="post-meta">
                 <span>Published on {new Date(data.publishedAt).toLocaleDateString()}</span>
                 <span className="mx-2">•</span>
                 <span>By {post.userId}</span>
             </div>
-            {imageUrl && <img src={imageUrl} className="post-image" alt={data.title} />}
-            <div className="post-content">
-                {data.content.split('\n').map((para: string, i: number) => (
-                    <p key={i}>{para}</p>
-                ))}
-            </div>
+            
+            {isDetail ? (
+                <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(processedContent) as string) }} />
+            ) : (
+                <div>
+                    <div className="post-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(synopsis) as string) }} />
+                    <button className="btn btn-link p-0 mt-2" onClick={onSelect}>Read More →</button>
+                </div>
+            )}
         </article>
     );
 };
@@ -47,6 +65,7 @@ const Reader = () => {
     const [initialized, setInitialized] = useState(false);
     const [blobCache, setBlobCache] = useState<Record<string, string>>({});
     const [newAuthorId, setNewAuthorId] = useState(config.authorId);
+    const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
     const init = async (targetAuthor?: string) => {
         setInitialized(false);
@@ -58,18 +77,11 @@ const Reader = () => {
                     s3: {
                         endpoint: config.endpoint,
                         region: config.region,
-                        credentials: {
-                            accessKeyId: config.accessKeyId,
-                            secretAccessKey: config.secretAccessKey
-                        },
+                        credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
                         bucketName: config.bucketName,
                         forcePathStyle: true
                     },
-                    paths: { 
-                        appId: config.appId, 
-                        userId: 'reader-' + Math.random().toString(36).substring(7), 
-                        storeId: 'main' 
-                    },
+                    paths: { appId: config.appId, userId: 'reader-' + Math.random().toString(36).substring(7), storeId: 'main' },
                     password: 'public-reader-password',
                     useWorker: true,
                     workerUrl: 'sync-worker.js'
@@ -94,6 +106,7 @@ const Reader = () => {
     };
 
     const changeAuthor = () => {
+        setSelectedPostId(null);
         init(newAuthorId);
     };
 
@@ -122,6 +135,8 @@ const Reader = () => {
         );
     }
 
+    const selectedPost = posts.find(p => p.id === selectedPostId);
+
     return (
         <div className="container">
             <header className="blog-header">
@@ -129,18 +144,27 @@ const Reader = () => {
                     <input className="form-control form-control-sm w-auto" value={newAuthorId} onChange={e => setNewAuthorId(e.target.value)} placeholder="Author ID" />
                     <button className="btn btn-sm btn-dark" onClick={changeAuthor}>View Blog</button>
                 </div>
-                <h1 className="blog-title">Sovereign Thoughts</h1>
+                <h1 className="blog-title" style={{ cursor: 'pointer' }} onClick={() => setSelectedPostId(null)}>Sovereign Thoughts</h1>
                 <p className="lead text-muted">A decentralized blog powered by SovereignS3nc</p>
             </header>
 
             <main>
-                {posts.map(post => (
-                    <BlogPost key={post.id} post={post} getBlob={getBlob} />
-                ))}
+                {selectedPost ? (
+                    <div>
+                        <button className="btn btn-sm btn-outline-dark mb-4" onClick={() => setSelectedPostId(null)}>← Back to List</button>
+                        <BlogPost post={selectedPost} getBlob={getBlob} isDetail={true} />
+                    </div>
+                ) : (
+                    <div>
+                        {posts.map(post => (
+                            <BlogPost key={post.id} post={post} getBlob={getBlob} isDetail={false} onSelect={() => setSelectedPostId(post.id)} />
+                        ))}
 
-                {posts.length === 0 && (
-                    <div className="text-center text-muted mt-5">
-                        <p>No posts found yet. The author hasn't published anything.</p>
+                        {posts.length === 0 && (
+                            <div className="text-center text-muted mt-5">
+                                <p>No posts found yet. The author hasn't published anything.</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </main>

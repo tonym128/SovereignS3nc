@@ -155015,11 +155015,16 @@ ${toHex(hashedRequest)}`;
           return tx.objectStore(name2);
         }
         sanitizePath(filePath) {
-          const parts = filePath.split(/[/\\]/);
+          if (!filePath) return "";
+          const parts = filePath.replace(/\\/g, "/").split("/");
           const safeParts = [];
           for (const part of parts) {
-            if (part === ".." || part === "." || part === "") continue;
-            safeParts.push(part);
+            if (part === "." || part === "") continue;
+            if (part === "..") {
+              safeParts.pop();
+            } else {
+              safeParts.push(part);
+            }
           }
           return safeParts.join("/");
         }
@@ -181601,6 +181606,12 @@ ${toHex(hashedRequest)}`;
                 if (key) {
                   data = await this.decrypt(data, key);
                 }
+                const expectedHash = path2.split("/").pop();
+                const actualHash = this.calculateHashedContent(data);
+                if (expectedHash !== actualHash) {
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+                  throw new SyncError(`Blob corruption detected for ${path2}`);
+                }
                 await this.storage.saveFile(path2, data);
               }
             }
@@ -181969,7 +181980,13 @@ ${toHex(hashedRequest)}`;
         }
         async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
           const db = await this.getDb(date2, "group", groupId, sharedKey);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          const userId = this.db.getConfig().paths.userId;
+          const sql = `
+            INSERT OR REPLACE INTO posts 
+            (id, content, timestamp, userId, isEdited, isDeleted) 
+            VALUES (?, ?, ?, ?, 1, 0)
+        `;
+          db.run(sql, [postId, newContent, Date.now(), userId]);
           const binary = db.export();
           const dbPath = `public/groups/${groupId}/${date2}.db`;
           const encrypted = await this.db.encrypt(binary, sharedKey);
@@ -181994,14 +182011,13 @@ ${toHex(hashedRequest)}`;
           this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async getGroupPosts(groupId, date2) {
-          const posts = [];
           const deletedPostIds = /* @__PURE__ */ new Set();
           const initSqlJs = env3.getSqlJs();
           if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
           const sqliteInstance = await initSqlJs(env3.getSqlConfig() || {});
           const groups = await this.db.getGroups();
           const group3 = groups.find((g7) => g7.id === groupId);
-          if (!group3) return posts;
+          if (!group3) return [];
           const processModeration = (db, memberId) => {
             try {
               const memberRole = group3.members.find((m7) => m7.userId === memberId)?.role;
@@ -182015,6 +182031,7 @@ ${toHex(hashedRequest)}`;
             } catch (e10) {
             }
           };
+          const postsMap = /* @__PURE__ */ new Map();
           const processPosts = async (db) => {
             try {
               const res = db.exec("SELECT * FROM posts");
@@ -182029,10 +182046,13 @@ ${toHex(hashedRequest)}`;
                   });
                   return post;
                 });
-                const filtered = batch.filter((p7) => {
-                  return !p7.isDeleted && !deletedPostIds.has(p7.id);
+                batch.forEach((p7) => {
+                  if (p7.isDeleted || deletedPostIds.has(p7.id)) return;
+                  const existing = postsMap.get(p7.id);
+                  if (!existing || p7.timestamp > existing.timestamp) {
+                    postsMap.set(p7.id, p7);
+                  }
                 });
-                posts.push(...filtered);
               }
             } catch (e10) {
             }
@@ -182064,6 +182084,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           }
+          const posts = Array.from(postsMap.values());
           posts.sort((a7, b7) => b7.timestamp - a7.timestamp);
           return posts;
         }
@@ -182374,40 +182395,59 @@ ${toHex(hashedRequest)}`;
           if (!sov || !newBoardName) return;
           setSyncing(true);
           try {
+            console.log("Creating board:", newBoardName);
+            const pubKey = sov.getConfig().publicEncryptionKey;
+            if (!pubKey) throw new Error("Identity keys not initialized");
             const members = [{
               userId: config3.userId,
-              publicKey: sov.getConfig().publicEncryptionKey,
+              publicKey: pubKey,
               role: "owner"
             }];
             const group3 = await sov.createGroup(newBoardName, members);
-            setGroups([...groups, group3]);
+            console.log("Board created:", group3);
+            const updatedGroups = [...groups, group3];
+            setGroups(updatedGroups);
             setSelectedGroup(group3);
-            setShowCreateBoard(false);
             setNewBoardName("");
             await sov.sync();
+            console.log("Sync complete after board creation");
           } catch (err) {
+            console.error("Failed to create board", err);
             alert("Failed to create board: " + err.message);
           } finally {
             setSyncing(false);
           }
         };
         const loadTasks = async () => {
-          if (!boardModule || !selectedGroup) return;
-          const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const posts = await boardModule.getGroupPosts(selectedGroup.id, today);
-          setTasks(posts);
+          if (!boardModule || !selectedGroup || typeof selectedGroup === "string") return;
+          try {
+            const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+            const posts = await boardModule.getGroupPosts(selectedGroup.id, today);
+            setTasks(posts);
+          } catch (err) {
+            console.error("Failed to load tasks", err);
+          }
         };
         const addTask = async (column) => {
+          if (!selectedGroup || typeof selectedGroup === "string") {
+            alert("Please select or create a board first.");
+            return;
+          }
           const title3 = prompt("Task Title");
-          if (!title3 || !boardModule || !selectedGroup) return;
-          await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
-            title: title3,
-            column,
-            priority: "medium",
-            createdAt: Date.now()
-          }));
-          await loadTasks();
-          sov?.sync();
+          if (!title3 || !boardModule) return;
+          try {
+            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
+              title: title3,
+              column,
+              priority: "medium",
+              createdAt: Date.now()
+            }));
+            await loadTasks();
+            sov?.sync();
+          } catch (err) {
+            console.error("Failed to add task", err);
+            alert("Failed to add task: " + err.message);
+          }
         };
         const moveTask = async (task, newColumn) => {
           if (!boardModule || !selectedGroup) return;
@@ -182444,8 +182484,11 @@ ${toHex(hashedRequest)}`;
           "select",
           {
             className: "form-select form-select-sm bg-dark text-white border-secondary",
-            value: selectedGroup?.id || "",
-            onChange: (e10) => setSelectedGroup(groups.find((g7) => g7.id === e10.target.value))
+            value: typeof selectedGroup === "string" ? selectedGroup : selectedGroup?.id || "",
+            onChange: (e10) => {
+              if (e10.target.value === "new") setSelectedGroup("new");
+              else setSelectedGroup(groups.find((g7) => g7.id === e10.target.value));
+            }
           },
           groups.map((g7) => /* @__PURE__ */ import_react.default.createElement("option", { key: g7.id, value: g7.id }, g7.name)),
           /* @__PURE__ */ import_react.default.createElement("option", { value: "new" }, "+ Create New Board")

@@ -37851,24 +37851,24 @@ ${toHex(hashedRequest)}`;
           id: ""
         },
         sha256: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha256",
-          id: ""
+          id: "3031300d060960864801650304020105000420"
         },
         sha224: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha224",
-          id: ""
+          id: "302d300d06096086480165030402040500041c"
         },
         sha384: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha384",
-          id: ""
+          id: "3041300d060960864801650304020205000430"
         },
         sha512: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha512",
-          id: ""
+          id: "3051300d060960864801650304020305000440"
         },
         "DSA-SHA": {
           sign: "dsa",
@@ -69853,11 +69853,16 @@ ${toHex(hashedRequest)}`;
           return tx.objectStore(name);
         }
         sanitizePath(filePath) {
-          const parts = filePath.split(/[/\\]/);
+          if (!filePath) return "";
+          const parts = filePath.replace(/\\/g, "/").split("/");
           const safeParts = [];
           for (const part of parts) {
-            if (part === ".." || part === "." || part === "") continue;
-            safeParts.push(part);
+            if (part === "." || part === "") continue;
+            if (part === "..") {
+              safeParts.pop();
+            } else {
+              safeParts.push(part);
+            }
           }
           return safeParts.join("/");
         }
@@ -75012,6 +75017,12 @@ ${toHex(hashedRequest)}`;
                 data = result2.data;
                 if (key) {
                   data = await this.decrypt(data, key);
+                }
+                const expectedHash = path2.split("/").pop();
+                const actualHash = this.calculateHashedContent(data);
+                if (expectedHash !== actualHash) {
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+                  throw new SyncError(`Blob corruption detected for ${path2}`);
                 }
                 await this.storage.saveFile(path2, data);
               }

@@ -16,7 +16,16 @@
         .navbar { background-color: #fff; border-bottom: 1px solid #eee; }
         .navbar-brand { font-weight: 800; }
         .image-preview { max-width: 100%; border-radius: 8px; margin-top: 1rem; }
+        .markdown-preview { font-family: 'Georgia', serif; line-height: 1.6; }
+        .markdown-preview img { max-width: 100%; border-radius: 4px; }
+        .max-width-800 { max-width: 800px; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script>
+        window.SQL_CONFIG = {
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+        };
+    </script>
 </head>
 <body>
     <div id="root"></div>

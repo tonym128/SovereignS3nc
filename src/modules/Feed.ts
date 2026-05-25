@@ -315,7 +315,17 @@ export class FeedModule {
 
     async editGroupPost(groupId: string, sharedKey: string, postId: string, date: string, newContent: string) {
         const db = await this.getDb(date, 'group', groupId, sharedKey);
-        db.run('UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?', [newContent, Date.now(), postId]);
+        const userId = this.db.getConfig().paths.userId;
+        
+        // Use INSERT OR REPLACE to support collaborative editing of posts created by others
+        // We need all columns for the REPLACE to work if it hits the PK
+        const sql = `
+            INSERT OR REPLACE INTO posts 
+            (id, content, timestamp, userId, isEdited, isDeleted) 
+            VALUES (?, ?, ?, ?, 1, 0)
+        `;
+        db.run(sql, [postId, newContent, Date.now(), userId]);
+        
         const binary = db.export();
         const dbPath = `public/groups/${groupId}/${date}.db`;
         const encrypted = await this.db.encrypt(binary, sharedKey);
@@ -345,7 +355,6 @@ export class FeedModule {
     }
 
     async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
-        const posts: Post[] = [];
         const deletedPostIds = new Set<string>();
         
         // Use env to get sql.js
@@ -355,7 +364,7 @@ export class FeedModule {
 
         const groups = await this.db.getGroups();
         const group = groups.find(g => g.id === groupId);
-        if (!group) return posts;
+        if (!group) return [];
 
         const processModeration = (db: any, memberId: string) => {
             try {
@@ -370,6 +379,8 @@ export class FeedModule {
                 }
             } catch(e) {}
         };
+
+        const postsMap = new Map<string, Post>();
 
         const processPosts = async (db: any) => {
             try {
@@ -387,11 +398,14 @@ export class FeedModule {
                             return post as Post;
                         });
                     
-                    const filtered = batch.filter((p: Post) => {
-                        return !p.isDeleted && !deletedPostIds.has(p.id);
+                    batch.forEach((p: Post) => {
+                        if (p.isDeleted || deletedPostIds.has(p.id)) return;
+                        
+                        const existing = postsMap.get(p.id);
+                        if (!existing || p.timestamp > existing.timestamp) {
+                            postsMap.set(p.id, p);
+                        }
                     });
-                    
-                    posts.push(...filtered);
                 }
             } catch (e: any) {}
         };
@@ -426,6 +440,7 @@ export class FeedModule {
             }
         }
 
+        const posts = Array.from(postsMap.values());
         posts.sort((a, b) => b.timestamp - a.timestamp);
         return posts;
     }

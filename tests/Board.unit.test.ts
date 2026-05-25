@@ -199,22 +199,69 @@ describe('Sovereign Board (Kanban) Functionality Tests', () => {
         expect(tasksForAlice.find(t => JSON.parse(t.content).title === 'Bob Task')).toBeDefined();
     });
 
-    test('should support blog reader functionality (public posts)', async () => {
+    test('should resolve conflicts when two users move the same task (LWW)', async () => {
+        const groupName = 'Conflict Board';
+        
+        // Setup Alice and Bob
+        const configBob = { paths: { appId, userId: 'bob', storeId: 'main' }, password: 'bobpassword', debug: false };
+        const remoteFactoryBob = (uid: string) => getPrefixedRemote(uid);
+        const sovBob = await SovereignS3nc.create(configBob, getPrefixedRemote('bob', true), remoteFactoryBob);
+        const boardBob = new FeedModule(sovBob);
+
+        const members = [
+            { userId: 'alice', publicKey: sov.getConfig().publicEncryptionKey!, role: 'owner' as const },
+            { userId: 'bob', publicKey: sovBob.getConfig().publicEncryptionKey!, role: 'member' as const }
+        ];
+        const group = await sov.createGroup(groupName, members);
         const today = new Date().toISOString().split('T')[0];
         
-        // Alice (Author) posts a blog entry
-        const blogPost = JSON.stringify({ title: 'My First Blog', content: 'Hello World', publishedAt: Date.now() });
-        await board.post(blogPost, true); // Public post
+        // Alice adds a task and syncs
+        await board.postToGroup(group.id, group.sharedKey, JSON.stringify({ title: 'Race Condition', column: 'Todo' }));
+        await sov.sync();
+        
+        // Bob joins and syncs
+        await sovBob.joinGroup(group);
+        await sovBob.respondToGroup(group.id, 'joined');
+        await sovBob.follow('alice');
+        await sovBob.sync();
+        
+        // Alice MUST also follow Bob to sync his group data
+        await sov.follow('bob');
+        
+        // Alice moves to "In Progress"
+        let aliceTasks = await board.getGroupPosts(group.id, today);
+        const taskId = aliceTasks[0].id;
+        await board.editGroupPost(group.id, group.sharedKey, taskId, today, JSON.stringify({ title: 'Race Condition', column: 'In Progress' }));
+        
+        // Wait a bit to ensure Bob's timestamp is later
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Bob (who hasn't synced Alice's move yet) moves to "Done"
+        await boardBob.editGroupPost(group.id, group.sharedKey, taskId, today, JSON.stringify({ title: 'Race Condition', column: 'Done' }));
+
+        // Bob MUST sync first to upload his change
+        await sovBob.sync();
+        
+        // Alice syncs to pull Bob's change
+        await sov.sync();
+        
+        const finalTasks = await board.getGroupPosts(group.id, today);
+        expect(finalTasks.length).toBe(1);
+        // By default, the last write (Bob's) should win in the SQLite chunk export/import pattern
+        expect(JSON.parse(finalTasks[0].content).column).toBe('Done');
+    });
+
+    test('should NOT allow followers to see private blog posts', async () => {
+        const today = new Date().toISOString().split('T')[0];
+        
+        // Alice (Author) posts one public and one private entry
+        await board.post(JSON.stringify({ title: 'Public News' }), true);
+        await board.post(JSON.stringify({ title: 'Private Diary' }), false);
         await sov.sync();
         
         // Bob (Reader) follows Alice
-        const configBob = {
-            paths: { appId, userId: 'bob-reader', storeId: 'main' },
-            password: 'readerpassword',
-            debug: false
-        };
-        const remoteFactoryBob = (uid: string) => getPrefixedRemote(uid);
-        const sovBob = await SovereignS3nc.create(configBob, getPrefixedRemote('bob-reader', true), remoteFactoryBob);
+        const configBob = { paths: { appId, userId: 'bob-reader', storeId: 'main' }, password: 'readerpassword', debug: false };
+        const sovBob = await SovereignS3nc.create(configBob, getPrefixedRemote('bob-reader', true), (uid: string) => getPrefixedRemote(uid));
         const boardBob = new FeedModule(sovBob);
         
         await sovBob.follow('alice');
@@ -222,7 +269,9 @@ describe('Sovereign Board (Kanban) Functionality Tests', () => {
         
         // Bob reads Alice's blog
         const alicePosts = await boardBob.getPosts('alice/' + today, 'followed');
+        
         expect(alicePosts.length).toBe(1);
-        expect(JSON.parse(alicePosts[0].content).title).toBe('My First Blog');
+        expect(JSON.parse(alicePosts[0].content).title).toBe('Public News');
+        expect(alicePosts.find(p => p.content.includes('Private Diary'))).toBeUndefined();
     });
 });

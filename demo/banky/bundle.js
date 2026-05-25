@@ -59283,24 +59283,24 @@ ${toHex(hashedRequest)}`;
           id: ""
         },
         sha256: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha256",
-          id: ""
+          id: "3031300d060960864801650304020105000420"
         },
         sha224: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha224",
-          id: ""
+          id: "302d300d06096086480165030402040500041c"
         },
         sha384: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha384",
-          id: ""
+          id: "3041300d060960864801650304020205000430"
         },
         sha512: {
-          sign: "ecdsa",
+          sign: "ecdsa/rsa",
           hash: "sha512",
-          id: ""
+          id: "3051300d060960864801650304020305000440"
         },
         "DSA-SHA": {
           sign: "dsa",
@@ -91285,11 +91285,16 @@ ${toHex(hashedRequest)}`;
           return tx.objectStore(name);
         }
         sanitizePath(filePath) {
-          const parts = filePath.split(/[/\\]/);
+          if (!filePath) return "";
+          const parts = filePath.replace(/\\/g, "/").split("/");
           const safeParts = [];
           for (const part of parts) {
-            if (part === ".." || part === "." || part === "") continue;
-            safeParts.push(part);
+            if (part === "." || part === "") continue;
+            if (part === "..") {
+              safeParts.pop();
+            } else {
+              safeParts.push(part);
+            }
           }
           return safeParts.join("/");
         }
@@ -96445,6 +96450,12 @@ ${toHex(hashedRequest)}`;
                 if (key) {
                   data = await this.decrypt(data, key);
                 }
+                const expectedHash = path3.split("/").pop();
+                const actualHash = this.calculateHashedContent(data);
+                if (expectedHash !== actualHash) {
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path3}. Expected ${expectedHash}, got ${actualHash}`);
+                  throw new SyncError(`Blob corruption detected for ${path3}`);
+                }
                 await this.storage.saveFile(path3, data);
               }
             }
@@ -96784,7 +96795,6 @@ ${toHex(hashedRequest)}`;
     "src/modules/Messaging.ts"() {
       "use strict";
       import_polyfills693 = __toESM(require_polyfills());
-      init_SovereignS3nc();
       init_Logger();
       init_Environment();
       init_Errors();
@@ -96806,8 +96816,15 @@ ${toHex(hashedRequest)}`;
                         recipientId TEXT,
                         image TEXT,
                         isEdited INTEGER DEFAULT 0,
-                        isDeleted INTEGER DEFAULT 0
+                        isDeleted INTEGER DEFAULT 0,
+                        status TEXT DEFAULT 'sent'
                     `
+              }
+            ],
+            migrations: [
+              {
+                version: 2,
+                sql: ['ALTER TABLE messages ADD COLUMN status TEXT DEFAULT "sent";']
               }
             ]
           });
@@ -96823,7 +96840,7 @@ ${toHex(hashedRequest)}`;
             db = new sqliteInstance.Database(data || void 0);
           } catch (e2) {
             if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
-              Logger.error("Messaging", `Database corruption detected at ${path3}. Deleting corrupted file.`);
+              Logger.error("Messaging", `Database corruption detected at ${path3}. Deleting.`);
               await this.db.getStorage().deleteFile(path3);
               db = new sqliteInstance.Database();
             } else {
@@ -96831,6 +96848,21 @@ ${toHex(hashedRequest)}`;
             }
           }
           this.db.applyModuleSchema(db, this.MODULE_NAME);
+          return db;
+        }
+        async getReceiptsDb(userId, date2, type) {
+          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date2}.db`, type);
+          const data = await this.db.getStorage().getFile(path3);
+          const initSqlJs = env.getSqlJs();
+          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
+          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+          let db;
+          try {
+            db = new sqliteInstance.Database(data || void 0);
+          } catch (e2) {
+            db = new sqliteInstance.Database();
+          }
+          db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
           return db;
         }
         async sendDirectMessage(recipientId, content, image) {
@@ -96845,14 +96877,14 @@ ${toHex(hashedRequest)}`;
           if (image) {
             imagePath = await this.db.saveBlob(image, true);
           }
-          const message = { id, content, timestamp, senderId, recipientId, image: imagePath || void 0, isEdited: false, isDeleted: false };
+          const message = { id, content, timestamp, senderId, recipientId, image: imagePath || void 0, isEdited: false, isDeleted: false, status: "sent" };
           await this._saveAndSendDM(recipientId, message, date2);
         }
         async _saveAndSendDM(recipientId, message, date2) {
           const outboxDb = await this.getMessageDb(date2, "outbox");
           outboxDb.run(
-            "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0]
+            "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || "sent"]
           );
           const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
           await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
@@ -96866,13 +96898,7 @@ ${toHex(hashedRequest)}`;
           try {
             publicDb = new sqliteInstance.Database(publicDmData || void 0);
           } catch (e2) {
-            if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
-              Logger.error("Messaging", `Transport database corruption detected at ${publicDmPath}. Deleting.`);
-              await this.db.getStorage().deleteFile(publicDmPath);
-              publicDb = new sqliteInstance.Database();
-            } else {
-              throw e2;
-            }
+            publicDb = new sqliteInstance.Database();
           }
           publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
           const registry2 = await this.db.getPublicRegistry();
@@ -96908,9 +96934,10 @@ ${toHex(hashedRequest)}`;
             timestamp,
             senderId,
             recipientId,
-            image: imagePath,
+            image: imagePath || void 0,
             isEdited: true,
-            isDeleted: false
+            isDeleted: false,
+            status: "sent"
           };
           await this._saveAndSendDM(recipientId, message, date2);
         }
@@ -96925,35 +96952,111 @@ ${toHex(hashedRequest)}`;
             recipientId,
             image: void 0,
             isEdited: false,
-            isDeleted: true
+            isDeleted: true,
+            status: "sent"
           };
           await this._saveAndSendDM(recipientId, message, date2);
+        }
+        async markAsRead(senderId, messageId, date2) {
+          const db = await this.getReceiptsDb(senderId, date2, "public");
+          db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "read", Date.now()]);
+          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+          await this.db.getStorage().saveFile(path3, db.export());
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+        }
+        async markBatchAsRead(senderId, messages) {
+          const dates = [...new Set(messages.map((m2) => m2.date))];
+          for (const date2 of dates) {
+            const db = await this.getReceiptsDb(senderId, date2, "public");
+            const msgsForDate = messages.filter((m2) => m2.date === date2);
+            for (const m2 of msgsForDate) {
+              db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "read", Date.now()]);
+            }
+            const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+            await this.db.getStorage().saveFile(path3, db.export());
+            db.close();
+            this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+          }
+        }
+        async markAsDelivered(senderId, messageId, date2) {
+          const db = await this.getReceiptsDb(senderId, date2, "public");
+          const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [messageId]);
+          if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read") {
+            db.close();
+            return;
+          }
+          db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "delivered", Date.now()]);
+          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+          await this.db.getStorage().saveFile(path3, db.export());
+          db.close();
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+        }
+        async markBatchAsDelivered(senderId, messages) {
+          const dates = [...new Set(messages.map((m2) => m2.date))];
+          for (const date2 of dates) {
+            const db = await this.getReceiptsDb(senderId, date2, "public");
+            const msgsForDate = messages.filter((m2) => m2.date === date2);
+            let changed = false;
+            for (const m2 of msgsForDate) {
+              const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [m2.id]);
+              if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read")) {
+                db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "delivered", Date.now()]);
+                changed = true;
+              }
+            }
+            if (changed) {
+              const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+              await this.db.getStorage().saveFile(path3, db.export());
+              this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+            }
+            db.close();
+          }
         }
         async getInboxMessages(days = 5) {
           const messages = [];
           const following = await this.db.getFollowing();
-          const usersToCheck = [...following];
-          const config = this.db.getConfig();
-          if (config.adminPublicKey && !usersToCheck.find((u2) => u2.userId === "admin")) {
-            const startDate = /* @__PURE__ */ new Date();
-            startDate.setUTCDate(startDate.getUTCDate() - 7);
-            usersToCheck.push({
-              userId: "admin",
-              publicKey: config.adminPublicKey,
-              lastSync: SovereignS3nc.getDateStr(startDate)
-            });
-          }
+          const myId = this.db.getConfig().paths.userId;
+          const initSqlJs = env.getSqlJs();
+          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
+          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           const dates = [];
           for (let i2 = 0; i2 < days; i2++) {
             const d2 = /* @__PURE__ */ new Date();
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(d2.toISOString().split("T")[0]);
           }
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const myId = this.db.getConfig().paths.userId;
-          for (const user of usersToCheck) {
+          for (const user of following) {
+            for (const date2 of dates) {
+              const receiptPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/receipts/${myId}/${date2}.db`, "followed");
+              const receiptData = await this.db.getStorage().getFile(receiptPath);
+              if (receiptData) {
+                const rdb = new sqliteInstance.Database(receiptData);
+                try {
+                  const res = rdb.exec("SELECT messageId, status FROM receipts");
+                  if (res && res.length > 0) {
+                    const outboxDb = await this.getMessageDb(date2, "outbox");
+                    for (const row of res[0].values) {
+                      const [mid, status] = row;
+                      outboxDb.run(`
+                                    UPDATE messages SET status = ? 
+                                    WHERE id = ? AND (
+                                        (status = 'sent' AND ? IN ('delivered', 'read')) OR
+                                        (status = 'delivered' AND ? = 'read')
+                                    )
+                                `, [status, mid, status, status]);
+                    }
+                    const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
+                    await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
+                    outboxDb.close();
+                  }
+                } catch (e2) {
+                }
+                rdb.close();
+              }
+            }
+          }
+          for (const user of following) {
             const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
             for (const date2 of dates) {
               const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date2}.db`, "followed");
@@ -96963,6 +97066,7 @@ ${toHex(hashedRequest)}`;
                 try {
                   const res = db.exec("SELECT encrypted_data FROM messages");
                   if (res && res.length > 0) {
+                    const newMsgsForUser = [];
                     for (const row of res[0].values) {
                       try {
                         const decrypted = await this.db.decrypt(row[0], sharedSecret);
@@ -96971,9 +97075,16 @@ ${toHex(hashedRequest)}`;
                           if (typeof parsed.isEdited === "number") parsed.isEdited = !!parsed.isEdited;
                           if (typeof parsed.isDeleted === "number") parsed.isDeleted = !!parsed.isDeleted;
                           messages.push(parsed);
+                          newMsgsForUser.push(parsed);
                         }
                       } catch (e2) {
                       }
+                    }
+                    if (newMsgsForUser.length > 0) {
+                      await this.markBatchAsDelivered(user.userId, newMsgsForUser.map((m2) => ({
+                        id: m2.id,
+                        date: date2
+                      })));
                     }
                   }
                 } catch (e2) {
