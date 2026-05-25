@@ -182381,8 +182381,11 @@ ${toHex(hashedRequest)}`;
             setLastSync(/* @__PURE__ */ new Date());
             const myGroups = await instance.getGroups();
             setGroups(myGroups);
-            if (myGroups.length > 0) {
+            if (myGroups && myGroups.length > 0) {
               setSelectedGroup(myGroups[0]);
+            } else {
+              setSelectedGroup(null);
+              setShowCreateBoard(true);
             }
           } catch (err) {
             console.error("Login failed", err);
@@ -182409,6 +182412,7 @@ ${toHex(hashedRequest)}`;
             setGroups(updatedGroups);
             setSelectedGroup(group3);
             setNewBoardName("");
+            setShowCreateBoard(false);
             await sov.sync();
             console.log("Sync complete after board creation");
           } catch (err) {
@@ -182480,19 +182484,16 @@ ${toHex(hashedRequest)}`;
         if (!isLoggedIn) {
           return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react.default.createElement("h3", { className: "card-title mb-4" }, "Sovereign Board Login"), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "S3 Endpoint"), /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control", value: config3.endpoint, onChange: (e10) => setConfig({ ...config3, endpoint: e10.target.value }) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "User ID"), /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control", value: config3.userId, onChange: (e10) => setConfig({ ...config3, userId: e10.target.value }) })), /* @__PURE__ */ import_react.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "form-label" }, "Password"), /* @__PURE__ */ import_react.default.createElement("input", { type: "password", className: "form-control", value: config3.password, onChange: (e10) => setConfig({ ...config3, password: e10.target.value }) })), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary w-100", onClick: login, disabled: syncing }, syncing ? "Connecting..." : "Join Workspace"))))));
         }
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column", style: { height: "100vh" } }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-dark bg-dark px-4" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "navbar-brand" }, "SOVEREIGN BOARD"), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-auto d-flex align-items-center gap-3" }, /* @__PURE__ */ import_react.default.createElement(
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column", style: { height: "100vh" } }, /* @__PURE__ */ import_react.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-dark bg-dark px-4" }, /* @__PURE__ */ import_react.default.createElement("span", { className: "navbar-brand" }, "SOVEREIGN BOARD"), /* @__PURE__ */ import_react.default.createElement("div", { className: "ms-auto d-flex align-items-center gap-3" }, groups.length > 0 && /* @__PURE__ */ import_react.default.createElement(
           "select",
           {
             className: "form-select form-select-sm bg-dark text-white border-secondary",
-            value: typeof selectedGroup === "string" ? selectedGroup : selectedGroup?.id || "",
-            onChange: (e10) => {
-              if (e10.target.value === "new") setSelectedGroup("new");
-              else setSelectedGroup(groups.find((g7) => g7.id === e10.target.value));
-            }
+            value: selectedGroup?.id || "",
+            onChange: (e10) => setSelectedGroup(groups.find((g7) => g7.id === e10.target.value))
           },
-          groups.map((g7) => /* @__PURE__ */ import_react.default.createElement("option", { key: g7.id, value: g7.id }, g7.name)),
-          /* @__PURE__ */ import_react.default.createElement("option", { value: "new" }, "+ Create New Board")
-        ), selectedGroup === "new" && /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control form-control-sm", placeholder: "Board Name", value: newBoardName, onChange: (e10) => setNewBoardName(e10.target.value) }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: createBoard }, "Create")), /* @__PURE__ */ import_react.default.createElement("div", { className: "sync-indicator text-secondary" }, syncing ? /* @__PURE__ */ import_react.default.createElement("span", { className: "spinner-border spinner-border-sm me-1" }) : /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-check me-1" }), lastSync ? `Synced ${lastSync.toLocaleTimeString()}` : "Never synced"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-light btn-sm", onClick: () => sov?.sync().then(loadTasks) }, "Sync Now"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "kanban-board" }, COLUMNS.map((col) => /* @__PURE__ */ import_react.default.createElement("div", { key: col, className: "kanban-column", onDragOver: (e10) => e10.preventDefault(), onDrop: (e10) => {
+          /* @__PURE__ */ import_react.default.createElement("option", { value: "", disabled: true }, "Select Board..."),
+          groups.map((g7) => /* @__PURE__ */ import_react.default.createElement("option", { key: g7.id, value: g7.id }, g7.name))
+        ), showCreateBoard ? /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react.default.createElement("input", { type: "text", className: "form-control form-control-sm", placeholder: "Board Name", value: newBoardName, onChange: (e10) => setNewBoardName(e10.target.value), autoFocus: true }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-success", onClick: createBoard }, "Create"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-secondary text-white", onClick: () => setShowCreateBoard(false) }, "Cancel")) : /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-primary", onClick: () => setShowCreateBoard(true) }, /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-plus-lg me-1" }), " New Board"), /* @__PURE__ */ import_react.default.createElement("div", { className: "sync-indicator text-secondary d-none d-md-block" }, syncing ? /* @__PURE__ */ import_react.default.createElement("span", { className: "spinner-border spinner-border-sm me-1" }) : /* @__PURE__ */ import_react.default.createElement("i", { className: "bi bi-cloud-check me-1" }), lastSync ? `Synced ${lastSync.toLocaleTimeString()}` : "Never synced"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-outline-light btn-sm", onClick: () => sov?.sync().then(loadTasks) }, "Sync Now"))), /* @__PURE__ */ import_react.default.createElement("div", { className: "kanban-board" }, COLUMNS.map((col) => /* @__PURE__ */ import_react.default.createElement("div", { key: col, className: "kanban-column", onDragOver: (e10) => e10.preventDefault(), onDrop: (e10) => {
           const taskData = e10.dataTransfer.getData("task");
           if (taskData) moveTask(JSON.parse(taskData), col);
         } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "kanban-column-header" }, /* @__PURE__ */ import_react.default.createElement("span", null, col.toUpperCase()), /* @__PURE__ */ import_react.default.createElement("span", { className: "badge bg-secondary rounded-pill" }, tasks.filter((t14) => JSON.parse(t14.content).column === col).length)), /* @__PURE__ */ import_react.default.createElement("div", { className: "kanban-tasks" }, tasks.filter((t14) => JSON.parse(t14.content).column === col).map((task) => {

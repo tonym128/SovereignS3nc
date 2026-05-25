@@ -68,35 +68,49 @@ const Reader = () => {
     const [config, setConfig] = useState({
         endpoint: 'http://127.0.0.1:9000',
         region: 'rustfs',
-        accessKeyId: 'user-key',
-        secretAccessKey: 'user-secret-123',
+        accessKeyId: '',
+        secretAccessKey: '',
         bucketName: 'sovereign-demo',
         appId: 'sov-blog',
-        authorId: 'author-1'
+        authorId: ''
     });
 
     const [sov, setSov] = useState<SovereignS3nc | null>(null);
     const [posts, setPosts] = useState<Post[]>([]);
     const [initialized, setInitialized] = useState(false);
     const [blobCache, setBlobCache] = useState<Record<string, string>>({});
-    const [newAuthorId, setNewAuthorId] = useState(config.authorId);
+    const [newAuthorId, setNewAuthorId] = useState('author-1');
     const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+    const [authors, setAuthors] = useState<{userId: string, publicKey: string}[]>([]);
 
     const init = async (targetAuthor?: string) => {
         setInitialized(false);
+        setPosts([]);
+        setSelectedPostId(null);
         try {
-            const authorToFollow = targetAuthor || config.authorId;
+            let currentConfig = config;
+            if (!config.accessKeyId) {
+                const res = await fetch('config.json');
+                const remoteConfig = await res.json();
+                currentConfig = { ...config, ...remoteConfig };
+                setConfig(currentConfig);
+                if (!targetAuthor) targetAuthor = currentConfig.authorId || 'author-1';
+            }
+
+            const authorToFollow = targetAuthor || 'author-1';
+            setNewAuthorId(authorToFollow);
+
             let instance = sov;
             if (!instance) {
                 instance = await SovereignS3nc.create({
                     s3: {
-                        endpoint: config.endpoint,
-                        region: config.region,
-                        credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
-                        bucketName: config.bucketName,
+                        endpoint: currentConfig.endpoint,
+                        region: currentConfig.region,
+                        credentials: { accessKeyId: currentConfig.accessKeyId, secretAccessKey: currentConfig.secretAccessKey },
+                        bucketName: currentConfig.bucketName,
                         forcePathStyle: true
                     },
-                    paths: { appId: config.appId, userId: 'reader-' + Math.random().toString(36).substring(7), storeId: 'main' },
+                    paths: { appId: currentConfig.appId, userId: 'reader-' + Math.random().toString(36).substring(7), storeId: 'main' },
                     password: 'public-reader-password',
                     useWorker: true,
                     workerUrl: 'sync-worker.js'
@@ -104,6 +118,10 @@ const Reader = () => {
                 setSov(instance);
             }
             
+            // Discover all authors
+            const registeredUsers = await instance.discoverUsers();
+            if (registeredUsers) setAuthors(registeredUsers);
+
             await instance.follow(authorToFollow);
             await instance.sync();
             
@@ -141,11 +159,11 @@ const Reader = () => {
         init();
     }, []);
 
-    if (!sov && !initialized) {
+    if (!initialized) {
         return (
             <div className="container mt-5 text-center">
                 <div className="spinner-border text-primary" role="status"></div>
-                <p className="mt-3">Connecting to Sovereign Network...</p>
+                <p className="mt-3">Loading Sovereign Blog...</p>
             </div>
         );
     }
@@ -156,8 +174,14 @@ const Reader = () => {
         <div className="container">
             <header className="blog-header">
                 <div className="d-flex justify-content-center gap-2 mb-4 no-print">
-                    <input className="form-control form-control-sm w-auto" value={newAuthorId} onChange={e => setNewAuthorId(e.target.value)} placeholder="Author ID" />
-                    <button className="btn btn-sm btn-dark" onClick={changeAuthor}>View Blog</button>
+                    <select className="form-select form-select-sm w-auto" value={newAuthorId} onChange={e => {
+                        setNewAuthorId(e.target.value);
+                        if (e.target.value) init(e.target.value);
+                    }}>
+                        <option value="">Select Author...</option>
+                        {authors.map(a => <option key={a.userId} value={a.userId}>{a.userId}</option>)}
+                    </select>
+                    <button className="btn btn-sm btn-outline-dark" onClick={() => init(newAuthorId)}>Refresh</button>
                 </div>
                 <h1 className="blog-title" style={{ cursor: 'pointer' }} onClick={() => setSelectedPostId(null)}>Sovereign Thoughts</h1>
                 <p className="lead text-muted">A decentralized blog powered by SovereignS3nc</p>

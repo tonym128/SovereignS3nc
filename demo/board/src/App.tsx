@@ -74,8 +74,11 @@ const App = () => {
             // Load groups (boards)
             const myGroups = await instance.getGroups();
             setGroups(myGroups);
-            if (myGroups.length > 0) {
+            if (myGroups && myGroups.length > 0) {
                 setSelectedGroup(myGroups[0]);
+            } else {
+                setSelectedGroup(null);
+                setShowCreateBoard(true); // Suggest creation if none exist
             }
         } catch (err) {
             console.error('Login failed', err);
@@ -106,6 +109,7 @@ const App = () => {
             setGroups(updatedGroups);
             setSelectedGroup(group);
             setNewBoardName('');
+            setShowCreateBoard(false);
             await sov.sync();
             console.log('Sync complete after board creation');
         } catch (err) {
@@ -220,22 +224,28 @@ const App = () => {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
                 <span className="navbar-brand">SOVEREIGN BOARD</span>
                 <div className="ms-auto d-flex align-items-center gap-3">
-                    <select className="form-select form-select-sm bg-dark text-white border-secondary" 
-                        value={typeof selectedGroup === 'string' ? selectedGroup : (selectedGroup?.id || '')} 
-                        onChange={e => {
-                            if (e.target.value === 'new') setSelectedGroup('new');
-                            else setSelectedGroup(groups.find(g => g.id === e.target.value));
-                        }}>
-                        {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-                        <option value="new">+ Create New Board</option>
-                    </select>
-                    {selectedGroup === 'new' && (
-                        <div className="d-flex gap-2">
-                            <input type="text" className="form-control form-control-sm" placeholder="Board Name" value={newBoardName} onChange={e => setNewBoardName(e.target.value)} />
-                            <button className="btn btn-sm btn-success" onClick={createBoard}>Create</button>
-                        </div>
+                    {groups.length > 0 && (
+                        <select className="form-select form-select-sm bg-dark text-white border-secondary" 
+                            value={selectedGroup?.id || ''} 
+                            onChange={e => setSelectedGroup(groups.find(g => g.id === e.target.value))}>
+                            <option value="" disabled>Select Board...</option>
+                            {groups.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
+                        </select>
                     )}
-                    <div className="sync-indicator text-secondary">
+
+                    {showCreateBoard ? (
+                        <div className="d-flex gap-2">
+                            <input type="text" className="form-control form-control-sm" placeholder="Board Name" value={newBoardName} onChange={e => setNewBoardName(e.target.value)} autoFocus />
+                            <button className="btn btn-sm btn-success" onClick={createBoard}>Create</button>
+                            <button className="btn btn-sm btn-outline-secondary text-white" onClick={() => setShowCreateBoard(false)}>Cancel</button>
+                        </div>
+                    ) : (
+                        <button className="btn btn-sm btn-primary" onClick={() => setShowCreateBoard(true)}>
+                            <i className="bi bi-plus-lg me-1"></i> New Board
+                        </button>
+                    )}
+
+                    <div className="sync-indicator text-secondary d-none d-md-block">
                         {syncing ? <span className="spinner-border spinner-border-sm me-1"></span> : <i className="bi bi-cloud-check me-1"></i>}
                         {lastSync ? `Synced ${lastSync.toLocaleTimeString()}` : 'Never synced'}
                     </div>

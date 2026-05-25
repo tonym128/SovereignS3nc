@@ -184510,39 +184510,53 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
         const [config3, setConfig] = (0, import_react.useState)({
           endpoint: "http://127.0.0.1:9000",
           region: "rustfs",
-          accessKeyId: "user-key",
-          secretAccessKey: "user-secret-123",
+          accessKeyId: "",
+          secretAccessKey: "",
           bucketName: "sovereign-demo",
           appId: "sov-blog",
-          authorId: "author-1"
+          authorId: ""
         });
         const [sov, setSov] = (0, import_react.useState)(null);
         const [posts, setPosts] = (0, import_react.useState)([]);
         const [initialized, setInitialized] = (0, import_react.useState)(false);
         const [blobCache, setBlobCache] = (0, import_react.useState)({});
-        const [newAuthorId, setNewAuthorId] = (0, import_react.useState)(config3.authorId);
+        const [newAuthorId, setNewAuthorId] = (0, import_react.useState)("author-1");
         const [selectedPostId, setSelectedPostId] = (0, import_react.useState)(null);
+        const [authors, setAuthors] = (0, import_react.useState)([]);
         const init2 = async (targetAuthor) => {
           setInitialized(false);
+          setPosts([]);
+          setSelectedPostId(null);
           try {
-            const authorToFollow = targetAuthor || config3.authorId;
+            let currentConfig = config3;
+            if (!config3.accessKeyId) {
+              const res = await fetch("config.json");
+              const remoteConfig = await res.json();
+              currentConfig = { ...config3, ...remoteConfig };
+              setConfig(currentConfig);
+              if (!targetAuthor) targetAuthor = currentConfig.authorId || "author-1";
+            }
+            const authorToFollow = targetAuthor || "author-1";
+            setNewAuthorId(authorToFollow);
             let instance = sov;
             if (!instance) {
               instance = await SovereignS3nc.create({
                 s3: {
-                  endpoint: config3.endpoint,
-                  region: config3.region,
-                  credentials: { accessKeyId: config3.accessKeyId, secretAccessKey: config3.secretAccessKey },
-                  bucketName: config3.bucketName,
+                  endpoint: currentConfig.endpoint,
+                  region: currentConfig.region,
+                  credentials: { accessKeyId: currentConfig.accessKeyId, secretAccessKey: currentConfig.secretAccessKey },
+                  bucketName: currentConfig.bucketName,
                   forcePathStyle: true
                 },
-                paths: { appId: config3.appId, userId: "reader-" + Math.random().toString(36).substring(7), storeId: "main" },
+                paths: { appId: currentConfig.appId, userId: "reader-" + Math.random().toString(36).substring(7), storeId: "main" },
                 password: "public-reader-password",
                 useWorker: true,
                 workerUrl: "sync-worker.js"
               });
               setSov(instance);
             }
+            const registeredUsers = await instance.discoverUsers();
+            if (registeredUsers) setAuthors(registeredUsers);
             await instance.follow(authorToFollow);
             await instance.sync();
             const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
@@ -184575,11 +184589,14 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
         (0, import_react.useEffect)(() => {
           init2();
         }, []);
-        if (!sov && !initialized) {
-          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5 text-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "spinner-border text-primary", role: "status" }), /* @__PURE__ */ import_react.default.createElement("p", { className: "mt-3" }, "Connecting to Sovereign Network..."));
+        if (!initialized) {
+          return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5 text-center" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "spinner-border text-primary", role: "status" }), /* @__PURE__ */ import_react.default.createElement("p", { className: "mt-3" }, "Loading Sovereign Blog..."));
         }
         const selectedPost = posts.find((p7) => p7.id === selectedPostId);
-        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "blog-header" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-center gap-2 mb-4 no-print" }, /* @__PURE__ */ import_react.default.createElement("input", { className: "form-control form-control-sm w-auto", value: newAuthorId, onChange: (e10) => setNewAuthorId(e10.target.value), placeholder: "Author ID" }), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-dark", onClick: changeAuthor }, "View Blog")), /* @__PURE__ */ import_react.default.createElement("h1", { className: "blog-title", style: { cursor: "pointer" }, onClick: () => setSelectedPostId(null) }, "Sovereign Thoughts"), /* @__PURE__ */ import_react.default.createElement("p", { className: "lead text-muted" }, "A decentralized blog powered by SovereignS3nc")), /* @__PURE__ */ import_react.default.createElement("main", null, selectedPost ? /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-dark mb-4", onClick: () => setSelectedPostId(null) }, "\u2190 Back to List"), /* @__PURE__ */ import_react.default.createElement(BlogPost, { post: selectedPost, getBlob, isDetail: true })) : /* @__PURE__ */ import_react.default.createElement("div", null, posts.map((post) => /* @__PURE__ */ import_react.default.createElement(BlogPost, { key: post.id, post, getBlob, isDetail: false, onSelect: () => setSelectedPostId(post.id) })), posts.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react.default.createElement("p", null, "No posts found yet. The author hasn't published anything.")))), /* @__PURE__ */ import_react.default.createElement("footer", { className: "py-5 text-center text-muted border-top" }, /* @__PURE__ */ import_react.default.createElement("p", null, "Built with ", /* @__PURE__ */ import_react.default.createElement("a", { href: "https://github.com/sovereigns3nc", className: "text-dark" }, "SovereignS3nc"))));
+        return /* @__PURE__ */ import_react.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "blog-header" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-center gap-2 mb-4 no-print" }, /* @__PURE__ */ import_react.default.createElement("select", { className: "form-select form-select-sm w-auto", value: newAuthorId, onChange: (e10) => {
+          setNewAuthorId(e10.target.value);
+          if (e10.target.value) init2(e10.target.value);
+        } }, /* @__PURE__ */ import_react.default.createElement("option", { value: "" }, "Select Author..."), authors.map((a7) => /* @__PURE__ */ import_react.default.createElement("option", { key: a7.userId, value: a7.userId }, a7.userId))), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-dark", onClick: () => init2(newAuthorId) }, "Refresh")), /* @__PURE__ */ import_react.default.createElement("h1", { className: "blog-title", style: { cursor: "pointer" }, onClick: () => setSelectedPostId(null) }, "Sovereign Thoughts"), /* @__PURE__ */ import_react.default.createElement("p", { className: "lead text-muted" }, "A decentralized blog powered by SovereignS3nc")), /* @__PURE__ */ import_react.default.createElement("main", null, selectedPost ? /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-sm btn-outline-dark mb-4", onClick: () => setSelectedPostId(null) }, "\u2190 Back to List"), /* @__PURE__ */ import_react.default.createElement(BlogPost, { post: selectedPost, getBlob, isDetail: true })) : /* @__PURE__ */ import_react.default.createElement("div", null, posts.map((post) => /* @__PURE__ */ import_react.default.createElement(BlogPost, { key: post.id, post, getBlob, isDetail: false, onSelect: () => setSelectedPostId(post.id) })), posts.length === 0 && /* @__PURE__ */ import_react.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react.default.createElement("p", null, "No posts found yet. The author hasn't published anything.")))), /* @__PURE__ */ import_react.default.createElement("footer", { className: "py-5 text-center text-muted border-top" }, /* @__PURE__ */ import_react.default.createElement("p", null, "Built with ", /* @__PURE__ */ import_react.default.createElement("a", { href: "https://github.com/sovereigns3nc", className: "text-dark" }, "SovereignS3nc"))));
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
       root2.render(/* @__PURE__ */ import_react.default.createElement(Reader, null));

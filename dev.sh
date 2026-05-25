@@ -243,10 +243,18 @@ EOF
     \"secretAccessKey\": \"$USER_SECRET\",
     \"bucketName\": \"$BUCKET_NAME\"
 }"
+    BLOG_READER_JSON_CONFIG="{
+    \"endpoint\": \"http://127.0.0.1:$RUSTFS_PORT\",
+    \"region\": \"rustfs\",
+    \"accessKeyId\": \"$BLOG_READER_ACCESS\",
+    \"secretAccessKey\": \"$BLOG_READER_SECRET\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}"
+
     echo "$JSON_CONFIG" > "$SOCIAL_CONFIG"
     echo "$JSON_CONFIG" > "$BANKY_CONFIG"
     echo "$JSON_CONFIG" > "$BOARD_CONFIG"
-    echo "$JSON_CONFIG" > "$BLOG_CONFIG"
+    echo "$BLOG_READER_JSON_CONFIG" > "$BLOG_CONFIG"
 
     # Also save admin config for reference/manual testing
     echo "{
@@ -301,6 +309,12 @@ EOF
     echo "Banky Demo App:          http://127.0.0.1:8887"
     echo "Board Demo App:          http://127.0.0.1:8885"
     echo "Blog Demo App:           http://127.0.0.1:8884"
+    echo ""
+    echo "BLOG CREDENTIALS:"
+    echo "  Reader Access: $BLOG_READER_ACCESS"
+    echo "  Reader Secret: $BLOG_READER_SECRET"
+    echo "  Admin Access:  $BLOG_ADMIN_ACCESS"
+    echo "  Admin Secret:  $BLOG_ADMIN_SECRET"
     echo ""
     echo "ADMIN CREDENTIALS (for manual testing):"
     echo "Access Key: $ADMIN_ACCESS"

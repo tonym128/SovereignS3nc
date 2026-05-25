@@ -43,7 +43,7 @@
   var require_base64_js = __commonJS({
     "node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -144,7 +144,7 @@
   // node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -229,17 +229,17 @@
   var require_buffer = __commonJS({
     "node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
-      exports.Buffer = Buffer4;
+      exports.Buffer = Buffer3;
       exports.SlowBuffer = SlowBuffer;
       exports.INSPECT_MAX_BYTES = 50;
       var K_MAX_LENGTH = 2147483647;
       exports.kMaxLength = K_MAX_LENGTH;
-      Buffer4.TYPED_ARRAY_SUPPORT = typedArraySupport();
-      if (!Buffer4.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
+      Buffer3.TYPED_ARRAY_SUPPORT = typedArraySupport();
+      if (!Buffer3.TYPED_ARRAY_SUPPORT && typeof console !== "undefined" && typeof console.error === "function") {
         console.error(
           "This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support."
         );
@@ -257,17 +257,17 @@
           return false;
         }
       }
-      Object.defineProperty(Buffer4.prototype, "parent", {
+      Object.defineProperty(Buffer3.prototype, "parent", {
         enumerable: true,
         get: function() {
-          if (!Buffer4.isBuffer(this)) return void 0;
+          if (!Buffer3.isBuffer(this)) return void 0;
           return this.buffer;
         }
       });
-      Object.defineProperty(Buffer4.prototype, "offset", {
+      Object.defineProperty(Buffer3.prototype, "offset", {
         enumerable: true,
         get: function() {
-          if (!Buffer4.isBuffer(this)) return void 0;
+          if (!Buffer3.isBuffer(this)) return void 0;
           return this.byteOffset;
         }
       });
@@ -276,10 +276,10 @@
           throw new RangeError('The value "' + length + '" is invalid for option "size"');
         }
         const buf = new Uint8Array(length);
-        Object.setPrototypeOf(buf, Buffer4.prototype);
+        Object.setPrototypeOf(buf, Buffer3.prototype);
         return buf;
       }
-      function Buffer4(arg, encodingOrOffset, length) {
+      function Buffer3(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           if (typeof encodingOrOffset === "string") {
             throw new TypeError(
@@ -290,7 +290,7 @@
         }
         return from2(arg, encodingOrOffset, length);
       }
-      Buffer4.poolSize = 8192;
+      Buffer3.poolSize = 8192;
       function from2(value, encodingOrOffset, length) {
         if (typeof value === "string") {
           return fromString(value, encodingOrOffset);
@@ -316,22 +316,22 @@
         }
         const valueOf = value.valueOf && value.valueOf();
         if (valueOf != null && valueOf !== value) {
-          return Buffer4.from(valueOf, encodingOrOffset, length);
+          return Buffer3.from(valueOf, encodingOrOffset, length);
         }
         const b2 = fromObject2(value);
         if (b2) return b2;
         if (typeof Symbol !== "undefined" && Symbol.toPrimitive != null && typeof value[Symbol.toPrimitive] === "function") {
-          return Buffer4.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
+          return Buffer3.from(value[Symbol.toPrimitive]("string"), encodingOrOffset, length);
         }
         throw new TypeError(
           "The first argument must be one of type string, Buffer, ArrayBuffer, Array, or Array-like Object. Received type " + typeof value
         );
       }
-      Buffer4.from = function(value, encodingOrOffset, length) {
+      Buffer3.from = function(value, encodingOrOffset, length) {
         return from2(value, encodingOrOffset, length);
       };
-      Object.setPrototypeOf(Buffer4.prototype, Uint8Array.prototype);
-      Object.setPrototypeOf(Buffer4, Uint8Array);
+      Object.setPrototypeOf(Buffer3.prototype, Uint8Array.prototype);
+      Object.setPrototypeOf(Buffer3, Uint8Array);
       function assertSize(size) {
         if (typeof size !== "number") {
           throw new TypeError('"size" argument must be of type number');
@@ -349,24 +349,24 @@
         }
         return createBuffer(size);
       }
-      Buffer4.alloc = function(size, fill2, encoding) {
+      Buffer3.alloc = function(size, fill2, encoding) {
         return alloc(size, fill2, encoding);
       };
       function allocUnsafe(size) {
         assertSize(size);
         return createBuffer(size < 0 ? 0 : checked(size) | 0);
       }
-      Buffer4.allocUnsafe = function(size) {
+      Buffer3.allocUnsafe = function(size) {
         return allocUnsafe(size);
       };
-      Buffer4.allocUnsafeSlow = function(size) {
+      Buffer3.allocUnsafeSlow = function(size) {
         return allocUnsafe(size);
       };
       function fromString(string, encoding) {
         if (typeof encoding !== "string" || encoding === "") {
           encoding = "utf8";
         }
-        if (!Buffer4.isEncoding(encoding)) {
+        if (!Buffer3.isEncoding(encoding)) {
           throw new TypeError("Unknown encoding: " + encoding);
         }
         const length = byteLength(string, encoding) | 0;
@@ -407,11 +407,11 @@
         } else {
           buf = new Uint8Array(array, byteOffset, length);
         }
-        Object.setPrototypeOf(buf, Buffer4.prototype);
+        Object.setPrototypeOf(buf, Buffer3.prototype);
         return buf;
       }
       function fromObject2(obj) {
-        if (Buffer4.isBuffer(obj)) {
+        if (Buffer3.isBuffer(obj)) {
           const len = checked(obj.length) | 0;
           const buf = createBuffer(len);
           if (buf.length === 0) {
@@ -440,15 +440,15 @@
         if (+length != length) {
           length = 0;
         }
-        return Buffer4.alloc(+length);
+        return Buffer3.alloc(+length);
       }
-      Buffer4.isBuffer = function isBuffer(b2) {
-        return b2 != null && b2._isBuffer === true && b2 !== Buffer4.prototype;
+      Buffer3.isBuffer = function isBuffer(b2) {
+        return b2 != null && b2._isBuffer === true && b2 !== Buffer3.prototype;
       };
-      Buffer4.compare = function compare(a2, b2) {
-        if (isInstance(a2, Uint8Array)) a2 = Buffer4.from(a2, a2.offset, a2.byteLength);
-        if (isInstance(b2, Uint8Array)) b2 = Buffer4.from(b2, b2.offset, b2.byteLength);
-        if (!Buffer4.isBuffer(a2) || !Buffer4.isBuffer(b2)) {
+      Buffer3.compare = function compare(a2, b2) {
+        if (isInstance(a2, Uint8Array)) a2 = Buffer3.from(a2, a2.offset, a2.byteLength);
+        if (isInstance(b2, Uint8Array)) b2 = Buffer3.from(b2, b2.offset, b2.byteLength);
+        if (!Buffer3.isBuffer(a2) || !Buffer3.isBuffer(b2)) {
           throw new TypeError(
             'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
           );
@@ -467,7 +467,7 @@
         if (y2 < x2) return 1;
         return 0;
       };
-      Buffer4.isEncoding = function isEncoding(encoding) {
+      Buffer3.isEncoding = function isEncoding(encoding) {
         switch (String(encoding).toLowerCase()) {
           case "hex":
           case "utf8":
@@ -485,12 +485,12 @@
             return false;
         }
       };
-      Buffer4.concat = function concat(list, length) {
+      Buffer3.concat = function concat(list, length) {
         if (!Array.isArray(list)) {
           throw new TypeError('"list" argument must be an Array of Buffers');
         }
         if (list.length === 0) {
-          return Buffer4.alloc(0);
+          return Buffer3.alloc(0);
         }
         let i2;
         if (length === void 0) {
@@ -499,13 +499,13 @@
             length += list[i2].length;
           }
         }
-        const buffer = Buffer4.allocUnsafe(length);
+        const buffer = Buffer3.allocUnsafe(length);
         let pos = 0;
         for (i2 = 0; i2 < list.length; ++i2) {
           let buf = list[i2];
           if (isInstance(buf, Uint8Array)) {
             if (pos + buf.length > buffer.length) {
-              if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
+              if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
               buf.copy(buffer, pos);
             } else {
               Uint8Array.prototype.set.call(
@@ -514,7 +514,7 @@
                 pos
               );
             }
-          } else if (!Buffer4.isBuffer(buf)) {
+          } else if (!Buffer3.isBuffer(buf)) {
             throw new TypeError('"list" argument must be an Array of Buffers');
           } else {
             buf.copy(buffer, pos);
@@ -524,7 +524,7 @@
         return buffer;
       };
       function byteLength(string, encoding) {
-        if (Buffer4.isBuffer(string)) {
+        if (Buffer3.isBuffer(string)) {
           return string.length;
         }
         if (ArrayBuffer.isView(string) || isInstance(string, ArrayBuffer)) {
@@ -566,7 +566,7 @@
           }
         }
       }
-      Buffer4.byteLength = byteLength;
+      Buffer3.byteLength = byteLength;
       function slowToString(encoding, start, end) {
         let loweredCase = false;
         if (start === void 0 || start < 0) {
@@ -613,13 +613,13 @@
           }
         }
       }
-      Buffer4.prototype._isBuffer = true;
+      Buffer3.prototype._isBuffer = true;
       function swap2(b2, n2, m2) {
         const i2 = b2[n2];
         b2[n2] = b2[m2];
         b2[m2] = i2;
       }
-      Buffer4.prototype.swap16 = function swap16() {
+      Buffer3.prototype.swap16 = function swap16() {
         const len = this.length;
         if (len % 2 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 16-bits");
@@ -629,7 +629,7 @@
         }
         return this;
       };
-      Buffer4.prototype.swap32 = function swap32() {
+      Buffer3.prototype.swap32 = function swap32() {
         const len = this.length;
         if (len % 4 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 32-bits");
@@ -640,7 +640,7 @@
         }
         return this;
       };
-      Buffer4.prototype.swap64 = function swap64() {
+      Buffer3.prototype.swap64 = function swap64() {
         const len = this.length;
         if (len % 8 !== 0) {
           throw new RangeError("Buffer size must be a multiple of 64-bits");
@@ -653,19 +653,19 @@
         }
         return this;
       };
-      Buffer4.prototype.toString = function toString() {
+      Buffer3.prototype.toString = function toString() {
         const length = this.length;
         if (length === 0) return "";
         if (arguments.length === 0) return utf8Slice(this, 0, length);
         return slowToString.apply(this, arguments);
       };
-      Buffer4.prototype.toLocaleString = Buffer4.prototype.toString;
-      Buffer4.prototype.equals = function equals(b2) {
-        if (!Buffer4.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
+      Buffer3.prototype.toLocaleString = Buffer3.prototype.toString;
+      Buffer3.prototype.equals = function equals(b2) {
+        if (!Buffer3.isBuffer(b2)) throw new TypeError("Argument must be a Buffer");
         if (this === b2) return true;
-        return Buffer4.compare(this, b2) === 0;
+        return Buffer3.compare(this, b2) === 0;
       };
-      Buffer4.prototype.inspect = function inspect() {
+      Buffer3.prototype.inspect = function inspect() {
         let str = "";
         const max = exports.INSPECT_MAX_BYTES;
         str = this.toString("hex", 0, max).replace(/(.{2})/g, "$1 ").trim();
@@ -673,13 +673,13 @@
         return "<Buffer " + str + ">";
       };
       if (customInspectSymbol) {
-        Buffer4.prototype[customInspectSymbol] = Buffer4.prototype.inspect;
+        Buffer3.prototype[customInspectSymbol] = Buffer3.prototype.inspect;
       }
-      Buffer4.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
+      Buffer3.prototype.compare = function compare(target, start, end, thisStart, thisEnd) {
         if (isInstance(target, Uint8Array)) {
-          target = Buffer4.from(target, target.offset, target.byteLength);
+          target = Buffer3.from(target, target.offset, target.byteLength);
         }
-        if (!Buffer4.isBuffer(target)) {
+        if (!Buffer3.isBuffer(target)) {
           throw new TypeError(
             'The "target" argument must be one of type Buffer or Uint8Array. Received type ' + typeof target
           );
@@ -752,9 +752,9 @@
           else return -1;
         }
         if (typeof val === "string") {
-          val = Buffer4.from(val, encoding);
+          val = Buffer3.from(val, encoding);
         }
-        if (Buffer4.isBuffer(val)) {
+        if (Buffer3.isBuffer(val)) {
           if (val.length === 0) {
             return -1;
           }
@@ -822,13 +822,13 @@
         }
         return -1;
       }
-      Buffer4.prototype.includes = function includes(val, byteOffset, encoding) {
+      Buffer3.prototype.includes = function includes(val, byteOffset, encoding) {
         return this.indexOf(val, byteOffset, encoding) !== -1;
       };
-      Buffer4.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
+      Buffer3.prototype.indexOf = function indexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, true);
       };
-      Buffer4.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
+      Buffer3.prototype.lastIndexOf = function lastIndexOf(val, byteOffset, encoding) {
         return bidirectionalIndexOf(this, val, byteOffset, encoding, false);
       };
       function hexWrite(buf, string, offset, length) {
@@ -866,7 +866,7 @@
       function ucs2Write(buf, string, offset, length) {
         return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length);
       }
-      Buffer4.prototype.write = function write(string, offset, length, encoding) {
+      Buffer3.prototype.write = function write(string, offset, length, encoding) {
         if (offset === void 0) {
           encoding = "utf8";
           length = this.length;
@@ -921,7 +921,7 @@
           }
         }
       };
-      Buffer4.prototype.toJSON = function toJSON() {
+      Buffer3.prototype.toJSON = function toJSON() {
         return {
           type: "Buffer",
           data: Array.prototype.slice.call(this._arr || this, 0)
@@ -1044,7 +1044,7 @@
         }
         return res;
       }
-      Buffer4.prototype.slice = function slice(start, end) {
+      Buffer3.prototype.slice = function slice(start, end) {
         const len = this.length;
         start = ~~start;
         end = end === void 0 ? len : ~~end;
@@ -1062,14 +1062,14 @@
         }
         if (end < start) end = start;
         const newBuf = this.subarray(start, end);
-        Object.setPrototypeOf(newBuf, Buffer4.prototype);
+        Object.setPrototypeOf(newBuf, Buffer3.prototype);
         return newBuf;
       };
       function checkOffset(offset, ext, length) {
         if (offset % 1 !== 0 || offset < 0) throw new RangeError("offset is not uint");
         if (offset + ext > length) throw new RangeError("Trying to access beyond buffer length");
       }
-      Buffer4.prototype.readUintLE = Buffer4.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
+      Buffer3.prototype.readUintLE = Buffer3.prototype.readUIntLE = function readUIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1081,7 +1081,7 @@
         }
         return val;
       };
-      Buffer4.prototype.readUintBE = Buffer4.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
+      Buffer3.prototype.readUintBE = Buffer3.prototype.readUIntBE = function readUIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) {
@@ -1094,32 +1094,32 @@
         }
         return val;
       };
-      Buffer4.prototype.readUint8 = Buffer4.prototype.readUInt8 = function readUInt8(offset, noAssert) {
+      Buffer3.prototype.readUint8 = Buffer3.prototype.readUInt8 = function readUInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         return this[offset];
       };
-      Buffer4.prototype.readUint16LE = Buffer4.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
+      Buffer3.prototype.readUint16LE = Buffer3.prototype.readUInt16LE = function readUInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] | this[offset + 1] << 8;
       };
-      Buffer4.prototype.readUint16BE = Buffer4.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
+      Buffer3.prototype.readUint16BE = Buffer3.prototype.readUInt16BE = function readUInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         return this[offset] << 8 | this[offset + 1];
       };
-      Buffer4.prototype.readUint32LE = Buffer4.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
+      Buffer3.prototype.readUint32LE = Buffer3.prototype.readUInt32LE = function readUInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return (this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16) + this[offset + 3] * 16777216;
       };
-      Buffer4.prototype.readUint32BE = Buffer4.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
+      Buffer3.prototype.readUint32BE = Buffer3.prototype.readUInt32BE = function readUInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] * 16777216 + (this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3]);
       };
-      Buffer4.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
+      Buffer3.prototype.readBigUInt64LE = defineBigIntMethod(function readBigUInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1131,7 +1131,7 @@
         const hi = this[++offset] + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + last * 2 ** 24;
         return BigInt(lo) + (BigInt(hi) << BigInt(32));
       });
-      Buffer4.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
+      Buffer3.prototype.readBigUInt64BE = defineBigIntMethod(function readBigUInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1143,7 +1143,7 @@
         const lo = this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last;
         return (BigInt(hi) << BigInt(32)) + BigInt(lo);
       });
-      Buffer4.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
+      Buffer3.prototype.readIntLE = function readIntLE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1157,7 +1157,7 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer4.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
+      Buffer3.prototype.readIntBE = function readIntBE(offset, byteLength2, noAssert) {
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
         if (!noAssert) checkOffset(offset, byteLength2, this.length);
@@ -1171,35 +1171,35 @@
         if (val >= mul) val -= Math.pow(2, 8 * byteLength2);
         return val;
       };
-      Buffer4.prototype.readInt8 = function readInt8(offset, noAssert) {
+      Buffer3.prototype.readInt8 = function readInt8(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 1, this.length);
         if (!(this[offset] & 128)) return this[offset];
         return (255 - this[offset] + 1) * -1;
       };
-      Buffer4.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
+      Buffer3.prototype.readInt16LE = function readInt16LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset] | this[offset + 1] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer4.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
+      Buffer3.prototype.readInt16BE = function readInt16BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 2, this.length);
         const val = this[offset + 1] | this[offset] << 8;
         return val & 32768 ? val | 4294901760 : val;
       };
-      Buffer4.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
+      Buffer3.prototype.readInt32LE = function readInt32LE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] | this[offset + 1] << 8 | this[offset + 2] << 16 | this[offset + 3] << 24;
       };
-      Buffer4.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
+      Buffer3.prototype.readInt32BE = function readInt32BE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return this[offset] << 24 | this[offset + 1] << 16 | this[offset + 2] << 8 | this[offset + 3];
       };
-      Buffer4.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
+      Buffer3.prototype.readBigInt64LE = defineBigIntMethod(function readBigInt64LE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1210,7 +1210,7 @@
         const val = this[offset + 4] + this[offset + 5] * 2 ** 8 + this[offset + 6] * 2 ** 16 + (last << 24);
         return (BigInt(val) << BigInt(32)) + BigInt(first + this[++offset] * 2 ** 8 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 24);
       });
-      Buffer4.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
+      Buffer3.prototype.readBigInt64BE = defineBigIntMethod(function readBigInt64BE(offset) {
         offset = offset >>> 0;
         validateNumber(offset, "offset");
         const first = this[offset];
@@ -1222,32 +1222,32 @@
         this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + this[++offset];
         return (BigInt(val) << BigInt(32)) + BigInt(this[++offset] * 2 ** 24 + this[++offset] * 2 ** 16 + this[++offset] * 2 ** 8 + last);
       });
-      Buffer4.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
+      Buffer3.prototype.readFloatLE = function readFloatLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, true, 23, 4);
       };
-      Buffer4.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
+      Buffer3.prototype.readFloatBE = function readFloatBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 4, this.length);
         return ieee754.read(this, offset, false, 23, 4);
       };
-      Buffer4.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
+      Buffer3.prototype.readDoubleLE = function readDoubleLE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, true, 52, 8);
       };
-      Buffer4.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
+      Buffer3.prototype.readDoubleBE = function readDoubleBE(offset, noAssert) {
         offset = offset >>> 0;
         if (!noAssert) checkOffset(offset, 8, this.length);
         return ieee754.read(this, offset, false, 52, 8);
       };
       function checkInt(buf, value, offset, ext, max, min) {
-        if (!Buffer4.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
+        if (!Buffer3.isBuffer(buf)) throw new TypeError('"buffer" argument must be a Buffer instance');
         if (value > max || value < min) throw new RangeError('"value" argument is out of bounds');
         if (offset + ext > buf.length) throw new RangeError("Index out of range");
       }
-      Buffer4.prototype.writeUintLE = Buffer4.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
+      Buffer3.prototype.writeUintLE = Buffer3.prototype.writeUIntLE = function writeUIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1263,7 +1263,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer4.prototype.writeUintBE = Buffer4.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
+      Buffer3.prototype.writeUintBE = Buffer3.prototype.writeUIntBE = function writeUIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         byteLength2 = byteLength2 >>> 0;
@@ -1279,14 +1279,14 @@
         }
         return offset + byteLength2;
       };
-      Buffer4.prototype.writeUint8 = Buffer4.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
+      Buffer3.prototype.writeUint8 = Buffer3.prototype.writeUInt8 = function writeUInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 255, 0);
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer4.prototype.writeUint16LE = Buffer4.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
+      Buffer3.prototype.writeUint16LE = Buffer3.prototype.writeUInt16LE = function writeUInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1294,7 +1294,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer4.prototype.writeUint16BE = Buffer4.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
+      Buffer3.prototype.writeUint16BE = Buffer3.prototype.writeUInt16BE = function writeUInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 65535, 0);
@@ -1302,7 +1302,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer4.prototype.writeUint32LE = Buffer4.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
+      Buffer3.prototype.writeUint32LE = Buffer3.prototype.writeUInt32LE = function writeUInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1312,7 +1312,7 @@
         this[offset] = value & 255;
         return offset + 4;
       };
-      Buffer4.prototype.writeUint32BE = Buffer4.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
+      Buffer3.prototype.writeUint32BE = Buffer3.prototype.writeUInt32BE = function writeUInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 4294967295, 0);
@@ -1362,13 +1362,13 @@
         buf[offset] = hi;
         return offset + 8;
       }
-      Buffer4.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
+      Buffer3.prototype.writeBigUInt64LE = defineBigIntMethod(function writeBigUInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer4.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
+      Buffer3.prototype.writeBigUInt64BE = defineBigIntMethod(function writeBigUInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, BigInt(0), BigInt("0xffffffffffffffff"));
       });
-      Buffer4.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
+      Buffer3.prototype.writeIntLE = function writeIntLE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1387,7 +1387,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer4.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
+      Buffer3.prototype.writeIntBE = function writeIntBE(value, offset, byteLength2, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) {
@@ -1406,7 +1406,7 @@
         }
         return offset + byteLength2;
       };
-      Buffer4.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
+      Buffer3.prototype.writeInt8 = function writeInt8(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 1, 127, -128);
@@ -1414,7 +1414,7 @@
         this[offset] = value & 255;
         return offset + 1;
       };
-      Buffer4.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
+      Buffer3.prototype.writeInt16LE = function writeInt16LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1422,7 +1422,7 @@
         this[offset + 1] = value >>> 8;
         return offset + 2;
       };
-      Buffer4.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
+      Buffer3.prototype.writeInt16BE = function writeInt16BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 2, 32767, -32768);
@@ -1430,7 +1430,7 @@
         this[offset + 1] = value & 255;
         return offset + 2;
       };
-      Buffer4.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
+      Buffer3.prototype.writeInt32LE = function writeInt32LE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1440,7 +1440,7 @@
         this[offset + 3] = value >>> 24;
         return offset + 4;
       };
-      Buffer4.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
+      Buffer3.prototype.writeInt32BE = function writeInt32BE(value, offset, noAssert) {
         value = +value;
         offset = offset >>> 0;
         if (!noAssert) checkInt(this, value, offset, 4, 2147483647, -2147483648);
@@ -1451,10 +1451,10 @@
         this[offset + 3] = value & 255;
         return offset + 4;
       };
-      Buffer4.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
+      Buffer3.prototype.writeBigInt64LE = defineBigIntMethod(function writeBigInt64LE(value, offset = 0) {
         return wrtBigUInt64LE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
-      Buffer4.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
+      Buffer3.prototype.writeBigInt64BE = defineBigIntMethod(function writeBigInt64BE(value, offset = 0) {
         return wrtBigUInt64BE(this, value, offset, -BigInt("0x8000000000000000"), BigInt("0x7fffffffffffffff"));
       });
       function checkIEEE754(buf, value, offset, ext, max, min) {
@@ -1470,10 +1470,10 @@
         ieee754.write(buf, value, offset, littleEndian, 23, 4);
         return offset + 4;
       }
-      Buffer4.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
+      Buffer3.prototype.writeFloatLE = function writeFloatLE(value, offset, noAssert) {
         return writeFloat(this, value, offset, true, noAssert);
       };
-      Buffer4.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
+      Buffer3.prototype.writeFloatBE = function writeFloatBE(value, offset, noAssert) {
         return writeFloat(this, value, offset, false, noAssert);
       };
       function writeDouble(buf, value, offset, littleEndian, noAssert) {
@@ -1485,14 +1485,14 @@
         ieee754.write(buf, value, offset, littleEndian, 52, 8);
         return offset + 8;
       }
-      Buffer4.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
+      Buffer3.prototype.writeDoubleLE = function writeDoubleLE(value, offset, noAssert) {
         return writeDouble(this, value, offset, true, noAssert);
       };
-      Buffer4.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
+      Buffer3.prototype.writeDoubleBE = function writeDoubleBE(value, offset, noAssert) {
         return writeDouble(this, value, offset, false, noAssert);
       };
-      Buffer4.prototype.copy = function copy(target, targetStart, start, end) {
-        if (!Buffer4.isBuffer(target)) throw new TypeError("argument should be a Buffer");
+      Buffer3.prototype.copy = function copy(target, targetStart, start, end) {
+        if (!Buffer3.isBuffer(target)) throw new TypeError("argument should be a Buffer");
         if (!start) start = 0;
         if (!end && end !== 0) end = this.length;
         if (targetStart >= target.length) targetStart = target.length;
@@ -1521,7 +1521,7 @@
         }
         return len;
       };
-      Buffer4.prototype.fill = function fill2(val, start, end, encoding) {
+      Buffer3.prototype.fill = function fill2(val, start, end, encoding) {
         if (typeof val === "string") {
           if (typeof start === "string") {
             encoding = start;
@@ -1534,7 +1534,7 @@
           if (encoding !== void 0 && typeof encoding !== "string") {
             throw new TypeError("encoding must be a string");
           }
-          if (typeof encoding === "string" && !Buffer4.isEncoding(encoding)) {
+          if (typeof encoding === "string" && !Buffer3.isEncoding(encoding)) {
             throw new TypeError("Unknown encoding: " + encoding);
           }
           if (val.length === 1) {
@@ -1563,7 +1563,7 @@
             this[i2] = val;
           }
         } else {
-          const bytes = Buffer4.isBuffer(val) ? val : Buffer4.from(val, encoding);
+          const bytes = Buffer3.isBuffer(val) ? val : Buffer3.from(val, encoding);
           const len = bytes.length;
           if (len === 0) {
             throw new TypeError('The value "' + val + '" is invalid for argument "value"');
@@ -1821,7 +1821,7 @@
   // node_modules/process/browser.js
   var require_browser = __commonJS({
     "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1985,10 +1985,10 @@
   var require_polyfills = __commonJS({
     "demo/banky/src/polyfills.js"() {
       "use strict";
-      var import_buffer3 = __toESM(require_buffer());
+      var import_buffer2 = __toESM(require_buffer());
       var import_process = __toESM(require_browser());
       var g2 = typeof window !== "undefined" ? window : self;
-      g2.Buffer = import_buffer3.Buffer;
+      g2.Buffer = import_buffer2.Buffer;
       g2.process = import_process.default;
       g2.global = g2;
     }
@@ -1998,7 +1998,7 @@
   var require_react_development = __commonJS({
     "node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component2.prototype, methodName, {
@@ -2971,7 +2971,7 @@
   var require_react = __commonJS({
     "node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2984,7 +2984,7 @@
   var require_scheduler_development = __commonJS({
     "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3244,7 +3244,7 @@
   var require_scheduler = __commonJS({
     "node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3257,7 +3257,7 @@
   var require_react_dom_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function() {
         function noop2() {
         }
@@ -3502,7 +3502,7 @@
   var require_react_dom = __commonJS({
     "node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3516,17 +3516,17 @@
   var require_react_dom_client_development = __commonJS({
     "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
             fiber = fiber.next, id--;
           return fiber;
         }
-        function copyWithSetImpl(obj, path3, index2, value) {
-          if (index2 >= path3.length) return value;
-          var key = path3[index2], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
-          updated[key] = copyWithSetImpl(obj[key], path3, index2 + 1, value);
+        function copyWithSetImpl(obj, path2, index2, value) {
+          if (index2 >= path2.length) return value;
+          var key = path2[index2], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
+          updated[key] = copyWithSetImpl(obj[key], path2, index2 + 1, value);
           return updated;
         }
         function copyWithRename(obj, oldPath, newPath) {
@@ -3553,11 +3553,11 @@
           );
           return updated;
         }
-        function copyWithDeleteImpl(obj, path3, index2) {
-          var key = path3[index2], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
-          if (index2 + 1 === path3.length)
+        function copyWithDeleteImpl(obj, path2, index2) {
+          var key = path2[index2], updated = isArrayImpl(obj) ? obj.slice() : assign({}, obj);
+          if (index2 + 1 === path2.length)
             return isArrayImpl(updated) ? updated.splice(key, 1) : delete updated[key], updated;
-          updated[key] = copyWithDeleteImpl(obj[key], path3, index2 + 1);
+          updated[key] = copyWithDeleteImpl(obj[key], path2, index2 + 1);
           return updated;
         }
         function shouldSuspendImpl() {
@@ -23192,29 +23192,29 @@
         }, badgeFormat = "%c%s%c", badgeStyle = "background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px", resetStyle = "", pad = " ", bind = Function.prototype.bind;
         var didWarnAboutNestedUpdates = false;
         var overrideHookState = null, overrideHookStateDeletePath = null, overrideHookStateRenamePath = null, overrideProps = null, overridePropsDeletePath = null, overridePropsRenamePath = null, scheduleUpdate = null, scheduleRetry = null, setErrorHandler = null, setSuspenseHandler = null;
-        overrideHookState = function(fiber, id, path3, value) {
+        overrideHookState = function(fiber, id, path2, value) {
           id = findHook(fiber, id);
-          null !== id && (path3 = copyWithSetImpl(id.memoizedState, path3, 0, value), id.memoizedState = path3, id.baseState = path3, fiber.memoizedProps = assign({}, fiber.memoizedProps), path3 = enqueueConcurrentRenderForLane(fiber, 2), null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2));
+          null !== id && (path2 = copyWithSetImpl(id.memoizedState, path2, 0, value), id.memoizedState = path2, id.baseState = path2, fiber.memoizedProps = assign({}, fiber.memoizedProps), path2 = enqueueConcurrentRenderForLane(fiber, 2), null !== path2 && scheduleUpdateOnFiber(path2, fiber, 2));
         };
-        overrideHookStateDeletePath = function(fiber, id, path3) {
+        overrideHookStateDeletePath = function(fiber, id, path2) {
           id = findHook(fiber, id);
-          null !== id && (path3 = copyWithDeleteImpl(id.memoizedState, path3, 0), id.memoizedState = path3, id.baseState = path3, fiber.memoizedProps = assign({}, fiber.memoizedProps), path3 = enqueueConcurrentRenderForLane(fiber, 2), null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2));
+          null !== id && (path2 = copyWithDeleteImpl(id.memoizedState, path2, 0), id.memoizedState = path2, id.baseState = path2, fiber.memoizedProps = assign({}, fiber.memoizedProps), path2 = enqueueConcurrentRenderForLane(fiber, 2), null !== path2 && scheduleUpdateOnFiber(path2, fiber, 2));
         };
         overrideHookStateRenamePath = function(fiber, id, oldPath, newPath) {
           id = findHook(fiber, id);
           null !== id && (oldPath = copyWithRename(id.memoizedState, oldPath, newPath), id.memoizedState = oldPath, id.baseState = oldPath, fiber.memoizedProps = assign({}, fiber.memoizedProps), oldPath = enqueueConcurrentRenderForLane(fiber, 2), null !== oldPath && scheduleUpdateOnFiber(oldPath, fiber, 2));
         };
-        overrideProps = function(fiber, path3, value) {
-          fiber.pendingProps = copyWithSetImpl(fiber.memoizedProps, path3, 0, value);
+        overrideProps = function(fiber, path2, value) {
+          fiber.pendingProps = copyWithSetImpl(fiber.memoizedProps, path2, 0, value);
           fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-          path3 = enqueueConcurrentRenderForLane(fiber, 2);
-          null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2);
+          path2 = enqueueConcurrentRenderForLane(fiber, 2);
+          null !== path2 && scheduleUpdateOnFiber(path2, fiber, 2);
         };
-        overridePropsDeletePath = function(fiber, path3) {
-          fiber.pendingProps = copyWithDeleteImpl(fiber.memoizedProps, path3, 0);
+        overridePropsDeletePath = function(fiber, path2) {
+          fiber.pendingProps = copyWithDeleteImpl(fiber.memoizedProps, path2, 0);
           fiber.alternate && (fiber.alternate.pendingProps = fiber.pendingProps);
-          path3 = enqueueConcurrentRenderForLane(fiber, 2);
-          null !== path3 && scheduleUpdateOnFiber(path3, fiber, 2);
+          path2 = enqueueConcurrentRenderForLane(fiber, 2);
+          null !== path2 && scheduleUpdateOnFiber(path2, fiber, 2);
         };
         overridePropsRenamePath = function(fiber, oldPath, newPath) {
           fiber.pendingProps = copyWithRename(
@@ -23416,7 +23416,7 @@
   var require_client = __commonJS({
     "node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -25435,13 +25435,13 @@ ${value}\r
             const abortError = buildAbortError(abortSignal);
             return Promise.reject(abortError);
           }
-          let path3 = request.path;
+          let path2 = request.path;
           const queryString = buildQueryString(request.query || {});
           if (queryString) {
-            path3 += `?${queryString}`;
+            path2 += `?${queryString}`;
           }
           if (request.fragment) {
-            path3 += `#${request.fragment}`;
+            path2 += `#${request.fragment}`;
           }
           let auth = "";
           if (request.username != null || request.password != null) {
@@ -25450,7 +25450,7 @@ ${value}\r
             auth = `${username}:${password}@`;
           }
           const { port, method } = request;
-          const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path3}`;
+          const url = `${request.protocol}//${auth}${request.hostname}${port ? `:${port}` : ""}${path2}`;
           const body = method === "GET" || method === "HEAD" ? void 0 : request.body;
           const requestOptions = {
             body,
@@ -29603,11 +29603,11 @@ ${value}\r
             const opTraits = translateTraits(operationSchema.traits);
             if (opTraits.http) {
               request.method = opTraits.http[0];
-              const [path3, search] = opTraits.http[1].split("?");
+              const [path2, search] = opTraits.http[1].split("?");
               if (request.path == "/") {
-                request.path = path3;
+                request.path = path2;
               } else {
-                request.path += path3;
+                request.path += path2;
               }
               const traitSearchParams = new URLSearchParams(search ?? "");
               for (const [key, value] of traitSearchParams) {
@@ -31465,10 +31465,10 @@ ${longDate}
 ${credentialScope}
 ${toHex(hashedRequest)}`;
         }
-        getCanonicalPath({ path: path3 }) {
+        getCanonicalPath({ path: path2 }) {
           if (this.uriEscapePath) {
             const normalizedPathSegments = [];
-            for (const pathSegment2 of path3.split("/")) {
+            for (const pathSegment2 of path2.split("/")) {
               if (pathSegment2?.length === 0)
                 continue;
               if (pathSegment2 === ".")
@@ -31479,11 +31479,11 @@ ${toHex(hashedRequest)}`;
                 normalizedPathSegments.push(pathSegment2);
               }
             }
-            const normalizedPath = `${path3?.startsWith("/") ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && path3?.endsWith("/") ? "/" : ""}`;
+            const normalizedPath = `${path2?.startsWith("/") ? "/" : ""}${normalizedPathSegments.join("/")}${normalizedPathSegments.length > 0 && path2?.endsWith("/") ? "/" : ""}`;
             const doubleEncoded = escapeUri(normalizedPath);
             return doubleEncoded.replace(/%2F/g, "/");
           }
-          return path3;
+          return path2;
         }
         validateResolvedCredentials(credentials) {
           if (typeof credentials !== "object" || typeof credentials.accessKeyId !== "string" || typeof credentials.secretAccessKey !== "string") {
@@ -32022,9 +32022,9 @@ ${toHex(hashedRequest)}`;
         command = withCommand(command) ?? command;
         return await client.send(command, ...args);
       };
-      get = (fromObject2, path3) => {
+      get = (fromObject2, path2) => {
         let cursor = fromObject2;
-        const pathComponents = path3.split(".");
+        const pathComponents = path2.split(".");
         for (const step of pathComponents) {
           if (!cursor || typeof cursor !== "object") {
             return void 0;
@@ -33972,18 +33972,18 @@ ${toHex(hashedRequest)}`;
     "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
       import_polyfills356 = __toESM(require_polyfills());
       init_types4();
-      getAttrPathList = (path3) => {
-        const parts = path3.split(".");
+      getAttrPathList = (path2) => {
+        const parts = path2.split(".");
         const pathList = [];
         for (const part of parts) {
           const squareBracketIndex = part.indexOf("[");
           if (squareBracketIndex !== -1) {
             if (part.indexOf("]") !== part.length - 1) {
-              throw new EndpointError(`Path: '${path3}' does not end with ']'`);
+              throw new EndpointError(`Path: '${path2}' does not end with ']'`);
             }
             const arrayIndex = part.slice(squareBracketIndex + 1, -1);
             if (Number.isNaN(parseInt(arrayIndex))) {
-              throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path3}'`);
+              throw new EndpointError(`Invalid array index: '${arrayIndex}' in path: '${path2}'`);
             }
             if (squareBracketIndex !== 0) {
               pathList.push(part.slice(0, squareBracketIndex));
@@ -34005,9 +34005,9 @@ ${toHex(hashedRequest)}`;
       import_polyfills357 = __toESM(require_polyfills());
       init_types4();
       init_getAttrPathList();
-      getAttr = (value, path3) => getAttrPathList(path3).reduce((acc, index2) => {
+      getAttr = (value, path2) => getAttrPathList(path2).reduce((acc, index2) => {
         if (typeof acc !== "object") {
-          throw new EndpointError(`Index '${index2}' in '${path3}' not found in '${JSON.stringify(value)}'`);
+          throw new EndpointError(`Index '${index2}' in '${path2}' not found in '${JSON.stringify(value)}'`);
         } else if (Array.isArray(acc)) {
           const i2 = parseInt(index2);
           return acc[i2 < 0 ? acc.length + i2 : i2];
@@ -34095,8 +34095,8 @@ ${toHex(hashedRequest)}`;
               return value;
             }
             if (typeof value === "object" && "hostname" in value) {
-              const { hostname: hostname2, port, protocol: protocol2 = "", path: path3 = "", query = {} } = value;
-              const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path3}`);
+              const { hostname: hostname2, port, protocol: protocol2 = "", path: path2 = "", query = {} } = value;
+              const url = new URL(`${protocol2}//${hostname2}${port ? `:${port}` : ""}${path2}`);
               url.search = Object.entries(query).map(([k2, v2]) => `${k2}=${v2}`).join("&");
               return url;
             }
@@ -35536,8 +35536,8 @@ ${toHex(hashedRequest)}`;
                 return endpoint.url.href;
               }
               if ("hostname" in endpoint) {
-                const { protocol, hostname, port, path: path3 } = endpoint;
-                return `${protocol}//${hostname}${port ? ":" + port : ""}${path3}`;
+                const { protocol, hostname, port, path: path2 } = endpoint;
+                return `${protocol}//${hostname}${port ? ":" + port : ""}${path2}`;
               }
             }
             return endpoint;
@@ -50044,36 +50044,36 @@ ${toHex(hashedRequest)}`;
   // node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer4 = buffer.Buffer;
+      var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
+      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       }
-      SafeBuffer.prototype = Object.create(Buffer4.prototype);
-      copyProps(Buffer4, SafeBuffer);
+      SafeBuffer.prototype = Object.create(Buffer3.prototype);
+      copyProps(Buffer3, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill2, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer4(size);
+        var buf = Buffer3(size);
         if (fill2 !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill2, encoding);
@@ -50089,7 +50089,7 @@ ${toHex(hashedRequest)}`;
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer4(size);
+        return Buffer3(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -50104,13 +50104,13 @@ ${toHex(hashedRequest)}`;
   var require_browser2 = __commonJS({
     "node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
         throw new Error("Secure random number generation is not supported by this browser.\nUse Chrome, Firefox or Internet Explorer 11");
       }
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var crypto6 = window.crypto || window.msCrypto;
       if (crypto6 && crypto6.getRandomValues) {
         module.exports = randomBytes3;
@@ -50119,7 +50119,7 @@ ${toHex(hashedRequest)}`;
       }
       function randomBytes3(size, cb) {
         if (size > MAX_UINT32) throw new RangeError("requested too many random bytes");
-        var bytes = Buffer4.allocUnsafe(size);
+        var bytes = Buffer3.allocUnsafe(size);
         if (size > 0) {
           if (size > MAX_BYTES) {
             for (var generated = 0; generated < size; generated += MAX_BYTES) {
@@ -50142,7 +50142,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -50176,7 +50176,7 @@ ${toHex(hashedRequest)}`;
   var require_events = __commonJS({
     "node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -50545,7 +50545,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -50554,7 +50554,7 @@ ${toHex(hashedRequest)}`;
   var require_shams = __commonJS({
     "node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -50610,7 +50610,7 @@ ${toHex(hashedRequest)}`;
   var require_shams2 = __commonJS({
     "node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -50622,7 +50622,7 @@ ${toHex(hashedRequest)}`;
   var require_es_object_atoms = __commonJS({
     "node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -50631,7 +50631,7 @@ ${toHex(hashedRequest)}`;
   var require_es_errors = __commonJS({
     "node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -50640,7 +50640,7 @@ ${toHex(hashedRequest)}`;
   var require_eval = __commonJS({
     "node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -50649,7 +50649,7 @@ ${toHex(hashedRequest)}`;
   var require_range = __commonJS({
     "node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -50658,7 +50658,7 @@ ${toHex(hashedRequest)}`;
   var require_ref = __commonJS({
     "node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -50667,7 +50667,7 @@ ${toHex(hashedRequest)}`;
   var require_syntax = __commonJS({
     "node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -50676,7 +50676,7 @@ ${toHex(hashedRequest)}`;
   var require_type = __commonJS({
     "node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -50685,7 +50685,7 @@ ${toHex(hashedRequest)}`;
   var require_uri = __commonJS({
     "node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -50694,7 +50694,7 @@ ${toHex(hashedRequest)}`;
   var require_abs = __commonJS({
     "node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -50703,7 +50703,7 @@ ${toHex(hashedRequest)}`;
   var require_floor = __commonJS({
     "node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -50712,7 +50712,7 @@ ${toHex(hashedRequest)}`;
   var require_max = __commonJS({
     "node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -50721,7 +50721,7 @@ ${toHex(hashedRequest)}`;
   var require_min = __commonJS({
     "node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -50730,7 +50730,7 @@ ${toHex(hashedRequest)}`;
   var require_pow = __commonJS({
     "node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -50739,7 +50739,7 @@ ${toHex(hashedRequest)}`;
   var require_round = __commonJS({
     "node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -50748,7 +50748,7 @@ ${toHex(hashedRequest)}`;
   var require_isNaN = __commonJS({
     "node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -50759,7 +50759,7 @@ ${toHex(hashedRequest)}`;
   var require_sign = __commonJS({
     "node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign3(number) {
         if ($isNaN(number) || number === 0) {
@@ -50774,7 +50774,7 @@ ${toHex(hashedRequest)}`;
   var require_gOPD = __commonJS({
     "node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -50783,7 +50783,7 @@ ${toHex(hashedRequest)}`;
   var require_gopd = __commonJS({
     "node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -50800,7 +50800,7 @@ ${toHex(hashedRequest)}`;
   var require_es_define_property = __commonJS({
     "node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -50817,7 +50817,7 @@ ${toHex(hashedRequest)}`;
   var require_has_symbols = __commonJS({
     "node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -50842,7 +50842,7 @@ ${toHex(hashedRequest)}`;
   var require_Reflect_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -50851,7 +50851,7 @@ ${toHex(hashedRequest)}`;
   var require_Object_getPrototypeOf = __commonJS({
     "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -50861,7 +50861,7 @@ ${toHex(hashedRequest)}`;
   var require_implementation = __commonJS({
     "node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -50938,7 +50938,7 @@ ${toHex(hashedRequest)}`;
   var require_function_bind = __commonJS({
     "node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -50948,7 +50948,7 @@ ${toHex(hashedRequest)}`;
   var require_functionCall = __commonJS({
     "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -50957,7 +50957,7 @@ ${toHex(hashedRequest)}`;
   var require_functionApply = __commonJS({
     "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -50966,7 +50966,7 @@ ${toHex(hashedRequest)}`;
   var require_reflectApply = __commonJS({
     "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -50975,7 +50975,7 @@ ${toHex(hashedRequest)}`;
   var require_actualApply = __commonJS({
     "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -50988,7 +50988,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind_apply_helpers = __commonJS({
     "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -51006,7 +51006,7 @@ ${toHex(hashedRequest)}`;
   var require_get = __commonJS({
     "node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -51038,7 +51038,7 @@ ${toHex(hashedRequest)}`;
   var require_get_proto = __commonJS({
     "node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -51059,7 +51059,7 @@ ${toHex(hashedRequest)}`;
   var require_hasown = __commonJS({
     "node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -51071,7 +51071,7 @@ ${toHex(hashedRequest)}`;
   var require_get_intrinsic = __commonJS({
     "node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -51403,7 +51403,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bound = __commonJS({
     "node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -51427,7 +51427,7 @@ ${toHex(hashedRequest)}`;
   var require_is_arguments = __commonJS({
     "node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -51455,7 +51455,7 @@ ${toHex(hashedRequest)}`;
   var require_is_regex = __commonJS({
     "node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -51525,7 +51525,7 @@ ${toHex(hashedRequest)}`;
   var require_safe_regex_test = __commonJS({
     "node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -51545,7 +51545,7 @@ ${toHex(hashedRequest)}`;
   var require_generator_function = __commonJS({
     "node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -51559,7 +51559,7 @@ ${toHex(hashedRequest)}`;
   var require_is_generator_function = __commonJS({
     "node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -51592,7 +51592,7 @@ ${toHex(hashedRequest)}`;
   var require_is_callable = __commonJS({
     "node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -51711,7 +51711,7 @@ ${toHex(hashedRequest)}`;
   var require_for_each = __commonJS({
     "node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -51772,7 +51772,7 @@ ${toHex(hashedRequest)}`;
   var require_possible_typed_array_names = __commonJS({
     "node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -51794,7 +51794,7 @@ ${toHex(hashedRequest)}`;
   var require_available_typed_arrays = __commonJS({
     "node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -51813,7 +51813,7 @@ ${toHex(hashedRequest)}`;
   var require_define_data_property = __commonJS({
     "node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -51862,7 +51862,7 @@ ${toHex(hashedRequest)}`;
   var require_has_property_descriptors = __commonJS({
     "node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -51885,7 +51885,7 @@ ${toHex(hashedRequest)}`;
   var require_set_function_length = __commonJS({
     "node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -51939,7 +51939,7 @@ ${toHex(hashedRequest)}`;
   var require_applyBind = __commonJS({
     "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -51953,7 +51953,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind = __commonJS({
     "node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -51979,7 +51979,7 @@ ${toHex(hashedRequest)}`;
   var require_which_typed_array = __commonJS({
     "node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -52101,7 +52101,7 @@ ${toHex(hashedRequest)}`;
   var require_is_typed_array = __commonJS({
     "node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -52113,7 +52113,7 @@ ${toHex(hashedRequest)}`;
   var require_types = __commonJS({
     "node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -52343,7 +52343,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -52353,7 +52353,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util/util.js
   var require_util = __commonJS({
     "node_modules/util/util.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors2 = {};
@@ -52914,7 +52914,7 @@ ${toHex(hashedRequest)}`;
   var require_buffer_list = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -52980,12 +52980,12 @@ ${toHex(hashedRequest)}`;
         return (hint === "string" ? String : Number)(input);
       }
       var _require = require_buffer();
-      var Buffer4 = _require.Buffer;
+      var Buffer3 = _require.Buffer;
       var _require2 = require_util();
       var inspect = _require2.inspect;
       var custom = inspect && inspect.custom || "inspect";
       function copyBuffer(src, target, offset) {
-        Buffer4.prototype.copy.call(src, target, offset);
+        Buffer3.prototype.copy.call(src, target, offset);
       }
       module.exports = /* @__PURE__ */ (function() {
         function BufferList() {
@@ -53045,8 +53045,8 @@ ${toHex(hashedRequest)}`;
         }, {
           key: "concat",
           value: function concat(n2) {
-            if (this.length === 0) return Buffer4.alloc(0);
-            var ret = Buffer4.allocUnsafe(n2 >>> 0);
+            if (this.length === 0) return Buffer3.alloc(0);
+            var ret = Buffer3.allocUnsafe(n2 >>> 0);
             var p2 = this.head;
             var i2 = 0;
             while (p2) {
@@ -53110,7 +53110,7 @@ ${toHex(hashedRequest)}`;
         }, {
           key: "_getBuffer",
           value: function _getBuffer(n2) {
-            var ret = Buffer4.allocUnsafe(n2);
+            var ret = Buffer3.allocUnsafe(n2);
             var p2 = this.head;
             var c2 = 1;
             p2.data.copy(ret);
@@ -53157,7 +53157,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function destroy(err, cb) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -53247,7 +53247,7 @@ ${toHex(hashedRequest)}`;
   var require_errors_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -53357,7 +53357,7 @@ ${toHex(hashedRequest)}`;
   var require_state = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -53382,7 +53382,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -53421,7 +53421,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -53437,14 +53437,14 @@ ${toHex(hashedRequest)}`;
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser();
-      var Buffer4 = require_buffer().Buffer;
+      var Buffer3 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer4.from(chunk);
+        return Buffer3.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy();
       var _require = require_state();
@@ -53572,7 +53572,7 @@ ${toHex(hashedRequest)}`;
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer4.isBuffer(chunk)) {
+        if (isBuf && !Buffer3.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -53616,7 +53616,7 @@ ${toHex(hashedRequest)}`;
       });
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer4.from(chunk, encoding);
+          chunk = Buffer3.from(chunk, encoding);
         }
         return chunk;
       }
@@ -53893,7 +53893,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -53986,35 +53986,35 @@ ${toHex(hashedRequest)}`;
   // node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer4 = buffer.Buffer;
+      var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
+      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer4, SafeBuffer);
+      copyProps(Buffer3, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill2, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer4(size);
+        var buf = Buffer3(size);
         if (fill2 !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill2, encoding);
@@ -54030,7 +54030,7 @@ ${toHex(hashedRequest)}`;
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer4(size);
+        return Buffer3(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -54045,9 +54045,9 @@ ${toHex(hashedRequest)}`;
   var require_string_decoder = __commonJS({
     "node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer2().Buffer;
-      var isEncoding = Buffer4.isEncoding || function(encoding) {
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer2().Buffer;
+      var isEncoding = Buffer3.isEncoding || function(encoding) {
         encoding = "" + encoding;
         switch (encoding && encoding.toLowerCase()) {
           case "hex":
@@ -54095,7 +54095,7 @@ ${toHex(hashedRequest)}`;
       }
       function normalizeEncoding(enc) {
         var nenc = _normalizeEncoding(enc);
-        if (typeof nenc !== "string" && (Buffer4.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
+        if (typeof nenc !== "string" && (Buffer3.isEncoding === isEncoding || !isEncoding(enc))) throw new Error("Unknown encoding: " + enc);
         return nenc || enc;
       }
       exports.StringDecoder = StringDecoder;
@@ -54124,7 +54124,7 @@ ${toHex(hashedRequest)}`;
         }
         this.lastNeed = 0;
         this.lastTotal = 0;
-        this.lastChar = Buffer4.allocUnsafe(nb);
+        this.lastChar = Buffer3.allocUnsafe(nb);
       }
       StringDecoder.prototype.write = function(buf) {
         if (buf.length === 0) return "";
@@ -54284,7 +54284,7 @@ ${toHex(hashedRequest)}`;
   var require_end_of_stream = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once(callback2) {
         var called = false;
@@ -54374,7 +54374,7 @@ ${toHex(hashedRequest)}`;
   var require_async_iterator = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -54557,7 +54557,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -54568,7 +54568,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -54577,14 +54577,14 @@ ${toHex(hashedRequest)}`;
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser();
-      var Buffer4 = require_buffer().Buffer;
+      var Buffer3 = require_buffer().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer4.from(chunk);
+        return Buffer3.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var debugUtil = require_util();
       var debug;
@@ -54692,7 +54692,7 @@ ${toHex(hashedRequest)}`;
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer4.from(chunk, encoding);
+              chunk = Buffer3.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -54717,7 +54717,7 @@ ${toHex(hashedRequest)}`;
           if (er) {
             errorOrDestroy(stream, er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer4.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -55302,7 +55302,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -55404,7 +55404,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -55422,7 +55422,7 @@ ${toHex(hashedRequest)}`;
   var require_pipeline = __commonJS({
     "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var eos;
       function once(callback2) {
         var called = false;
@@ -55507,7 +55507,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -55586,13 +55586,13 @@ ${toHex(hashedRequest)}`;
   var require_hash_base = __commonJS({
     "node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer4.allocUnsafe(blockSize);
+        this._block = Buffer3.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -55618,18 +55618,18 @@ ${toHex(hashedRequest)}`;
         callback2(error);
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
-      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer4.prototype instanceof Uint8Array || Buffer4.TYPED_ARRAY_SUPPORT);
+      var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined" && ArrayBuffer.isView && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
       function toBuffer(data, encoding) {
-        if (data instanceof Buffer4) return data;
-        if (typeof data === "string") return Buffer4.from(data, encoding);
+        if (data instanceof Buffer3) return data;
+        if (typeof data === "string") return Buffer3.from(data, encoding);
         if (useArrayBuffer && ArrayBuffer.isView(data)) {
-          if (data.byteLength === 0) return Buffer4.alloc(0);
-          var res = Buffer4.from(data.buffer, data.byteOffset, data.byteLength);
+          if (data.byteLength === 0) return Buffer3.alloc(0);
+          var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
           if (res.byteLength === data.byteLength) return res;
         }
-        if (useUint8Array && data instanceof Uint8Array) return Buffer4.from(data);
-        if (Buffer4.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer4.from(data);
+        if (useUint8Array && data instanceof Uint8Array) return Buffer3.from(data);
+        if (Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer3.from(data);
         }
         throw new TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
       }
@@ -55675,10 +55675,10 @@ ${toHex(hashedRequest)}`;
   var require_md5 = __commonJS({
     "node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var ARRAY16 = new Array(16);
       function MD5() {
         HashBase.call(this, 64);
@@ -55775,7 +55775,7 @@ ${toHex(hashedRequest)}`;
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer4.allocUnsafe(16);
+        var buffer = Buffer3.allocUnsafe(16);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -55804,7 +55804,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55816,7 +55816,7 @@ ${toHex(hashedRequest)}`;
   var require_typed_array_buffer = __commonJS({
     "node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -55834,8 +55834,8 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer = __commonJS({
     "node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var isArray2 = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
       var isView = ArrayBuffer.isView || function isView2(obj) {
@@ -55848,35 +55848,35 @@ ${toHex(hashedRequest)}`;
       };
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = typeof ArrayBuffer !== "undefined" && typeof Uint8Array !== "undefined";
-      var useFromArrayBuffer = useArrayBuffer && (Buffer4.prototype instanceof Uint8Array || Buffer4.TYPED_ARRAY_SUPPORT);
+      var useFromArrayBuffer = useArrayBuffer && (Buffer3.prototype instanceof Uint8Array || Buffer3.TYPED_ARRAY_SUPPORT);
       module.exports = function toBuffer(data, encoding) {
-        if (Buffer4.isBuffer(data)) {
+        if (Buffer3.isBuffer(data)) {
           if (data.constructor && !("isBuffer" in data)) {
-            return Buffer4.from(data);
+            return Buffer3.from(data);
           }
           return data;
         }
         if (typeof data === "string") {
-          return Buffer4.from(data, encoding);
+          return Buffer3.from(data, encoding);
         }
         if (useArrayBuffer && isView(data)) {
           if (data.byteLength === 0) {
-            return Buffer4.alloc(0);
+            return Buffer3.alloc(0);
           }
           if (useFromArrayBuffer) {
-            var res = Buffer4.from(data.buffer, data.byteOffset, data.byteLength);
+            var res = Buffer3.from(data.buffer, data.byteOffset, data.byteLength);
             if (res.byteLength === data.byteLength) {
               return res;
             }
           }
           var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
-          var result = Buffer4.from(uint8);
+          var result = Buffer3.from(uint8);
           if (result.length === data.byteLength) {
             return result;
           }
         }
         if (useUint8Array && data instanceof Uint8Array) {
-          return Buffer4.from(data);
+          return Buffer3.from(data);
         }
         var isArr = isArray2(data);
         if (isArr) {
@@ -55887,8 +55887,8 @@ ${toHex(hashedRequest)}`;
             }
           }
         }
-        if (isArr || Buffer4.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
-          return Buffer4.from(data);
+        if (isArr || Buffer3.isBuffer(data) && data.constructor && typeof data.constructor.isBuffer === "function" && data.constructor.isBuffer(data)) {
+          return Buffer3.from(data);
         }
         throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
       };
@@ -55899,14 +55899,14 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding) {
-        if (typeof thing === "string" || Buffer4.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError('The "data" argument must be a string, a Buffer, a Uint8Array, or a DataView');
@@ -55918,7 +55918,7 @@ ${toHex(hashedRequest)}`;
   var require_process_nextick_args = __commonJS({
     "node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -55963,7 +55963,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55974,7 +55974,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -55982,35 +55982,35 @@ ${toHex(hashedRequest)}`;
   // node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var buffer = require_buffer();
-      var Buffer4 = buffer.Buffer;
+      var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
         for (var key in src) {
           dst[key] = src[key];
         }
       }
-      if (Buffer4.from && Buffer4.alloc && Buffer4.allocUnsafe && Buffer4.allocUnsafeSlow) {
+      if (Buffer3.from && Buffer3.alloc && Buffer3.allocUnsafe && Buffer3.allocUnsafeSlow) {
         module.exports = buffer;
       } else {
         copyProps(buffer, exports);
         exports.Buffer = SafeBuffer;
       }
       function SafeBuffer(arg, encodingOrOffset, length) {
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       }
-      copyProps(Buffer4, SafeBuffer);
+      copyProps(Buffer3, SafeBuffer);
       SafeBuffer.from = function(arg, encodingOrOffset, length) {
         if (typeof arg === "number") {
           throw new TypeError("Argument must not be a number");
         }
-        return Buffer4(arg, encodingOrOffset, length);
+        return Buffer3(arg, encodingOrOffset, length);
       };
       SafeBuffer.alloc = function(size, fill2, encoding) {
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        var buf = Buffer4(size);
+        var buf = Buffer3(size);
         if (fill2 !== void 0) {
           if (typeof encoding === "string") {
             buf.fill(fill2, encoding);
@@ -56026,7 +56026,7 @@ ${toHex(hashedRequest)}`;
         if (typeof size !== "number") {
           throw new TypeError("Argument must be a number");
         }
-        return Buffer4(size);
+        return Buffer3(size);
       };
       SafeBuffer.allocUnsafeSlow = function(size) {
         if (typeof size !== "number") {
@@ -56040,7 +56040,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function isArray2(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -56112,13 +56112,13 @@ ${toHex(hashedRequest)}`;
   var require_BufferList = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
         }
       }
-      var Buffer4 = require_safe_buffer3().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var util = require_util();
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
@@ -56165,8 +56165,8 @@ ${toHex(hashedRequest)}`;
           return ret;
         };
         BufferList.prototype.concat = function concat(n2) {
-          if (this.length === 0) return Buffer4.alloc(0);
-          var ret = Buffer4.allocUnsafe(n2 >>> 0);
+          if (this.length === 0) return Buffer3.alloc(0);
+          var ret = Buffer3.allocUnsafe(n2 >>> 0);
           var p2 = this.head;
           var i2 = 0;
           while (p2) {
@@ -56191,7 +56191,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy2 = __commonJS({
     "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb) {
         var _this = this;
@@ -56261,7 +56261,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -56281,14 +56281,14 @@ ${toHex(hashedRequest)}`;
         deprecate: require_browser3()
       };
       var Stream = require_stream_browser2();
-      var Buffer4 = require_safe_buffer3().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer4.from(chunk);
+        return Buffer3.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var destroyImpl = require_destroy2();
       util.inherits(Writable, Stream);
@@ -56410,7 +56410,7 @@ ${toHex(hashedRequest)}`;
         var state = this._writableState;
         var ret = false;
         var isBuf = !state.objectMode && _isUint8Array(chunk);
-        if (isBuf && !Buffer4.isBuffer(chunk)) {
+        if (isBuf && !Buffer3.isBuffer(chunk)) {
           chunk = _uint8ArrayToBuffer(chunk);
         }
         if (typeof encoding === "function") {
@@ -56446,7 +56446,7 @@ ${toHex(hashedRequest)}`;
       };
       function decodeChunk(state, chunk, encoding) {
         if (!state.objectMode && state.decodeStrings !== false && typeof chunk === "string") {
-          chunk = Buffer4.from(chunk, encoding);
+          chunk = Buffer3.from(chunk, encoding);
         }
         return chunk;
       }
@@ -56702,7 +56702,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -56780,7 +56780,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray2 = require_isarray2();
@@ -56791,14 +56791,14 @@ ${toHex(hashedRequest)}`;
         return emitter.listeners(type).length;
       };
       var Stream = require_stream_browser2();
-      var Buffer4 = require_safe_buffer3().Buffer;
+      var Buffer3 = require_safe_buffer3().Buffer;
       var OurUint8Array = (typeof window !== "undefined" ? window : typeof window !== "undefined" ? window : typeof self !== "undefined" ? self : {}).Uint8Array || function() {
       };
       function _uint8ArrayToBuffer(chunk) {
-        return Buffer4.from(chunk);
+        return Buffer3.from(chunk);
       }
       function _isUint8Array(obj) {
-        return Buffer4.isBuffer(obj) || obj instanceof OurUint8Array;
+        return Buffer3.isBuffer(obj) || obj instanceof OurUint8Array;
       }
       var util = Object.create(require_util2());
       util.inherits = require_inherits_browser();
@@ -56897,7 +56897,7 @@ ${toHex(hashedRequest)}`;
           if (typeof chunk === "string") {
             encoding = encoding || state.defaultEncoding;
             if (encoding !== state.encoding) {
-              chunk = Buffer4.from(chunk, encoding);
+              chunk = Buffer3.from(chunk, encoding);
               encoding = "";
             }
             skipChunkCheck = true;
@@ -56921,7 +56921,7 @@ ${toHex(hashedRequest)}`;
           if (er) {
             stream.emit("error", er);
           } else if (state.objectMode || chunk && chunk.length > 0) {
-            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer4.prototype) {
+            if (typeof chunk !== "string" && !state.objectMode && Object.getPrototypeOf(chunk) !== Buffer3.prototype) {
               chunk = _uint8ArrayToBuffer(chunk);
             }
             if (addToFront) {
@@ -57413,7 +57413,7 @@ ${toHex(hashedRequest)}`;
         return ret;
       }
       function copyFromBuffer(n2, list) {
-        var ret = Buffer4.allocUnsafe(n2);
+        var ret = Buffer3.allocUnsafe(n2);
         var p2 = list.head;
         var c2 = 1;
         p2.data.copy(ret);
@@ -57467,7 +57467,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -57568,7 +57568,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough2 = __commonJS({
     "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -57587,7 +57587,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -57602,14 +57602,14 @@ ${toHex(hashedRequest)}`;
   var require_hash_base2 = __commonJS({
     "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
       var inherits = require_inherits_browser();
       function HashBase(blockSize) {
         Transform.call(this);
-        this._block = Buffer4.allocUnsafe(blockSize);
+        this._block = Buffer3.allocUnsafe(blockSize);
         this._blockSize = blockSize;
         this._blockOffset = 0;
         this._length = [0, 0, 0, 0];
@@ -57694,8 +57694,8 @@ ${toHex(hashedRequest)}`;
   var require_ripemd160 = __commonJS({
     "node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
       var ARRAY16 = new Array(16);
@@ -58120,7 +58120,7 @@ ${toHex(hashedRequest)}`;
         this._block.writeUInt32LE(this._length[0], 56);
         this._block.writeUInt32LE(this._length[1], 60);
         this._update();
-        var buffer = Buffer4.alloc ? Buffer4.alloc(20) : new Buffer4(20);
+        var buffer = Buffer3.alloc ? Buffer3.alloc(20) : new Buffer3(20);
         buffer.writeInt32LE(this._a, 0);
         buffer.writeInt32LE(this._b, 4);
         buffer.writeInt32LE(this._c, 8);
@@ -58136,11 +58136,11 @@ ${toHex(hashedRequest)}`;
   var require_hash = __commonJS({
     "node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
-        this._block = Buffer4.alloc(blockSize);
+        this._block = Buffer3.alloc(blockSize);
         this._finalSize = finalSize;
         this._blockSize = blockSize;
         this._len = 0;
@@ -58198,10 +58198,10 @@ ${toHex(hashedRequest)}`;
   var require_sha = __commonJS({
     "node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -58267,7 +58267,7 @@ ${toHex(hashedRequest)}`;
         this._e = e2 + this._e | 0;
       };
       Sha.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(20);
+        var H2 = Buffer3.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -58283,10 +58283,10 @@ ${toHex(hashedRequest)}`;
   var require_sha1 = __commonJS({
     "node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var K2 = [
         1518500249,
         1859775393,
@@ -58355,7 +58355,7 @@ ${toHex(hashedRequest)}`;
         this._e = e2 + this._e | 0;
       };
       Sha13.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(20);
+        var H2 = Buffer3.allocUnsafe(20);
         H2.writeInt32BE(this._a | 0, 0);
         H2.writeInt32BE(this._b | 0, 4);
         H2.writeInt32BE(this._c | 0, 8);
@@ -58371,10 +58371,10 @@ ${toHex(hashedRequest)}`;
   var require_sha256 = __commonJS({
     "node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         1899447441,
@@ -58515,7 +58515,7 @@ ${toHex(hashedRequest)}`;
         this._h = h3 + this._h | 0;
       };
       Sha2564.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(32);
+        var H2 = Buffer3.allocUnsafe(32);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -58534,11 +58534,11 @@ ${toHex(hashedRequest)}`;
   var require_sha224 = __commonJS({
     "node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var W2 = new Array(64);
       function Sha224() {
         this.init();
@@ -58558,7 +58558,7 @@ ${toHex(hashedRequest)}`;
         return this;
       };
       Sha224.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(28);
+        var H2 = Buffer3.allocUnsafe(28);
         H2.writeInt32BE(this._a, 0);
         H2.writeInt32BE(this._b, 4);
         H2.writeInt32BE(this._c, 8);
@@ -58576,10 +58576,10 @@ ${toHex(hashedRequest)}`;
   var require_sha512 = __commonJS({
     "node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var K2 = [
         1116352408,
         3609767458,
@@ -58897,7 +58897,7 @@ ${toHex(hashedRequest)}`;
         this._hh = this._hh + hh2 + getCarry(this._hl, hl) | 0;
       };
       Sha512.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(64);
+        var H2 = Buffer3.allocUnsafe(64);
         function writeInt64BE(h3, l2, offset) {
           H2.writeInt32BE(h3, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -58920,11 +58920,11 @@ ${toHex(hashedRequest)}`;
   var require_sha384 = __commonJS({
     "node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var W2 = new Array(160);
       function Sha384() {
         this.init();
@@ -58952,7 +58952,7 @@ ${toHex(hashedRequest)}`;
         return this;
       };
       Sha384.prototype._hash = function() {
-        var H2 = Buffer4.allocUnsafe(48);
+        var H2 = Buffer3.allocUnsafe(48);
         function writeInt64BE(h3, l2, offset) {
           H2.writeInt32BE(h3, offset);
           H2.writeInt32BE(l2, offset + 4);
@@ -58973,7 +58973,7 @@ ${toHex(hashedRequest)}`;
   var require_sha2 = __commonJS({
     "node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -58995,8 +58995,8 @@ ${toHex(hashedRequest)}`;
   var require_cipher_base = __commonJS({
     "node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
       var inherits = require_inherits_browser();
@@ -59063,7 +59063,7 @@ ${toHex(hashedRequest)}`;
         done(err);
       };
       CipherBase.prototype._finalOrDigest = function(outputEnc) {
-        var outData = this.__final() || Buffer4.alloc(0);
+        var outData = this.__final() || Buffer3.alloc(0);
         if (outputEnc) {
           outData = this._toString(outData, outputEnc, true);
         }
@@ -59091,7 +59091,7 @@ ${toHex(hashedRequest)}`;
   var require_browser4 = __commonJS({
     "node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -59121,26 +59121,26 @@ ${toHex(hashedRequest)}`;
   var require_legacy = __commonJS({
     "node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
-      var ZEROS = Buffer4.alloc(128);
+      var ZEROS = Buffer3.alloc(128);
       var blocksize = 64;
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer4.from(key);
+          key = Buffer3.from(key);
         }
         this._alg = alg;
         this._key = key;
         if (key.length > blocksize) {
           key = alg(key);
         } else if (key.length < blocksize) {
-          key = Buffer4.concat([key, ZEROS], blocksize);
+          key = Buffer3.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer4.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer4.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -59152,8 +59152,8 @@ ${toHex(hashedRequest)}`;
         this._hash.push(data);
       };
       Hmac.prototype._final = function() {
-        var h3 = this._alg(Buffer4.concat(this._hash));
-        return this._alg(Buffer4.concat([this._opad, h3]));
+        var h3 = this._alg(Buffer3.concat(this._hash));
+        return this._alg(Buffer3.concat([this._opad, h3]));
       };
       module.exports = Hmac;
     }
@@ -59162,7 +59162,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -59174,19 +59174,19 @@ ${toHex(hashedRequest)}`;
   var require_browser5 = __commonJS({
     "node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var ZEROS = Buffer4.alloc(128);
+      var ZEROS = Buffer3.alloc(128);
       function Hmac(alg, key) {
         Base.call(this, "digest");
         if (typeof key === "string") {
-          key = Buffer4.from(key);
+          key = Buffer3.from(key);
         }
         var blocksize = alg === "sha512" || alg === "sha384" ? 128 : 64;
         this._alg = alg;
@@ -59195,10 +59195,10 @@ ${toHex(hashedRequest)}`;
           var hash = alg === "rmd160" ? new RIPEMD160() : sha(alg);
           key = hash.update(key).digest();
         } else if (key.length < blocksize) {
-          key = Buffer4.concat([key, ZEROS], blocksize);
+          key = Buffer3.concat([key, ZEROS], blocksize);
         }
-        var ipad = this._ipad = Buffer4.allocUnsafe(blocksize);
-        var opad = this._opad = Buffer4.allocUnsafe(blocksize);
+        var ipad = this._ipad = Buffer3.allocUnsafe(blocksize);
+        var opad = this._opad = Buffer3.allocUnsafe(blocksize);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
@@ -59390,7 +59390,7 @@ ${toHex(hashedRequest)}`;
   var require_algos = __commonJS({
     "node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -59399,7 +59399,7 @@ ${toHex(hashedRequest)}`;
   var require_precondition = __commonJS({
     "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -59423,7 +59423,7 @@ ${toHex(hashedRequest)}`;
   var require_default_encoding = __commonJS({
     "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -59442,14 +59442,14 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer3 = __commonJS({
     "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
       var useArrayBuffer = useUint8Array && typeof ArrayBuffer !== "undefined";
       var isView = useArrayBuffer && ArrayBuffer.isView;
       module.exports = function(thing, encoding, name) {
-        if (typeof thing === "string" || Buffer4.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
+        if (typeof thing === "string" || Buffer3.isBuffer(thing) || useUint8Array && thing instanceof Uint8Array || isView && isView(thing)) {
           return toBuffer(thing, encoding);
         }
         throw new TypeError(name + " must be a string, a Buffer, a Uint8Array, or a DataView");
@@ -59461,15 +59461,15 @@ ${toHex(hashedRequest)}`;
   var require_sync_browser = __commonJS({
     "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var toBuffer = require_to_buffer3();
-      var ZEROS = Buffer4.alloc(128);
+      var ZEROS = Buffer3.alloc(128);
       var sizes = {
         __proto__: null,
         md5: 16,
@@ -59512,15 +59512,15 @@ ${toHex(hashedRequest)}`;
         if (key.length > blocksize) {
           key = hash(key);
         } else if (key.length < blocksize) {
-          key = Buffer4.concat([key, ZEROS], blocksize);
+          key = Buffer3.concat([key, ZEROS], blocksize);
         }
-        var ipad = Buffer4.allocUnsafe(blocksize + sizes[alg]);
-        var opad = Buffer4.allocUnsafe(blocksize + sizes[alg]);
+        var ipad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
+        var opad = Buffer3.allocUnsafe(blocksize + sizes[alg]);
         for (var i2 = 0; i2 < blocksize; i2++) {
           ipad[i2] = key[i2] ^ 54;
           opad[i2] = key[i2] ^ 92;
         }
-        var ipad1 = Buffer4.allocUnsafe(blocksize + saltLen + 4);
+        var ipad1 = Buffer3.allocUnsafe(blocksize + saltLen + 4);
         ipad.copy(ipad1, 0, 0, blocksize);
         this.ipad1 = ipad1;
         this.ipad2 = ipad;
@@ -59547,8 +59547,8 @@ ${toHex(hashedRequest)}`;
           throw new TypeError("Digest algorithm not supported: " + digest);
         }
         var hmac2 = new Hmac(mappedDigest, password, salt.length);
-        var DK = Buffer4.allocUnsafe(keylen);
-        var block1 = Buffer4.allocUnsafe(salt.length + 4);
+        var DK = Buffer3.allocUnsafe(keylen);
+        var block1 = Buffer3.allocUnsafe(salt.length + 4);
         salt.copy(block1, 0, 0, salt.length);
         var destPos = 0;
         var hLen = size;
@@ -59576,8 +59576,8 @@ ${toHex(hashedRequest)}`;
   var require_async = __commonJS({
     "node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
       var sync = require_sync_browser();
@@ -59623,7 +59623,7 @@ ${toHex(hashedRequest)}`;
             }
           }, key, length << 3);
         }).then(function(res) {
-          return Buffer4.from(res);
+          return Buffer3.from(res);
         });
       }
       function checkNative(algo) {
@@ -59636,7 +59636,7 @@ ${toHex(hashedRequest)}`;
         if (checks[algo] !== void 0) {
           return checks[algo];
         }
-        ZERO_BUF = ZERO_BUF || Buffer4.alloc(8);
+        ZERO_BUF = ZERO_BUF || Buffer3.alloc(8);
         var prom = browserPbkdf2(ZERO_BUF, ZERO_BUF, 10, 128, algo).then(
           function() {
             return true;
@@ -59699,7 +59699,7 @@ ${toHex(hashedRequest)}`;
   var require_browser6 = __commonJS({
     "node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -59709,7 +59709,7 @@ ${toHex(hashedRequest)}`;
   var require_utils = __commonJS({
     "node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -60475,7 +60475,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -60492,7 +60492,7 @@ ${toHex(hashedRequest)}`;
   var require_cipher = __commonJS({
     "node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -60601,7 +60601,7 @@ ${toHex(hashedRequest)}`;
   var require_des = __commonJS({
     "node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -60729,7 +60729,7 @@ ${toHex(hashedRequest)}`;
   var require_cbc = __commonJS({
     "node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -60785,7 +60785,7 @@ ${toHex(hashedRequest)}`;
   var require_ede = __commonJS({
     "node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -60834,7 +60834,7 @@ ${toHex(hashedRequest)}`;
   var require_des2 = __commonJS({
     "node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -60846,11 +60846,11 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var modes = {
         "des-ede3-cbc": des.CBC.instantiate(des.EDE),
         "des-ede3": des.EDE,
@@ -60874,15 +60874,15 @@ ${toHex(hashedRequest)}`;
           type = "encrypt";
         }
         var key = opts.key;
-        if (!Buffer4.isBuffer(key)) {
-          key = Buffer4.from(key);
+        if (!Buffer3.isBuffer(key)) {
+          key = Buffer3.from(key);
         }
         if (modeName === "des-ede" || modeName === "des-ede-cbc") {
-          key = Buffer4.concat([key, key.slice(0, 8)]);
+          key = Buffer3.concat([key, key.slice(0, 8)]);
         }
         var iv = opts.iv;
-        if (!Buffer4.isBuffer(iv)) {
-          iv = Buffer4.from(iv);
+        if (!Buffer3.isBuffer(iv)) {
+          iv = Buffer3.from(iv);
         }
         this._des = mode.create({
           key,
@@ -60891,10 +60891,10 @@ ${toHex(hashedRequest)}`;
         });
       }
       DES.prototype._update = function(data) {
-        return Buffer4.from(this._des.update(data));
+        return Buffer3.from(this._des.update(data));
       };
       DES.prototype._final = function() {
-        return Buffer4.from(this._des.final());
+        return Buffer3.from(this._des.final());
       };
     }
   });
@@ -60902,7 +60902,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -60915,7 +60915,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -60930,7 +60930,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -60949,30 +60949,30 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
         var len = data.length;
         var out = xor(data, self2._cache);
         self2._cache = self2._cache.slice(len);
-        self2._prev = Buffer4.concat([self2._prev, decrypt ? data : out]);
+        self2._prev = Buffer3.concat([self2._prev, decrypt ? data : out]);
         return out;
       }
       exports.encrypt = function(self2, data, decrypt) {
-        var out = Buffer4.allocUnsafe(0);
+        var out = Buffer3.allocUnsafe(0);
         var len;
         while (data.length) {
           if (self2._cache.length === 0) {
             self2._cache = self2._cipher.encryptBlock(self2._prev);
-            self2._prev = Buffer4.allocUnsafe(0);
+            self2._prev = Buffer3.allocUnsafe(0);
           }
           if (self2._cache.length <= data.length) {
             len = self2._cache.length;
-            out = Buffer4.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
+            out = Buffer3.concat([out, encryptStart(self2, data.slice(0, len), decrypt)]);
             data = data.slice(len);
           } else {
-            out = Buffer4.concat([out, encryptStart(self2, data, decrypt)]);
+            out = Buffer3.concat([out, encryptStart(self2, data, decrypt)]);
             break;
           }
         }
@@ -60984,20 +60984,20 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
         var out = pad[0] ^ byteParam;
-        self2._prev = Buffer4.concat([
+        self2._prev = Buffer3.concat([
           self2._prev.slice(1),
-          Buffer4.from([decrypt ? byteParam : out])
+          Buffer3.from([decrypt ? byteParam : out])
         ]);
         return out;
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer4.allocUnsafe(len);
+        var out = Buffer3.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -61010,8 +61010,8 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
         var i2 = -1;
@@ -61030,8 +61030,8 @@ ${toHex(hashedRequest)}`;
       function shiftIn(buffer, value) {
         var len = buffer.length;
         var i2 = -1;
-        var out = Buffer4.allocUnsafe(buffer.length);
-        buffer = Buffer4.concat([buffer, Buffer4.from([value])]);
+        var out = Buffer3.allocUnsafe(buffer.length);
+        buffer = Buffer3.concat([buffer, Buffer3.from([value])]);
         while (++i2 < len) {
           out[i2] = buffer[i2] << 1 | buffer[i2 + 1] >> 7;
         }
@@ -61039,7 +61039,7 @@ ${toHex(hashedRequest)}`;
       }
       exports.encrypt = function(self2, chunk, decrypt) {
         var len = chunk.length;
-        var out = Buffer4.allocUnsafe(len);
+        var out = Buffer3.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           out[i2] = encryptByte(self2, chunk[i2], decrypt);
@@ -61052,7 +61052,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -61072,7 +61072,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -61094,9 +61094,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
       function getBlock(self2) {
         var out = self2._cipher.encryptBlockRaw(self2._prev);
@@ -61107,9 +61107,9 @@ ${toHex(hashedRequest)}`;
       exports.encrypt = function(self2, chunk) {
         var chunkNum = Math.ceil(chunk.length / blockSize);
         var start = self2._cache.length;
-        self2._cache = Buffer4.concat([
+        self2._cache = Buffer3.concat([
           self2._cache,
-          Buffer4.allocUnsafe(chunkNum * blockSize)
+          Buffer3.allocUnsafe(chunkNum * blockSize)
         ]);
         for (var i2 = 0; i2 < chunkNum; i2++) {
           var out = getBlock(self2);
@@ -61326,7 +61326,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -61349,10 +61349,10 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
-        if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
+        if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
         var len = buf.length / 4 | 0;
         var out = new Array(len);
         for (var i2 = 0; i2 < len; i2++) {
@@ -61492,7 +61492,7 @@ ${toHex(hashedRequest)}`;
       };
       AES.prototype.encryptBlock = function(M2) {
         var out = this.encryptBlockRaw(M2);
-        var buf = Buffer4.allocUnsafe(16);
+        var buf = Buffer3.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[1], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -61505,7 +61505,7 @@ ${toHex(hashedRequest)}`;
         M2[1] = M2[3];
         M2[3] = m1;
         var out = cryptBlock(M2, this._invKeySchedule, G2.INV_SUB_MIX, G2.INV_SBOX, this._nRounds);
-        var buf = Buffer4.allocUnsafe(16);
+        var buf = Buffer3.allocUnsafe(16);
         buf.writeUInt32BE(out[0], 0);
         buf.writeUInt32BE(out[3], 4);
         buf.writeUInt32BE(out[2], 8);
@@ -61524,9 +61524,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
-      var ZEROES = Buffer4.alloc(16, 0);
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
+      var ZEROES = Buffer3.alloc(16, 0);
       function toArray(buf) {
         return [
           buf.readUInt32BE(0),
@@ -61536,7 +61536,7 @@ ${toHex(hashedRequest)}`;
         ];
       }
       function fromArray(out) {
-        var buf = Buffer4.allocUnsafe(16);
+        var buf = Buffer3.allocUnsafe(16);
         buf.writeUInt32BE(out[0] >>> 0, 0);
         buf.writeUInt32BE(out[1] >>> 0, 4);
         buf.writeUInt32BE(out[2] >>> 0, 8);
@@ -61545,8 +61545,8 @@ ${toHex(hashedRequest)}`;
       }
       function GHASH(key) {
         this.h = key;
-        this.state = Buffer4.alloc(16, 0);
-        this.cache = Buffer4.allocUnsafe(0);
+        this.state = Buffer3.alloc(16, 0);
+        this.cache = Buffer3.allocUnsafe(0);
       }
       GHASH.prototype.ghash = function(block) {
         var i2 = -1;
@@ -61580,7 +61580,7 @@ ${toHex(hashedRequest)}`;
         this.state = fromArray(Zi);
       };
       GHASH.prototype.update = function(buf) {
-        this.cache = Buffer4.concat([this.cache, buf]);
+        this.cache = Buffer3.concat([this.cache, buf]);
         var chunk;
         while (this.cache.length >= 16) {
           chunk = this.cache.slice(0, 16);
@@ -61590,7 +61590,7 @@ ${toHex(hashedRequest)}`;
       };
       GHASH.prototype.final = function(abl, bl) {
         if (this.cache.length) {
-          this.ghash(Buffer4.concat([this.cache, ZEROES], 16));
+          this.ghash(Buffer3.concat([this.cache, ZEROES], 16));
         }
         this.ghash(fromArray([0, abl, 0, bl]));
         return this.state;
@@ -61602,9 +61602,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       var GHASH = require_ghash();
@@ -61621,8 +61621,8 @@ ${toHex(hashedRequest)}`;
       }
       function calcIv(self2, iv, ck) {
         if (iv.length === 12) {
-          self2._finID = Buffer4.concat([iv, Buffer4.from([0, 0, 0, 1])]);
-          return Buffer4.concat([iv, Buffer4.from([0, 0, 0, 2])]);
+          self2._finID = Buffer3.concat([iv, Buffer3.from([0, 0, 0, 1])]);
+          return Buffer3.concat([iv, Buffer3.from([0, 0, 0, 2])]);
         }
         var ghash = new GHASH(ck);
         var len = iv.length;
@@ -61630,28 +61630,28 @@ ${toHex(hashedRequest)}`;
         ghash.update(iv);
         if (toPad) {
           toPad = 16 - toPad;
-          ghash.update(Buffer4.alloc(toPad, 0));
+          ghash.update(Buffer3.alloc(toPad, 0));
         }
-        ghash.update(Buffer4.alloc(8, 0));
+        ghash.update(Buffer3.alloc(8, 0));
         var ivBits = len * 8;
-        var tail = Buffer4.alloc(8);
+        var tail = Buffer3.alloc(8);
         tail.writeUIntBE(ivBits, 0, 8);
         ghash.update(tail);
         self2._finID = ghash.state;
-        var out = Buffer4.from(self2._finID);
+        var out = Buffer3.from(self2._finID);
         incr32(out);
         return out;
       }
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
-        var h3 = Buffer4.alloc(4, 0);
+        var h3 = Buffer3.alloc(4, 0);
         this._cipher = new aes.AES(key);
         var ck = this._cipher.encryptBlock(h3);
         this._ghash = new GHASH(ck);
         iv = calcIv(this, iv, ck);
-        this._prev = Buffer4.from(iv);
-        this._cache = Buffer4.allocUnsafe(0);
-        this._secCache = Buffer4.allocUnsafe(0);
+        this._prev = Buffer3.from(iv);
+        this._cache = Buffer3.allocUnsafe(0);
+        this._secCache = Buffer3.allocUnsafe(0);
         this._decrypt = decrypt;
         this._alen = 0;
         this._len = 0;
@@ -61664,7 +61664,7 @@ ${toHex(hashedRequest)}`;
         if (!this._called && this._alen) {
           var rump = 16 - this._alen % 16;
           if (rump < 16) {
-            rump = Buffer4.alloc(rump, 0);
+            rump = Buffer3.alloc(rump, 0);
             this._ghash.update(rump);
           }
         }
@@ -61686,7 +61686,7 @@ ${toHex(hashedRequest)}`;
         this._cipher.scrub();
       };
       StreamCipher.prototype.getAuthTag = function getAuthTag() {
-        if (this._decrypt || !Buffer4.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
+        if (this._decrypt || !Buffer3.isBuffer(this._authTag)) throw new Error("Attempting to get auth tag in unsupported state");
         return this._authTag;
       };
       StreamCipher.prototype.setAuthTag = function setAuthTag(tag) {
@@ -61705,17 +61705,17 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var aes = require_aes();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
       var inherits = require_inherits_browser();
       function StreamCipher(mode, key, iv, decrypt) {
         Transform.call(this);
         this._cipher = new aes.AES(key);
-        this._prev = Buffer4.from(iv);
-        this._cache = Buffer4.allocUnsafe(0);
-        this._secCache = Buffer4.allocUnsafe(0);
+        this._prev = Buffer3.from(iv);
+        this._cache = Buffer3.allocUnsafe(0);
+        this._secCache = Buffer3.allocUnsafe(0);
         this._decrypt = decrypt;
         this._mode = mode;
       }
@@ -61733,19 +61733,19 @@ ${toHex(hashedRequest)}`;
   // node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
-        if (!Buffer4.isBuffer(password)) password = Buffer4.from(password, "binary");
+        if (!Buffer3.isBuffer(password)) password = Buffer3.from(password, "binary");
         if (salt) {
-          if (!Buffer4.isBuffer(salt)) salt = Buffer4.from(salt, "binary");
+          if (!Buffer3.isBuffer(salt)) salt = Buffer3.from(salt, "binary");
           if (salt.length !== 8) throw new RangeError("salt should be Buffer with 8 byte length");
         }
         var keyLen = keyBits / 8;
-        var key = Buffer4.alloc(keyLen);
-        var iv = Buffer4.alloc(ivLen || 0);
-        var tmp = Buffer4.alloc(0);
+        var key = Buffer3.alloc(keyLen);
+        var iv = Buffer3.alloc(ivLen || 0);
+        var tmp = Buffer3.alloc(0);
         while (keyLen > 0 || ivLen > 0) {
           var hash = new MD5();
           hash.update(tmp);
@@ -61776,10 +61776,10 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
       var aes = require_aes();
@@ -61789,7 +61789,7 @@ ${toHex(hashedRequest)}`;
         Transform.call(this);
         this._cache = new Splitter();
         this._cipher = new aes.AES(key);
-        this._prev = Buffer4.from(iv);
+        this._prev = Buffer3.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -61803,9 +61803,9 @@ ${toHex(hashedRequest)}`;
           thing = this._mode.encrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer4.concat(out);
+        return Buffer3.concat(out);
       };
-      var PADDING = Buffer4.alloc(16, 16);
+      var PADDING = Buffer3.alloc(16, 16);
       Cipher.prototype._final = function() {
         var chunk = this._cache.flush();
         if (this._autopadding) {
@@ -61823,10 +61823,10 @@ ${toHex(hashedRequest)}`;
         return this;
       };
       function Splitter() {
-        this.cache = Buffer4.allocUnsafe(0);
+        this.cache = Buffer3.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer4.concat([this.cache, data]);
+        this.cache = Buffer3.concat([this.cache, data]);
       };
       Splitter.prototype.get = function() {
         if (this.cache.length > 15) {
@@ -61838,19 +61838,19 @@ ${toHex(hashedRequest)}`;
       };
       Splitter.prototype.flush = function() {
         var len = 16 - this.cache.length;
-        var padBuff = Buffer4.allocUnsafe(len);
+        var padBuff = Buffer3.allocUnsafe(len);
         var i2 = -1;
         while (++i2 < len) {
           padBuff.writeUInt8(len, i2);
         }
-        return Buffer4.concat([this.cache, padBuff]);
+        return Buffer3.concat([this.cache, padBuff]);
       };
       function createCipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof password === "string") password = Buffer4.from(password);
+        if (typeof password === "string") password = Buffer3.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
-        if (typeof iv === "string") iv = Buffer4.from(iv);
+        if (typeof iv === "string") iv = Buffer3.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv);
@@ -61873,9 +61873,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       var MODES = require_modes();
       var StreamCipher = require_streamCipher();
       var Transform = require_cipher_base();
@@ -61887,7 +61887,7 @@ ${toHex(hashedRequest)}`;
         this._cache = new Splitter();
         this._last = void 0;
         this._cipher = new aes.AES(key);
-        this._prev = Buffer4.from(iv);
+        this._prev = Buffer3.from(iv);
         this._mode = mode;
         this._autopadding = true;
       }
@@ -61901,7 +61901,7 @@ ${toHex(hashedRequest)}`;
           thing = this._mode.decrypt(this, chunk);
           out.push(thing);
         }
-        return Buffer4.concat(out);
+        return Buffer3.concat(out);
       };
       Decipher.prototype._final = function() {
         var chunk = this._cache.flush();
@@ -61916,10 +61916,10 @@ ${toHex(hashedRequest)}`;
         return this;
       };
       function Splitter() {
-        this.cache = Buffer4.allocUnsafe(0);
+        this.cache = Buffer3.allocUnsafe(0);
       }
       Splitter.prototype.add = function(data) {
-        this.cache = Buffer4.concat([this.cache, data]);
+        this.cache = Buffer3.concat([this.cache, data]);
       };
       Splitter.prototype.get = function(autoPadding) {
         var out;
@@ -61958,9 +61958,9 @@ ${toHex(hashedRequest)}`;
       function createDecipheriv2(suite, password, iv) {
         var config = MODES[suite.toLowerCase()];
         if (!config) throw new TypeError("invalid suite type");
-        if (typeof iv === "string") iv = Buffer4.from(iv);
+        if (typeof iv === "string") iv = Buffer3.from(iv);
         if (config.mode !== "GCM" && iv.length !== config.iv) throw new TypeError("invalid iv length " + iv.length);
-        if (typeof password === "string") password = Buffer4.from(password);
+        if (typeof password === "string") password = Buffer3.from(password);
         if (password.length !== config.key / 8) throw new TypeError("invalid key length " + password.length);
         if (config.type === "stream") {
           return new StreamCipher(config.module, password, iv, true);
@@ -61983,7 +61983,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -62001,7 +62001,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -62032,7 +62032,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -62094,7 +62094,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -62131,12 +62131,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -62571,8 +62571,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -64906,7 +64906,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -64943,12 +64943,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -65383,8 +65383,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -67718,7 +67718,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -67776,7 +67776,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var bn = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -67868,7 +67868,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var randomBytes3 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -68005,7 +68005,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -68152,7 +68152,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -68192,7 +68192,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -68229,12 +68229,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -68691,9 +68691,9 @@ ${toHex(hashedRequest)}`;
         BN.prototype.toJSON = function toJSON() {
           return this.toString(16, 2);
         };
-        if (Buffer4) {
+        if (Buffer3) {
           BN.prototype.toBuffer = function toBuffer(endian, length) {
-            return this.toArrayLike(Buffer4, endian, length);
+            return this.toArrayLike(Buffer3, endian, length);
           };
         }
         BN.prototype.toArray = function toArray(endian, length) {
@@ -71085,10 +71085,10 @@ ${toHex(hashedRequest)}`;
   var require_browserify_rsa = __commonJS({
     "node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes3 = require_browser2();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       function getr(priv) {
         var len = priv.modulus.byteLength();
         var r2;
@@ -71114,7 +71114,7 @@ ${toHex(hashedRequest)}`;
         var m1 = c1.redPow(priv.exponent1).fromRed();
         var m2 = c2.redPow(priv.exponent2).fromRed();
         var h3 = m1.isub(m2).imul(qinv).umod(p2).imul(q2);
-        return m2.iadd(h3).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer4, "be", len);
+        return m2.iadd(h3).imul(blinds.unblinder).umod(priv.modulus).toArrayLike(Buffer3, "be", len);
       }
       crt.getr = getr;
       module.exports = crt;
@@ -71186,7 +71186,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -71223,12 +71223,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -71663,8 +71663,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -73999,7 +73999,7 @@ ${toHex(hashedRequest)}`;
   var require_utils2 = __commonJS({
     "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -74059,7 +74059,7 @@ ${toHex(hashedRequest)}`;
   var require_utils3 = __commonJS({
     "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -74166,7 +74166,7 @@ ${toHex(hashedRequest)}`;
   var require_base = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -74489,7 +74489,7 @@ ${toHex(hashedRequest)}`;
   var require_short = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75188,7 +75188,7 @@ ${toHex(hashedRequest)}`;
   var require_mont = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -75317,7 +75317,7 @@ ${toHex(hashedRequest)}`;
   var require_edwards = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75619,7 +75619,7 @@ ${toHex(hashedRequest)}`;
   var require_curve = __commonJS({
     "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -75632,7 +75632,7 @@ ${toHex(hashedRequest)}`;
   var require_utils4 = __commonJS({
     "node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -75878,7 +75878,7 @@ ${toHex(hashedRequest)}`;
   var require_common = __commonJS({
     "node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -75958,7 +75958,7 @@ ${toHex(hashedRequest)}`;
   var require_common2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -76005,7 +76005,7 @@ ${toHex(hashedRequest)}`;
   var require__ = __commonJS({
     "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76078,7 +76078,7 @@ ${toHex(hashedRequest)}`;
   var require__2 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76231,7 +76231,7 @@ ${toHex(hashedRequest)}`;
   var require__3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -76268,7 +76268,7 @@ ${toHex(hashedRequest)}`;
   var require__4 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -76708,7 +76708,7 @@ ${toHex(hashedRequest)}`;
   var require__5 = __commonJS({
     "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -76753,7 +76753,7 @@ ${toHex(hashedRequest)}`;
   var require_sha3 = __commonJS({
     "node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -76766,7 +76766,7 @@ ${toHex(hashedRequest)}`;
   var require_ripemd = __commonJS({
     "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -77208,7 +77208,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac = __commonJS({
     "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -77249,7 +77249,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -77268,7 +77268,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -78056,7 +78056,7 @@ ${toHex(hashedRequest)}`;
   var require_curves = __commonJS({
     "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -78233,7 +78233,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac_drbg = __commonJS({
     "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -78328,7 +78328,7 @@ ${toHex(hashedRequest)}`;
   var require_key = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78423,7 +78423,7 @@ ${toHex(hashedRequest)}`;
   var require_signature = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78579,7 +78579,7 @@ ${toHex(hashedRequest)}`;
   var require_ec = __commonJS({
     "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -78787,7 +78787,7 @@ ${toHex(hashedRequest)}`;
   var require_key2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -78862,7 +78862,7 @@ ${toHex(hashedRequest)}`;
   var require_signature2 = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78913,7 +78913,7 @@ ${toHex(hashedRequest)}`;
   var require_eddsa = __commonJS({
     "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -79002,7 +79002,7 @@ ${toHex(hashedRequest)}`;
   var require_elliptic = __commonJS({
     "node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -79017,7 +79017,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -79054,12 +79054,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -79494,8 +79494,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -81829,7 +81829,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -81883,7 +81883,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -81919,7 +81919,7 @@ ${toHex(hashedRequest)}`;
         if (state.obj !== null)
           state.obj[key] = value;
       };
-      Reporter.prototype.path = function path3() {
+      Reporter.prototype.path = function path2() {
         return this._reporterState.path.join("/");
       };
       Reporter.prototype.enterObject = function enterObject() {
@@ -81960,8 +81960,8 @@ ${toHex(hashedRequest)}`;
           errors: state.errors
         };
       };
-      function ReporterError(path3, msg) {
-        this.path = path3;
+      function ReporterError(path2, msg) {
+        this.path = path2;
         this.rethrow(msg);
       }
       inherits(ReporterError, Error);
@@ -81984,13 +81984,13 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
-      var Buffer4 = require_buffer().Buffer;
+      var Buffer3 = require_buffer().Buffer;
       function DecoderBuffer(base, options) {
         Reporter.call(this, options);
-        if (!Buffer4.isBuffer(base)) {
+        if (!Buffer3.isBuffer(base)) {
           this.error("Input not Buffer");
           return;
         }
@@ -82049,8 +82049,8 @@ ${toHex(hashedRequest)}`;
           this.length = 1;
         } else if (typeof value === "string") {
           this.value = value;
-          this.length = Buffer4.byteLength(value);
-        } else if (Buffer4.isBuffer(value)) {
+          this.length = Buffer3.byteLength(value);
+        } else if (Buffer3.isBuffer(value)) {
           this.value = value;
           this.length = value.length;
         } else {
@@ -82060,7 +82060,7 @@ ${toHex(hashedRequest)}`;
       exports.EncoderBuffer = EncoderBuffer;
       EncoderBuffer.prototype.join = function join2(out, offset) {
         if (!out)
-          out = new Buffer4(this.length);
+          out = new Buffer3(this.length);
         if (!offset)
           offset = 0;
         if (this.length === 0)
@@ -82075,7 +82075,7 @@ ${toHex(hashedRequest)}`;
             out[offset] = this.value;
           else if (typeof this.value === "string")
             out.write(this.value, offset);
-          else if (Buffer4.isBuffer(this.value))
+          else if (Buffer3.isBuffer(this.value))
             this.value.copy(out, offset);
           offset += this.length;
         }
@@ -82087,7 +82087,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -82621,7 +82621,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -82633,7 +82633,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -82680,7 +82680,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map3) {
         var res = {};
@@ -82699,7 +82699,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -82963,9 +82963,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer4 = require_buffer().Buffer;
+      var Buffer3 = require_buffer().Buffer;
       var DERDecoder = require_der2();
       function PEMDecoder(entity) {
         DERDecoder.call(this, entity);
@@ -83000,7 +83000,7 @@ ${toHex(hashedRequest)}`;
           throw new Error("PEM section not found for: " + label);
         var base64 = lines.slice(start + 1, end).join("");
         base64.replace(/[^a-z0-9\+\/=]+/gi, "");
-        var input = new Buffer4(base64, "base64");
+        var input = new Buffer3(base64, "base64");
         return DERDecoder.prototype.decode.call(this, input, options);
       };
     }
@@ -83009,7 +83009,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -83019,9 +83019,9 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
-      var Buffer4 = require_buffer().Buffer;
+      var Buffer3 = require_buffer().Buffer;
       var asn1 = require_asn1();
       var base = asn1.base;
       var der = asn1.constants.der;
@@ -83043,7 +83043,7 @@ ${toHex(hashedRequest)}`;
       DERNode.prototype._encodeComposite = function encodeComposite(tag, primitive, cls, content) {
         var encodedTag = encodeTag(tag, primitive, cls, this.reporter);
         if (content.length < 128) {
-          var header = new Buffer4(2);
+          var header = new Buffer3(2);
           header[0] = encodedTag;
           header[1] = content.length;
           return this._createEncoderBuffer([header, content]);
@@ -83051,7 +83051,7 @@ ${toHex(hashedRequest)}`;
         var lenOctets = 1;
         for (var i2 = content.length; i2 >= 256; i2 >>= 8)
           lenOctets++;
-        var header = new Buffer4(1 + 1 + lenOctets);
+        var header = new Buffer3(1 + 1 + lenOctets);
         header[0] = encodedTag;
         header[1] = 128 | lenOctets;
         for (var i2 = 1 + lenOctets, j2 = content.length; j2 > 0; i2--, j2 >>= 8)
@@ -83062,7 +83062,7 @@ ${toHex(hashedRequest)}`;
         if (tag === "bitstr") {
           return this._createEncoderBuffer([str.unused | 0, str.data]);
         } else if (tag === "bmpstr") {
-          var buf = new Buffer4(str.length * 2);
+          var buf = new Buffer3(str.length * 2);
           for (var i2 = 0; i2 < str.length; i2++) {
             buf.writeUInt16BE(str.charCodeAt(i2), i2 * 2);
           }
@@ -83113,7 +83113,7 @@ ${toHex(hashedRequest)}`;
           for (size++; ident >= 128; ident >>= 7)
             size++;
         }
-        var objid = new Buffer4(size);
+        var objid = new Buffer3(size);
         var offset = objid.length - 1;
         for (var i2 = id.length - 1; i2 >= 0; i2--) {
           var ident = id[i2];
@@ -83169,18 +83169,18 @@ ${toHex(hashedRequest)}`;
           }
           num = values[num];
         }
-        if (typeof num !== "number" && !Buffer4.isBuffer(num)) {
+        if (typeof num !== "number" && !Buffer3.isBuffer(num)) {
           var numArray = num.toArray();
           if (!num.sign && numArray[0] & 128) {
             numArray.unshift(0);
           }
-          num = new Buffer4(numArray);
+          num = new Buffer3(numArray);
         }
-        if (Buffer4.isBuffer(num)) {
+        if (Buffer3.isBuffer(num)) {
           var size = num.length;
           if (num.length === 0)
             size++;
-          var out = new Buffer4(size);
+          var out = new Buffer3(size);
           num.copy(out);
           if (num.length === 0)
             out[0] = 0;
@@ -83201,7 +83201,7 @@ ${toHex(hashedRequest)}`;
         if (out[0] & 128) {
           out.unshift(0);
         }
-        return this._createEncoderBuffer(new Buffer4(out));
+        return this._createEncoderBuffer(new Buffer3(out));
       };
       DERNode.prototype._encodeBool = function encodeBool(value) {
         return this._createEncoderBuffer(value ? 255 : 0);
@@ -83251,7 +83251,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -83275,7 +83275,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -83285,7 +83285,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -83300,7 +83300,7 @@ ${toHex(hashedRequest)}`;
   var require_certificate = __commonJS({
     "node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -83380,7 +83380,7 @@ ${toHex(hashedRequest)}`;
   var require_asn12 = __commonJS({
     "node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -83514,30 +83514,30 @@ ${toHex(hashedRequest)}`;
   var require_fixProc = __commonJS({
     "node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
       var evp = require_evp_bytestokey();
       var ciphers = require_browser7();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(okey, password) {
         var key = okey.toString();
         var match = key.match(findProc);
         var decrypted;
         if (!match) {
           var match2 = key.match(fullRegex);
-          decrypted = Buffer4.from(match2[2].replace(/[\r\n]/g, ""), "base64");
+          decrypted = Buffer3.from(match2[2].replace(/[\r\n]/g, ""), "base64");
         } else {
           var suite = "aes" + match[1];
-          var iv = Buffer4.from(match[2], "hex");
-          var cipherText = Buffer4.from(match[3].replace(/[\r\n]/g, ""), "base64");
+          var iv = Buffer3.from(match[2], "hex");
+          var cipherText = Buffer3.from(match[3].replace(/[\r\n]/g, ""), "base64");
           var cipherKey = evp(password, iv.slice(0, 8), parseInt(match[1], 10)).key;
           var out = [];
           var cipher = ciphers.createDecipheriv(suite, cipherKey, iv);
           out.push(cipher.update(cipherText));
           out.push(cipher["final"]());
-          decrypted = Buffer4.concat(out);
+          decrypted = Buffer3.concat(out);
         }
         var tag = key.match(startRegex)[1];
         return {
@@ -83552,13 +83552,13 @@ ${toHex(hashedRequest)}`;
   var require_parse_asn1 = __commonJS({
     "node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
       var ciphers = require_browser7();
       var pbkdf2Sync2 = require_browser6().pbkdf2Sync;
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       function decrypt(data, password) {
         var salt = data.algorithm.decrypt.kde.kdeparams.salt;
         var iters = parseInt(data.algorithm.decrypt.kde.kdeparams.iters.toString(), 10);
@@ -83571,16 +83571,16 @@ ${toHex(hashedRequest)}`;
         var out = [];
         out.push(cipher.update(cipherText));
         out.push(cipher["final"]());
-        return Buffer4.concat(out);
+        return Buffer3.concat(out);
       }
       function parseKeys(buffer) {
         var password;
-        if (typeof buffer === "object" && !Buffer4.isBuffer(buffer)) {
+        if (typeof buffer === "object" && !Buffer3.isBuffer(buffer)) {
           password = buffer.passphrase;
           buffer = buffer.key;
         }
         if (typeof buffer === "string") {
-          buffer = Buffer4.from(buffer);
+          buffer = Buffer3.from(buffer);
         }
         var stripped = fixProc(buffer, password);
         var type = stripped.tag;
@@ -83681,8 +83681,8 @@ ${toHex(hashedRequest)}`;
   var require_sign2 = __commonJS({
     "node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var createHmac = require_browser5();
       var crt = require_browserify_rsa();
       var EC = require_elliptic().ec;
@@ -83709,7 +83709,7 @@ ${toHex(hashedRequest)}`;
         if (key.padding !== void 0 && key.padding !== RSA_PKCS1_PADDING) {
           throw new Error("illegal or unsupported padding mode");
         }
-        hash = Buffer4.concat([tag, hash]);
+        hash = Buffer3.concat([tag, hash]);
         var len = priv.modulus.byteLength();
         var pad = [0, 1];
         while (hash.length + pad.length + 1 < len) {
@@ -83731,7 +83731,7 @@ ${toHex(hashedRequest)}`;
         var curve = new EC(curveId);
         var key = curve.keyFromPrivate(priv.privateKey);
         var out = key.sign(hash);
-        return Buffer4.from(out.toDER());
+        return Buffer3.from(out.toDER());
       }
       function dsaSign(hash, priv, algo) {
         var x2 = priv.params.priv_key;
@@ -83771,22 +83771,22 @@ ${toHex(hashedRequest)}`;
           r2.length
         ];
         res = res.concat(r2, [2, s2.length], s2);
-        return Buffer4.from(res);
+        return Buffer3.from(res);
       }
       function getKey(x2, q2, hash, algo) {
-        x2 = Buffer4.from(x2.toArray());
+        x2 = Buffer3.from(x2.toArray());
         if (x2.length < q2.byteLength()) {
-          var zeros = Buffer4.alloc(q2.byteLength() - x2.length);
-          x2 = Buffer4.concat([zeros, x2]);
+          var zeros = Buffer3.alloc(q2.byteLength() - x2.length);
+          x2 = Buffer3.concat([zeros, x2]);
         }
         var hlen = hash.length;
         var hbits = bits2octets(hash, q2);
-        var v2 = Buffer4.alloc(hlen);
+        var v2 = Buffer3.alloc(hlen);
         v2.fill(1);
-        var k2 = Buffer4.alloc(hlen);
-        k2 = createHmac(algo, k2).update(v2).update(Buffer4.from([0])).update(x2).update(hbits).digest();
+        var k2 = Buffer3.alloc(hlen);
+        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([0])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
-        k2 = createHmac(algo, k2).update(v2).update(Buffer4.from([1])).update(x2).update(hbits).digest();
+        k2 = createHmac(algo, k2).update(v2).update(Buffer3.from([1])).update(x2).update(hbits).digest();
         v2 = createHmac(algo, k2).update(v2).digest();
         return { k: k2, v: v2 };
       }
@@ -83801,10 +83801,10 @@ ${toHex(hashedRequest)}`;
       function bits2octets(bits, q2) {
         bits = bits2int(bits, q2);
         bits = bits.mod(q2);
-        var out = Buffer4.from(bits.toArray());
+        var out = Buffer3.from(bits.toArray());
         if (out.length < q2.byteLength()) {
-          var zeros = Buffer4.alloc(q2.byteLength() - out.length);
-          out = Buffer4.concat([zeros, out]);
+          var zeros = Buffer3.alloc(q2.byteLength() - out.length);
+          out = Buffer3.concat([zeros, out]);
         }
         return out;
       }
@@ -83812,13 +83812,13 @@ ${toHex(hashedRequest)}`;
         var t8;
         var k2;
         do {
-          t8 = Buffer4.alloc(0);
+          t8 = Buffer3.alloc(0);
           while (t8.length * 8 < q2.bitLength()) {
             kv.v = createHmac(algo, kv.k).update(kv.v).digest();
-            t8 = Buffer4.concat([t8, kv.v]);
+            t8 = Buffer3.concat([t8, kv.v]);
           }
           k2 = bits2int(t8, q2);
-          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer4.from([0])).digest();
+          kv.k = createHmac(algo, kv.k).update(kv.v).update(Buffer3.from([0])).digest();
           kv.v = createHmac(algo, kv.k).update(kv.v).digest();
         } while (k2.cmp(q2) !== -1);
         return k2;
@@ -83836,8 +83836,8 @@ ${toHex(hashedRequest)}`;
   var require_verify = __commonJS({
     "node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
       var parseKeys = require_parse_asn1();
@@ -83858,7 +83858,7 @@ ${toHex(hashedRequest)}`;
         if (signType !== "rsa" && signType !== "ecdsa/rsa") {
           throw new Error("wrong public key type");
         }
-        hash = Buffer4.concat([tag, hash]);
+        hash = Buffer3.concat([tag, hash]);
         var len = pub.modulus.byteLength();
         var pad = [1];
         var padNum = 0;
@@ -83871,11 +83871,11 @@ ${toHex(hashedRequest)}`;
         while (++i2 < hash.length) {
           pad.push(hash[i2]);
         }
-        pad = Buffer4.from(pad);
+        pad = Buffer3.from(pad);
         var red = BN.mont(pub.modulus);
         sig = new BN(sig).toRed(red);
         sig = sig.redPow(new BN(pub.publicExponent));
-        sig = Buffer4.from(sig.fromRed().toArray());
+        sig = Buffer3.from(sig.fromRed().toArray());
         var out = padNum < 8 ? 1 : 0;
         len = Math.min(sig.length, pad.length);
         if (sig.length !== pad.length) {
@@ -83927,8 +83927,8 @@ ${toHex(hashedRequest)}`;
   var require_browser10 = __commonJS({
     "node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      var Buffer4 = require_safe_buffer().Buffer;
+      var import_polyfills699 = __toESM(require_polyfills());
+      var Buffer3 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
       var inherits = require_inherits_browser();
@@ -83936,7 +83936,7 @@ ${toHex(hashedRequest)}`;
       var verify = require_verify();
       var algorithms = require_algorithms();
       Object.keys(algorithms).forEach(function(key) {
-        algorithms[key].id = Buffer4.from(algorithms[key].id, "hex");
+        algorithms[key].id = Buffer3.from(algorithms[key].id, "hex");
         algorithms[key.toLowerCase()] = algorithms[key];
       });
       function Sign(algorithm) {
@@ -83956,7 +83956,7 @@ ${toHex(hashedRequest)}`;
         done();
       };
       Sign.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer4.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
         return this;
       };
       Sign.prototype.sign = function signMethod(key, enc) {
@@ -83981,11 +83981,11 @@ ${toHex(hashedRequest)}`;
         done();
       };
       Verify.prototype.update = function update(data, enc) {
-        this._hash.update(typeof data === "string" ? Buffer4.from(data, enc) : data);
+        this._hash.update(typeof data === "string" ? Buffer3.from(data, enc) : data);
         return this;
       };
       Verify.prototype.verify = function verifyMethod(key, sig, enc) {
-        var sigBuffer = typeof sig === "string" ? Buffer4.from(sig, enc) : sig;
+        var sigBuffer = typeof sig === "string" ? Buffer3.from(sig, enc) : sig;
         this.end();
         var hash = this._hash.digest();
         return verify(sigBuffer, hash, key, this._signType, this._tag);
@@ -84008,7 +84008,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -84045,12 +84045,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -84485,8 +84485,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -86820,7 +86820,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -86939,21 +86939,21 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
-        var t8 = Buffer4.alloc(0);
+        var t8 = Buffer3.alloc(0);
         var i2 = 0;
         var c2;
         while (t8.length < len) {
           c2 = i2ops(i2++);
-          t8 = Buffer4.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
+          t8 = Buffer3.concat([t8, createHash4("sha1").update(seed).update(c2).digest()]);
         }
         return t8.slice(0, len);
       };
       function i2ops(c2) {
-        var out = Buffer4.allocUnsafe(4);
+        var out = Buffer3.allocUnsafe(4);
         out.writeUInt32BE(c2, 0);
         return out;
       }
@@ -86963,7 +86963,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -86978,7 +86978,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -87015,12 +87015,12 @@ ${toHex(hashedRequest)}`;
         }
         BN.BN = BN;
         BN.wordSize = 26;
-        var Buffer4;
+        var Buffer3;
         try {
           if (typeof window !== "undefined" && typeof window.Buffer !== "undefined") {
-            Buffer4 = window.Buffer;
+            Buffer3 = window.Buffer;
           } else {
-            Buffer4 = require_buffer().Buffer;
+            Buffer3 = require_buffer().Buffer;
           }
         } catch (e2) {
         }
@@ -87455,8 +87455,8 @@ ${toHex(hashedRequest)}`;
           return this.toString(16);
         };
         BN.prototype.toBuffer = function toBuffer(endian, length) {
-          assert(typeof Buffer4 !== "undefined");
-          return this.toArrayLike(Buffer4, endian, length);
+          assert(typeof Buffer3 !== "undefined");
+          return this.toArrayLike(Buffer3, endian, length);
         };
         BN.prototype.toArray = function toArray(endian, length) {
           return this.toArrayLike(Array, endian, length);
@@ -89790,11 +89790,11 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var BN = require_bn7();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
-        return Buffer4.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
+        return Buffer3.from(paddedMsg.toRed(BN.mont(key.modulus)).redPow(new BN(key.publicExponent)).fromRed().toArray());
       }
       module.exports = withPublic;
     }
@@ -89803,7 +89803,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes3 = require_browser2();
       var createHash4 = require_browser4();
@@ -89812,7 +89812,7 @@ ${toHex(hashedRequest)}`;
       var BN = require_bn7();
       var withPublic = require_withPublic();
       var crt = require_browserify_rsa();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function publicEncrypt(publicKey, msg, reverse) {
         var padding;
         if (publicKey.padding) {
@@ -89845,18 +89845,18 @@ ${toHex(hashedRequest)}`;
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
         var mLen = msg.length;
-        var iHash = createHash4("sha1").update(Buffer4.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
         var hLen = iHash.length;
         var hLen2 = 2 * hLen;
         if (mLen > k2 - hLen2 - 2) {
           throw new Error("message too long");
         }
-        var ps = Buffer4.alloc(k2 - mLen - hLen2 - 2);
+        var ps = Buffer3.alloc(k2 - mLen - hLen2 - 2);
         var dblen = k2 - hLen - 1;
         var seed = randomBytes3(hLen);
-        var maskedDb = xor(Buffer4.concat([iHash, ps, Buffer4.alloc(1, 1), msg], dblen), mgf(seed, dblen));
+        var maskedDb = xor(Buffer3.concat([iHash, ps, Buffer3.alloc(1, 1), msg], dblen), mgf(seed, dblen));
         var maskedSeed = xor(seed, mgf(maskedDb, hLen));
-        return new BN(Buffer4.concat([Buffer4.alloc(1), maskedSeed, maskedDb], k2));
+        return new BN(Buffer3.concat([Buffer3.alloc(1), maskedSeed, maskedDb], k2));
       }
       function pkcs1(key, msg, reverse) {
         var mLen = msg.length;
@@ -89866,14 +89866,14 @@ ${toHex(hashedRequest)}`;
         }
         var ps;
         if (reverse) {
-          ps = Buffer4.alloc(k2 - mLen - 3, 255);
+          ps = Buffer3.alloc(k2 - mLen - 3, 255);
         } else {
           ps = nonZero(k2 - mLen - 3);
         }
-        return new BN(Buffer4.concat([Buffer4.from([0, reverse ? 1 : 2]), ps, Buffer4.alloc(1), msg], k2));
+        return new BN(Buffer3.concat([Buffer3.from([0, reverse ? 1 : 2]), ps, Buffer3.alloc(1), msg], k2));
       }
       function nonZero(len) {
-        var out = Buffer4.allocUnsafe(len);
+        var out = Buffer3.allocUnsafe(len);
         var i2 = 0;
         var cache2 = randomBytes3(len * 2);
         var cur = 0;
@@ -89896,7 +89896,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -89904,7 +89904,7 @@ ${toHex(hashedRequest)}`;
       var crt = require_browserify_rsa();
       var createHash4 = require_browser4();
       var withPublic = require_withPublic();
-      var Buffer4 = require_safe_buffer().Buffer;
+      var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function privateDecrypt(privateKey, enc, reverse) {
         var padding;
         if (privateKey.padding) {
@@ -89925,8 +89925,8 @@ ${toHex(hashedRequest)}`;
         } else {
           msg = crt(enc, key);
         }
-        var zBuffer = Buffer4.alloc(k2 - msg.length);
-        msg = Buffer4.concat([zBuffer, msg], k2);
+        var zBuffer = Buffer3.alloc(k2 - msg.length);
+        msg = Buffer3.concat([zBuffer, msg], k2);
         if (padding === 4) {
           return oaep(key, msg);
         } else if (padding === 1) {
@@ -89939,7 +89939,7 @@ ${toHex(hashedRequest)}`;
       };
       function oaep(key, msg) {
         var k2 = key.modulus.byteLength();
-        var iHash = createHash4("sha1").update(Buffer4.alloc(0)).digest();
+        var iHash = createHash4("sha1").update(Buffer3.alloc(0)).digest();
         var hLen = iHash.length;
         if (msg[0] !== 0) {
           throw new Error("decryption error");
@@ -89983,8 +89983,8 @@ ${toHex(hashedRequest)}`;
         return msg.slice(i2);
       }
       function compare(a2, b2) {
-        a2 = Buffer4.from(a2);
-        b2 = Buffer4.from(b2);
+        a2 = Buffer3.from(a2);
+        b2 = Buffer3.from(b2);
         var dif = 0;
         var len = a2.length;
         if (a2.length !== b2.length) {
@@ -90003,7 +90003,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -90019,13 +90019,13 @@ ${toHex(hashedRequest)}`;
   var require_browser13 = __commonJS({
     "node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
       var safeBuffer = require_safe_buffer();
       var randombytes = require_browser2();
-      var Buffer4 = safeBuffer.Buffer;
+      var Buffer3 = safeBuffer.Buffer;
       var kBufferMaxLength = safeBuffer.kMaxLength;
       var crypto6 = window.crypto || window.msCrypto;
       var kMaxUint32 = Math.pow(2, 32) - 1;
@@ -90059,7 +90059,7 @@ ${toHex(hashedRequest)}`;
         exports.randomFillSync = oldBrowser;
       }
       function randomFill(buf, offset, size, cb) {
-        if (!Buffer4.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         if (typeof offset === "function") {
@@ -90107,7 +90107,7 @@ ${toHex(hashedRequest)}`;
         if (typeof offset === "undefined") {
           offset = 0;
         }
-        if (!Buffer4.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
+        if (!Buffer3.isBuffer(buf) && !(buf instanceof window.Uint8Array)) {
           throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
         }
         assertOffset(offset, buf.length);
@@ -90122,7 +90122,7 @@ ${toHex(hashedRequest)}`;
   var require_crypto_browserify = __commonJS({
     "node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -90392,8 +90392,8 @@ ${toHex(hashedRequest)}`;
           }
           throw lastError;
         }
-        async uploadFile(path3, data, providedHash, customMetadata) {
-          const key = this.getKey(path3);
+        async uploadFile(path2, data, providedHash, customMetadata) {
+          const key = this.getKey(path2);
           Logger.debug("S3", `Uploading to key: ${key}`);
           let hash = providedHash;
           if (!hash) {
@@ -90418,8 +90418,8 @@ ${toHex(hashedRequest)}`;
           })), `Upload ${key}`);
           return response.ETag || null;
         }
-        async downloadFile(path3, ifNoneMatch, timeout = 15e3) {
-          const key = this.getKey(path3);
+        async downloadFile(path2, ifNoneMatch, timeout = 15e3) {
+          const key = this.getKey(path2);
           Logger.debug("S3", `Starting download from S3: ${key} (If-None-Match: ${ifNoneMatch || "none"}, timeout: ${timeout}ms)`);
           return this.withRetry(async () => {
             const controller = new AbortController();
@@ -90454,11 +90454,11 @@ ${toHex(hashedRequest)}`;
             }
           }, `Download ${key}`);
         }
-        async getFileHash(path3) {
+        async getFileHash(path2) {
           if (!this.supportsMetadataHash) {
-            return this.getFileEtag(path3);
+            return this.getFileEtag(path2);
           }
-          const key = this.getKey(path3);
+          const key = this.getKey(path2);
           try {
             const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
@@ -90479,8 +90479,8 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
-        async getFileEtag(path3) {
-          const key = this.getKey(path3);
+        async getFileEtag(path2) {
+          const key = this.getKey(path2);
           try {
             const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
@@ -90495,8 +90495,8 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
-        async getFileMetadata(path3, key) {
-          const fullKey = this.getKey(path3);
+        async getFileMetadata(path2, key) {
+          const fullKey = this.getKey(path2);
           try {
             const response = await this.withRetry(() => this.client.send(new HeadObjectCommand({
               Bucket: this.bucket,
@@ -90507,8 +90507,8 @@ ${toHex(hashedRequest)}`;
             return null;
           }
         }
-        async canWrite(path3) {
-          const key = this.getKey(path3.endsWith("/") ? `${path3}.probe` : `${path3}/.probe`);
+        async canWrite(path2) {
+          const key = this.getKey(path2.endsWith("/") ? `${path2}.probe` : `${path2}/.probe`);
           try {
             const sentinel = new TextEncoder().encode(JSON.stringify({ probe: Date.now() }));
             await this.withRetry(() => this.client.send(new PutObjectCommand({
@@ -90557,8 +90557,8 @@ ${toHex(hashedRequest)}`;
           }
           return keys;
         }
-        async deleteFile(path3) {
-          const key = this.getKey(path3);
+        async deleteFile(path2) {
+          const key = this.getKey(path2);
           try {
             const command = new DeleteObjectCommand({
               Bucket: this.bucket,
@@ -90578,11 +90578,11 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info("S3", `Purge complete. ${files.length} files deleted.`);
         }
-        getKey(path3) {
-          if (path3.includes("..")) {
-            throw new NetworkError(`Security Violation: Path '${path3}' contains parent directory references.`);
+        getKey(path2) {
+          if (path2.includes("..")) {
+            throw new NetworkError(`Security Violation: Path '${path2}' contains parent directory references.`);
           }
-          return `${this.prefix}${path3}`;
+          return `${this.prefix}${path2}`;
         }
       };
     }
@@ -90770,8 +90770,8 @@ ${toHex(hashedRequest)}`;
         generateMsgId() {
           return env.generateId(15) + Date.now().toString(36);
         }
-        getKey(path3) {
-          return `${this.prefix}${path3}`;
+        getKey(path2) {
+          return `${this.prefix}${path2}`;
         }
         /**
          * Connects an RTCDataChannel (or any mock channel) to this adapter.
@@ -90967,8 +90967,8 @@ ${toHex(hashedRequest)}`;
             }
           }
         }
-        async uploadFile(path3, data, hash, metadata) {
-          const key = this.getKey(path3);
+        async uploadFile(path2, data, hash, metadata) {
+          const key = this.getKey(path2);
           const fileHash = hash || import_buffer.Buffer.from(data).toString("hex").substring(0, 16);
           const etag = `"${Date.now().toString()}-${env.generateId(12)}"`;
           this.cache.set(key, { data, hash: fileHash, etag });
@@ -90987,11 +90987,11 @@ ${toHex(hashedRequest)}`;
           this.broadcast(msg);
           return etag;
         }
-        async getFileMetadata(path3, key) {
+        async getFileMetadata(path2, key) {
           return null;
         }
-        async downloadFile(path3, ifNoneMatch, timeout = 3e3) {
-          const key = this.getKey(path3);
+        async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
+          const key = this.getKey(path2);
           const local = this.cache.get(key);
           if (local) {
             if (ifNoneMatch && ifNoneMatch === local.etag) {
@@ -91046,21 +91046,21 @@ ${toHex(hashedRequest)}`;
             this.broadcast(reqMsg);
           });
         }
-        async getFileHash(path3) {
-          const key = this.getKey(path3);
+        async getFileHash(path2) {
+          const key = this.getKey(path2);
           return this.cache.get(key)?.hash || null;
         }
-        async getFileEtag(path3) {
-          const key = this.getKey(path3);
+        async getFileEtag(path2) {
+          const key = this.getKey(path2);
           return this.cache.get(key)?.etag || null;
         }
-        async canWrite(path3) {
+        async canWrite(path2) {
           return this.channels.size > 0;
         }
         async listFiles(prefix) {
           return [];
         }
-        async deleteFile(path3) {
+        async deleteFile(path2) {
         }
       };
     }
@@ -91302,8 +91302,8 @@ ${toHex(hashedRequest)}`;
           return new Promise((resolve2, reject) => {
             try {
               const store = this.getStore("files");
-              const path3 = this.sanitizePath(`${type}/${date2}.db`);
-              const request = store.get(path3);
+              const path2 = this.sanitizePath(`${type}/${date2}.db`);
+              const request = store.get(path2);
               request.onsuccess = () => resolve2(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91312,14 +91312,14 @@ ${toHex(hashedRequest)}`;
           });
         }
         async saveDailyDb(date2, type, data) {
-          const path3 = this.sanitizePath(`${type}/${date2}.db`);
+          const path2 = this.sanitizePath(`${type}/${date2}.db`);
           return new Promise((resolve2, reject) => {
             try {
               const tx = this.db.transaction(["files", "metadata"], "readwrite");
               const filesStore = tx.objectStore("files");
               const metadataStore = tx.objectStore("metadata");
-              filesStore.put(data, path3);
-              metadataStore.put(Date.now(), `timestamp:${path3}`);
+              filesStore.put(data, path2);
+              metadataStore.put(Date.now(), `timestamp:${path2}`);
               tx.oncomplete = () => resolve2();
               tx.onerror = () => reject(tx.error);
             } catch (e2) {
@@ -91328,14 +91328,14 @@ ${toHex(hashedRequest)}`;
           });
         }
         async deleteDailyDb(date2, type) {
-          const path3 = this.sanitizePath(`${type}/${date2}.db`);
+          const path2 = this.sanitizePath(`${type}/${date2}.db`);
           return new Promise((resolve2, reject) => {
             try {
               const tx = this.db.transaction(["files", "metadata"], "readwrite");
               const filesStore = tx.objectStore("files");
               const metadataStore = tx.objectStore("metadata");
-              filesStore.delete(path3);
-              metadataStore.delete(`timestamp:${path3}`);
+              filesStore.delete(path2);
+              metadataStore.delete(`timestamp:${path2}`);
               tx.oncomplete = () => resolve2();
               tx.onerror = () => reject(tx.error);
             } catch (e2) {
@@ -91354,11 +91354,11 @@ ${toHex(hashedRequest)}`;
         async savePublicUserFile(data) {
           await this.saveFile("public/user.json", data);
         }
-        async getFile(path3) {
+        async getFile(path2) {
           return new Promise((resolve2, reject) => {
             try {
               const store = this.getStore("files");
-              const request = store.get(this.sanitizePath(path3));
+              const request = store.get(this.sanitizePath(path2));
               request.onsuccess = () => resolve2(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91366,8 +91366,8 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async saveFile(path3, data) {
-          const sanitizedPath = this.sanitizePath(path3);
+        async saveFile(path2, data) {
+          const sanitizedPath = this.sanitizePath(path2);
           return new Promise((resolve2, reject) => {
             try {
               const tx = this.db.transaction(["files", "metadata"], "readwrite");
@@ -91382,8 +91382,8 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async deleteFile(path3) {
-          const sanitizedPath = this.sanitizePath(path3);
+        async deleteFile(path2) {
+          const sanitizedPath = this.sanitizePath(path2);
           return new Promise((resolve2, reject) => {
             try {
               const tx = this.db.transaction(["files", "metadata"], "readwrite");
@@ -91398,11 +91398,11 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async getFileTimestamp(path3) {
+        async getFileTimestamp(path2) {
           return new Promise((resolve2, reject) => {
             try {
               const store = this.getStore("metadata");
-              const request = store.get(`timestamp:${this.sanitizePath(path3)}`);
+              const request = store.get(`timestamp:${this.sanitizePath(path2)}`);
               request.onsuccess = () => resolve2(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91426,11 +91426,11 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async getGenericRemoteHashCache(path3) {
+        async getGenericRemoteHashCache(path2) {
           return new Promise((resolve2, reject) => {
             try {
               const store = this.getStore("metadata");
-              const request = store.get(`hash_generic:${path3}`);
+              const request = store.get(`hash_generic:${path2}`);
               request.onsuccess = () => resolve2(request.result || null);
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91438,11 +91438,11 @@ ${toHex(hashedRequest)}`;
             }
           });
         }
-        async setGenericRemoteHashCache(path3, hash) {
+        async setGenericRemoteHashCache(path2, hash) {
           return new Promise((resolve2, reject) => {
             try {
               const store = this.getStore("metadata", "readwrite");
-              const request = store.put(hash, `hash_generic:${path3}`);
+              const request = store.put(hash, `hash_generic:${path2}`);
               request.onsuccess = () => resolve2();
               request.onerror = () => reject(request.error);
             } catch (e2) {
@@ -91709,7 +91709,7 @@ ${toHex(hashedRequest)}`;
   // node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -94907,8 +94907,8 @@ ${toHex(hashedRequest)}`;
         }
         async respondToGroup(groupId, status) {
           const statusData = new TextEncoder().encode(JSON.stringify({ status, updatedAt: Date.now() }));
-          const path3 = `${PATHS.PUBLIC_PREFIX}${PATHS.GROUPS_DIR}${groupId}/status${PATHS.JSON_EXT}`;
-          await this.ctx.storage.saveFile(path3, statusData);
+          const path2 = `${PATHS.PUBLIC_PREFIX}${PATHS.GROUPS_DIR}${groupId}/status${PATHS.JSON_EXT}`;
+          await this.ctx.storage.saveFile(path2, statusData);
           const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
           const localInfo = await this.ctx.storage.getFile(infoPath);
           if (localInfo) {
@@ -94923,8 +94923,8 @@ ${toHex(hashedRequest)}`;
         }
         async leaveGroup(groupId) {
           const statusData = new TextEncoder().encode(JSON.stringify({ status: "left", updatedAt: Date.now() }));
-          const path3 = `${PATHS.PUBLIC_PREFIX}${PATHS.GROUPS_DIR}${groupId}/status${PATHS.JSON_EXT}`;
-          await this.ctx.storage.saveFile(path3, statusData);
+          const path2 = `${PATHS.PUBLIC_PREFIX}${PATHS.GROUPS_DIR}${groupId}/status${PATHS.JSON_EXT}`;
+          await this.ctx.storage.saveFile(path2, statusData);
           const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
           await this.ctx.storage.deleteFile(infoPath);
           Logger.info("Group", `Left group ${groupId}`);
@@ -95306,9 +95306,9 @@ ${toHex(hashedRequest)}`;
         async syncBlacklist() {
           const globalRemote = this.ctx.getGlobalRemote();
           if (!globalRemote) return;
-          const path3 = PATHS.BLACKLIST;
+          const path2 = PATHS.BLACKLIST;
           try {
-            const result = await globalRemote.downloadFile(path3);
+            const result = await globalRemote.downloadFile(path2);
             if (result && result.data) {
               const list = JSON.parse(new TextDecoder().decode(result.data));
               this.ctx.config.blacklist = list;
@@ -95328,21 +95328,21 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills706 = __toESM(require_polyfills());
-      function assertPath(path3) {
-        if (typeof path3 !== "string") {
-          throw new TypeError("Path must be a string. Received " + JSON.stringify(path3));
+      var import_polyfills699 = __toESM(require_polyfills());
+      function assertPath(path2) {
+        if (typeof path2 !== "string") {
+          throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
         }
       }
-      function normalizeStringPosix(path3, allowAboveRoot) {
+      function normalizeStringPosix(path2, allowAboveRoot) {
         var res = "";
         var lastSegmentLength = 0;
         var lastSlash = -1;
         var dots = 0;
         var code;
-        for (var i2 = 0; i2 <= path3.length; ++i2) {
-          if (i2 < path3.length)
-            code = path3.charCodeAt(i2);
+        for (var i2 = 0; i2 <= path2.length; ++i2) {
+          if (i2 < path2.length)
+            code = path2.charCodeAt(i2);
           else if (code === 47)
             break;
           else
@@ -95382,9 +95382,9 @@ ${toHex(hashedRequest)}`;
               }
             } else {
               if (res.length > 0)
-                res += "/" + path3.slice(lastSlash + 1, i2);
+                res += "/" + path2.slice(lastSlash + 1, i2);
               else
-                res = path3.slice(lastSlash + 1, i2);
+                res = path2.slice(lastSlash + 1, i2);
               lastSegmentLength = i2 - lastSlash - 1;
             }
             lastSlash = i2;
@@ -95415,20 +95415,20 @@ ${toHex(hashedRequest)}`;
           var resolvedAbsolute = false;
           var cwd;
           for (var i2 = arguments.length - 1; i2 >= -1 && !resolvedAbsolute; i2--) {
-            var path3;
+            var path2;
             if (i2 >= 0)
-              path3 = arguments[i2];
+              path2 = arguments[i2];
             else {
               if (cwd === void 0)
                 cwd = process.cwd();
-              path3 = cwd;
+              path2 = cwd;
             }
-            assertPath(path3);
-            if (path3.length === 0) {
+            assertPath(path2);
+            if (path2.length === 0) {
               continue;
             }
-            resolvedPath = path3 + "/" + resolvedPath;
-            resolvedAbsolute = path3.charCodeAt(0) === 47;
+            resolvedPath = path2 + "/" + resolvedPath;
+            resolvedAbsolute = path2.charCodeAt(0) === 47;
           }
           resolvedPath = normalizeStringPosix(resolvedPath, !resolvedAbsolute);
           if (resolvedAbsolute) {
@@ -95442,20 +95442,20 @@ ${toHex(hashedRequest)}`;
             return ".";
           }
         },
-        normalize: function normalize(path3) {
-          assertPath(path3);
-          if (path3.length === 0) return ".";
-          var isAbsolute = path3.charCodeAt(0) === 47;
-          var trailingSeparator = path3.charCodeAt(path3.length - 1) === 47;
-          path3 = normalizeStringPosix(path3, !isAbsolute);
-          if (path3.length === 0 && !isAbsolute) path3 = ".";
-          if (path3.length > 0 && trailingSeparator) path3 += "/";
-          if (isAbsolute) return "/" + path3;
-          return path3;
+        normalize: function normalize(path2) {
+          assertPath(path2);
+          if (path2.length === 0) return ".";
+          var isAbsolute = path2.charCodeAt(0) === 47;
+          var trailingSeparator = path2.charCodeAt(path2.length - 1) === 47;
+          path2 = normalizeStringPosix(path2, !isAbsolute);
+          if (path2.length === 0 && !isAbsolute) path2 = ".";
+          if (path2.length > 0 && trailingSeparator) path2 += "/";
+          if (isAbsolute) return "/" + path2;
+          return path2;
         },
-        isAbsolute: function isAbsolute(path3) {
-          assertPath(path3);
-          return path3.length > 0 && path3.charCodeAt(0) === 47;
+        isAbsolute: function isAbsolute(path2) {
+          assertPath(path2);
+          return path2.length > 0 && path2.charCodeAt(0) === 47;
         },
         join: function join2() {
           if (arguments.length === 0)
@@ -95541,18 +95541,18 @@ ${toHex(hashedRequest)}`;
             return to2.slice(toStart);
           }
         },
-        _makeLong: function _makeLong(path3) {
-          return path3;
+        _makeLong: function _makeLong(path2) {
+          return path2;
         },
-        dirname: function dirname3(path3) {
-          assertPath(path3);
-          if (path3.length === 0) return ".";
-          var code = path3.charCodeAt(0);
+        dirname: function dirname2(path2) {
+          assertPath(path2);
+          if (path2.length === 0) return ".";
+          var code = path2.charCodeAt(0);
           var hasRoot = code === 47;
           var end = -1;
           var matchedSlash = true;
-          for (var i2 = path3.length - 1; i2 >= 1; --i2) {
-            code = path3.charCodeAt(i2);
+          for (var i2 = path2.length - 1; i2 >= 1; --i2) {
+            code = path2.charCodeAt(i2);
             if (code === 47) {
               if (!matchedSlash) {
                 end = i2;
@@ -95564,21 +95564,21 @@ ${toHex(hashedRequest)}`;
           }
           if (end === -1) return hasRoot ? "/" : ".";
           if (hasRoot && end === 1) return "//";
-          return path3.slice(0, end);
+          return path2.slice(0, end);
         },
-        basename: function basename(path3, ext) {
+        basename: function basename(path2, ext) {
           if (ext !== void 0 && typeof ext !== "string") throw new TypeError('"ext" argument must be a string');
-          assertPath(path3);
+          assertPath(path2);
           var start = 0;
           var end = -1;
           var matchedSlash = true;
           var i2;
-          if (ext !== void 0 && ext.length > 0 && ext.length <= path3.length) {
-            if (ext.length === path3.length && ext === path3) return "";
+          if (ext !== void 0 && ext.length > 0 && ext.length <= path2.length) {
+            if (ext.length === path2.length && ext === path2) return "";
             var extIdx = ext.length - 1;
             var firstNonSlashEnd = -1;
-            for (i2 = path3.length - 1; i2 >= 0; --i2) {
-              var code = path3.charCodeAt(i2);
+            for (i2 = path2.length - 1; i2 >= 0; --i2) {
+              var code = path2.charCodeAt(i2);
               if (code === 47) {
                 if (!matchedSlash) {
                   start = i2 + 1;
@@ -95602,11 +95602,11 @@ ${toHex(hashedRequest)}`;
               }
             }
             if (start === end) end = firstNonSlashEnd;
-            else if (end === -1) end = path3.length;
-            return path3.slice(start, end);
+            else if (end === -1) end = path2.length;
+            return path2.slice(start, end);
           } else {
-            for (i2 = path3.length - 1; i2 >= 0; --i2) {
-              if (path3.charCodeAt(i2) === 47) {
+            for (i2 = path2.length - 1; i2 >= 0; --i2) {
+              if (path2.charCodeAt(i2) === 47) {
                 if (!matchedSlash) {
                   start = i2 + 1;
                   break;
@@ -95617,18 +95617,18 @@ ${toHex(hashedRequest)}`;
               }
             }
             if (end === -1) return "";
-            return path3.slice(start, end);
+            return path2.slice(start, end);
           }
         },
-        extname: function extname(path3) {
-          assertPath(path3);
+        extname: function extname(path2) {
+          assertPath(path2);
           var startDot = -1;
           var startPart = 0;
           var end = -1;
           var matchedSlash = true;
           var preDotState = 0;
-          for (var i2 = path3.length - 1; i2 >= 0; --i2) {
-            var code = path3.charCodeAt(i2);
+          for (var i2 = path2.length - 1; i2 >= 0; --i2) {
+            var code = path2.charCodeAt(i2);
             if (code === 47) {
               if (!matchedSlash) {
                 startPart = i2 + 1;
@@ -95654,7 +95654,7 @@ ${toHex(hashedRequest)}`;
           preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
             return "";
           }
-          return path3.slice(startDot, end);
+          return path2.slice(startDot, end);
         },
         format: function format2(pathObject) {
           if (pathObject === null || typeof pathObject !== "object") {
@@ -95662,11 +95662,11 @@ ${toHex(hashedRequest)}`;
           }
           return _format("/", pathObject);
         },
-        parse: function parse2(path3) {
-          assertPath(path3);
+        parse: function parse2(path2) {
+          assertPath(path2);
           var ret = { root: "", dir: "", base: "", ext: "", name: "" };
-          if (path3.length === 0) return ret;
-          var code = path3.charCodeAt(0);
+          if (path2.length === 0) return ret;
+          var code = path2.charCodeAt(0);
           var isAbsolute = code === 47;
           var start;
           if (isAbsolute) {
@@ -95679,10 +95679,10 @@ ${toHex(hashedRequest)}`;
           var startPart = 0;
           var end = -1;
           var matchedSlash = true;
-          var i2 = path3.length - 1;
+          var i2 = path2.length - 1;
           var preDotState = 0;
           for (; i2 >= start; --i2) {
-            code = path3.charCodeAt(i2);
+            code = path2.charCodeAt(i2);
             if (code === 47) {
               if (!matchedSlash) {
                 startPart = i2 + 1;
@@ -95705,20 +95705,20 @@ ${toHex(hashedRequest)}`;
           preDotState === 0 || // The (right-most) trimmed path component is exactly '..'
           preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
             if (end !== -1) {
-              if (startPart === 0 && isAbsolute) ret.base = ret.name = path3.slice(1, end);
-              else ret.base = ret.name = path3.slice(startPart, end);
+              if (startPart === 0 && isAbsolute) ret.base = ret.name = path2.slice(1, end);
+              else ret.base = ret.name = path2.slice(startPart, end);
             }
           } else {
             if (startPart === 0 && isAbsolute) {
-              ret.name = path3.slice(1, startDot);
-              ret.base = path3.slice(1, end);
+              ret.name = path2.slice(1, startDot);
+              ret.base = path2.slice(1, end);
             } else {
-              ret.name = path3.slice(startPart, startDot);
-              ret.base = path3.slice(startPart, end);
+              ret.name = path2.slice(startPart, startDot);
+              ret.base = path2.slice(startPart, end);
             }
-            ret.ext = path3.slice(startDot, end);
+            ret.ext = path2.slice(startDot, end);
           }
-          if (startPart > 0) ret.dir = path3.slice(0, startPart - 1);
+          if (startPart > 0) ret.dir = path2.slice(0, startPart - 1);
           else if (isAbsolute) ret.dir = "/";
           return ret;
         },
@@ -96156,9 +96156,9 @@ ${toHex(hashedRequest)}`;
             Logger.warn("Sovereign", "Cannot connect native RTC: Active remote is not a WebRTCRemoteAdapter");
           }
         }
-        onModuleUpdate(moduleName, path3) {
-          this.emit(`${moduleName}:update`, { moduleName, path: path3 });
-          this.emit("update", { moduleName, path: path3 });
+        onModuleUpdate(moduleName, path2) {
+          this.emit(`${moduleName}:update`, { moduleName, path: path2 });
+          this.emit("update", { moduleName, path: path2 });
         }
         applyModuleSchema(db, moduleName) {
           const module = this.registeredModules.find((m2) => m2.name === moduleName);
@@ -96225,9 +96225,9 @@ ${toHex(hashedRequest)}`;
             } else {
               try {
                 const { NodeStorage: NodeStorage2 } = await Promise.resolve().then(() => (init_NodeStorage(), NodeStorage_exports));
-                const path3 = await Promise.resolve().then(() => __toESM(require_path_browserify()));
+                const path2 = await Promise.resolve().then(() => __toESM(require_path_browserify()));
                 const homeDir = process.env.HOME || process.env.USERPROFILE || ".";
-                const baseDir = this.config.localPersistencePath || path3.join(homeDir, ".sovereigns3nc", this.config.paths.appId, this.config.paths.userId);
+                const baseDir = this.config.localPersistencePath || path2.join(homeDir, ".sovereigns3nc", this.config.paths.appId, this.config.paths.userId);
                 this.storage = new NodeStorage2(baseDir);
               } catch (e2) {
                 throw new StorageError(`Failed to load NodeStorage: ${e2.message}. If you are in a browser, ensure indexedDB is available.`);
@@ -96432,49 +96432,49 @@ ${toHex(hashedRequest)}`;
         async saveBlob(data, isPublic = true) {
           const hash = this.calculateHashedContent(data);
           const type = isPublic ? "public" : "private";
-          const path3 = `${type}/blobs/${hash}`;
-          await this.storage.saveFile(path3, data);
-          return path3;
+          const path2 = `${type}/blobs/${hash}`;
+          await this.storage.saveFile(path2, data);
+          return path2;
         }
-        async getBlob(path3, userId) {
+        async getBlob(path2, userId) {
           const myId = this.config.paths.userId;
           if (!userId || userId === myId) {
-            let data = await this.storage.getFile(path3);
+            let data = await this.storage.getFile(path2);
             if (!data) {
-              const activeRemote = path3.startsWith("public/") ? this.publicRemote : this.remote;
+              const activeRemote = path2.startsWith("public/") ? this.publicRemote : this.remote;
               if (!activeRemote) return null;
-              const key = path3.startsWith("public/") ? void 0 : this.config.encryptionKey;
-              const result2 = await activeRemote.downloadFile(path3);
+              const key = path2.startsWith("public/") ? void 0 : this.config.encryptionKey;
+              const result2 = await activeRemote.downloadFile(path2);
               if (result2 && result2.data) {
                 data = result2.data;
                 if (key) {
                   data = await this.decrypt(data, key);
                 }
-                const expectedHash = path3.split("/").pop();
+                const expectedHash = path2.split("/").pop();
                 const actualHash = this.calculateHashedContent(data);
                 if (expectedHash !== actualHash) {
-                  Logger.error("Sovereign", `Hash mismatch for own blob ${path3}. Expected ${expectedHash}, got ${actualHash}`);
-                  throw new SyncError(`Blob corruption detected for ${path3}`);
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+                  throw new SyncError(`Blob corruption detected for ${path2}`);
                 }
-                await this.storage.saveFile(path3, data);
+                await this.storage.saveFile(path2, data);
               }
             }
             return data;
           }
-          if (!path3.startsWith("public/")) {
+          if (!path2.startsWith("public/")) {
             throw new SyncError("Only public blobs can be fetched from other users");
           }
           const userRemote = this.createRemote(userId);
-          const result = await userRemote.downloadFile(path3);
+          const result = await userRemote.downloadFile(path2);
           if (result && result.data) {
             const data = result.data;
-            const expectedHash = path3.split("/").pop();
+            const expectedHash = path2.split("/").pop();
             const actualHash = this.calculateHashedContent(data);
             if (expectedHash !== actualHash) {
-              Logger.error("Sovereign", `Hash mismatch for blob ${path3}. Expected ${expectedHash}, got ${actualHash}`);
-              throw new SyncError(`Blob corruption detected for ${path3}`);
+              Logger.error("Sovereign", `Hash mismatch for blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+              throw new SyncError(`Blob corruption detected for ${path2}`);
             }
-            await this.storage.saveFile(`${PATHS.FOLLOWED_PREFIX}${userId}/${path3}`, data);
+            await this.storage.saveFile(`${PATHS.FOLLOWED_PREFIX}${userId}/${path2}`, data);
             return data;
           }
           return null;
@@ -96528,11 +96528,11 @@ ${toHex(hashedRequest)}`;
             resolve2(choice);
           }
         }
-        async handleConflict(path3, localData, remoteData) {
+        async handleConflict(path2, localData, remoteData) {
           return new Promise((resolve2) => {
             const conflictId = env.generateId(12);
             this.pendingConflicts.set(conflictId, resolve2);
-            this.emit("conflict", { id: conflictId, path: path3, localData, remoteData });
+            this.emit("conflict", { id: conflictId, path: path2, localData, remoteData });
           });
         }
         async sendEncryptedPayload(recipientId, payload, namespace) {
@@ -96725,8 +96725,8 @@ ${toHex(hashedRequest)}`;
             const data2 = await this.db.getStorage().getPublicUserFile();
             return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
           }
-          const path3 = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
-          const data = await this.db.getStorage().getFile(path3);
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
+          const data = await this.db.getStorage().getFile(path2);
           if (data) {
             return JSON.parse(new TextDecoder().decode(data));
           }
@@ -96830,8 +96830,8 @@ ${toHex(hashedRequest)}`;
           });
         }
         async getMessageDb(date2, type) {
-          const path3 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
-          const data = await this.db.getStorage().getFile(path3);
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
+          const data = await this.db.getStorage().getFile(path2);
           const initSqlJs = env.getSqlJs();
           if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
           const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
@@ -96840,8 +96840,8 @@ ${toHex(hashedRequest)}`;
             db = new sqliteInstance.Database(data || void 0);
           } catch (e2) {
             if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
-              Logger.error("Messaging", `Database corruption detected at ${path3}. Deleting.`);
-              await this.db.getStorage().deleteFile(path3);
+              Logger.error("Messaging", `Database corruption detected at ${path2}. Deleting.`);
+              await this.db.getStorage().deleteFile(path2);
               db = new sqliteInstance.Database();
             } else {
               throw e2;
@@ -96851,8 +96851,8 @@ ${toHex(hashedRequest)}`;
           return db;
         }
         async getReceiptsDb(userId, date2, type) {
-          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date2}.db`, type);
-          const data = await this.db.getStorage().getFile(path3);
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date2}.db`, type);
+          const data = await this.db.getStorage().getFile(path2);
           const initSqlJs = env.getSqlJs();
           if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
           const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
@@ -96960,10 +96960,10 @@ ${toHex(hashedRequest)}`;
         async markAsRead(senderId, messageId, date2) {
           const db = await this.getReceiptsDb(senderId, date2, "public");
           db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "read", Date.now()]);
-          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-          await this.db.getStorage().saveFile(path3, db.export());
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+          await this.db.getStorage().saveFile(path2, db.export());
           db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
         }
         async markBatchAsRead(senderId, messages) {
           const dates = [...new Set(messages.map((m2) => m2.date))];
@@ -96973,10 +96973,10 @@ ${toHex(hashedRequest)}`;
             for (const m2 of msgsForDate) {
               db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "read", Date.now()]);
             }
-            const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-            await this.db.getStorage().saveFile(path3, db.export());
+            const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+            await this.db.getStorage().saveFile(path2, db.export());
             db.close();
-            this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+            this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
           }
         }
         async markAsDelivered(senderId, messageId, date2) {
@@ -96987,10 +96987,10 @@ ${toHex(hashedRequest)}`;
             return;
           }
           db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "delivered", Date.now()]);
-          const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-          await this.db.getStorage().saveFile(path3, db.export());
+          const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+          await this.db.getStorage().saveFile(path2, db.export());
           db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+          this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
         }
         async markBatchAsDelivered(senderId, messages) {
           const dates = [...new Set(messages.map((m2) => m2.date))];
@@ -97006,9 +97006,9 @@ ${toHex(hashedRequest)}`;
               }
             }
             if (changed) {
-              const path3 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-              await this.db.getStorage().saveFile(path3, db.export());
-              this.db.emit(`${this.MODULE_NAME}:update`, { path: path3 });
+              const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
+              await this.db.getStorage().saveFile(path2, db.export());
+              this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
             }
             db.close();
           }
@@ -97135,102 +97135,13 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // src/types.ts
-  var import_polyfills694;
-  var init_types7 = __esm({
-    "src/types.ts"() {
-      "use strict";
-      import_polyfills694 = __toESM(require_polyfills());
-    }
-  });
-
-  // src/interfaces/IStorage.ts
-  var import_polyfills695;
-  var init_IStorage = __esm({
-    "src/interfaces/IStorage.ts"() {
-      "use strict";
-      import_polyfills695 = __toESM(require_polyfills());
-    }
-  });
-
-  // src/interfaces/IRemoteAdapter.ts
-  var import_polyfills696;
-  var init_IRemoteAdapter = __esm({
-    "src/interfaces/IRemoteAdapter.ts"() {
-      "use strict";
-      import_polyfills696 = __toESM(require_polyfills());
-    }
-  });
-
-  // src/adapters/SQLiteNodeStorage.ts
-  var import_polyfills697, fs2, path2;
-  var init_SQLiteNodeStorage = __esm({
-    "src/adapters/SQLiteNodeStorage.ts"() {
-      "use strict";
-      import_polyfills697 = __toESM(require_polyfills());
-      fs2 = __toESM(__require("fs-extra"));
-      path2 = __toESM(require_path_browserify());
-      init_Logger();
-      init_Environment();
-      init_Errors();
-    }
-  });
-
-  // src/modules/Feed.ts
-  var import_polyfills698;
-  var init_Feed = __esm({
-    "src/modules/Feed.ts"() {
-      "use strict";
-      import_polyfills698 = __toESM(require_polyfills());
-      init_Logger();
-      init_Environment();
-      init_Errors();
-      init_Constants();
-    }
-  });
-
-  // src/modules/Moderation.ts
-  var import_polyfills699, import_buffer2;
-  var init_Moderation = __esm({
-    "src/modules/Moderation.ts"() {
-      "use strict";
-      import_polyfills699 = __toESM(require_polyfills());
-      init_Logger();
-      import_buffer2 = __toESM(require_buffer());
-      init_Constants();
-      init_Errors();
-      init_Environment();
-    }
-  });
-
-  // src/index.ts
-  var import_polyfills700;
-  var init_src = __esm({
-    "src/index.ts"() {
-      "use strict";
-      import_polyfills700 = __toESM(require_polyfills());
-      init_SovereignS3nc();
-      init_types7();
-      init_IStorage();
-      init_IRemoteAdapter();
-      init_S3RemoteAdapter();
-      init_SQLiteNodeStorage();
-      init_Profile();
-      init_Messaging();
-      init_Feed();
-      init_Moderation();
-      init_Logger();
-      init_MediaUtils();
-    }
-  });
-
   // demo/banky/src/Banky.ts
-  var import_polyfills701, BANKY_MODULE_DEFINITION, BankyManager;
+  var import_polyfills694, BANKY_MODULE_DEFINITION, BankyManager;
   var init_Banky = __esm({
     "demo/banky/src/Banky.ts"() {
       "use strict";
-      import_polyfills701 = __toESM(require_polyfills());
-      init_src();
+      import_polyfills694 = __toESM(require_polyfills());
+      init_Logger();
       BANKY_MODULE_DEFINITION = {
         name: "banky",
         tables: [
@@ -97455,21 +97366,21 @@ ${toHex(hashedRequest)}`;
               for (const member2 of group3.members) {
                 if (member2.userId === this.db.getConfig().paths.userId) continue;
                 if (member2.status !== "joined") continue;
-                const path3 = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-                let data = await this.db.getStorage().getFile(path3);
+                const path2 = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
+                let data = await this.db.getStorage().getFile(path2);
                 if (data) {
                   try {
                     try {
                       data = await this.db.decrypt(data, group3.sharedKey);
                     } catch (de) {
-                      console.error(`[Banky] Decryption failed for ${path3}: ${de.message}`);
+                      console.error(`[Banky] Decryption failed for ${path2}: ${de.message}`);
                       continue;
                     }
                     const db = new this.sqliteInstance.Database(data);
                     transactions.push(...this.queryTransactions(db, groupId));
                     db.close();
                   } catch (e2) {
-                    console.error(`[Banky] DB init failed for member data ${path3}: ${e2.message}`);
+                    console.error(`[Banky] DB init failed for member data ${path2}: ${e2.message}`);
                   }
                 }
               }
@@ -97877,10 +97788,10 @@ ${toHex(hashedRequest)}`;
     }
     return hueParse(str);
   }
-  var import_polyfills702, lim, map$1, hex, h1, h2, eq, isShort, alpha, HUE_RE, map, names$1, names, RGB_RE, to, from, Color;
+  var import_polyfills695, lim, map$1, hex, h1, h2, eq, isShort, alpha, HUE_RE, map, names$1, names, RGB_RE, to, from, Color;
   var init_color_esm = __esm({
     "node_modules/@kurkle/color/dist/color.esm.js"() {
-      import_polyfills702 = __toESM(require_polyfills(), 1);
+      import_polyfills695 = __toESM(require_polyfills(), 1);
       lim = (v2, l2, h3) => Math.max(Math.min(v2, h3), l2);
       map$1 = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, A: 10, B: 11, C: 12, D: 13, E: 14, F: 15, a: 10, b: 11, c: 12, d: 13, e: 14, f: 15 };
       hex = [..."0123456789ABCDEF"];
@@ -100231,10 +100142,10 @@ ${toHex(hashedRequest)}`;
       bottom: clip.bottom === false ? chart.height : area.bottom + (clip.bottom === true ? 0 : clip.bottom)
     };
   }
-  var import_polyfills703, uid, toPercentage, toDimension, keyResolvers, defined, isFunction, setsEqual, PI, TAU, PITAU, INFINITY, RAD_PER_DEG, HALF_PI, QUARTER_PI, TWO_THIRDS_PI, log10, sign2, _lookupByKey, _rlookupByKey, arrayEvents, requestAnimFrame, _toLeftRightCenter, _alignStartEnd, _textX, atEdge, elasticIn, elasticOut, effects, numbers, colors, intlCache, formatters, Ticks, overrides, descriptors, Defaults, defaults, LINE_HEIGHT, FONT_STYLE, numberOrZero, readKey, needsSubResolver, getScope, EPSILON, getPoint, getValueAxis, getComputedStyle, positions, useOffsetPos, round1, supportsEventListenerOptions, getRightToLeftAdapter, getLeftToRightAdapter;
+  var import_polyfills696, uid, toPercentage, toDimension, keyResolvers, defined, isFunction, setsEqual, PI, TAU, PITAU, INFINITY, RAD_PER_DEG, HALF_PI, QUARTER_PI, TWO_THIRDS_PI, log10, sign2, _lookupByKey, _rlookupByKey, arrayEvents, requestAnimFrame, _toLeftRightCenter, _alignStartEnd, _textX, atEdge, elasticIn, elasticOut, effects, numbers, colors, intlCache, formatters, Ticks, overrides, descriptors, Defaults, defaults, LINE_HEIGHT, FONT_STYLE, numberOrZero, readKey, needsSubResolver, getScope, EPSILON, getPoint, getValueAxis, getComputedStyle, positions, useOffsetPos, round1, supportsEventListenerOptions, getRightToLeftAdapter, getLeftToRightAdapter;
   var init_helpers_dataset = __esm({
     "node_modules/chart.js/dist/chunks/helpers.dataset.js"() {
-      import_polyfills703 = __toESM(require_polyfills(), 1);
+      import_polyfills696 = __toESM(require_polyfills(), 1);
       init_color_esm();
       uid = /* @__PURE__ */ (() => {
         let id = 0;
@@ -102468,15 +102379,15 @@ ${toHex(hashedRequest)}`;
     return _pointInLine;
   }
   function strokePathWithCache(ctx, line, start, count) {
-    let path3 = line._path;
-    if (!path3) {
-      path3 = line._path = new Path2D();
-      if (line.path(path3, start, count)) {
-        path3.closePath();
+    let path2 = line._path;
+    if (!path2) {
+      path2 = line._path = new Path2D();
+      if (line.path(path2, start, count)) {
+        path2.closePath();
       }
     }
     setStyle(ctx, line.options);
-    ctx.stroke(path3);
+    ctx.stroke(path2);
   }
   function strokePathDirect(ctx, line, start, count) {
     const { segments, options } = line;
@@ -104123,10 +104034,10 @@ ${toHex(hashedRequest)}`;
     const span = nextSource - prevSource;
     return span ? prevTarget + (nextTarget - prevTarget) * (val - prevSource) / span : prevTarget;
   }
-  var import_polyfills704, Animator, animator, transparent, interpolators, Animation, Animations, isDirectUpdateMode, cloneIfNotShared, createStack, DatasetController, BarController, BubbleController, DoughnutController, LineController, PolarAreaController, PieController, RadarController, ScatterController, controllers, DateAdapterBase, adapters, Interaction, STATIC_POSITIONS, layouts, BasePlatform, BasicPlatform, EXPANDO_KEY, EVENT_TYPES, isNullOrEmpty, eventListenerOptions, drpListeningCharts, oldDevicePixelRatio, DomPlatform, Element, reverseAlign, offsetFromEdge, getTicksLimit, Scale, TypedRegistry, Registry, registry, PluginService, keyCache, keysCached, addIfFound, Config, hasFunction, version, KNOWN_POSITIONS, instances, getChart, Chart, ArcElement, usePath2D, LineElement, PointElement, BarElement, elements, BORDER_COLORS, BACKGROUND_COLORS, plugin_colors, plugin_decimation, simpleArc, index, getBoxSize, itemsEqual, Legend, plugin_legend, Title, plugin_title, map2, plugin_subtitle, positioners, defaultCallbacks, Tooltip, plugin_tooltip, plugins, addIfString, validIndex, CategoryScale, LinearScaleBase, LinearScale, log10Floor, changeExponent, LogarithmicScale, RadialLinearScale, INTERVALS, UNITS, TimeScale, TimeSeriesScale, scales, registerables;
+  var import_polyfills697, Animator, animator, transparent, interpolators, Animation, Animations, isDirectUpdateMode, cloneIfNotShared, createStack, DatasetController, BarController, BubbleController, DoughnutController, LineController, PolarAreaController, PieController, RadarController, ScatterController, controllers, DateAdapterBase, adapters, Interaction, STATIC_POSITIONS, layouts, BasePlatform, BasicPlatform, EXPANDO_KEY, EVENT_TYPES, isNullOrEmpty, eventListenerOptions, drpListeningCharts, oldDevicePixelRatio, DomPlatform, Element, reverseAlign, offsetFromEdge, getTicksLimit, Scale, TypedRegistry, Registry, registry, PluginService, keyCache, keysCached, addIfFound, Config, hasFunction, version, KNOWN_POSITIONS, instances, getChart, Chart, ArcElement, usePath2D, LineElement, PointElement, BarElement, elements, BORDER_COLORS, BACKGROUND_COLORS, plugin_colors, plugin_decimation, simpleArc, index, getBoxSize, itemsEqual, Legend, plugin_legend, Title, plugin_title, map2, plugin_subtitle, positioners, defaultCallbacks, Tooltip, plugin_tooltip, plugins, addIfString, validIndex, CategoryScale, LinearScaleBase, LinearScale, log10Floor, changeExponent, LogarithmicScale, RadialLinearScale, INTERVALS, UNITS, TimeScale, TimeSeriesScale, scales, registerables;
   var init_chart = __esm({
     "node_modules/chart.js/dist/chart.js"() {
-      import_polyfills704 = __toESM(require_polyfills(), 1);
+      import_polyfills697 = __toESM(require_polyfills(), 1);
       init_helpers_dataset();
       Animator = class {
         constructor() {
@@ -112114,11 +112025,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // demo/banky/src/ErrorBoundary.tsx
-  var import_polyfills705, import_react, ErrorBoundary;
+  var import_polyfills698, import_react, ErrorBoundary;
   var init_ErrorBoundary = __esm({
     "demo/banky/src/ErrorBoundary.tsx"() {
       "use strict";
-      import_polyfills705 = __toESM(require_polyfills());
+      import_polyfills698 = __toESM(require_polyfills());
       import_react = __toESM(require_react());
       ErrorBoundary = class extends import_react.Component {
         constructor() {
@@ -112146,7 +112057,7 @@ ${toHex(hashedRequest)}`;
   // demo/banky/src/App.tsx
   var require_App = __commonJS({
     "demo/banky/src/App.tsx"() {
-      var import_polyfills706 = __toESM(require_polyfills());
+      var import_polyfills699 = __toESM(require_polyfills());
       var import_react2 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
@@ -112155,6 +112066,7 @@ ${toHex(hashedRequest)}`;
       init_Banky();
       init_chart();
       init_ErrorBoundary();
+      init_MediaUtils();
       Chart.register(...registerables);
       var App = () => {
         const [config, setConfig] = (0, import_react2.useState)({
@@ -112343,7 +112255,7 @@ ${toHex(hashedRequest)}`;
           try {
             const reader = new FileReader();
             reader.onload = async (ev) => {
-              const img = await SovereignS3nc.compressImage(ev.target?.result, 100 * 1024);
+              const img = await MediaUtils.compressImage(ev.target?.result, 100 * 1024);
               await banky.updateAccountImage(selectedAccount.id, img);
               await sync();
               setSelectedAccount({ ...selectedAccount, image: img });

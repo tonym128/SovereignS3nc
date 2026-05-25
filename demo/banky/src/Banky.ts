@@ -1,4 +1,6 @@
-import { SovereignS3nc, ModuleDefinition, Logger } from '../../../src';
+import { SovereignS3nc } from '../../../src/SovereignS3nc';
+import { ModuleDefinition } from '../../../src/types';
+import { Logger } from '../../../src/utils/Logger';
 
 export interface BankAccount {
     id: string;

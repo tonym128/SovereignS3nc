@@ -9,6 +9,7 @@ import { S3RemoteAdapter } from '../../../src/adapters/S3RemoteAdapter';
 import { IndexedDBStorage } from '../../../src/adapters/IndexedDBStorage';
 import { Chart, registerables } from 'chart.js';
 import { ErrorBoundary } from './ErrorBoundary';
+import { MediaUtils } from '../../../src/utils/MediaUtils';
 
 Chart.register(...registerables);
 
@@ -239,7 +240,7 @@ const App = () => {
         try {
             const reader = new FileReader();
             reader.onload = async (ev) => {
-                const img = await SovereignS3nc.compressImage(ev.target?.result as string, 100 * 1024);
+                const img = await MediaUtils.compressImage(ev.target?.result as string, 100 * 1024);
                 await banky.updateAccountImage(selectedAccount.id, img);
                 await sync();
                 setSelectedAccount({ ...selectedAccount, image: img });

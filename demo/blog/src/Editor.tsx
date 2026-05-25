@@ -11,8 +11,8 @@ const Editor = () => {
     const [config, setConfig] = useState({
         endpoint: 'http://127.0.0.1:9000',
         region: 'rustfs',
-        accessKeyId: 'user-key',
-        secretAccessKey: 'user-secret-123',
+        accessKeyId: '',
+        secretAccessKey: '',
         bucketName: 'sovereign-demo',
         appId: 'sov-blog',
         userId: 'author-1',
@@ -53,7 +53,11 @@ const Editor = () => {
             setSov(instance);
             setFeed(new FeedModule(instance));
             setIsLoggedIn(true);
+
+            // Register in global users.json
+            await instance.ensureGlobalRegistration();
             await instance.sync();
+
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);
         } catch (err) {
@@ -183,6 +187,24 @@ const Editor = () => {
         setView('edit');
     };
 
+    const deletePost = async (post: Post) => {
+        if (!feed || !sov || !confirm('Are you sure you want to delete this post?')) return;
+        setSyncing(true);
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            const isPublic = JSON.parse(post.content).status === 'published';
+            await feed.deletePost(post.id, today, isPublic);
+            await sov.sync();
+            alert('Post deleted!');
+            loadPosts(feed);
+        } catch (err) {
+            console.error('Delete failed', err);
+            alert('Delete failed: ' + (err as Error).message);
+        } finally {
+            setSyncing(false);
+        }
+    };
+
     const exportStaticSite = async () => {
         if (!sov || !feed) return;
         setSyncing(true);
@@ -278,9 +300,32 @@ const Editor = () => {
                 <div className="row justify-content-center">
                     <div className="col-md-6 card p-4 shadow-sm">
                         <h3 className="mb-4">Author Login</h3>
-                        <input className="form-control mb-3" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
-                        <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
-                        <button className="btn btn-primary w-100" onClick={login} disabled={syncing}>
+                        <label className="form-label small">S3 Endpoint</label>
+                        <input className="form-control mb-3" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                        
+                        <div className="row">
+                            <div className="col">
+                                <label className="form-label small">Access Key ID</label>
+                                <input className="form-control mb-3" placeholder="Access Key ID" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
+                            </div>
+                            <div className="col">
+                                <label className="form-label small">Secret Access Key</label>
+                                <input className="form-control mb-3" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <label className="form-label small">User ID</label>
+                                <input className="form-control mb-3" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
+                            </div>
+                            <div className="col">
+                                <label className="form-label small">Passphrase</label>
+                                <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
+                            </div>
+                        </div>
+
+                        <button className="btn btn-primary w-100 mt-2" onClick={login} disabled={syncing}>
                             {syncing ? 'Logging in...' : 'Enter Editor'}
                         </button>
                     </div>
@@ -341,7 +386,10 @@ const Editor = () => {
                                             <h5 className="mb-1">{data.title} <span className={`badge ${data.status === 'draft' ? 'bg-warning text-dark' : 'bg-success'} ms-2`}>{data.status}</span></h5>
                                             <small className="text-muted">{new Date(data.publishedAt).toLocaleDateString()}</small>
                                         </div>
-                                        <button className="btn btn-sm btn-outline-primary" onClick={() => startEdit(post)}>Edit</button>
+                                        <div className="d-flex gap-2">
+                                            <button className="btn btn-sm btn-outline-primary" onClick={() => startEdit(post)}>Edit</button>
+                                            <button className="btn btn-sm btn-outline-danger" onClick={() => deletePost(post)}>Delete</button>
+                                        </div>
                                     </div>
                                 );
                             })}
