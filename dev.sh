@@ -4,19 +4,32 @@
 
 set -e
 
-# Configuration
-SOCIAL_CONFIG="demo/social/config.json"
-BANKY_CONFIG="demo/banky/config.json"
-BOARD_CONFIG="demo/board/config.json"
-BLOG_CONFIG="demo/blog/config.json"
-BUCKET_NAME="sovereign-demo"
-RUSTFS_BINARY="./bin/rustfs"
-RC_BINARY="./bin/rc"
-DATA_DIR="./rustfs_data"
-LOG_FILE="rustfs.log"
-RUSTFS_PORT=9000
-RUSTFS_ROOT_KEY="rustfsroot"
-RUSTFS_ROOT_SECRET="rustfsrootsecret"
+# ─── Load credentials from .env (gitignored) ─────────────────────────────────
+# Copy .env.example to .env and customise for your environment.
+# If .env is absent, safe local-only defaults are used with a visible warning.
+if [ -f ".env" ]; then
+    # shellcheck source=/dev/null
+    source .env
+else
+    echo ""
+    echo "⚠️  WARNING: No .env file found. Using default dev credentials."
+    echo "   Copy .env.example to .env and customise before exposing to any network."
+    echo ""
+fi
+
+# Configuration — values can be overridden via .env
+SOCIAL_CONFIG="${SOCIAL_CONFIG:-demo/social/config.json}"
+BANKY_CONFIG="${BANKY_CONFIG:-demo/banky/config.json}"
+BOARD_CONFIG="${BOARD_CONFIG:-demo/board/config.json}"
+BLOG_CONFIG="${BLOG_CONFIG:-demo/blog/config.json}"
+BUCKET_NAME="${BUCKET_NAME:-sovereign-demo}"
+RUSTFS_BINARY="${RUSTFS_BINARY:-./bin/rustfs}"
+RC_BINARY="${RC_BINARY:-./bin/rc}"
+DATA_DIR="${DATA_DIR:-./rustfs_data}"
+LOG_FILE="${LOG_FILE:-rustfs.log}"
+RUSTFS_PORT="${RUSTFS_PORT:-9000}"
+RUSTFS_ROOT_KEY="${RUSTFS_ROOT_KEY:-rustfsroot}"
+RUSTFS_ROOT_SECRET="${RUSTFS_ROOT_SECRET:-rustfsrootsecret}"
 
 function check_binaries() {
     if [ ! -f "$RUSTFS_BINARY" ]; then
@@ -71,18 +84,18 @@ function dev() {
     $RC_BINARY alias set local "http://127.0.0.1:$RUSTFS_PORT" "$RUSTFS_ROOT_KEY" "$RUSTFS_ROOT_SECRET" > /dev/null
     
     # Create Admin Key
-    ADMIN_ACCESS="admin-key"
-    ADMIN_SECRET="admin-secret-123"
+    ADMIN_ACCESS="${ADMIN_ACCESS:-admin-key}"
+    ADMIN_SECRET="${ADMIN_SECRET:-admin-secret-123}"
     $RC_BINARY admin user add local "$ADMIN_ACCESS" "$ADMIN_SECRET" > /dev/null || true
     
     # Create Blog Admin Key
-    BLOG_ADMIN_ACCESS="blog-admin"
-    BLOG_ADMIN_SECRET="blog-secret-789"
+    BLOG_ADMIN_ACCESS="${BLOG_ADMIN_ACCESS:-blog-admin}"
+    BLOG_ADMIN_SECRET="${BLOG_ADMIN_SECRET:-blog-secret-789}"
     $RC_BINARY admin user add local "$BLOG_ADMIN_ACCESS" "$BLOG_ADMIN_SECRET" > /dev/null || true
 
     # Create Blog Reader Key
-    BLOG_READER_ACCESS="blog-reader"
-    BLOG_READER_SECRET="blog-read-only-456"
+    BLOG_READER_ACCESS="${BLOG_READER_ACCESS:-blog-reader}"
+    BLOG_READER_SECRET="${BLOG_READER_SECRET:-blog-read-only-456}"
     $RC_BINARY admin user add local "$BLOG_READER_ACCESS" "$BLOG_READER_SECRET" > /dev/null || true
 
     # Create Admin Policy (Full bucket access for development)
@@ -149,8 +162,8 @@ EOF
     rm blog-reader-policy.json
 
     # Create User Key
-    USER_ACCESS="user-key"
-    USER_SECRET="user-secret-123"
+    USER_ACCESS="${USER_ACCESS:-user-key}"
+    USER_SECRET="${USER_SECRET:-user-secret-123}"
     $RC_BINARY admin user add local "$USER_ACCESS" "$USER_SECRET" > /dev/null || true
     
     # Create User Policy (Specific Allows for test users, ensuring admin isolation and functional discovery)
