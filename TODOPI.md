@@ -16,10 +16,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Affected: `Feed.ts` (post IDs), `MessagingModule.ts` (message IDs), `WebRTCRemoteAdapter.ts` (msgId, deduplication), `GroupManager.ts` (group IDs), `SovereignS3nc.ts` (conflict resolution IDs)
   - `Math.random()` is not cryptographically secure — predictable IDs enable message forgery
 
-- [ ] **Remove hardcoded demo credentials from repo** (`dev.sh`)
+- [x] **Remove hardcoded demo credentials from repo** (`dev.sh`)
   - `ADMIN_ACCESS="admin-key"`, `ADMIN_SECRET="admin-secret-123"` are committed to source control
   - Anyone who clones the repo can access S3 buckets configured with these credentials
   - Move to `.env` file (gitignored) or environment variables
+  - ✅ Fixed: All credentials now load from `.env` (gitignored) via `source .env`. Falls back to defaults with a visible warning. Added `.env.example` template.
 
 - [x] **Add authentication to Admin CLI** (`src/admin.ts`)
   - Currently no password, MFA, or session token protection
