@@ -260,13 +260,15 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟢 P3 — Low Priority / Nice-to-Have
 
-- [ ] **Add module name collision detection** (`src/SovereignS3nc.ts`)
+- [x] **Add module name collision detection** (`src/SovereignS3nc.ts`)
   - Sanitized names like `"feedDROP TABLE"` could collide with legitimate modules
   - Add validation that sanitized name matches original after stripping non-alphanumeric chars
+  - ✅ Fixed: `registerModule()` now throws `ModuleError` if a module with the same name is already registered, rather than silently ignoring the duplicate. This prevents silent path collisions in the namespace.
 
-- [ ] **Add sync progress events** (`src/core/SyncOrchestrator.ts`)
+- [x] **Add sync progress events** (`src/core/SyncOrchestrator.ts`)
   - No way to track sync progress for large datasets
   - Emit `sync:progress` events with percentage or items remaining
+  - ✅ Fixed: `SyncOrchestrator.sync()` now calls `ctx.emitSyncProgress()` at each major phase: `start`, `syncing_own_data`, `registering`, `discovering_users`, `syncing_followed`, `syncing_blobs`, `complete`. SovereignS3nc emits a `sync:progress` event with `{ stage, done?, total? }` payload. Listen via `sov.on('sync:progress', cb)`.
 
 - [ ] **Add P2P message TTL enforcement** (`src/adapters/WebRTCRemoteAdapter.ts`)
   - Messages have a TTL field but no strict enforcement — stale messages can persist indefinitely in the mesh

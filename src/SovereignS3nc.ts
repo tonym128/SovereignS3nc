@@ -183,7 +183,11 @@ export class SovereignS3nc extends EventEmitter {
             createRemote: (uid) => this.createRemote(uid),
             getModulePath: (mn, sp, t) => this.getModulePath(mn, sp, t),
             onModuleUpdate: (mn, p) => this.onModuleUpdate(mn, p),
-            registeredModules: this.registeredModules
+            registeredModules: this.registeredModules,
+            emitSyncProgress: (stage, done, total) => {
+                this.emit('sync:progress', { stage, done, total });
+                Logger.debug('Sync', `Progress: ${stage}${total !== undefined ? ` (${done ?? 0}/${total})` : ''}`);
+            }
         });
     }
 
@@ -238,12 +242,18 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     public registerModule(definition: ModuleDefinition) {
-        if (!this.registeredModules.find(m => m.name === definition.name)) {
-            this.registeredModules.push(definition);
+        const existing = this.registeredModules.find(m => m.name === definition.name);
+        if (existing) {
+            throw new ModuleError(
+                definition.name,
+                `Module name collision: a module named "${definition.name}" is already registered. ` +
+                `Each module must have a unique name to avoid path conflicts.`
+            );
         }
+        this.registeredModules.push(definition);
 
         if (this.syncWorker) {
-            this.syncWorker.registerModule(definition).catch(e => Logger.warn('Sovereign', 'Failed to register module in worker', e));
+            this.syncWorker.registerModule(definition).catch((e: any) => Logger.warn('Sovereign', 'Failed to register module in worker', e));
         }
     }
 
