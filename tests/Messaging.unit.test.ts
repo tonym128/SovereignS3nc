@@ -141,4 +141,28 @@ describe('MessagingModule Unit Tests', () => {
         const messages = await messagingModule.getInboxMessages(1);
         expect(messages.find(m => m.id === 'expired1')).toBeUndefined();
     });
+
+    test('markAsDelivered and markAsRead should record receipts and save them to storage', async () => {
+        const saveSpy = jest.spyOn(sov.getStorage(), 'saveFile').mockResolvedValue(undefined);
+        
+        await messagingModule.markAsDelivered('bob', 'msg-123', '2026-09-17');
+        expect(saveSpy).toHaveBeenCalledWith(
+            expect.stringContaining('receipts/bob/2026-09-17.db'),
+            expect.any(Uint8Array)
+        );
+
+        await messagingModule.markAsRead('bob', 'msg-123', '2026-09-17');
+        expect(saveSpy).toHaveBeenCalledWith(
+            expect.stringContaining('receipts/bob/2026-09-17.db'),
+            expect.any(Uint8Array)
+        );
+    });
+
+    test('getMessageReceipt should return status from outbox', async () => {
+        jest.spyOn(sov.getStorage(), 'getFile').mockResolvedValue(new Uint8Array([1, 2, 3]));
+        mockDbInstance.exec.mockReturnValue([{ values: [['delivered']] }]);
+
+        const status = await messagingModule.getMessageReceipt('msg-456', '2026-09-17');
+        expect(status).toBe('delivered');
+    });
 });

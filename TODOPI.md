@@ -210,9 +210,10 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Implement sync-time cleanup pass for expired items
   - ✅ Fixed: Added `expiresAt?: number` (Unix ms) to `Message` and `Post` interfaces. Added database migrations (v3 for Messaging, v2 for Feed). `sendDirectMessage()` and `post()` support `expiresAt`. `getInboxMessages()` and `getPosts()` filter out expired entries at read time. Added `cleanupExpired()` methods to both modules to purge expired rows from SQLite files. Tested in `Feed.unit.test.ts` and `Messaging.unit.test.ts`.
 
-- [ ] **Add read receipts / delivery status** (`src/modules/Messaging.ts`)
+- [x] **Add read receipts / delivery status** (`src/modules/Messaging.ts`)
   - No concept of message delivery confirmation or read receipts
   - Users have no feedback on whether DMs were received
+  - ✅ Fixed: End-to-end receipt pipeline: `markAsDelivered` and `markAsRead` write receipts into public `receipts/{senderId}/{date}.db`. `getInboxMessages()` pulls receipts from followed users and updates local outbox status (`sent` -> `delivered` -> `read`). Added `getMessageReceipt(messageId, date)` to query message receipt status. Verified with unit tests in `Messaging.unit.test.ts`.
 
 - [ ] **Add granular group permissions** (`src/core/GroupManager.ts`, `src/modules/Feed.ts`)
   - Only supports `owner`, `admin`, `member` — no fine-grained controls

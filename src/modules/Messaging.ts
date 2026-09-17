@@ -285,6 +285,28 @@ export class MessagingModule {
         }
     }
 
+    /**
+     * Gets the delivery or read receipt status of an outgoing message from the outbox.
+     */
+    async getMessageReceipt(messageId: string, date: string): Promise<'sent' | 'delivered' | 'read' | null> {
+        const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
+        const data = await this.db.getStorage().getFile(outboxPath);
+        if (!data) return null;
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+        const db = new sqliteInstance.Database(data);
+        try {
+            const res = db.exec('SELECT status FROM messages WHERE id = ?', [messageId]);
+            if (res && res.length > 0 && res[0].values.length > 0) {
+                return (res[0].values[0][0] as any) || 'sent';
+            }
+            return null;
+        } finally {
+            db.close();
+        }
+    }
+
     async getInboxMessages(days: number = 5): Promise<Message[]> {
         const messages: Message[] = [];
         const following = await this.db.getFollowing();
