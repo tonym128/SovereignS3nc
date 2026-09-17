@@ -239,10 +239,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Run through HKDF for domain separation and defense-in-depth
   - ✅ Fixed: `deriveSharedSecret()` now applies `crypto.hkdfSync('sha256', rawShared, ..., 'SovereignS3nc-DM-v2', 32)`. Backward compat: `MessagingModule.getInboxMessages` tries V2 first, falls back to V1 (`'SovereignS3nc-DM-v1-raw'`) for pre-HKDF messages.
 
-- [ ] **Add Content Security Policy (CSP) to demo HTML files** (all `demo/*/index.html`)
+- [x] **Add Content Security Policy (CSP) to demo HTML files** (all `demo/*/index.html`)
   - Demos load Bootstrap, sql.js, QR libraries from CDNs with no CSP headers
   - Opens XSS risk if any CDN is compromised
   - Add CSP meta tags restricting sources to specific CDN domains + nonces for inline scripts
+  - ✅ Fixed: Added `<meta http-equiv="Content-Security-Policy">` to all 6 demo HTML files (social, social-local, blog, banky, board, web). Allows `cdn.jsdelivr.net` + `cdnjs.cloudflare.com`, `'unsafe-inline'` for styles/scripts, `blob:` for WASM workers, `wss:` for WebRTC signaling. `object-src 'none'` and `base-uri 'self'` hardened.
 
 - [ ] **Add SRI (Subresource Integrity) hashes to worker script loading** (`src/worker/SyncWorkerProxy.ts`)
   - Worker loaded from URL with no integrity verification
