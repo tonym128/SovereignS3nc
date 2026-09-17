@@ -15,6 +15,22 @@
       "sizes": "512x512"
     }
   ],
+  "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Sovereign Social Desktop"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Sovereign Social Mobile"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#1877f2",

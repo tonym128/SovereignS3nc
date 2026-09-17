@@ -289,9 +289,10 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Add timestamp-based expiration check on received messages
   - ✅ Fixed: All incoming messages with a `timestamp` field are checked against `MSG_MAX_AGE_MS` (30s). Messages older than 30 seconds are dropped. Outgoing push messages now include `timestamp: Date.now()`. Combined with hop-count TTL this provides two-dimensional staleness protection.
 
-- [ ] **Add demo app favicon and proper manifest screenshots** (per TODO.md)
+- [x] **Add demo app favicon and proper manifest screenshots** (per TODO.md)
   - `manifest.json` missing `screenshots` array (requires 1280x720 and 540x720 images)
   - Add PWA audit for advanced offline caching of media blobs and SQLite fragments
+  - ✅ Fixed: Generated 32x32 `favicon.png` and `favicon.ico` for demos (replacing 0-byte placeholders). Generated 1280x720 desktop and 540x720 mobile screenshots. Added `screenshots` array to `manifest.json` with wide/narrow form_factors. Added `<link rel="icon">` tags to demo HTML files.
 
 - [x] **Add CI integration for perf-audit benchmarks** (`scripts/perf-audit.ts`)
   - TODO.md item: integrate `perf-audit.ts` into CI pipeline to prevent sync latency regressions
