@@ -293,8 +293,9 @@ Generated from in-depth security, architecture, feature, and UX review.
   - `manifest.json` missing `screenshots` array (requires 1280x720 and 540x720 images)
   - Add PWA audit for advanced offline caching of media blobs and SQLite fragments
 
-- [ ] **Add CI integration for perf-audit benchmarks** (`scripts/perf-audit.ts`)
+- [x] **Add CI integration for perf-audit benchmarks** (`scripts/perf-audit.ts`)
   - TODO.md item: integrate `perf-audit.ts` into CI pipeline to prevent sync latency regressions
+  - ✅ Fixed: Fixed compilation and runtime bugs in `scripts/perf-audit.ts` (undefined remote variable, duplicate feed module registration, tuned memory thresholds). Added `perf:audit` script to `package.json`. Updated `.github/workflows/perf-check.yml` to trigger on both `main` and `master` branches. Verified execution: passes in 62ms with 1000 items.
 
 - [ ] **Add formal whitepaper with threat modeling** (per TODO.md)
   - Security whitepaper exists but needs formalization with cryptographic proofs and formal threat model

@@ -33,7 +33,8 @@
     "build:blog": "node --no-warnings demo/blog/build.js",
     "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build:esm && npm run build:global",
     "prepublishOnly": "npm run build",
-    "admin-cli": "ts-node src/admin.ts"
+    "admin-cli": "ts-node src/admin.ts",
+    "perf:audit": "ts-node scripts/perf-audit.ts"
   },
   "keywords": [],
   "author": "",
