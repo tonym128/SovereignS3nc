@@ -8,14 +8,54 @@ import { SyncError } from '../utils/Errors';
  * SyncWorkerProxy manages a Web Worker from the main thread.
  * It provides a Promise-based API for sync operations and emits events
  * when the worker detects changes.
+ *
+ * When `integrity` is provided (e.g. "sha256-abc123=="), the worker script
+ * is fetched, the hash is verified via SubtleCrypto, and only then is the
+ * Worker created from a Blob URL — preventing supply-chain attacks.
  */
 export class SyncWorkerProxy extends EventEmitter {
     private worker: Worker | null = null;
     private messageId = 0;
     private pendingPromises: Map<number, { resolve: Function, reject: Function }> = new Map();
 
-    constructor(private workerUrl: string) {
+    constructor(private workerUrl: string, private integrity?: string) {
         super();
+    }
+
+    /**
+     * Fetches the worker script and verifies its integrity against the given SRI hash.
+     * Returns a Blob URL that can be used to create a same-origin Worker.
+     * Throws SyncError if the hash does not match.
+     */
+    private async fetchAndVerifyWorker(url: string, integrity: string): Promise<string> {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new SyncError(`Failed to fetch worker script: ${response.status} ${response.statusText}`);
+        }
+        const scriptText = await response.text();
+        const scriptBytes = new TextEncoder().encode(scriptText);
+
+        // Parse SRI hash: "sha256-<base64>" or "sha384-..." or "sha512-..."
+        const match = integrity.match(/^(sha(?:256|384|512))-(.+)$/);
+        if (!match) {
+            throw new SyncError(`Invalid integrity format: "${integrity}". Expected "sha256-<base64>", "sha384-...", or "sha512-...".`);
+        }
+        const algorithm = match[1].toUpperCase().replace('SHA', 'SHA-'); // "sha256" -> "SHA-256"
+        const expectedBase64 = match[2];
+
+        const hashBuffer = await crypto.subtle.digest(algorithm, scriptBytes);
+        const hashBase64 = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+
+        if (hashBase64 !== expectedBase64) {
+            throw new SyncError(
+                `Worker script integrity check FAILED for ${url}. ` +
+                `Expected: ${expectedBase64}, Got: ${hashBase64}. ` +
+                `This may indicate a supply-chain attack or stale deployment.`
+            );
+        }
+
+        const blob = new Blob([scriptText], { type: 'application/javascript' });
+        return URL.createObjectURL(blob);
     }
 
     /**
@@ -24,7 +64,15 @@ export class SyncWorkerProxy extends EventEmitter {
     async init(config: SovereignConfig): Promise<void> {
         if (!this.worker) {
             try {
-                this.worker = new Worker(this.workerUrl);
+                let workerSrc: string = this.workerUrl;
+
+                // If an integrity hash is provided and we're in a browser environment
+                // with SubtleCrypto + fetch, verify the script before loading it.
+                if (this.integrity && typeof crypto !== 'undefined' && crypto.subtle && typeof fetch !== 'undefined') {
+                    workerSrc = await this.fetchAndVerifyWorker(this.workerUrl, this.integrity);
+                }
+
+                this.worker = new Worker(workerSrc);
                 this.worker.onmessage = this.handleMessage.bind(this);
                 this.worker.onerror = (err) => {
                     console.error('[SyncWorkerProxy] Worker error:', err);
