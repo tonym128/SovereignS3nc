@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions } from './types';
+import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -567,6 +567,158 @@ export class SovereignS3nc extends EventEmitter {
     public async getPublicRegistry() { return this.globalRegistry.getPublicRegistry(); }
 
     public async syncManifest() { return this.manifestManager.syncManifest(); }
+
+    /**
+     * Creates an encrypted, time-limited device pairing package that can be transmitted
+     * to a new browser/device via QR code, P2P channel, or manual copy-paste.
+     */
+    public async createDevicePairingPackage(pairingPassphrase: string, validityMs: number = 300_000): Promise<string> {
+        if (!this.config.encryptionKey || !this.config.publicEncryptionKey) {
+            throw new AuthError('Cannot create pairing package: Identity keys are not loaded.');
+        }
+
+        const crypto = await import('crypto');
+        const salt = crypto.randomBytes(16);
+        const derivedKey = crypto.pbkdf2Sync(pairingPassphrase, salt, 50_000, 32, 'sha256');
+
+        const payload = JSON.stringify({
+            userId: this.config.paths.userId,
+            appId: this.config.paths.appId,
+            encryptionKey: this.config.encryptionKey,
+            publicEncryptionKey: this.config.publicEncryptionKey,
+            password: this.config.password
+        });
+
+        const iv = crypto.randomBytes(12);
+        const cipher = crypto.createCipheriv('aes-256-gcm', derivedKey, iv);
+        const encrypted = Buffer.concat([cipher.update(Buffer.from(payload, 'utf-8')), cipher.final()]);
+        const tag = cipher.getAuthTag();
+
+        const pairingPkg: DevicePairingPackage = {
+            version: 1,
+            appId: this.config.paths.appId,
+            userId: this.config.paths.userId,
+            salt: salt.toString('hex'),
+            iv: iv.toString('hex'),
+            tag: tag.toString('hex'),
+            ciphertext: encrypted.toString('hex'),
+            createdAt: Date.now(),
+            expiresAt: Date.now() + validityMs
+        };
+
+        return Buffer.from(JSON.stringify(pairingPkg)).toString('base64');
+    }
+
+    /**
+     * Imports an encrypted device pairing package, validates its expiration and authenticity,
+     * restores identity keys, and updates local persistent storage.
+     */
+    public async importDevicePairingPackage(pairingCode: string, pairingPassphrase: string): Promise<{ userId: string; appId: string }> {
+        let pkg: DevicePairingPackage;
+        try {
+            const json = Buffer.from(pairingCode, 'base64').toString('utf-8');
+            pkg = JSON.parse(json);
+        } catch (e) {
+            throw new AuthError('Invalid pairing package format.');
+        }
+
+        if (Date.now() > pkg.expiresAt) {
+            throw new AuthError('Pairing package has expired. Please generate a new one on the host device.');
+        }
+
+        const crypto = await import('crypto');
+        const salt = Buffer.from(pkg.salt, 'hex');
+        const derivedKey = crypto.pbkdf2Sync(pairingPassphrase, salt, 50_000, 32, 'sha256');
+
+        let decryptedPayload: any;
+        try {
+            const decipher = crypto.createDecipheriv('aes-256-gcm', derivedKey, Buffer.from(pkg.iv, 'hex'));
+            decipher.setAuthTag(Buffer.from(pkg.tag, 'hex'));
+            const decrypted = Buffer.concat([
+                decipher.update(Buffer.from(pkg.ciphertext, 'hex')),
+                decipher.final()
+            ]);
+            decryptedPayload = JSON.parse(decrypted.toString('utf-8'));
+        } catch (e) {
+            throw new AuthError('Failed to decrypt pairing package: Incorrect passphrase or tampered package.');
+        }
+
+        this.config.paths.userId = decryptedPayload.userId;
+        this.config.paths.appId = decryptedPayload.appId;
+        this.config.encryptionKey = decryptedPayload.encryptionKey;
+        this.config.publicEncryptionKey = decryptedPayload.publicEncryptionKey;
+        if (decryptedPayload.password) {
+            this.config.password = decryptedPayload.password;
+        }
+
+        if (!this.storage) {
+            const dbName = `${this.config.paths.appId}_${this.config.paths.userId}_${this.config.paths.storeId}`;
+            this.storage = new IndexedDBStorage(dbName);
+            await this.storage.init();
+        }
+
+        // Persist the imported keys into local storage
+        if (this.config.password) {
+            const keyInfo = {
+                privateKey: this.config.encryptionKey,
+                publicKey: this.config.publicEncryptionKey
+            };
+            const keysSalt = crypto.randomBytes(16);
+            const keysDerivedKey = crypto.pbkdf2Sync(this.config.password, keysSalt, 1000, 32, 'sha256');
+            const iv = crypto.randomBytes(12);
+            const keyCipher = crypto.createCipheriv('aes-256-gcm', keysDerivedKey, iv);
+            const encKeys = Buffer.concat([keyCipher.update(Buffer.from(JSON.stringify(keyInfo))), keyCipher.final()]);
+            const v2Keys = Buffer.concat([keysSalt, iv, keyCipher.getAuthTag(), encKeys]);
+            await this.storage.saveDailyDb('_keys', 'private', v2Keys);
+        }
+
+        Logger.info('Device', `Successfully imported pairing package for user ${pkg.userId}`);
+        return { userId: pkg.userId, appId: pkg.appId };
+    }
+
+    /**
+     * Registers a new device in the user's private device registry.
+     */
+    public async registerDevice(deviceName: string): Promise<DeviceInfo> {
+        const devices = await this.getRegisteredDevices();
+        const deviceId = env.generateId(12);
+        const device: DeviceInfo = {
+            deviceId,
+            deviceName,
+            registeredAt: Date.now(),
+            lastSeenAt: Date.now(),
+            status: 'active'
+        };
+        devices.push(device);
+        await this.storage.saveFile('private/devices.json', new TextEncoder().encode(JSON.stringify(devices)));
+        return device;
+    }
+
+    /**
+     * Retrieves the list of active and revoked devices.
+     */
+    public async getRegisteredDevices(): Promise<DeviceInfo[]> {
+        const data = await this.storage.getFile('private/devices.json');
+        if (!data) return [];
+        try {
+            return JSON.parse(new TextDecoder().decode(data));
+        } catch (e) {
+            return [];
+        }
+    }
+
+    /**
+     * Revokes a registered device by ID.
+     */
+    public async revokeDevice(deviceId: string): Promise<void> {
+        const devices = await this.getRegisteredDevices();
+        const device = devices.find(d => d.deviceId === deviceId);
+        if (device) {
+            device.status = 'revoked';
+            await this.storage.saveFile('private/devices.json', new TextEncoder().encode(JSON.stringify(devices)));
+            Logger.info('Device', `Revoked device ${deviceId}`);
+        }
+    }
 
     public async saveBlob(data: Uint8Array, isPublic: boolean = true): Promise<string> {
         const hash = this.calculateHashedContent(data);

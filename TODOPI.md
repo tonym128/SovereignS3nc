@@ -228,10 +228,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Add configurable retention policy (e.g., "keep last 30 days of public posts")
   - ✅ Fixed: Added `RetentionPolicy` interface (`maxDaysOwnData`, `maxDaysFollowedData`) to `SovereignConfig`. Implemented `applyRetentionPolicy()` in `SyncOrchestrator` (and exposed on `SovereignS3nc`) that prunes local date-partitioned files older than the configured thresholds. Automatically runs during `sync()`. Tested in `SovereignS3nc_Extra.unit.test.ts`.
 
-- [ ] **Add multi-device support** (`src/SovereignS3nc.ts`)
+- [x] **Add multi-device support** (`src/SovereignS3nc.ts`)
   - Architecture assumes one device per identity key
   - No mechanism for sharing keys across devices or syncing same identity to multiple browsers/phones
   - Implement key sharing protocol with device management
+  - ✅ Fixed: Added `createDevicePairingPackage()` (exports AES-256-GCM encrypted, time-limited base64 package using PBKDF2 passphrase derivation) and `importDevicePairingPackage()` (authenticates, decrypts, restores identity keys, and persists locally). Added device registry management (`registerDevice`, `getRegisteredDevices`, `revokeDevice`) in `private/devices.json`. Tested in `SovereignS3nc_Extra.unit.test.ts`.
 
 - [x] **Encrypt admin backup data** (`src/admin.ts`)
   ```typescript
