@@ -100,6 +100,71 @@ export class KeyManager {
         return Buffer.from(derived).toString('hex');
     }
 
+    /**
+     * Derives a forward-secret shared key for sending a message using an ephemeral X25519 keypair.
+     * The ephemeral private key is used with the recipient's public key to derive an AES key via HKDF,
+     * and the ephemeral private key is immediately wiped from memory.
+     *
+     * @param recipientPublicKey - Hex-encoded X25519 public key of the recipient.
+     * @param context - HKDF info label. Defaults to 'SovereignS3nc-DM-v3-ephemeral'.
+     * @returns Object containing the hex-encoded ephemeral public key (to be sent alongside ciphertext)
+     *          and the derived AES-256 key hex.
+     */
+    public deriveEphemeralSharedSecret(recipientPublicKey: string, context: string = 'SovereignS3nc-DM-v3-ephemeral'): { ephemeralPublicKey: string; sharedSecret: string } {
+        const theirPublicKey = Buffer.from(recipientPublicKey, 'hex');
+        if (theirPublicKey.length !== 32) {
+            throw new AuthError(`Invalid public key size: expected 32 bytes, got ${theirPublicKey.length}. Key: ${recipientPublicKey.substring(0, 10)}...`);
+        }
+
+        const eph = nacl.box.keyPair();
+        try {
+            const rawShared = nacl.box.before(theirPublicKey, eph.secretKey);
+            const derived = crypto.hkdfSync(
+                'sha256',
+                rawShared,
+                Buffer.alloc(0),
+                Buffer.from(context, 'utf8'),
+                32
+            );
+            return {
+                ephemeralPublicKey: Buffer.from(eph.publicKey).toString('hex'),
+                sharedSecret: Buffer.from(derived).toString('hex')
+            };
+        } finally {
+            // Zero out ephemeral secret key in memory to guarantee forward secrecy
+            eph.secretKey.fill(0);
+        }
+    }
+
+    /**
+     * Derives the forward-secret shared key on the recipient side using the received ephemeral public key
+     * and the recipient's private identity key.
+     *
+     * @param ephemeralPublicKey - Hex-encoded X25519 ephemeral public key from the sender.
+     * @param context - HKDF info label. Defaults to 'SovereignS3nc-DM-v3-ephemeral'.
+     * @returns Hex-encoded derived AES-256 key.
+     */
+    public deriveRecipientSharedSecret(ephemeralPublicKey: string, context: string = 'SovereignS3nc-DM-v3-ephemeral'): string {
+        if (!this.ctx.config.encryptionKey) throw new AuthError('Identity key not initialized');
+
+        const mySecretKey = Buffer.from(this.ctx.config.encryptionKey, 'hex');
+        const ephPublicKey = Buffer.from(ephemeralPublicKey, 'hex');
+
+        if (ephPublicKey.length !== 32) {
+            throw new AuthError(`Invalid ephemeral public key size: expected 32 bytes, got ${ephPublicKey.length}. Key: ${ephemeralPublicKey.substring(0, 10)}...`);
+        }
+
+        const rawShared = nacl.box.before(ephPublicKey, mySecretKey);
+        const derived = crypto.hkdfSync(
+            'sha256',
+            rawShared,
+            Buffer.alloc(0),
+            Buffer.from(context, 'utf8'),
+            32
+        );
+        return Buffer.from(derived).toString('hex');
+    }
+
     public getHashedUserId(userId: string, isPrivate: boolean): string {
         if (!isPrivate || userId === 'global' || userId === 'admin' || userId === '' || userId === 'root') {
             return userId; 

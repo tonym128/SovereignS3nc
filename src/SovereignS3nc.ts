@@ -544,6 +544,8 @@ export class SovereignS3nc extends EventEmitter {
     public async encrypt(d: Uint8Array, k: string) { return this.keyManager.encrypt(d, k); }
     public async decrypt(d: Uint8Array, k: string) { return this.keyManager.decrypt(d, k); }
     public deriveSharedSecret(pk: string, context?: string) { return this.keyManager.deriveSharedSecret(pk, context); }
+    public deriveEphemeralSharedSecret(pk: string, context?: string) { return this.keyManager.deriveEphemeralSharedSecret(pk, context); }
+    public deriveRecipientSharedSecret(ephPk: string, context?: string) { return this.keyManager.deriveRecipientSharedSecret(ephPk, context); }
 
     public calculateHashedContent(d: Uint8Array, k?: string) { return this.keyManager.calculateHashedContent(d, k); }
     private getHashedUserId(uid: string, ip: boolean) { return this.keyManager.getHashedUserId(uid, ip); }

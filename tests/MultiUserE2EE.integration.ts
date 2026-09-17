@@ -130,9 +130,9 @@ describe('Multi-User E2EE Integration Test', () => {
         // 1. Bob syncs to ensure his registry entry and public profile are uploaded
         await bobSov.sync();
 
-        // Verify Bob is in shared storage
-        const globalRegistryKey = `${appId}/global/users/users.json`;
-        expect(sharedFiles.has(globalRegistryKey)).toBe(true);
+        // Verify Bob is in shared storage (signed per-user entry or legacy users.json)
+        const hasBobEntry = sharedFiles.has(`${appId}/global/users/users/bob.json`) || sharedFiles.has(`${appId}/global/users/users.json`);
+        expect(hasBobEntry).toBe(true);
 
         // 2. Alice syncs to discover Bob
         await aliceSov.sync();

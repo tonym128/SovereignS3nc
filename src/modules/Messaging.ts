@@ -148,7 +148,10 @@ export class MessagingModule {
             publicDb = new sqliteInstance.Database();
         }
         
-        publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB);`);
+        publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
+        try {
+            publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
+        } catch (e) {}
 
         const registry = await this.db.getPublicRegistry();
         let recipient = registry.find(u => u.userId === recipientId);
@@ -163,10 +166,11 @@ export class MessagingModule {
 
         if (!recipient || !recipient.publicKey) throw new AuthError('Recipient public key not found');
 
-        const sharedSecret = this.db.deriveSharedSecret(recipient.publicKey);
+        // V3: Ephemeral ECDH forward secrecy
+        const { ephemeralPublicKey, sharedSecret } = this.db.deriveEphemeralSharedSecret(recipient.publicKey);
         const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
         
-        publicDb.run('INSERT OR REPLACE INTO messages (id, encrypted_data) VALUES (?, ?)', [message.id, encrypted]);
+        publicDb.run('INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)', [message.id, encrypted, ephemeralPublicKey]);
 
         await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
         publicDb.close();
@@ -365,19 +369,48 @@ export class MessagingModule {
                 if (data) {
                     const db = new sqliteInstance.Database(data);
                     try {
-                        const res = db.exec('SELECT encrypted_data FROM messages');
+                        let hasEphemeralCol = false;
+                        try {
+                            const tableInfo = db.exec("PRAGMA table_info(messages)");
+                            if (tableInfo && tableInfo.length > 0) {
+                                hasEphemeralCol = tableInfo[0].values.some((col: any) => col[1] === 'ephemeral_pk');
+                            }
+                        } catch (e) {}
+
+                        const query = hasEphemeralCol 
+                            ? 'SELECT encrypted_data, ephemeral_pk FROM messages'
+                            : 'SELECT encrypted_data FROM messages';
+                        const res = db.exec(query);
                         if (res && res.length > 0) {
                             const newMsgsForUser: Message[] = [];
                             for (const row of res[0].values) {
                                 try {
-                                    // Try V2 (HKDF) first; fall back to V1 (raw) for legacy messages
-                                    let decrypted: Uint8Array;
-                                    try {
-                                        decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecretV2);
-                                    } catch (e) {
-                                        // V2 failed — attempt V1 for backward compat with pre-HKDF messages
-                                        decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecretV1);
+                                    const encryptedData = row[0] as Uint8Array;
+                                    const ephemeralPk = hasEphemeralCol ? (row[1] as string | null) : null;
+                                    let decrypted: Uint8Array | null = null;
+
+                                    // V3: Try forward-secret ephemeral key if present
+                                    if (ephemeralPk) {
+                                        try {
+                                            const sharedSecretV3 = this.db.deriveRecipientSharedSecret(ephemeralPk);
+                                            decrypted = await this.db.decrypt(encryptedData, sharedSecretV3);
+                                        } catch (e) {}
                                     }
+
+                                    // V2: Fall back to static HKDF shared secret
+                                    if (!decrypted) {
+                                        try {
+                                            decrypted = await this.db.decrypt(encryptedData, sharedSecretV2);
+                                        } catch (e) {}
+                                    }
+
+                                    // V1: Fall back to raw legacy shared secret (pre-HKDF)
+                                    if (!decrypted) {
+                                        try {
+                                            decrypted = await this.db.decrypt(encryptedData, sharedSecretV1);
+                                        } catch (e) {}
+                                    }
+
                                     if (decrypted) {
                                         const parsed = JSON.parse(new TextDecoder().decode(decrypted)) as Message;
                                         if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
