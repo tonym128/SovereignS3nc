@@ -229,12 +229,13 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟢 P2 — Medium Security Improvements
 
-- [ ] **Add KDF between X25519 shared secret and AES key** (`src/core/KeyManager.ts`)
+- [x] **Add KDF between X25519 shared secret and AES key** (`src/core/KeyManager.ts`)
   ```typescript
   const keyBuffer = Buffer.from(key, 'hex').slice(0, 32); // direct use as AES key
   ```
   - Shared secret used directly as AES-256 key without KDF
   - Run through HKDF for domain separation and defense-in-depth
+  - ✅ Fixed: `deriveSharedSecret()` now applies `crypto.hkdfSync('sha256', rawShared, ..., 'SovereignS3nc-DM-v2', 32)`. Backward compat: `MessagingModule.getInboxMessages` tries V2 first, falls back to V1 (`'SovereignS3nc-DM-v1-raw'`) for pre-HKDF messages.
 
 - [ ] **Add Content Security Policy (CSP) to demo HTML files** (all `demo/*/index.html`)
   - Demos load Bootstrap, sql.js, QR libraries from CDNs with no CSP headers

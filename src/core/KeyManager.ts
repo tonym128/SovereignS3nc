@@ -61,7 +61,16 @@ export class KeyManager {
         }
     }
 
-    public deriveSharedSecret(otherPublicKey: string): string {
+    /**
+     * Derives a shared secret from the local private key and a remote public key using X25519,
+     * then applies HKDF-SHA256 for proper domain separation before returning the hex-encoded AES key.
+     *
+     * @param otherPublicKey - Hex-encoded X25519 public key of the remote party.
+     * @param context - HKDF info label for domain separation. Defaults to 'SovereignS3nc-DM-v2'.
+     *                  Pass 'SovereignS3nc-DM-v1-raw' to obtain the legacy (raw) derived secret
+     *                  for decrypting data encrypted before HKDF was introduced.
+     */
+    public deriveSharedSecret(otherPublicKey: string, context: string = 'SovereignS3nc-DM-v2'): string {
         if (!this.ctx.config.encryptionKey) throw new AuthError('Identity key not initialized');
         
         const mySecretKey = Buffer.from(this.ctx.config.encryptionKey, 'hex');
@@ -71,8 +80,24 @@ export class KeyManager {
             throw new AuthError(`Invalid public key size: expected 32 bytes, got ${theirPublicKey.length}. Key: ${otherPublicKey.substring(0, 10)}...`);
         }
 
-        const shared = nacl.box.before(theirPublicKey, mySecretKey);
-        return Buffer.from(shared).toString('hex');
+        const rawShared = nacl.box.before(theirPublicKey, mySecretKey);
+
+        // Legacy path: return raw shared secret for backward-compat decryption of old data.
+        if (context === 'SovereignS3nc-DM-v1-raw') {
+            return Buffer.from(rawShared).toString('hex');
+        }
+
+        // V2: Apply HKDF-SHA256 for proper domain separation.
+        // Salt is omitted (zero-length) as per RFC 5869 §2.2 — the X25519 output already has
+        // high entropy. The info label provides domain separation across use cases.
+        const derived = crypto.hkdfSync(
+            'sha256',
+            rawShared,
+            Buffer.alloc(0),  // zero-length salt
+            Buffer.from(context, 'utf8'), // info / domain label
+            32  // 32 bytes = 256-bit AES key
+        );
+        return Buffer.from(derived).toString('hex');
     }
 
     public getHashedUserId(userId: string, isPrivate: boolean): string {

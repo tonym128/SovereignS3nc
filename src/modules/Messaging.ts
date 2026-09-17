@@ -321,7 +321,10 @@ export class MessagingModule {
 
         // 2. Fetch Incoming Messages
         for (const user of following) {
-            const sharedSecret = this.db.deriveSharedSecret(user.publicKey);
+            // V2: HKDF-derived shared secret (default)
+            const sharedSecretV2 = this.db.deriveSharedSecret(user.publicKey);
+            // V1: Raw shared secret — for backward compat with messages sent before HKDF was introduced
+            const sharedSecretV1 = this.db.deriveSharedSecret(user.publicKey, 'SovereignS3nc-DM-v1-raw');
             for (const date of dates) {
                 const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/dms/${myId}/${date}.db`, 'followed');
                 const data = await this.db.getStorage().getFile(localPath);
@@ -333,7 +336,14 @@ export class MessagingModule {
                             const newMsgsForUser: Message[] = [];
                             for (const row of res[0].values) {
                                 try {
-                                    const decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecret);
+                                    // Try V2 (HKDF) first; fall back to V1 (raw) for legacy messages
+                                    let decrypted: Uint8Array;
+                                    try {
+                                        decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecretV2);
+                                    } catch (e) {
+                                        // V2 failed — attempt V1 for backward compat with pre-HKDF messages
+                                        decrypted = await this.db.decrypt(row[0] as Uint8Array, sharedSecretV1);
+                                    }
                                     if (decrypted) {
                                         const parsed = JSON.parse(new TextDecoder().decode(decrypted)) as Message;
                                         if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
