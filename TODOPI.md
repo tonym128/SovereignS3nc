@@ -220,12 +220,13 @@ Generated from in-depth security, architecture, feature, and UX review.
   - No mechanism for sharing keys across devices or syncing same identity to multiple browsers/phones
   - Implement key sharing protocol with device management
 
-- [ ] **Encrypt admin backup data** (`src/admin.ts`)
+- [x] **Encrypt admin backup data** (`src/admin.ts`)
   ```typescript
   await fs.writeFile(outputPath, data); // plain JSON export
   ```
   - Backup exported as unencrypted JSON — anyone who obtains it can read all system data
   - Add password-based encryption for backup files
+  - ✅ Fixed: Backup now encrypted with AES-256-GCM using PBKDF2(password, salt, 600k, SHA-256). Binary format: `SOV_BACKUP_V1` magic + salt(32) + iv(12) + GCM tag(16) + ciphertext. Restore auto-detects encrypted vs legacy plain JSON for backward compat.
 
 ---
 

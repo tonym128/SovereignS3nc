@@ -4,6 +4,7 @@ import { ModerationModule } from './modules/Moderation';
 import { NodeStorage } from './adapters/NodeStorage';
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as crypto from 'crypto';
 
 const initSqlJs = require('sql.js');
 
@@ -11,6 +12,49 @@ const initSqlJs = require('sql.js');
 (global as any).initSqlJs = initSqlJs;
 (global as any).TextEncoder = require('util').TextEncoder;
 (global as any).TextDecoder = require('util').TextDecoder;
+
+/** Magic header that identifies an encrypted SovereignS3nc backup file. */
+const BACKUP_MAGIC = 'SOV_BACKUP_V1';
+const PBKDF2_ITERATIONS = 600000;
+const SALT_SIZE = 32;
+
+/**
+ * Encrypts a backup payload (JSON string) using AES-256-GCM with a PBKDF2-derived key.
+ * Output format (binary): [magic(13)] [salt(32)] [iv(12)] [tag(16)] [ciphertext]
+ */
+function encryptBackup(plaintext: string, password: string): Buffer {
+    const salt = crypto.randomBytes(SALT_SIZE);
+    const key = crypto.pbkdf2Sync(password, salt, PBKDF2_ITERATIONS, 32, 'sha256');
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    const encrypted = Buffer.concat([cipher.update(plaintext, 'utf8'), cipher.final()]);
+    const tag = cipher.getAuthTag();
+    return Buffer.concat([
+        Buffer.from(BACKUP_MAGIC, 'ascii'),
+        salt, iv, tag, encrypted
+    ]);
+}
+
+/**
+ * Decrypts an encrypted backup file. Returns the plaintext JSON string.
+ * Throws if the file is not in the encrypted format or the password is wrong.
+ */
+function decryptBackup(data: Buffer, password: string): string {
+    const magic = data.slice(0, BACKUP_MAGIC.length).toString('ascii');
+    if (magic !== BACKUP_MAGIC) {
+        // Not encrypted — assume legacy plain JSON for backward compat
+        return data.toString('utf8');
+    }
+    const offset = BACKUP_MAGIC.length;
+    const salt = data.slice(offset, offset + SALT_SIZE);
+    const iv   = data.slice(offset + SALT_SIZE, offset + SALT_SIZE + 12);
+    const tag  = data.slice(offset + SALT_SIZE + 12, offset + SALT_SIZE + 28);
+    const ciphertext = data.slice(offset + SALT_SIZE + 28);
+    const key = crypto.pbkdf2Sync(password, salt, PBKDF2_ITERATIONS, 32, 'sha256');
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+    decipher.setAuthTag(tag);
+    return decipher.update(ciphertext) + decipher.final('utf8');
+}
 
 const APP_ID = process.env.SOV_APP_ID || 'sov-social';
 const HOME_DIR = process.env.HOME || process.env.USERPROFILE || '.';
@@ -159,10 +203,12 @@ SovereignS3nc Admin CLI - Usage:
 
             case 'backup':
             case 'export-data':
-                const outputPath = args[1] || 'export.json';
-                const data = await moderation.exportAllData();
-                await fs.writeFile(outputPath, data);
-                console.log(`All data exported to ${outputPath}`);
+                const outputPath = args[1] || 'export.bin';
+                const rawData = await moderation.exportAllData();
+                const encryptedBackup = encryptBackup(rawData, user.password);
+                await fs.writeFile(outputPath, encryptedBackup);
+                console.log(`All data exported and encrypted to ${outputPath}`);
+                console.log('  (This file is AES-256-GCM encrypted with your admin password)');
                 break;
 
             case 'restore':
@@ -173,7 +219,8 @@ SovereignS3nc Admin CLI - Usage:
                     return;
                 }
                 auditLog('restore', importPath);
-                const importData = await fs.readFile(importPath, 'utf8');
+                const encryptedImport = await fs.readFile(importPath);
+                const importData = decryptBackup(encryptedImport, user.password);
                 await moderation.importAllData(importData);
                 console.log('Data imported successfully.');
                 break;
