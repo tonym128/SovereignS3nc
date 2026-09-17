@@ -188,11 +188,12 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Detect corruption and attempt recovery from remote/peer copies
   - Log specific error types instead of swallowing all exceptions
 
-- [ ] **Add trust model to PEX (Peer Exchange)** (`src/adapters/WebRTCRemoteAdapter.ts`)
+- [x] **Add trust model to PEX (Peer Exchange)** (`src/adapters/WebRTCRemoteAdapter.ts`)
   - PEX allows peers to introduce fake peers with your own user ID
   - Can perform Sybil attacks by creating many fake identities
   - Only accept PEX introductions from trusted/verified peers
   - Add reputation or trust score system
+  - ✅ Fixed (WT-37): `peer_list` messages only accepted from directly-connected peers or peers with a verified Ed25519 signature. Unverified peer_list messages are dropped with a warning log.
 
 ---
 
