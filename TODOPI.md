@@ -260,10 +260,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Add SRI hash verification for all externally-loaded scripts
   - ✅ Fixed: `SyncWorkerProxy` now accepts optional `integrity` parameter (e.g. `"sha384-..."`). When provided, fetches script via `fetch()`, computes SHA-256/384/512 using `crypto.subtle.digest()`, and verifies against expected base64 hash before creating a Blob URL Worker. Added `workerIntegrity?: string` to `SovereignConfig` type.
 
-- [ ] **Add rate limiting / spam protection to global registry** (`src/discovery/GlobalRegistry.ts`)
+- [x] **Add rate limiting / spam protection to global registry** (`src/discovery/GlobalRegistry.ts`)
   - No limit on how often a user can update their entry
   - Malicious users could flood the registry with updates
   - Add per-user write rate limits and deduplication checks
+  - ✅ Fixed: In `ensureGlobalRegistration()`, added in-memory cooldown (`REGISTRATION_COOLDOWN_MS = 5m`) to prevent registry flooding on frequent sync calls, plus deduplication check against remote entry. In `verifyEntry()`, added age and future drift validation (`ENTRY_MAX_AGE_MS = 7d`, max 5m future drift) to reject replayed stale entries.
 
 ---
 
