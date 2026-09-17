@@ -215,10 +215,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Users have no feedback on whether DMs were received
   - ✅ Fixed: End-to-end receipt pipeline: `markAsDelivered` and `markAsRead` write receipts into public `receipts/{senderId}/{date}.db`. `getInboxMessages()` pulls receipts from followed users and updates local outbox status (`sent` -> `delivered` -> `read`). Added `getMessageReceipt(messageId, date)` to query message receipt status. Verified with unit tests in `Messaging.unit.test.ts`.
 
-- [ ] **Add granular group permissions** (`src/core/GroupManager.ts`, `src/modules/Feed.ts`)
+- [x] **Add granular group permissions** (`src/core/GroupManager.ts`, `src/modules/Feed.ts`)
   - Only supports `owner`, `admin`, `member` — no fine-grained controls
   - No "can post" vs "can moderate" distinction
   - Add per-group moderation controls beyond app-level admin
+  - ✅ Fixed: Added `GroupPermissions` interface (`canPost`, `canModerate`, `canInvite`) to `GroupMember`. Added `setMemberPermissions` and `setMemberRole` to `GroupManager` (and `SovereignS3nc`). `postToGroup` enforces `canPost !== false`, and `deleteGroupPost` / `getGroupPosts` enforce moderation permission (`owner`, `admin`, or `canModerate: true`). Tested in `Feed.unit.test.ts`.
 
 - [x] **Add data retention / cleanup policy** (`src/core/SyncOrchestrator.ts`)
   - No mechanism to auto-clean old daily DBs or followed user data

@@ -74,11 +74,18 @@ export interface SovereignManifest {
     files?: Record<string, { hash: string, updatedAt: number }>;
 }
 
+export interface GroupPermissions {
+    canPost?: boolean;
+    canModerate?: boolean;
+    canInvite?: boolean;
+}
+
 export interface GroupMember {
     userId: string;
     publicKey: string;
     role: 'owner' | 'admin' | 'member';
     status?: 'pending' | 'joined' | 'declined' | 'left';
+    permissions?: GroupPermissions;
 }
 
 export interface SovereignGroup {
