@@ -246,10 +246,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Add CSP meta tags restricting sources to specific CDN domains + nonces for inline scripts
   - ✅ Fixed: Added `<meta http-equiv="Content-Security-Policy">` to all 6 demo HTML files (social, social-local, blog, banky, board, web). Allows `cdn.jsdelivr.net` + `cdnjs.cloudflare.com`, `'unsafe-inline'` for styles/scripts, `blob:` for WASM workers, `wss:` for WebRTC signaling. `object-src 'none'` and `base-uri 'self'` hardened.
 
-- [ ] **Add SRI (Subresource Integrity) hashes to worker script loading** (`src/worker/SyncWorkerProxy.ts`)
+- [x] **Add SRI (Subresource Integrity) hashes to worker script loading** (`src/worker/SyncWorkerProxy.ts`)
   - Worker loaded from URL with no integrity verification
   - Compromised server hosting `sync-worker.js` could inject malicious code
   - Add SRI hash verification for all externally-loaded scripts
+  - ✅ Fixed: `SyncWorkerProxy` now accepts optional `integrity` parameter (e.g. `"sha384-..."`). When provided, fetches script via `fetch()`, computes SHA-256/384/512 using `crypto.subtle.digest()`, and verifies against expected base64 hash before creating a Blob URL Worker. Added `workerIntegrity?: string` to `SovereignConfig` type.
 
 - [ ] **Add rate limiting / spam protection to global registry** (`src/discovery/GlobalRegistry.ts`)
   - No limit on how often a user can update their entry

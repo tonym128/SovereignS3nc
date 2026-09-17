@@ -393,7 +393,7 @@ export class SovereignS3nc extends EventEmitter {
             } else {
                 try {
                     Logger.info('Sovereign', `Initializing background sync worker: ${this.config.workerUrl}`);
-                    this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+                    this.syncWorker = new SyncWorkerProxy(this.config.workerUrl, this.config.workerIntegrity);
                     
                     this.syncWorker.on('error', (err) => {
                         Logger.warn('Sovereign', 'Background worker error, disabling worker:', err);

@@ -44,6 +44,13 @@ export interface SovereignConfig {
   debug?: boolean; // Enable verbose logging
   useWorker?: boolean; // Enable background sync via Web Worker
   workerUrl?: string; // Path to the compiled worker.js
+  /**
+   * Optional SRI hash for the worker script (e.g. "sha256-abc123==").
+   * When provided, the Worker will be loaded via a Blob URL after the script
+   * content is fetched and verified against the hash, preventing supply-chain attacks.
+   * Example: "sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+   */
+  workerIntegrity?: string;
   enableP2PPairing?: boolean; // Enable QR code and Bluetooth pairing functionality
 }
 
