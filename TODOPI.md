@@ -160,12 +160,19 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Should gracefully degrade to offline mode and queue operations for later retry
   - Wrap all remote calls in try/catch with fallback behavior; track pending operations
 
-- [ ] **Add backpressure to gossip protocol** (`src/adapters/WebRTCRemoteAdapter.ts`)
+- [x] **Add backpressure to gossip protocol** (`src/adapters/WebRTCRemoteAdapter.ts`)
   - Gossip broadcasts every push to all peers without rate limiting — O(n²) message explosion
   - Implement per-peer rate limits, exponential backoff on re-broadcasts
   - Add "sync state" exchange instead of full data gossip for large datasets
+  - ✅ Fixed: Added per-channel token-bucket rate limiter (20 sends/sec burst limit, 1s window). `broadcast()` now calls `rateLimitedSend()` which tracks send counts per-channel via WeakMap.
 
-- [x] **Optimize manifest generation** (`src/core/ManifestManager.ts`)
+- [x] **Add trust model to PEX (Peer Exchange)** (`src/adapters/WebRTCRemoteAdapter.ts`)
+  - PEX allows peers to introduce fake peers with your own user ID
+  - Can perform Sybil attacks by creating many fake identities
+  - Only accept PEX introductions from trusted/verified peers
+  - Add reputation or trust score system
+  - ✅ Fixed: `peer_list` messages are now only accepted from (a) directly-connected peers (channelsByUserId match) or (b) peers with a verified Ed25519 signature. Also added age-based TTL enforcement — messages older than 30s are dropped. Added `timestamp` field to `PeerMessage` interface.
+
   ```typescript
   const allFiles = await this.ctx.storage.listFiles(''); // O(n) every sync
   ```
@@ -268,9 +275,10 @@ Generated from in-depth security, architecture, feature, and UX review.
   - No way to track sync progress for large datasets
   - Emit `sync:progress` events with percentage or items remaining
 
-- [ ] **Add P2P message TTL enforcement** (`src/adapters/WebRTCRemoteAdapter.ts`)
+- [x] **Add P2P message TTL enforcement** (`src/adapters/WebRTCRemoteAdapter.ts`)
   - Messages have a TTL field but no strict enforcement — stale messages can persist indefinitely in the mesh
   - Add timestamp-based expiration check on received messages
+  - ✅ Fixed: All incoming messages with a `timestamp` field are checked against `MSG_MAX_AGE_MS` (30s). Messages older than 30 seconds are dropped. Outgoing push messages now include `timestamp: Date.now()`. Combined with hop-count TTL this provides two-dimensional staleness protection.
 
 - [ ] **Add demo app favicon and proper manifest screenshots** (per TODO.md)
   - `manifest.json` missing `screenshots` array (requires 1280x720 and 540x720 images)

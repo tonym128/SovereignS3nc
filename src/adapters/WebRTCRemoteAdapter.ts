@@ -18,6 +18,7 @@ export interface PeerMessage {
     senderId: string;
     msgId?: string; // Unique ID for deduplication
     ttl?: number;   // Hop limit
+    timestamp?: number; // Unix ms — used for absolute age-based TTL enforcement
     signature?: string; // Hex encoded signature
     signingPublicKey?: string; // Hex encoded signing public key
     // PEX fields
@@ -63,6 +64,15 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     private verify?: (data: Uint8Array, signature: Uint8Array, publicKey: string) => boolean;
     private signingPublicKey?: string;
     private getPublicKey?: (userId: string) => Promise<string | null>;
+
+    // Gossip backpressure: token-bucket per channel
+    // Each channel is allowed at most GOSSIP_BURST_LIMIT messages per GOSSIP_WINDOW_MS.
+    private static readonly GOSSIP_WINDOW_MS = 1000;
+    private static readonly GOSSIP_BURST_LIMIT = 20;
+    private channelSendCounts: WeakMap<object, { count: number; windowStart: number }> = new WeakMap();
+
+    // Message timestamp TTL enforcement: drop messages older than MSG_MAX_AGE_MS
+    private static readonly MSG_MAX_AGE_MS = 30_000; // 30 seconds
 
     constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
         super();
@@ -222,6 +232,12 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                 this.markMessageAsSeen(msg.msgId);
             }
 
+            // 1b. Age-based TTL enforcement: drop messages older than MSG_MAX_AGE_MS
+            if (msg.timestamp && Date.now() - msg.timestamp > WebRTCRemoteAdapter.MSG_MAX_AGE_MS) {
+                Logger.debug('WebRTC', `Dropping stale message (age ${Date.now() - msg.timestamp}ms) from ${msg.senderId}`);
+                return;
+            }
+
             // 2. Handle PEX Introductions (Signal Relay)
             if (msg.type === 'relay_signal') {
                 if (msg.to === this.peerId) {
@@ -243,10 +259,20 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                 return;
             }
 
-            // 3. Handle Peer List exchange
+            // 3. Handle Peer List exchange (PEX trust: only accept from verified senders)
             if (msg.type === 'peer_list') {
                 if (this.enablePEX && msg.peerList) {
-                    this.emit('pex:peers', { from: msg.senderId, peers: msg.peerList });
+                    // Trust: only accept PEX from a sender whose signature we verified above,
+                    // OR from a directly connected peer (channelsByUserId has their channel).
+                    const isDirectPeer = Array.from(this.channelsByUserId.entries())
+                        .some(([uid, ch]) => uid === msg.senderId && ch === sourceChannel);
+                    const wasSignatureVerified = !!(this.verify && msg.signature && msg.signingPublicKey);
+
+                    if (isDirectPeer || wasSignatureVerified) {
+                        this.emit('pex:peers', { from: msg.senderId, peers: msg.peerList });
+                    } else {
+                        Logger.warn('WebRTC', `Ignoring unverified peer_list from ${msg.senderId} (not a direct peer, no valid signature).`);
+                    }
                 }
                 return;
             }
@@ -345,6 +371,30 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         }
     }
 
+    /**
+     * Rate-limited send to a single channel. Returns false if the channel is over its burst limit.
+     * Uses a simple sliding-window token bucket: GOSSIP_BURST_LIMIT sends per GOSSIP_WINDOW_MS.
+     */
+    private rateLimitedSend(channel: { send: (msg: string) => void }, msgStr: string): boolean {
+        const now = Date.now();
+        let bucket = this.channelSendCounts.get(channel);
+        if (!bucket || now - bucket.windowStart >= WebRTCRemoteAdapter.GOSSIP_WINDOW_MS) {
+            bucket = { count: 0, windowStart: now };
+            this.channelSendCounts.set(channel, bucket);
+        }
+        if (bucket.count >= WebRTCRemoteAdapter.GOSSIP_BURST_LIMIT) {
+            Logger.warn('WebRTC', `Rate limit hit — dropping gossip message to a peer.`);
+            return false;
+        }
+        bucket.count++;
+        try {
+            channel.send(msgStr);
+        } catch (e) {
+            // channel closed or error
+        }
+        return true;
+    }
+
     private broadcast(msg: PeerMessage, excludeChannel?: any) {
         if (this.sign && this.signingPublicKey) {
             msg.signingPublicKey = this.signingPublicKey;
@@ -355,11 +405,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         const msgStr = JSON.stringify(msg);
         for (const channel of this.channels) {
             if (channel !== excludeChannel) {
-                try {
-                    channel.send(msgStr);
-                } catch (e) {
-                    // channel closed or error
-                }
+                this.rateLimitedSend(channel, msgStr);
             }
         }
     }
@@ -380,7 +426,8 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
             data: Buffer.from(data).toString('base64'),
             senderId: this.peerId,
             msgId: this.generateMsgId(),
-            ttl: this.defaultTTL
+            ttl: this.defaultTTL,
+            timestamp: Date.now()
         };
         
         this.markMessageAsSeen(msg.msgId!);
