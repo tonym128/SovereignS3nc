@@ -329,12 +329,21 @@ export class FeedModule {
     // --- Group logic ---
     
     async postToGroup(groupId: string, sharedKey: string, content: string, image?: Uint8Array, type: 'text' | 'system' = 'text') {
+        const groups = await this.db.getGroups();
+        const group = groups.find(g => g.id === groupId);
+        const userId = this.db.getConfig().paths.userId;
+        if (group) {
+            const member = group.members.find(m => m.userId === userId);
+            if (member?.permissions?.canPost === false) {
+                throw new ModuleError('feed', `Permission denied: User ${userId} is not allowed to post in group ${groupId}`);
+            }
+        }
+
         const date = new Date().toISOString().split('T')[0];
         const db = await this.getDb(date, 'group', groupId, sharedKey);
         
         const id = env.generateId(12);
         const timestamp = Date.now();
-        const userId = this.db.getConfig().paths.userId;
 
         let imagePath = null;
         if (image) {
@@ -382,7 +391,15 @@ export class FeedModule {
         if (authorId === myId) {
             db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
         } else {
-            // Owner/Admin moderation
+            // Check moderation permission (owner, admin, or member with canModerate permission)
+            const groups = await this.db.getGroups();
+            const group = groups.find(g => g.id === groupId);
+            const member = group?.members.find(m => m.userId === myId);
+            const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
+            if (!canModerate) {
+                db.close();
+                throw new ModuleError('feed', `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
+            }
             db.run('CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)');
             db.run('INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)', [postId, 'delete', Date.now()]);
         }
@@ -409,8 +426,9 @@ export class FeedModule {
 
         const processModeration = (db: any, memberId: string) => {
             try {
-                const memberRole = group.members.find(m => m.userId === memberId)?.role;
-                if (memberRole !== 'owner' && memberRole !== 'admin') return;
+                const member = group.members.find(m => m.userId === memberId);
+                const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
+                if (!canModerate) return;
 
                 const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
                 if (res && res.length > 0) {

@@ -197,5 +197,51 @@ describe('FeedModule Unit Tests', () => {
             const deleted = await feed.cleanupExpired(today, true);
             expect(deleted).toBeGreaterThanOrEqual(1);
         });
+
+        test('should enforce granular group permissions for posting and moderating', async () => {
+            // Add bob with canPost: false and charlie with canModerate: true
+            const group = {
+                id: groupId,
+                name: 'Test Group',
+                sharedKey: sharedKey,
+                members: [
+                    { userId: 'alice', role: 'owner' },
+                    { userId: 'bob', role: 'member', permissions: { canPost: false } },
+                    { userId: 'charlie', role: 'member', permissions: { canModerate: true } },
+                    { userId: 'dave', role: 'member' }
+                ]
+            };
+            await sov.getStorage().saveFile(`private/groups/${groupId}/info.json`, new TextEncoder().encode(JSON.stringify(group)));
+
+            // Alice posts
+            await feed.postToGroup(groupId, sharedKey, 'Alice post');
+
+            // Alice can set member permissions via SovereignS3nc
+            await sov.setGroupMemberPermissions(groupId, 'dave', { canPost: false });
+            const members = await sov.getGroupMembersWithStatus(groupId);
+            expect(members.find(m => m.userId === 'dave')?.permissions?.canPost).toBe(false);
+
+            // If a member with canModerate: true moderates a post
+            const posts = await feed.getGroupPosts(groupId, today);
+            const postId = posts[0].id;
+
+            // charlie moderates alice's post (charlie has canModerate: true)
+            sov.getConfig().paths.userId = 'charlie';
+            await feed.deleteGroupPost(groupId, sharedKey, postId, today, 'alice');
+            
+            // Post should now be deleted according to getGroupPosts
+            const remaining = await feed.getGroupPosts(groupId, today);
+            expect(remaining.length).toBe(0);
+
+            // dave (without canModerate) cannot moderate alice's post
+            sov.getConfig().paths.userId = 'dave';
+            await expect(feed.deleteGroupPost(groupId, sharedKey, 'other-id', today, 'alice'))
+                .rejects.toThrow(/Permission denied/);
+
+            // bob (with canPost: false) cannot post to group
+            sov.getConfig().paths.userId = 'bob';
+            await expect(feed.postToGroup(groupId, sharedKey, 'Unauthorized post'))
+                .rejects.toThrow(/Permission denied/);
+        });
     });
 });

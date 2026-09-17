@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember } from './types';
+import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions } from './types';
 import { IStorage } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -551,6 +551,8 @@ export class SovereignS3nc extends EventEmitter {
     public async leaveGroup(gid: string) { return this.groupManager.leaveGroup(gid); }
     public async getGroupMembersWithStatus(gid: string) { return this.groupManager.getGroupMembersWithStatus(gid); }
     public async getGroups() { return this.groupManager.getGroups(); }
+    public async setGroupMemberPermissions(gid: string, uid: string, p: GroupPermissions) { return this.groupManager.setMemberPermissions(gid, uid, p); }
+    public async setGroupMemberRole(gid: string, uid: string, r: 'owner' | 'admin' | 'member') { return this.groupManager.setMemberRole(gid, uid, r); }
 
     public async ensureGlobalRegistration() { return this.globalRegistry.ensureGlobalRegistration(); }
     public async discoverUsers() { return this.globalRegistry.discoverUsers(); }

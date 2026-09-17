@@ -1,10 +1,10 @@
 import * as crypto from 'crypto';
-import { SovereignGroup, GroupMember } from '../types';
+import { SovereignGroup, GroupMember, GroupPermissions } from '../types';
 import { IStorage } from '../interfaces/IStorage';
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
 import { PATHS } from '../utils/Constants';
-import { SyncError } from '../utils/Errors';
+import { SyncError, AuthError } from '../utils/Errors';
 import { env } from '../utils/Environment';
 
 export interface GroupManagerContext {
@@ -59,6 +59,50 @@ export class GroupManager {
         }
         
         Logger.info('Group', `Updated group ${group.name} (${group.id})`);
+    }
+
+    /**
+     * Updates granular permissions for a group member. Caller must be group owner or admin.
+     */
+    public async setMemberPermissions(groupId: string, targetUserId: string, permissions: GroupPermissions): Promise<SovereignGroup> {
+        const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
+        const localInfo = await this.ctx.storage.getFile(infoPath);
+        if (!localInfo) throw new Error(`Group ${groupId} not found`);
+
+        const group: SovereignGroup = JSON.parse(new TextDecoder().decode(localInfo));
+        const caller = group.members.find(m => m.userId === this.ctx.userId);
+        if (!caller || (caller.role !== 'owner' && caller.role !== 'admin')) {
+            throw new AuthError(`Permission denied: Only group owners or admins can set member permissions`);
+        }
+
+        const target = group.members.find(m => m.userId === targetUserId);
+        if (!target) throw new Error(`Member ${targetUserId} not found in group ${groupId}`);
+
+        target.permissions = { ...target.permissions, ...permissions };
+        await this.updateGroup(group);
+        return group;
+    }
+
+    /**
+     * Updates a member's role (owner, admin, member). Caller must be the group owner.
+     */
+    public async setMemberRole(groupId: string, targetUserId: string, role: 'owner' | 'admin' | 'member'): Promise<SovereignGroup> {
+        const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
+        const localInfo = await this.ctx.storage.getFile(infoPath);
+        if (!localInfo) throw new Error(`Group ${groupId} not found`);
+
+        const group: SovereignGroup = JSON.parse(new TextDecoder().decode(localInfo));
+        const caller = group.members.find(m => m.userId === this.ctx.userId);
+        if (!caller || caller.role !== 'owner') {
+            throw new AuthError(`Permission denied: Only the group owner can change member roles`);
+        }
+
+        const target = group.members.find(m => m.userId === targetUserId);
+        if (!target) throw new Error(`Member ${targetUserId} not found in group ${groupId}`);
+
+        target.role = role;
+        await this.updateGroup(group);
+        return group;
     }
 
     public async joinGroup(group: SovereignGroup) {
