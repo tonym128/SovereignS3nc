@@ -542,6 +542,7 @@ export class SovereignS3nc extends EventEmitter {
     private getHashedUserId(uid: string, ip: boolean) { return this.keyManager.getHashedUserId(uid, ip); }
 
     public async sync(force: boolean = false) { return this.syncOrchestrator.sync(force); }
+    public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
 
     public async createGroup(n: string, m: GroupMember[]) { return this.groupManager.createGroup(n, m); }
     public async updateGroup(g: SovereignGroup) { return this.groupManager.updateGroup(g); }

@@ -52,6 +52,15 @@ export interface SovereignConfig {
    */
   workerIntegrity?: string;
   enableP2PPairing?: boolean; // Enable QR code and Bluetooth pairing functionality
+  /** Configurable local data retention policy to prevent unbounded storage growth. */
+  retentionPolicy?: RetentionPolicy;
+}
+
+export interface RetentionPolicy {
+  /** Maximum number of days of own daily partition databases to keep locally. Older files are pruned. */
+  maxDaysOwnData?: number;
+  /** Maximum number of days of followed user data to keep locally. Older files are pruned. */
+  maxDaysFollowedData?: number;
 }
 
 export interface SovereignManifest {

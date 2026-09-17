@@ -157,11 +157,61 @@ export class SyncOrchestrator {
 
             await this.ctx.processModerationRequests();
             await this.ctx.syncManifest();
+            await this.applyRetentionPolicy();
             await this.ctx.storage.setLastSyncDate(today);
             this.ctx.emitSyncProgress('complete');
         } finally {
             this.ctx.setSyncing(false);
         }
+    }
+
+    /**
+     * Enforces local data retention policy by pruning date-partitioned files
+     * that exceed the configured age limits (maxDaysOwnData, maxDaysFollowedData).
+     * Returns the count of deleted files.
+     */
+    public async applyRetentionPolicy(): Promise<number> {
+        const policy = this.ctx.config.retentionPolicy;
+        if (!policy) return 0;
+
+        let prunedCount = 0;
+        const now = new Date();
+
+        const getCutoff = (days: number): string => {
+            const d = new Date(now);
+            d.setUTCDate(d.getUTCDate() - days);
+            return SovereignS3nc.getDateStr(d);
+        };
+
+        const allFiles = await this.ctx.storage.listFiles('');
+        const dateRegex = /\b(\d{4}-\d{2}-\d{2})\b/;
+
+        for (const file of allFiles) {
+            const match = file.match(dateRegex);
+            if (!match) continue;
+            const fileDate = match[1];
+
+            if (policy.maxDaysFollowedData !== undefined && file.startsWith(PATHS.FOLLOWED_PREFIX)) {
+                const cutoff = getCutoff(policy.maxDaysFollowedData);
+                if (fileDate < cutoff) {
+                    await this.ctx.storage.deleteFile(file);
+                    prunedCount++;
+                    Logger.debug('Retention', `Pruned old followed file: ${file}`);
+                }
+            } else if (policy.maxDaysOwnData !== undefined && !file.startsWith(PATHS.FOLLOWED_PREFIX)) {
+                const cutoff = getCutoff(policy.maxDaysOwnData);
+                if (fileDate < cutoff) {
+                    await this.ctx.storage.deleteFile(file);
+                    prunedCount++;
+                    Logger.debug('Retention', `Pruned old own file: ${file}`);
+                }
+            }
+        }
+
+        if (prunedCount > 0) {
+            Logger.info('Retention', `Applied retention policy: pruned ${prunedCount} old files.`);
+        }
+        return prunedCount;
     }
 
     public async syncDay(date: string, type: 'private' | 'public', localPublicKey?: string, remoteOverride?: IRemoteAdapter, remoteManifest?: SovereignManifest | null) {
