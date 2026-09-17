@@ -7,7 +7,8 @@ export const PATHS = {
     SENTINEL: 'sentinel.enc',
     USER_PROFILE: 'public/user.json',
     MANIFEST: 'manifest.json',
-    USERS_REGISTRY: 'users.json',
+    USERS_REGISTRY: 'users.json',       // Legacy — kept for backward compat reads
+    REGISTRY_ENTRIES_PREFIX: 'users/',   // Per-user signed entries (V2 registry)
     BLACKLIST: 'blacklist.json',
     ADMIN_PUBLIC_KEY: 'public_key.json',
     MANIFEST_CACHE: '.manifest_cache.json',

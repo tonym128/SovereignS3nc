@@ -44,12 +44,13 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Sign all P2P messages using sender's X25519 private key (EdDSA/Ed25519)
   - Verify signatures before accepting data from peers
 
-- [ ] **Fix global registry overwrite vulnerability** (`src/discovery/GlobalRegistry.ts`)
+- [x] **Fix global registry overwrite vulnerability** (`src/discovery/GlobalRegistry.ts`)
   - Any user can upload a new `users.json`, overwriting all other users' entries
   - No versioning, signing, or consensus mechanism
   - Malicious actor could delete all users or inject fake identities
   - Implement signed registry entries (each user signs their own entry)
   - Consider Merkle tree or append-only log for the registry
+  - ✅ Fixed: Each user now uploads their own signed file at `users/{userId}.json` containing `{userId, publicKey, signingPublicKey, signature, timestamp}`. Signature is Ed25519 over the canonical payload. `getPublicRegistry()` fetches all `users/*.json`, verifies signatures, and merges with legacy `users.json` (V2 entries take priority). Existing `users.json` still read for backward compat.
 
 - [ ] **Add forward secrecy to DMs** (`src/modules/Messaging.ts`)
   - Current: static ECDH — same shared secret from long-term identity keys
