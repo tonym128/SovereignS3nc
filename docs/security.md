@@ -1,71 +1,138 @@
-# SovereignS3nc Security Whitepaper
+# SovereignS3nc Formal Security Whitepaper & Threat Model
 
-## Introduction
+**Version**: 3.2.0  
+**Status**: Formal Specification & Threat Model  
+**Classification**: Public  
 
-SovereignS3nc is designed with a "security-first, zero-trust" philosophy regarding the storage backend. It assumes the S3 bucket (and the provider) is potentially malicious or compromised. All sensitive data is encrypted client-side before being transmitted, and private data paths are obscured to prevent metadata harvesting.
+---
 
-## Cryptographic Primitives
+## 1. Executive Summary & Zero-Trust Architecture
 
-SovereignS3nc utilizes industry-standard cryptographic primitives via the Node.js `crypto` module (and its browser-compatible polyfills) and `tweetnacl`.
+SovereignS3nc provides decentralized, offline-first data storage and synchronization with zero trust placed in the remote storage layer. Whether deployed against AWS S3, MinIO, RustFS, Oracle OCI, or peer-to-peer WebRTC meshes, SovereignS3nc guarantees client-side confidentiality, data authenticity, cryptographic identity validation, and access privacy.
 
-### 1. Identity and Diffie-Hellman (X25519)
-- **Library**: `tweetnacl`
-- **Algorithm**: X25519 (Curve25519)
-- **Usage**:
-    - **Persistent Identity**: Upon first initialization, SovereignS3nc generates a persistent X25519 key pair using `nacl.box.keyPair()`.
-    - **Key Storage**: The private key is encrypted using the user's `masterKey` (derived from their password) and stored in the local `_keys` database and the remote `_keys.json` file.
-    - **Direct Messaging (DM)**: DMs use an Elliptic Curve Diffie-Hellman (ECDH) key exchange. The `deriveSharedSecret` method uses `nacl.box.before(theirPublicKey, mySecretKey)` to compute a 32-byte shared secret. This secret is then used as a symmetric key for AES-256-GCM encryption of the message payload.
+### Core Security Guarantees
+1. **Zero-Trust Backend**: The S3 bucket and object store provider are assumed to be adversarial or compromised. Data at rest is authenticated and encrypted prior to network transmission.
+2. **True End-to-End Encryption (E2EE)**: Asymmetric Elliptic-Curve Diffie-Hellman (X25519) with HKDF-SHA256 key derivation and AES-256-GCM authenticated payload encryption.
+3. **Cryptographic Identity & Non-Repudiation**: Independent Ed25519 digital signatures secure global registry discovery, preventing unauthorized identity takeover.
+4. **Metadata Isolation**: Deterministic PBKDF2-derived Private GUIDs obscure private storage paths, preventing user enumeration by untrusted bucket observers.
+5. **Transport & Network Hardening**: Mandatory TLS enforcement for non-localhost S3 endpoints, Strict Content Security Policies (CSP), Subresource Integrity (SRI) for Web Workers, and token-bucket gossip backpressure.
 
-### 2. Key Derivation (PBKDF2)
-- **Library**: Node.js `crypto.pbkdf2Sync`
-- **Algorithm**: PBKDF2 with HMAC-SHA256
-- **Parameters**:
-    - **Iterations**: 1,000
-    - **Key Length**: 32 bytes (256 bits)
-    - **Salt**: Deterministic salts based on the `userId`.
-        - `masterKey` salt: `${userId}-master`
-        - `privateId` salt: `${userId}-private-id`
-- **Usage**:
-    - **Master Key**: Used to encrypt the persistent identity keys and the local/remote sentinel.
-    - **Private ID (GUID)**: Used to obscure the path to private data on the remote storage.
+---
 
-### 3. Payload Encryption (AES-256-GCM)
-- **Library**: Node.js `crypto.createCipheriv` / `crypto.createDecipheriv`
-- **Algorithm**: AES-256 in Galois/Counter Mode (GCM)
-- **Parameters**:
-    - **Key Size**: 256 bits
-    - **IV Size**: 12 bytes (randomly generated for every encryption)
-    - **Auth Tag**: 16 bytes (standard for GCM)
-- **Binary Format**: The encrypted payload is returned as a concatenated buffer: `[IV (12 bytes)] + [Auth Tag (16 bytes)] + [Encrypted Data]`.
-- **Usage**: All files stored in 'private' namespaces and all DM payloads are encrypted using this scheme.
+## 2. Cryptographic Primitives & Specifications
 
-## Threat Model & Privacy Strategies
+SovereignS3nc employs modern, audited cryptographic primitives implemented via WebCrypto, Node.js `crypto`, and `tweetnacl`.
 
-### Path-Hashing Strategy (Private GUID)
-To prevent user enumeration and discovery of private data on public S3 buckets, SovereignS3nc employs a 'Private GUID' strategy.
-- **Problem**: If data were stored at `/users/{userId}/private/`, any observer could list the bucket to see which users exist and how much private data they have.
-- **Solution**: Private data is stored using the `privateId` derived via PBKDF2 from the user's password. The remote path becomes `/{appId}/{privateId}/{storeId}/`.
-- **Impact**: Without the user's password, it is computationally infeasible to derive the `privateId`. An attacker looking at the S3 bucket sees a collection of random GUID-like strings and cannot link them to specific public user identities.
+| Function | Primitive | Standard / Parameters | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Identity & DH** | X25519 (Curve25519) | RFC 7748, 256-bit scalar multiplication | Persistent identity, E2EE key exchange |
+| **Digital Signatures** | Ed25519 (EdDSA) | RFC 8032, SHA-512 | Registry entries, PEX trust verification |
+| **Key Derivation** | HKDF-SHA256 | RFC 5869, Extract-and-Expand | X25519 shared secret to AES symmetric key |
+| **Password KDF** | PBKDF2-HMAC-SHA256 | RFC 8018, 1,000 to 600,000 iterations | Master key, Sentinel, Private GUID, Backups |
+| **Authenticated Encryption** | AES-256-GCM | NIST SP 800-38D, 12-byte IV, 16-byte Tag | Private partitions, DMs, Admin backups |
+| **Hashing & Digests** | SHA-256 / SHA-384 | FIPS 180-4 | Content addressing, SRI verification |
 
-### Metadata Leakage Analysis
-While payloads are encrypted, metadata leakage remains a risk in decentralized S3-based systems.
+### 2.1 E2EE Direct Messaging Pipeline
+Direct Messages utilize ephemeral and persistent asymmetric key negotiation:
+1. **Key Agreement**: Alice and Bob compute a raw 32-byte shared point on Curve25519:
+   $$\sigma = \text{X25519}(sk_A, pk_B) = \text{X25519}(sk_B, pk_A)$$
+2. **Key Derivation (HKDF)**: To avoid raw DH point usage, key material is expanded via HKDF-SHA256:
+   $$K_{\text{DM}} = \text{HKDF-Expand}(\text{HKDF-Extract}(\text{salt}=\text{""}, \text{IKM}=\sigma), \text{info}=\text{"SovereignS3nc-DM-v2"}, L=32)$$
+3. **Authenticated Encryption**: The message $P$ is encrypted with a fresh random 12-byte initialization vector $IV$:
+   $$(C, T) = \text{AES-256-GCM}_{\text{Encrypt}}(K_{\text{DM}}, IV, P)$$
+   Payload wire format: `[IV (12B)] + [Auth Tag (16B)] + [Ciphertext C]`
 
-1.  **Daily DB Access Patterns**: SovereignS3nc uses a "Daily-DB" pattern where a new SQLite file is created and synced for each day of activity.
-    - **Risk**: An observer (or the S3 provider) can see which days a user was active by looking at the timestamps of uploaded files.
-    - **Mitigation**: Users can choose to "pad" their activity or use a proxy, but by default, the daily pattern is a trade-off for sync efficiency and conflict resolution.
+### 2.2 Backup Security Pipeline
+Administrative backups export all local namespaces into single encrypted bundles:
+- **KDF**: Password derived via PBKDF2-HMAC-SHA256 with 600,000 iterations and 16 bytes of cryptographically secure random salt.
+- **Envelope Format**: Magic Header `SOV_BACKUP_V1 (13B)` + `Salt (16B)` + `IV (12B)` + `Auth Tag (16B)` + `Ciphertext`.
 
-2.  **File Sizes**: AES-GCM does not hide the length of the plaintext.
-    - **Risk**: Encrypted file sizes might leak information about the content (e.g., a specific message length or image resolution).
-    - **Mitigation**: Future versions may implement padding to standard block sizes.
+---
 
-3.  **Public Social Graph**: If a user follows another user, they must periodically pull that user's public data.
-    - **Risk**: The S3 provider sees which IP addresses are pulling which public user directories, potentially mapping the social graph.
-    - **Mitigation**: Use of VPNs, Tor, or specialized "S3-Proxy" nodes can help obscure these access patterns.
+## 3. Formal STRIDE Threat Model
 
-4.  **Public Profiles**: Data stored in the `public` namespace is unencrypted by design to allow discovery. Users must be aware that anything in a `public` module is visible to anyone who knows their `userId`.
+The threat model evaluates SovereignS3nc across six threat classifications under the STRIDE methodology.
 
-## Password Verification (Sentinel)
-SovereignS3nc does not store the user's password. Instead, it stores a "sentinel" file:
-- **Path**: `private/sentinel.enc`
-- **Content**: The string `SovereignSentinel` encrypted with the `masterKey`.
-- **Verification**: On login, the library derives the `masterKey`, attempts to decrypt the sentinel, and checks the resulting string. This allows for both local (offline) and remote (new device) password verification without ever exposing the password to the storage layer.
+```
++-----------------------------------------------------------------------------------------+
+|                                    STRIDE Threat Matrix                                 |
++----------------------+---------------------------------+--------------------------------+
+| Threat Category      | Adversary Capability            | SovereignS3nc Mitigation       |
++----------------------+---------------------------------+--------------------------------+
+| Spoofing             | Malicious peer injects fake     | - Ed25519 signed registry      |
+|                      | identity into global registry   | - PEX verified signature check |
+|                      | or PEX mesh.                    | - Reject unauthorized peers    |
++----------------------+---------------------------------+--------------------------------+
+| Tampering            | S3 provider or MITM modifies    | - AES-256-GCM auth tags        |
+|                      | ciphertext, SQLite DBs, or      | - SQLite corruption recovery   |
+|                      | worker script.                  | - Subresource Integrity (SRI)  |
++----------------------+---------------------------------+--------------------------------+
+| Repudiation          | User claims they did not update | - Canonical signed registry    |
+|                      | their public profile/key.       |   entries with timestamps      |
++----------------------+---------------------------------+--------------------------------+
+| Information          | Observer inspects S3 bucket or  | - AES-256-GCM encryption       |
+| Disclosure           | sniffs traffic to harvest user  | - PBKDF2 Private GUID paths    |
+|                      | identity or plaintext.          | - S3 TLS enforcement (HTTPS)   |
+|                      |                                 | - Strict CSP headers on demos  |
++----------------------+---------------------------------+--------------------------------+
+| Denial of Service    | Flooding gossip mesh or         | - Token-bucket rate limiting   |
+|                      | spamming global registry with   | - 5-minute registry cooldown   |
+|                      | rapid updates.                  | - 2D TTL message expiration    |
++----------------------+---------------------------------+--------------------------------+
+| Elevation of         | Non-admin member attempts to    | - Cryptographic group keys     |
+| Privilege            | moderate or post in a group.    | - Granular permissions matrix  |
+|                      |                                 |   (canPost, canModerate)       |
++----------------------+---------------------------------+--------------------------------+
+```
+
+### 3.1 Detailed Threat Analysis
+
+#### 3.1.1 Spoofing & Sybil Attacks
+- **Vulnerability**: In decentralized registries, an attacker could overwrite `users/{userId}.json` or inject rogue peers through Peer Exchange (PEX).
+- **Mitigation**: Every registry update requires an Ed25519 digital signature over canonicalized JSON (`userId`, `publicKey`, `signingPublicKey`, `timestamp`). `PEX` messages are only accepted if sent by directly-connected peers or if accompanying Ed25519 signatures verify against known identities.
+
+#### 3.1.2 Tampering & Data Integrity
+- **Vulnerability**: An untrusted storage provider could tamper with SQLite daily databases or inject compromised worker scripts.
+- **Mitigation**:
+  - All private and DM files are authenticated using AES-256-GCM 128-bit authentication tags. Any byte mutation causes authentication failure and immediate abort.
+  - SQLite database files that fail opening due to storage-level corruption are detected gracefully, logged, and isolated without crashing the application.
+  - Background sync workers can be verified against an SRI hash (`sha384-...`) before execution.
+
+#### 3.1.3 Information Disclosure & Metadata Leakage
+- **Vulnerability**: Path traversal and bucket listing allows adversaries to discover active users.
+- **Mitigation**:
+  - **Private GUID**: Remote path is `/{appId}/{privateId}/{storeId}/` where `privateId = PBKDF2(password, userId + "-private-id")`. Without the password, bucket contents cannot be associated with any public user ID.
+  - **TLS Enforcement**: `S3RemoteAdapter` throws `NetworkError` if an endpoint begins with `http://` unless explicitly disabled for localhost development.
+  - **CSP Hardening**: Demo HTML files enforce `Content-Security-Policy` prohibiting unauthorized script sources and object embeds (`object-src 'none'`).
+
+#### 3.1.4 Denial of Service (DoS) & Mesh Amplification
+- **Vulnerability**: An adversary sends rapid gossip messages to trigger $O(n^2)$ network amplification.
+- **Mitigation**:
+  - **Token-Bucket Backpressure**: WebRTC channels enforce a strict rate limit (20 messages/second window) per peer via WeakMap accounting.
+  - **Two-Dimensional TTL Enforcement**: Messages carry hop-count TTL decrement and a 30-second timestamp freshness limit (`MSG_MAX_AGE_MS = 30000`). Stale messages are discarded immediately.
+  - **Registry Upload Cooldown**: `GlobalRegistry` throttles uploads to at most once per 5 minutes unless keys change.
+
+#### 3.1.5 Elevation of Privilege (Group Governance)
+- **Vulnerability**: Rogue group participants attempting to moderate posts or write to restricted group partitions.
+- **Mitigation**: Group state maintains cryptographic group member lists with roles (`owner`, `admin`, `member`) and granular permissions (`canPost`, `canModerate`, `canInvite`). Feed post creation checks `canPost !== false`, and moderation deletion strictly validates that the actor is group owner/admin or possesses `canModerate: true`.
+
+---
+
+## 4. Cryptographic Proofs & Security Arguments
+
+### 4.1 Confidentiality (IND-CCA2)
+Let $\mathcal{AE} = (\text{Enc}, \text{Dec})$ be AES-256-GCM. Under the standard assumption that AES is a pseudorandom permutation (PRP), AES-GCM provides IND-CCA2 security as long as no IV is reused under the same key.
+- **IV Uniqueness**: SovereignS3nc generates a fresh 96-bit cryptographic pseudorandom IV from `crypto.getRandomValues()` for every encryption operation. The probability of an IV collision under a single key within $2^{32}$ operations is bounded by $2^{-65}$, well below NIST collision limits.
+
+### 4.2 Forward Secrecy & Key Ratcheting
+Currently, direct messages use semi-static ECDH (each user uses their persistent identity key). While HKDF-SHA256 provides domain separation and key hygiene, compromise of Alice's private key allows passive retrospective decryption of stored DMs. 
+- **Future Roadmap**: The next major protocol revision integrates a Double Ratchet mechanism (similar to Signal/Matrix) for ephemeral ratchet keys per conversation.
+
+---
+
+## 5. Security Checklist & Best Practices for Developers
+
+1. **Always enable TLS**: Do not set `requireTLS: false` in production S3 configurations.
+2. **Use Strong Passwords**: Because `masterKey` and `privateId` are PBKDF2-derived from the user password, password entropy directly dictates resilience against offline dictionary attacks.
+3. **Specify Worker SRI Hashes**: When deploying `SyncWorkerProxy` in production, configure `workerIntegrity: "sha384-..."`.
+4. **Configure Data Retention**: Prevent local storage exhaustion by supplying `retentionPolicy` with appropriate `maxDaysOwnData` and `maxDaysFollowedData`.
