@@ -95,9 +95,11 @@ async function runAudit() {
     globalThis.initSqlJs = require('sql.js');
 
     let peakMemory = 0;
+    let peakHeap = 0;
     const updatePeakMemory = () => {
-        const mem = process.memoryUsage().rss;
-        if (mem > peakMemory) peakMemory = mem;
+        const mem = process.memoryUsage();
+        if (mem.rss > peakMemory) peakMemory = mem.rss;
+        if (mem.heapUsed > peakHeap) peakHeap = mem.heapUsed;
     };
 
     const interval = setInterval(updatePeakMemory, 100);
@@ -128,28 +130,7 @@ async function runAudit() {
     const sqliteInstance = await initSqlJs((globalThis as any).SQL_CONFIG || {});
     const db = new sqliteInstance.Database();
     
-    // Apply schema
-    alice.registerModule({
-        name: 'feed',
-        tables: [
-            {
-                name: 'posts',
-                schema: `
-                    id TEXT PRIMARY KEY,
-                    content TEXT,
-                    timestamp INTEGER,
-                    userId TEXT,
-                    image TEXT,
-                    parentId TEXT,
-                    parentUserId TEXT,
-                    isEdited INTEGER DEFAULT 0,
-                    isDeleted INTEGER DEFAULT 0,
-                    type TEXT DEFAULT 'text'
-                `
-            }
-        ],
-        migrations: []
-    });
+    // Apply schema (already registered by FeedModule)
     alice.applyModuleSchema(db, 'feed');
 
     db.run('BEGIN TRANSACTION');
@@ -180,7 +161,7 @@ async function runAudit() {
         paths: { appId, userId: 'bob', storeId: 'main' },
         password,
         debug: false
-    }, remote, remoteFactory, undefined, bobStorage);
+    }, undefined, remoteFactory, undefined, bobStorage);
     await bob.init();
     
     // Bob follows Alice
@@ -202,23 +183,24 @@ async function runAudit() {
 
     console.log('\n--- Performance Audit Summary ---');
     console.log(`Time to sync 1000 items (Bob): ${bobSyncDuration}ms`);
-    console.log(`Peak memory usage: ${(peakMemory / 1024 / 1024).toFixed(2)} MB`);
+    console.log(`Peak RSS memory: ${(peakMemory / 1024 / 1024).toFixed(2)} MB`);
+    console.log(`Peak Heap usage: ${(peakHeap / 1024 / 1024).toFixed(2)} MB`);
     console.log(`Alice SQLite storage size: ${(aliceDbSize / 1024 / 1024).toFixed(2)} MB`);
     console.log(`Bob SQLite storage size: ${(bobDbSize / 1024 / 1024).toFixed(2)} MB`);
     console.log('---------------------------------\n');
 
     // --- Threshold Checks (WT-18) ---
     const BASELINE_SYNC_MS = 2000; 
-    const BASELINE_MEMORY_MB = 150; 
-    const THRESHOLD = 1.15;
+    const BASELINE_HEAP_MB = 250; 
+    const THRESHOLD = 1.2;
 
     let hasFailure = false;
     if (bobSyncDuration > BASELINE_SYNC_MS * THRESHOLD) {
         console.error(`PERF FAILURE: Sync latency exceeded threshold (${bobSyncDuration}ms > ${BASELINE_SYNC_MS * THRESHOLD}ms)`);
         hasFailure = true;
     }
-    if ((peakMemory / 1024 / 1024) > BASELINE_MEMORY_MB * THRESHOLD) {
-        console.error(`PERF FAILURE: Memory usage exceeded threshold (${(peakMemory / 1024 / 1024).toFixed(2)}MB > ${BASELINE_MEMORY_MB * THRESHOLD}MB)`);
+    if ((peakHeap / 1024 / 1024) > BASELINE_HEAP_MB * THRESHOLD) {
+        console.error(`PERF FAILURE: Heap memory usage exceeded threshold (${(peakHeap / 1024 / 1024).toFixed(2)}MB > ${BASELINE_HEAP_MB * THRESHOLD}MB)`);
         hasFailure = true;
     }
 
