@@ -298,8 +298,9 @@ Generated from in-depth security, architecture, feature, and UX review.
   - TODO.md item: integrate `perf-audit.ts` into CI pipeline to prevent sync latency regressions
   - ✅ Fixed: Fixed compilation and runtime bugs in `scripts/perf-audit.ts` (undefined remote variable, duplicate feed module registration, tuned memory thresholds). Added `perf:audit` script to `package.json`. Updated `.github/workflows/perf-check.yml` to trigger on both `main` and `master` branches. Verified execution: passes in 62ms with 1000 items.
 
-- [ ] **Add formal whitepaper with threat modeling** (per TODO.md)
+- [x] **Add formal whitepaper with threat modeling** (per TODO.md)
   - Security whitepaper exists but needs formalization with cryptographic proofs and formal threat model
+  - ✅ Fixed: Created comprehensive formal whitepaper in `docs/security.md` covering zero-trust architecture, cryptographic primitive specifications (X25519, Ed25519, HKDF-SHA256, PBKDF2, AES-256-GCM), complete STRIDE threat matrix with concrete mitigations, cryptographic proofs/arguments for IND-CCA2 confidentiality and replay protection, and developer security best practices.
 
 ---
 
