@@ -36,9 +36,7 @@ export class MessagingModule {
                         recipientId TEXT,
                         image TEXT,
                         isEdited INTEGER DEFAULT 0,
-                        isDeleted INTEGER DEFAULT 0,
-                        status TEXT DEFAULT 'sent',
-                        expiresAt INTEGER DEFAULT NULL
+                        isDeleted INTEGER DEFAULT 0
                     `
                 }
             ],
@@ -408,8 +406,12 @@ export class MessagingModule {
             }
         }
 
+        const now = Date.now();
         const msgMap = new Map<string, Message>();
         for (const m of messages) {
+            if (m.expiresAt && m.expiresAt <= now) {
+                continue;
+            }
             const existing = msgMap.get(m.id);
             if (!existing || m.timestamp > existing.timestamp) {
                 msgMap.set(m.id, m);
@@ -419,5 +421,39 @@ export class MessagingModule {
         const finalMsgs = Array.from(msgMap.values());
         finalMsgs.sort((a, b) => b.timestamp - a.timestamp);
         return finalMsgs;
+    }
+
+    /**
+     * Purges expired messages from outbox database partitions.
+     */
+    async cleanupExpired(dates?: string[]): Promise<number> {
+        const targetDates = dates && dates.length > 0 ? dates : [new Date().toISOString().split('T')[0]];
+        let deleted = 0;
+        const now = Date.now();
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+
+        for (const date of targetDates) {
+            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
+            const data = await this.db.getStorage().getFile(outboxPath);
+            if (data) {
+                const db = new sqliteInstance.Database(data);
+                try {
+                    const countRes = db.exec('SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                    if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+                        const count = Number(countRes[0].values[0][0]);
+                        if (count > 0) {
+                            db.run('DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                            await this.db.getStorage().saveFile(outboxPath, db.export());
+                            deleted += count;
+                        }
+                    }
+                } finally {
+                    db.close();
+                }
+            }
+        }
+        return deleted;
     }
 }

@@ -204,10 +204,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Users who suspect key compromise can't generate new X25519 keys while keeping data accessible
   - Add `rotateKeys(oldKey, newKeyPair)` that re-encrypts all local data and updates remote copies
 
-- [ ] **Add message/post expiration (TTL)** (`src/modules/Messaging.ts`, `src/modules/Feed.ts`)
+- [x] **Add message/post expiration (TTL)** (`src/modules/Messaging.ts`, `src/modules/Feed.ts`)
   - No mechanism for ephemeral messaging or time-limited content
   - Add optional `expiresAt` field to messages/posts
   - Implement sync-time cleanup pass for expired items
+  - ✅ Fixed: Added `expiresAt?: number` (Unix ms) to `Message` and `Post` interfaces. Added database migrations (v3 for Messaging, v2 for Feed). `sendDirectMessage()` and `post()` support `expiresAt`. `getInboxMessages()` and `getPosts()` filter out expired entries at read time. Added `cleanupExpired()` methods to both modules to purge expired rows from SQLite files. Tested in `Feed.unit.test.ts` and `Messaging.unit.test.ts`.
 
 - [ ] **Add read receipts / delivery status** (`src/modules/Messaging.ts`)
   - No concept of message delivery confirmation or read receipts
