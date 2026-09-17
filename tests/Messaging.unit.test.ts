@@ -60,11 +60,16 @@ describe('MessagingModule Unit Tests', () => {
         
         // Mock core primitives
         jest.spyOn(sov, 'deriveSharedSecret').mockReturnValue('0'.repeat(64));
+        jest.spyOn(sov, 'deriveEphemeralSharedSecret').mockReturnValue({
+            ephemeralPublicKey: '1'.repeat(64),
+            sharedSecret: '0'.repeat(64)
+        });
+        jest.spyOn(sov, 'deriveRecipientSharedSecret').mockReturnValue('0'.repeat(64));
         jest.spyOn(sov, 'encrypt').mockResolvedValue(new Uint8Array([1, 2, 3]));
         jest.spyOn(sov, 'decrypt').mockResolvedValue(new TextEncoder().encode(JSON.stringify({
             id: 'msg1', content: 'hello', timestamp: Date.now(), senderId: 'bob', recipientId: 'alice'
         })));
-        jest.spyOn(sov, 'getPublicRegistry').mockResolvedValue([{ userId: 'bob', publicKey: 'bob-pub' }]);
+        jest.spyOn(sov, 'getPublicRegistry').mockResolvedValue([{ userId: 'bob', publicKey: '0'.repeat(64) }]);
 
         messagingModule = new MessagingModule(sov);
     });
@@ -164,5 +169,69 @@ describe('MessagingModule Unit Tests', () => {
 
         const status = await messagingModule.getMessageReceipt('msg-456', '2026-09-17');
         expect(status).toBe('delivered');
+    });
+
+    test('sendDirectMessage should use ephemeral forward secrecy and save ephemeral_pk', async () => {
+        await messagingModule.sendDirectMessage('bob', 'Secret with PFS');
+
+        expect(sov.deriveEphemeralSharedSecret).toHaveBeenCalledWith('0'.repeat(64));
+        expect(mockDbInstance.run).toHaveBeenCalledWith(
+            expect.stringContaining('INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)'),
+            expect.arrayContaining(['1'.repeat(64)])
+        );
+    });
+
+    test('getInboxMessages should decrypt using deriveRecipientSharedSecret when ephemeral_pk is present', async () => {
+        jest.spyOn(sov, 'getFollowing').mockResolvedValue([{ userId: 'bob', lastSync: '', publicKey: '0'.repeat(64) }]);
+        jest.spyOn(sov.getStorage(), 'getFile').mockResolvedValue(new Uint8Array([9, 9, 9]));
+
+        // Mock PRAGMA table_info to return ephemeral_pk column, and SELECT result with ephemeral_pk
+        mockDbInstance.exec.mockImplementation((sql: string) => {
+            if (sql.includes('table_info')) {
+                return [{ values: [[0, 'id'], [1, 'encrypted_data'], [2, 'ephemeral_pk']] }];
+            }
+            if (sql.includes('SELECT encrypted_data, ephemeral_pk')) {
+                return [{ values: [[new Uint8Array([1, 2, 3]), 'eph_pub_key_hex']] }];
+            }
+            return [];
+        });
+
+        const messages = await messagingModule.getInboxMessages(1);
+        expect(messages.length).toBeGreaterThan(0);
+        expect(sov.deriveRecipientSharedSecret).toHaveBeenCalledWith('eph_pub_key_hex');
+    });
+
+    test('KeyManager cryptographic forward secrecy: sender and recipient derive identical AES key', async () => {
+        const alice = new SovereignS3nc({
+            paths: { appId: 'pfs-test-alice', userId: 'alice', storeId: 'main' },
+            password: 'alice-password-123'
+        }, new MockRemote());
+        await alice.init();
+
+        const bob = new SovereignS3nc({
+            paths: { appId: 'pfs-test-bob', userId: 'bob', storeId: 'main' },
+            password: 'bob-password-456'
+        }, new MockRemote());
+        await bob.init();
+
+        const bobPublicKey = bob.getConfig().publicEncryptionKey!;
+        expect(bobPublicKey).toBeDefined();
+
+        // 1. Alice derives ephemeral secret for Bob
+        const { ephemeralPublicKey, sharedSecret: aliceDerivedSecret } = alice.deriveEphemeralSharedSecret(bobPublicKey);
+        expect(ephemeralPublicKey).toBeDefined();
+        expect(aliceDerivedSecret).toBeDefined();
+        expect(ephemeralPublicKey.length).toBe(64);
+        expect(aliceDerivedSecret.length).toBe(64);
+
+        // 2. Bob derives recipient secret using Alice's ephemeral public key
+        const bobDerivedSecret = bob.deriveRecipientSharedSecret(ephemeralPublicKey);
+        expect(bobDerivedSecret).toBe(aliceDerivedSecret);
+
+        // 3. Encrypt with Alice's derived key, decrypt with Bob's derived key
+        const plaintext = new TextEncoder().encode('Forward secret message content');
+        const encrypted = await alice.encrypt(plaintext, aliceDerivedSecret);
+        const decrypted = await bob.decrypt(encrypted, bobDerivedSecret);
+        expect(new TextDecoder().decode(decrypted)).toBe('Forward secret message content');
     });
 });

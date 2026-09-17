@@ -64,3 +64,98 @@
 - **Reliability**: Integrated OpenRelay public TURN servers into `NativeWebRTCTransport` by default to improve P2P connectivity in restrictive networks (Symmetric NAT).
 - **Mesh Dashboard**: Added a new "Mesh" tab to the Social Demo providing real-time visibility into the P2P network, including connected peer counts, unique peer IDs, and a live gossip activity log.
 - **Library API**: Exposed `getMeshStats()` in the core `SovereignS3nc` class to allow UI components to query mesh health.
+
+---
+
+# SovereignS3nc Parallel Worktrees (Batch 6)
+
+| ID | Task | Target File(s) | Status |
+| :--- | :--- | :--- | :--- |
+| WT-31 | **Remove Hardcoded Credentials** | `dev.sh`, `.env.example` | Completed |
+| WT-32 | **Enforce TLS for S3 Connections** | `src/adapters/S3RemoteAdapter.ts` | Completed |
+| WT-33 | **Signed Global Registry Entries** | `src/discovery/GlobalRegistry.ts` | Completed |
+| WT-34 | **HKDF Key Derivation for Shared Secrets** | `src/core/KeyManager.ts`, `src/modules/Messaging.ts` | Completed |
+| WT-35 | **CSP Headers for Demo HTML Files** | `demo/*/index.html` | Completed |
+| WT-36 | **Encrypted Admin Backups** | `src/admin.ts`, `tests/admin_cli.unit.test.ts` | Completed |
+| WT-37 | **Gossip Backpressure & PEX Trust Model** | `src/adapters/WebRTCRemoteAdapter.ts` | Completed |
+| WT-38 | **Sync Progress Events & Module Collision Check** | `src/SovereignS3nc.ts`, `src/core/SyncOrchestrator.ts` | Completed |
+| WT-39 | **SRI Worker Script Loading Verification** | `src/worker/SyncWorkerProxy.ts`, `src/types.ts` | Completed |
+| WT-40 | **Global Registry Write Rate Limiting** | `src/discovery/GlobalRegistry.ts` | Completed |
+| WT-41 | **Message & Post Expiration (TTL)** | `src/modules/Messaging.ts`, `src/modules/Feed.ts` | Completed |
+| WT-42 | **Read Receipts & Delivery Status** | `src/modules/Messaging.ts` | Completed |
+| WT-43 | **Local Data Retention & Cleanup Policy** | `src/core/SyncOrchestrator.ts`, `src/SovereignS3nc.ts` | Completed |
+| WT-44 | **Granular Group Permissions** | `src/core/GroupManager.ts`, `src/modules/Feed.ts` | Completed |
+| WT-45 | **CI Integration for perf-audit Benchmarks** | `scripts/perf-audit.ts`, `.github/workflows/perf-check.yml` | Completed |
+| WT-46 | **Demo App Favicon & Manifest Screenshots** | `demo/*/manifest.json`, `demo/*/favicon.png` | Completed |
+| WT-47 | **Security Whitepaper & Threat Modeling** | `docs/security.md` | Completed |
+| WT-48 | **Identity Key Rotation & Re-encryption** | `src/core/KeyManager.ts`, `src/SovereignS3nc.ts` | Completed |
+| WT-49 | **Multi-device Pairing & Device Registry** | `src/SovereignS3nc.ts`, `src/types.ts` | Completed |
+| WT-50 | **Forward Secrecy for Direct Messages** | `src/modules/Messaging.ts`, `src/core/KeyManager.ts` | Completed |
+
+## Completed Objectives (Batch 6)
+
+### WT-31: Remove Hardcoded Credentials
+- Parameterized default root key and secret in `dev.sh` to read from environment variables.
+- Added comprehensive `.env.example` file.
+
+### WT-32: Enforce TLS for S3 Connections
+- Added `requireTLS` option to `S3Config` (defaults to `true`).
+- Disallowed plaintext HTTP endpoints in non-development environments.
+
+### WT-33: Signed Global Registry Entries
+- Replaced monolithic `users.json` overwrites with signed per-user entries (`users/{userId}.json`).
+- Added Ed25519 signature generation and verification with legacy fallback.
+
+### WT-34: HKDF Key Derivation for Shared Secrets
+- Applied HKDF-SHA256 expansion on raw X25519 shared secrets with domain separation label `'SovereignS3nc-DM-v2'`.
+- Preserved backward compatibility fallback (`'SovereignS3nc-DM-v1-raw'`).
+
+### WT-35: CSP Headers for Demo HTML Files
+- Added strict Content-Security-Policy meta tags across all demo apps.
+
+### WT-36: Encrypted Admin Backups
+- Encrypted administrative JSON backups using AES-256-GCM and PBKDF2 (`SOV_BACKUP_V1`).
+
+### WT-37: Gossip Backpressure & PEX Trust Model
+- Implemented token-bucket rate limiter (20 msg/sec) for WebRTC gossip.
+- Restricted PEX updates to directly connected peers or Ed25519-verified signers with 30s message TTL.
+
+### WT-38: Sync Progress Events & Module Collision Check
+- Added `sync:progress` lifecycle events across all sync orchestrator stages.
+- Added collision check in `registerModule` throwing `ModuleError` on duplicate names.
+
+### WT-39: SRI Worker Script Loading Verification
+- Added Subresource Integrity (SRI) digest validation for sync worker script loading.
+
+### WT-40: Global Registry Write Rate Limiting
+- Added 5-minute cooldown between registration updates, deduplication checks, and 7-day age validation.
+
+### WT-41: Message & Post Expiration (TTL)
+- Added `expiresAt` timestamps, SQLite v3/v2 schema migrations, read-time filtering, and `cleanupExpired()` methods.
+
+### WT-42: Read Receipts & Delivery Status
+- Added delivery and read confirmation pipeline with outbox status synchronization.
+
+### WT-43: Local Data Retention & Cleanup Policy
+- Implemented configurable retention policy pruning date-partitioned files older than configured limits.
+
+### WT-44: Granular Group Permissions
+- Introduced `GroupPermissions` (`canPost`, `canModerate`, `canInvite`) and enforced role permissions.
+
+### WT-45: CI Integration for perf-audit Benchmarks
+- Fixed runtime and memory threshold issues in `scripts/perf-audit.ts` and enabled CI workflow.
+
+### WT-46: Demo App Favicon & Manifest Screenshots
+- Added genuine 32x32 icons and desktop/mobile screenshots for PWA compliance.
+
+### WT-47: Security Whitepaper & Threat Modeling
+- Authored comprehensive cryptographic security whitepaper with STRIDE threat model in `docs/security.md`.
+
+### WT-48: Identity Key Rotation & Re-encryption
+- Implemented `rotateIdentityKeys()` with master-key re-encryption, PBKDF2 salt rotation, and registry update.
+
+### WT-49: Multi-device Pairing & Device Registry
+- Added password-authenticated encrypted pairing packages and device revocation registry.
+
+### WT-50: Forward Secrecy for Direct Messages
+- Implemented ephemeral-static ECDH forward secrecy with per-message ephemeral X25519 keypair negotiation, HKDF expansion, zeroing of ephemeral private keys, and `ephemeral_pk` storage in recipient boxes with backward-compatible fallbacks.

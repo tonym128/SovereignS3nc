@@ -52,10 +52,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Consider Merkle tree or append-only log for the registry
   - ✅ Fixed: Each user now uploads their own signed file at `users/{userId}.json` containing `{userId, publicKey, signingPublicKey, signature, timestamp}`. Signature is Ed25519 over the canonical payload. `getPublicRegistry()` fetches all `users/*.json`, verifies signatures, and merges with legacy `users.json` (V2 entries take priority). Existing `users.json` still read for backward compat.
 
-- [ ] **Add forward secrecy to DMs** (`src/modules/Messaging.ts`)
+- [x] **Add forward secrecy to DMs** (`src/modules/Messaging.ts`, `src/core/KeyManager.ts`)
   - Current: static ECDH — same shared secret from long-term identity keys
   - If private key is compromised, all past and future messages are decryptable
   - Implement double-ratchet or per-message ephemeral key derivation
+  - ✅ Fixed (WT-50): Implemented ephemeral-static ECDH forward secrecy for Direct Messages. When sending a DM, `_saveAndSendDM` generates an ephemeral X25519 keypair via `KeyManager.deriveEphemeralSharedSecret()`, derives a 256-bit AES key via HKDF-SHA256 (`'SovereignS3nc-DM-v3-ephemeral'`), wipes the ephemeral private key from memory, and stores `ephemeral_pk` alongside ciphertext in the recipient's public DM database. When reading DMs, `getInboxMessages` checks for `ephemeral_pk` and derives the recipient key via `KeyManager.deriveRecipientSharedSecret()`. Falls back seamlessly to V2 (HKDF static) and V1 (raw static) for full backward compatibility. Verified with unit and multi-user integration tests.
 
 - [x] **Enforce TLS for S3 connections** (`src/adapters/S3RemoteAdapter.ts`)
   - Accepts any endpoint URL including `http://` — no validation of HTTPS/TLS usage
