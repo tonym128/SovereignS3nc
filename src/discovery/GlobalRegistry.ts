@@ -34,6 +34,13 @@ const REGISTRY_ENTRIES_PREFIX = 'users/';
 const LEGACY_REGISTRY_PATH = PATHS.USERS_REGISTRY;
 
 export class GlobalRegistry {
+    /** Cooldown in ms between registry re-uploads (prevents flooding on rapid sync() calls). */
+    private static readonly REGISTRATION_COOLDOWN_MS = 5 * 60_000; // 5 minutes
+    /** Maximum acceptable age of a received registry entry — prevents replay of stale entries. */
+    private static readonly ENTRY_MAX_AGE_MS = 7 * 24 * 60 * 60_000; // 7 days
+
+    private lastRegistrationAt = 0;
+
     constructor(private ctx: GlobalRegistryContext) {}
 
     // ─── Internal helpers ───────────────────────────────────────────────────────
@@ -58,6 +65,20 @@ export class GlobalRegistry {
     }
 
     private verifyEntry(entry: SignedRegistryEntry): boolean {
+        // Age check: reject entries with timestamps too far in the past or future
+        const now = Date.now();
+        if (entry.timestamp) {
+            const age = now - entry.timestamp;
+            if (age > GlobalRegistry.ENTRY_MAX_AGE_MS) {
+                Logger.warn('Registry', `Entry for ${entry.userId} is too old (${Math.round(age / 86400000)}d). Rejecting.`);
+                return false;
+            }
+            if (age < -300_000) { // 5 min future drift tolerance
+                Logger.warn('Registry', `Entry for ${entry.userId} has a future timestamp. Possible replay attack. Rejecting.`);
+                return false;
+            }
+        }
+
         if (!this.ctx.verify) return true; // Verification not configured — accept all
         if (!entry.signature || !entry.signingPublicKey) {
             Logger.warn('Registry', `Entry for ${entry.userId} is unsigned — rejecting.`);
@@ -78,6 +99,7 @@ export class GlobalRegistry {
     /**
      * Uploads the current user's signed registry entry to `users/{userId}.json`.
      * Only touches the current user's own file — does NOT overwrite other users.
+     * Rate-limited: re-uploads are suppressed within REGISTRATION_COOLDOWN_MS of the last upload.
      */
     public async ensureGlobalRegistration() {
         const globalRemote = this.ctx.getGlobalRemote();
@@ -92,16 +114,24 @@ export class GlobalRegistry {
             return;
         }
 
+        // Rate limiting: skip re-upload if we uploaded recently (within cooldown window)
+        const now = Date.now();
+        if (this.lastRegistrationAt > 0 && now - this.lastRegistrationAt < GlobalRegistry.REGISTRATION_COOLDOWN_MS) {
+            Logger.debug('Discovery', `Registry registration rate-limited — last upload ${Math.round((now - this.lastRegistrationAt) / 1000)}s ago, cooldown is ${GlobalRegistry.REGISTRATION_COOLDOWN_MS / 1000}s.`);
+            return;
+        }
+
         const remotePath = this.entryPath(myUserId);
         Logger.info('Discovery', `Checking individual registry entry at ${remotePath}`);
 
-        // Check if our current entry is already up to date
+        // Check if our current entry is already up to date on remote
         try {
             const result = await globalRemote.downloadFile(remotePath, undefined, DEFAULTS.NETWORK_TIMEOUT);
             if (result?.data) {
                 const existing: SignedRegistryEntry = JSON.parse(new TextDecoder().decode(result.data));
                 if (existing.userId === myUserId && existing.publicKey === myPublicKey) {
                     Logger.debug('Discovery', `Registry entry for ${myUserId} is already current.`);
+                    this.lastRegistrationAt = now; // Count as a registration for rate-limit purposes
                     return;
                 }
             }
@@ -110,7 +140,7 @@ export class GlobalRegistry {
             Logger.debug('Discovery', `No existing registry entry for ${myUserId}. Creating.`);
         }
 
-        const timestamp = Date.now();
+        const timestamp = now;
         const entryWithoutSig: Omit<SignedRegistryEntry, 'signature'> = {
             userId: myUserId,
             publicKey: myPublicKey,
@@ -131,6 +161,7 @@ export class GlobalRegistry {
 
         try {
             await globalRemote.uploadFile(remotePath, data);
+            this.lastRegistrationAt = now;
             Logger.info('Discovery', `Registered/Updated entry for ${myUserId}.`);
         } catch (e: any) {
             Logger.warn('Discovery', `Failed to upload registry entry: ${e.message}`);
