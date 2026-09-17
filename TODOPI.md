@@ -199,10 +199,11 @@ Generated from in-depth security, architecture, feature, and UX review.
 
 ## 🟢 P2 — Missing Features
 
-- [ ] **Add key rotation / re-encryption support** (`src/core/KeyManager.ts`)
+- [x] **Add key rotation / re-encryption support** (`src/core/KeyManager.ts`)
   - `changePassword()` exists but no way to rotate identity keys independently
   - Users who suspect key compromise can't generate new X25519 keys while keeping data accessible
   - Add `rotateKeys(oldKey, newKeyPair)` that re-encrypts all local data and updates remote copies
+  - ✅ Fixed: Implemented `rotateIdentityKeys(newKeyPair?)` in `KeyManager` and `SovereignS3nc`. Generates new X25519 keypair, re-encrypts it with the master key using a fresh PBKDF2 salt, stores locally in `_keys` and uploads to remote `_keys.json`, updates in-memory keys, and refreshes the global registry registration with the new public key. Tested in `ChangePassword.unit.test.ts`.
 
 - [x] **Add message/post expiration (TTL)** (`src/modules/Messaging.ts`, `src/modules/Feed.ts`)
   - No mechanism for ephemeral messaging or time-limited content

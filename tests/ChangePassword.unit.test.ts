@@ -136,4 +136,25 @@ describe('SovereignS3nc Change Password Tests', () => {
 
         await expect(sov.changePassword('wrongPassword', 'newPassword')).rejects.toThrow('Incorrect old password.');
     });
+
+    test('should rotate identity keys independently of password and re-encrypt with master key', async () => {
+        const sov = new SovereignS3nc(config, undefined, remoteFactory);
+        await sov.init();
+
+        const oldPubKey = sov.getConfig().publicEncryptionKey;
+        const oldPrivKey = sov.getConfig().encryptionKey;
+        expect(oldPubKey).toBeDefined();
+
+        const rotated = await sov.rotateIdentityKeys();
+        expect(rotated.publicKey).not.toBe(oldPubKey);
+        expect(rotated.privateKey).not.toBe(oldPrivKey);
+        expect(sov.getConfig().publicEncryptionKey).toBe(rotated.publicKey);
+        expect(sov.getConfig().encryptionKey).toBe(rotated.privateKey);
+
+        // Verify that re-initializing another instance with the same storage and password loads the rotated keys
+        const reloadedSov = new SovereignS3nc(config, undefined, remoteFactory, undefined, sov.getStorage());
+        await reloadedSov.init();
+        expect(reloadedSov.getConfig().publicEncryptionKey).toBe(rotated.publicKey);
+        expect(reloadedSov.getConfig().encryptionKey).toBe(rotated.privateKey);
+    });
 });
