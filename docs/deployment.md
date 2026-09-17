@@ -78,6 +78,35 @@ DigitalOcean Spaces provides a simple, cost-effective S3-compatible layer.
 
 ---
 
+## 4. Backblaze B2
+
+Backblaze B2 offers affordable S3-compatible cloud storage with high durability.
+
+### Configuration
+- **Endpoint:** `https://s3.<REGION>.backblazeb2.com` (e.g., `s3.us-west-004.backblazeb2.com`).
+- **Region:** The region slug assigned to your bucket (e.g., `us-west-004`).
+- **forcePathStyle:** Recommended `true` or `false` (B2 supports virtual-host style for buckets without dots).
+- **Credentials:** Create an Application Key in Backblaze B2 with Read and Write access to your specific bucket.
+
+### Nuances
+- **Metadata Limit:** Up to **2 KB** of user-defined metadata.
+- **CORS Expose Headers:** When using SovereignS3nc in the browser, you **must** configure CORS rules in Backblaze B2 to expose `ETag`, `x-amz-meta-hash`, and `x-amz-meta-mtime`:
+  ```json
+  [
+    {
+      "corsRuleName": "sovereignS3ncWeb",
+      "allowedOrigins": ["*"],
+      "allowedOperations": ["s3_head", "s3_get", "s3_put", "s3_delete"],
+      "allowedHeaders": ["*"],
+      "exposeHeaders": ["ETag", "x-amz-meta-hash", "x-amz-meta-mtime", "x-amz-request-id"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  ```
+- **ETags on Large Files:** B2 computes ETags differently on large multipart uploads. SovereignS3nc's client-side SHA-256 hash tracking avoids false sync triggers.
+
+---
+
 ## Summary of Provider Quirks
 
 | Provider | Metadata Limit | Recommended `forcePathStyle` | Region | Known Nuances |
@@ -85,6 +114,7 @@ DigitalOcean Spaces provides a simple, cost-effective S3-compatible layer.
 | **AWS S3** | 2 KB | `false` | Standard (e.g. `us-east-1`) | Gold standard for compatibility. |
 | **MinIO** | 2 KB | `true` | Any | Path-style is default. |
 | **Cloudflare R2** | 8 KB | `true` | `auto` | Zero egress; Requires `auto` region. |
+| **Backblaze B2** | 2 KB | `true` | Region Slug (`us-west-004`) | **Must expose `ETag` and metadata in CORS.** |
 | **DO Spaces** | 2 KB | `true` | Data Center Slug | **Must expose ETag in CORS.** |
 | **OCI** | 2 KB | `true` | Region Slug | Requires S3 Compatibility API keys. |
 

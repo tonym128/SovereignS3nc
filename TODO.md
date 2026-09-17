@@ -60,8 +60,8 @@
     - [x] **Web Bluetooth (Central)**: Added browser-side BLE scanning for pairing with headless/native peripherals.
     - [x] **Peer Exchange (PEX)**: Implemented automated in-band signaling and peer discovery through existing connections.
     - [x] **PWA Audit & Fix**: Comprehensive caching for `sync-worker.js`, CDN assets, and SQL.js WASM; added iOS meta tags and "Offline" UI indicators.
-    - [ ] Add `screenshots` array to `manifest.json` (requires 1280x720 and 540x720 images).
-    - [ ] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
+    - [x] Add `screenshots` array to `manifest.json` (requires 1280x720 and 540x720 images).
+    - [x] Audit and implement advanced offline caching strategies for media blobs and SQLite fragments.
 
 ## 🧪 Testing & Validation
 - [x] **Integration Testing**
@@ -70,19 +70,19 @@
     - [x] Create a shared test suite for `IStorage` implementations to ensure behavioral consistency.
 - [x] **Admin & Moderation**
     - [x] Add integration tests for the Admin CLI with a real S3-compatible backend (RustFS).
-- [ ] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
-- [ ] Add integration tests for complex group permissions and member removal/revocation edge cases.
-- [ ] **Storage Migration Tests**: Verify data consistency and integrity when switching between `IndexedDBStorage` and `SQLiteNodeStorage`.
+- [x] Integrate `perf-audit.ts` benchmarking into the CI pipeline to prevent sync latency regressions.
+- [x] Add integration tests for complex group permissions and member removal/revocation edge cases.
+- [x] **Storage Migration Tests**: Verify data consistency and integrity when switching between `IndexedDBStorage` and `SQLiteNodeStorage`.
 
 ## 📚 Documentation & Infrastructure
 - [x] **Security & Whitepaper**
     - [x] Create a security whitepaper detailing cryptographic primitives, threat models, and metadata privacy.
-    - [ ] **Formal Whitepaper**: Formalize security documentation into a full whitepaper with formal threat modeling and cryptographic proofs.
+    - [x] **Formal Whitepaper**: Formalize security documentation into a full whitepaper with formal threat modeling and cryptographic proofs.
 - [x] **Deployment & DX**
     - [x] Write a "Deployment Guide" for generic S3 providers (MinIO, R2, DigitalOcean).
-    - [ ] **Provider Recipes**: Add specific configuration "recipes" for Cloudflare R2 and Backblaze B2 (ETag/CORS specificities).
+    - [x] **Provider Recipes**: Add specific configuration "recipes" for Cloudflare R2 and Backblaze B2 (ETag/CORS specificities).
     - [x] Create one-click setup templates (Terraform or Docker Compose) for production-ready RustFS/PeerJS.
-    - [ ] **Cloud-Native Templates**: Create Helm charts or Terraform modules for scaling in Kubernetes and serverless environments.
+    - [x] **Cloud-Native Templates**: Create Helm charts or Terraform modules for scaling in Kubernetes and serverless environments.
     - [x] Write a Gemini CLI Skill for the library.
     - [x] Modern Packaging: Implemented ESM/CJS dual-loading in `package.json`.
     - [x] Create `AGENT.md` for AI Agent context and include it in the npm package.

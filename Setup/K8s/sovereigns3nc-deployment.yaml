@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sovereigns3nc-backend
+  labels:
+    app: sovereigns3nc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sovereigns3nc
+  template:
+    metadata:
+      labels:
+        app: sovereigns3nc
+    spec:
+      containers:
+        - name: rustfs
+          image: rustfs/rustfs:latest
+          env:
+            - name: RUSTFS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sovereign-secrets
+                  key: rustfs-access-key
+            - name: RUSTFS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sovereign-secrets
+                  key: rustfs-secret-key
+            - name: RUST_LOG
+              value: "error"
+          ports:
+            - containerPort: 9000
+              name: s3-api
+          volumeMounts:
+            - name: storage
+              mountPath: /data
+        - name: peerjs
+          image: peerjs/peerjs-server:latest
+          env:
+            - name: PORT
+              value: "9001"
+          ports:
+            - containerPort: 9001
+              name: webrtc-signal
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: sovereign-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sovereigns3nc-service
+spec:
+  selector:
+    app: sovereigns3nc
+  ports:
+    - name: s3
+      port: 9000
+      targetPort: 9000
+    - name: peerjs
+      port: 9001
+      targetPort: 9001
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sovereigns3nc-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-expose-headers: "ETag, x-amz-meta-hash, x-amz-meta-mtime"
+spec:
+  rules:
+    - host: sovereign.example.com
+      http:
+        paths:
+          - path: /s3
+            pathType: Prefix
+            backend:
+              service:
+                name: sovereigns3nc-service
+                port:
+                  number: 9000
+          - path: /peerjs
+            pathType: Prefix
+            backend:
+              service:
+                name: sovereigns3nc-service
+                port:
+                  number: 9001
