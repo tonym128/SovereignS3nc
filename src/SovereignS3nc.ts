@@ -146,7 +146,9 @@ export class SovereignS3nc extends EventEmitter {
         this.globalRegistry = new GlobalRegistry({
             config: this.config,
             storage: this.storage,
-            getGlobalRemote: () => this.globalRemote
+            getGlobalRemote: () => this.globalRemote,
+            sign: (data) => this.keyManager.sign(data),
+            verify: (data, sig, pk) => this.keyManager.verify(data, sig, pk),
         });
 
         this.blacklistManager = new BlacklistManager({
