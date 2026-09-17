@@ -96,6 +96,26 @@ export interface SovereignGroup {
     createdAt: number;
 }
 
+export interface DeviceInfo {
+    deviceId: string;
+    deviceName: string;
+    registeredAt: number;
+    lastSeenAt?: number;
+    status: 'active' | 'revoked';
+}
+
+export interface DevicePairingPackage {
+    version: 1;
+    appId: string;
+    userId: string;
+    salt: string;
+    iv: string;
+    tag: string;
+    ciphertext: string;
+    createdAt: number;
+    expiresAt: number;
+}
+
 export interface TableDefinition {
     name: string;
     schema: string; // "id TEXT PRIMARY KEY, content TEXT..."

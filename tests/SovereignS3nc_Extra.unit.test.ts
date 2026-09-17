@@ -179,6 +179,62 @@ describe('SovereignS3nc Extra Coverage Tests', () => {
         expect(await storage.getFile(`private/${today}.db`)).not.toBeNull();
         expect(await storage.getFile(`followed/bob/modules/feed/${today}.db`)).not.toBeNull();
     });
+
+    test('Multi-Device Pairing and Key Transfer', async () => {
+        const aliceHost = new SovereignS3nc({
+            paths: { appId: 'multi-device-app', userId: 'alice', storeId: 'social' },
+            password: 'alice-password-123'
+        });
+        await aliceHost.init();
+
+        const pairingPassphrase = 'pair-code-xyz-987';
+        const pairingPackage = await aliceHost.createDevicePairingPackage(pairingPassphrase, 60_000);
+        expect(typeof pairingPackage).toBe('string');
+
+        // New device (empty instance without keys)
+        const aliceDevice2 = new SovereignS3nc({
+            paths: { appId: 'multi-device-app', userId: 'unknown', storeId: 'social' }
+        });
+
+        // Wrong passphrase should fail
+        await expect(aliceDevice2.importDevicePairingPackage(pairingPackage, 'wrong-passphrase'))
+            .rejects.toThrow(/Failed to decrypt pairing package/);
+
+        // Correct passphrase imports successfully
+        const imported = await aliceDevice2.importDevicePairingPackage(pairingPackage, pairingPassphrase);
+        expect(imported.userId).toBe('alice');
+        expect(aliceDevice2.getConfig().publicEncryptionKey).toBe(aliceHost.getConfig().publicEncryptionKey);
+        expect(aliceDevice2.getConfig().encryptionKey).toBe(aliceHost.getConfig().encryptionKey);
+
+        // Expired package should fail
+        const expiredPackage = await aliceHost.createDevicePairingPackage(pairingPassphrase, -1000);
+        await expect(aliceDevice2.importDevicePairingPackage(expiredPackage, pairingPassphrase))
+            .rejects.toThrow(/expired/);
+    });
+
+    test('Device Registry Management', async () => {
+        const uniqueAppId = 'device-reg-app-' + Math.random().toString(36).substring(7);
+        const alice = new SovereignS3nc({
+            paths: { appId: uniqueAppId, userId: 'alice', storeId: 'social' },
+            password: 'alice-password-123'
+        });
+        await alice.init();
+
+        const dev1 = await alice.registerDevice('Alice iPhone 15');
+        const dev2 = await alice.registerDevice('Alice MacBook Pro');
+
+        let devices = await alice.getRegisteredDevices();
+        expect(devices.length).toBe(2);
+        expect(devices[0].deviceName).toBe('Alice iPhone 15');
+        expect(devices[1].deviceName).toBe('Alice MacBook Pro');
+        expect(devices[0].status).toBe('active');
+
+        // Revoke dev1
+        await alice.revokeDevice(dev1.deviceId);
+        devices = await alice.getRegisteredDevices();
+        expect(devices.find(d => d.deviceId === dev1.deviceId)?.status).toBe('revoked');
+        expect(devices.find(d => d.deviceId === dev2.deviceId)?.status).toBe('active');
+    });
 });
 
 import * as nacl from 'tweetnacl';
