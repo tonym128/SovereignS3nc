@@ -37,6 +37,8 @@ export interface SyncOrchestratorContext {
     getModulePath: (moduleName: string, subPath: string, type: 'private' | 'public' | 'followed') => string;
     onModuleUpdate: (moduleName: string, path: string) => void;
     registeredModules: any[];
+    /** Emit a sync progress event. Stage describes the current phase; total/done are optional file counts. */
+    emitSyncProgress: (stage: string, done?: number, total?: number) => void;
 }
 
 export class SyncOrchestrator {
@@ -62,6 +64,8 @@ export class SyncOrchestrator {
             if (forceSync) {
                 Logger.info('Sync', 'FORCE SYNC initiated. Bypassing ETag cache.');
             }
+
+            this.ctx.emitSyncProgress('start');
 
             let remoteManifest: SovereignManifest | null = null;
             const publicRemote = this.ctx.getPublicRemote();
@@ -105,19 +109,23 @@ export class SyncOrchestrator {
                 () => this.syncDay(dateStr, 'private', undefined, this.ctx.getRemote(), remoteManifest),
                 () => this.syncDay(dateStr, 'public', undefined, this.ctx.getPublicRemote(), remoteManifest)
             ]);
+            this.ctx.emitSyncProgress('syncing_own_data', 0, dateTasks.length);
             await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE);
 
+            this.ctx.emitSyncProgress('registering');
             await this.syncUserFile(remoteManifest);
             await this.ctx.ensureGlobalRegistration();
             await this.ctx.updateFollowingPublicKeys();
             
             if (this.ctx.config.autoFollowDiscoveredUsers !== false) {
+                this.ctx.emitSyncProgress('discovering_users');
                 const userList = await this.ctx.discoverUsers();
                 if (userList) {
                     await this.ctx.autoFollowUsers(userList);
                 }
             }
 
+            this.ctx.emitSyncProgress('syncing_followed');
             await this.syncFollowedUsers(today);
             await this.ctx.syncGroups(today);
 
@@ -144,11 +152,13 @@ export class SyncOrchestrator {
                 return () => this.syncGenericFile(relativePath, type, remoteManifest);
             }).filter(t => t !== null) as (() => Promise<void>)[];
 
+            this.ctx.emitSyncProgress('syncing_blobs', 0, blobTasks.length);
             await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
 
             await this.ctx.processModerationRequests();
             await this.ctx.syncManifest();
             await this.ctx.storage.setLastSyncDate(today);
+            this.ctx.emitSyncProgress('complete');
         } finally {
             this.ctx.setSyncing(false);
         }
