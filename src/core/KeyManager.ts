@@ -443,4 +443,45 @@ export class KeyManager {
             // No admin key found, which is fine
         }
     }
+
+    /**
+     * Rotates persistent identity keys independently of password.
+     * Encrypts the new keypair with the master key and updates local/remote storage.
+     */
+    public async rotateIdentityKeys(newKeyPair?: { privateKey: string, publicKey: string }): Promise<{ privateKey: string, publicKey: string }> {
+        if (!this.ctx.config.password) {
+            throw new AuthError('Password is required to rotate identity keys.');
+        }
+
+        let privateKey: string;
+        let publicKey: string;
+        if (newKeyPair) {
+            privateKey = newKeyPair.privateKey;
+            publicKey = newKeyPair.publicKey;
+        } else {
+            const kp = nacl.box.keyPair();
+            privateKey = Buffer.from(kp.secretKey).toString('hex');
+            publicKey = Buffer.from(kp.publicKey).toString('hex');
+        }
+
+        const keyInfo = { privateKey, publicKey };
+
+        const keysSalt = crypto.randomBytes(DEFAULTS.SALT_SIZE);
+        const keysDerivedKey = await this.pbkdf2(this.ctx.config.password, keysSalt, DEFAULTS.PBKDF2_ITERATIONS);
+        const encryptedKeys = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), keysDerivedKey.toString('hex'));
+        const v2Keys = Buffer.concat([keysSalt, encryptedKeys]);
+
+        await this.ctx.storage.saveDailyDb('_keys', 'private', v2Keys);
+
+        this.ctx.config.encryptionKey = privateKey;
+        this.ctx.config.publicEncryptionKey = publicKey;
+
+        const remote = this.ctx.getRemote();
+        if (remote) {
+            await remote.uploadFile(PATHS.KEYS, v2Keys);
+        }
+
+        Logger.info('Keys', `Successfully rotated identity keys for ${this.ctx.config.paths.userId}`);
+        return { privateKey, publicKey };
+    }
 }

@@ -534,6 +534,13 @@ export class SovereignS3nc extends EventEmitter {
 
     public async initKeys() { return this.keyManager.initKeys(); }
     public async changePassword(old: string, newP: string) { return this.keyManager.changePassword(old, newP); }
+    public async rotateIdentityKeys(newKeyPair?: { privateKey: string, publicKey: string }) {
+        const result = await this.keyManager.rotateIdentityKeys(newKeyPair);
+        try {
+            await this.ensureGlobalRegistration();
+        } catch (e) {}
+        return result;
+    }
     public async encrypt(d: Uint8Array, k: string) { return this.keyManager.encrypt(d, k); }
     public async decrypt(d: Uint8Array, k: string) { return this.keyManager.decrypt(d, k); }
     public deriveSharedSecret(pk: string, context?: string) { return this.keyManager.deriveSharedSecret(pk, context); }
