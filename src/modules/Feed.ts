@@ -19,6 +19,8 @@ export interface Post {
     likedByMe?: boolean;
     isEdited?: boolean;
     isDeleted?: boolean;
+    /** Optional expiration timestamp (Unix ms). Posts past this time are filtered out and cleaned up. */
+    expiresAt?: number;
 }
 
 export const FEED_MODULE_DEFINITION: ModuleDefinition = {
@@ -57,7 +59,12 @@ export const FEED_MODULE_DEFINITION: ModuleDefinition = {
             `
         }
     ],
-    migrations: [] // New module, so we start with the full schema
+    migrations: [
+        {
+            version: 2,
+            sql: ['ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;']
+        }
+    ]
 };
 
 export class FeedModule {
@@ -106,7 +113,7 @@ export class FeedModule {
         return db;
     }
 
-    async post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string) {
+    async post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string, expiresAt?: number) {
         if (content.length > DEFAULTS.MAX_POST_LENGTH) {
             throw new ModuleError('feed', `Post exceeds maximum length of ${DEFAULTS.MAX_POST_LENGTH} characters`);
         }
@@ -124,8 +131,8 @@ export class FeedModule {
             imagePath = await this.db.saveBlob(image, isPublic);
         }
 
-        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)';
-        db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null]);
+        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)';
+        db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
 
         const binary = db.export();
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
@@ -202,6 +209,7 @@ export class FeedModule {
                 const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
                 if (res && res.length > 0) {
                     const columns = res[0].columns;
+                    const now = Date.now();
                     const posts = res[0].values.map((row: any) => {
                         const post: any = {};
                         columns.forEach((col: string, i: number) => {
@@ -215,7 +223,7 @@ export class FeedModule {
                             post.userId = date.split('/')[0];
                         }
                         return post as Post;
-                    });
+                    }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
                     allPosts.push(...posts);
                 }
             } catch (e) {}
@@ -223,6 +231,39 @@ export class FeedModule {
         }
 
         return allPosts;
+    }
+
+    /**
+     * Purges expired posts from a given date partition.
+     */
+    async cleanupExpired(date: string, isPublic: boolean = true): Promise<number> {
+        const type = isPublic ? 'public' : 'private';
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        const data = await this.db.getStorage().getFile(dbPath);
+        if (!data) return 0;
+
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+
+        const db = new sqliteInstance.Database(data);
+        const now = Date.now();
+        let deletedCount = 0;
+        try {
+            const countRes = db.exec('SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+            if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+                deletedCount = Number(countRes[0].values[0][0]);
+            }
+            if (deletedCount > 0) {
+                db.run('DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                const binary = db.export();
+                await this.db.getStorage().saveFile(dbPath, binary);
+                this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+            }
+        } finally {
+            db.close();
+        }
+        return deletedCount;
     }
 
     async enrichLikes(posts: Post[], days: number = 5) {

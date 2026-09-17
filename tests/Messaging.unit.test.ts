@@ -114,4 +114,31 @@ describe('MessagingModule Unit Tests', () => {
         await messagingModule.deleteMessage('bob', 'msg1', '2025-03-22');
         expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ isDeleted: true }), '2025-03-22');
     });
+
+    test('sendDirectMessage should support expiresAt TTL', async () => {
+        const spy = jest.spyOn(messagingModule as any, '_saveAndSendDM').mockResolvedValue(undefined);
+        const expiresAt = Date.now() + 60000;
+        await messagingModule.sendDirectMessage('bob', 'self-destruct message', undefined, expiresAt);
+        expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ content: 'self-destruct message', expiresAt }), expect.any(String));
+    });
+
+    test('getInboxMessages should filter out expired messages', async () => {
+        jest.spyOn(sov, 'getFollowing').mockResolvedValue([{ userId: 'bob', lastSync: '', publicKey: 'bob-pub' }]);
+        jest.spyOn(sov.getStorage(), 'getFile').mockResolvedValue(new Uint8Array([9, 9, 9]));
+        
+        // Return an expired message
+        const expiredMsg: Message = {
+            id: 'expired1',
+            content: 'old secret',
+            timestamp: Date.now() - 10000,
+            senderId: 'bob',
+            recipientId: 'alice',
+            expiresAt: Date.now() - 1000 // Expired 1 second ago
+        };
+        (sov.decrypt as jest.Mock).mockResolvedValue(new TextEncoder().encode(JSON.stringify(expiredMsg)));
+        mockDbInstance.exec.mockReturnValue([{ values: [[new Uint8Array([1, 2, 3])]] }]);
+
+        const messages = await messagingModule.getInboxMessages(1);
+        expect(messages.find(m => m.id === 'expired1')).toBeUndefined();
+    });
 });

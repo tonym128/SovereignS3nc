@@ -182,5 +182,20 @@ describe('FeedModule Unit Tests', () => {
             posts = await feed.getGroupPosts(groupId, today);
             expect(posts.length).toBe(0);
         });
+
+        test('should support post TTL expiration and cleanupExpired', async () => {
+            const expiredTime = Date.now() - 1000;
+            await feed.post('Expired post', true, undefined, undefined, undefined, expiredTime);
+            await feed.post('Active post', true, undefined, undefined, undefined, Date.now() + 60000);
+
+            // getPosts should filter out the expired post
+            let posts = await feed.getPosts(today, 'public');
+            expect(posts.some(p => p.content === 'Expired post')).toBe(false);
+            expect(posts.some(p => p.content === 'Active post')).toBe(true);
+
+            // cleanupExpired should remove the expired post from database
+            const deleted = await feed.cleanupExpired(today, true);
+            expect(deleted).toBeGreaterThanOrEqual(1);
+        });
     });
 });

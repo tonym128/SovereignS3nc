@@ -15,6 +15,8 @@ export interface Message {
     isEdited?: boolean;
     isDeleted?: boolean;
     status?: 'sent' | 'delivered' | 'read';
+    /** Optional expiration timestamp (Unix ms). Messages past this time are purged by cleanupExpired(). */
+    expiresAt?: number;
 }
 
 export class MessagingModule {
@@ -34,8 +36,7 @@ export class MessagingModule {
                         recipientId TEXT,
                         image TEXT,
                         isEdited INTEGER DEFAULT 0,
-                        isDeleted INTEGER DEFAULT 0,
-                        status TEXT DEFAULT 'sent'
+                        isDeleted INTEGER DEFAULT 0
                     `
                 }
             ],
@@ -43,6 +44,10 @@ export class MessagingModule {
                 {
                     version: 2,
                     sql: ['ALTER TABLE messages ADD COLUMN status TEXT DEFAULT "sent";']
+                },
+                {
+                    version: 3,
+                    sql: ['ALTER TABLE messages ADD COLUMN expiresAt INTEGER DEFAULT NULL;']
                 }
             ]
         });
@@ -92,7 +97,14 @@ export class MessagingModule {
         return db;
     }
 
-    async sendDirectMessage(recipientId: string, content: string, image?: Uint8Array) {
+    /**
+     * Send a direct encrypted message to a recipient.
+     * @param recipientId - Target user's ID
+     * @param content - Message text
+     * @param image - Optional image blob
+     * @param expiresAt - Optional Unix timestamp (ms) after which the message should be purged
+     */
+    async sendDirectMessage(recipientId: string, content: string, image?: Uint8Array, expiresAt?: number) {
         if (content.length > DEFAULTS.MAX_MESSAGE_LENGTH) {
             throw new ModuleError('messaging', `Message exceeds maximum length of ${DEFAULTS.MAX_MESSAGE_LENGTH} characters`);
         }
@@ -107,15 +119,15 @@ export class MessagingModule {
             imagePath = await this.db.saveBlob(image, true);
         }
 
-        const message: Message = { id, content, timestamp, senderId, recipientId, image: imagePath || undefined, isEdited: false, isDeleted: false, status: 'sent' };
+        const message: Message = { id, content, timestamp, senderId, recipientId, image: imagePath || undefined, isEdited: false, isDeleted: false, status: 'sent', expiresAt };
         await this._saveAndSendDM(recipientId, message, date);
     }
 
     private async _saveAndSendDM(recipientId: string, message: Message, date: string) {
         // 1. Save to my Outbox (using my private key)
         const outboxDb = await this.getMessageDb(date, 'outbox');
-        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || 'sent']);
+        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || 'sent', message.expiresAt ?? null]);
 
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
@@ -394,8 +406,12 @@ export class MessagingModule {
             }
         }
 
+        const now = Date.now();
         const msgMap = new Map<string, Message>();
         for (const m of messages) {
+            if (m.expiresAt && m.expiresAt <= now) {
+                continue;
+            }
             const existing = msgMap.get(m.id);
             if (!existing || m.timestamp > existing.timestamp) {
                 msgMap.set(m.id, m);
@@ -405,5 +421,39 @@ export class MessagingModule {
         const finalMsgs = Array.from(msgMap.values());
         finalMsgs.sort((a, b) => b.timestamp - a.timestamp);
         return finalMsgs;
+    }
+
+    /**
+     * Purges expired messages from outbox database partitions.
+     */
+    async cleanupExpired(dates?: string[]): Promise<number> {
+        const targetDates = dates && dates.length > 0 ? dates : [new Date().toISOString().split('T')[0]];
+        let deleted = 0;
+        const now = Date.now();
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+
+        for (const date of targetDates) {
+            const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
+            const data = await this.db.getStorage().getFile(outboxPath);
+            if (data) {
+                const db = new sqliteInstance.Database(data);
+                try {
+                    const countRes = db.exec('SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                    if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+                        const count = Number(countRes[0].values[0][0]);
+                        if (count > 0) {
+                            db.run('DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                            await this.db.getStorage().saveFile(outboxPath, db.export());
+                            deleted += count;
+                        }
+                    }
+                } finally {
+                    db.close();
+                }
+            }
+        }
+        return deleted;
     }
 }
