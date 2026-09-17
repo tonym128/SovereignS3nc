@@ -56,10 +56,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - If private key is compromised, all past and future messages are decryptable
   - Implement double-ratchet or per-message ephemeral key derivation
 
-- [ ] **Enforce TLS for S3 connections** (`src/adapters/S3RemoteAdapter.ts`)
+- [x] **Enforce TLS for S3 connections** (`src/adapters/S3RemoteAdapter.ts`)
   - Accepts any endpoint URL including `http://` — no validation of HTTPS/TLS usage
   - Exposes encrypted payloads to MITM attacks on the wire
   - Add `requireTLS: boolean` config option; warn/error when using `http://` in production
+  - ✅ Fixed: Added `requireTLS` field to `S3Config` (defaults to `true`). Non-localhost `http://` endpoints throw `NetworkError` unless `requireTLS: false` is explicitly set. Localhost/127.x.x.x always allowed for dev. Added 7 unit tests.
 
 - [x] **Fix path sanitization bypass** (`src/adapters/IndexedDBStorage.ts`)
   ```typescript

@@ -204,3 +204,58 @@ describe('S3RemoteAdapter', () => {
     });
 });
 
+describe('S3RemoteAdapter — TLS enforcement', () => {
+    const paths = { appId: 'app', userId: 'user', storeId: 'store' };
+    const baseCredentials = { accessKeyId: 'k', secretAccessKey: 's' };
+
+    it('allows https:// endpoints without restriction', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'https://mys3.example.com', credentials: baseCredentials },
+            paths
+        )).not.toThrow();
+    });
+
+    it('allows http:// on localhost without warning (local dev)', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'http://localhost:9000', credentials: baseCredentials },
+            paths
+        )).not.toThrow();
+    });
+
+    it('allows http:// on 127.x.x.x without error (local dev)', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'http://127.0.0.1:9000', credentials: baseCredentials },
+            paths
+        )).not.toThrow();
+    });
+
+    it('throws NetworkError for http:// on a non-localhost endpoint (default requireTLS)', () => {
+        const { NetworkError } = require('../src/utils/Errors');
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'http://mys3.example.com', credentials: baseCredentials },
+            paths
+        )).toThrow(NetworkError);
+    });
+
+    it('throws NetworkError message mentioning requireTLS opt-out', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'http://mys3.example.com', credentials: baseCredentials },
+            paths
+        )).toThrow('requireTLS: false');
+    });
+
+    it('does NOT throw for http:// non-localhost when requireTLS: false is set explicitly', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', endpoint: 'http://mys3.example.com', requireTLS: false, credentials: baseCredentials },
+            paths
+        )).not.toThrow();
+    });
+
+    it('allows no endpoint (AWS native) without any TLS check', () => {
+        expect(() => new S3RemoteAdapter(
+            { region: 'us-east-1', bucketName: 'b', credentials: baseCredentials },
+            paths
+        )).not.toThrow();
+    });
+});
+
