@@ -152,6 +152,33 @@ describe('SovereignS3nc Extra Coverage Tests', () => {
         
         expect(secret1).toBe(secret2);
     });
+
+    test('Data Retention Policy Pruning', async () => {
+        const retentionSov = new SovereignS3nc({
+            paths: { appId: 'retention-test', userId: 'alice', storeId: 'social' },
+            retentionPolicy: {
+                maxDaysOwnData: 7,
+                maxDaysFollowedData: 3
+            }
+        });
+        await retentionSov.init();
+
+        const storage = retentionSov.getStorage();
+        // Save files: some old, some recent
+        await storage.saveFile('private/2020-01-01.db', new Uint8Array([1]));
+        await storage.saveFile('followed/bob/modules/feed/2020-01-01.db', new Uint8Array([2]));
+        const today = new Date().toISOString().split('T')[0];
+        await storage.saveFile(`private/${today}.db`, new Uint8Array([3]));
+        await storage.saveFile(`followed/bob/modules/feed/${today}.db`, new Uint8Array([4]));
+
+        const pruned = await retentionSov.applyRetentionPolicy();
+        expect(pruned).toBe(2);
+
+        expect(await storage.getFile('private/2020-01-01.db')).toBeNull();
+        expect(await storage.getFile('followed/bob/modules/feed/2020-01-01.db')).toBeNull();
+        expect(await storage.getFile(`private/${today}.db`)).not.toBeNull();
+        expect(await storage.getFile(`followed/bob/modules/feed/${today}.db`)).not.toBeNull();
+    });
 });
 
 import * as nacl from 'tweetnacl';

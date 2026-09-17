@@ -220,10 +220,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - No "can post" vs "can moderate" distinction
   - Add per-group moderation controls beyond app-level admin
 
-- [ ] **Add data retention / cleanup policy** (`src/core/SyncOrchestrator.ts`)
+- [x] **Add data retention / cleanup policy** (`src/core/SyncOrchestrator.ts`)
   - No mechanism to auto-clean old daily DBs or followed user data
   - Storage grows unbounded over time
   - Add configurable retention policy (e.g., "keep last 30 days of public posts")
+  - ✅ Fixed: Added `RetentionPolicy` interface (`maxDaysOwnData`, `maxDaysFollowedData`) to `SovereignConfig`. Implemented `applyRetentionPolicy()` in `SyncOrchestrator` (and exposed on `SovereignS3nc`) that prunes local date-partitioned files older than the configured thresholds. Automatically runs during `sync()`. Tested in `SovereignS3nc_Extra.unit.test.ts`.
 
 - [ ] **Add multi-device support** (`src/SovereignS3nc.ts`)
   - Architecture assumes one device per identity key
