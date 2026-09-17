@@ -16,7 +16,29 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     Logger.debug('S3', `Initializing adapter for ${paths.userId}...`);
     this.endpoint = config.endpoint || '';
-    
+
+    // ── TLS Enforcement ───────────────────────────────────────────────────────
+    // By default (requireTLS is undefined or true), warn/throw on http:// endpoints
+    // to prevent plaintext transmission of encrypted payloads.
+    // Set requireTLS: false in S3Config to opt-out for local dev (e.g. RustFS on localhost).
+    if (this.endpoint && this.endpoint.startsWith('http://')) {
+      const isLocalhost = /^http:\/\/(localhost|127\.\d+\.\d+\.\d+|::1)(:\d+)?/.test(this.endpoint);
+      const tlsRequired = config.requireTLS !== false; // default: true
+      if (tlsRequired && !isLocalhost) {
+        throw new NetworkError(
+          `S3 endpoint "${this.endpoint}" uses http:// without TLS. ` +
+          'This exposes encrypted payloads to MITM attacks. ' +
+          'Use an https:// endpoint, or set requireTLS: false to opt-out for local dev only.'
+        );
+      } else if (isLocalhost) {
+        Logger.debug('S3', `Using http:// on localhost — TLS not required for local dev.`);
+      } else {
+        // requireTLS: false explicitly set on a non-localhost http:// URL
+        Logger.warn('S3', `WARNING: TLS enforcement disabled for non-localhost http:// endpoint "${this.endpoint}". ` +
+          'Ensure this is intentional and the network is trusted.');
+      }
+    }
+
     // Support both nested credentials object and flat config (from dev.sh)
     const credentials = config.credentials || {
         accessKeyId: (config as any).accessKeyId,

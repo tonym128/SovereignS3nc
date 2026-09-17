@@ -7,6 +7,12 @@ export interface S3Config {
   };
   bucketName: string;
   forcePathStyle?: boolean; // Often needed for custom S3 implementations
+  /**
+   * When `true` (the default), an `http://` endpoint will throw a `NetworkError`
+   * to prevent encrypted payloads from being transmitted over unencrypted channels.
+   * Set to `false` for local development environments (e.g. RustFS on localhost).
+   */
+  requireTLS?: boolean;
 }
 
 export interface SovereignConfig {
