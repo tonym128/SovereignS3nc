@@ -34,6 +34,22 @@ const Editor = () => {
     const [mediaList, setMediaList] = useState<string[]>([]);
     const [blobUrls, setBlobUrls] = useState<Record<string, string>>({});
 
+    useEffect(() => {
+        fetch('admin_config.json')
+            .then(res => res.json())
+            .then(data => {
+                setConfig(prev => ({
+                    ...prev,
+                    endpoint: data.endpoint || prev.endpoint,
+                    region: data.region || prev.region,
+                    accessKeyId: data.accessKeyId || prev.accessKeyId,
+                    secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
+                    bucketName: data.bucketName || prev.bucketName
+                }));
+            })
+            .catch(() => {});
+    }, []);
+
     const login = async () => {
         setSyncing(true);
         try {

@@ -40,7 +40,8 @@ export const env = {
      * Check if running in a Web Worker.
      */
     isWorker: (): boolean => {
-        return typeof importScripts !== 'undefined';
+        return typeof importScripts !== 'undefined' || 
+               (typeof (globalThis as any).WorkerGlobalScope !== 'undefined' && typeof (globalThis as any).postMessage === 'function');
     },
 
     /**

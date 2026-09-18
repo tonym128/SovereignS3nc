@@ -99,7 +99,7 @@ describe('Admin CLI Unit Tests', () => {
         
         expect(mockModeration.exportAllData).toHaveBeenCalled();
         expect(fs.writeFile as unknown as jest.Mock).toHaveBeenCalledWith('my-backup.json', expect.any(Buffer));
-        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('to my-backup.json'));
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('exported and encrypted to my-backup.json'));
         consoleSpy.mockRestore();
     });
 

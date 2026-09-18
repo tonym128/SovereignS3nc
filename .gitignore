@@ -1,8 +1,10 @@
 # Dependency directories
+node_modules
 node_modules/
 
 # Build outputs
 dist/
+bin
 bin/
 *.tsbuildinfo
 
@@ -42,6 +44,7 @@ rustfs_data/
 *.pid
 garage_local.toml
 demo/web/config.json
+demo/blog/admin_config.json
 .harkness_session.json
 
 # IDEs and Editors
