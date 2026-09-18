@@ -208,7 +208,7 @@
 
 ### 💻 3. Engineering & Developer Experience (DX)
 
-- [ ] **Lightweight Typed Repository Layer (`getRepository<T>`)**
+- [x] **Lightweight Typed Repository Layer (`getRepository<T>`)**
   - **Target File(s)**: `src/core/Repository.ts`, `src/SovereignS3nc.ts`, `src/index.ts`
   - **Context**: Custom modules must currently write raw SQL strings against SQLite instances. This introduces typo risks and lacks TypeScript auto-completion for schema types.
   - **Expectations & Acceptance Criteria**:

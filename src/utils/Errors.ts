@@ -63,3 +63,15 @@ export class ModuleError extends SovereignError {
         Object.setPrototypeOf(this, ModuleError.prototype);
     }
 }
+
+/**
+ * Errors related to typed repository operations and validation.
+ */
+export class RepositoryError extends SovereignError {
+    constructor(message: string, details?: any) {
+        super('REPOSITORY_ERROR', message, details);
+        this.name = 'RepositoryError';
+        Object.setPrototypeOf(this, RepositoryError.prototype);
+    }
+}
+

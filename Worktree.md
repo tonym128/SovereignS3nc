@@ -208,3 +208,11 @@
 - Implemented incremental sub-manifest uploads in `syncManifest()`, only uploading sub-manifests whose hash changed.
 - Implemented `resolveSubManifest()` with local caching and `resolveFullManifest()` with 100% backward compatibility for legacy flat manifests.
 - Added comprehensive unit tests in `tests/HierarchicalManifest.unit.test.ts` verifying partitioning, incremental upload, Merkle change detection, and legacy manifest support.
+
+### WT-59: Lightweight Typed Repository Layer (`getRepository<T>`)
+- Implemented `Repository<T>` in `src/core/Repository.ts` providing type-safe CRUD operations (`find`, `findById`, `insert`, `update`, `delete`, `count`, and `upsert`).
+- Added strict SQL identifier validation (`/^[a-zA-Z_][a-zA-Z0-9_]*$/`) for table and column names to ensure 100% protection against SQL injection attacks.
+- Parameterized all values in queries and mutations via `sql.js` prepared statements.
+- Added automatic update notification dispatch (`moduleName:update`) upon write operations.
+- Added `RepositoryError` in `src/utils/Errors.ts` and exposed `getRepository<T>()` on `SovereignS3nc`.
+- Added comprehensive unit tests in `tests/Repository.unit.test.ts` covering CRUD, upsert, SQL injection validation, and event emission.

@@ -8,5 +8,7 @@ export * from './modules/Profile';
 export * from './modules/Messaging';
 export * from './modules/Feed';
 export * from './modules/Moderation';
+export * from './core/Repository';
 export * from './utils/Logger';
 export * from './utils/MediaUtils';
+export * from './utils/Errors';

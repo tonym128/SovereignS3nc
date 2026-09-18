@@ -21,6 +21,7 @@ import { GroupManager } from './core/GroupManager';
 import { ModerationEngine } from './core/ModerationEngine';
 import { GlobalRegistry } from './discovery/GlobalRegistry';
 import { BlacklistManager } from './discovery/BlacklistManager';
+import { Repository, RepositoryOptions } from './core/Repository';
 
 export class SovereignS3nc extends EventEmitter {
     public static readonly VERSION = '3.1.1';
@@ -596,6 +597,24 @@ export class SovereignS3nc extends EventEmitter {
     public getFollowManifestCache(userId: string) { return this.manifestManager.getFollowManifestCache(userId); }
     public async resolveSubManifest(userId: string, partitionKey: string, ref: any) { return this.manifestManager.resolveSubManifest(userId, partitionKey, ref); }
     public async resolveFullManifest(userId: string, rootManifest: any) { return this.manifestManager.resolveFullManifest(userId, rootManifest); }
+
+    /**
+     * Obtains a lightweight type-safe Repository for interacting with a specific table
+     * in a date-partitioned SQLite database with automated schema application and SQL injection protection.
+     */
+    public getRepository<T extends Record<string, any> = any>(
+        moduleName: string,
+        tableName: string,
+        datePartition?: string,
+        type?: 'public' | 'private',
+        idColumn?: string
+    ): Repository<T> {
+        return new Repository<T>(this, moduleName, tableName, {
+            datePartition,
+            type,
+            idColumn
+        });
+    }
 
     /**
      * Creates an encrypted, time-limited device pairing package that can be transmitted
