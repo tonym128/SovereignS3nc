@@ -1,5 +1,5 @@
 import { S3RemoteAdapter } from '../src/adapters/S3RemoteAdapter';
-import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, DeleteObjectCommand, CreateMultipartUploadCommand, UploadPartCommand, CompleteMultipartUploadCommand, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
 
 jest.mock('@aws-sdk/client-s3', () => {
     const actual = jest.requireActual('@aws-sdk/client-s3');
@@ -8,11 +8,15 @@ jest.mock('@aws-sdk/client-s3', () => {
         S3Client: jest.fn().mockImplementation(() => ({
             send: jest.fn()
         })),
-        PutObjectCommand: jest.fn().mockImplementation((input) => ({ input })),
-        GetObjectCommand: jest.fn().mockImplementation((input) => ({ input })),
-        HeadObjectCommand: jest.fn().mockImplementation((input) => ({ input })),
-        ListObjectsV2Command: jest.fn().mockImplementation((input) => ({ input })),
-        DeleteObjectCommand: jest.fn().mockImplementation((input) => ({ input }))
+        PutObjectCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'PutObjectCommand' })),
+        GetObjectCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'GetObjectCommand' })),
+        HeadObjectCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'HeadObjectCommand' })),
+        ListObjectsV2Command: jest.fn().mockImplementation((input) => ({ input, __type: 'ListObjectsV2Command' })),
+        DeleteObjectCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'DeleteObjectCommand' })),
+        CreateMultipartUploadCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'CreateMultipartUploadCommand' })),
+        UploadPartCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'UploadPartCommand' })),
+        CompleteMultipartUploadCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'CompleteMultipartUploadCommand' })),
+        AbortMultipartUploadCommand: jest.fn().mockImplementation((input) => ({ input, __type: 'AbortMultipartUploadCommand' }))
     };
 });
 
@@ -201,6 +205,98 @@ describe('S3RemoteAdapter', () => {
         
         // One call for listFiles, two calls for deleteFile
         expect(mockS3Client.send).toHaveBeenCalledTimes(3);
+    });
+
+    describe('S3 Resumable Multipart Uploads', () => {
+        it('uses single PutObjectCommand when data size <= multipartThreshold', async () => {
+            const data = new Uint8Array(100);
+            (mockS3Client.send as jest.Mock).mockResolvedValue({ ETag: '"single-put-etag"' } as any);
+
+            const etag = await adapter.uploadFile('small.bin', data);
+            expect(etag).toBe('"single-put-etag"');
+            expect(PutObjectCommand).toHaveBeenCalled();
+            expect(CreateMultipartUploadCommand).not.toHaveBeenCalled();
+        });
+
+        it('initiates, chunks parts, and completes multipart upload when data size > multipartThreshold', async () => {
+            const mpAdapter = new S3RemoteAdapter({
+                ...config,
+                multipartThreshold: 1000,
+                multipartChunkSize: 500
+            }, paths);
+            const mpMockS3 = (S3Client as any).mock.results[(S3Client as any).mock.results.length - 1].value;
+
+            // 1200 bytes will be chunked into: 500 + 500 + 200 = 3 parts
+            const largeData = new Uint8Array(1200);
+            largeData.fill(42);
+
+            (mpMockS3.send as jest.Mock).mockImplementation(async (command: any) => {
+                if (command.__type === 'CreateMultipartUploadCommand') {
+                    return { UploadId: 'test-upload-123' };
+                }
+                if (command.__type === 'UploadPartCommand') {
+                    return { ETag: `"part-${command.input.PartNumber}-etag"` };
+                }
+                if (command.__type === 'CompleteMultipartUploadCommand') {
+                    return { ETag: '"completed-mp-etag"' };
+                }
+                return {};
+            });
+
+            const etag = await mpAdapter.uploadFile('large.bin', largeData);
+
+            expect(etag).toBe('"completed-mp-etag"');
+            expect(CreateMultipartUploadCommand).toHaveBeenCalledWith(expect.objectContaining({
+                Bucket: 'test-bucket',
+                Key: expect.stringContaining('large.bin')
+            }));
+            expect(UploadPartCommand).toHaveBeenCalledTimes(3);
+            expect(CompleteMultipartUploadCommand).toHaveBeenCalledWith(expect.objectContaining({
+                Bucket: 'test-bucket',
+                UploadId: 'test-upload-123',
+                MultipartUpload: {
+                    Parts: [
+                        { ETag: '"part-1-etag"', PartNumber: 1 },
+                        { ETag: '"part-2-etag"', PartNumber: 2 },
+                        { ETag: '"part-3-etag"', PartNumber: 3 }
+                    ]
+                }
+            }));
+            expect(AbortMultipartUploadCommand).not.toHaveBeenCalled();
+        });
+
+        it('aborts multipart upload if a part upload fails permanently', async () => {
+            const mpAdapter = new S3RemoteAdapter({
+                ...config,
+                multipartThreshold: 1000,
+                multipartChunkSize: 500
+            }, paths);
+            const mpMockS3 = (S3Client as any).mock.results[(S3Client as any).mock.results.length - 1].value;
+
+            const largeData = new Uint8Array(1200);
+
+            (mpMockS3.send as jest.Mock).mockImplementation(async (command: any) => {
+                if (command.__type === 'CreateMultipartUploadCommand') {
+                    return { UploadId: 'fail-upload-456' };
+                }
+                if (command.__type === 'UploadPartCommand') {
+                    const err: any = new Error('Permanent network connection drop');
+                    err.$metadata = { httpStatusCode: 403 }; // Status code 403 won't retry
+                    throw err;
+                }
+                if (command.__type === 'AbortMultipartUploadCommand') {
+                    return {};
+                }
+                return {};
+            });
+
+            await expect(mpAdapter.uploadFile('large-fail.bin', largeData)).rejects.toThrow('Permanent network connection drop');
+
+            expect(AbortMultipartUploadCommand).toHaveBeenCalledWith(expect.objectContaining({
+                Bucket: 'test-bucket',
+                UploadId: 'fail-upload-456'
+            }));
+        });
     });
 });
 

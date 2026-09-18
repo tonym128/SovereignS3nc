@@ -13,6 +13,16 @@ export interface S3Config {
    * Set to `false` for local development environments (e.g. RustFS on localhost).
    */
   requireTLS?: boolean;
+  /**
+   * Minimum payload size (in bytes) to trigger S3 multipart upload.
+   * Defaults to 25MB (26,214,400 bytes).
+   */
+  multipartThreshold?: number;
+  /**
+   * Chunk size for each multipart upload part. Minimum 5MB (5,242,880 bytes).
+   * Defaults to 5MB (5,242,880 bytes).
+   */
+  multipartChunkSize?: number;
 }
 
 export interface SovereignConfig {

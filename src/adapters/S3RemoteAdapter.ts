@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, ListObjectsV2Command, DeleteObjectCommand, CreateMultipartUploadCommand, UploadPartCommand, CompleteMultipartUploadCommand, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
 import { S3Config } from '../types';
 import { IRemoteAdapter, DownloadResult } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
@@ -12,6 +12,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
   private prefix: string;
   private endpoint: string;
   private supportsMetadataHash: boolean = true; // Optimization flag for backends like RustFS
+  private multipartThreshold: number;
+  private multipartChunkSize: number;
 
   constructor(config: S3Config, paths: { appId: string, userId: string, storeId: string }) {
     Logger.debug('S3', `Initializing adapter for ${paths.userId}...`);
@@ -65,6 +67,8 @@ export class S3RemoteAdapter implements IRemoteAdapter {
     } else {
         this.prefix = '';
     }
+    this.multipartThreshold = config.multipartThreshold ?? (25 * 1024 * 1024);
+    this.multipartChunkSize = config.multipartChunkSize ?? (5 * 1024 * 1024);
     Logger.info('S3', `Adapter initialized with prefix: ${this.prefix}`);
   }
 
@@ -114,6 +118,11 @@ export class S3RemoteAdapter implements IRemoteAdapter {
         }
     }
     
+    // Check if payload exceeds multipart threshold
+    if (data.byteLength > this.multipartThreshold) {
+        return this.uploadMultipart(key, data, hash, customMetadata);
+    }
+
     const response = await this.withRetry(() => this.client.send(new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
@@ -124,6 +133,86 @@ export class S3RemoteAdapter implements IRemoteAdapter {
       }
     })), `Upload ${key}`);
     return response.ETag || null;
+  }
+
+  /**
+   * Performs an S3 resumable multipart upload for large files exceeding multipartThreshold.
+   * Chunks payload into 5MB+ parts with exponential backoff on individual part failures,
+   * and sends AbortMultipartUploadCommand on permanent failure to prevent orphaned storage.
+   */
+  private async uploadMultipart(key: string, data: Uint8Array, hash: string, customMetadata?: Record<string, string>): Promise<string | null> {
+    Logger.info('S3', `Initiating multipart upload for ${key} (${data.byteLength} bytes, chunk size: ${this.multipartChunkSize})`);
+
+    const createRes = await this.withRetry(() => this.client.send(new CreateMultipartUploadCommand({
+      Bucket: this.bucket,
+      Key: key,
+      Metadata: {
+        'hash': hash,
+        ...(customMetadata || {})
+      }
+    })), `CreateMultipartUpload ${key}`);
+
+    const uploadId = createRes.UploadId;
+    if (!uploadId) {
+      throw new NetworkError(`Failed to initiate multipart upload for ${key}: missing UploadId`);
+    }
+
+    const totalSize = data.byteLength;
+    const chunkSize = this.multipartChunkSize;
+    const totalParts = Math.ceil(totalSize / chunkSize);
+    const completedParts: { ETag: string; PartNumber: number }[] = [];
+
+    try {
+      for (let partNumber = 1; partNumber <= totalParts; partNumber++) {
+        const start = (partNumber - 1) * chunkSize;
+        const end = Math.min(start + chunkSize, totalSize);
+        const partBuffer = data.subarray(start, end);
+
+        const partRes = await this.withRetry(async () => {
+          return await this.client.send(new UploadPartCommand({
+            Bucket: this.bucket,
+            Key: key,
+            UploadId: uploadId,
+            PartNumber: partNumber,
+            Body: partBuffer
+          }));
+        }, `UploadPart ${key} #${partNumber}/${totalParts}`);
+
+        if (!partRes.ETag) {
+          throw new NetworkError(`Missing ETag for part ${partNumber} of ${key}`);
+        }
+
+        completedParts.push({
+          ETag: partRes.ETag,
+          PartNumber: partNumber
+        });
+      }
+
+      const completeRes = await this.withRetry(() => this.client.send(new CompleteMultipartUploadCommand({
+        Bucket: this.bucket,
+        Key: key,
+        UploadId: uploadId,
+        MultipartUpload: {
+          Parts: completedParts
+        }
+      })), `CompleteMultipartUpload ${key}`);
+
+      Logger.info('S3', `Completed multipart upload for ${key} (${completedParts.length} parts)`);
+      return completeRes.ETag || null;
+    } catch (err: any) {
+      Logger.error('S3', `Multipart upload failed for ${key}, aborting uploadId ${uploadId}: ${err.message}`);
+      try {
+        await this.client.send(new AbortMultipartUploadCommand({
+          Bucket: this.bucket,
+          Key: key,
+          UploadId: uploadId
+        }));
+        Logger.info('S3', `Successfully aborted multipart upload ${uploadId} for ${key}`);
+      } catch (abortErr: any) {
+        Logger.warn('S3', `Failed to abort multipart upload ${uploadId}: ${abortErr.message}`);
+      }
+      throw err;
+    }
   }
 
   async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 15000): Promise<DownloadResult | null> {

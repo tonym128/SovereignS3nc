@@ -181,6 +181,13 @@
 - Added graceful fallbacks for Node.js and unsupported environments.
 - Created unit tests verifying automated persistence requests, existing persistence detection, quota reporting, and rejection handling.
 
+### WT-55: S3 Resumable Multipart Uploads for Large Media Blobs (>25MB)
+- Added `multipartThreshold` (default 25MB) and `multipartChunkSize` (default 5MB) configuration options to `S3Config`.
+- Implemented `uploadMultipart` lifecycle with `CreateMultipartUploadCommand`, chunked `UploadPartCommand`s with exponential backoff retries, and `CompleteMultipartUploadCommand`.
+- Implemented automatic cleanup using `AbortMultipartUploadCommand` on permanent part failures to prevent orphaned AWS S3 storage costs.
+- Added unit tests in `tests/S3RemoteAdapter.unit.test.ts` verifying single put vs multipart thresholding, part chunking, completion payload, and abort error recovery.
+
+
 
 
 

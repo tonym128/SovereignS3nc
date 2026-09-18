@@ -179,7 +179,7 @@
     - Expose `getStoragePersistenceStatus(): Promise<{ persisted: boolean, quota?: number, usage?: number }>` on `IStorage` and `SovereignS3nc`.
     - Add unit tests mocking `navigator.storage` to verify both granted and denied persistence states without throwing errors in Node.js environments.
 
-- [ ] **S3 Resumable Multipart Uploads for Large Media Blobs (>25MB)**
+- [x] **S3 Resumable Multipart Uploads for Large Media Blobs (>25MB)**
   - **Target File(s)**: `src/adapters/S3RemoteAdapter.ts`, `src/interfaces/IRemoteAdapter.ts`
   - **Context**: Currently, `saveBlob()` uploads images and files as a single S3 `PutObjectCommand`. For media blobs larger than 25MB (e.g. video files, audio attachments, or large database exports), network interruptions on mobile connections cause total upload failure requiring a restart from 0%.
   - **Expectations & Acceptance Criteria**:
