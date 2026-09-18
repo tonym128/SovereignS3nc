@@ -57,12 +57,12 @@ function dev() {
 
     echo "--- Starting RustFS Binary ---"
     # Note: absolute path for data dir is usually safer for rustfs
-    RUST_LOG=error nohup $RUSTFS_BINARY server \
+    RUST_LOG=error setsid $RUSTFS_BINARY server \
         --address "127.0.0.1:$RUSTFS_PORT" \
         --access-key "$RUSTFS_ROOT_KEY" \
         --secret-key "$RUSTFS_ROOT_SECRET" \
         --console-enable \
-        "$(pwd)/$DATA_DIR" > "$LOG_FILE" 2>&1 &
+        "$(pwd)/$DATA_DIR" < /dev/null > "$LOG_FILE" 2>&1 &
     RUSTFS_PID=$!
     disown $RUSTFS_PID
     echo $RUSTFS_PID > .rustfs.pid
@@ -292,31 +292,31 @@ EOF
     npm run build:blog
 
     echo "--- Starting Social Web Server (Port 8888) ---"
-    nohup python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social < /dev/null > social_web.log 2>&1 &
+    setsid python3 -m http.server 8888 --bind 127.0.0.1 --directory demo/social < /dev/null > social_web.log 2>&1 &
     SOCIAL_PID=$!
     disown $SOCIAL_PID
     echo $SOCIAL_PID > .social_web.pid
 
     echo "--- Starting Social Local Web Server (Port 8886) ---"
-    nohup python3 -m http.server 8886 --bind 127.0.0.1 --directory demo/social-local < /dev/null > social_local_web.log 2>&1 &
+    setsid python3 -m http.server 8886 --bind 127.0.0.1 --directory demo/social-local < /dev/null > social_local_web.log 2>&1 &
     SOCIAL_LOCAL_PID=$!
     disown $SOCIAL_LOCAL_PID
     echo $SOCIAL_LOCAL_PID > .social_local_web.pid
 
     echo "--- Starting Banky Web Server (Port 8887) ---"
-    nohup python3 -m http.server 8887 --bind 127.0.0.1 --directory demo/banky < /dev/null > banky_web.log 2>&1 &
+    setsid python3 -m http.server 8887 --bind 127.0.0.1 --directory demo/banky < /dev/null > banky_web.log 2>&1 &
     BANKY_PID=$!
     disown $BANKY_PID
     echo $BANKY_PID > .banky_web.pid
 
     echo "--- Starting Board Web Server (Port 8885) ---"
-    nohup python3 -m http.server 8885 --bind 127.0.0.1 --directory demo/board < /dev/null > board_web.log 2>&1 &
+    setsid python3 -m http.server 8885 --bind 127.0.0.1 --directory demo/board < /dev/null > board_web.log 2>&1 &
     BOARD_PID=$!
     disown $BOARD_PID
     echo $BOARD_PID > .board_web.pid
 
     echo "--- Starting Blog Web Server (Port 8884) ---"
-    nohup python3 -m http.server 8884 --bind 127.0.0.1 --directory demo/blog < /dev/null > blog_web.log 2>&1 &
+    setsid python3 -m http.server 8884 --bind 127.0.0.1 --directory demo/blog < /dev/null > blog_web.log 2>&1 &
     BLOG_PID=$!
     disown $BLOG_PID
     echo $BLOG_PID > .blog_web.pid
