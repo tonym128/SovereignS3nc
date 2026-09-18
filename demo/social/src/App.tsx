@@ -606,7 +606,7 @@ const App = () => {
 
             // Task #36: Image upload error feedback
             const compressed = await MediaUtils.compressImage(dataUrl, 500 * 1024);
-            const data = new Uint8Array(await (await fetch(compressed)).arrayBuffer());
+            const data = MediaUtils.dataUrlToBytes(compressed);
 
             if (isMessage) {
                 setMsgImage(data);
@@ -1058,7 +1058,7 @@ const App = () => {
             });
 
             const compressed = await MediaUtils.compressImage(dataUrl, 500 * 1024);
-            const data = new Uint8Array(await (await fetch(compressed)).arrayBuffer());
+            const data = MediaUtils.dataUrlToBytes(compressed);
 
             setGroupImage(data);
             setGroupImagePreview(compressed);

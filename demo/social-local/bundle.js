@@ -98166,6 +98166,23 @@ ${toHex(hashedRequest)}`;
             img.onerror = (e2) => reject(e2);
           });
         }
+        /**
+         * Converts a data URL (e.g. data:image/jpeg;base64,...) to a Uint8Array.
+         * Operates in-memory without using fetch(), avoiding CSP connect-src restrictions.
+         */
+        static dataUrlToBytes(dataUrl) {
+          const commaIdx = dataUrl.indexOf(",");
+          const base64 = commaIdx >= 0 ? dataUrl.substring(commaIdx + 1) : dataUrl;
+          if (typeof Buffer !== "undefined") {
+            return new Uint8Array(Buffer.from(base64, "base64"));
+          }
+          const binary = atob(base64);
+          const bytes = new Uint8Array(binary.length);
+          for (let i2 = 0; i2 < binary.length; i2++) {
+            bytes[i2] = binary.charCodeAt(i2);
+          }
+          return bytes;
+        }
       };
     }
   });

@@ -93,4 +93,22 @@ export class MediaUtils {
             img.onerror = (e) => reject(e);
         });
     }
+
+    /**
+     * Converts a data URL (e.g. data:image/jpeg;base64,...) to a Uint8Array.
+     * Operates in-memory without using fetch(), avoiding CSP connect-src restrictions.
+     */
+    static dataUrlToBytes(dataUrl: string): Uint8Array {
+        const commaIdx = dataUrl.indexOf(',');
+        const base64 = commaIdx >= 0 ? dataUrl.substring(commaIdx + 1) : dataUrl;
+        if (typeof Buffer !== 'undefined') {
+            return new Uint8Array(Buffer.from(base64, 'base64'));
+        }
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+    }
 }

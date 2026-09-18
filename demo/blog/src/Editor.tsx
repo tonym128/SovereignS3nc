@@ -141,8 +141,8 @@ const Editor = () => {
             reader.onload = async (event) => {
                 const dataUrl = event.target?.result as string;
                 const compressed = await MediaUtils.compressImage(dataUrl, 500 * 1024);
-                const binary = await (await fetch(compressed)).arrayBuffer();
-                const path = await sov.saveBlob(new Uint8Array(binary), true); // Public blob for blog
+                const binary = MediaUtils.dataUrlToBytes(compressed);
+                const path = await sov.saveBlob(binary, true); // Public blob for blog
                 
                 const newList = [path, ...mediaList];
                 setMediaList(newList);
