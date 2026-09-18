@@ -33,6 +33,7 @@ export class SovereignS3nc extends EventEmitter {
     private config: SovereignConfig;
     private remoteFactory?: (userId: string) => IRemoteAdapter;
     private registeredModules: ModuleDefinition[] = [];
+    public moduleInstances: any[] = [];
     private _isSyncing: boolean = false;
     private syncWorker?: SyncWorkerProxy;
     private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) => void> = new Map();
@@ -184,6 +185,7 @@ export class SovereignS3nc extends EventEmitter {
             getModulePath: (mn, sp, t) => this.getModulePath(mn, sp, t),
             onModuleUpdate: (mn, p) => this.onModuleUpdate(mn, p),
             registeredModules: this.registeredModules,
+            getModuleInstances: () => this.moduleInstances,
             emitSyncProgress: (stage, done, total) => {
                 this.emit('sync:progress', { stage, done, total });
                 Logger.debug('Sync', `Progress: ${stage}${total !== undefined ? ` (${done ?? 0}/${total})` : ''}`);
@@ -254,6 +256,12 @@ export class SovereignS3nc extends EventEmitter {
 
         if (this.syncWorker) {
             this.syncWorker.registerModule(definition).catch((e: any) => Logger.warn('Sovereign', 'Failed to register module in worker', e));
+        }
+    }
+
+    public registerModuleInstance(instance: any) {
+        if (!this.moduleInstances.includes(instance)) {
+            this.moduleInstances.push(instance);
         }
     }
 
@@ -556,6 +564,7 @@ export class SovereignS3nc extends EventEmitter {
 
     public async sync(force: boolean = false) { return this.syncOrchestrator.sync(force); }
     public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
+    public async compactDatabases(dates?: string[], force: boolean = false) { return this.syncOrchestrator.compactDatabases(dates, force); }
 
     public async createGroup(n: string, m: GroupMember[]) { return this.groupManager.createGroup(n, m); }
     public async updateGroup(g: SovereignGroup) { return this.groupManager.updateGroup(g); }

@@ -51,6 +51,7 @@ export class MessagingModule {
                 }
             ]
         });
+        this.db.registerModuleInstance(this);
     }
 
     private async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
@@ -222,6 +223,7 @@ export class MessagingModule {
         };
 
         await this._saveAndSendDM(recipientId, message, date);
+        await this.compactDatabase(date, false).catch(() => {});
     }
 
     async markAsRead(senderId: string, messageId: string, date: string) {
@@ -502,6 +504,7 @@ export class MessagingModule {
                         const count = Number(countRes[0].values[0][0]);
                         if (count > 0) {
                             db.run('DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                            db.run('VACUUM');
                             await this.db.getStorage().saveFile(outboxPath, db.export());
                             deleted += count;
                         }
@@ -512,5 +515,66 @@ export class MessagingModule {
             }
         }
         return deleted;
+    }
+
+    /**
+     * Compacts outbox SQLite databases by permanently purging deleted/tombstoned/expired records
+     * and running SQLite VACUUM to reclaim disk and IndexedDB quota.
+     * Compaction runs if tombstone ratio >= 50% or if force is true.
+     */
+    async compactDatabase(date?: string, force: boolean = false): Promise<{
+        compacted: boolean;
+        originalSize: number;
+        newSize: number;
+        freedBytes: number;
+        tombstoneRatio: number;
+    }> {
+        const targetDate = date || new Date().toISOString().split('T')[0];
+        const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${targetDate}.db`, 'private');
+        const data = await this.db.getStorage().getFile(outboxPath);
+        if (!data) {
+            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
+        }
+
+        const originalSize = data.byteLength;
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+
+        const db = new sqliteInstance.Database(data);
+        const now = Date.now();
+        let compacted = false;
+        let newSize = originalSize;
+        let tombstoneRatio = 0;
+
+        try {
+            const totalRes = db.exec('SELECT COUNT(*) FROM messages');
+            const total = (totalRes && totalRes.length > 0 && totalRes[0].values[0]) ? Number(totalRes[0].values[0][0]) : 0;
+
+            const tombstoneRes = db.exec('SELECT COUNT(*) FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)', [now]);
+            const tombstones = (tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0]) ? Number(tombstoneRes[0].values[0][0]) : 0;
+
+            tombstoneRatio = total > 0 ? tombstones / total : 0;
+
+            if (force || (tombstones > 0 && tombstoneRatio >= 0.5)) {
+                db.run('DELETE FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)', [now]);
+                db.run('VACUUM');
+                const compactedBinary = db.export();
+                newSize = compactedBinary.byteLength;
+                await this.db.getStorage().saveFile(outboxPath, compactedBinary);
+                this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
+                compacted = true;
+            }
+        } finally {
+            db.close();
+        }
+
+        return {
+            compacted,
+            originalSize,
+            newSize,
+            freedBytes: originalSize - newSize,
+            tombstoneRatio
+        };
     }
 }

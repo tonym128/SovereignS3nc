@@ -37,6 +37,7 @@ export interface SyncOrchestratorContext {
     getModulePath: (moduleName: string, subPath: string, type: 'private' | 'public' | 'followed') => string;
     onModuleUpdate: (moduleName: string, path: string) => void;
     registeredModules: any[];
+    getModuleInstances?: () => any[];
     /** Emit a sync progress event. Stage describes the current phase; total/done are optional file counts. */
     emitSyncProgress: (stage: string, done?: number, total?: number) => void;
 }
@@ -605,5 +606,29 @@ export class SyncOrchestrator {
         });
         await Promise.all(workers);
         return results;
+    }
+
+    /**
+     * Runs compaction maintenance on registered modules for specified dates.
+     */
+    async compactDatabases(dates?: string[], force: boolean = false): Promise<void> {
+        const today = SovereignS3nc.getDateStr(new Date());
+        const targetDates = dates && dates.length > 0 ? dates : [today];
+        const instances = this.ctx.getModuleInstances ? this.ctx.getModuleInstances() : [];
+        for (const mod of instances) {
+            if (typeof (mod as any).compactDatabase === 'function') {
+                for (const d of targetDates) {
+                    try {
+                        if (mod.MODULE_NAME === 'feed') {
+                            await (mod as any).compactDatabase(d, true, force);
+                        } else {
+                            await (mod as any).compactDatabase(d, force);
+                        }
+                    } catch (e) {
+                        Logger.warn('Sync', `Compaction failed for module on date ${d}: ${e}`);
+                    }
+                }
+            }
+        }
     }
 }

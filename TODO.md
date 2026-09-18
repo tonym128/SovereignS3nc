@@ -139,7 +139,7 @@
     - Verify that reconnect exponential backoff prevents CPU spikes when signaling or peer channels drop repeatedly.
     - Confirm gossip loop termination: Ensure that re-broadcasted messages are dropped after hop TTL or 30s without propagating endlessly.
 
-- [ ] **SQLite File Fragmentation & Compaction Stress Test**
+- [x] **SQLite File Fragmentation & Compaction Stress Test**
   - **Target File(s)**: `tests/SQLiteCompaction.unit.test.ts`, `src/core/SyncOrchestrator.ts`, `src/modules/Messaging.ts`
   - **Context**: SQLite databases in `sql.js` grow as messages and posts are inserted and marked as deleted/tombstoned. In browser environments, IndexedDB storage quotas are finite. Without periodic compaction (`VACUUM`), databases will retain unused allocated pages.
   - **Expectations & Acceptance Criteria**:

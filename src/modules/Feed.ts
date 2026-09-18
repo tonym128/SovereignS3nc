@@ -72,6 +72,7 @@ export class FeedModule {
 
     constructor(private db: SovereignS3nc) {
         this.db.registerModule(FEED_MODULE_DEFINITION);
+        this.db.registerModuleInstance(this);
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string, sharedKey?: string): Promise<any> {
@@ -168,6 +169,7 @@ export class FeedModule {
         db.close();
 
         this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        await this.compactDatabase(date, isPublic, false).catch(() => {});
     }
 
     async like(postId: string, isPublic: boolean = true) {
@@ -301,6 +303,7 @@ export class FeedModule {
             }
             if (deletedCount > 0) {
                 db.run('DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                db.run('VACUUM');
                 const binary = db.export();
                 await this.db.getStorage().saveFile(dbPath, binary);
                 this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
@@ -309,6 +312,67 @@ export class FeedModule {
             db.close();
         }
         return deletedCount;
+    }
+
+    /**
+     * Compacts feed SQLite databases by permanently purging deleted/tombstoned/expired posts
+     * and running SQLite VACUUM to reclaim storage and IndexedDB quota.
+     * Compaction runs if tombstone ratio >= 50% or if force is true.
+     */
+    async compactDatabase(date: string, isPublic: boolean = true, force: boolean = false): Promise<{
+        compacted: boolean;
+        originalSize: number;
+        newSize: number;
+        freedBytes: number;
+        tombstoneRatio: number;
+    }> {
+        const type = isPublic ? 'public' : 'private';
+        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        const data = await this.db.getStorage().getFile(dbPath);
+        if (!data) {
+            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
+        }
+
+        const originalSize = data.byteLength;
+        const initSqlJs = env.getSqlJs();
+        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
+        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+
+        const db = new sqliteInstance.Database(data);
+        const now = Date.now();
+        let compacted = false;
+        let newSize = originalSize;
+        let tombstoneRatio = 0;
+
+        try {
+            const totalRes = db.exec('SELECT COUNT(*) FROM posts');
+            const total = (totalRes && totalRes.length > 0 && totalRes[0].values[0]) ? Number(totalRes[0].values[0][0]) : 0;
+
+            const tombstoneRes = db.exec('SELECT COUNT(*) FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)', [now]);
+            const tombstones = (tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0]) ? Number(tombstoneRes[0].values[0][0]) : 0;
+
+            tombstoneRatio = total > 0 ? tombstones / total : 0;
+
+            if (force || (tombstones > 0 && tombstoneRatio >= 0.5)) {
+                db.run('DELETE FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)', [now]);
+                db.run('VACUUM');
+                const compactedBinary = db.export();
+                newSize = compactedBinary.byteLength;
+                await this.db.getStorage().saveFile(dbPath, compactedBinary);
+                this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+                compacted = true;
+            }
+        } finally {
+            db.close();
+        }
+
+        return {
+            compacted,
+            originalSize,
+            newSize,
+            freedBytes: originalSize - newSize,
+            tombstoneRatio
+        };
     }
 
     async enrichLikes(posts: Post[], days: number = 5) {

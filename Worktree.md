@@ -169,4 +169,11 @@
 - Added robust peer disconnection and cleanup handling accepting channel or `userId` string, resetting backoff upon reconnect, and preventing reconnection loops and CPU spikes during peer churn.
 - Added `tests/WebRTC_Chaos.integration.ts` verifying packet drops recovery, partition timeouts, exponential backoff progression, hop limit TTL termination, stale message age drops (>30s), and cyclic mesh termination.
 
+### WT-53: SQLite File Fragmentation & Compaction Stress Test
+- Implemented `compactDatabase()` in `MessagingModule` and `FeedModule` with automatic and threshold-based (tombstone ratio >= 50%) SQLite page compaction (`VACUUM`).
+- Integrated automated `VACUUM` into `cleanupExpired()` across messaging and feed modules to immediately reclaim free pages after TTL expirations.
+- Added orchestrated compaction support `SovereignS3nc.compactDatabases()` via `SyncOrchestrator`.
+- Created stress test suite `tests/SQLiteCompaction.unit.test.ts` validating structural integrity, queryability, and >= 40% binary reduction under 1,000 post/message stress scenarios.
+
+
 
