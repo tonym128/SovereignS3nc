@@ -230,6 +230,14 @@ export class ModerationModule {
                 }
             }
         } catch (e) {}
+
+        try {
+            const entryPath = `${PATHS.REGISTRY_ENTRIES_PREFIX}${userId}.json`;
+            if (globalRemote.deleteFile) {
+                await globalRemote.deleteFile(entryPath);
+                Logger.info('Moderation', `User ${userId} entry removed from V2 global registry.`);
+            }
+        } catch (e) {}
     }
 
     /**

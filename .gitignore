@@ -36,6 +36,7 @@ coverage/
 test-results/
 test-data/
 temp_perf_audit/
+tests/temp_home_*
 .sovereigns3nc/
 
 # Local Dev / Runtime Data

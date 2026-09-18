@@ -501,6 +501,10 @@ export class SovereignS3nc extends EventEmitter {
         Logger.info('Sovereign', 'Initialization complete.');
     }
 
+    public async syncAdminKey(): Promise<void> {
+        await this.keyManager.syncAdminKey();
+    }
+
     public async connectRemote(remote: any) {
         Logger.info('Sovereign', 'Connecting to remote...');
         

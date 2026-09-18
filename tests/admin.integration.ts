@@ -38,6 +38,7 @@ describe('RustFS Admin & Moderation Integration Tests', () => {
 
 const appId = 'rustfs-admin-test-' + Math.random().toString(36).substring(7);
 process.env.SOV_APP_ID = appId;
+process.env.SOV_ADMIN_PASSWORD = 'admin-password';
 
 beforeAll(async () => {
         // Setup Admin
@@ -205,9 +206,7 @@ beforeAll(async () => {
         await evilSov.sync();
 
         // Verify registered in global registry
-        const globalRemote = (adminSov as any).globalRemote;
-        const regBefore = await globalRemote.downloadFile('users.json');
-        const usersBefore = JSON.parse(new TextDecoder().decode(regBefore.data));
+        const usersBefore = await adminSov.getPublicRegistry();
         expect(usersBefore.find((u: any) => u.userId === evilUserId)).toBeDefined();
 
         // 1. Admin bans user
@@ -223,8 +222,7 @@ beforeAll(async () => {
         expect(checkProfile).toBeNull();
 
         // 4. Verify removed from global registry
-        const regAfter = await globalRemote.downloadFile('users.json');
-        const usersAfter = JSON.parse(new TextDecoder().decode(regAfter.data));
+        const usersAfter = await adminSov.getPublicRegistry();
         expect(usersAfter.find((u: any) => u.userId === evilUserId)).toBeUndefined();
     });
 
@@ -304,9 +302,7 @@ beforeAll(async () => {
             consoleSpy.mockRestore();
 
             // Verify they are gone from registry
-            const globalRemote = (adminSov as any).globalRemote;
-            const regResult = await globalRemote.downloadFile('users.json');
-            const users = JSON.parse(new TextDecoder().decode(regResult.data));
+            const users = await adminSov.getPublicRegistry();
             expect(users.find((u: any) => u.userId === banMeId)).toBeUndefined();
         });
 

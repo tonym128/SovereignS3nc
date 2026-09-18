@@ -225,8 +225,10 @@ describe('Group Permissions Integration Tests', () => {
         const alicePost = posts.find(p => p.content === "Alice's post");
         expect(alicePost).toBeDefined();
 
-        // 2. Charlie (member) attempts to moderate Alice's post
-        await charlieFeed.deleteGroupPost(group.id, group.sharedKey, alicePost!.id, today, 'alice');
+        // 2. Charlie (member) attempts to moderate Alice's post (should fail with permission denied)
+        await expect(
+            charlieFeed.deleteGroupPost(group.id, group.sharedKey, alicePost!.id, today, 'alice')
+        ).rejects.toThrow(/Permission denied/);
         await charlieSov.sync();
 
         // 3. Alice and Bob sync
