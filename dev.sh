@@ -41,7 +41,7 @@ function check_binaries() {
     if [ ! -f "$RC_BINARY" ]; then
         echo "--- Downloading RustFS CLI (rc) ---"
         mkdir -p bin
-        curl -L https://github.com/rustfs/cli/releases/download/v0.1.7/rustfs-cli-linux-amd64-v0.1.7.tar.gz -o bin/rc.tar.gz
+        curl -L https://github.com/rustfs/cli/releases/download/v0.1.36/rustfs-cli-linux-amd64-v0.1.36.tar.gz -o bin/rc.tar.gz
         cd bin && tar -xzf rc.tar.gz && chmod +x rc && rm rc.tar.gz && cd ..
     fi
 }

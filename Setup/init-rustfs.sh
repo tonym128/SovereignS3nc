@@ -21,7 +21,7 @@ until wget -qO- "$ENDPOINT" > /dev/null 2>&1; do
 done
 
 echo "--- Downloading RustFS CLI (rc) ---"
-wget -q https://github.com/rustfs/cli/releases/download/v0.1.7/rustfs-cli-linux-amd64-v0.1.7.tar.gz -O rc.tar.gz
+wget -q https://github.com/rustfs/cli/releases/download/v0.1.36/rustfs-cli-linux-amd64-v0.1.36.tar.gz -O rc.tar.gz
 tar -xzf rc.tar.gz
 mv rc /usr/local/bin/rc
 chmod +x /usr/local/bin/rc
