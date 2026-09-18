@@ -201,3 +201,10 @@
 - Implemented unchanged manifest ETag skipping in `SyncOrchestrator`: when remote returns 304 or cached manifest is valid and unchanged, skips checking all module and DM date partition files.
 - Added comprehensive benchmark suite `tests/FollowManifestOpt.benchmark.test.ts` demonstrating 100% request elimination for followed users during short auto-sync intervals and > 65% HTTP request reduction on full sync with 20 followed users.
 
+### WT-58: Hierarchical Merkle Tree Manifests for Large Repositories (>10k Files)
+- Added `SubManifestRef`, `SubManifest`, and Merkle tree fields (`merkleRoot`, `subManifests`) to `SovereignManifest` in `src/types.ts`.
+- Implemented `generateHierarchicalManifest()` partitioning accounts by year (`manifests/YYYY.json`) and media blobs (`manifests/blobs.json`).
+- Implemented deterministic `computeMerkleRoot()` calculating the top-level Merkle root hash across all sub-manifests to detect changes in a single 1KB fetch.
+- Implemented incremental sub-manifest uploads in `syncManifest()`, only uploading sub-manifests whose hash changed.
+- Implemented `resolveSubManifest()` with local caching and `resolveFullManifest()` with 100% backward compatibility for legacy flat manifests.
+- Added comprehensive unit tests in `tests/HierarchicalManifest.unit.test.ts` verifying partitioning, incremental upload, Merkle change detection, and legacy manifest support.

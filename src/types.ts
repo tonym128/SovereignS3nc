@@ -75,13 +75,33 @@ export interface RetentionPolicy {
   maxDaysFollowedData?: number;
 }
 
+export interface SubManifestRef {
+    path: string;      // Remote path, e.g. "manifests/2026.json" or "manifests/blobs.json"
+    hash: string;      // SHA-256 hash of this sub-manifest
+    count: number;     // Number of files or records in partition
+    updatedAt: number; // Partition last update timestamp
+}
+
+export interface SubManifest {
+    partitionKey: string;
+    updatedAt: number;
+    userId: string;
+    modules?: Record<string, string[]>;
+    dms?: Record<string, string[]>;
+    groups?: Record<string, string[]>;
+    blobs?: string[];
+    files?: Record<string, { hash: string, updatedAt: number }>;
+}
+
 export interface SovereignManifest {
     updatedAt: number;
     userId: string;
-    modules: Record<string, string[]>; // moduleName -> [dateStr, ...]
-    dms: Record<string, string[]>;     // recipientId -> [dateStr, ...]
-    groups: Record<string, string[]>;  // groupId -> [dateStr, ...]
-    blobs: string[];                   // List of blob hashes or paths
+    merkleRoot?: string;                                // Top-level Merkle root hash of all sub-manifests
+    subManifests?: Record<string, SubManifestRef>;      // Partition key -> SubManifestRef
+    modules: Record<string, string[]>;                 // moduleName -> [dateStr, ...]
+    dms: Record<string, string[]>;                     // recipientId -> [dateStr, ...]
+    groups: Record<string, string[]>;                  // groupId -> [dateStr, ...]
+    blobs: string[];                                   // List of blob hashes or paths
     profileHash?: string;
     files?: Record<string, { hash: string, updatedAt: number }>;
 }

@@ -590,9 +590,12 @@ export class SovereignS3nc extends EventEmitter {
     public async getPublicRegistry() { return this.globalRegistry.getPublicRegistry(); }
 
     public async syncManifest() { return this.manifestManager.syncManifest(); }
+    public async generateManifest() { return this.manifestManager.generateManifest(); }
     public clearFollowManifestCache(userId?: string) { this.manifestManager.clearFollowManifestCache(userId); }
     public expireFollowManifestCache(userId?: string) { this.manifestManager.expireFollowManifestCache(userId); }
     public getFollowManifestCache(userId: string) { return this.manifestManager.getFollowManifestCache(userId); }
+    public async resolveSubManifest(userId: string, partitionKey: string, ref: any) { return this.manifestManager.resolveSubManifest(userId, partitionKey, ref); }
+    public async resolveFullManifest(userId: string, rootManifest: any) { return this.manifestManager.resolveFullManifest(userId, rootManifest); }
 
     /**
      * Creates an encrypted, time-limited device pairing package that can be transmitted

@@ -196,7 +196,7 @@
     - Cache positive ETag matches with TTL so unchanged remote users are skipped without network calls during short auto-sync cycles.
     - Add a benchmark test demonstrating reduced HTTP request counts when syncing with 20 followed users.
 
-- [ ] **Hierarchical Merkle Tree Manifests for Large Repositories (>10k Files)**
+- [x] **Hierarchical Merkle Tree Manifests for Large Repositories (>10k Files)**
   - **Target File(s)**: `src/core/ManifestManager.ts`
   - **Context**: `manifest.json` currently maintains a flat key-value list of all files in the account. When accounts accumulate tens of thousands of date partitions, media blobs, and group stores over multiple years, serializing and downloading a single flat JSON manifest becomes a memory bottleneck.
   - **Expectations & Acceptance Criteria**:
