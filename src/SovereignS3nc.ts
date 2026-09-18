@@ -268,6 +268,14 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
+    public getModuleInstance<T = any>(predicateOrName: string | (new (...args: any[]) => T)): T | undefined {
+        if (typeof predicateOrName === 'string') {
+            return this.moduleInstances.find((m: any) => m.MODULE_NAME === predicateOrName || m.name === predicateOrName);
+        } else {
+            return this.moduleInstances.find((m: any) => m instanceof predicateOrName);
+        }
+    }
+
     public connectNativeRTC(transport: NativeWebRTCTransport) {
         if (this.config.enableP2PPairing === false) {
             Logger.warn('Sovereign', 'P2P Pairing is disabled in config. Connection rejected.');
@@ -566,6 +574,7 @@ export class SovereignS3nc extends EventEmitter {
     private getHashedUserId(uid: string, ip: boolean) { return this.keyManager.getHashedUserId(uid, ip); }
 
     public async sync(force: boolean = false) { return this.syncOrchestrator.sync(force); }
+    public isSyncing(): boolean { return this._isSyncing; }
     public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
     public async compactDatabases(dates?: string[], force: boolean = false) { return this.syncOrchestrator.compactDatabases(dates, force); }
     public async checkStoragePersistence(): Promise<StoragePersistenceInfo> {

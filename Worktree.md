@@ -216,3 +216,15 @@
 - Added automatic update notification dispatch (`moduleName:update`) upon write operations.
 - Added `RepositoryError` in `src/utils/Errors.ts` and exposed `getRepository<T>()` on `SovereignS3nc`.
 - Added comprehensive unit tests in `tests/Repository.unit.test.ts` covering CRUD, upsert, SQL injection validation, and event emission.
+
+### WT-60: Official `@sovereigns3nc/react` Reactive Hooks Package
+- Created dedicated React package under `packages/react/` with `package.json`, `tsconfig.json`, and TypeScript definitions.
+- Implemented `<SovereignProvider>` supporting existing `instance` or auto-initializing via `config`, tracking `isInitialized` and `initError`.
+- Implemented `useSovereign()` returning the active client instance with context-boundary validation.
+- Implemented `useSyncStatus()` tracking `isSyncing`, stage, progress percentages, error handling, and manual `sync()` trigger.
+- Implemented `useDirectMessages()` managing end-to-end encrypted messaging, automatic conversation filtering, sorting, and `messaging:update`/`sync:progress` reactive reloading.
+- Implemented `useFeed()` managing post creation, likes, soft-deletion, and `feed:update`/`sync:progress` reactive reloading.
+- Implemented `useRepository<T>()` reactive hook wrapping the typed repository layer with automated query synchronization upon write events.
+- Added `getModuleInstance()` and `isSyncing()` helpers on `SovereignS3nc`.
+- Added `build:react` script and mapped exports in root `package.json`.
+- Created comprehensive unit tests in `tests/ReactHooks.unit.test.ts` verifying all hooks, providers, and lifecycle states (7/7 tests passing).

@@ -12,6 +12,11 @@
       "import": "./dist/sovereigns3nc.esm.js",
       "require": "./dist/index.js"
     },
+    "./react": {
+      "types": "./packages/react/dist/index.d.ts",
+      "import": "./packages/react/dist/index.js",
+      "require": "./packages/react/dist/index.js"
+    },
     "./package.json": "./package.json"
   },
   "bin": {
@@ -26,12 +31,13 @@
     "test:browser": "NODE_OPTIONS=--experimental-vm-modules npx playwright test -c tests/playwright.config.ts",
     "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
+    "build:react": "tsc -p packages/react/tsconfig.json",
     "build:social": "node --no-warnings demo/social/build.js",
     "build:social-local": "node --no-warnings demo/social-local/build.js",
     "build:banky": "node --no-warnings demo/banky/build.js",
     "build:board": "node --no-warnings demo/board/build.js",
     "build:blog": "node --no-warnings demo/blog/build.js",
-    "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build:esm && npm run build:global",
+    "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build:esm && npm run build:global && npm run build:react",
     "prepublishOnly": "npm run build",
     "admin-cli": "ts-node src/admin.ts",
     "perf:audit": "ts-node scripts/perf-audit.ts"

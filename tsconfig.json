@@ -6,13 +6,19 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "jsx": "react-jsx",
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "sovereigns3nc": ["./src/index.ts"],
+      "@sovereigns3nc/react": ["./packages/react/src/index.ts"]
+    }
   },
-  "include": ["src/**/*", "tests/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "packages/**/*", "tests/**/*"],
+  "exclude": ["node_modules", "dist", "packages/*/dist"]
 }

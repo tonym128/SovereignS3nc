@@ -3,6 +3,8 @@ module.exports = {
   testEnvironment: 'node',
   testTimeout: 120000,
   moduleNameMapper: {
+    '^sovereigns3nc$': '<rootDir>/src/index.ts',
+    '^@sovereigns3nc/react$': '<rootDir>/packages/react/src/index.ts',
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testMatch: ["<rootDir>/tests/**/*.test.ts"],

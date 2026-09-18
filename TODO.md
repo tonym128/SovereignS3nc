@@ -221,7 +221,7 @@
     - Expose `db.getRepository<T>(moduleName, tableName, datePartition?)` on `SovereignS3nc`.
     - Validate with unit tests demonstrating full type safety and SQL injection protection.
 
-- [ ] **Official `@sovereigns3nc/react` Reactive Hooks Package**
+- [x] **Official `@sovereigns3nc/react` Reactive Hooks Package**
   - **Target File(s)**: `packages/react/package.json`, `packages/react/src/useSovereign.ts`, `packages/react/src/useDirectMessages.ts`, `packages/react/src/useFeed.ts`
   - **Context**: Developers building React apps (like the demos) have to manually implement `useEffect`, event listeners for `sync:progress` and module updates, and state synchronization.
   - **Expectations & Acceptance Criteria**:
