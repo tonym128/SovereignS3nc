@@ -76,12 +76,21 @@ const App = () => {
 
     // Load dynamic config
     useEffect(() => {
+        const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
         fetch('config.json')
             .then(res => res.json())
             .then(data => {
-                setConfig((prev: any) => ({ ...prev, s3: data }));
+                const endpointIsLocal = data.endpoint && (data.endpoint.includes('127.0.0.1') || data.endpoint.includes('localhost'));
+                if (!isLocalHost && endpointIsLocal) {
+                    setConfig((prev: any) => ({ ...prev, s3: undefined }));
+                } else {
+                    setConfig((prev: any) => ({ ...prev, s3: data }));
+                }
             })
-            .catch(e => console.error('Failed to load config.json', e));
+            .catch(e => {
+                console.error('Failed to load config.json', e);
+                setConfig((prev: any) => ({ ...prev, s3: undefined }));
+            });
     }, []);
 
     // Initial Login

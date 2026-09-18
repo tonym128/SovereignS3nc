@@ -53,14 +53,19 @@ const Editor = () => {
     const login = async () => {
         setSyncing(true);
         try {
+            const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+            const endpointIsLocal = config.endpoint && (config.endpoint.includes('127.0.0.1') || config.endpoint.includes('localhost'));
+            const hasS3 = config.endpoint && (!endpointIsLocal || isLocalHost);
+
             const instance = await SovereignS3nc.create({
-                s3: {
+                s3: hasS3 ? {
                     endpoint: config.endpoint,
                     region: config.region,
                     credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
                     bucketName: config.bucketName,
                     forcePathStyle: true
-                },
+                } : undefined,
+                offline: !hasS3,
                 paths: { appId: config.appId, userId: config.userId, storeId: 'main' },
                 password: config.password,
                 useWorker: true,
@@ -70,9 +75,13 @@ const Editor = () => {
             setFeed(new FeedModule(instance));
             setIsLoggedIn(true);
 
-            // Register in global users.json
-            await instance.ensureGlobalRegistration();
-            await instance.sync();
+            // Register in global users.json if remote storage available
+            if (hasS3) {
+                try {
+                    await instance.ensureGlobalRegistration();
+                    await instance.sync();
+                } catch (e) {}
+            }
 
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);

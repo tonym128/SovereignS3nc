@@ -38,9 +38,19 @@ const App = () => {
     const COLUMNS = ['Todo', 'In Progress', 'Done'];
 
     useEffect(() => {
+        const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+        const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+        const requestedMode = urlParams.get('mode');
+
         fetch('config.json')
             .then(res => res.json())
             .then(data => {
+                const endpointIsLocal = data.endpoint && (data.endpoint.includes('127.0.0.1') || data.endpoint.includes('localhost'));
+                let defaultMode = data.syncMode || (isLocalHost ? 's3' : 'webrtc');
+                if (requestedMode) defaultMode = requestedMode;
+                if (!isLocalHost && endpointIsLocal && !requestedMode) {
+                    defaultMode = 'webrtc';
+                }
                 setConfig(prev => ({
                     ...prev,
                     endpoint: data.endpoint || prev.endpoint,
@@ -48,15 +58,31 @@ const App = () => {
                     accessKeyId: data.accessKeyId || prev.accessKeyId,
                     secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
                     bucketName: data.bucketName || prev.bucketName,
+                    syncMode: defaultMode
                 }));
             })
-            .catch(() => {});
+            .catch(() => {
+                if (!isLocalHost) {
+                    setConfig(prev => ({ ...prev, syncMode: requestedMode || 'webrtc' }));
+                }
+            });
     }, []);
 
     // --- Core Logic ---
     const login = async () => {
         setSyncing(true);
         try {
+            let remoteAdapter: IRemoteAdapter | undefined;
+            if (config.syncMode === 'webrtc') {
+                const webrtc = new WebRTCRemoteAdapter(config.userId);
+                const bc = new BroadcastChannel('sov-board-mesh');
+                const peer = webrtc.connectPeer((msg) => bc.postMessage(msg));
+                if (peer) {
+                    bc.onmessage = (e) => peer.receive(e.data);
+                }
+                remoteAdapter = webrtc;
+            }
+
             const instance = await SovereignS3nc.create({
                 s3: config.syncMode === 's3' ? {
                     endpoint: config.endpoint,
@@ -68,6 +94,7 @@ const App = () => {
                     bucketName: config.bucketName,
                     forcePathStyle: true
                 } : undefined,
+                offline: config.syncMode === 'offline',
                 paths: {
                     appId: config.appId,
                     userId: config.userId,
@@ -76,7 +103,7 @@ const App = () => {
                 password: config.password,
                 useWorker: true,
                 workerUrl: 'sync-worker.js'
-            });
+            }, remoteAdapter);
 
             setSov(instance);
             setProfileModule(new ProfileModule(instance));
@@ -213,9 +240,30 @@ const App = () => {
                             <div className="card-body">
                                 <h3 className="card-title mb-4">Sovereign Board Login</h3>
                                 <div className="mb-3">
-                                    <label className="form-label">S3 Endpoint</label>
-                                    <input type="text" className="form-control" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                                    <label className="form-label fw-bold">Sync Mode</label>
+                                    <div className="btn-group w-100 mb-2" role="group">
+                                        <button type="button" className={`btn btn-sm ${config.syncMode === 'webrtc' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setConfig({...config, syncMode: 'webrtc'})}>
+                                            ⚡ WebRTC Mesh
+                                        </button>
+                                        <button type="button" className={`btn btn-sm ${config.syncMode === 's3' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setConfig({...config, syncMode: 's3'})}>
+                                            ☁️ S3 Remote
+                                        </button>
+                                        <button type="button" className={`btn btn-sm ${config.syncMode === 'offline' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setConfig({...config, syncMode: 'offline'})}>
+                                            💾 Offline IDB
+                                        </button>
+                                    </div>
+                                    <small className="text-muted d-block">
+                                        {config.syncMode === 'webrtc' && 'Peer-to-peer gossip mesh across open tabs & local peers.'}
+                                        {config.syncMode === 's3' && 'Two-way sync with an S3-compatible bucket.'}
+                                        {config.syncMode === 'offline' && 'Purely local storage via IndexedDB & SQLite WASM.'}
+                                    </small>
                                 </div>
+                                {config.syncMode === 's3' && (
+                                    <div className="mb-3">
+                                        <label className="form-label">S3 Endpoint</label>
+                                        <input type="text" className="form-control" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                                    </div>
+                                )}
                                 <div className="mb-3">
                                     <label className="form-label">User ID</label>
                                     <input type="text" className="form-control" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />

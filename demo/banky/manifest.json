@@ -1,0 +1,22 @@
+{
+  "short_name": "Banky",
+  "name": "Sovereign Banky",
+  "description": "A decentralized, cryptographically signed offline-first ledger for family banking.",
+  "categories": ["finance", "utilities"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0d6efd",
+  "background_color": "#f0f2f5"
+}

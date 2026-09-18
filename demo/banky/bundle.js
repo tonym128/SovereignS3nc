@@ -12,11 +12,20 @@
     if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x2 + '" is not supported');
   });
-  var __esm = (fn, res) => function __init() {
-    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+  var __esm = (fn, res, err) => function __init() {
+    if (err) throw err[0];
+    try {
+      return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+    } catch (e2) {
+      throw err = [e2], e2;
+    }
   };
   var __commonJS = (cb, mod) => function __require2() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    try {
+      return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    } catch (e2) {
+      throw mod = 0, e2;
+    }
   };
   var __export = (target, all) => {
     for (var name in all)
@@ -39,11 +48,11 @@
     mod
   ));
 
-  // node_modules/base64-js/index.js
+  // ../SovereignS3nc/node_modules/base64-js/index.js
   var require_base64_js = __commonJS({
-    "node_modules/base64-js/index.js"(exports) {
+    "../SovereignS3nc/node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -141,10 +150,10 @@
     }
   });
 
-  // node_modules/ieee754/index.js
+  // ../SovereignS3nc/node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
-    "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/ieee754/index.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -225,11 +234,11 @@
     }
   });
 
-  // node_modules/buffer/index.js
+  // ../SovereignS3nc/node_modules/buffer/index.js
   var require_buffer = __commonJS({
-    "node_modules/buffer/index.js"(exports) {
+    "../SovereignS3nc/node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1818,10 +1827,10 @@
     }
   });
 
-  // node_modules/process/browser.js
+  // ../SovereignS3nc/node_modules/process/browser.js
   var require_browser = __commonJS({
-    "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/process/browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -1994,11 +2003,11 @@
     }
   });
 
-  // node_modules/react/cjs/react.development.js
+  // ../SovereignS3nc/node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "node_modules/react/cjs/react.development.js"(exports, module) {
+    "../SovereignS3nc/node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component2.prototype, methodName, {
@@ -2967,11 +2976,11 @@
     }
   });
 
-  // node_modules/react/index.js
+  // ../SovereignS3nc/node_modules/react/index.js
   var require_react = __commonJS({
-    "node_modules/react/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -2980,11 +2989,11 @@
     }
   });
 
-  // node_modules/scheduler/cjs/scheduler.development.js
+  // ../SovereignS3nc/node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+    "../SovereignS3nc/node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3240,11 +3249,11 @@
     }
   });
 
-  // node_modules/scheduler/index.js
+  // ../SovereignS3nc/node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "node_modules/scheduler/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3253,11 +3262,11 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom.development.js
+  // ../SovereignS3nc/node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
+    "../SovereignS3nc/node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       (function() {
         function noop2() {
         }
@@ -3498,11 +3507,11 @@
     }
   });
 
-  // node_modules/react-dom/index.js
+  // ../SovereignS3nc/node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "node_modules/react-dom/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3512,11 +3521,11 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom-client.development.js
+  // ../SovereignS3nc/node_modules/react-dom/cjs/react-dom-client.development.js
   var require_react_dom_client_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
+    "../SovereignS3nc/node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -23412,11 +23421,11 @@
     }
   });
 
-  // node_modules/react-dom/client.js
+  // ../SovereignS3nc/node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "node_modules/react-dom/client.js"(exports, module) {
+    "../SovereignS3nc/node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23426,10 +23435,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
   var import_polyfills, getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
   var init_httpExtensionConfiguration = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
       import_polyfills = __toESM(require_polyfills());
       getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -23455,27 +23464,27 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/index.js
   var import_polyfills2;
   var init_extensions = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
       import_polyfills2 = __toESM(require_polyfills());
       init_httpExtensionConfiguration();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/abort.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/abort.js
   var import_polyfills3;
   var init_abort = __esm({
-    "node_modules/@smithy/types/dist-es/abort.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/abort.js"() {
       import_polyfills3 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/auth.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/auth.js
   var import_polyfills4, HttpAuthLocation;
   var init_auth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/auth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/auth.js"() {
       import_polyfills4 = __toESM(require_polyfills());
       (function(HttpAuthLocation2) {
         HttpAuthLocation2["HEADER"] = "header";
@@ -23484,10 +23493,10 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
   var import_polyfills5, HttpApiKeyAuthLocation;
   var init_HttpApiKeyAuth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
       import_polyfills5 = __toESM(require_polyfills());
       (function(HttpApiKeyAuthLocation2) {
         HttpApiKeyAuthLocation2["HEADER"] = "header";
@@ -23496,42 +23505,42 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
   var import_polyfills6;
   var init_HttpAuthScheme = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
       import_polyfills6 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
   var import_polyfills7;
   var init_HttpAuthSchemeProvider = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
       import_polyfills7 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpSigner.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpSigner.js
   var import_polyfills8;
   var init_HttpSigner = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
       import_polyfills8 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
   var import_polyfills9;
   var init_IdentityProviderConfig = __esm({
-    "node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
       import_polyfills9 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/index.js
   var import_polyfills10;
   var init_auth2 = __esm({
-    "node_modules/@smithy/types/dist-es/auth/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/index.js"() {
       import_polyfills10 = __toESM(require_polyfills());
       init_auth();
       init_HttpApiKeyAuth();
@@ -23542,66 +23551,66 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
   var import_polyfills11;
   var init_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
       import_polyfills11 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/checksum.js
   var import_polyfills12;
   var init_checksum = __esm({
-    "node_modules/@smithy/types/dist-es/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/checksum.js"() {
       import_polyfills12 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/client.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/client.js
   var import_polyfills13;
   var init_client = __esm({
-    "node_modules/@smithy/types/dist-es/client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/client.js"() {
       import_polyfills13 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/command.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/command.js
   var import_polyfills14;
   var init_command = __esm({
-    "node_modules/@smithy/types/dist-es/command.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/command.js"() {
       import_polyfills14 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/config.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/config.js
   var import_polyfills15;
   var init_config = __esm({
-    "node_modules/@smithy/types/dist-es/connection/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/config.js"() {
       import_polyfills15 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/manager.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/manager.js
   var import_polyfills16;
   var init_manager = __esm({
-    "node_modules/@smithy/types/dist-es/connection/manager.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/manager.js"() {
       import_polyfills16 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/pool.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/pool.js
   var import_polyfills17;
   var init_pool = __esm({
-    "node_modules/@smithy/types/dist-es/connection/pool.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/pool.js"() {
       import_polyfills17 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/index.js
   var import_polyfills18;
   var init_connection = __esm({
-    "node_modules/@smithy/types/dist-es/connection/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/index.js"() {
       import_polyfills18 = __toESM(require_polyfills());
       init_config();
       init_manager();
@@ -23609,26 +23618,26 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/crypto.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/crypto.js
   var import_polyfills19;
   var init_crypto = __esm({
-    "node_modules/@smithy/types/dist-es/crypto.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/crypto.js"() {
       import_polyfills19 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/encode.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/encode.js
   var import_polyfills20;
   var init_encode = __esm({
-    "node_modules/@smithy/types/dist-es/encode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/encode.js"() {
       import_polyfills20 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoint.js
   var import_polyfills21, EndpointURLScheme;
   var init_endpoint = __esm({
-    "node_modules/@smithy/types/dist-es/endpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoint.js"() {
       import_polyfills21 = __toESM(require_polyfills());
       (function(EndpointURLScheme2) {
         EndpointURLScheme2["HTTP"] = "http";
@@ -23637,50 +23646,50 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
   var import_polyfills22;
   var init_EndpointRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
       import_polyfills22 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
   var import_polyfills23;
   var init_ErrorRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
       import_polyfills23 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
   var import_polyfills24;
   var init_RuleSetObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
       import_polyfills24 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/shared.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/shared.js
   var import_polyfills25;
   var init_shared = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
       import_polyfills25 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
   var import_polyfills26;
   var init_TreeRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
       import_polyfills26 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/index.js
   var import_polyfills27;
   var init_endpoints = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/index.js"() {
       import_polyfills27 = __toESM(require_polyfills());
       init_EndpointRuleObject();
       init_ErrorRuleObject();
@@ -23690,18 +23699,18 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/eventStream.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/eventStream.js
   var import_polyfills28;
   var init_eventStream = __esm({
-    "node_modules/@smithy/types/dist-es/eventStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/eventStream.js"() {
       import_polyfills28 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/checksum.js
   var import_polyfills29, AlgorithmId;
   var init_checksum2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
       import_polyfills29 = __toESM(require_polyfills());
       (function(AlgorithmId2) {
         AlgorithmId2["MD5"] = "md5";
@@ -23713,26 +23722,26 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
   var import_polyfills30;
   var init_defaultClientConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
       import_polyfills30 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
   var import_polyfills31;
   var init_defaultExtensionConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
       import_polyfills31 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/index.js
   var import_polyfills32;
   var init_extensions2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/index.js"() {
       import_polyfills32 = __toESM(require_polyfills());
       init_defaultClientConfiguration();
       init_defaultExtensionConfiguration();
@@ -23740,18 +23749,18 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/feature-ids.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/feature-ids.js
   var import_polyfills33;
   var init_feature_ids = __esm({
-    "node_modules/@smithy/types/dist-es/feature-ids.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/feature-ids.js"() {
       import_polyfills33 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/http.js
   var import_polyfills34, FieldPosition;
   var init_http = __esm({
-    "node_modules/@smithy/types/dist-es/http.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/http.js"() {
       import_polyfills34 = __toESM(require_polyfills());
       (function(FieldPosition2) {
         FieldPosition2[FieldPosition2["HEADER"] = 0] = "HEADER";
@@ -23760,50 +23769,50 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
   var import_polyfills35;
   var init_httpHandlerInitialization = __esm({
-    "node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
       import_polyfills35 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
   var import_polyfills36;
   var init_apiKeyIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
       import_polyfills36 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
   var import_polyfills37;
   var init_awsCredentialIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
       import_polyfills37 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/identity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/identity.js
   var import_polyfills38;
   var init_identity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/identity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/identity.js"() {
       import_polyfills38 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
   var import_polyfills39;
   var init_tokenIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
       import_polyfills39 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/index.js
   var import_polyfills40;
   var init_identity2 = __esm({
-    "node_modules/@smithy/types/dist-es/identity/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/index.js"() {
       import_polyfills40 = __toESM(require_polyfills());
       init_apiKeyIdentity();
       init_awsCredentialIdentity();
@@ -23812,35 +23821,35 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/logger.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/logger.js
   var import_polyfills41;
   var init_logger = __esm({
-    "node_modules/@smithy/types/dist-es/logger.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/logger.js"() {
       import_polyfills41 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/middleware.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/middleware.js
   var import_polyfills42, SMITHY_CONTEXT_KEY;
   var init_middleware = __esm({
-    "node_modules/@smithy/types/dist-es/middleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/middleware.js"() {
       import_polyfills42 = __toESM(require_polyfills());
       SMITHY_CONTEXT_KEY = "__smithy_context";
     }
   });
 
-  // node_modules/@smithy/types/dist-es/pagination.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/pagination.js
   var import_polyfills43;
   var init_pagination = __esm({
-    "node_modules/@smithy/types/dist-es/pagination.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/pagination.js"() {
       import_polyfills43 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/profile.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/profile.js
   var import_polyfills44, IniSectionType;
   var init_profile = __esm({
-    "node_modules/@smithy/types/dist-es/profile.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/profile.js"() {
       import_polyfills44 = __toESM(require_polyfills());
       (function(IniSectionType2) {
         IniSectionType2["PROFILE"] = "profile";
@@ -23850,122 +23859,122 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/response.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/response.js
   var import_polyfills45;
   var init_response = __esm({
-    "node_modules/@smithy/types/dist-es/response.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/response.js"() {
       import_polyfills45 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/retry.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/retry.js
   var import_polyfills46;
   var init_retry = __esm({
-    "node_modules/@smithy/types/dist-es/retry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/retry.js"() {
       import_polyfills46 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema.js
   var import_polyfills47;
   var init_schema = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema.js"() {
       import_polyfills47 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/traits.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/traits.js
   var import_polyfills48;
   var init_traits = __esm({
-    "node_modules/@smithy/types/dist-es/schema/traits.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/traits.js"() {
       import_polyfills48 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
   var import_polyfills49;
   var init_schema_deprecated = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
       import_polyfills49 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/sentinels.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/sentinels.js
   var import_polyfills50;
   var init_sentinels = __esm({
-    "node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
       import_polyfills50 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/static-schemas.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/static-schemas.js
   var import_polyfills51;
   var init_static_schemas = __esm({
-    "node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
       import_polyfills51 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/serde.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/serde.js
   var import_polyfills52;
   var init_serde = __esm({
-    "node_modules/@smithy/types/dist-es/serde.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/serde.js"() {
       import_polyfills52 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/shapes.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/shapes.js
   var import_polyfills53;
   var init_shapes = __esm({
-    "node_modules/@smithy/types/dist-es/shapes.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/shapes.js"() {
       import_polyfills53 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/signature.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/signature.js
   var import_polyfills54;
   var init_signature = __esm({
-    "node_modules/@smithy/types/dist-es/signature.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/signature.js"() {
       import_polyfills54 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/stream.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/stream.js
   var import_polyfills55;
   var init_stream = __esm({
-    "node_modules/@smithy/types/dist-es/stream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/stream.js"() {
       import_polyfills55 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
   var import_polyfills56;
   var init_streaming_blob_common_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
       import_polyfills56 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
   var import_polyfills57;
   var init_streaming_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
       import_polyfills57 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
   var import_polyfills58;
   var init_streaming_blob_payload_output_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
       import_polyfills58 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transfer.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transfer.js
   var import_polyfills59, RequestHandlerProtocol;
   var init_transfer = __esm({
-    "node_modules/@smithy/types/dist-es/transfer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transfer.js"() {
       import_polyfills59 = __toESM(require_polyfills());
       (function(RequestHandlerProtocol2) {
         RequestHandlerProtocol2["HTTP_0_9"] = "http/0.9";
@@ -23975,66 +23984,66 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
   var import_polyfills60;
   var init_client_payload_blob_type_narrow = __esm({
-    "node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
       import_polyfills60 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/mutable.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/mutable.js
   var import_polyfills61;
   var init_mutable = __esm({
-    "node_modules/@smithy/types/dist-es/transform/mutable.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/mutable.js"() {
       import_polyfills61 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/no-undefined.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/no-undefined.js
   var import_polyfills62;
   var init_no_undefined = __esm({
-    "node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
       import_polyfills62 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/type-transform.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/type-transform.js
   var import_polyfills63;
   var init_type_transform = __esm({
-    "node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
       import_polyfills63 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/uri.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/uri.js
   var import_polyfills64;
   var init_uri = __esm({
-    "node_modules/@smithy/types/dist-es/uri.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/uri.js"() {
       import_polyfills64 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/util.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/util.js
   var import_polyfills65;
   var init_util = __esm({
-    "node_modules/@smithy/types/dist-es/util.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/util.js"() {
       import_polyfills65 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/waiter.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/waiter.js
   var import_polyfills66;
   var init_waiter = __esm({
-    "node_modules/@smithy/types/dist-es/waiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/waiter.js"() {
       import_polyfills66 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/index.js
   var import_polyfills67;
   var init_dist_es = __esm({
-    "node_modules/@smithy/types/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/index.js"() {
       import_polyfills67 = __toESM(require_polyfills());
       init_abort();
       init_auth2();
@@ -24082,31 +24091,31 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Field.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Field.js
   var import_polyfills68;
   var init_Field = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Field.js"() {
       import_polyfills68 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Fields.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Fields.js
   var import_polyfills69;
   var init_Fields = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
       import_polyfills69 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpHandler.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpHandler.js
   var import_polyfills70;
   var init_httpHandler = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
       import_polyfills70 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpRequest.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpRequest.js
   function cloneQuery(query) {
     return Object.keys(query).reduce((carry, paramName) => {
       const param = query[paramName];
@@ -24118,7 +24127,7 @@
   }
   var import_polyfills71, HttpRequest;
   var init_httpRequest = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
       import_polyfills71 = __toESM(require_polyfills());
       HttpRequest = class _HttpRequest {
         method;
@@ -24169,10 +24178,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpResponse.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpResponse.js
   var import_polyfills72, HttpResponse;
   var init_httpResponse = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
       import_polyfills72 = __toESM(require_polyfills());
       HttpResponse = class {
         statusCode;
@@ -24195,26 +24204,26 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
   var import_polyfills73;
   var init_isValidHostname = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
       import_polyfills73 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/types.js
   var import_polyfills74;
   var init_types = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/types.js"() {
       import_polyfills74 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/index.js
   var import_polyfills75;
   var init_dist_es2 = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/index.js"() {
       import_polyfills75 = __toESM(require_polyfills());
       init_extensions();
       init_Field();
@@ -24227,7 +24236,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
   function addExpectContinueMiddleware(options) {
     return (next) => async (args) => {
       const { request } = args;
@@ -24254,7 +24263,7 @@
   }
   var import_polyfills76, addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
   var init_dist_es3 = __esm({
-    "node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
       import_polyfills76 = __toESM(require_polyfills());
       init_dist_es2();
       addExpectContinueMiddlewareOptions = {
@@ -24271,10 +24280,10 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
   var import_polyfills77, RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
   var init_constants = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
       import_polyfills77 = __toESM(require_polyfills());
       RequestChecksumCalculation = {
         WHEN_SUPPORTED: "WHEN_SUPPORTED",
@@ -24302,31 +24311,31 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
   var import_polyfills78;
   var init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
       import_polyfills78 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
   var import_polyfills79;
   var init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
       import_polyfills79 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
   var import_polyfills80;
   var init_emitWarningIfUnsupportedVersion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
       import_polyfills80 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
   function setCredentialFeature(credentials, feature, value) {
     if (!credentials.$source) {
       credentials.$source = {};
@@ -24336,15 +24345,15 @@
   }
   var import_polyfills81;
   var init_setCredentialFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
       import_polyfills81 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/config.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/config.js
   var import_polyfills82, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
   var init_config2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/config.js"() {
       import_polyfills82 = __toESM(require_polyfills());
       (function(RETRY_MODES2) {
         RETRY_MODES2["STANDARD"] = "standard";
@@ -24355,10 +24364,10 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/constants.js
   var import_polyfills83, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
   var init_constants2 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
       import_polyfills83 = __toESM(require_polyfills());
       THROTTLING_ERROR_CODES = [
         "BandwidthLimitExceeded",
@@ -24383,13 +24392,13 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/index.js
   function isNodeJsHttp2TransientError(error) {
     return error.code === "ERR_HTTP2_STREAM_ERROR" && error.message.includes("NGHTTP2_REFUSED_STREAM");
   }
   var import_polyfills84, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
   var init_dist_es4 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/index.js"() {
       import_polyfills84 = __toESM(require_polyfills());
       init_constants2();
       isRetryableByTrait = (error) => error?.$retryable !== void 0;
@@ -24423,10 +24432,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
   var import_polyfills85, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
       import_polyfills85 = __toESM(require_polyfills());
       init_dist_es4();
       DefaultRateLimiter = class _DefaultRateLimiter {
@@ -24541,10 +24550,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/constants.js
   var import_polyfills86, MAXIMUM_RETRY_DELAY, INITIAL_RETRY_TOKENS, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
   var init_constants3 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/constants.js"() {
       import_polyfills86 = __toESM(require_polyfills());
       MAXIMUM_RETRY_DELAY = 20 * 1e3;
       INITIAL_RETRY_TOKENS = 500;
@@ -24554,10 +24563,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
   var import_polyfills87, Retry;
   var init_retries_2026_config = __esm({
-    "node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
       import_polyfills87 = __toESM(require_polyfills());
       Retry = class _Retry {
         static v2026 = typeof process !== "undefined" && process.env?.SMITHY_NEW_RETRIES_2026 === "true";
@@ -24580,10 +24589,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
   var import_polyfills88, DefaultRetryBackoffStrategy;
   var init_DefaultRetryBackoffStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
       import_polyfills88 = __toESM(require_polyfills());
       init_constants3();
       init_retries_2026_config();
@@ -24602,10 +24611,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
   var import_polyfills89, DefaultRetryToken;
   var init_DefaultRetryToken = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
       import_polyfills89 = __toESM(require_polyfills());
       init_constants3();
       DefaultRetryToken = class {
@@ -24635,10 +24644,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
   var import_polyfills90, refusal, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
       import_polyfills90 = __toESM(require_polyfills());
       init_config2();
       init_constants3();
@@ -24732,10 +24741,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
   var import_polyfills91, AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
       import_polyfills91 = __toESM(require_polyfills());
       init_config2();
       init_DefaultRateLimiter();
@@ -24774,26 +24783,26 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
   var import_polyfills92;
   var init_ConfiguredRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
       import_polyfills92 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/types.js
   var import_polyfills93;
   var init_types2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/types.js"() {
       import_polyfills93 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/index.js
   var import_polyfills94;
   var init_dist_es5 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/index.js"() {
       import_polyfills94 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy();
       init_ConfiguredRetryStrategy();
@@ -24806,7 +24815,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
   function setFeature(context, feature, value) {
     if (!context.__aws_sdk_context) {
       context.__aws_sdk_context = {
@@ -24819,25 +24828,25 @@
   }
   var import_polyfills95;
   var init_setFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
       import_polyfills95 = __toESM(require_polyfills());
       init_dist_es5();
       Retry.v2026 ||= typeof process === "object" && process.env?.AWS_NEW_RETRIES_2026 === "true";
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
   var import_polyfills96;
   var init_setTokenFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
       import_polyfills96 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
   var import_polyfills97;
   var init_client2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
       import_polyfills97 = __toESM(require_polyfills());
       init_emitWarningIfUnsupportedVersion();
       init_setCredentialFeature();
@@ -24846,10 +24855,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/constants.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/constants.browser.js
   var import_polyfills98, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
       import_polyfills98 = __toESM(require_polyfills());
       chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
       alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
@@ -24863,10 +24872,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
   var import_polyfills99, fromBase64;
   var init_fromBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
       import_polyfills99 = __toESM(require_polyfills());
       init_constants_browser();
       fromBase64 = (input) => {
@@ -24905,19 +24914,19 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills100, fromUtf8;
   var init_fromUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills100 = __toESM(require_polyfills());
       fromUtf8 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills101, toUint8Array;
   var init_toUint8Array = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills101 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       toUint8Array = (data) => {
@@ -24932,10 +24941,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills102, toUtf8;
   var init_toUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills102 = __toESM(require_polyfills());
       toUtf8 = (input) => {
         if (typeof input === "string") {
@@ -24949,10 +24958,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills103;
   var init_dist_es6 = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills103 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       init_toUint8Array();
@@ -24960,7 +24969,7 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
   function toBase64(_input) {
     let input;
     if (typeof _input === "string") {
@@ -24993,27 +25002,27 @@
   }
   var import_polyfills104;
   var init_toBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
       import_polyfills104 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants_browser();
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/index.js
   var import_polyfills105;
   var init_dist_es7 = __esm({
-    "node_modules/@smithy/util-base64/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/index.js"() {
       import_polyfills105 = __toESM(require_polyfills());
       init_fromBase64_browser();
       init_toBase64_browser();
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
   var import_polyfills106, Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
-    "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
       import_polyfills106 = __toESM(require_polyfills());
       init_dist_es7();
       init_dist_es6();
@@ -25041,10 +25050,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
   var import_polyfills107, ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
       import_polyfills107 = __toESM(require_polyfills());
       ReadableStreamRef = typeof ReadableStream === "function" ? ReadableStream : function() {
       };
@@ -25053,19 +25062,19 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/stream-type-check.js
   var import_polyfills108, isReadableStream;
   var init_stream_type_check = __esm({
-    "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
       import_polyfills108 = __toESM(require_polyfills());
       isReadableStream = (stream) => typeof ReadableStream === "function" && (stream?.constructor?.name === ReadableStream.name || stream instanceof ReadableStream);
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
   var import_polyfills109, createChecksumStream;
   var init_createChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
       import_polyfills109 = __toESM(require_polyfills());
       init_dist_es7();
       init_stream_type_check();
@@ -25104,10 +25113,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
   var import_polyfills110, ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
-    "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
       import_polyfills110 = __toESM(require_polyfills());
       ByteArrayCollector = class {
         allocByteArray;
@@ -25144,7 +25153,7 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
   function createBufferedReadableStream(upstream, size, logger2) {
     const reader = upstream.getReader();
     let streamBufferingLoggedWarning = false;
@@ -25237,17 +25246,17 @@
   }
   var import_polyfills111, createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
-    "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
       import_polyfills111 = __toESM(require_polyfills());
       init_ByteArrayCollector();
       createBufferedReadable = createBufferedReadableStream;
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
   var import_polyfills112, getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
       import_polyfills112 = __toESM(require_polyfills());
       getAwsChunkedEncodingStream = (readableStream, options) => {
         const { base64Encoder, bodyLengthChecker, checksumAlgorithmFn, checksumLocationName, streamHasher } = options;
@@ -25279,43 +25288,43 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/headStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/headStream.browser.js
   var import_polyfills113;
   var init_headStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
       import_polyfills113 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
   var import_polyfills114, escapeUri, hexEncode;
   var init_escape_uri = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
       import_polyfills114 = __toESM(require_polyfills());
       escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
       hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
   var import_polyfills115;
   var init_escape_uri_path = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
       import_polyfills115 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/index.js
   var import_polyfills116;
   var init_dist_es8 = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
       import_polyfills116 = __toESM(require_polyfills());
       init_escape_uri();
       init_escape_uri_path();
     }
   });
 
-  // node_modules/@smithy/querystring-builder/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/querystring-builder/dist-es/index.js
   function buildQueryString(query) {
     const parts = [];
     for (let key of Object.keys(query).sort()) {
@@ -25337,24 +25346,24 @@ ${value}\r
   }
   var import_polyfills117;
   var init_dist_es9 = __esm({
-    "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/querystring-builder/dist-es/index.js"() {
       import_polyfills117 = __toESM(require_polyfills());
       init_dist_es8();
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
   var import_polyfills118;
   var init_create_request = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
       import_polyfills118 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
   function requestTimeout(timeoutInMs = 0) {
     return new Promise((resolve2, reject) => {
       if (timeoutInMs) {
@@ -25368,12 +25377,12 @@ ${value}\r
   }
   var import_polyfills119;
   var init_request_timeout = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
       import_polyfills119 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
   function buildAbortError(abortSignal) {
     const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
     if (reason) {
@@ -25393,7 +25402,7 @@ ${value}\r
   }
   var import_polyfills120, keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
       import_polyfills120 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es9();
@@ -25536,7 +25545,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
   async function collectBlob(blob) {
     const base64 = await readToBase64(blob);
     const arrayBuffer = fromBase64(base64);
@@ -25582,7 +25591,7 @@ ${value}\r
   }
   var import_polyfills121, streamCollector;
   var init_stream_collector = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
       import_polyfills121 = __toESM(require_polyfills());
       init_dist_es7();
       streamCollector = async (stream) => {
@@ -25597,17 +25606,17 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/index.js
   var import_polyfills122;
   var init_dist_es10 = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
       import_polyfills122 = __toESM(require_polyfills());
       init_fetch_http_handler();
       init_stream_collector();
     }
   });
 
-  // node_modules/@smithy/util-hex-encoding/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-hex-encoding/dist-es/index.js
   function fromHex(encoded) {
     if (encoded.length % 2 !== 0) {
       throw new Error("Hex encoded strings must have an even number length");
@@ -25632,7 +25641,7 @@ ${value}\r
   }
   var import_polyfills123, SHORT_TO_HEX, HEX_TO_SHORT;
   var init_dist_es11 = __esm({
-    "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
       import_polyfills123 = __toESM(require_polyfills());
       SHORT_TO_HEX = {};
       HEX_TO_SHORT = {};
@@ -25647,10 +25656,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
   var import_polyfills124, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
       import_polyfills124 = __toESM(require_polyfills());
       init_dist_es10();
       init_dist_es7();
@@ -25712,18 +25721,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
   var import_polyfills125;
   var init_splitStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
       import_polyfills125 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/index.js
   var import_polyfills126;
   var init_dist_es12 = __esm({
-    "node_modules/@smithy/util-stream/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/index.js"() {
       import_polyfills126 = __toESM(require_polyfills());
       init_Uint8ArrayBlobAdapter();
       init_ChecksumStream_browser();
@@ -25736,10 +25745,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
   var import_polyfills127, getChecksumAlgorithmForRequest;
   var init_getChecksumAlgorithmForRequest = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
       import_polyfills127 = __toESM(require_polyfills());
       init_constants();
       getChecksumAlgorithmForRequest = (input, { requestChecksumRequired, requestAlgorithmMember, requestChecksumCalculation }) => {
@@ -25755,20 +25764,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
   var import_polyfills128, getChecksumLocationName;
   var init_getChecksumLocationName = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
       import_polyfills128 = __toESM(require_polyfills());
       init_constants();
       getChecksumLocationName = (algorithm) => algorithm === ChecksumAlgorithm.MD5 ? "content-md5" : `x-amz-checksum-${algorithm.toLowerCase()}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
   var import_polyfills129, hasHeader;
   var init_hasHeader = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
       import_polyfills129 = __toESM(require_polyfills());
       hasHeader = (header, headers) => {
         const soughtHeader = header.toLowerCase();
@@ -25782,10 +25791,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
   var import_polyfills130, hasHeaderWithPrefix;
   var init_hasHeaderWithPrefix = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
       import_polyfills130 = __toESM(require_polyfills());
       hasHeaderWithPrefix = (headerPrefix, headers) => {
         const soughtHeaderPrefix = headerPrefix.toLowerCase();
@@ -25799,26 +25808,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/is-array-buffer/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/is-array-buffer/dist-es/index.js
   var import_polyfills131, isArrayBuffer;
   var init_dist_es13 = __esm({
-    "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
       import_polyfills131 = __toESM(require_polyfills());
       isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
   var import_polyfills132, isStreaming;
   var init_isStreaming = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
       import_polyfills132 = __toESM(require_polyfills());
       init_dist_es13();
       isStreaming = (body) => body !== void 0 && typeof body !== "string" && !ArrayBuffer.isView(body) && !isArrayBuffer(body);
     }
   });
 
-  // node_modules/tslib/tslib.es6.mjs
+  // ../SovereignS3nc/node_modules/tslib/tslib.es6.mjs
   function __awaiter(thisArg, _arguments, P2, generator) {
     function adopt(value) {
       return value instanceof P2 ? value : new P2(function(resolve2) {
@@ -25928,41 +25937,41 @@ ${value}\r
   }
   var import_polyfills133;
   var init_tslib_es6 = __esm({
-    "node_modules/tslib/tslib.es6.mjs"() {
+    "../SovereignS3nc/node_modules/tslib/tslib.es6.mjs"() {
       import_polyfills133 = __toESM(require_polyfills(), 1);
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills134, fromUtf82;
   var init_fromUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills134 = __toESM(require_polyfills());
       fromUtf82 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills135;
   var init_toUint8Array2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills135 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills136;
   var init_toUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills136 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills137;
   var init_dist_es14 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills137 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
       init_toUint8Array2();
@@ -25970,7 +25979,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/convertToBuffer.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/convertToBuffer.js
   function convertToBuffer(data) {
     if (data instanceof Uint8Array)
       return data;
@@ -25984,7 +25993,7 @@ ${value}\r
   }
   var import_polyfills138, fromUtf83;
   var init_convertToBuffer = __esm({
-    "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
       import_polyfills138 = __toESM(require_polyfills());
       init_dist_es14();
       fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
@@ -25993,7 +26002,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/isEmptyData.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/isEmptyData.js
   function isEmptyData(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -26002,12 +26011,12 @@ ${value}\r
   }
   var import_polyfills139;
   var init_isEmptyData = __esm({
-    "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
       import_polyfills139 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/numToUint8.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/numToUint8.js
   function numToUint8(num) {
     return new Uint8Array([
       (num & 4278190080) >> 24,
@@ -26018,12 +26027,12 @@ ${value}\r
   }
   var import_polyfills140;
   var init_numToUint8 = __esm({
-    "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
       import_polyfills140 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
   function uint32ArrayFrom(a_lookUpTable2) {
     if (!Uint32Array.from) {
       var return_array = new Uint32Array(a_lookUpTable2.length);
@@ -26038,15 +26047,15 @@ ${value}\r
   }
   var import_polyfills141;
   var init_uint32ArrayFrom = __esm({
-    "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
       import_polyfills141 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/index.js
   var import_polyfills142;
   var init_module = __esm({
-    "node_modules/@aws-crypto/util/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/index.js"() {
       import_polyfills142 = __toESM(require_polyfills());
       init_convertToBuffer();
       init_isEmptyData();
@@ -26055,10 +26064,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
   var import_polyfills143, AwsCrc32c;
   var init_aws_crc32c = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
       import_polyfills143 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26088,10 +26097,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/index.js
   var import_polyfills144, Crc32c, a_lookupTable, lookupTable;
   var init_module2 = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/index.js"() {
       import_polyfills144 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26386,10 +26395,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
   var import_polyfills145, generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
   var init_Crc64Nvme = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
       import_polyfills145 = __toESM(require_polyfills());
       generateCRC64NVMETable = () => {
         const sliceLength = 8;
@@ -26474,10 +26483,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
   var import_polyfills146, crc64NvmeCrtContainer;
   var init_crc64_nvme_crt_container = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
       import_polyfills146 = __toESM(require_polyfills());
       crc64NvmeCrtContainer = {
         CrtCrc64Nvme: null
@@ -26485,20 +26494,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
   var import_polyfills147;
   var init_dist_es15 = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
       import_polyfills147 = __toESM(require_polyfills());
       init_Crc64Nvme();
       init_crc64_nvme_crt_container();
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
   var import_polyfills148, AwsCrc32;
   var init_aws_crc32 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
       import_polyfills148 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26528,10 +26537,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/index.js
   var import_polyfills149, Crc32, a_lookUpTable, lookupTable2;
   var init_module3 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/index.js"() {
       import_polyfills149 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26826,20 +26835,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
   var import_polyfills150, getCrc32ChecksumAlgorithmFunction;
   var init_getCrc32ChecksumAlgorithmFunction_browser = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
       import_polyfills150 = __toESM(require_polyfills());
       init_module3();
       getCrc32ChecksumAlgorithmFunction = () => AwsCrc32;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
   var import_polyfills151, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
   var init_types3 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
       import_polyfills151 = __toESM(require_polyfills());
       init_constants();
       CLIENT_SUPPORTED_ALGORITHMS = [
@@ -26859,10 +26868,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
   var import_polyfills152, selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
       import_polyfills152 = __toESM(require_polyfills());
       init_module2();
       init_dist_es15();
@@ -26897,10 +26906,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
   var import_polyfills153, stringHasher;
   var init_stringHasher = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
       import_polyfills153 = __toESM(require_polyfills());
       init_dist_es6();
       stringHasher = (checksumAlgorithmFn, body) => {
@@ -26911,10 +26920,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
   var import_polyfills154, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
       import_polyfills154 = __toESM(require_polyfills());
       init_client2();
       init_dist_es2();
@@ -27034,10 +27043,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
   var import_polyfills155, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
       import_polyfills155 = __toESM(require_polyfills());
       init_client2();
       init_constants();
@@ -27079,10 +27088,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
   var import_polyfills156, getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
       import_polyfills156 = __toESM(require_polyfills());
       init_types3();
       getChecksumAlgorithmListForResponse = (responseAlgorithms = []) => {
@@ -27101,10 +27110,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
   var import_polyfills157, isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
       import_polyfills157 = __toESM(require_polyfills());
       isChecksumWithPartNumber = (checksum) => {
         const lastHyphenIndex = checksum.lastIndexOf("-");
@@ -27122,20 +27131,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
   var import_polyfills158, getChecksum;
   var init_getChecksum = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
       import_polyfills158 = __toESM(require_polyfills());
       init_stringHasher();
       getChecksum = async (body, { checksumAlgorithmFn, base64Encoder }) => base64Encoder(await stringHasher(checksumAlgorithmFn, body));
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
   var import_polyfills159, validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
       import_polyfills159 = __toESM(require_polyfills());
       init_dist_es12();
       init_constants();
@@ -27183,10 +27192,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
   var import_polyfills160, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
       import_polyfills160 = __toESM(require_polyfills());
       init_dist_es2();
       init_getChecksumAlgorithmListForResponse();
@@ -27237,10 +27246,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
   var import_polyfills161, getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
       import_polyfills161 = __toESM(require_polyfills());
       init_flexibleChecksumsInputMiddleware();
       init_flexibleChecksumsMiddleware();
@@ -27255,20 +27264,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
   var import_polyfills162, getSmithyContext;
   var init_getSmithyContext = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
       import_polyfills162 = __toESM(require_polyfills());
       init_dist_es();
       getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
   var import_polyfills163, normalizeProvider;
   var init_normalizeProvider = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
       import_polyfills163 = __toESM(require_polyfills());
       normalizeProvider = (input) => {
         if (typeof input === "function")
@@ -27279,20 +27288,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/index.js
   var import_polyfills164;
   var init_dist_es16 = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/index.js"() {
       import_polyfills164 = __toESM(require_polyfills());
       init_getSmithyContext();
       init_normalizeProvider();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
   var import_polyfills165, resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
       import_polyfills165 = __toESM(require_polyfills());
       init_dist_es16();
       init_constants();
@@ -27308,10 +27317,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
   var import_polyfills166;
   var init_dist_es17 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
       import_polyfills166 = __toESM(require_polyfills());
       init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS();
       init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS();
@@ -27322,13 +27331,13 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
   function resolveHostHeaderConfig(input) {
     return input;
   }
   var import_polyfills167, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
   var init_dist_es18 = __esm({
-    "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
       import_polyfills167 = __toESM(require_polyfills());
       init_dist_es2();
       hostHeaderMiddleware = (options) => (next) => async (args) => {
@@ -27362,10 +27371,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
   var import_polyfills168, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
       import_polyfills168 = __toESM(require_polyfills());
       loggerMiddleware = () => (next, context) => async (args) => {
         try {
@@ -27411,19 +27420,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/index.js
   var import_polyfills169;
   var init_dist_es19 = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
       import_polyfills169 = __toESM(require_polyfills());
       init_loggerMiddleware();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
   var import_polyfills170, recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
       import_polyfills170 = __toESM(require_polyfills());
       recursionDetectionMiddlewareOptions = {
         step: "build",
@@ -27435,19 +27444,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
   var import_polyfills171, recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
       import_polyfills171 = __toESM(require_polyfills());
       recursionDetectionMiddleware = () => (next) => async (args) => next(args);
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
   var import_polyfills172, getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
       import_polyfills172 = __toESM(require_polyfills());
       init_configuration();
       init_recursionDetectionMiddleware_browser();
@@ -27459,20 +27468,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
   var import_polyfills173;
   var init_dist_es20 = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
       import_polyfills173 = __toESM(require_polyfills());
       init_getRecursionDetectionPlugin();
       init_recursionDetectionMiddleware_browser();
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
   var import_polyfills174, getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
   var init_MiddlewareStack = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
       import_polyfills174 = __toESM(require_polyfills());
       getAllAliases = (name, aliases) => {
         const _aliases = [];
@@ -27740,19 +27749,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/index.js
   var import_polyfills175;
   var init_dist_es21 = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/index.js"() {
       import_polyfills175 = __toESM(require_polyfills());
       init_MiddlewareStack();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/client.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/client.js
   var import_polyfills176, Client;
   var init_client3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/client.js"() {
       import_polyfills176 = __toESM(require_polyfills());
       init_dist_es21();
       Client = class {
@@ -27804,10 +27813,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
   var import_polyfills177, collectBody;
   var init_collect_stream_body = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
       import_polyfills177 = __toESM(require_polyfills());
       init_dist_es12();
       collectBody = async (streamBody = new Uint8Array(), context) => {
@@ -27823,7 +27832,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
   function extendedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
       return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
@@ -27831,15 +27840,15 @@ ${value}\r
   }
   var import_polyfills178;
   var init_extended_encode_uri_component = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
       import_polyfills178 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/deref.js
   var import_polyfills179, deref;
   var init_deref = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
       import_polyfills179 = __toESM(require_polyfills());
       deref = (schemaRef) => {
         if (typeof schemaRef === "function") {
@@ -27850,10 +27859,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
   var import_polyfills180, operation;
   var init_operation = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
       import_polyfills180 = __toESM(require_polyfills());
       operation = (namespace, name, traits, input, output) => ({
         name,
@@ -27865,10 +27874,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
   var import_polyfills181, schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
       import_polyfills181 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es16();
@@ -27934,7 +27943,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/querystring-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/querystring-parser/dist-es/index.js
   function parseQueryString(querystring) {
     const query = {};
     querystring = querystring.replace(/^\?/, "");
@@ -27958,15 +27967,15 @@ ${value}\r
   }
   var import_polyfills182;
   var init_dist_es22 = __esm({
-    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/querystring-parser/dist-es/index.js"() {
       import_polyfills182 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/url-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/url-parser/dist-es/index.js
   var import_polyfills183, parseUrl;
   var init_dist_es23 = __esm({
-    "node_modules/@smithy/url-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/url-parser/dist-es/index.js"() {
       import_polyfills183 = __toESM(require_polyfills());
       init_dist_es22();
       parseUrl = (url) => {
@@ -27989,10 +27998,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
   var import_polyfills184, toEndpointV1;
   var init_toEndpointV1 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
       import_polyfills184 = __toESM(require_polyfills());
       init_dist_es23();
       toEndpointV1 = (endpoint) => {
@@ -28014,19 +28023,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
   var import_polyfills185;
   var init_endpoints2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
       import_polyfills185 = __toESM(require_polyfills());
       init_toEndpointV1();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
   var import_polyfills186, schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
       import_polyfills186 = __toESM(require_polyfills());
       init_endpoints2();
       init_dist_es16();
@@ -28048,7 +28057,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
   function getSchemaSerdePlugin(config) {
     return {
       applyToStack: (commandStack) => {
@@ -28060,7 +28069,7 @@ ${value}\r
   }
   var import_polyfills187, deserializerMiddlewareOption, serializerMiddlewareOption;
   var init_getSchemaSerdePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
       import_polyfills187 = __toESM(require_polyfills());
       init_schemaDeserializationMiddleware();
       init_schemaSerializationMiddleware();
@@ -28079,55 +28088,55 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
   var import_polyfills188;
   var init_Schema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
       import_polyfills188 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
   var import_polyfills189;
   var init_ListSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
       import_polyfills189 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
   var import_polyfills190;
   var init_MapSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
       import_polyfills190 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
   var import_polyfills191;
   var init_OperationSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
       import_polyfills191 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
   var import_polyfills192;
   var init_StructureSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
       import_polyfills192 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
   var import_polyfills193;
   var init_ErrorSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
       import_polyfills193 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
   function translateTraits(indicator) {
     if (typeof indicator === "object") {
       return indicator;
@@ -28155,13 +28164,13 @@ ${value}\r
   }
   var import_polyfills194, traitsCache;
   var init_translateTraits = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
       import_polyfills194 = __toESM(require_polyfills());
       traitsCache = [];
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
   function member(memberSchema, memberName) {
     if (memberSchema instanceof NormalizedSchema) {
       return Object.assign(memberSchema, {
@@ -28174,7 +28183,7 @@ ${value}\r
   }
   var import_polyfills195, anno, simpleSchemaCacheN, simpleSchemaCacheS, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
       import_polyfills195 = __toESM(require_polyfills());
       init_deref();
       init_translateTraits();
@@ -28451,26 +28460,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
   var import_polyfills196;
   var init_SimpleSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
       import_polyfills196 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
   var import_polyfills197;
   var init_sentinels2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
       import_polyfills197 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
   var import_polyfills198, TypeRegistry;
   var init_TypeRegistry = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
       import_polyfills198 = __toESM(require_polyfills());
       TypeRegistry = class _TypeRegistry {
         namespace;
@@ -28564,10 +28573,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/index.js
   var import_polyfills199;
   var init_schema2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
       import_polyfills199 = __toESM(require_polyfills());
       init_deref();
       init_getSchemaSerdePlugin();
@@ -28586,18 +28595,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
   var import_polyfills200;
   var init_copyDocumentWithTransform = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
       import_polyfills200 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
   var import_polyfills201, expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
   var init_parse_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
       import_polyfills201 = __toESM(require_polyfills());
       expectNumber = (value) => {
         if (value === null || value === void 0) {
@@ -28690,7 +28699,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
   function dateToUtcString(date2) {
     const year2 = date2.getUTCFullYear();
     const month = date2.getUTCMonth();
@@ -28707,7 +28716,7 @@ ${value}\r
   }
   var import_polyfills202, DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
   var init_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
       import_polyfills202 = __toESM(require_polyfills());
       init_parse_utils();
       DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -28812,19 +28821,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
   var import_polyfills203, randomUUID;
   var init_randomUUID_browser = __esm({
-    "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
       import_polyfills203 = __toESM(require_polyfills());
       randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/v4.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/v4.js
   var import_polyfills204, decimalToHex, v4;
   var init_v4 = __esm({
-    "node_modules/@smithy/uuid/dist-es/v4.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/v4.js"() {
       import_polyfills204 = __toESM(require_polyfills());
       init_randomUUID_browser();
       decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
@@ -28841,28 +28850,28 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/index.js
   var import_polyfills205;
   var init_dist_es24 = __esm({
-    "node_modules/@smithy/uuid/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/index.js"() {
       import_polyfills205 = __toESM(require_polyfills());
       init_v4();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
   var import_polyfills206;
   var init_generateIdempotencyToken = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
       import_polyfills206 = __toESM(require_polyfills());
       init_dist_es24();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
   var import_polyfills207, LazyJsonString;
   var init_lazy_json = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
       import_polyfills207 = __toESM(require_polyfills());
       LazyJsonString = function LazyJsonString2(val) {
         const str = Object.assign(new String(val), {
@@ -28890,7 +28899,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
   function quoteHeader(part) {
     if (part.includes(",") || part.includes('"')) {
       part = `"${part.replace(/"/g, '\\"')}"`;
@@ -28899,12 +28908,12 @@ ${value}\r
   }
   var import_polyfills208;
   var init_quote_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
       import_polyfills208 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
   function range(v2, min, max) {
     const _v = Number(v2);
     if (_v < min || _v > max) {
@@ -28913,7 +28922,7 @@ ${value}\r
   }
   var import_polyfills209, ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
   var init_schema_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
       import_polyfills209 = __toESM(require_polyfills());
       ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
       mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
@@ -29009,7 +29018,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
   function splitEvery(value, delimiter, numDelimiters) {
     if (numDelimiters <= 0 || !Number.isInteger(numDelimiters)) {
       throw new Error("Invalid number of delimiters (" + numDelimiters + ") for splitEvery.");
@@ -29038,15 +29047,15 @@ ${value}\r
   }
   var import_polyfills210;
   var init_split_every = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
       import_polyfills210 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
   var import_polyfills211, splitHeader;
   var init_split_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
       import_polyfills211 = __toESM(require_polyfills());
       splitHeader = (value) => {
         const z2 = value.length;
@@ -29088,10 +29097,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
   var import_polyfills212, format, NumericValue;
   var init_NumericValue = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
       import_polyfills212 = __toESM(require_polyfills());
       format = /^-?\d*(\.\d+)?$/;
       NumericValue = class _NumericValue {
@@ -29118,10 +29127,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/index.js
   var import_polyfills213;
   var init_serde2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
       import_polyfills213 = __toESM(require_polyfills());
       init_copyDocumentWithTransform();
       init_date_utils();
@@ -29136,10 +29145,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
   var import_polyfills214, SerdeContext;
   var init_SerdeContext = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
       import_polyfills214 = __toESM(require_polyfills());
       SerdeContext = class {
         serdeContext;
@@ -29150,10 +29159,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
   var import_polyfills215, EventStreamSerde;
   var init_EventStreamSerde = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
       import_polyfills215 = __toESM(require_polyfills());
       init_dist_es6();
       EventStreamSerde = class {
@@ -29401,23 +29410,23 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
   var event_streams_exports = {};
   __export(event_streams_exports, {
     EventStreamSerde: () => EventStreamSerde
   });
   var import_polyfills216;
   var init_event_streams = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
       import_polyfills216 = __toESM(require_polyfills());
       init_EventStreamSerde();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
   var import_polyfills217, HttpProtocol;
   var init_HttpProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
       import_polyfills217 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es2();
@@ -29563,10 +29572,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
   var import_polyfills218, HttpBindingProtocol;
   var init_HttpBindingProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
       import_polyfills218 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -29840,31 +29849,31 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
   var import_polyfills219;
   var init_RpcProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
       import_polyfills219 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
   var import_polyfills220;
   var init_resolve_path = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
       import_polyfills220 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
   var import_polyfills221;
   var init_requestBuilder = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
       import_polyfills221 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
   function determineTimestampFormat(ns, settings) {
     if (settings.timestampFormat.useTrait) {
       if (ns.isTimestampSchema() && (ns.getSchema() === 5 || ns.getSchema() === 6 || ns.getSchema() === 7)) {
@@ -29877,15 +29886,15 @@ ${value}\r
   }
   var import_polyfills222;
   var init_determineTimestampFormat = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
       import_polyfills222 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
   var import_polyfills223, FromStringShapeDeserializer;
   var init_FromStringShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
       import_polyfills223 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -29956,10 +29965,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
   var import_polyfills224, HttpInterceptingShapeDeserializer;
   var init_HttpInterceptingShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
       import_polyfills224 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es6();
@@ -30005,10 +30014,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
   var import_polyfills225, ToStringShapeSerializer;
   var init_ToStringShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
       import_polyfills225 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -30103,10 +30112,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
   var import_polyfills226, HttpInterceptingShapeSerializer;
   var init_HttpInterceptingShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
       import_polyfills226 = __toESM(require_polyfills());
       init_schema2();
       init_ToStringShapeSerializer();
@@ -30144,10 +30153,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/index.js
   var import_polyfills227;
   var init_protocols = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
       import_polyfills227 = __toESM(require_polyfills());
       init_collect_stream_body();
       init_extended_encode_uri_component();
@@ -30165,15 +30174,15 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
   var import_polyfills228;
   var init_collect_stream_body2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
       import_polyfills228 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
   function schemaLogFilter(schema, data) {
     if (data == null) {
       return data;
@@ -30206,17 +30215,17 @@ ${value}\r
   }
   var import_polyfills229, SENSITIVE_STRING;
   var init_schemaLogFilter = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
       import_polyfills229 = __toESM(require_polyfills());
       init_schema2();
       SENSITIVE_STRING = "***SensitiveInformation***";
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/command.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/command.js
   var import_polyfills230, Command, ClassBuilder;
   var init_command2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/command.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/command.js"() {
       import_polyfills230 = __toESM(require_polyfills());
       init_dist_es21();
       init_dist_es();
@@ -30353,18 +30362,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/constants.js
   var import_polyfills231;
   var init_constants4 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/constants.js"() {
       import_polyfills231 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
   var import_polyfills232, createAggregatedClient;
   var init_create_aggregated_client = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
       import_polyfills232 = __toESM(require_polyfills());
       createAggregatedClient = (commands2, Client2, options) => {
         for (const [command, CommandCtor] of Object.entries(commands2)) {
@@ -30414,10 +30423,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/exceptions.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/exceptions.js
   var import_polyfills233, ServiceException, decorateServiceException;
   var init_exceptions = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
       import_polyfills233 = __toESM(require_polyfills());
       ServiceException = class _ServiceException extends Error {
         $fault;
@@ -30467,18 +30476,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
   var import_polyfills234;
   var init_default_error_handler = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
       import_polyfills234 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
   var import_polyfills235, loadConfigsForDefaultMode;
   var init_defaults_mode = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
       import_polyfills235 = __toESM(require_polyfills());
       loadConfigsForDefaultMode = (mode) => {
         switch (mode) {
@@ -30509,26 +30518,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
   var import_polyfills236;
   var init_emitWarningIfUnsupportedVersion2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
       import_polyfills236 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
   var import_polyfills237;
   var init_extended_encode_uri_component2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
       import_polyfills237 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
   var import_polyfills238, knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
       import_polyfills238 = __toESM(require_polyfills());
       init_dist_es();
       knownAlgorithms = Object.values(AlgorithmId);
@@ -30580,10 +30589,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
   var import_polyfills239, getRetryConfiguration, resolveRetryRuntimeConfig;
   var init_retry2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
       import_polyfills239 = __toESM(require_polyfills());
       getRetryConfiguration = (runtimeConfig) => {
         return {
@@ -30603,10 +30612,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
   var import_polyfills240, getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
   var init_defaultExtensionConfiguration2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
       import_polyfills240 = __toESM(require_polyfills());
       init_checksum3();
       init_retry2();
@@ -30619,27 +30628,27 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/index.js
   var import_polyfills241;
   var init_extensions3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
       import_polyfills241 = __toESM(require_polyfills());
       init_defaultExtensionConfiguration2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
   var import_polyfills242;
   var init_get_array_if_single_item = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
       import_polyfills242 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
   var import_polyfills243, getValueFromTextNode;
   var init_get_value_from_text_node = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
       import_polyfills243 = __toESM(require_polyfills());
       getValueFromTextNode = (obj) => {
         const textNodeName = "#text";
@@ -30655,18 +30664,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
   var import_polyfills244;
   var init_is_serializable_header_value = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
       import_polyfills244 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
   var import_polyfills245, NoOpLogger;
   var init_NoOpLogger = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
       import_polyfills245 = __toESM(require_polyfills());
       NoOpLogger = class {
         trace() {
@@ -30683,42 +30692,42 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/object-mapping.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/object-mapping.js
   var import_polyfills246;
   var init_object_mapping = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
       import_polyfills246 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/resolve-path.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/resolve-path.js
   var import_polyfills247;
   var init_resolve_path2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
       import_polyfills247 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/ser-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/ser-utils.js
   var import_polyfills248;
   var init_ser_utils = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
       import_polyfills248 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/serde-json.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/serde-json.js
   var import_polyfills249;
   var init_serde_json = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
       import_polyfills249 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/index.js
   var import_polyfills250;
   var init_dist_es25 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/index.js"() {
       import_polyfills250 = __toESM(require_polyfills());
       init_client3();
       init_collect_stream_body2();
@@ -30743,7 +30752,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
   function checkContentLengthHeader() {
     return (next, context) => async (args) => {
       const { request } = args;
@@ -30762,7 +30771,7 @@ ${value}\r
   }
   var import_polyfills251, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
       import_polyfills251 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es25();
@@ -30782,10 +30791,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
   var import_polyfills252, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
       import_polyfills252 = __toESM(require_polyfills());
       regionRedirectEndpointMiddleware = (config) => {
         return (next, context) => async (args) => {
@@ -30831,7 +30840,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
   function regionRedirectMiddleware(clientConfig) {
     return (next, context) => async (args) => {
       try {
@@ -30860,7 +30869,7 @@ ${value}\r
   }
   var import_polyfills253, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
       import_polyfills253 = __toESM(require_polyfills());
       init_region_redirect_endpoint_middleware();
       regionRedirectMiddlewareOptions = {
@@ -30878,10 +30887,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
   var import_polyfills254, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
       import_polyfills254 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es25();
@@ -30918,10 +30927,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
   var import_polyfills255, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
       import_polyfills255 = __toESM(require_polyfills());
       S3ExpressIdentityCache = class _S3ExpressIdentityCache {
         data;
@@ -30965,10 +30974,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
   var import_polyfills256, S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
       import_polyfills256 = __toESM(require_polyfills());
       S3ExpressIdentityCacheEntry = class {
         _identity;
@@ -30987,10 +30996,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
   var import_polyfills257, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
       import_polyfills257 = __toESM(require_polyfills());
       init_S3ExpressIdentityCache();
       init_S3ExpressIdentityCacheEntry();
@@ -31044,10 +31053,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/constants.js
   var import_polyfills258, ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
   var init_constants5 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/constants.js"() {
       import_polyfills258 = __toESM(require_polyfills());
       ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
       CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
@@ -31091,10 +31100,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
   var import_polyfills259, signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
   var init_credentialDerivation = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
       import_polyfills259 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31126,10 +31135,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
   var import_polyfills260, getCanonicalHeaders;
   var init_getCanonicalHeaders = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
       import_polyfills260 = __toESM(require_polyfills());
       init_constants5();
       getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
@@ -31151,10 +31160,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
   var import_polyfills261, getPayloadHash;
   var init_getPayloadHash = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
       import_polyfills261 = __toESM(require_polyfills());
       init_dist_es13();
       init_dist_es11();
@@ -31178,7 +31187,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
   function negate(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -31191,7 +31200,7 @@ ${value}\r
   }
   var import_polyfills262, HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
   var init_HeaderFormatter = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
       import_polyfills262 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31311,10 +31320,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/headerUtil.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/headerUtil.js
   var import_polyfills263, hasHeader2;
   var init_headerUtil = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
       import_polyfills263 = __toESM(require_polyfills());
       hasHeader2 = (soughtHeader, headers) => {
         soughtHeader = soughtHeader.toLowerCase();
@@ -31328,10 +31337,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
   var import_polyfills264, moveHeadersToQuery;
   var init_moveHeadersToQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
       import_polyfills264 = __toESM(require_polyfills());
       init_dist_es2();
       moveHeadersToQuery = (request, options = {}) => {
@@ -31352,10 +31361,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
   var import_polyfills265, prepareRequest;
   var init_prepareRequest = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
       import_polyfills265 = __toESM(require_polyfills());
       init_dist_es2();
       init_constants5();
@@ -31371,10 +31380,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
   var import_polyfills266, getCanonicalQuery;
   var init_getCanonicalQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
       import_polyfills266 = __toESM(require_polyfills());
       init_dist_es8();
       init_constants5();
@@ -31399,10 +31408,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/utilDate.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/utilDate.js
   var import_polyfills267, iso8601, toDate;
   var init_utilDate = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
       import_polyfills267 = __toESM(require_polyfills());
       iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
       toDate = (time2) => {
@@ -31420,10 +31429,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
   var import_polyfills268, SignatureV4Base;
   var init_SignatureV4Base = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
       import_polyfills268 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es16();
@@ -31504,10 +31513,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
   var import_polyfills269, SignatureV4;
   var init_SignatureV4 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
       import_polyfills269 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31646,10 +31655,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
   var import_polyfills270, signatureV4aContainer;
   var init_signature_v4a_container = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
       import_polyfills270 = __toESM(require_polyfills());
       signatureV4aContainer = {
         SignatureV4a: null
@@ -31657,10 +31666,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/index.js
   var import_polyfills271;
   var init_dist_es26 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/index.js"() {
       import_polyfills271 = __toESM(require_polyfills());
       init_SignatureV4();
       init_constants5();
@@ -31669,10 +31678,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
   var import_polyfills272, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants6 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
       import_polyfills272 = __toESM(require_polyfills());
       S3_EXPRESS_BUCKET_TYPE = "Directory";
       S3_EXPRESS_BACKEND = "S3Express";
@@ -31682,7 +31691,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
   function getCredentialsWithoutSessionToken(credentials) {
     const credentialsWithoutSessionToken = {
       accessKeyId: credentials.accessKeyId,
@@ -31705,7 +31714,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills273, SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
       import_polyfills273 = __toESM(require_polyfills());
       init_dist_es26();
       init_constants6();
@@ -31731,10 +31740,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
   var import_polyfills274, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
       import_polyfills274 = __toESM(require_polyfills());
       init_client2();
       init_dist_es2();
@@ -31779,18 +31788,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/getSmithyContext.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/getSmithyContext.js
   var import_polyfills275;
   var init_getSmithyContext2 = __esm({
-    "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
       import_polyfills275 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
   var import_polyfills276, resolveAuthOptions;
   var init_resolveAuthOptions = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
       import_polyfills276 = __toESM(require_polyfills());
       resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
         if (!authSchemePreference || authSchemePreference.length === 0) {
@@ -31815,7 +31824,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
   function convertHttpAuthSchemesToMap(httpAuthSchemes) {
     const map3 = /* @__PURE__ */ new Map();
     for (const scheme of httpAuthSchemes) {
@@ -31825,7 +31834,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills277, httpAuthSchemeMiddleware;
   var init_httpAuthSchemeMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
       import_polyfills277 = __toESM(require_polyfills());
       init_dist_es16();
       init_resolveAuthOptions();
@@ -31865,10 +31874,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
   var import_polyfills278, httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
   var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
       import_polyfills278 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
@@ -31890,18 +31899,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
   var import_polyfills279;
   var init_getHttpAuthSchemePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
       import_polyfills279 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
   var import_polyfills280;
   var init_middleware_http_auth_scheme = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
       import_polyfills280 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       init_getHttpAuthSchemeEndpointRuleSetPlugin();
@@ -31909,10 +31918,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
   var import_polyfills281, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
       import_polyfills281 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es16();
@@ -31941,10 +31950,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
   var import_polyfills282, httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
       import_polyfills282 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       httpSigningMiddlewareOptions = {
@@ -31964,20 +31973,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
   var import_polyfills283;
   var init_middleware_http_signing = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
       import_polyfills283 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       init_getHttpSigningMiddleware();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/normalizeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/normalizeProvider.js
   var import_polyfills284, normalizeProvider2;
   var init_normalizeProvider2 = __esm({
-    "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
       import_polyfills284 = __toESM(require_polyfills());
       normalizeProvider2 = (input) => {
         if (typeof input === "function")
@@ -31988,7 +31997,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/pagination/createPaginator.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/pagination/createPaginator.js
   function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
     return async function* paginateOperation(config, input, ...additionalArguments) {
       const _input = input;
@@ -32015,7 +32024,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills285, makePagedClientRequest, get;
   var init_createPaginator = __esm({
-    "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
       import_polyfills285 = __toESM(require_polyfills());
       makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
         let command = new CommandCtor(input);
@@ -32036,15 +32045,15 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
   var import_polyfills286;
   var init_requestBuilder2 = __esm({
-    "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
       import_polyfills286 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/setFeature.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/setFeature.js
   function setFeature2(context, feature, value) {
     if (!context.__smithy_context) {
       context.__smithy_context = {
@@ -32057,15 +32066,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills287;
   var init_setFeature2 = __esm({
-    "node_modules/@smithy/core/dist-es/setFeature.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/setFeature.js"() {
       import_polyfills287 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
   var import_polyfills288, DefaultIdentityProviderConfig;
   var init_DefaultIdentityProviderConfig = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
       import_polyfills288 = __toESM(require_polyfills());
       DefaultIdentityProviderConfig = class {
         authSchemes = /* @__PURE__ */ new Map();
@@ -32084,34 +32093,34 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
   var import_polyfills289;
   var init_httpApiKeyAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
       import_polyfills289 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
   var import_polyfills290;
   var init_httpBearerAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
       import_polyfills290 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
   var import_polyfills291;
   var init_noAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
       import_polyfills291 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
   var import_polyfills292;
   var init_httpAuthSchemes = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
       import_polyfills292 = __toESM(require_polyfills());
       init_httpApiKeyAuth();
       init_httpBearerAuth();
@@ -32119,10 +32128,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
   var import_polyfills293, createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
   var init_memoizeIdentityProvider = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
       import_polyfills293 = __toESM(require_polyfills());
       createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
         return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
@@ -32181,10 +32190,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
   var import_polyfills294;
   var init_util_identity_and_auth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
       import_polyfills294 = __toESM(require_polyfills());
       init_DefaultIdentityProviderConfig();
       init_httpAuthSchemes();
@@ -32192,10 +32201,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/index.js
   var import_polyfills295;
   var init_dist_es27 = __esm({
-    "node_modules/@smithy/core/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/index.js"() {
       import_polyfills295 = __toESM(require_polyfills());
       init_getSmithyContext2();
       init_middleware_http_auth_scheme();
@@ -32208,10 +32217,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
   var import_polyfills296, signS3Express;
   var init_signS3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
       import_polyfills296 = __toESM(require_polyfills());
       signS3Express = async (s3ExpressIdentity, signingOptions, request, sigV4MultiRegionSigner) => {
         const signedRequest = await sigV4MultiRegionSigner.signWithCredentials(request, s3ExpressIdentity, {});
@@ -32223,10 +32232,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
   var import_polyfills297, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
       import_polyfills297 = __toESM(require_polyfills());
       init_dist_es27();
       init_dist_es2();
@@ -32268,10 +32277,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
   var import_polyfills298;
   var init_s3_express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
       import_polyfills298 = __toESM(require_polyfills());
       init_S3ExpressIdentityProviderImpl();
       init_SignatureV4S3Express();
@@ -32280,10 +32289,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
   var import_polyfills299, resolveS3Config;
   var init_s3Configuration = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
       import_polyfills299 = __toESM(require_polyfills());
       init_s3_express();
       resolveS3Config = (input, { session }) => {
@@ -32304,7 +32313,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
   function toStream(bytes) {
     return new ReadableStream({
       start(controller) {
@@ -32315,15 +32324,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills300;
   var init_toStream_browser = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
       import_polyfills300 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
   var import_polyfills301, THROW_IF_EMPTY_BODY, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
       import_polyfills301 = __toESM(require_polyfills());
       init_dist_es2();
       init_toStream_browser();
@@ -32379,16 +32388,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
   var import_polyfills302, validate;
   var init_dist_es28 = __esm({
-    "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
       import_polyfills302 = __toESM(require_polyfills());
       validate = (str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
   function bucketEndpointMiddleware(options) {
     return (next, context) => async (args) => {
       if (options.bucketEndpoint) {
@@ -32419,7 +32428,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills303, bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
       import_polyfills303 = __toESM(require_polyfills());
       bucketEndpointMiddlewareOptions = {
         name: "bucketEndpointMiddleware",
@@ -32430,7 +32439,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
   function validateBucketNameMiddleware({ bucketEndpoint }) {
     return (next) => async (args) => {
       const { input: { Bucket } } = args;
@@ -32444,7 +32453,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills304, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
       import_polyfills304 = __toESM(require_polyfills());
       init_dist_es28();
       init_bucket_endpoint_middleware();
@@ -32463,10 +32472,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
+  // ../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
   var import_polyfills305, TEXT_ENCODER, calculateBodyLength;
   var init_calculateBodyLength = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
       import_polyfills305 = __toESM(require_polyfills());
       TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
       calculateBodyLength = (body) => {
@@ -32495,19 +32504,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/index.js
   var import_polyfills306;
   var init_dist_es29 = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
       import_polyfills306 = __toESM(require_polyfills());
       init_calculateBodyLength();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
   var import_polyfills307, ProtocolLib;
   var init_ProtocolLib = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
       import_polyfills307 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es25();
@@ -32646,26 +32655,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
   var import_polyfills308;
   var init_AwsSmithyRpcV2CborProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
       import_polyfills308 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
   var import_polyfills309;
   var init_coercing_serializers = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
       import_polyfills309 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
   var import_polyfills310, SerdeContextConfig;
   var init_ConfigurableSerdeContext = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
       import_polyfills310 = __toESM(require_polyfills());
       SerdeContextConfig = class {
         serdeContext;
@@ -32676,10 +32685,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
   var import_polyfills311, UnionSerde;
   var init_UnionSerde = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
       import_polyfills311 = __toESM(require_polyfills());
       UnionSerde = class {
         from;
@@ -32710,85 +32719,85 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
   var import_polyfills312;
   var init_parseJsonBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
       import_polyfills312 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
   var import_polyfills313;
   var init_JsonShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
       import_polyfills313 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
   var import_polyfills314;
   var init_JsonShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
       import_polyfills314 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
   var import_polyfills315;
   var init_JsonCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
       import_polyfills315 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
   var import_polyfills316;
   var init_AwsJsonRpcProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
       import_polyfills316 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
   var import_polyfills317;
   var init_AwsJson1_0Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
       import_polyfills317 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
   var import_polyfills318;
   var init_AwsJson1_1Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
       import_polyfills318 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
   var import_polyfills319;
   var init_AwsRestJsonProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
       import_polyfills319 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
   var import_polyfills320;
   var init_awsExpectUnion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
       import_polyfills320 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
   function escapeAttribute(value) {
     return value.replace(ATTR_ESCAPE_RE, (ch) => ATTR_ESCAPE_MAP[ch]);
   }
   var import_polyfills321, ATTR_ESCAPE_RE, ATTR_ESCAPE_MAP;
   var init_escape_attribute = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
       import_polyfills321 = __toESM(require_polyfills());
       ATTR_ESCAPE_RE = /[&<>"]/g;
       ATTR_ESCAPE_MAP = {
@@ -32800,13 +32809,13 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
   function escapeElement(value) {
     return value.replace(ELEMENT_ESCAPE_RE, (ch) => ELEMENT_ESCAPE_MAP[ch]);
   }
   var import_polyfills322, ELEMENT_ESCAPE_RE, ELEMENT_ESCAPE_MAP;
   var init_escape_element = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
       import_polyfills322 = __toESM(require_polyfills());
       ELEMENT_ESCAPE_RE = /[&"'<>\r\n\u0085\u2028]/g;
       ELEMENT_ESCAPE_MAP = {
@@ -32823,10 +32832,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
   var import_polyfills323, XmlText;
   var init_XmlText = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
       import_polyfills323 = __toESM(require_polyfills());
       init_escape_element();
       XmlText = class {
@@ -32841,10 +32850,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
   var import_polyfills324, XmlNode;
   var init_XmlNode = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
       import_polyfills324 = __toESM(require_polyfills());
       init_escape_attribute();
       init_XmlText();
@@ -32937,7 +32946,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
   function parseXML(xmlString) {
     if (!parser) {
       parser = new DOMParser();
@@ -32993,15 +33002,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills325, parser;
   var init_xml_parser_browser = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
       import_polyfills325 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/index.js
   var import_polyfills326;
   var init_dist_es30 = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
       import_polyfills326 = __toESM(require_polyfills());
       init_XmlNode();
       init_XmlText();
@@ -33009,10 +33018,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
   var import_polyfills327, XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
       import_polyfills327 = __toESM(require_polyfills());
       init_dist_es30();
       init_protocols();
@@ -33163,42 +33172,42 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
   var import_polyfills328;
   var init_QueryShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
       import_polyfills328 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
   var import_polyfills329;
   var init_AwsQueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
       import_polyfills329 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
   var import_polyfills330;
   var init_AwsEc2QueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
       import_polyfills330 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
   var import_polyfills331;
   var init_QuerySerializerSettings = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
       import_polyfills331 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
   var import_polyfills332, loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
       import_polyfills332 = __toESM(require_polyfills());
       loadRestXmlErrorCode = (output, data) => {
         if (data?.Error?.Code !== void 0) {
@@ -33214,10 +33223,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
   var import_polyfills333, XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
       import_polyfills333 = __toESM(require_polyfills());
       init_dist_es30();
       init_protocols();
@@ -33494,10 +33503,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
   var import_polyfills334, XmlCodec;
   var init_XmlCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
       import_polyfills334 = __toESM(require_polyfills());
       init_ConfigurableSerdeContext();
       init_XmlShapeDeserializer();
@@ -33522,10 +33531,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
   var import_polyfills335, AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
       import_polyfills335 = __toESM(require_polyfills());
       init_protocols();
       init_schema2();
@@ -33622,10 +33631,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
   var import_polyfills336;
   var init_protocols2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
       import_polyfills336 = __toESM(require_polyfills());
       init_AwsSmithyRpcV2CborProtocol();
       init_coercing_serializers();
@@ -33650,10 +33659,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
   var import_polyfills337, S3RestXmlProtocol;
   var init_S3RestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
       import_polyfills337 = __toESM(require_polyfills());
       init_protocols2();
       init_schema2();
@@ -33683,10 +33692,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
   var import_polyfills338;
   var init_dist_es31 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
       import_polyfills338 = __toESM(require_polyfills());
       init_check_content_length_header();
       init_region_redirect_endpoint_middleware();
@@ -33700,7 +33709,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
   function isValidUserAgentAppId(appId) {
     if (appId === void 0) {
       return true;
@@ -33728,17 +33737,17 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills339, DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
       import_polyfills339 = __toESM(require_polyfills());
       init_dist_es27();
       DEFAULT_UA_APP_ID = void 0;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
   var import_polyfills340, BinaryDecisionDiagram;
   var init_BinaryDecisionDiagram = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
       import_polyfills340 = __toESM(require_polyfills());
       BinaryDecisionDiagram = class _BinaryDecisionDiagram {
         nodes;
@@ -33758,10 +33767,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
   var import_polyfills341, EndpointCache;
   var init_EndpointCache = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
       import_polyfills341 = __toESM(require_polyfills());
       EndpointCache = class {
         capacity;
@@ -33816,10 +33825,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
   var import_polyfills342, EndpointError;
   var init_EndpointError = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
       import_polyfills342 = __toESM(require_polyfills());
       EndpointError = class extends Error {
         constructor(message) {
@@ -33830,58 +33839,58 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
   var import_polyfills343;
   var init_EndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
       import_polyfills343 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
   var import_polyfills344;
   var init_EndpointRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills344 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
   var import_polyfills345;
   var init_ErrorRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       import_polyfills345 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
   var import_polyfills346;
   var init_RuleSetObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
       import_polyfills346 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
   var import_polyfills347;
   var init_TreeRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       import_polyfills347 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/shared.js
   var import_polyfills348;
   var init_shared2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
       import_polyfills348 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/index.js
   var import_polyfills349;
   var init_types4 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
       import_polyfills349 = __toESM(require_polyfills());
       init_EndpointError();
       init_EndpointFunctions();
@@ -33893,16 +33902,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
   var import_polyfills350, debugId;
   var init_debugId = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
       import_polyfills350 = __toESM(require_polyfills());
       debugId = "endpoints";
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
   function toDebugString(input) {
     if (typeof input !== "object" || input == null) {
       return input;
@@ -33917,40 +33926,40 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills351;
   var init_toDebugString = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
       import_polyfills351 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/index.js
   var import_polyfills352;
   var init_debug = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
       import_polyfills352 = __toESM(require_polyfills());
       init_debugId();
       init_toDebugString();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
   var import_polyfills353, customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
       import_polyfills353 = __toESM(require_polyfills());
       customEndpointFunctions = {};
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
   var import_polyfills354, booleanEquals;
   var init_booleanEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
       import_polyfills354 = __toESM(require_polyfills());
       booleanEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
   function coalesce(...args) {
     for (const arg of args) {
       if (arg != null) {
@@ -33961,15 +33970,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills355;
   var init_coalesce = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
       import_polyfills355 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
   var import_polyfills356, getAttrPathList;
   var init_getAttrPathList = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
       import_polyfills356 = __toESM(require_polyfills());
       init_types4();
       getAttrPathList = (path2) => {
@@ -33998,10 +34007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
   var import_polyfills357, getAttr;
   var init_getAttr = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
       import_polyfills357 = __toESM(require_polyfills());
       init_types4();
       init_getAttrPathList();
@@ -34017,19 +34026,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
   var import_polyfills358, isSet;
   var init_isSet = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
       import_polyfills358 = __toESM(require_polyfills());
       isSet = (value) => value != null;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
   var import_polyfills359, VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
       import_polyfills359 = __toESM(require_polyfills());
       VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
       isValidHostLabel = (value, allowSubDomains = false) => {
@@ -34047,40 +34056,40 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
   function ite(condition, trueValue, falseValue) {
     return condition ? trueValue : falseValue;
   }
   var import_polyfills360;
   var init_ite = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
       import_polyfills360 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/not.js
   var import_polyfills361, not;
   var init_not = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
       import_polyfills361 = __toESM(require_polyfills());
       not = (value) => !value;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
   var import_polyfills362, IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
       import_polyfills362 = __toESM(require_polyfills());
       IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
       isIpAddress = (value) => IP_V4_REGEX.test(value) || value.startsWith("[") && value.endsWith("]");
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
   var import_polyfills363, DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
       import_polyfills363 = __toESM(require_polyfills());
       init_dist_es();
       init_isIpAddress();
@@ -34132,7 +34141,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/split.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/split.js
   function split(value, delimiter, limit) {
     if (limit === 1) {
       return [value];
@@ -34148,24 +34157,24 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills364;
   var init_split = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
       import_polyfills364 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
   var import_polyfills365, stringEquals;
   var init_stringEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
       import_polyfills365 = __toESM(require_polyfills());
       stringEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
   var import_polyfills366, substring;
   var init_substring = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
       import_polyfills366 = __toESM(require_polyfills());
       substring = (input, start, stop, reverse) => {
         if (input == null || start >= stop || input.length < stop || /[^\u0000-\u007f]/.test(input)) {
@@ -34179,19 +34188,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
   var import_polyfills367, uriEncode;
   var init_uriEncode = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
       import_polyfills367 = __toESM(require_polyfills());
       uriEncode = (value) => encodeURIComponent(value).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/index.js
   var import_polyfills368;
   var init_lib = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
       import_polyfills368 = __toESM(require_polyfills());
       init_booleanEquals();
       init_coalesce();
@@ -34208,10 +34217,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
   var import_polyfills369, endpointFunctions;
   var init_endpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
       import_polyfills369 = __toESM(require_polyfills());
       init_lib();
       endpointFunctions = {
@@ -34231,10 +34240,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
   var import_polyfills370, evaluateTemplate;
   var init_evaluateTemplate = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
       import_polyfills370 = __toESM(require_polyfills());
       init_lib();
       evaluateTemplate = (template, options) => {
@@ -34271,10 +34280,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
   var import_polyfills371, getReferenceValue;
   var init_getReferenceValue = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
       import_polyfills371 = __toESM(require_polyfills());
       getReferenceValue = ({ ref }, options) => {
         return options.referenceRecord[ref] ?? options.endpointParams[ref];
@@ -34282,10 +34291,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
   var import_polyfills372, evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
       import_polyfills372 = __toESM(require_polyfills());
       init_types4();
       init_customEndpointFunctions();
@@ -34333,19 +34342,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
   var import_polyfills373;
   var init_callFunction = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
       import_polyfills373 = __toESM(require_polyfills());
       init_evaluateExpression();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
   var import_polyfills374, evaluateCondition;
   var init_evaluateCondition = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
       import_polyfills374 = __toESM(require_polyfills());
       init_debug();
       init_types4();
@@ -34366,10 +34375,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
   var import_polyfills375, getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
       import_polyfills375 = __toESM(require_polyfills());
       init_types4();
       init_evaluateExpression();
@@ -34386,10 +34395,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
   var import_polyfills376, getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
       import_polyfills376 = __toESM(require_polyfills());
       init_types4();
       init_evaluateTemplate();
@@ -34422,10 +34431,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
   var import_polyfills377, getEndpointUrl;
   var init_getEndpointUrl = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
       import_polyfills377 = __toESM(require_polyfills());
       init_types4();
       init_evaluateExpression();
@@ -34444,10 +34453,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
   var import_polyfills378, RESULT, decideEndpoint;
   var init_decideEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
       import_polyfills378 = __toESM(require_polyfills());
       init_types4();
       init_evaluateCondition();
@@ -34494,18 +34503,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
   var import_polyfills379;
   var init_resolveEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
       import_polyfills379 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/index.js
   var import_polyfills380;
   var init_dist_es32 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/index.js"() {
       import_polyfills380 = __toESM(require_polyfills());
       init_BinaryDecisionDiagram();
       init_EndpointCache();
@@ -34518,19 +34527,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
   var import_polyfills381;
   var init_isIpAddress2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
       import_polyfills381 = __toESM(require_polyfills());
       init_dist_es32();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
   var import_polyfills382, isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
       import_polyfills382 = __toESM(require_polyfills());
       init_dist_es32();
       init_isIpAddress2();
@@ -34560,10 +34569,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
   var import_polyfills383, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
       import_polyfills383 = __toESM(require_polyfills());
       ARN_DELIMITER = ":";
       RESOURCE_DELIMITER = "/";
@@ -34586,10 +34595,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
   var partitions_default;
   var init_partitions = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
       partitions_default = {
         partitions: [{
           id: "aws",
@@ -34860,10 +34869,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
   var import_polyfills384, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
       import_polyfills384 = __toESM(require_polyfills());
       init_partitions();
       selectedPartitionsInfo = partitions_default;
@@ -34901,10 +34910,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
   var import_polyfills385, awsEndpointFunctions;
   var init_aws = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
       import_polyfills385 = __toESM(require_polyfills());
       init_dist_es32();
       init_isVirtualHostableS3Bucket();
@@ -34919,74 +34928,74 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
   var import_polyfills386;
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
       import_polyfills386 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
   var import_polyfills387;
   var init_resolveEndpoint2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
       import_polyfills387 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
   var import_polyfills388;
   var init_EndpointError2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
       import_polyfills388 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
   var import_polyfills389;
   var init_EndpointRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills389 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
   var import_polyfills390;
   var init_ErrorRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       import_polyfills390 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
   var import_polyfills391;
   var init_RuleSetObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
       import_polyfills391 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
   var import_polyfills392;
   var init_TreeRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       import_polyfills392 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
   var import_polyfills393;
   var init_shared3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
       import_polyfills393 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
   var import_polyfills394;
   var init_types5 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
       import_polyfills394 = __toESM(require_polyfills());
       init_EndpointError2();
       init_EndpointRuleObject3();
@@ -34997,10 +35006,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/index.js
   var import_polyfills395;
   var init_dist_es33 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
       import_polyfills395 = __toESM(require_polyfills());
       init_aws();
       init_partition();
@@ -35011,7 +35020,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
   async function checkFeatures(context, config, args) {
     const request = args.request;
     if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
@@ -35060,7 +35069,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills396, ACCOUNT_ID_ENDPOINT_REGEX;
   var init_check_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
       import_polyfills396 = __toESM(require_polyfills());
       init_client2();
       init_dist_es5();
@@ -35068,10 +35077,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
   var import_polyfills397, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
   var init_constants7 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
       import_polyfills397 = __toESM(require_polyfills());
       USER_AGENT = "user-agent";
       X_AMZ_USER_AGENT = "x-amz-user-agent";
@@ -35083,7 +35092,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
   function encodeFeatures(features) {
     let buffer = "";
     for (const key in features) {
@@ -35102,16 +35111,16 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills398, BYTE_LIMIT;
   var init_encode_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
       import_polyfills398 = __toESM(require_polyfills());
       BYTE_LIMIT = 1024;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
   var import_polyfills399, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
   var init_user_agent_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
       import_polyfills399 = __toESM(require_polyfills());
       init_dist_es33();
       init_dist_es2();
@@ -35188,54 +35197,54 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
   var import_polyfills400;
   var init_dist_es34 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
       import_polyfills400 = __toESM(require_polyfills());
       init_configurations();
       init_user_agent_middleware();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
   var import_polyfills401, DEFAULT_USE_DUALSTACK_ENDPOINT;
   var init_NodeUseDualstackEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
       import_polyfills401 = __toESM(require_polyfills());
       DEFAULT_USE_DUALSTACK_ENDPOINT = false;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
   var import_polyfills402, DEFAULT_USE_FIPS_ENDPOINT;
   var init_NodeUseFipsEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
       import_polyfills402 = __toESM(require_polyfills());
       DEFAULT_USE_FIPS_ENDPOINT = false;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
   var import_polyfills403;
   var init_resolveCustomEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
       import_polyfills403 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
   var import_polyfills404;
   var init_resolveEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
       import_polyfills404 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
   var import_polyfills405;
   var init_endpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
       import_polyfills405 = __toESM(require_polyfills());
       init_NodeUseDualstackEndpointConfigOptions();
       init_NodeUseFipsEndpointConfigOptions();
@@ -35244,18 +35253,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
   var import_polyfills406;
   var init_config3 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
       import_polyfills406 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
   var import_polyfills407, validRegions, checkRegion;
   var init_checkRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
       import_polyfills407 = __toESM(require_polyfills());
       init_dist_es32();
       validRegions = /* @__PURE__ */ new Set();
@@ -35273,29 +35282,29 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
   var import_polyfills408, isFipsRegion;
   var init_isFipsRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
       import_polyfills408 = __toESM(require_polyfills());
       isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
   var import_polyfills409, getRealRegion;
   var init_getRealRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
       import_polyfills409 = __toESM(require_polyfills());
       init_isFipsRegion();
       getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
   var import_polyfills410, resolveRegionConfig;
   var init_resolveRegionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
       import_polyfills410 = __toESM(require_polyfills());
       init_checkRegion();
       init_getRealRegion();
@@ -35324,44 +35333,44 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
   var import_polyfills411;
   var init_regionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
       import_polyfills411 = __toESM(require_polyfills());
       init_config3();
       init_resolveRegionConfig();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
   var import_polyfills412;
   var init_PartitionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
       import_polyfills412 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
   var import_polyfills413;
   var init_RegionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
       import_polyfills413 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
   var import_polyfills414;
   var init_getRegionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
       import_polyfills414 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
   var import_polyfills415;
   var init_regionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
       import_polyfills415 = __toESM(require_polyfills());
       init_PartitionHash();
       init_RegionHash();
@@ -35369,10 +35378,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/index.js
   var import_polyfills416;
   var init_dist_es35 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/index.js"() {
       import_polyfills416 = __toESM(require_polyfills());
       init_endpointsConfig();
       init_regionConfig();
@@ -35380,10 +35389,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
   var import_polyfills417, resolveEventStreamSerdeConfig;
   var init_EventStreamSerdeConfig = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
       import_polyfills417 = __toESM(require_polyfills());
       resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
         eventStreamMarshaller: input.eventStreamSerdeProvider(input)
@@ -35391,16 +35400,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
   var import_polyfills418;
   var init_dist_es36 = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
       import_polyfills418 = __toESM(require_polyfills());
       init_EventStreamSerdeConfig();
     }
   });
 
-  // node_modules/@smithy/middleware-content-length/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-content-length/dist-es/index.js
   function contentLengthMiddleware(bodyLengthChecker) {
     return (next) => async (args) => {
       const request = args.request;
@@ -35425,7 +35434,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills419, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
   var init_dist_es37 = __esm({
-    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
       import_polyfills419 = __toESM(require_polyfills());
       init_dist_es2();
       CONTENT_LENGTH_HEADER2 = "content-length";
@@ -35443,10 +35452,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
   var import_polyfills420, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
   var init_s3 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
       import_polyfills420 = __toESM(require_polyfills());
       resolveParamsForS3 = async (endpointParams) => {
         const bucket = endpointParams?.Bucket || "";
@@ -35482,19 +35491,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
   var import_polyfills421;
   var init_service_customizations = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
       import_polyfills421 = __toESM(require_polyfills());
       init_s3();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
   var import_polyfills422, createConfigValueProvider;
   var init_createConfigValueProvider = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
       import_polyfills422 = __toESM(require_polyfills());
       createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
         const configProvider = async () => {
@@ -35548,19 +35557,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
   var import_polyfills423, getEndpointFromConfig;
   var init_getEndpointFromConfig_browser = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
       import_polyfills423 = __toESM(require_polyfills());
       getEndpointFromConfig = async (serviceId) => void 0;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
   var import_polyfills424, toEndpointV12;
   var init_toEndpointV12 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
       import_polyfills424 = __toESM(require_polyfills());
       init_dist_es23();
       toEndpointV12 = (endpoint) => {
@@ -35582,10 +35591,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
   var import_polyfills425, getEndpointFromInstructions, resolveParams;
   var init_getEndpointFromInstructions = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
       import_polyfills425 = __toESM(require_polyfills());
       init_service_customizations();
       init_createConfigValueProvider();
@@ -35653,20 +35662,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
   var import_polyfills426;
   var init_adaptors = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
       import_polyfills426 = __toESM(require_polyfills());
       init_getEndpointFromInstructions();
       init_toEndpointV12();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
   var import_polyfills427, endpointMiddleware;
   var init_endpointMiddleware = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
       import_polyfills427 = __toESM(require_polyfills());
       init_dist_es27();
       init_dist_es16();
@@ -35707,26 +35716,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
   var import_polyfills428;
   var init_deserializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
       import_polyfills428 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
   var import_polyfills429;
   var init_serializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
       import_polyfills429 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
   var import_polyfills430, serializerMiddlewareOption2;
   var init_serdePlugin = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
       import_polyfills430 = __toESM(require_polyfills());
       serializerMiddlewareOption2 = {
         name: "serializerMiddleware",
@@ -35737,10 +35746,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/index.js
   var import_polyfills431;
   var init_dist_es38 = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/index.js"() {
       import_polyfills431 = __toESM(require_polyfills());
       init_deserializerMiddleware();
       init_serdePlugin();
@@ -35748,10 +35757,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
   var import_polyfills432, endpointMiddlewareOptions, getEndpointPlugin;
   var init_getEndpointPlugin = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
       import_polyfills432 = __toESM(require_polyfills());
       init_dist_es38();
       init_endpointMiddleware();
@@ -35774,10 +35783,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
   var import_polyfills433, resolveEndpointConfig;
   var init_resolveEndpointConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
       import_polyfills433 = __toESM(require_polyfills());
       init_dist_es16();
       init_getEndpointFromConfig_browser();
@@ -35806,26 +35815,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
   var import_polyfills434;
   var init_resolveEndpointRequiredConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
       import_polyfills434 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/types.js
   var import_polyfills435;
   var init_types6 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
       import_polyfills435 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/index.js
   var import_polyfills436;
   var init_dist_es39 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
       import_polyfills436 = __toESM(require_polyfills());
       init_adaptors();
       init_endpointMiddleware();
@@ -35836,10 +35845,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/util.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/util.js
   var import_polyfills437, asSdkError;
   var init_util2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/util.js"() {
       import_polyfills437 = __toESM(require_polyfills());
       asSdkError = (error) => {
         if (error instanceof Error)
@@ -35853,42 +35862,42 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
   var import_polyfills438;
   var init_delayDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
       import_polyfills438 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
   var import_polyfills439;
   var init_retryDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
       import_polyfills439 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
   var import_polyfills440;
   var init_StandardRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
       import_polyfills440 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
   var import_polyfills441;
   var init_AdaptiveRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
       import_polyfills441 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/configurations.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/configurations.js
   var import_polyfills442, resolveRetryConfig;
   var init_configurations2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
       import_polyfills442 = __toESM(require_polyfills());
       init_dist_es16();
       init_dist_es5();
@@ -35905,24 +35914,24 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
   var import_polyfills443;
   var init_omitRetryHeadersMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
       import_polyfills443 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
   var import_polyfills444, isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
       import_polyfills444 = __toESM(require_polyfills());
       isStreamingPayload = (request) => request?.body instanceof ReadableStream;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
   function parseRetryAfterHeader(response, logger2) {
     if (!HttpResponse.isInstance(response)) {
       return;
@@ -35964,17 +35973,17 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills445;
   var init_parseRetryAfterHeader = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
       import_polyfills445 = __toESM(require_polyfills());
       init_serde2();
       init_dist_es2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
   var import_polyfills446, retryMiddleware, cooldown, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin;
   var init_retryMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
       import_polyfills446 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
@@ -36079,10 +36088,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/index.js
   var import_polyfills447;
   var init_dist_es40 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/index.js"() {
       import_polyfills447 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy2();
       init_StandardRetryStrategy2();
@@ -36094,39 +36103,39 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
   var import_polyfills448, getDateHeader;
   var init_getDateHeader = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
       import_polyfills448 = __toESM(require_polyfills());
       init_dist_es2();
       getDateHeader = (response) => HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
   var import_polyfills449, getSkewCorrectedDate;
   var init_getSkewCorrectedDate = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
       import_polyfills449 = __toESM(require_polyfills());
       getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
   var import_polyfills450, isClockSkewed;
   var init_isClockSkewed = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
       import_polyfills450 = __toESM(require_polyfills());
       init_getSkewCorrectedDate();
       isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
   var import_polyfills451, getUpdatedSystemClockOffset;
   var init_getUpdatedSystemClockOffset = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
       import_polyfills451 = __toESM(require_polyfills());
       init_isClockSkewed();
       getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
@@ -36139,10 +36148,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
   var import_polyfills452;
   var init_utils = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
       import_polyfills452 = __toESM(require_polyfills());
       init_getDateHeader();
       init_getSkewCorrectedDate();
@@ -36150,10 +36159,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
   var import_polyfills453, throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
   var init_AwsSdkSigV4Signer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
       import_polyfills453 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
@@ -36229,10 +36238,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
   var import_polyfills454, AwsSdkSigV4ASigner;
   var init_AwsSdkSigV4ASigner = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
       import_polyfills454 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
@@ -36256,66 +36265,66 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
   var import_polyfills455;
   var init_getBearerTokenEnvKey = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
       import_polyfills455 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
   var import_polyfills456;
   var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
       import_polyfills456 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/ProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/ProviderError.js
   var import_polyfills457;
   var init_ProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
       import_polyfills457 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
   var import_polyfills458;
   var init_CredentialsProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
       import_polyfills458 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
   var import_polyfills459;
   var init_TokenProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
       import_polyfills459 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/chain.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/chain.js
   var import_polyfills460;
   var init_chain = __esm({
-    "node_modules/@smithy/property-provider/dist-es/chain.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/chain.js"() {
       import_polyfills460 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/fromStatic.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/fromStatic.js
   var import_polyfills461;
   var init_fromStatic = __esm({
-    "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
       import_polyfills461 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/memoize.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/memoize.js
   var import_polyfills462, memoize;
   var init_memoize = __esm({
-    "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/memoize.js"() {
       import_polyfills462 = __toESM(require_polyfills());
       memoize = (provider, isExpired, requiresRefresh) => {
         let resolved;
@@ -36364,10 +36373,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/index.js
   var import_polyfills463;
   var init_dist_es41 = __esm({
-    "node_modules/@smithy/property-provider/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/index.js"() {
       import_polyfills463 = __toESM(require_polyfills());
       init_CredentialsProviderError();
       init_ProviderError();
@@ -36378,10 +36387,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
   var import_polyfills464, resolveAwsSdkSigV4AConfig;
   var init_resolveAwsSdkSigV4AConfig = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
       import_polyfills464 = __toESM(require_polyfills());
       init_dist_es27();
       resolveAwsSdkSigV4AConfig = (config) => {
@@ -36391,7 +36400,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
   function normalizeCredentialProvider(config, { credentials, credentialDefaultProvider }) {
     let credentialsProvider;
     if (credentials) {
@@ -36425,7 +36434,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills465, resolveAwsSdkSigV4Config;
   var init_resolveAwsSdkSigV4Config = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
       import_polyfills465 = __toESM(require_polyfills());
       init_client2();
       init_dist_es27();
@@ -36529,10 +36538,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
   var import_polyfills466;
   var init_aws_sdk = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
       import_polyfills466 = __toESM(require_polyfills());
       init_AwsSdkSigV4Signer();
       init_AwsSdkSigV4ASigner();
@@ -36542,20 +36551,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
   var import_polyfills467;
   var init_httpAuthSchemes2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
       import_polyfills467 = __toESM(require_polyfills());
       init_aws_sdk();
       init_getBearerTokenEnvKey();
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
   var import_polyfills468, signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
       import_polyfills468 = __toESM(require_polyfills());
       signatureV4CrtContainer = {
         CrtSignerV4: null
@@ -36563,10 +36572,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
   var import_polyfills469, SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
       import_polyfills469 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es26();
@@ -36658,20 +36667,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
   var import_polyfills470;
   var init_dist_es42 = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
       import_polyfills470 = __toESM(require_polyfills());
       init_SignatureV4MultiRegion();
       init_signature_v4_crt_container();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
   var import_polyfills471, av, aw, ax, ay, az, aA, aB, aC, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, as, at, au, _data, root, r, nodes, bdd;
   var init_bdd = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
       import_polyfills471 = __toESM(require_polyfills());
       init_dist_es32();
       av = "ref";
@@ -38609,10 +38618,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
   var import_polyfills472, cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
       import_polyfills472 = __toESM(require_polyfills());
       init_dist_es33();
       init_dist_es32();
@@ -38646,7 +38655,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
   function createAwsAuthSigv4HttpAuthOption(authParameters) {
     return {
       schemeId: "aws.auth#sigv4",
@@ -38679,7 +38688,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills473, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
       import_polyfills473 = __toESM(require_polyfills());
       init_httpAuthSchemes2();
       init_dist_es42();
@@ -38773,10 +38782,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
   var import_polyfills474, resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
       import_polyfills474 = __toESM(require_polyfills());
       resolveClientEndpointParameters = (options) => {
         return Object.assign(options, {
@@ -38805,10 +38814,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
   var import_polyfills475, S3ServiceException;
   var init_S3ServiceException = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
       import_polyfills475 = __toESM(require_polyfills());
       init_dist_es25();
       S3ServiceException = class _S3ServiceException extends ServiceException {
@@ -38820,10 +38829,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
   var import_polyfills476, NoSuchUpload, AccessDenied, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
       import_polyfills476 = __toESM(require_polyfills());
       init_S3ServiceException();
       NoSuchUpload = class _NoSuchUpload extends S3ServiceException {
@@ -39013,10 +39022,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
   var import_polyfills477, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _ADb, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BNu, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMDo, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSHAhe, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _CXXHASH, _CXXHASHh, _CXXHASHhe, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKA, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NEKKAS, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OE, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSE, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UOE, _UOER, _UOERp, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _st, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabn, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacm_, _xacrsba, _xacs, _xacs_, _xacs__, _xacs___, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xacx, _xacx_, _xacx__, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacm, _xafhxacs, _xafhxacs_, _xafhxacs__, _xafhxacx, _xafhxacx_, _xafhxacx__, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, _s_registry, S3ServiceException$, n0_registry, AccessDenied$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, EncryptionTypeMismatch$, IdempotencyParameterMismatch$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, ObjectAlreadyInActiveTierError$, ObjectNotInActiveTierError$, TooManyParts$, errorTypeRegistries, CopySourceSSECustomerKey, NonEmptyKmsKeyArnString, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSEKMSEncryption$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UpdateObjectEncryptionRequest$, UpdateObjectEncryptionResponse$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, ObjectEncryption$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UpdateObjectEncryption$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
       import_polyfills477 = __toESM(require_polyfills());
       init_schema2();
       init_errors();
@@ -44217,10 +44226,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
   var import_polyfills478, CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
       import_polyfills478 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -44241,10 +44250,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/package.json
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/package.json
   var package_default;
   var init_package = __esm({
-    "node_modules/@aws-sdk/client-s3/package.json"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/package.json"() {
       package_default = {
         name: "@aws-sdk/client-s3",
         description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
@@ -44375,36 +44384,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills479, fromUtf84;
   var init_fromUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills479 = __toESM(require_polyfills());
       fromUtf84 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills480;
   var init_toUint8Array3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills480 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills481;
   var init_toUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills481 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills482;
   var init_dist_es43 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills482 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
       init_toUint8Array3();
@@ -44412,7 +44421,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
   function isEmptyData2(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -44421,15 +44430,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills483;
   var init_isEmptyData2 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
       import_polyfills483 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/constants.js
   var import_polyfills484, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
       import_polyfills484 = __toESM(require_polyfills());
       SHA_1_HASH = { name: "SHA-1" };
       SHA_1_HMAC_ALGO = {
@@ -44461,7 +44470,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-locate-window/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-locate-window/dist-es/index.js
   function locateWindow() {
     if (typeof window !== "undefined") {
       return window;
@@ -44472,13 +44481,13 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills485, fallbackWindow;
   var init_dist_es44 = __esm({
-    "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
       import_polyfills485 = __toESM(require_polyfills());
       fallbackWindow = {};
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
   function convertToBuffer2(data) {
     if (typeof data === "string") {
       return fromUtf84(data);
@@ -44490,7 +44499,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills486, Sha1;
   var init_webCryptoSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
       import_polyfills486 = __toESM(require_polyfills());
       init_dist_es43();
       init_isEmptyData2();
@@ -44544,7 +44553,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
   function supportsWebCrypto(window2) {
     if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
       var subtle = window2.crypto.subtle;
@@ -44566,7 +44575,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills487, subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
       import_polyfills487 = __toESM(require_polyfills());
       subtleCryptoMethods = [
         "decrypt",
@@ -44581,19 +44590,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
   var import_polyfills488;
   var init_module4 = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
       import_polyfills488 = __toESM(require_polyfills());
       init_supportsWebCrypto();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
   var import_polyfills489, Sha12;
   var init_crossPlatformSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
       import_polyfills489 = __toESM(require_polyfills());
       init_webCryptoSha1();
       init_module4();
@@ -44622,20 +44631,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/index.js
   var import_polyfills490;
   var init_module5 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
       import_polyfills490 = __toESM(require_polyfills());
       init_crossPlatformSha1();
       init_webCryptoSha1();
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/constants.js
   var import_polyfills491, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
       import_polyfills491 = __toESM(require_polyfills());
       SHA_256_HASH = { name: "SHA-256" };
       SHA_256_HMAC_ALGO = {
@@ -44679,10 +44688,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
   var import_polyfills492, Sha256;
   var init_webCryptoSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
       import_polyfills492 = __toESM(require_polyfills());
       init_module();
       init_constants9();
@@ -44738,10 +44747,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/constants.js
   var import_polyfills493, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
       import_polyfills493 = __toESM(require_polyfills());
       BLOCK_SIZE = 64;
       DIGEST_LENGTH = 32;
@@ -44825,10 +44834,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
   var import_polyfills494, RawSha256;
   var init_RawSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
       import_polyfills494 = __toESM(require_polyfills());
       init_constants10();
       RawSha256 = /** @class */
@@ -44928,7 +44937,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
   function bufferFromSecret(secret) {
     var input = convertToBuffer(secret);
     if (input.byteLength > BLOCK_SIZE) {
@@ -44942,7 +44951,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills495, Sha2562;
   var init_jsSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
       import_polyfills495 = __toESM(require_polyfills());
       init_tslib_es6();
       init_constants10();
@@ -45007,19 +45016,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/index.js
   var import_polyfills496;
   var init_module6 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
       import_polyfills496 = __toESM(require_polyfills());
       init_jsSha256();
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
   var import_polyfills497, Sha2563;
   var init_crossPlatformSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
       import_polyfills497 = __toESM(require_polyfills());
       init_webCryptoSha256();
       init_module6();
@@ -45049,20 +45058,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/index.js
   var import_polyfills498;
   var init_module7 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
       import_polyfills498 = __toESM(require_polyfills());
       init_crossPlatformSha256();
       init_webCryptoSha256();
     }
   });
 
-  // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
   var import_polyfills499, createDefaultUserAgentProvider, fallback;
   var init_dist_es45 = __esm({
-    "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
       import_polyfills499 = __toESM(require_polyfills());
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
         const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
@@ -45118,7 +45127,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Int64.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Int64.js
   function negate2(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -45131,7 +45140,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills500, Int642;
   var init_Int64 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
       import_polyfills500 = __toESM(require_polyfills());
       init_dist_es11();
       Int642 = class _Int64 {
@@ -45170,10 +45179,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
   var import_polyfills501, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
       import_polyfills501 = __toESM(require_polyfills());
       init_dist_es11();
       init_Int64();
@@ -45361,7 +45370,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
   function splitMessage({ byteLength, byteOffset, buffer }) {
     if (byteLength < MINIMUM_MESSAGE_LENGTH) {
       throw new Error("Provided message too short to accommodate event stream message overhead");
@@ -45389,7 +45398,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills502, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
       import_polyfills502 = __toESM(require_polyfills());
       init_module3();
       PRELUDE_MEMBER_LENGTH = 4;
@@ -45399,10 +45408,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
   var import_polyfills503, EventStreamCodec;
   var init_EventStreamCodec = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
       import_polyfills503 = __toESM(require_polyfills());
       init_module3();
       init_HeaderMarshaller();
@@ -45472,18 +45481,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Message.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Message.js
   var import_polyfills504;
   var init_Message = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
       import_polyfills504 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
   var import_polyfills505, MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
       import_polyfills505 = __toESM(require_polyfills());
       MessageDecoderStream = class {
         options;
@@ -45503,10 +45512,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
   var import_polyfills506, MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
       import_polyfills506 = __toESM(require_polyfills());
       MessageEncoderStream = class {
         options;
@@ -45529,10 +45538,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
   var import_polyfills507, SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
       import_polyfills507 = __toESM(require_polyfills());
       SmithyMessageDecoderStream = class {
         options;
@@ -45554,10 +45563,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
   var import_polyfills508, SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
       import_polyfills508 = __toESM(require_polyfills());
       SmithyMessageEncoderStream = class {
         options;
@@ -45577,10 +45586,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/index.js
   var import_polyfills509;
   var init_dist_es46 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
       import_polyfills509 = __toESM(require_polyfills());
       init_EventStreamCodec();
       init_HeaderMarshaller();
@@ -45593,7 +45602,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
   function getChunkedStream(source) {
     let currentMessageTotalLength = 0;
     let currentMessagePendingLength = 0;
@@ -45660,12 +45669,12 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills510;
   var init_getChunkedStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
       import_polyfills510 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
   function getMessageUnmarshaller(deserializer, toUtf82) {
     return async function(message) {
       const { value: messageType } = message.headers[":message-type"];
@@ -45698,15 +45707,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills511;
   var init_getUnmarshalledStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
       import_polyfills511 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
   var import_polyfills512, EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
       import_polyfills512 = __toESM(require_polyfills());
       init_dist_es46();
       init_getChunkedStream();
@@ -45736,28 +45745,28 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
   var import_polyfills513;
   var init_provider = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
       import_polyfills513 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
   var import_polyfills514;
   var init_dist_es47 = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
       import_polyfills514 = __toESM(require_polyfills());
       init_EventStreamMarshaller();
       init_provider();
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
   var import_polyfills515, readableStreamtoIterable, iterableToReadableStream;
   var init_utils2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
       import_polyfills515 = __toESM(require_polyfills());
       readableStreamtoIterable = (readableStream) => ({
         [Symbol.asyncIterator]: async function* () {
@@ -45789,10 +45798,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
   var import_polyfills516, EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
       import_polyfills516 = __toESM(require_polyfills());
       init_dist_es47();
       init_utils2();
@@ -45817,20 +45826,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
   var import_polyfills517, eventStreamSerdeProvider;
   var init_provider2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
       import_polyfills517 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       eventStreamSerdeProvider = (options) => new EventStreamMarshaller2(options);
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
   var import_polyfills518;
   var init_dist_es48 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
       import_polyfills518 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       init_provider2();
@@ -45838,7 +45847,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/chunked-blob-reader/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/chunked-blob-reader/dist-es/index.js
   async function blobReader(blob, onChunk, chunkSize = 1024 * 1024) {
     const size = blob.size;
     let totalBytesRead = 0;
@@ -45850,15 +45859,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills519;
   var init_dist_es49 = __esm({
-    "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
       import_polyfills519 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/hash-blob-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/hash-blob-browser/dist-es/index.js
   var import_polyfills520, blobHasher;
   var init_dist_es50 = __esm({
-    "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
       import_polyfills520 = __toESM(require_polyfills());
       init_dist_es49();
       blobHasher = async function blobHasher2(hashCtor, blob) {
@@ -45871,37 +45880,37 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
   var import_polyfills521;
   var init_invalidFunction = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
       import_polyfills521 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
   var import_polyfills522, invalidProvider;
   var init_invalidProvider = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
       import_polyfills522 = __toESM(require_polyfills());
       invalidProvider = (message) => () => Promise.reject(message);
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/index.js
   var import_polyfills523;
   var init_dist_es51 = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
       import_polyfills523 = __toESM(require_polyfills());
       init_invalidFunction();
       init_invalidProvider();
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/constants.js
   var import_polyfills524, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/constants.js"() {
       import_polyfills524 = __toESM(require_polyfills());
       BLOCK_SIZE2 = 64;
       DIGEST_LENGTH2 = 16;
@@ -45909,7 +45918,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/index.js
   function cmn(q2, a2, b2, x2, s2, t8) {
     a2 = (a2 + q2 & 4294967295) + (x2 + t8 & 4294967295) & 4294967295;
     return (a2 << s2 | a2 >>> 32 - s2) + b2 & 4294967295;
@@ -45943,7 +45952,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills525, Md5;
   var init_dist_es52 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/index.js"() {
       import_polyfills525 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants11();
@@ -46084,19 +46093,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
   var import_polyfills526, DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
       import_polyfills526 = __toESM(require_polyfills());
       DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
   var import_polyfills527, resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
       import_polyfills527 = __toESM(require_polyfills());
       init_dist_es41();
       init_constants12();
@@ -46131,19 +46140,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
   var import_polyfills528;
   var init_dist_es53 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
       import_polyfills528 = __toESM(require_polyfills());
       init_resolveDefaultsModeConfig();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
   var import_polyfills529, getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
       import_polyfills529 = __toESM(require_polyfills());
       init_httpAuthSchemes2();
       init_dist_es31();
@@ -46200,10 +46209,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
   var import_polyfills530, getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
       import_polyfills530 = __toESM(require_polyfills());
       init_package();
       init_module5();
@@ -46249,10 +46258,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
   var import_polyfills531, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
       import_polyfills531 = __toESM(require_polyfills());
       getAwsRegionExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -46272,26 +46281,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
   var import_polyfills532;
   var init_awsRegionConfig = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
       import_polyfills532 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
   var import_polyfills533;
   var init_stsRegionDefaultResolver_browser = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
       import_polyfills533 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
   var import_polyfills534;
   var init_dist_es54 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
       import_polyfills534 = __toESM(require_polyfills());
       init_extensions4();
       init_awsRegionConfig();
@@ -46299,10 +46308,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
   var import_polyfills535, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
       import_polyfills535 = __toESM(require_polyfills());
       getHttpAuthExtensionConfiguration = (runtimeConfig) => {
         const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
@@ -46344,10 +46353,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
   var import_polyfills536, resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
       import_polyfills536 = __toESM(require_polyfills());
       init_dist_es54();
       init_dist_es2();
@@ -46361,10 +46370,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
   var import_polyfills537, S3Client;
   var init_S3Client = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
       import_polyfills537 = __toESM(require_polyfills());
       init_dist_es3();
       init_dist_es17();
@@ -46432,10 +46441,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
   var import_polyfills538, AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
       import_polyfills538 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -46456,7 +46465,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
   function ssecMiddleware(options) {
     return (next) => async (args) => {
       const input = { ...args.input };
@@ -46509,7 +46518,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills539, ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es55 = __esm({
-    "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
       import_polyfills539 = __toESM(require_polyfills());
       ssecMiddlewareOptions = {
         name: "ssecMiddleware",
@@ -46525,10 +46534,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
   var import_polyfills540, CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
       import_polyfills540 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46551,10 +46560,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
   var import_polyfills541, CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
       import_polyfills541 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46579,7 +46588,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
   function locationConstraintMiddleware(options) {
     return (next) => async (args) => {
       const { CreateBucketConfiguration } = args.input;
@@ -46595,7 +46604,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills542, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es56 = __esm({
-    "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
       import_polyfills542 = __toESM(require_polyfills());
       locationConstraintMiddlewareOptions = {
         step: "initialize",
@@ -46611,10 +46620,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
   var import_polyfills543, CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
       import_polyfills543 = __toESM(require_polyfills());
       init_dist_es56();
       init_dist_es31();
@@ -46638,10 +46647,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
   var import_polyfills544, CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
       import_polyfills544 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -46665,10 +46674,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
   var import_polyfills545, CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills545 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -46692,10 +46701,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
   var import_polyfills546, CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
       import_polyfills546 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46718,10 +46727,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
   var import_polyfills547, DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills547 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46738,10 +46747,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
   var import_polyfills548, DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
       import_polyfills548 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46758,10 +46767,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
   var import_polyfills549, DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
       import_polyfills549 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46778,10 +46787,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
   var import_polyfills550, DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
       import_polyfills550 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46798,10 +46807,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills551, DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills551 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46818,10 +46827,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
   var import_polyfills552, DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
       import_polyfills552 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46838,10 +46847,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
   var import_polyfills553, DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
       import_polyfills553 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46858,10 +46867,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
   var import_polyfills554, DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
       import_polyfills554 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46878,10 +46887,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
   var import_polyfills555, DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills555 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46898,10 +46907,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
   var import_polyfills556, DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
       import_polyfills556 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46918,10 +46927,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
   var import_polyfills557, DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
       import_polyfills557 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46938,10 +46947,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
   var import_polyfills558, DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
       import_polyfills558 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46958,10 +46967,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
   var import_polyfills559, DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
       import_polyfills559 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46978,10 +46987,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
   var import_polyfills560, DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
       import_polyfills560 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46998,10 +47007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
   var import_polyfills561, DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
       import_polyfills561 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47018,10 +47027,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
   var import_polyfills562, DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
       import_polyfills562 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47042,10 +47051,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
   var import_polyfills563, DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
       import_polyfills563 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -47070,10 +47079,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
   var import_polyfills564, DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
       import_polyfills564 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47093,10 +47102,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
   var import_polyfills565, DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
       import_polyfills565 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47113,10 +47122,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
   var import_polyfills566, GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
       import_polyfills566 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47136,10 +47145,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
   var import_polyfills567, GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
       import_polyfills567 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47160,10 +47169,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
   var import_polyfills568, GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
       import_polyfills568 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47184,10 +47193,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
   var import_polyfills569, GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills569 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47208,10 +47217,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
   var import_polyfills570, GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
       import_polyfills570 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47232,10 +47241,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
   var import_polyfills571, GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
       import_polyfills571 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47256,10 +47265,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills572, GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills572 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47280,10 +47289,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
   var import_polyfills573, GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
       import_polyfills573 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47304,10 +47313,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
   var import_polyfills574, GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
       import_polyfills574 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47328,10 +47337,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
   var import_polyfills575, GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
       import_polyfills575 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47352,10 +47361,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
   var import_polyfills576, GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
       import_polyfills576 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47376,10 +47385,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
   var import_polyfills577, GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
       import_polyfills577 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47400,10 +47409,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
   var import_polyfills578, GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills578 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47424,10 +47433,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
   var import_polyfills579, GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
       import_polyfills579 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47448,10 +47457,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
   var import_polyfills580, GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
       import_polyfills580 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47472,10 +47481,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
   var import_polyfills581, GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
       import_polyfills581 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47496,10 +47505,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
   var import_polyfills582, GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
       import_polyfills582 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47516,10 +47525,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
   var import_polyfills583, GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
       import_polyfills583 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47540,10 +47549,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
   var import_polyfills584, GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
       import_polyfills584 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47564,10 +47573,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
   var import_polyfills585, GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
       import_polyfills585 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47588,10 +47597,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
   var import_polyfills586, GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
       import_polyfills586 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47612,10 +47621,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
   var import_polyfills587, GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
       import_polyfills587 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47636,10 +47645,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
   var import_polyfills588, GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
       import_polyfills588 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47660,10 +47669,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
   var import_polyfills589, GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
       import_polyfills589 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47684,10 +47693,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
   var import_polyfills590, GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
       import_polyfills590 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -47709,10 +47718,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
   var import_polyfills591, GetObjectCommand;
   var init_GetObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
       import_polyfills591 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -47741,10 +47750,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
   var import_polyfills592, GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
       import_polyfills592 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47764,10 +47773,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
   var import_polyfills593, GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
       import_polyfills593 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47787,10 +47796,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
   var import_polyfills594, GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
       import_polyfills594 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47810,10 +47819,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
   var import_polyfills595, GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
       import_polyfills595 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47833,10 +47842,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
   var import_polyfills596, GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
       import_polyfills596 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47852,10 +47861,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
   var import_polyfills597, GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
       import_polyfills597 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47876,10 +47885,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
   var import_polyfills598, HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
       import_polyfills598 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47899,10 +47908,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
   var import_polyfills599, HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
       import_polyfills599 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -47926,10 +47935,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
   var import_polyfills600, ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
       import_polyfills600 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47950,10 +47959,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
   var import_polyfills601, ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
       import_polyfills601 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47974,10 +47983,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
   var import_polyfills602, ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
       import_polyfills602 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47998,10 +48007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
   var import_polyfills603, ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
       import_polyfills603 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48022,10 +48031,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
   var import_polyfills604, ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
       import_polyfills604 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48042,10 +48051,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
   var import_polyfills605, ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
       import_polyfills605 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48065,10 +48074,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
   var import_polyfills606, ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
       import_polyfills606 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48089,10 +48098,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
   var import_polyfills607, ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
       import_polyfills607 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48113,10 +48122,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
   var import_polyfills608, ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
       import_polyfills608 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48137,10 +48146,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
   var import_polyfills609, ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
       import_polyfills609 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48161,10 +48170,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
   var import_polyfills610, ListPartsCommand;
   var init_ListPartsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
       import_polyfills610 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -48187,10 +48196,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
   var import_polyfills611, PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
       import_polyfills611 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48213,10 +48222,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
   var import_polyfills612, PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
       import_polyfills612 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48240,10 +48249,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
   var import_polyfills613, PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
       import_polyfills613 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48267,10 +48276,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
   var import_polyfills614, PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills614 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48287,10 +48296,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
   var import_polyfills615, PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
       import_polyfills615 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48314,10 +48323,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
   var import_polyfills616, PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
       import_polyfills616 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48341,10 +48350,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills617, PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills617 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48361,10 +48370,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
   var import_polyfills618, PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
       import_polyfills618 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48381,10 +48390,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
   var import_polyfills619, PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
       import_polyfills619 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48410,10 +48419,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
   var import_polyfills620, PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
       import_polyfills620 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48437,10 +48446,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
   var import_polyfills621, PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
       import_polyfills621 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48457,10 +48466,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
   var import_polyfills622, PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
       import_polyfills622 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48477,10 +48486,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
   var import_polyfills623, PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
       import_polyfills623 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48504,10 +48513,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
   var import_polyfills624, PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
       import_polyfills624 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48531,10 +48540,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
   var import_polyfills625, PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
       import_polyfills625 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48558,10 +48567,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
   var import_polyfills626, PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
       import_polyfills626 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48585,10 +48594,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
   var import_polyfills627, PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
       import_polyfills627 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48612,10 +48621,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
   var import_polyfills628, PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
       import_polyfills628 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48639,10 +48648,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
   var import_polyfills629, PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
       import_polyfills629 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48666,10 +48675,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
   var import_polyfills630, PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
       import_polyfills630 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48695,10 +48704,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
   var import_polyfills631, PutObjectCommand;
   var init_PutObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
       import_polyfills631 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48727,10 +48736,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
   var import_polyfills632, PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
       import_polyfills632 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48755,10 +48764,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
   var import_polyfills633, PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
       import_polyfills633 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48783,10 +48792,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
   var import_polyfills634, PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
       import_polyfills634 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48811,10 +48820,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
   var import_polyfills635, PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
       import_polyfills635 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48839,10 +48848,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
   var import_polyfills636, PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
       import_polyfills636 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48866,10 +48875,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
   var import_polyfills637, RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
       import_polyfills637 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48890,10 +48899,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
   var import_polyfills638, RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
       import_polyfills638 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48918,10 +48927,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
   var import_polyfills639, SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
       import_polyfills639 = __toESM(require_polyfills());
       init_dist_es55();
       init_dist_es39();
@@ -48945,10 +48954,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
   var import_polyfills640, UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
       import_polyfills640 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48972,10 +48981,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
   var import_polyfills641, UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
       import_polyfills641 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48999,10 +49008,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
   var import_polyfills642, UpdateObjectEncryptionCommand;
   var init_UpdateObjectEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
       import_polyfills642 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -49027,10 +49036,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
   var import_polyfills643, UploadPartCommand;
   var init_UploadPartCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
       import_polyfills643 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -49058,10 +49067,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
   var import_polyfills644, UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
       import_polyfills644 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -49084,10 +49093,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
   var import_polyfills645, WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
       import_polyfills645 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -49103,10 +49112,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
   var import_polyfills646, paginateListBuckets;
   var init_ListBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
       import_polyfills646 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListBucketsCommand();
@@ -49115,10 +49124,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
   var import_polyfills647, paginateListDirectoryBuckets;
   var init_ListDirectoryBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
       import_polyfills647 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListDirectoryBucketsCommand();
@@ -49127,10 +49136,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
   var import_polyfills648, paginateListObjectsV2;
   var init_ListObjectsV2Paginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
       import_polyfills648 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListObjectsV2Command();
@@ -49139,10 +49148,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
   var import_polyfills649, paginateListParts;
   var init_ListPartsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
       import_polyfills649 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListPartsCommand();
@@ -49151,10 +49160,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
   var import_polyfills650, getCircularReplacer;
   var init_circularReplacer = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
       import_polyfills650 = __toESM(require_polyfills());
       getCircularReplacer = () => {
         const seen = /* @__PURE__ */ new WeakSet();
@@ -49171,10 +49180,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
   var import_polyfills651, sleep;
   var init_sleep = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
       import_polyfills651 = __toESM(require_polyfills());
       sleep = (seconds) => {
         return new Promise((resolve2) => setTimeout(resolve2, seconds * 1e3));
@@ -49182,10 +49191,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/waiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/waiter.js
   var import_polyfills652, waiterServiceDefaults, WaiterState, checkExceptions;
   var init_waiter2 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
       import_polyfills652 = __toESM(require_polyfills());
       init_circularReplacer();
       waiterServiceDefaults = {
@@ -49222,10 +49231,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/poller.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/poller.js
   var import_polyfills653, runPolling, checkWarn403, createMessageFromResponse, exponentialBackoffWithJitter, randomInRange;
   var init_poller = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/poller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/poller.js"() {
       import_polyfills653 = __toESM(require_polyfills());
       init_circularReplacer();
       init_sleep();
@@ -49315,10 +49324,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/validate.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/validate.js
   var import_polyfills654, validateWaiterOptions;
   var init_validate = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
       import_polyfills654 = __toESM(require_polyfills());
       validateWaiterOptions = (options) => {
         if (options.maxWaitTime <= 0) {
@@ -49336,20 +49345,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/index.js
   var import_polyfills655;
   var init_utils3 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
       import_polyfills655 = __toESM(require_polyfills());
       init_sleep();
       init_validate();
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/createWaiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/createWaiter.js
   var import_polyfills656, abortTimeout, createWaiter;
   var init_createWaiter = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
       import_polyfills656 = __toESM(require_polyfills());
       init_poller();
       init_utils3();
@@ -49401,20 +49410,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/index.js
   var import_polyfills657;
   var init_dist_es57 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/index.js"() {
       import_polyfills657 = __toESM(require_polyfills());
       init_createWaiter();
       init_waiter2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
   var import_polyfills658, checkState, waitUntilBucketExists;
   var init_waitForBucketExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
       import_polyfills658 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49440,10 +49449,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
   var import_polyfills659, checkState2, waitUntilBucketNotExists;
   var init_waitForBucketNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
       import_polyfills659 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49468,10 +49477,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
   var import_polyfills660, checkState3, waitUntilObjectExists;
   var init_waitForObjectExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
       import_polyfills660 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49497,10 +49506,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
   var import_polyfills661, checkState4, waitUntilObjectNotExists;
   var init_waitForObjectNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
       import_polyfills661 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49525,10 +49534,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3.js
   var import_polyfills662, commands, paginators, waiters, S3;
   var init_S3 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
       import_polyfills662 = __toESM(require_polyfills());
       init_dist_es25();
       init_AbortMultipartUploadCommand();
@@ -49774,10 +49783,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
   var import_polyfills663;
   var init_commands = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
       import_polyfills663 = __toESM(require_polyfills());
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
@@ -49889,18 +49898,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
   var import_polyfills664;
   var init_Interfaces = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
       import_polyfills664 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
   var import_polyfills665;
   var init_pagination2 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
       import_polyfills665 = __toESM(require_polyfills());
       init_Interfaces();
       init_ListBucketsPaginator();
@@ -49910,10 +49919,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
   var import_polyfills666;
   var init_waiters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
       import_polyfills666 = __toESM(require_polyfills());
       init_waitForBucketExists();
       init_waitForBucketNotExists();
@@ -49922,34 +49931,34 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
   var import_polyfills667;
   var init_enums = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
       import_polyfills667 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
   var import_polyfills668;
   var init_models_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
       import_polyfills668 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
   var import_polyfills669;
   var init_models_1 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
       import_polyfills669 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/index.js
   var import_polyfills670;
   var init_dist_es58 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
       import_polyfills670 = __toESM(require_polyfills());
       init_S3Client();
       init_S3();
@@ -50041,10 +50050,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/safe-buffer/index.js
+  // ../SovereignS3nc/node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
-    "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -50100,11 +50109,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/randombytes/browser.js
+  // ../SovereignS3nc/node_modules/randombytes/browser.js
   var require_browser2 = __commonJS({
-    "node_modules/randombytes/browser.js"(exports, module) {
+    "../SovereignS3nc/node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -50139,10 +50148,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/inherits/inherits_browser.js
+  // ../SovereignS3nc/node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
-    "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/inherits/inherits_browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -50172,11 +50181,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/events/events.js
+  // ../SovereignS3nc/node_modules/events/events.js
   var require_events = __commonJS({
-    "node_modules/events/events.js"(exports, module) {
+    "../SovereignS3nc/node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -50542,19 +50551,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // node_modules/has-symbols/shams.js
+  // ../SovereignS3nc/node_modules/has-symbols/shams.js
   var require_shams = __commonJS({
-    "node_modules/has-symbols/shams.js"(exports, module) {
+    "../SovereignS3nc/node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -50606,11 +50615,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-tostringtag/shams.js
+  // ../SovereignS3nc/node_modules/has-tostringtag/shams.js
   var require_shams2 = __commonJS({
-    "node_modules/has-tostringtag/shams.js"(exports, module) {
+    "../SovereignS3nc/node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -50618,148 +50627,148 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/es-object-atoms/index.js
+  // ../SovereignS3nc/node_modules/es-object-atoms/index.js
   var require_es_object_atoms = __commonJS({
-    "node_modules/es-object-atoms/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
 
-  // node_modules/es-errors/index.js
+  // ../SovereignS3nc/node_modules/es-errors/index.js
   var require_es_errors = __commonJS({
-    "node_modules/es-errors/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
 
-  // node_modules/es-errors/eval.js
+  // ../SovereignS3nc/node_modules/es-errors/eval.js
   var require_eval = __commonJS({
-    "node_modules/es-errors/eval.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
 
-  // node_modules/es-errors/range.js
+  // ../SovereignS3nc/node_modules/es-errors/range.js
   var require_range = __commonJS({
-    "node_modules/es-errors/range.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
 
-  // node_modules/es-errors/ref.js
+  // ../SovereignS3nc/node_modules/es-errors/ref.js
   var require_ref = __commonJS({
-    "node_modules/es-errors/ref.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
 
-  // node_modules/es-errors/syntax.js
+  // ../SovereignS3nc/node_modules/es-errors/syntax.js
   var require_syntax = __commonJS({
-    "node_modules/es-errors/syntax.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
 
-  // node_modules/es-errors/type.js
+  // ../SovereignS3nc/node_modules/es-errors/type.js
   var require_type = __commonJS({
-    "node_modules/es-errors/type.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
 
-  // node_modules/es-errors/uri.js
+  // ../SovereignS3nc/node_modules/es-errors/uri.js
   var require_uri = __commonJS({
-    "node_modules/es-errors/uri.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
 
-  // node_modules/math-intrinsics/abs.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/abs.js
   var require_abs = __commonJS({
-    "node_modules/math-intrinsics/abs.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
 
-  // node_modules/math-intrinsics/floor.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/floor.js
   var require_floor = __commonJS({
-    "node_modules/math-intrinsics/floor.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
 
-  // node_modules/math-intrinsics/max.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/max.js
   var require_max = __commonJS({
-    "node_modules/math-intrinsics/max.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
 
-  // node_modules/math-intrinsics/min.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/min.js
   var require_min = __commonJS({
-    "node_modules/math-intrinsics/min.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
 
-  // node_modules/math-intrinsics/pow.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/pow.js
   var require_pow = __commonJS({
-    "node_modules/math-intrinsics/pow.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
 
-  // node_modules/math-intrinsics/round.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/round.js
   var require_round = __commonJS({
-    "node_modules/math-intrinsics/round.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
 
-  // node_modules/math-intrinsics/isNaN.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/isNaN.js
   var require_isNaN = __commonJS({
-    "node_modules/math-intrinsics/isNaN.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
     }
   });
 
-  // node_modules/math-intrinsics/sign.js
+  // ../SovereignS3nc/node_modules/math-intrinsics/sign.js
   var require_sign = __commonJS({
-    "node_modules/math-intrinsics/sign.js"(exports, module) {
+    "../SovereignS3nc/node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign3(number) {
         if ($isNaN(number) || number === 0) {
@@ -50770,20 +50779,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/gopd/gOPD.js
+  // ../SovereignS3nc/node_modules/gopd/gOPD.js
   var require_gOPD = __commonJS({
-    "node_modules/gopd/gOPD.js"(exports, module) {
+    "../SovereignS3nc/node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
 
-  // node_modules/gopd/index.js
+  // ../SovereignS3nc/node_modules/gopd/index.js
   var require_gopd = __commonJS({
-    "node_modules/gopd/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -50796,11 +50805,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/es-define-property/index.js
+  // ../SovereignS3nc/node_modules/es-define-property/index.js
   var require_es_define_property = __commonJS({
-    "node_modules/es-define-property/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -50813,11 +50822,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-symbols/index.js
+  // ../SovereignS3nc/node_modules/has-symbols/index.js
   var require_has_symbols = __commonJS({
-    "node_modules/has-symbols/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -50838,30 +50847,30 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-proto/Reflect.getPrototypeOf.js
+  // ../SovereignS3nc/node_modules/get-proto/Reflect.getPrototypeOf.js
   var require_Reflect_getPrototypeOf = __commonJS({
-    "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
+    "../SovereignS3nc/node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
 
-  // node_modules/get-proto/Object.getPrototypeOf.js
+  // ../SovereignS3nc/node_modules/get-proto/Object.getPrototypeOf.js
   var require_Object_getPrototypeOf = __commonJS({
-    "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
+    "../SovereignS3nc/node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
   });
 
-  // node_modules/function-bind/implementation.js
+  // ../SovereignS3nc/node_modules/function-bind/implementation.js
   var require_implementation = __commonJS({
-    "node_modules/function-bind/implementation.js"(exports, module) {
+    "../SovereignS3nc/node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -50934,48 +50943,48 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/function-bind/index.js
+  // ../SovereignS3nc/node_modules/function-bind/index.js
   var require_function_bind = __commonJS({
-    "node_modules/function-bind/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/functionCall.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/functionCall.js
   var require_functionCall = __commonJS({
-    "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/functionApply.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/functionApply.js
   var require_functionApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/reflectApply.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/reflectApply.js
   var require_reflectApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/actualApply.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/actualApply.js
   var require_actualApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -50984,11 +50993,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/index.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/index.js
   var require_call_bind_apply_helpers = __commonJS({
-    "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -51002,11 +51011,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/dunder-proto/get.js
+  // ../SovereignS3nc/node_modules/dunder-proto/get.js
   var require_get = __commonJS({
-    "node_modules/dunder-proto/get.js"(exports, module) {
+    "../SovereignS3nc/node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -51034,11 +51043,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-proto/index.js
+  // ../SovereignS3nc/node_modules/get-proto/index.js
   var require_get_proto = __commonJS({
-    "node_modules/get-proto/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -51055,11 +51064,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hasown/index.js
+  // ../SovereignS3nc/node_modules/hasown/index.js
   var require_hasown = __commonJS({
-    "node_modules/hasown/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -51067,11 +51076,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-intrinsic/index.js
+  // ../SovereignS3nc/node_modules/get-intrinsic/index.js
   var require_get_intrinsic = __commonJS({
-    "node_modules/get-intrinsic/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -51399,11 +51408,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bound/index.js
+  // ../SovereignS3nc/node_modules/call-bound/index.js
   var require_call_bound = __commonJS({
-    "node_modules/call-bound/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -51423,11 +51432,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-arguments/index.js
+  // ../SovereignS3nc/node_modules/is-arguments/index.js
   var require_is_arguments = __commonJS({
-    "node_modules/is-arguments/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -51451,11 +51460,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-regex/index.js
+  // ../SovereignS3nc/node_modules/is-regex/index.js
   var require_is_regex = __commonJS({
-    "node_modules/is-regex/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -51521,11 +51530,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/safe-regex-test/index.js
+  // ../SovereignS3nc/node_modules/safe-regex-test/index.js
   var require_safe_regex_test = __commonJS({
-    "node_modules/safe-regex-test/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -51541,11 +51550,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/generator-function/index.js
+  // ../SovereignS3nc/node_modules/generator-function/index.js
   var require_generator_function = __commonJS({
-    "node_modules/generator-function/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -51555,11 +51564,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-generator-function/index.js
+  // ../SovereignS3nc/node_modules/is-generator-function/index.js
   var require_is_generator_function = __commonJS({
-    "node_modules/is-generator-function/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -51588,11 +51597,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-callable/index.js
+  // ../SovereignS3nc/node_modules/is-callable/index.js
   var require_is_callable = __commonJS({
-    "node_modules/is-callable/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -51707,11 +51716,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/for-each/index.js
+  // ../SovereignS3nc/node_modules/for-each/index.js
   var require_for_each = __commonJS({
-    "node_modules/for-each/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -51768,11 +51777,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/possible-typed-array-names/index.js
+  // ../SovereignS3nc/node_modules/possible-typed-array-names/index.js
   var require_possible_typed_array_names = __commonJS({
-    "node_modules/possible-typed-array-names/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -51790,11 +51799,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/available-typed-arrays/index.js
+  // ../SovereignS3nc/node_modules/available-typed-arrays/index.js
   var require_available_typed_arrays = __commonJS({
-    "node_modules/available-typed-arrays/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -51809,11 +51818,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/define-data-property/index.js
+  // ../SovereignS3nc/node_modules/define-data-property/index.js
   var require_define_data_property = __commonJS({
-    "node_modules/define-data-property/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -51858,11 +51867,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-property-descriptors/index.js
+  // ../SovereignS3nc/node_modules/has-property-descriptors/index.js
   var require_has_property_descriptors = __commonJS({
-    "node_modules/has-property-descriptors/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -51881,11 +51890,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/set-function-length/index.js
+  // ../SovereignS3nc/node_modules/set-function-length/index.js
   var require_set_function_length = __commonJS({
-    "node_modules/set-function-length/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -51935,11 +51944,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/applyBind.js
+  // ../SovereignS3nc/node_modules/call-bind-apply-helpers/applyBind.js
   var require_applyBind = __commonJS({
-    "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -51949,11 +51958,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind/index.js
+  // ../SovereignS3nc/node_modules/call-bind/index.js
   var require_call_bind = __commonJS({
-    "node_modules/call-bind/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -51975,11 +51984,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/which-typed-array/index.js
+  // ../SovereignS3nc/node_modules/which-typed-array/index.js
   var require_which_typed_array = __commonJS({
-    "node_modules/which-typed-array/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -52097,11 +52106,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-typed-array/index.js
+  // ../SovereignS3nc/node_modules/is-typed-array/index.js
   var require_is_typed_array = __commonJS({
-    "node_modules/is-typed-array/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -52109,11 +52118,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util/support/types.js
+  // ../SovereignS3nc/node_modules/util/support/types.js
   var require_types = __commonJS({
-    "node_modules/util/support/types.js"(exports) {
+    "../SovereignS3nc/node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -52340,20 +52349,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util/support/isBufferBrowser.js
+  // ../SovereignS3nc/node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
-    "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/util/support/isBufferBrowser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
     }
   });
 
-  // node_modules/util/util.js
+  // ../SovereignS3nc/node_modules/util/util.js
   var require_util = __commonJS({
-    "node_modules/util/util.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/util/util.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors2 = {};
@@ -52910,11 +52919,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
   var require_buffer_list = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -53153,11 +53162,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       function destroy(err, cb) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -53243,11 +53252,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
   var require_errors_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -53353,11 +53362,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
   var require_state = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -53379,10 +53388,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util-deprecate/browser.js
+  // ../SovereignS3nc/node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
-    "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/util-deprecate/browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -53417,11 +53426,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -53889,11 +53898,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -53983,10 +53992,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/string_decoder/node_modules/safe-buffer/index.js
+  // ../SovereignS3nc/node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
-    "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -54041,11 +54050,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/string_decoder/lib/string_decoder.js
+  // ../SovereignS3nc/node_modules/string_decoder/lib/string_decoder.js
   var require_string_decoder = __commonJS({
-    "node_modules/string_decoder/lib/string_decoder.js"(exports) {
+    "../SovereignS3nc/node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer3.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -54280,11 +54289,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
   var require_end_of_stream = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once(callback2) {
         var called = false;
@@ -54370,11 +54379,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
   var require_async_iterator = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -54554,21 +54563,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -55298,11 +55307,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -55400,11 +55409,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -55418,11 +55427,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
+  // ../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
   var require_pipeline = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
+    "../SovereignS3nc/node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var eos;
       function once(callback2) {
         var called = false;
@@ -55504,10 +55513,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/index.js
+  // ../SovereignS3nc/node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
-    "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/stream-browserify/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -55582,11 +55591,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash-base/index.js
+  // ../SovereignS3nc/node_modules/hash-base/index.js
   var require_hash_base = __commonJS({
-    "node_modules/hash-base/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -55671,11 +55680,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/md5.js/index.js
+  // ../SovereignS3nc/node_modules/md5.js/index.js
   var require_md5 = __commonJS({
-    "node_modules/md5.js/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -55801,10 +55810,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/to-buffer/node_modules/isarray/index.js
+  // ../SovereignS3nc/node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
-    "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55812,11 +55821,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/typed-array-buffer/index.js
+  // ../SovereignS3nc/node_modules/typed-array-buffer/index.js
   var require_typed_array_buffer = __commonJS({
-    "node_modules/typed-array-buffer/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -55830,11 +55839,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/to-buffer/index.js
+  // ../SovereignS3nc/node_modules/to-buffer/index.js
   var require_to_buffer = __commonJS({
-    "node_modules/to-buffer/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var isArray2 = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -55895,11 +55904,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/node_modules/hash-base/to-buffer.js
+  // ../SovereignS3nc/node_modules/ripemd160/node_modules/hash-base/to-buffer.js
   var require_to_buffer2 = __commonJS({
-    "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
+    "../SovereignS3nc/node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -55914,11 +55923,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/process-nextick-args/index.js
+  // ../SovereignS3nc/node_modules/process-nextick-args/index.js
   var require_process_nextick_args = __commonJS({
-    "node_modules/process-nextick-args/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -55960,10 +55969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/isarray/index.js
+  // ../SovereignS3nc/node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
-    "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55971,18 +55980,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // node_modules/readable-stream/node_modules/safe-buffer/index.js
+  // ../SovereignS3nc/node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
-    "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -56037,10 +56046,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/core-util-is/lib/util.js
+  // ../SovereignS3nc/node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
-    "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/core-util-is/lib/util.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       function isArray2(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -56108,11 +56117,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/BufferList.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/BufferList.js
   var require_BufferList = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -56187,11 +56196,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/destroy.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy2 = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb) {
         var _this = this;
@@ -56257,11 +56266,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_writable.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -56698,11 +56707,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_duplex.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -56776,11 +56785,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_readable.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray2 = require_isarray2();
@@ -57463,11 +57472,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_transform.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -57564,11 +57573,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_passthrough.js
+  // ../SovereignS3nc/node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "../SovereignS3nc/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -57584,10 +57593,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/readable-browser.js
+  // ../SovereignS3nc/node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
-    "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/readable-stream/readable-browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -57598,11 +57607,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/node_modules/hash-base/index.js
+  // ../SovereignS3nc/node_modules/ripemd160/node_modules/hash-base/index.js
   var require_hash_base2 = __commonJS({
-    "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -57690,11 +57699,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/index.js
+  // ../SovereignS3nc/node_modules/ripemd160/index.js
   var require_ripemd160 = __commonJS({
-    "node_modules/ripemd160/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -58132,11 +58141,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/hash.js
+  // ../SovereignS3nc/node_modules/sha.js/hash.js
   var require_hash = __commonJS({
-    "node_modules/sha.js/hash.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -58194,11 +58203,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha.js
+  // ../SovereignS3nc/node_modules/sha.js/sha.js
   var require_sha = __commonJS({
-    "node_modules/sha.js/sha.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58279,11 +58288,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha1.js
+  // ../SovereignS3nc/node_modules/sha.js/sha1.js
   var require_sha1 = __commonJS({
-    "node_modules/sha.js/sha1.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58367,11 +58376,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha256.js
+  // ../SovereignS3nc/node_modules/sha.js/sha256.js
   var require_sha256 = __commonJS({
-    "node_modules/sha.js/sha256.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58530,11 +58539,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha224.js
+  // ../SovereignS3nc/node_modules/sha.js/sha224.js
   var require_sha224 = __commonJS({
-    "node_modules/sha.js/sha224.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -58572,11 +58581,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha512.js
+  // ../SovereignS3nc/node_modules/sha.js/sha512.js
   var require_sha512 = __commonJS({
-    "node_modules/sha.js/sha512.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58916,11 +58925,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha384.js
+  // ../SovereignS3nc/node_modules/sha.js/sha384.js
   var require_sha384 = __commonJS({
-    "node_modules/sha.js/sha384.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -58969,11 +58978,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/index.js
+  // ../SovereignS3nc/node_modules/sha.js/index.js
   var require_sha2 = __commonJS({
-    "node_modules/sha.js/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -58991,11 +59000,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/cipher-base/index.js
+  // ../SovereignS3nc/node_modules/cipher-base/index.js
   var require_cipher_base = __commonJS({
-    "node_modules/cipher-base/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -59087,11 +59096,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hash/browser.js
+  // ../SovereignS3nc/node_modules/create-hash/browser.js
   var require_browser4 = __commonJS({
-    "node_modules/create-hash/browser.js"(exports, module) {
+    "../SovereignS3nc/node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -59117,11 +59126,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hmac/legacy.js
+  // ../SovereignS3nc/node_modules/create-hmac/legacy.js
   var require_legacy = __commonJS({
-    "node_modules/create-hmac/legacy.js"(exports, module) {
+    "../SovereignS3nc/node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -59159,10 +59168,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hash/md5.js
+  // ../SovereignS3nc/node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
-    "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/create-hash/md5.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -59170,11 +59179,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hmac/browser.js
+  // ../SovereignS3nc/node_modules/create-hmac/browser.js
   var require_browser5 = __commonJS({
-    "node_modules/create-hmac/browser.js"(exports, module) {
+    "../SovereignS3nc/node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -59228,9 +59237,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/algorithms.json
+  // ../SovereignS3nc/node_modules/browserify-sign/browser/algorithms.json
   var require_algorithms = __commonJS({
-    "node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
       module.exports = {
         sha224WithRSAEncryption: {
           sign: "rsa",
@@ -59386,20 +59395,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/algos.js
+  // ../SovereignS3nc/node_modules/browserify-sign/algos.js
   var require_algos = __commonJS({
-    "node_modules/browserify-sign/algos.js"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
 
-  // node_modules/pbkdf2/lib/precondition.js
+  // ../SovereignS3nc/node_modules/pbkdf2/lib/precondition.js
   var require_precondition = __commonJS({
-    "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
+    "../SovereignS3nc/node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -59419,11 +59428,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/default-encoding.js
+  // ../SovereignS3nc/node_modules/pbkdf2/lib/default-encoding.js
   var require_default_encoding = __commonJS({
-    "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
+    "../SovereignS3nc/node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -59438,11 +59447,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/to-buffer.js
+  // ../SovereignS3nc/node_modules/pbkdf2/lib/to-buffer.js
   var require_to_buffer3 = __commonJS({
-    "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
+    "../SovereignS3nc/node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -59457,11 +59466,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/sync-browser.js
+  // ../SovereignS3nc/node_modules/pbkdf2/lib/sync-browser.js
   var require_sync_browser = __commonJS({
-    "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
+    "../SovereignS3nc/node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -59572,11 +59581,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/async.js
+  // ../SovereignS3nc/node_modules/pbkdf2/lib/async.js
   var require_async = __commonJS({
-    "node_modules/pbkdf2/lib/async.js"(exports, module) {
+    "../SovereignS3nc/node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -59695,21 +59704,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/browser.js
+  // ../SovereignS3nc/node_modules/pbkdf2/browser.js
   var require_browser6 = __commonJS({
-    "node_modules/pbkdf2/browser.js"(exports) {
+    "../SovereignS3nc/node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
   });
 
-  // node_modules/des.js/lib/des/utils.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des/utils.js
   var require_utils = __commonJS({
-    "node_modules/des.js/lib/des/utils.js"(exports) {
+    "../SovereignS3nc/node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -60472,10 +60481,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/minimalistic-assert/index.js
+  // ../SovereignS3nc/node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
-    "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/minimalistic-assert/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -60488,11 +60497,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/cipher.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des/cipher.js
   var require_cipher = __commonJS({
-    "node_modules/des.js/lib/des/cipher.js"(exports, module) {
+    "../SovereignS3nc/node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -60597,11 +60606,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/des.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des/des.js
   var require_des = __commonJS({
-    "node_modules/des.js/lib/des/des.js"(exports, module) {
+    "../SovereignS3nc/node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -60725,11 +60734,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/cbc.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des/cbc.js
   var require_cbc = __commonJS({
-    "node_modules/des.js/lib/des/cbc.js"(exports) {
+    "../SovereignS3nc/node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -60781,11 +60790,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/ede.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des/ede.js
   var require_ede = __commonJS({
-    "node_modules/des.js/lib/des/ede.js"(exports, module) {
+    "../SovereignS3nc/node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -60830,11 +60839,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des.js
+  // ../SovereignS3nc/node_modules/des.js/lib/des.js
   var require_des2 = __commonJS({
-    "node_modules/des.js/lib/des.js"(exports) {
+    "../SovereignS3nc/node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -60843,10 +60852,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-des/index.js
+  // ../SovereignS3nc/node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
-    "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-des/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -60899,10 +60908,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ecb.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
-    "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/ecb.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -60912,10 +60921,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/buffer-xor/index.js
+  // ../SovereignS3nc/node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
-    "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/buffer-xor/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -60927,10 +60936,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cbc.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
-    "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/cbc.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -60946,10 +60955,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
-    "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/cfb.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -60981,10 +60990,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb8.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
-    "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/cfb8.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -61007,10 +61016,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb1.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
-    "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/cfb1.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -61049,10 +61058,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ofb.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
-    "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/ofb.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -61069,10 +61078,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/incr32.js
+  // ../SovereignS3nc/node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
-    "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/incr32.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -61091,10 +61100,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ctr.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
-    "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/ctr.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer3 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -61126,9 +61135,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/list.json
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/list.json
   var require_list = __commonJS({
-    "node_modules/browserify-aes/modes/list.json"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-aes/modes/list.json"(exports, module) {
       module.exports = {
         "aes-128-ecb": {
           cipher: "AES",
@@ -61323,10 +61332,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/index.js
+  // ../SovereignS3nc/node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
-    "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/modes/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -61346,10 +61355,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/aes.js
+  // ../SovereignS3nc/node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
-    "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/aes.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
@@ -61521,10 +61530,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/ghash.js
+  // ../SovereignS3nc/node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
-    "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/ghash.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var ZEROES = Buffer3.alloc(16, 0);
       function toArray(buf) {
@@ -61599,10 +61608,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/authCipher.js
+  // ../SovereignS3nc/node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
-    "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/authCipher.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61702,10 +61711,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/streamCipher.js
+  // ../SovereignS3nc/node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
-    "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/streamCipher.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61730,10 +61739,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/evp_bytestokey/index.js
+  // ../SovereignS3nc/node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
-    "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/evp_bytestokey/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -61773,10 +61782,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/encrypter.js
+  // ../SovereignS3nc/node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
-    "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/encrypter.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -61870,10 +61879,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/decrypter.js
+  // ../SovereignS3nc/node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
-    "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/decrypter.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -61980,10 +61989,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/browser.js
+  // ../SovereignS3nc/node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
-    "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-aes/browser.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -61998,10 +62007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-des/modes.js
+  // ../SovereignS3nc/node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
-    "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-des/modes.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -62029,10 +62038,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-cipher/browser.js
+  // ../SovereignS3nc/node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
-    "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/browserify-cipher/browser.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -62091,10 +62100,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
-    "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -64903,10 +64912,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
-    "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -67715,10 +67724,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/brorand/index.js
+  // ../SovereignS3nc/node_modules/brorand/index.js
   var require_brorand = __commonJS({
-    "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/brorand/index.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -67773,10 +67782,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/miller-rabin/lib/mr.js
+  // ../SovereignS3nc/node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
-    "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/miller-rabin/lib/mr.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var bn = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -67865,10 +67874,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/generatePrime.js
+  // ../SovereignS3nc/node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
-    "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var randomBytes3 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -67962,9 +67971,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/primes.json
+  // ../SovereignS3nc/node_modules/diffie-hellman/lib/primes.json
   var require_primes = __commonJS({
-    "node_modules/diffie-hellman/lib/primes.json"(exports, module) {
+    "../SovereignS3nc/node_modules/diffie-hellman/lib/primes.json"(exports, module) {
       module.exports = {
         modp1: {
           gen: "02",
@@ -68002,10 +68011,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/dh.js
+  // ../SovereignS3nc/node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
-    "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/diffie-hellman/lib/dh.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -68149,10 +68158,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/browser.js
+  // ../SovereignS3nc/node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
-    "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/diffie-hellman/browser.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -68189,10 +68198,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
-    "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -71081,11 +71090,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-rsa/index.js
+  // ../SovereignS3nc/node_modules/browserify-rsa/index.js
   var require_browserify_rsa = __commonJS({
-    "node_modules/browserify-rsa/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes3 = require_browser2();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -71121,9 +71130,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/package.json
+  // ../SovereignS3nc/node_modules/elliptic/package.json
   var require_package = __commonJS({
-    "node_modules/elliptic/package.json"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/package.json"(exports, module) {
       module.exports = {
         name: "elliptic",
         version: "6.6.1",
@@ -71183,10 +71192,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
-    "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -73995,11 +74004,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/minimalistic-crypto-utils/lib/utils.js
+  // ../SovereignS3nc/node_modules/minimalistic-crypto-utils/lib/utils.js
   var require_utils2 = __commonJS({
-    "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
+    "../SovereignS3nc/node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -74055,11 +74064,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/utils.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/utils.js
   var require_utils3 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -74162,11 +74171,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/base.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/base.js
   var require_base = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -74485,11 +74494,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/short.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/short.js
   var require_short = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75184,11 +75193,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/mont.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/mont.js
   var require_mont = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -75313,11 +75322,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/edwards.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/edwards.js
   var require_edwards = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75615,11 +75624,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/index.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/index.js
   var require_curve = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -75628,11 +75637,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/utils.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/utils.js
   var require_utils4 = __commonJS({
-    "node_modules/hash.js/lib/hash/utils.js"(exports) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -75874,11 +75883,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/common.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/common.js
   var require_common = __commonJS({
-    "node_modules/hash.js/lib/hash/common.js"(exports) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -75954,11 +75963,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/common.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/common.js
   var require_common2 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -76001,11 +76010,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/1.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/1.js
   var require__ = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76074,11 +76083,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/256.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/256.js
   var require__2 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76227,11 +76236,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/224.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/224.js
   var require__3 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -76264,11 +76273,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/512.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/512.js
   var require__4 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -76704,11 +76713,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/384.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha/384.js
   var require__5 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -76749,11 +76758,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/sha.js
   var require_sha3 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha.js"(exports) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -76762,11 +76771,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/ripemd.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/ripemd.js
   var require_ripemd = __commonJS({
-    "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -77204,11 +77213,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/hmac.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash/hmac.js
   var require_hmac = __commonJS({
-    "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -77246,10 +77255,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash.js
+  // ../SovereignS3nc/node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
-    "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/hash.js/lib/hash.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -77265,10 +77274,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -78052,11 +78061,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curves.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/curves.js
   var require_curves = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -78229,11 +78238,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hmac-drbg/lib/hmac-drbg.js
+  // ../SovereignS3nc/node_modules/hmac-drbg/lib/hmac-drbg.js
   var require_hmac_drbg = __commonJS({
-    "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
+    "../SovereignS3nc/node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -78324,11 +78333,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/key.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/key.js
   var require_key = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78419,11 +78428,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/signature.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/signature.js
   var require_signature = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78575,11 +78584,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/index.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/index.js
   var require_ec = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -78783,11 +78792,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/key.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/key.js
   var require_key2 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -78858,11 +78867,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/signature.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/signature.js
   var require_signature2 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78909,11 +78918,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/index.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/index.js
   var require_eddsa = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -78998,11 +79007,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic.js
+  // ../SovereignS3nc/node_modules/elliptic/lib/elliptic.js
   var require_elliptic = __commonJS({
-    "node_modules/elliptic/lib/elliptic.js"(exports) {
+    "../SovereignS3nc/node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -79014,10 +79023,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
-    "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -81826,10 +81835,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/api.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
-    "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/api.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -81880,10 +81889,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/reporter.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -81981,10 +81990,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/buffer.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer3 = require_buffer().Buffer;
@@ -82084,10 +82093,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/node.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -82618,10 +82627,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/index.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -82630,10 +82639,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/constants/der.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
-    "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -82677,10 +82686,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/constants/index.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
-    "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map3) {
         var res = {};
@@ -82696,10 +82705,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/der.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -82960,10 +82969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/pem.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -83006,20 +83015,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/index.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/der.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -83248,10 +83257,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/pem.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -83272,20 +83281,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/index.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
     }
   });
 
-  // node_modules/asn1.js/lib/asn1.js
+  // ../SovereignS3nc/node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
-    "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/asn1.js/lib/asn1.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -83296,11 +83305,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/certificate.js
+  // ../SovereignS3nc/node_modules/parse-asn1/certificate.js
   var require_certificate = __commonJS({
-    "node_modules/parse-asn1/certificate.js"(exports, module) {
+    "../SovereignS3nc/node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -83376,11 +83385,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/asn1.js
+  // ../SovereignS3nc/node_modules/parse-asn1/asn1.js
   var require_asn12 = __commonJS({
-    "node_modules/parse-asn1/asn1.js"(exports) {
+    "../SovereignS3nc/node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -83490,9 +83499,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/aesid.json
+  // ../SovereignS3nc/node_modules/parse-asn1/aesid.json
   var require_aesid = __commonJS({
-    "node_modules/parse-asn1/aesid.json"(exports, module) {
+    "../SovereignS3nc/node_modules/parse-asn1/aesid.json"(exports, module) {
       module.exports = {
         "2.16.840.1.101.3.4.1.1": "aes-128-ecb",
         "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
@@ -83510,11 +83519,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/fixProc.js
+  // ../SovereignS3nc/node_modules/parse-asn1/fixProc.js
   var require_fixProc = __commonJS({
-    "node_modules/parse-asn1/fixProc.js"(exports, module) {
+    "../SovereignS3nc/node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -83548,11 +83557,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/index.js
+  // ../SovereignS3nc/node_modules/parse-asn1/index.js
   var require_parse_asn1 = __commonJS({
-    "node_modules/parse-asn1/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -83663,9 +83672,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/curves.json
+  // ../SovereignS3nc/node_modules/browserify-sign/browser/curves.json
   var require_curves2 = __commonJS({
-    "node_modules/browserify-sign/browser/curves.json"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/browser/curves.json"(exports, module) {
       module.exports = {
         "1.3.132.0.10": "secp256k1",
         "1.3.132.0.33": "p224",
@@ -83677,11 +83686,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/sign.js
+  // ../SovereignS3nc/node_modules/browserify-sign/browser/sign.js
   var require_sign2 = __commonJS({
-    "node_modules/browserify-sign/browser/sign.js"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHmac2 = require_browser5();
       var crt = require_browserify_rsa();
@@ -83832,11 +83841,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/verify.js
+  // ../SovereignS3nc/node_modules/browserify-sign/browser/verify.js
   var require_verify = __commonJS({
-    "node_modules/browserify-sign/browser/verify.js"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -83923,11 +83932,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/index.js
+  // ../SovereignS3nc/node_modules/browserify-sign/browser/index.js
   var require_browser10 = __commonJS({
-    "node_modules/browserify-sign/browser/index.js"(exports, module) {
+    "../SovereignS3nc/node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
@@ -84005,10 +84014,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
-    "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -86817,10 +86826,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-ecdh/browser.js
+  // ../SovereignS3nc/node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
-    "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/create-ecdh/browser.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -86936,10 +86945,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/mgf.js
+  // ../SovereignS3nc/node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
-    "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/mgf.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
@@ -86960,10 +86969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/xor.js
+  // ../SovereignS3nc/node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
-    "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/xor.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -86975,10 +86984,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
+  // ../SovereignS3nc/node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
-    "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -89787,10 +89796,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/withPublic.js
+  // ../SovereignS3nc/node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
-    "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/withPublic.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer3 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -89800,10 +89809,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/publicEncrypt.js
+  // ../SovereignS3nc/node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
-    "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes3 = require_browser2();
       var createHash4 = require_browser4();
@@ -89893,10 +89902,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/privateDecrypt.js
+  // ../SovereignS3nc/node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
-    "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -90000,10 +90009,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/browser.js
+  // ../SovereignS3nc/node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
-    "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/public-encrypt/browser.js"(exports) {
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -90015,11 +90024,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/randomfill/browser.js
+  // ../SovereignS3nc/node_modules/randomfill/browser.js
   var require_browser13 = __commonJS({
-    "node_modules/randomfill/browser.js"(exports) {
+    "../SovereignS3nc/node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -90118,11 +90127,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/crypto-browserify/index.js
+  // ../SovereignS3nc/node_modules/crypto-browserify/index.js
   var require_crypto_browserify = __commonJS({
-    "node_modules/crypto-browserify/index.js"(exports) {
+    "../SovereignS3nc/node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -90276,7 +90285,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/utils/Errors.ts
-  var import_polyfills673, SovereignError, AuthError, SyncError, StorageError, NetworkError, ModuleError;
+  var import_polyfills673, SovereignError, AuthError, SyncError, StorageError, NetworkError, ModuleError, RepositoryError;
   var init_Errors = __esm({
     "src/utils/Errors.ts"() {
       "use strict";
@@ -90325,6 +90334,13 @@ ${toHex(hashedRequest)}`;
           Object.setPrototypeOf(this, _ModuleError.prototype);
         }
       };
+      RepositoryError = class _RepositoryError extends SovereignError {
+        constructor(message, details) {
+          super("REPOSITORY_ERROR", message, details);
+          this.name = "RepositoryError";
+          Object.setPrototypeOf(this, _RepositoryError.prototype);
+        }
+      };
     }
   });
 
@@ -90340,7 +90356,6 @@ ${toHex(hashedRequest)}`;
       crypto2 = __toESM(require_crypto_browserify());
       init_Errors();
       S3RemoteAdapter = class {
-        // Optimization flag for backends like RustFS
         constructor(config, paths) {
           this.supportsMetadataHash = true;
           Logger.debug("S3", `Initializing adapter for ${paths.userId}...`);
@@ -90380,6 +90395,8 @@ ${toHex(hashedRequest)}`;
           } else {
             this.prefix = "";
           }
+          this.multipartThreshold = config.multipartThreshold ?? 25 * 1024 * 1024;
+          this.multipartChunkSize = config.multipartChunkSize ?? 5 * 1024 * 1024;
           Logger.info("S3", `Adapter initialized with prefix: ${this.prefix}`);
         }
         /**
@@ -90420,6 +90437,9 @@ ${toHex(hashedRequest)}`;
               hash = crypto2.createHash("sha256").update(data).digest("hex");
             }
           }
+          if (data.byteLength > this.multipartThreshold) {
+            return this.uploadMultipart(key, data, hash, customMetadata);
+          }
           const response = await this.withRetry(() => this.client.send(new PutObjectCommand({
             Bucket: this.bucket,
             Key: key,
@@ -90430,6 +90450,76 @@ ${toHex(hashedRequest)}`;
             }
           })), `Upload ${key}`);
           return response.ETag || null;
+        }
+        /**
+         * Performs an S3 resumable multipart upload for large files exceeding multipartThreshold.
+         * Chunks payload into 5MB+ parts with exponential backoff on individual part failures,
+         * and sends AbortMultipartUploadCommand on permanent failure to prevent orphaned storage.
+         */
+        async uploadMultipart(key, data, hash, customMetadata) {
+          Logger.info("S3", `Initiating multipart upload for ${key} (${data.byteLength} bytes, chunk size: ${this.multipartChunkSize})`);
+          const createRes = await this.withRetry(() => this.client.send(new CreateMultipartUploadCommand({
+            Bucket: this.bucket,
+            Key: key,
+            Metadata: {
+              "hash": hash,
+              ...customMetadata || {}
+            }
+          })), `CreateMultipartUpload ${key}`);
+          const uploadId = createRes.UploadId;
+          if (!uploadId) {
+            throw new NetworkError(`Failed to initiate multipart upload for ${key}: missing UploadId`);
+          }
+          const totalSize = data.byteLength;
+          const chunkSize = this.multipartChunkSize;
+          const totalParts = Math.ceil(totalSize / chunkSize);
+          const completedParts = [];
+          try {
+            for (let partNumber = 1; partNumber <= totalParts; partNumber++) {
+              const start = (partNumber - 1) * chunkSize;
+              const end = Math.min(start + chunkSize, totalSize);
+              const partBuffer = data.subarray(start, end);
+              const partRes = await this.withRetry(async () => {
+                return await this.client.send(new UploadPartCommand({
+                  Bucket: this.bucket,
+                  Key: key,
+                  UploadId: uploadId,
+                  PartNumber: partNumber,
+                  Body: partBuffer
+                }));
+              }, `UploadPart ${key} #${partNumber}/${totalParts}`);
+              if (!partRes.ETag) {
+                throw new NetworkError(`Missing ETag for part ${partNumber} of ${key}`);
+              }
+              completedParts.push({
+                ETag: partRes.ETag,
+                PartNumber: partNumber
+              });
+            }
+            const completeRes = await this.withRetry(() => this.client.send(new CompleteMultipartUploadCommand({
+              Bucket: this.bucket,
+              Key: key,
+              UploadId: uploadId,
+              MultipartUpload: {
+                Parts: completedParts
+              }
+            })), `CompleteMultipartUpload ${key}`);
+            Logger.info("S3", `Completed multipart upload for ${key} (${completedParts.length} parts)`);
+            return completeRes.ETag || null;
+          } catch (err) {
+            Logger.error("S3", `Multipart upload failed for ${key}, aborting uploadId ${uploadId}: ${err.message}`);
+            try {
+              await this.client.send(new AbortMultipartUploadCommand({
+                Bucket: this.bucket,
+                Key: key,
+                UploadId: uploadId
+              }));
+              Logger.info("S3", `Successfully aborted multipart upload ${uploadId} for ${key}`);
+            } catch (abortErr) {
+              Logger.warn("S3", `Failed to abort multipart upload ${uploadId}: ${abortErr.message}`);
+            }
+            throw err;
+          }
         }
         async downloadFile(path2, ifNoneMatch, timeout = 15e3) {
           const key = this.getKey(path2);
@@ -90714,7 +90804,6 @@ ${toHex(hashedRequest)}`;
       init_Constants();
       init_Environment();
       WebRTCRemoteAdapter = class _WebRTCRemoteAdapter extends import_events.EventEmitter {
-        // 30 seconds
         constructor(userId, prefix = "", config = {}) {
           super();
           this.channels = /* @__PURE__ */ new Set();
@@ -90726,6 +90815,14 @@ ${toHex(hashedRequest)}`;
           this.seenMessages = /* @__PURE__ */ new Set();
           this.seenMessagesQueue = [];
           this.channelSendCounts = /* @__PURE__ */ new WeakMap();
+          this.reconnectAttempts = /* @__PURE__ */ new Map();
+          this.reconnectTimers = /* @__PURE__ */ new Map();
+          // Packet & Gossip Metrics
+          this.packetsSent = 0;
+          this.packetsReceived = 0;
+          this.packetsDropped = 0;
+          this.peerLatencies = /* @__PURE__ */ new Map();
+          this.reconnectHandlers = /* @__PURE__ */ new Map();
           this.peerId = userId;
           this.prefix = prefix;
           if (this.prefix && !this.prefix.endsWith("/")) {
@@ -90739,6 +90836,9 @@ ${toHex(hashedRequest)}`;
           this.verify = config.verify;
           this.signingPublicKey = config.signingPublicKey;
           this.getPublicKey = config.getPublicKey;
+          this.defaultRetries = config.downloadRetries ?? 0;
+          this.reconnectBackoffBaseMs = config.reconnectBackoffBaseMs ?? 100;
+          this.maxReconnectBackoffMs = config.maxReconnectBackoffMs ?? 1e4;
         }
         static {
           // Gossip backpressure: token-bucket per channel
@@ -90751,6 +90851,18 @@ ${toHex(hashedRequest)}`;
         static {
           // Message timestamp TTL enforcement: drop messages older than MSG_MAX_AGE_MS
           this.MSG_MAX_AGE_MS = 3e4;
+        }
+        getMeshStats() {
+          return {
+            peerId: this.peerId,
+            activePeers: Array.from(this.channelsByUserId.keys()),
+            peerCount: this.channelsByUserId.size,
+            latencies: Object.fromEntries(this.peerLatencies.entries()),
+            packetsSent: this.packetsSent,
+            packetsReceived: this.packetsReceived,
+            packetsDropped: this.packetsDropped,
+            seenMessagesCount: this.seenMessages.size
+          };
         }
         /**
          * Sends an SDP signal to a target peer through the mesh.
@@ -90818,6 +90930,7 @@ ${toHex(hashedRequest)}`;
           this.channels.add(channel);
           if (userId) {
             this.channelsByUserId.set(userId, channel);
+            this.resetReconnectBackoff(userId);
           }
           return {
             channel,
@@ -90835,22 +90948,107 @@ ${toHex(hashedRequest)}`;
           }
         }
         /**
-         * Disconnects a channel.
+         * Disconnects a channel (or peer by userId) and triggers exponential backoff reconnect if a handler is registered.
          */
-        disconnectPeer(channel) {
-          this.channels.delete(channel);
-          for (const [uid2, ch] of this.channelsByUserId.entries()) {
-            if (ch === channel) {
-              this.channelsByUserId.delete(uid2);
-              break;
+        disconnectPeer(channelOrUserId) {
+          let disconnectedUserId;
+          let channelToRemove;
+          if (typeof channelOrUserId === "string") {
+            disconnectedUserId = channelOrUserId;
+            channelToRemove = this.channelsByUserId.get(channelOrUserId);
+            if (channelToRemove) {
+              this.channels.delete(channelToRemove);
+              this.channelsByUserId.delete(channelOrUserId);
+            }
+          } else {
+            channelToRemove = channelOrUserId;
+            this.channels.delete(channelToRemove);
+            for (const [uid2, ch] of this.channelsByUserId.entries()) {
+              if (ch === channelToRemove) {
+                this.channelsByUserId.delete(uid2);
+                disconnectedUserId = uid2;
+                break;
+              }
             }
           }
           Logger.debug("WebRTC", `Peer disconnected. Active channels: ${this.channels.size}`);
+          if (disconnectedUserId && this.reconnectHandlers.has(disconnectedUserId)) {
+            this.scheduleReconnect(disconnectedUserId);
+          }
+        }
+        /**
+         * Registers a callback to re-establish connection to a peer when disconnected.
+         */
+        registerReconnectHandler(userId, handler) {
+          this.reconnectHandlers.set(userId, handler);
+        }
+        /**
+         * Schedules a reconnection attempt using exponential backoff with jitter to prevent CPU spikes.
+         */
+        scheduleReconnect(userId) {
+          if (this.reconnectTimers.has(userId)) {
+            return false;
+          }
+          const handler = this.reconnectHandlers.get(userId);
+          if (!handler) {
+            return false;
+          }
+          const currentAttempts = this.reconnectAttempts.get(userId) || 0;
+          const delay = Math.min(
+            this.maxReconnectBackoffMs,
+            this.reconnectBackoffBaseMs * Math.pow(2, currentAttempts)
+          );
+          this.emit("reconnect:scheduled", { userId, attempt: currentAttempts + 1, delayMs: delay });
+          const timer = setTimeout(async () => {
+            this.reconnectTimers.delete(userId);
+            this.reconnectAttempts.set(userId, currentAttempts + 1);
+            this.emit("reconnect:attempt", { userId, attempt: currentAttempts + 1 });
+            try {
+              const res = await handler();
+              if (res !== false) {
+                this.resetReconnectBackoff(userId);
+                this.emit("reconnect:success", { userId, attempt: currentAttempts + 1 });
+                return;
+              }
+            } catch (err) {
+              Logger.warn("WebRTC", `Reconnection attempt to ${userId} failed: ${err}`);
+            }
+            if (this.reconnectHandlers.has(userId)) {
+              this.scheduleReconnect(userId);
+            }
+          }, delay);
+          this.reconnectTimers.set(userId, timer);
+          return true;
+        }
+        /**
+         * Resets exponential backoff counters and clears pending timers for a peer.
+         */
+        resetReconnectBackoff(userId) {
+          if (this.reconnectTimers.has(userId)) {
+            clearTimeout(this.reconnectTimers.get(userId));
+            this.reconnectTimers.delete(userId);
+          }
+          this.reconnectAttempts.delete(userId);
+        }
+        getReconnectAttempts(userId) {
+          return this.reconnectAttempts.get(userId) || 0;
+        }
+        clearAllReconnectTimers() {
+          for (const timer of this.reconnectTimers.values()) {
+            clearTimeout(timer);
+          }
+          this.reconnectTimers.clear();
+          this.reconnectAttempts.clear();
         }
         async handleMessage(msgStr, sourceChannel) {
           try {
+            this.packetsReceived++;
             const msg = JSON.parse(msgStr);
             const key = msg.path;
+            if (msg.timestamp && msg.senderId) {
+              const latency = Math.max(0, Date.now() - msg.timestamp);
+              this.peerLatencies.set(msg.senderId, latency);
+            }
             if (this.verify && msg.signature && msg.signingPublicKey) {
               const messageToVerify = { ...msg };
               delete messageToVerify.signature;
@@ -90863,6 +91061,7 @@ ${toHex(hashedRequest)}`;
               }
               if (!this.verify(dataToVerify, signature, knownPublicKey)) {
                 Logger.warn("WebRTC", `Invalid signature from peer ${msg.senderId}. Dropping message.`);
+                this.packetsDropped++;
                 return;
               }
             }
@@ -90874,6 +91073,7 @@ ${toHex(hashedRequest)}`;
             }
             if (msg.timestamp && Date.now() - msg.timestamp > _WebRTCRemoteAdapter.MSG_MAX_AGE_MS) {
               Logger.debug("WebRTC", `Dropping stale message (age ${Date.now() - msg.timestamp}ms) from ${msg.senderId}`);
+              this.packetsDropped++;
               return;
             }
             if (msg.type === "relay_signal") {
@@ -91004,12 +91204,15 @@ ${toHex(hashedRequest)}`;
           }
           if (bucket.count >= _WebRTCRemoteAdapter.GOSSIP_BURST_LIMIT) {
             Logger.warn("WebRTC", `Rate limit hit \u2014 dropping gossip message to a peer.`);
+            this.packetsDropped++;
             return false;
           }
           bucket.count++;
           try {
             channel.send(msgStr);
+            this.packetsSent++;
           } catch (e2) {
+            this.packetsDropped++;
           }
           return true;
         }
@@ -91050,7 +91253,21 @@ ${toHex(hashedRequest)}`;
         async getFileMetadata(path2, key) {
           return null;
         }
-        async downloadFile(path2, ifNoneMatch, timeout = 3e3) {
+        async downloadFile(path2, ifNoneMatch, timeout = 3e3, retries) {
+          const attempts = retries !== void 0 ? retries : this.defaultRetries;
+          for (let i2 = 0; i2 <= attempts; i2++) {
+            const res = await this._downloadFileOnce(path2, ifNoneMatch, timeout);
+            if (res !== null) {
+              return res;
+            }
+            if (i2 < attempts) {
+              const waitMs = Math.min(500, 50 * Math.pow(2, i2));
+              await new Promise((r2) => setTimeout(r2, waitMs));
+            }
+          }
+          return null;
+        }
+        async _downloadFileOnce(path2, ifNoneMatch, timeout = 3e3) {
           const key = this.getKey(path2);
           const local = this.cache.get(key);
           if (local) {
@@ -91100,7 +91317,8 @@ ${toHex(hashedRequest)}`;
               reqId,
               senderId: this.peerId,
               msgId: this.generateMsgId(),
-              ttl: this.defaultTTL
+              ttl: this.defaultTTL,
+              timestamp: Date.now()
             };
             this.markMessageAsSeen(reqMsg.msgId);
             this.broadcast(reqMsg);
@@ -91307,7 +91525,7 @@ ${toHex(hashedRequest)}`;
         async init() {
           if (this.db) return;
           Logger.debug("IDB", `Initializing ${this.dbName}...`);
-          return new Promise((resolve2, reject) => {
+          await new Promise((resolve2, reject) => {
             try {
               const request = indexedDB.open(this.dbName, 1);
               request.onerror = () => {
@@ -91337,6 +91555,8 @@ ${toHex(hashedRequest)}`;
             } catch (e2) {
               reject(e2);
             }
+          });
+          await this.requestPersistence().catch(() => {
           });
         }
         getStore(name, mode = "readonly") {
@@ -91649,6 +91869,51 @@ ${toHex(hashedRequest)}`;
           const hashBuffer = await crypto.subtle.digest("SHA-256", data);
           return Array.from(new Uint8Array(hashBuffer)).map((b2) => b2.toString(16).padStart(2, "0")).join("");
         }
+        /**
+         * Attempts to request persistent storage via navigator.storage.persist() to protect
+         * local keys, offline databases, and outbox queues from browser eviction.
+         */
+        async requestPersistence() {
+          if (typeof navigator !== "undefined" && navigator.storage && typeof navigator.storage.persist === "function") {
+            try {
+              const isAlreadyPersisted = typeof navigator.storage.persisted === "function" ? await navigator.storage.persisted() : false;
+              if (!isAlreadyPersisted) {
+                const granted = await navigator.storage.persist();
+                Logger.info("IDB", `Storage persistence request result: ${granted}`);
+                return granted;
+              }
+              Logger.debug("IDB", "Storage is already persisted.");
+              return true;
+            } catch (e2) {
+              Logger.debug("IDB", `Storage persistence request failed: ${e2.message}`);
+              return false;
+            }
+          }
+          return false;
+        }
+        /**
+         * Checks if the storage is persisted and retrieves quota / usage estimates if available.
+         */
+        async checkStoragePersistence() {
+          let persisted = false;
+          let quota;
+          let usage;
+          if (typeof navigator !== "undefined" && navigator.storage) {
+            try {
+              if (typeof navigator.storage.persisted === "function") {
+                persisted = await navigator.storage.persisted();
+              }
+              if (typeof navigator.storage.estimate === "function") {
+                const estimate = await navigator.storage.estimate();
+                quota = estimate.quota;
+                usage = estimate.usage;
+              }
+            } catch (e2) {
+              Logger.debug("IDB", `Failed to check storage persistence: ${e2.message}`);
+            }
+          }
+          return { persisted, quota, usage };
+        }
       };
     }
   });
@@ -91799,10 +92064,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/tweetnacl/nacl-fast.js
+  // ../SovereignS3nc/node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
-    "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills699 = __toESM(require_polyfills());
+    "../SovereignS3nc/node_modules/tweetnacl/nacl-fast.js"(exports, module) {
+      var import_polyfills701 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -94760,64 +95025,76 @@ ${toHex(hashedRequest)}`;
             });
           }
           const blacklist = this.ctx.config.blacklist || [];
-          for (const user of usersToSync) {
-            if (blacklist.includes(user.userId)) {
-              Logger.info("Sync", `Skipping blacklisted user ${user.userId}`);
-              continue;
+          const eligibleUsers = usersToSync.filter((u2) => !blacklist.includes(u2.userId));
+          const BATCH_SIZE = 5;
+          for (let i2 = 0; i2 < eligibleUsers.length; i2 += BATCH_SIZE) {
+            const batch = eligibleUsers.slice(i2, i2 + BATCH_SIZE);
+            await Promise.all(batch.map((user) => this.syncFollowedUser(user, today)));
+          }
+        }
+        async syncFollowedUser(user, today) {
+          const meta = this.ctx.fetchManifestWithMeta ? await this.ctx.fetchManifestWithMeta(user.userId) : { manifest: await this.ctx.fetchManifest(user.userId), etag: null, unchanged: false, fromCache: false };
+          const manifest = meta.manifest;
+          if (manifest) {
+            const lastProcessedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${user.userId}`);
+            if (meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
+              Logger.info("Sync", `Skipping unchanged manifest for ${user.userId} (ETag: ${meta.etag}, fromCache: ${meta.fromCache})`);
+              await this.ctx.storage.updateFollowedUserSync(user.userId, today);
+              return;
             }
-            const manifest = await this.ctx.fetchManifest(user.userId);
-            if (manifest) {
-              Logger.info("Sync", `Using manifest for ${user.userId}`);
-              if (manifest.modules["core"]) {
-                for (const dateStr of manifest.modules["core"]) {
-                  await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                }
+            Logger.info("Sync", `Using manifest for ${user.userId}`);
+            if (manifest.modules["core"]) {
+              for (const dateStr of manifest.modules["core"]) {
+                await this.pullUserDay(user.userId, dateStr, user.publicKey);
               }
-              for (const [moduleName, dates] of Object.entries(manifest.modules)) {
-                if (moduleName === "core") continue;
-                for (const dateStr of dates) {
-                  const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
-                  const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
-                  const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+            }
+            for (const [moduleName, dates] of Object.entries(manifest.modules)) {
+              if (moduleName === "core") continue;
+              for (const dateStr of dates) {
+                const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
+                const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
+                const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+              }
+            }
+            const myId = this.ctx.config.paths.userId;
+            if (manifest.dms && manifest.dms[myId]) {
+              for (const dateStr of manifest.dms[myId]) {
+                for (const moduleDef of this.ctx.registeredModules) {
+                  const moduleName = moduleDef.name;
+                  const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
+                  const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
+                  const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
                   if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
                 }
               }
-              const myId = this.ctx.config.paths.userId;
-              if (manifest.dms[myId]) {
-                for (const dateStr of manifest.dms[myId]) {
-                  for (const moduleDef of this.ctx.registeredModules) {
-                    const moduleName = moduleDef.name;
-                    const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
-                    const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
-                    const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                    if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
-                  }
-                }
-              }
-            } else {
-              const startDate = new Date(user.lastSync);
-              const endDate = new Date(today);
-              let iter = new Date(startDate);
-              iter.setUTCHours(0, 0, 0, 0);
-              endDate.setUTCHours(0, 0, 0, 0);
-              while (iter <= endDate) {
-                const dateStr = SovereignS3nc.getDateStr(iter);
-                await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                for (const moduleDef of this.ctx.registeredModules) {
-                  const moduleName = moduleDef.name;
-                  const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
-                  const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
-                  await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
-                  const myId = this.ctx.config.paths.userId;
-                  const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
-                  const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
-                  await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
-                }
-                iter.setUTCDate(iter.getUTCDate() + 1);
-              }
             }
-            await this.ctx.storage.updateFollowedUserSync(user.userId, today);
+            if (meta.etag) {
+              await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${user.userId}`, meta.etag);
+            }
+          } else {
+            const startDate = new Date(user.lastSync);
+            const endDate = new Date(today);
+            let iter = new Date(startDate);
+            iter.setUTCHours(0, 0, 0, 0);
+            endDate.setUTCHours(0, 0, 0, 0);
+            while (iter <= endDate) {
+              const dateStr = SovereignS3nc.getDateStr(iter);
+              await this.pullUserDay(user.userId, dateStr, user.publicKey);
+              for (const moduleDef of this.ctx.registeredModules) {
+                const moduleName = moduleDef.name;
+                const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
+                const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
+                await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                const myId = this.ctx.config.paths.userId;
+                const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
+                const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
+                await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
+              }
+              iter.setUTCDate(iter.getUTCDate() + 1);
+            }
           }
+          await this.ctx.storage.updateFollowedUserSync(user.userId, today);
         }
         async pullUserFile(userId, remotePath, publicKey, localPath, expectEncrypted = true) {
           try {
@@ -95010,6 +95287,29 @@ ${toHex(hashedRequest)}`;
           await Promise.all(workers);
           return results;
         }
+        /**
+         * Runs compaction maintenance on registered modules for specified dates.
+         */
+        async compactDatabases(dates, force = false) {
+          const today = SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
+          const targetDates = dates && dates.length > 0 ? dates : [today];
+          const instances2 = this.ctx.getModuleInstances ? this.ctx.getModuleInstances() : [];
+          for (const mod of instances2) {
+            if (typeof mod.compactDatabase === "function") {
+              for (const d2 of targetDates) {
+                try {
+                  if (mod.MODULE_NAME === "feed") {
+                    await mod.compactDatabase(d2, true, force);
+                  } else {
+                    await mod.compactDatabase(d2, force);
+                  }
+                } catch (e2) {
+                  Logger.warn("Sync", `Compaction failed for module on date ${d2}: ${e2}`);
+                }
+              }
+            }
+          }
+        }
       };
     }
   });
@@ -95025,21 +95325,40 @@ ${toHex(hashedRequest)}`;
       ManifestManager = class {
         constructor(ctx) {
           this.ctx = ctx;
+          this.followManifestCache = /* @__PURE__ */ new Map();
+        }
+        computeMerkleRoot(subManifests) {
+          const keys = Object.keys(subManifests).sort();
+          if (keys.length === 0) {
+            return this.ctx.calculateHashedContent(new TextEncoder().encode(""));
+          }
+          const combined = keys.map((k2) => `${k2}:${subManifests[k2].hash}`).join("|");
+          return this.ctx.calculateHashedContent(new TextEncoder().encode(combined));
         }
         async syncManifest() {
           const publicRemote = this.ctx.getPublicRemote();
           if (!publicRemote) return;
           try {
-            Logger.info("Sync", "Generating and uploading manifest...");
-            const manifest = await this.generateManifest();
-            const data = new TextEncoder().encode(JSON.stringify(manifest));
-            await publicRemote.uploadFile(PATHS.MANIFEST, data);
-            Logger.info("Sync", "Manifest uploaded successfully.");
+            Logger.info("Sync", "Generating and uploading hierarchical manifest...");
+            const { rootManifest, subManifests } = await this.generateHierarchicalManifest();
+            for (const [key, sub] of Object.entries(subManifests)) {
+              const subPath = sub.ref.path;
+              const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(`submanifest:${subPath}`);
+              if (cachedHash !== sub.ref.hash) {
+                const data = new TextEncoder().encode(JSON.stringify(sub.data));
+                await publicRemote.uploadFile(subPath, data, sub.ref.hash);
+                await this.ctx.storage.setGenericRemoteHashCache(`submanifest:${subPath}`, sub.ref.hash);
+                Logger.debug("Sync", `Uploaded sub-manifest ${subPath} (hash: ${sub.ref.hash.substring(0, 8)})`);
+              }
+            }
+            const rootData = new TextEncoder().encode(JSON.stringify(rootManifest));
+            await publicRemote.uploadFile(PATHS.MANIFEST, rootData);
+            Logger.info("Sync", `Hierarchical manifest uploaded successfully (merkleRoot: ${rootManifest.merkleRoot?.substring(0, 8)}).`);
           } catch (e2) {
             Logger.warn("Sync", `Failed to sync manifest: ${e2.message}`);
           }
         }
-        async generateManifest() {
+        async generateHierarchicalManifest() {
           const cachePath = PATHS.MANIFEST_CACHE;
           let cachedManifest = null;
           try {
@@ -95051,19 +95370,36 @@ ${toHex(hashedRequest)}`;
           }
           const allFiles = await this.ctx.storage.listFiles("");
           Logger.debug("Sync", `generateManifest: Scanning ${allFiles.length} files (Incremental)`);
-          const manifest = {
+          const rootManifest = {
             updatedAt: Date.now(),
             userId: this.ctx.userId,
             modules: {},
             dms: {},
             groups: {},
             blobs: [],
-            files: {}
+            files: {},
+            subManifests: {}
           };
           const profileData = await this.ctx.storage.getPublicUserFile();
           if (profileData) {
-            manifest.profileHash = this.ctx.calculateHashedContent(profileData);
+            rootManifest.profileHash = this.ctx.calculateHashedContent(profileData);
           }
+          const subManifestDataMap = {};
+          const getOrCreatePartition = (key) => {
+            if (!subManifestDataMap[key]) {
+              subManifestDataMap[key] = {
+                partitionKey: key,
+                updatedAt: 0,
+                userId: this.ctx.userId,
+                modules: {},
+                dms: {},
+                groups: {},
+                blobs: key === "blobs" ? [] : void 0,
+                files: {}
+              };
+            }
+            return subManifestDataMap[key];
+          };
           for (const file of allFiles) {
             if (file.includes(PATHS.MANIFEST)) continue;
             if (file.includes(PATHS.KEYS)) continue;
@@ -95071,11 +95407,12 @@ ${toHex(hashedRequest)}`;
             if (file.includes(PATHS.MANIFEST_CACHE)) continue;
             if (file.includes(".probe")) continue;
             if (file.startsWith(PATHS.FOLLOWED_PREFIX)) continue;
+            if (file.startsWith("manifests/")) continue;
             const parts = file.split("/");
             const fileName = parts[parts.length - 1];
             const updatedAt = await this.ctx.storage.getFileTimestamp(file) || Date.now();
             let hash;
-            if (cachedManifest && cachedManifest.files[file] && cachedManifest.files[file].updatedAt >= updatedAt) {
+            if (cachedManifest && cachedManifest.files && cachedManifest.files[file] && cachedManifest.files[file].updatedAt >= updatedAt) {
               hash = cachedManifest.files[file].hash;
             } else {
               const data = await this.ctx.storage.getFile(file);
@@ -95086,46 +95423,235 @@ ${toHex(hashedRequest)}`;
               }
             }
             if (hash) {
-              manifest.files[file] = { hash, updatedAt };
+              rootManifest.files[file] = { hash, updatedAt };
+              let partitionKey = "misc";
+              let dateStr = null;
               if (parts.length === 2 && fileName.endsWith(PATHS.DB_EXT)) {
-                const dateStr = fileName.replace(PATHS.DB_EXT, "");
-                if (!manifest.modules["core"]) manifest.modules["core"] = [];
-                if (!manifest.modules["core"].includes(dateStr)) manifest.modules["core"].push(dateStr);
+                dateStr = fileName.replace(PATHS.DB_EXT, "");
+                if (!rootManifest.modules["core"]) rootManifest.modules["core"] = [];
+                if (!rootManifest.modules["core"].includes(dateStr)) rootManifest.modules["core"].push(dateStr);
               } else if (file.includes(`/${PATHS.MODULES_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
                 const moduleName = parts[2];
                 if (parts.length === 4) {
-                  const dateStr = fileName.replace(PATHS.DB_EXT, "");
-                  if (!manifest.modules[moduleName]) manifest.modules[moduleName] = [];
-                  if (!manifest.modules[moduleName].includes(dateStr)) manifest.modules[moduleName].push(dateStr);
+                  dateStr = fileName.replace(PATHS.DB_EXT, "");
+                  if (!rootManifest.modules[moduleName]) rootManifest.modules[moduleName] = [];
+                  if (!rootManifest.modules[moduleName].includes(dateStr)) rootManifest.modules[moduleName].push(dateStr);
                 } else if (parts.length === 6 && parts[3] === "dms") {
                   const recipientId = parts[4];
-                  const dateStr = fileName.replace(PATHS.DB_EXT, "");
-                  if (!manifest.dms[recipientId]) manifest.dms[recipientId] = [];
-                  if (!manifest.dms[recipientId].includes(dateStr)) manifest.dms[recipientId].push(dateStr);
+                  dateStr = fileName.replace(PATHS.DB_EXT, "");
+                  if (!rootManifest.dms[recipientId]) rootManifest.dms[recipientId] = [];
+                  if (!rootManifest.dms[recipientId].includes(dateStr)) rootManifest.dms[recipientId].push(dateStr);
                 }
               } else if (file.includes(`/${PATHS.GROUPS_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
                 const groupId = parts[2];
-                const dateStr = fileName.replace(PATHS.DB_EXT, "");
-                if (!manifest.groups[groupId]) manifest.groups[groupId] = [];
-                if (!manifest.groups[groupId].includes(dateStr)) manifest.groups[groupId].push(dateStr);
+                dateStr = fileName.replace(PATHS.DB_EXT, "");
+                if (!rootManifest.groups[groupId]) rootManifest.groups[groupId] = [];
+                if (!rootManifest.groups[groupId].includes(dateStr)) rootManifest.groups[groupId].push(dateStr);
+              } else if (file.includes("blobs/") || file.startsWith("blobs/")) {
+                partitionKey = "blobs";
               }
-              manifest.blobs.push(file);
+              if (dateStr && dateStr.length >= 4) {
+                const year2 = dateStr.substring(0, 4);
+                if (/^\d{4}$/.test(year2)) {
+                  partitionKey = year2;
+                }
+              }
+              rootManifest.blobs.push(file);
+              const partition2 = getOrCreatePartition(partitionKey);
+              partition2.files[file] = { hash, updatedAt };
+              if (updatedAt > partition2.updatedAt) partition2.updatedAt = updatedAt;
+              if (dateStr) {
+                if (parts.length === 2) {
+                  if (!partition2.modules["core"]) partition2.modules["core"] = [];
+                  if (!partition2.modules["core"].includes(dateStr)) partition2.modules["core"].push(dateStr);
+                } else if (file.includes(`/${PATHS.MODULES_DIR}`)) {
+                  const moduleName = parts[2];
+                  if (parts.length === 4) {
+                    if (!partition2.modules[moduleName]) partition2.modules[moduleName] = [];
+                    if (!partition2.modules[moduleName].includes(dateStr)) partition2.modules[moduleName].push(dateStr);
+                  } else if (parts.length === 6 && parts[3] === "dms") {
+                    const recipientId = parts[4];
+                    if (!partition2.dms[recipientId]) partition2.dms[recipientId] = [];
+                    if (!partition2.dms[recipientId].includes(dateStr)) partition2.dms[recipientId].push(dateStr);
+                  }
+                } else if (file.includes(`/${PATHS.GROUPS_DIR}`)) {
+                  const groupId = parts[2];
+                  if (!partition2.groups[groupId]) partition2.groups[groupId] = [];
+                  if (!partition2.groups[groupId].includes(dateStr)) partition2.groups[groupId].push(dateStr);
+                }
+              }
+              if (partitionKey === "blobs" && partition2.blobs) {
+                partition2.blobs.push(file);
+              }
             }
           }
-          await this.ctx.storage.saveFile(cachePath, new TextEncoder().encode(JSON.stringify(manifest)));
-          return manifest;
+          const subManifestsResult = {};
+          const subManifestRefs = {};
+          for (const [key, data] of Object.entries(subManifestDataMap)) {
+            const encoded = new TextEncoder().encode(JSON.stringify(data));
+            const subHash = this.ctx.calculateHashedContent(encoded);
+            const ref = {
+              path: `manifests/${key}.json`,
+              hash: subHash,
+              count: Object.keys(data.files || {}).length,
+              updatedAt: data.updatedAt || Date.now()
+            };
+            subManifestRefs[key] = ref;
+            subManifestsResult[key] = { ref, data };
+          }
+          rootManifest.subManifests = subManifestRefs;
+          rootManifest.merkleRoot = this.computeMerkleRoot(subManifestRefs);
+          await this.ctx.storage.saveFile(cachePath, new TextEncoder().encode(JSON.stringify(rootManifest)));
+          return { rootManifest, subManifests: subManifestsResult };
         }
-        async fetchManifest(userId) {
+        async generateManifest() {
+          const { rootManifest } = await this.generateHierarchicalManifest();
+          return rootManifest;
+        }
+        async resolveSubManifest(userId, partitionKey, ref) {
+          const localPath = `followed/${userId}/${ref.path}`;
+          const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`);
+          if (cachedHash === ref.hash) {
+            const data = await this.ctx.storage.getFile(localPath);
+            if (data) {
+              try {
+                return JSON.parse(new TextDecoder().decode(data));
+              } catch (e2) {
+              }
+            }
+          }
           try {
             const userRemote = this.ctx.createRemote(userId);
-            const result = await userRemote.downloadFile(PATHS.MANIFEST);
+            const result = await userRemote.downloadFile(ref.path);
             if (result && result.data) {
-              return JSON.parse(new TextDecoder().decode(result.data));
+              const subManifest = JSON.parse(new TextDecoder().decode(result.data));
+              await this.ctx.storage.saveFile(localPath, result.data);
+              await this.ctx.storage.setGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`, ref.hash);
+              return subManifest;
             }
           } catch (e2) {
-            Logger.debug("Sync", `Manifest not found for user ${userId}`);
+            Logger.debug("Sync", `Failed to download sub-manifest ${ref.path} for ${userId}: ${e2.message}`);
           }
           return null;
+        }
+        async resolveFullManifest(userId, rootManifest) {
+          if (!rootManifest.subManifests || Object.keys(rootManifest.subManifests).length === 0) {
+            return rootManifest;
+          }
+          const merged = {
+            ...rootManifest,
+            files: { ...rootManifest.files || {} },
+            modules: { ...rootManifest.modules || {} },
+            dms: { ...rootManifest.dms || {} },
+            groups: { ...rootManifest.groups || {} },
+            blobs: [...rootManifest.blobs || []]
+          };
+          for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
+            const sub = await this.resolveSubManifest(userId, key, ref);
+            if (sub && sub.files) {
+              Object.assign(merged.files, sub.files);
+            }
+          }
+          return merged;
+        }
+        async fetchManifestWithMeta(userId, options) {
+          const ttl = options?.ttlMs ?? this.ctx.followManifestCacheTtlMs ?? 6e4;
+          let cached = this.followManifestCache.get(userId);
+          if (!cached) {
+            try {
+              const stored = await this.ctx.storage.getFile(`followed/${userId}/manifest.json`);
+              const storedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${userId}`);
+              if (stored && storedEtag) {
+                const manifest = JSON.parse(new TextDecoder().decode(stored));
+                cached = {
+                  etag: storedEtag,
+                  manifest,
+                  timestamp: 0
+                  // Expired TTL initially, forcing conditional check
+                };
+                this.followManifestCache.set(userId, cached);
+              }
+            } catch (e2) {
+            }
+          }
+          if (!options?.forceRefresh && cached && Date.now() - cached.timestamp < ttl) {
+            Logger.debug("Sync", `Serving cached manifest for ${userId} (TTL valid, etag: ${cached.etag})`);
+            return {
+              manifest: cached.manifest,
+              etag: cached.etag,
+              unchanged: true,
+              fromCache: true
+            };
+          }
+          try {
+            const userRemote = this.ctx.createRemote(userId);
+            const ifNoneMatch = !options?.forceRefresh && cached?.etag ? cached.etag : void 0;
+            const result = await userRemote.downloadFile(PATHS.MANIFEST, ifNoneMatch);
+            if (result) {
+              if (result.notModified && cached) {
+                cached.timestamp = Date.now();
+                Logger.debug("Sync", `Manifest for ${userId} 304 Not Modified (etag: ${cached.etag})`);
+                return {
+                  manifest: cached.manifest,
+                  etag: cached.etag,
+                  unchanged: true,
+                  fromCache: false
+                };
+              }
+              if (result.data) {
+                const manifest = JSON.parse(new TextDecoder().decode(result.data));
+                const etag = result.etag || null;
+                this.followManifestCache.set(userId, {
+                  etag,
+                  manifest,
+                  timestamp: Date.now()
+                });
+                if (etag) {
+                  await this.ctx.storage.saveFile(`followed/${userId}/manifest.json`, result.data);
+                  await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${userId}`, etag);
+                }
+                Logger.debug("Sync", `Downloaded fresh manifest for ${userId} (etag: ${etag})`);
+                return {
+                  manifest,
+                  etag,
+                  unchanged: false,
+                  fromCache: false
+                };
+              }
+            }
+          } catch (e2) {
+            Logger.debug("Sync", `Manifest not found or error for user ${userId}: ${e2.message}`);
+          }
+          return {
+            manifest: null,
+            etag: null,
+            unchanged: false,
+            fromCache: false
+          };
+        }
+        async fetchManifest(userId) {
+          const res = await this.fetchManifestWithMeta(userId);
+          return res.manifest;
+        }
+        clearFollowManifestCache(userId) {
+          if (userId) {
+            this.followManifestCache.delete(userId);
+          } else {
+            this.followManifestCache.clear();
+          }
+        }
+        expireFollowManifestCache(userId) {
+          if (userId) {
+            const entry = this.followManifestCache.get(userId);
+            if (entry) entry.timestamp = 0;
+          } else {
+            for (const entry of this.followManifestCache.values()) {
+              entry.timestamp = 0;
+            }
+          }
+        }
+        getFollowManifestCache(userId) {
+          return this.followManifestCache.get(userId);
         }
       };
     }
@@ -95738,11 +96264,412 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/path-browserify/index.js
-  var require_path_browserify = __commonJS({
-    "node_modules/path-browserify/index.js"(exports, module) {
+  // src/core/Repository.ts
+  function validateIdentifier(name, type) {
+    if (typeof name !== "string" || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(name)) {
+      throw new RepositoryError(
+        `Invalid ${type} identifier: "${name}". Identifiers must match /^[a-zA-Z_][a-zA-Z0-9_]*$/ to prevent SQL injection.`
+      );
+    }
+    return name;
+  }
+  var import_polyfills688, Repository;
+  var init_Repository = __esm({
+    "src/core/Repository.ts"() {
       "use strict";
-      var import_polyfills699 = __toESM(require_polyfills());
+      import_polyfills688 = __toESM(require_polyfills());
+      init_Environment();
+      init_Errors();
+      Repository = class {
+        constructor(sov, moduleName, tableName, options) {
+          this.sov = sov;
+          this.moduleName = moduleName;
+          this.tableName = validateIdentifier(tableName, "table");
+          this.idColumn = validateIdentifier(options?.idColumn || "id", "column");
+          this.datePartition = options?.datePartition || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          this.type = options?.type || "public";
+        }
+        async getDb() {
+          const dbPath = this.sov.getModulePath(this.moduleName, `${this.datePartition}.db`, this.type);
+          const data = await this.sov.getStorage().getFile(dbPath);
+          const initSqlJs = env.getSqlJs();
+          if (!initSqlJs) throw new RepositoryError("sql.js not loaded");
+          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+          const db = new sqliteInstance.Database(data || void 0);
+          this.sov.applyModuleSchema(db, this.moduleName);
+          const save = async () => {
+            const binary = db.export();
+            await this.sov.getStorage().saveFile(dbPath, binary);
+            this.sov.emit(`${this.moduleName}:update`, { path: dbPath });
+          };
+          const close = () => {
+            db.close();
+          };
+          return { db, close, save };
+        }
+        async find(query) {
+          const { db, close } = await this.getDb();
+          try {
+            if (!query || Object.keys(query).length === 0) {
+              const stmt2 = db.prepare(`SELECT * FROM "${this.tableName}"`);
+              const rows2 = [];
+              while (stmt2.step()) {
+                rows2.push(stmt2.getAsObject());
+              }
+              stmt2.free();
+              return rows2;
+            }
+            const keys = Object.keys(query);
+            const clauses = keys.map((k2) => {
+              validateIdentifier(k2, "column");
+              return `"${k2}" = ?`;
+            });
+            const values = keys.map((k2) => query[k2]);
+            const stmt = db.prepare(`SELECT * FROM "${this.tableName}" WHERE ${clauses.join(" AND ")}`);
+            stmt.bind(values);
+            const rows = [];
+            while (stmt.step()) {
+              rows.push(stmt.getAsObject());
+            }
+            stmt.free();
+            return rows;
+          } finally {
+            close();
+          }
+        }
+        async findById(id) {
+          const { db, close } = await this.getDb();
+          try {
+            const stmt = db.prepare(`SELECT * FROM "${this.tableName}" WHERE "${this.idColumn}" = ? LIMIT 1`);
+            stmt.bind([id]);
+            let result = null;
+            if (stmt.step()) {
+              result = stmt.getAsObject();
+            }
+            stmt.free();
+            return result;
+          } finally {
+            close();
+          }
+        }
+        async insert(entity) {
+          const keys = Object.keys(entity);
+          if (keys.length === 0) return;
+          keys.forEach((k2) => validateIdentifier(k2, "column"));
+          const { db, close, save } = await this.getDb();
+          try {
+            const columns = keys.map((k2) => `"${k2}"`).join(", ");
+            const placeholders = keys.map(() => "?").join(", ");
+            const values = keys.map((k2) => entity[k2]);
+            db.run(`INSERT INTO "${this.tableName}" (${columns}) VALUES (${placeholders})`, values);
+            await save();
+          } finally {
+            close();
+          }
+        }
+        async update(id, updates) {
+          const keys = Object.keys(updates);
+          if (keys.length === 0) return;
+          keys.forEach((k2) => validateIdentifier(k2, "column"));
+          const { db, close, save } = await this.getDb();
+          try {
+            const setClauses = keys.map((k2) => `"${k2}" = ?`).join(", ");
+            const values = [...keys.map((k2) => updates[k2]), id];
+            db.run(`UPDATE "${this.tableName}" SET ${setClauses} WHERE "${this.idColumn}" = ?`, values);
+            await save();
+          } finally {
+            close();
+          }
+        }
+        async delete(id) {
+          const { db, close, save } = await this.getDb();
+          try {
+            db.run(`DELETE FROM "${this.tableName}" WHERE "${this.idColumn}" = ?`, [id]);
+            await save();
+          } finally {
+            close();
+          }
+        }
+        async count(query) {
+          const { db, close } = await this.getDb();
+          try {
+            if (!query || Object.keys(query).length === 0) {
+              const res = db.exec(`SELECT COUNT(*) as cnt FROM "${this.tableName}"`);
+              return res && res[0] && res[0].values[0] ? Number(res[0].values[0][0]) : 0;
+            }
+            const keys = Object.keys(query);
+            const clauses = keys.map((k2) => {
+              validateIdentifier(k2, "column");
+              return `"${k2}" = ?`;
+            });
+            const values = keys.map((k2) => query[k2]);
+            const stmt = db.prepare(`SELECT COUNT(*) as cnt FROM "${this.tableName}" WHERE ${clauses.join(" AND ")}`);
+            stmt.bind(values);
+            let cnt = 0;
+            if (stmt.step()) {
+              cnt = Number(stmt.getAsObject().cnt);
+            }
+            stmt.free();
+            return cnt;
+          } finally {
+            close();
+          }
+        }
+        async upsert(entity) {
+          const keys = Object.keys(entity);
+          if (keys.length === 0) return;
+          keys.forEach((k2) => validateIdentifier(k2, "column"));
+          const { db, close, save } = await this.getDb();
+          try {
+            const columns = keys.map((k2) => `"${k2}"`).join(", ");
+            const placeholders = keys.map(() => "?").join(", ");
+            const values = keys.map((k2) => entity[k2]);
+            db.run(`INSERT OR REPLACE INTO "${this.tableName}" (${columns}) VALUES (${placeholders})`, values);
+            await save();
+          } finally {
+            close();
+          }
+        }
+      };
+    }
+  });
+
+  // src/utils/Inspector.ts
+  var import_polyfills689, Inspector;
+  var init_Inspector = __esm({
+    "src/utils/Inspector.ts"() {
+      "use strict";
+      import_polyfills689 = __toESM(require_polyfills());
+      init_WebRTCRemoteAdapter();
+      Inspector = class _Inspector {
+        /**
+         * Collects and compiles an exhaustive debug snapshot of local storage,
+         * remote sync status, WebRTC mesh network metrics, and active conflicts.
+         */
+        static async getSnapshot(sov) {
+          const config = sov.getConfig();
+          const appId = config.paths.appId;
+          const userId = config.paths.userId;
+          const storage = sov.getStorage();
+          const allPaths = await storage.listFiles("").catch(() => []);
+          const fileEntries = [];
+          let totalBytes = 0;
+          const byCategory = {
+            public: 0,
+            private: 0,
+            followed: 0,
+            blobs: 0,
+            databases: 0,
+            other: 0
+          };
+          for (const p2 of allPaths) {
+            const data = await storage.getFile(p2).catch(() => null);
+            const size = data ? data.byteLength : 0;
+            const timestamp = await storage.getFileTimestamp(p2).catch(() => null);
+            fileEntries.push({ path: p2, size, timestamp });
+            totalBytes += size;
+            if (p2.includes("/blobs/") || p2.startsWith("blobs/")) {
+              byCategory.blobs += size;
+            } else if (p2.endsWith(".db")) {
+              byCategory.databases += size;
+            }
+            if (p2.startsWith("public/")) {
+              byCategory.public += size;
+            } else if (p2.startsWith("private/")) {
+              byCategory.private += size;
+            } else if (p2.startsWith("followed/")) {
+              byCategory.followed += size;
+            } else {
+              byCategory.other += size;
+            }
+          }
+          const tree = _Inspector.buildPartitionTree(fileEntries);
+          const quotaInfo = await sov.checkStoragePersistence().catch(() => ({ persisted: false }));
+          const footprint = {
+            totalBytes,
+            fileCount: fileEntries.length,
+            byCategory,
+            quotaInfo
+          };
+          const isSyncing = sov.isSyncing();
+          const lastSyncDate = await storage.getLastSyncDate().catch(() => null);
+          const syncMode = config.offline ? "offline" : sov.getRemoteAdapter() instanceof WebRTCRemoteAdapter ? "webrtc" : "s3";
+          const etagCache = {};
+          for (const entry of fileEntries) {
+            const cachedEtag = await storage.getGenericRemoteHashCache(entry.path).catch(() => null);
+            if (cachedEtag) {
+              etagCache[entry.path] = cachedEtag;
+            }
+          }
+          let manifest = null;
+          try {
+            const manifestBytes = await storage.getFile("public/manifest.json");
+            if (manifestBytes) {
+              manifest = JSON.parse(new TextDecoder().decode(manifestBytes));
+            }
+          } catch {
+          }
+          const remoteSync = {
+            isSyncing,
+            lastSyncDate,
+            syncMode,
+            etagCache,
+            manifest
+          };
+          const adapter = sov.getRemoteAdapter();
+          const publicAdapter = sov.getPublicRemoteAdapter();
+          const webrtc = (adapter instanceof WebRTCRemoteAdapter ? adapter : null) || (publicAdapter instanceof WebRTCRemoteAdapter ? publicAdapter : null);
+          let mesh;
+          if (webrtc) {
+            const stats = webrtc.getMeshStats();
+            mesh = {
+              enabled: true,
+              peerId: stats.peerId,
+              peerCount: stats.peerCount,
+              peers: stats.activePeers.map((p2) => ({
+                peerId: p2,
+                latencyMs: stats.latencies[p2],
+                connected: true
+              })),
+              stats: {
+                packetsSent: stats.packetsSent,
+                packetsReceived: stats.packetsReceived,
+                packetsDropped: stats.packetsDropped,
+                seenMessagesCount: stats.seenMessagesCount
+              }
+            };
+          } else {
+            mesh = {
+              enabled: false,
+              peerId: null,
+              peerCount: 0,
+              peers: [],
+              stats: {
+                packetsSent: 0,
+                packetsReceived: 0,
+                packetsDropped: 0,
+                seenMessagesCount: 0
+              }
+            };
+          }
+          const rawConflicts = sov.getUnresolvedConflicts();
+          const conflicts = rawConflicts.map((c2) => {
+            const preview = _Inspector.computeDiffSummary(c2.localData, c2.remoteData, c2.path);
+            return {
+              id: c2.id,
+              path: c2.path,
+              timestamp: c2.timestamp,
+              localSize: c2.localData.byteLength,
+              remoteSize: c2.remoteData.byteLength,
+              isBinary: preview.diffType === "binary" || preview.diffType === "sqlite_db",
+              preview
+            };
+          });
+          return {
+            timestamp: Date.now(),
+            appId,
+            userId,
+            storage: {
+              tree,
+              footprint
+            },
+            remoteSync,
+            mesh,
+            conflicts
+          };
+        }
+        /**
+         * Builds a nested folder tree from flat file paths.
+         */
+        static buildPartitionTree(files) {
+          const rootNodes = [];
+          for (const file of files) {
+            const parts = file.path.split("/").filter(Boolean);
+            let currentLevel = rootNodes;
+            let currentPath = "";
+            for (let i2 = 0; i2 < parts.length; i2++) {
+              const part = parts[i2];
+              currentPath = currentPath ? `${currentPath}/${part}` : part;
+              const isFile = i2 === parts.length - 1;
+              let existingNode = currentLevel.find((n2) => n2.name === part);
+              if (!existingNode) {
+                existingNode = {
+                  name: part,
+                  path: currentPath,
+                  size: file.size,
+                  timestamp: isFile ? file.timestamp : null,
+                  type: isFile ? "file" : "directory",
+                  children: isFile ? void 0 : []
+                };
+                currentLevel.push(existingNode);
+              } else if (!isFile) {
+                existingNode.size += file.size;
+              }
+              if (!isFile && existingNode.children) {
+                currentLevel = existingNode.children;
+              }
+            }
+          }
+          const sortNodes = (nodes2) => {
+            nodes2.sort((a2, b2) => {
+              if (a2.type !== b2.type) {
+                return a2.type === "directory" ? -1 : 1;
+              }
+              return a2.name.localeCompare(b2.name);
+            });
+            for (const n2 of nodes2) {
+              if (n2.children) {
+                sortNodes(n2.children);
+              }
+            }
+          };
+          sortNodes(rootNodes);
+          return rootNodes;
+        }
+        /**
+         * Generates a semantic diff preview between local and remote versions of a conflicted file.
+         */
+        static computeDiffSummary(localData, remoteData, path2) {
+          if (path2.endsWith(".db")) {
+            const isLocalSqlite = localData.byteLength >= 16 && new TextDecoder().decode(localData.subarray(0, 15)).startsWith("SQLite format 3");
+            const isRemoteSqlite = remoteData.byteLength >= 16 && new TextDecoder().decode(remoteData.subarray(0, 15)).startsWith("SQLite format 3");
+            return {
+              diffType: "sqlite_db",
+              localTextSnippet: `SQLite 3 Database (${localData.byteLength.toLocaleString()} bytes, valid=${isLocalSqlite})`,
+              remoteTextSnippet: `SQLite 3 Database (${remoteData.byteLength.toLocaleString()} bytes, valid=${isRemoteSqlite})`
+            };
+          }
+          try {
+            const localText = new TextDecoder("utf-8", { fatal: true }).decode(localData);
+            const remoteText = new TextDecoder("utf-8", { fatal: true }).decode(remoteData);
+            let diffType = "text";
+            try {
+              JSON.parse(localText);
+              diffType = "json";
+            } catch {
+            }
+            return {
+              diffType,
+              localTextSnippet: localText.length > 500 ? localText.substring(0, 500) + "..." : localText,
+              remoteTextSnippet: remoteText.length > 500 ? remoteText.substring(0, 500) + "..." : remoteText
+            };
+          } catch {
+            return {
+              diffType: "binary",
+              localTextSnippet: `Binary Payload (${localData.byteLength.toLocaleString()} bytes)`,
+              remoteTextSnippet: `Binary Payload (${remoteData.byteLength.toLocaleString()} bytes)`
+            };
+          }
+        }
+      };
+    }
+  });
+
+  // ../SovereignS3nc/node_modules/path-browserify/index.js
+  var require_path_browserify = __commonJS({
+    "../SovereignS3nc/node_modules/path-browserify/index.js"(exports, module) {
+      "use strict";
+      var import_polyfills701 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -96151,11 +97078,11 @@ ${toHex(hashedRequest)}`;
   __export(NodeStorage_exports, {
     NodeStorage: () => NodeStorage
   });
-  var import_polyfills688, fs, path, crypto5, NodeStorage;
+  var import_polyfills690, fs, path, crypto5, NodeStorage;
   var init_NodeStorage = __esm({
     "src/adapters/NodeStorage.ts"() {
       "use strict";
-      import_polyfills688 = __toESM(require_polyfills());
+      import_polyfills690 = __toESM(require_polyfills());
       fs = __toESM(__require("fs-extra"));
       path = __toESM(require_path_browserify());
       crypto5 = __toESM(require_crypto_browserify());
@@ -96362,11 +97289,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills689, import_events3, SovereignS3nc;
+  var import_polyfills691, import_events3, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
-      import_polyfills689 = __toESM(require_polyfills());
+      import_polyfills691 = __toESM(require_polyfills());
       init_S3RemoteAdapter();
       init_WebRTCRemoteAdapter();
       init_NativeWebRTCTransport();
@@ -96384,12 +97311,16 @@ ${toHex(hashedRequest)}`;
       init_ModerationEngine();
       init_GlobalRegistry();
       init_BlacklistManager();
+      init_Repository();
+      init_Inspector();
       SovereignS3nc = class _SovereignS3nc extends import_events3.EventEmitter {
         constructor(config, remote, remoteFactory, keys, storage) {
           super();
           this.registeredModules = [];
+          this.moduleInstances = [];
           this._isSyncing = false;
           this.pendingConflicts = /* @__PURE__ */ new Map();
+          this.conflictDetails = /* @__PURE__ */ new Map();
           this.config = config;
           this.remoteFactory = remoteFactory;
           Logger.setLevel(config.debug ? 0 /* DEBUG */ : 2 /* WARN */);
@@ -96434,7 +97365,8 @@ ${toHex(hashedRequest)}`;
             storage: this.storage,
             getPublicRemote: () => this.publicRemote,
             createRemote: (uid2) => this.createRemote(uid2),
-            calculateHashedContent: (d2, k2) => this.calculateHashedContent(d2, k2)
+            calculateHashedContent: (d2, k2) => this.calculateHashedContent(d2, k2),
+            followManifestCacheTtlMs: this.config.followManifestCacheTtlMs
           });
           this.groupManager = new GroupManager({
             userId: this.config.paths.userId,
@@ -96486,6 +97418,7 @@ ${toHex(hashedRequest)}`;
             syncManifest: () => this.manifestManager.syncManifest(),
             generateManifest: () => this.manifestManager.generateManifest(),
             fetchManifest: (uid2) => this.manifestManager.fetchManifest(uid2),
+            fetchManifestWithMeta: (uid2, options) => this.manifestManager.fetchManifestWithMeta(uid2, options),
             syncGroups: (today) => this.groupManager.syncGroups(today),
             encrypt: (d2, k2) => this.encrypt(d2, k2),
             decrypt: (d2, k2) => this.decrypt(d2, k2),
@@ -96495,6 +97428,7 @@ ${toHex(hashedRequest)}`;
             getModulePath: (mn, sp, t8) => this.getModulePath(mn, sp, t8),
             onModuleUpdate: (mn, p2) => this.onModuleUpdate(mn, p2),
             registeredModules: this.registeredModules,
+            getModuleInstances: () => this.moduleInstances,
             emitSyncProgress: (stage, done, total) => {
               this.emit("sync:progress", { stage, done, total });
               Logger.debug("Sync", `Progress: ${stage}${total !== void 0 ? ` (${done ?? 0}/${total})` : ""}`);
@@ -96566,6 +97500,18 @@ ${toHex(hashedRequest)}`;
           this.registeredModules.push(definition);
           if (this.syncWorker) {
             this.syncWorker.registerModule(definition).catch((e2) => Logger.warn("Sovereign", "Failed to register module in worker", e2));
+          }
+        }
+        registerModuleInstance(instance) {
+          if (!this.moduleInstances.includes(instance)) {
+            this.moduleInstances.push(instance);
+          }
+        }
+        getModuleInstance(predicateOrName) {
+          if (typeof predicateOrName === "string") {
+            return this.moduleInstances.find((m2) => m2.MODULE_NAME === predicateOrName || m2.name === predicateOrName);
+          } else {
+            return this.moduleInstances.find((m2) => m2 instanceof predicateOrName);
           }
         }
         connectNativeRTC(transport) {
@@ -96835,8 +97781,20 @@ ${toHex(hashedRequest)}`;
         async sync(force = false) {
           return this.syncOrchestrator.sync(force);
         }
+        isSyncing() {
+          return this._isSyncing;
+        }
         async applyRetentionPolicy() {
           return this.syncOrchestrator.applyRetentionPolicy();
+        }
+        async compactDatabases(dates, force = false) {
+          return this.syncOrchestrator.compactDatabases(dates, force);
+        }
+        async checkStoragePersistence() {
+          if (this.storage && typeof this.storage.checkStoragePersistence === "function") {
+            return this.storage.checkStoragePersistence();
+          }
+          return { persisted: false };
         }
         async createGroup(n2, m2) {
           return this.groupManager.createGroup(n2, m2);
@@ -96879,6 +97837,35 @@ ${toHex(hashedRequest)}`;
         }
         async syncManifest() {
           return this.manifestManager.syncManifest();
+        }
+        async generateManifest() {
+          return this.manifestManager.generateManifest();
+        }
+        clearFollowManifestCache(userId) {
+          this.manifestManager.clearFollowManifestCache(userId);
+        }
+        expireFollowManifestCache(userId) {
+          this.manifestManager.expireFollowManifestCache(userId);
+        }
+        getFollowManifestCache(userId) {
+          return this.manifestManager.getFollowManifestCache(userId);
+        }
+        async resolveSubManifest(userId, partitionKey, ref) {
+          return this.manifestManager.resolveSubManifest(userId, partitionKey, ref);
+        }
+        async resolveFullManifest(userId, rootManifest) {
+          return this.manifestManager.resolveFullManifest(userId, rootManifest);
+        }
+        /**
+         * Obtains a lightweight type-safe Repository for interacting with a specific table
+         * in a date-partitioned SQLite database with automated schema application and SQL injection protection.
+         */
+        getRepository(moduleName, tableName, datePartition, type, idColumn) {
+          return new Repository(this, moduleName, tableName, {
+            datePartition,
+            type,
+            idColumn
+          });
         }
         /**
          * Creates an encrypted, time-limited device pairing package that can be transmitted
@@ -97095,6 +98082,9 @@ ${toHex(hashedRequest)}`;
               storeId: this.config.paths.storeId
             });
           }
+          if (this.remote) {
+            return this.remote;
+          }
           throw new SovereignError("CONFIG_ERROR", "Remote configuration missing");
         }
         static getDateStr(date2) {
@@ -97107,6 +98097,7 @@ ${toHex(hashedRequest)}`;
           const resolve2 = this.pendingConflicts.get(conflictId);
           if (resolve2) {
             this.pendingConflicts.delete(conflictId);
+            this.conflictDetails.delete(conflictId);
             resolve2(choice);
           }
         }
@@ -97114,8 +98105,27 @@ ${toHex(hashedRequest)}`;
           return new Promise((resolve2) => {
             const conflictId = env.generateId(12);
             this.pendingConflicts.set(conflictId, resolve2);
+            this.conflictDetails.set(conflictId, {
+              id: conflictId,
+              path: path2,
+              localData,
+              remoteData,
+              timestamp: Date.now()
+            });
             this.emit("conflict", { id: conflictId, path: path2, localData, remoteData });
           });
+        }
+        getUnresolvedConflicts() {
+          return Array.from(this.conflictDetails.values());
+        }
+        getRemoteAdapter() {
+          return this.remote;
+        }
+        getPublicRemoteAdapter() {
+          return this.publicRemote;
+        }
+        async getDebugSnapshot() {
+          return Inspector.getSnapshot(this);
         }
         async sendEncryptedPayload(recipientId, payload, namespace) {
           const following = await this.storage.getFollowing();
@@ -97154,21 +98164,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/jimp/dist/browser/index.js
+  // ../SovereignS3nc/node_modules/jimp/dist/browser/index.js
   var browser_exports = {};
-  var import_polyfills690;
+  var import_polyfills692;
   var init_browser = __esm({
-    "node_modules/jimp/dist/browser/index.js"() {
-      import_polyfills690 = __toESM(require_polyfills(), 1);
+    "../SovereignS3nc/node_modules/jimp/dist/browser/index.js"() {
+      import_polyfills692 = __toESM(require_polyfills(), 1);
     }
   });
 
   // src/utils/MediaUtils.ts
-  var import_polyfills691, MediaUtils;
+  var import_polyfills693, MediaUtils;
   var init_MediaUtils = __esm({
     "src/utils/MediaUtils.ts"() {
       "use strict";
-      import_polyfills691 = __toESM(require_polyfills());
+      import_polyfills693 = __toESM(require_polyfills());
       init_Logger();
       init_Errors();
       MediaUtils = class {
@@ -97271,11 +98281,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Profile.ts
-  var import_polyfills692, ProfileModule;
+  var import_polyfills694, ProfileModule;
   var init_Profile = __esm({
     "src/modules/Profile.ts"() {
       "use strict";
-      import_polyfills692 = __toESM(require_polyfills());
+      import_polyfills694 = __toESM(require_polyfills());
       init_Logger();
       init_MediaUtils();
       init_Constants();
@@ -97389,11 +98399,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Messaging.ts
-  var import_polyfills693, MessagingModule;
+  var import_polyfills695, MessagingModule;
   var init_Messaging = __esm({
     "src/modules/Messaging.ts"() {
       "use strict";
-      import_polyfills693 = __toESM(require_polyfills());
+      import_polyfills695 = __toESM(require_polyfills());
       init_Logger();
       init_Environment();
       init_Errors();
@@ -97430,6 +98440,7 @@ ${toHex(hashedRequest)}`;
               }
             ]
           });
+          this.db.registerModuleInstance(this);
         }
         async getMessageDb(date2, type) {
           const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
@@ -97569,6 +98580,8 @@ ${toHex(hashedRequest)}`;
             status: "sent"
           };
           await this._saveAndSendDM(recipientId, message, date2);
+          await this.compactDatabase(date2, false).catch(() => {
+          });
         }
         async markAsRead(senderId, messageId, date2) {
           const db = await this.getReceiptsDb(senderId, date2, "public");
@@ -97655,7 +98668,7 @@ ${toHex(hashedRequest)}`;
           if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
           const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           const dates = [];
-          for (let i2 = 0; i2 < days; i2++) {
+          for (let i2 = -1; i2 < days; i2++) {
             const d2 = /* @__PURE__ */ new Date();
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(d2.toISOString().split("T")[0]);
@@ -97821,6 +98834,7 @@ ${toHex(hashedRequest)}`;
                   const count = Number(countRes[0].values[0][0]);
                   if (count > 0) {
                     db.run("DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+                    db.run("VACUUM");
                     await this.db.getStorage().saveFile(outboxPath, db.export());
                     deleted += count;
                   }
@@ -97832,16 +98846,63 @@ ${toHex(hashedRequest)}`;
           }
           return deleted;
         }
+        /**
+         * Compacts outbox SQLite databases by permanently purging deleted/tombstoned/expired records
+         * and running SQLite VACUUM to reclaim disk and IndexedDB quota.
+         * Compaction runs if tombstone ratio >= 50% or if force is true.
+         */
+        async compactDatabase(date2, force = false) {
+          const targetDate = date2 || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+          const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${targetDate}.db`, "private");
+          const data = await this.db.getStorage().getFile(outboxPath);
+          if (!data) {
+            return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
+          }
+          const originalSize = data.byteLength;
+          const initSqlJs = env.getSqlJs();
+          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
+          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+          const db = new sqliteInstance.Database(data);
+          const now = Date.now();
+          let compacted = false;
+          let newSize = originalSize;
+          let tombstoneRatio = 0;
+          try {
+            const totalRes = db.exec("SELECT COUNT(*) FROM messages");
+            const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
+            const tombstoneRes = db.exec("SELECT COUNT(*) FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+            const tombstones = tombstoneRes && tombstoneRes.length > 0 && tombstoneRes[0].values[0] ? Number(tombstoneRes[0].values[0][0]) : 0;
+            tombstoneRatio = total > 0 ? tombstones / total : 0;
+            if (force || tombstones >= 50 && tombstoneRatio >= 0.5) {
+              db.run("DELETE FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
+              db.run("VACUUM");
+              const compactedBinary = db.export();
+              newSize = compactedBinary.byteLength;
+              await this.db.getStorage().saveFile(outboxPath, compactedBinary);
+              this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
+              compacted = true;
+            }
+          } finally {
+            db.close();
+          }
+          return {
+            compacted,
+            originalSize,
+            newSize,
+            freedBytes: originalSize - newSize,
+            tombstoneRatio
+          };
+        }
       };
     }
   });
 
   // demo/banky/src/Banky.ts
-  var import_polyfills694, BANKY_MODULE_DEFINITION, BankyManager;
+  var import_polyfills696, BANKY_MODULE_DEFINITION, BankyManager;
   var init_Banky = __esm({
     "demo/banky/src/Banky.ts"() {
       "use strict";
-      import_polyfills694 = __toESM(require_polyfills());
+      import_polyfills696 = __toESM(require_polyfills());
       init_Logger();
       BANKY_MODULE_DEFINITION = {
         name: "banky",
@@ -98237,7 +99298,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@kurkle/color/dist/color.esm.js
+  // ../SovereignS3nc/node_modules/@kurkle/color/dist/color.esm.js
   function round(v2) {
     return v2 + 0.5 | 0;
   }
@@ -98489,10 +99550,10 @@ ${toHex(hashedRequest)}`;
     }
     return hueParse(str);
   }
-  var import_polyfills695, lim, map$1, hex, h1, h2, eq, isShort, alpha, HUE_RE, map, names$1, names, RGB_RE, to, from, Color;
+  var import_polyfills697, lim, map$1, hex, h1, h2, eq, isShort, alpha, HUE_RE, map, names$1, names, RGB_RE, to, from, Color;
   var init_color_esm = __esm({
-    "node_modules/@kurkle/color/dist/color.esm.js"() {
-      import_polyfills695 = __toESM(require_polyfills(), 1);
+    "../SovereignS3nc/node_modules/@kurkle/color/dist/color.esm.js"() {
+      import_polyfills697 = __toESM(require_polyfills(), 1);
       lim = (v2, l2, h3) => Math.max(Math.min(v2, h3), l2);
       map$1 = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, A: 10, B: 11, C: 12, D: 13, E: 14, F: 15, a: 10, b: 11, c: 12, d: 13, e: 14, f: 15 };
       hex = [..."0123456789ABCDEF"];
@@ -98799,7 +99860,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/chart.js/dist/chunks/helpers.dataset.js
+  // ../SovereignS3nc/node_modules/chart.js/dist/chunks/helpers.dataset.js
   function noop() {
   }
   function isNullOrUndef(value) {
@@ -100843,10 +101904,10 @@ ${toHex(hashedRequest)}`;
       bottom: clip.bottom === false ? chart.height : area.bottom + (clip.bottom === true ? 0 : clip.bottom)
     };
   }
-  var import_polyfills696, uid, toPercentage, toDimension, keyResolvers, defined, isFunction, setsEqual, PI, TAU, PITAU, INFINITY, RAD_PER_DEG, HALF_PI, QUARTER_PI, TWO_THIRDS_PI, log10, sign2, _lookupByKey, _rlookupByKey, arrayEvents, requestAnimFrame, _toLeftRightCenter, _alignStartEnd, _textX, atEdge, elasticIn, elasticOut, effects, numbers, colors, intlCache, formatters, Ticks, overrides, descriptors, Defaults, defaults, LINE_HEIGHT, FONT_STYLE, numberOrZero, readKey, needsSubResolver, getScope, EPSILON, getPoint, getValueAxis, getComputedStyle, positions, useOffsetPos, round1, supportsEventListenerOptions, getRightToLeftAdapter, getLeftToRightAdapter;
+  var import_polyfills698, uid, toPercentage, toDimension, keyResolvers, defined, isFunction, setsEqual, PI, TAU, PITAU, INFINITY, RAD_PER_DEG, HALF_PI, QUARTER_PI, TWO_THIRDS_PI, log10, sign2, _lookupByKey, _rlookupByKey, arrayEvents, requestAnimFrame, _toLeftRightCenter, _alignStartEnd, _textX, atEdge, elasticIn, elasticOut, effects, numbers, colors, intlCache, formatters, Ticks, overrides, descriptors, Defaults, defaults, LINE_HEIGHT, FONT_STYLE, numberOrZero, readKey, needsSubResolver, getScope, EPSILON, getPoint, getValueAxis, getComputedStyle, positions, useOffsetPos, round1, supportsEventListenerOptions, getRightToLeftAdapter, getLeftToRightAdapter;
   var init_helpers_dataset = __esm({
-    "node_modules/chart.js/dist/chunks/helpers.dataset.js"() {
-      import_polyfills696 = __toESM(require_polyfills(), 1);
+    "../SovereignS3nc/node_modules/chart.js/dist/chunks/helpers.dataset.js"() {
+      import_polyfills698 = __toESM(require_polyfills(), 1);
       init_color_esm();
       uid = /* @__PURE__ */ (() => {
         let id = 0;
@@ -101219,7 +102280,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/chart.js/dist/chart.js
+  // ../SovereignS3nc/node_modules/chart.js/dist/chart.js
   function awaitAll(animations, properties) {
     const running = [];
     const keys = Object.keys(properties);
@@ -104735,10 +105796,10 @@ ${toHex(hashedRequest)}`;
     const span = nextSource - prevSource;
     return span ? prevTarget + (nextTarget - prevTarget) * (val - prevSource) / span : prevTarget;
   }
-  var import_polyfills697, Animator, animator, transparent, interpolators, Animation, Animations, isDirectUpdateMode, cloneIfNotShared, createStack, DatasetController, BarController, BubbleController, DoughnutController, LineController, PolarAreaController, PieController, RadarController, ScatterController, controllers, DateAdapterBase, adapters, Interaction, STATIC_POSITIONS, layouts, BasePlatform, BasicPlatform, EXPANDO_KEY, EVENT_TYPES, isNullOrEmpty, eventListenerOptions, drpListeningCharts, oldDevicePixelRatio, DomPlatform, Element, reverseAlign, offsetFromEdge, getTicksLimit, Scale, TypedRegistry, Registry, registry, PluginService, keyCache, keysCached, addIfFound, Config, hasFunction, version, KNOWN_POSITIONS, instances, getChart, Chart, ArcElement, usePath2D, LineElement, PointElement, BarElement, elements, BORDER_COLORS, BACKGROUND_COLORS, plugin_colors, plugin_decimation, simpleArc, index, getBoxSize, itemsEqual, Legend, plugin_legend, Title, plugin_title, map2, plugin_subtitle, positioners, defaultCallbacks, Tooltip, plugin_tooltip, plugins, addIfString, validIndex, CategoryScale, LinearScaleBase, LinearScale, log10Floor, changeExponent, LogarithmicScale, RadialLinearScale, INTERVALS, UNITS, TimeScale, TimeSeriesScale, scales, registerables;
+  var import_polyfills699, Animator, animator, transparent, interpolators, Animation, Animations, isDirectUpdateMode, cloneIfNotShared, createStack, DatasetController, BarController, BubbleController, DoughnutController, LineController, PolarAreaController, PieController, RadarController, ScatterController, controllers, DateAdapterBase, adapters, Interaction, STATIC_POSITIONS, layouts, BasePlatform, BasicPlatform, EXPANDO_KEY, EVENT_TYPES, isNullOrEmpty, eventListenerOptions, drpListeningCharts, oldDevicePixelRatio, DomPlatform, Element, reverseAlign, offsetFromEdge, getTicksLimit, Scale, TypedRegistry, Registry, registry, PluginService, keyCache, keysCached, addIfFound, Config, hasFunction, version, KNOWN_POSITIONS, instances, getChart, Chart, ArcElement, usePath2D, LineElement, PointElement, BarElement, elements, BORDER_COLORS, BACKGROUND_COLORS, plugin_colors, plugin_decimation, simpleArc, index, getBoxSize, itemsEqual, Legend, plugin_legend, Title, plugin_title, map2, plugin_subtitle, positioners, defaultCallbacks, Tooltip, plugin_tooltip, plugins, addIfString, validIndex, CategoryScale, LinearScaleBase, LinearScale, log10Floor, changeExponent, LogarithmicScale, RadialLinearScale, INTERVALS, UNITS, TimeScale, TimeSeriesScale, scales, registerables;
   var init_chart = __esm({
-    "node_modules/chart.js/dist/chart.js"() {
-      import_polyfills697 = __toESM(require_polyfills(), 1);
+    "../SovereignS3nc/node_modules/chart.js/dist/chart.js"() {
+      import_polyfills699 = __toESM(require_polyfills(), 1);
       init_helpers_dataset();
       Animator = class {
         constructor() {
@@ -112725,13 +113786,285 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // ../SovereignS3nc/node_modules/react/cjs/react-jsx-runtime.development.js
+  var require_react_jsx_runtime_development = __commonJS({
+    "../SovereignS3nc/node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
+      "use strict";
+      var import_polyfills701 = __toESM(require_polyfills());
+      (function() {
+        function getComponentNameFromType(type) {
+          if (null == type) return null;
+          if ("function" === typeof type)
+            return type.$$typeof === REACT_CLIENT_REFERENCE ? null : type.displayName || type.name || null;
+          if ("string" === typeof type) return type;
+          switch (type) {
+            case REACT_FRAGMENT_TYPE:
+              return "Fragment";
+            case REACT_PROFILER_TYPE:
+              return "Profiler";
+            case REACT_STRICT_MODE_TYPE:
+              return "StrictMode";
+            case REACT_SUSPENSE_TYPE:
+              return "Suspense";
+            case REACT_SUSPENSE_LIST_TYPE:
+              return "SuspenseList";
+            case REACT_ACTIVITY_TYPE:
+              return "Activity";
+          }
+          if ("object" === typeof type)
+            switch ("number" === typeof type.tag && console.error(
+              "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
+            ), type.$$typeof) {
+              case REACT_PORTAL_TYPE:
+                return "Portal";
+              case REACT_CONTEXT_TYPE:
+                return type.displayName || "Context";
+              case REACT_CONSUMER_TYPE:
+                return (type._context.displayName || "Context") + ".Consumer";
+              case REACT_FORWARD_REF_TYPE:
+                var innerType = type.render;
+                type = type.displayName;
+                type || (type = innerType.displayName || innerType.name || "", type = "" !== type ? "ForwardRef(" + type + ")" : "ForwardRef");
+                return type;
+              case REACT_MEMO_TYPE:
+                return innerType = type.displayName || null, null !== innerType ? innerType : getComponentNameFromType(type.type) || "Memo";
+              case REACT_LAZY_TYPE:
+                innerType = type._payload;
+                type = type._init;
+                try {
+                  return getComponentNameFromType(type(innerType));
+                } catch (x2) {
+                }
+            }
+          return null;
+        }
+        function testStringCoercion(value) {
+          return "" + value;
+        }
+        function checkKeyStringCoercion(value) {
+          try {
+            testStringCoercion(value);
+            var JSCompiler_inline_result = false;
+          } catch (e2) {
+            JSCompiler_inline_result = true;
+          }
+          if (JSCompiler_inline_result) {
+            JSCompiler_inline_result = console;
+            var JSCompiler_temp_const = JSCompiler_inline_result.error;
+            var JSCompiler_inline_result$jscomp$0 = "function" === typeof Symbol && Symbol.toStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+            JSCompiler_temp_const.call(
+              JSCompiler_inline_result,
+              "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
+              JSCompiler_inline_result$jscomp$0
+            );
+            return testStringCoercion(value);
+          }
+        }
+        function getTaskName(type) {
+          if (type === REACT_FRAGMENT_TYPE) return "<>";
+          if ("object" === typeof type && null !== type && type.$$typeof === REACT_LAZY_TYPE)
+            return "<...>";
+          try {
+            var name = getComponentNameFromType(type);
+            return name ? "<" + name + ">" : "<...>";
+          } catch (x2) {
+            return "<...>";
+          }
+        }
+        function getOwner() {
+          var dispatcher = ReactSharedInternals.A;
+          return null === dispatcher ? null : dispatcher.getOwner();
+        }
+        function UnknownOwner() {
+          return Error("react-stack-top-frame");
+        }
+        function hasValidKey(config) {
+          if (hasOwnProperty.call(config, "key")) {
+            var getter = Object.getOwnPropertyDescriptor(config, "key").get;
+            if (getter && getter.isReactWarning) return false;
+          }
+          return void 0 !== config.key;
+        }
+        function defineKeyPropWarningGetter(props, displayName) {
+          function warnAboutAccessingKey() {
+            specialPropKeyWarningShown || (specialPropKeyWarningShown = true, console.error(
+              "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
+              displayName
+            ));
+          }
+          warnAboutAccessingKey.isReactWarning = true;
+          Object.defineProperty(props, "key", {
+            get: warnAboutAccessingKey,
+            configurable: true
+          });
+        }
+        function elementRefGetterWithDeprecationWarning() {
+          var componentName = getComponentNameFromType(this.type);
+          didWarnAboutElementRef[componentName] || (didWarnAboutElementRef[componentName] = true, console.error(
+            "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
+          ));
+          componentName = this.props.ref;
+          return void 0 !== componentName ? componentName : null;
+        }
+        function ReactElement(type, key, props, owner, debugStack, debugTask) {
+          var refProp = props.ref;
+          type = {
+            $$typeof: REACT_ELEMENT_TYPE,
+            type,
+            key,
+            props,
+            _owner: owner
+          };
+          null !== (void 0 !== refProp ? refProp : null) ? Object.defineProperty(type, "ref", {
+            enumerable: false,
+            get: elementRefGetterWithDeprecationWarning
+          }) : Object.defineProperty(type, "ref", { enumerable: false, value: null });
+          type._store = {};
+          Object.defineProperty(type._store, "validated", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: 0
+          });
+          Object.defineProperty(type, "_debugInfo", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: null
+          });
+          Object.defineProperty(type, "_debugStack", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: debugStack
+          });
+          Object.defineProperty(type, "_debugTask", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: debugTask
+          });
+          Object.freeze && (Object.freeze(type.props), Object.freeze(type));
+          return type;
+        }
+        function jsxDEVImpl(type, config, maybeKey, isStaticChildren, debugStack, debugTask) {
+          var children = config.children;
+          if (void 0 !== children)
+            if (isStaticChildren)
+              if (isArrayImpl(children)) {
+                for (isStaticChildren = 0; isStaticChildren < children.length; isStaticChildren++)
+                  validateChildKeys(children[isStaticChildren]);
+                Object.freeze && Object.freeze(children);
+              } else
+                console.error(
+                  "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
+                );
+            else validateChildKeys(children);
+          if (hasOwnProperty.call(config, "key")) {
+            children = getComponentNameFromType(type);
+            var keys = Object.keys(config).filter(function(k2) {
+              return "key" !== k2;
+            });
+            isStaticChildren = 0 < keys.length ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
+            didWarnAboutKeySpread[children + isStaticChildren] || (keys = 0 < keys.length ? "{" + keys.join(": ..., ") + ": ...}" : "{}", console.error(
+              'A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />',
+              isStaticChildren,
+              children,
+              keys,
+              children
+            ), didWarnAboutKeySpread[children + isStaticChildren] = true);
+          }
+          children = null;
+          void 0 !== maybeKey && (checkKeyStringCoercion(maybeKey), children = "" + maybeKey);
+          hasValidKey(config) && (checkKeyStringCoercion(config.key), children = "" + config.key);
+          if ("key" in config) {
+            maybeKey = {};
+            for (var propName in config)
+              "key" !== propName && (maybeKey[propName] = config[propName]);
+          } else maybeKey = config;
+          children && defineKeyPropWarningGetter(
+            maybeKey,
+            "function" === typeof type ? type.displayName || type.name || "Unknown" : type
+          );
+          return ReactElement(
+            type,
+            children,
+            maybeKey,
+            getOwner(),
+            debugStack,
+            debugTask
+          );
+        }
+        function validateChildKeys(node) {
+          isValidElement(node) ? node._store && (node._store.validated = 1) : "object" === typeof node && null !== node && node.$$typeof === REACT_LAZY_TYPE && ("fulfilled" === node._payload.status ? isValidElement(node._payload.value) && node._payload.value._store && (node._payload.value._store.validated = 1) : node._store && (node._store.validated = 1));
+        }
+        function isValidElement(object) {
+          return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
+        }
+        var React2 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+          return null;
+        };
+        React2 = {
+          react_stack_bottom_frame: function(callStackForError) {
+            return callStackForError();
+          }
+        };
+        var specialPropKeyWarningShown;
+        var didWarnAboutElementRef = {};
+        var unknownOwnerDebugStack = React2.react_stack_bottom_frame.bind(
+          React2,
+          UnknownOwner
+        )();
+        var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
+        var didWarnAboutKeySpread = {};
+        exports.Fragment = REACT_FRAGMENT_TYPE;
+        exports.jsx = function(type, config, maybeKey) {
+          var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
+          return jsxDEVImpl(
+            type,
+            config,
+            maybeKey,
+            false,
+            trackActualOwner ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
+            trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask
+          );
+        };
+        exports.jsxs = function(type, config, maybeKey) {
+          var trackActualOwner = 1e4 > ReactSharedInternals.recentlyCreatedOwnerStacks++;
+          return jsxDEVImpl(
+            type,
+            config,
+            maybeKey,
+            true,
+            trackActualOwner ? Error("react-stack-top-frame") : unknownOwnerDebugStack,
+            trackActualOwner ? createTask(getTaskName(type)) : unknownOwnerDebugTask
+          );
+        };
+      })();
+    }
+  });
+
+  // ../SovereignS3nc/node_modules/react/jsx-runtime.js
+  var require_jsx_runtime = __commonJS({
+    "../SovereignS3nc/node_modules/react/jsx-runtime.js"(exports, module) {
+      "use strict";
+      var import_polyfills701 = __toESM(require_polyfills());
+      if (false) {
+        module.exports = null;
+      } else {
+        module.exports = require_react_jsx_runtime_development();
+      }
+    }
+  });
+
   // demo/banky/src/ErrorBoundary.tsx
-  var import_polyfills698, import_react, ErrorBoundary;
+  var import_polyfills700, import_react, import_jsx_runtime, ErrorBoundary;
   var init_ErrorBoundary = __esm({
     "demo/banky/src/ErrorBoundary.tsx"() {
       "use strict";
-      import_polyfills698 = __toESM(require_polyfills());
+      import_polyfills700 = __toESM(require_polyfills());
       import_react = __toESM(require_react());
+      import_jsx_runtime = __toESM(require_jsx_runtime());
       ErrorBoundary = class extends import_react.Component {
         constructor() {
           super(...arguments);
@@ -112747,7 +114080,11 @@ ${toHex(hashedRequest)}`;
         }
         render() {
           if (this.state.hasError) {
-            return /* @__PURE__ */ import_react.default.createElement("div", { className: "container mt-5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "card-body p-5 text-center" }, /* @__PURE__ */ import_react.default.createElement("h2", { className: "fw-bold mb-3" }, "Banky Error"), /* @__PURE__ */ import_react.default.createElement("p", { className: "text-secondary mb-4" }, "Something went wrong with the banking dashboard."), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex justify-content-center gap-3" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary px-4", onClick: () => window.location.reload() }, "Refresh")))));
+            return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "card shadow-lg border-0 rounded-4", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card-body p-5 text-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { className: "fw-bold mb-3", children: "Banky Error" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-secondary mb-4", children: "Something went wrong with the banking dashboard." }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "d-flex justify-content-center gap-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary px-4", onClick: () => window.location.reload(), children: "Refresh" }) })
+            ] }) }) });
           }
           return this.props.children;
         }
@@ -112758,7 +114095,7 @@ ${toHex(hashedRequest)}`;
   // demo/banky/src/App.tsx
   var require_App = __commonJS({
     "demo/banky/src/App.tsx"() {
-      var import_polyfills699 = __toESM(require_polyfills());
+      var import_polyfills701 = __toESM(require_polyfills());
       var import_react2 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
@@ -112768,6 +114105,7 @@ ${toHex(hashedRequest)}`;
       init_chart();
       init_ErrorBoundary();
       init_MediaUtils();
+      var import_jsx_runtime2 = __toESM(require_jsx_runtime());
       Chart.register(...registerables);
       var App = () => {
         const [config, setConfig] = (0, import_react2.useState)({
@@ -112818,9 +114156,18 @@ ${toHex(hashedRequest)}`;
           });
         };
         (0, import_react2.useEffect)(() => {
+          const isLocalHost = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
           fetch("config.json").then((res) => res.json()).then((data) => {
-            setConfig((prev) => ({ ...prev, s3: data }));
-          }).catch((e2) => console.error("Failed to load config.json", e2));
+            const endpointIsLocal = data.endpoint && (data.endpoint.includes("127.0.0.1") || data.endpoint.includes("localhost"));
+            if (!isLocalHost && endpointIsLocal) {
+              setConfig((prev) => ({ ...prev, s3: void 0 }));
+            } else {
+              setConfig((prev) => ({ ...prev, s3: data }));
+            }
+          }).catch((e2) => {
+            console.error("Failed to load config.json", e2);
+            setConfig((prev) => ({ ...prev, s3: void 0 }));
+          });
         }, []);
         const handleLogin = async (e2) => {
           e2.preventDefault();
@@ -113234,39 +114581,307 @@ ${toHex(hashedRequest)}`;
           onConfirm(vals);
         } });
         if (!isLoggedIn) {
-          return /* @__PURE__ */ import_react2.default.createElement("div", { className: "container mt-5" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 shadow-sm border-0" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "text-center mb-4 fw-bold text-primary" }, "Banky-Sov"), /* @__PURE__ */ import_react2.default.createElement("form", { onSubmit: handleLogin }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label" }, "User ID"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "form-label" }, "Password"), /* @__PURE__ */ import_react2.default.createElement("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })), /* @__PURE__ */ import_react2.default.createElement("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3" }, "Login / Register"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache }, "Clear Local Data"))))));
+          return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-md-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-center mb-4 fw-bold text-primary", children: "Banky-Sov" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("form", { onSubmit: handleLogin, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("label", { className: "form-label", children: "User ID" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("label", { className: "form-label", children: "Password" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3", children: "Login / Register" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache, children: "Clear Local Data" })
+            ] })
+          ] }) }) }) });
         }
-        return /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "container" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "small text-muted me-3", style: { opacity: 0.6 } }, "[", config.paths.userId, "]"), /* @__PURE__ */ import_react2.default.createElement("span", { className: "navbar-brand fw-bold text-primary mb-0" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-bank me-2" }), "Banky-Sov")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts") }, "Accounts"), /* @__PURE__ */ import_react2.default.createElement("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing") }, "Friends"), !config.s3 && /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill ms-2", onClick: handleConnectRemote }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cloud-upload" }), " Connect Cloud"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-secondary ms-2 rounded-pill", onClick: sync, disabled: syncing || !config.s3 }, syncing ? "Syncing..." : !config.s3 ? "Offline" : /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-arrow-repeat me-1" }), " Sync")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown ms-2" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-list" })), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" } }, /* @__PURE__ */ import_react2.default.createElement("li", { className: "px-3 py-2 border-bottom mb-2" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, profile.name || "User"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted" }, "@", config.paths.userId)), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person-gear me-2" }), " Edit Profile")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react2.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Legacy Data"), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("label", { className: "dropdown-item rounded-3 cursor-pointer" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Legacy JSON", /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport }))), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react2.default.createElement("li", { className: "dropdown-header x-small text-uppercase fw-bold" }, "Transactions"), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-file-earmark-arrow-down me-2" }), " Export Account JSON")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}` }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-file-earmark-arrow-up me-2" }), " Import Account JSON", /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount }))), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-trash3 me-2" }), " Clear Local Cache")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-box-arrow-right me-2" }), " Logout"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "container" }, currentTab === "accounts" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-0 fw-bold" }, "My Accounts"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount }, "+ New")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group" }, accounts.map((acc) => /* @__PURE__ */ import_react2.default.createElement("button", { key: acc.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center p-2" }, acc.image ? /* @__PURE__ */ import_react2.default.createElement("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-primary" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-wallet2 fs-4" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, acc.name), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small opacity-75" }, acc.id))))), sharedAccounts.map((group3) => /* @__PURE__ */ import_react2.default.createElement("button", { key: group3.id, className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group3.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group3.id, name: group3.name, currency: "USD", createdAt: group3.createdAt, ownerId: "shared" }) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center p-2" }, group3.image ? /* @__PURE__ */ import_react2.default.createElement("img", { src: group3.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-light rounded-circle p-3 me-3 text-info" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-people fs-4" })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, group3.name), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small opacity-75" }, "Shared Account"))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-8" }, selectedAccount ? /* @__PURE__ */ import_react2.default.createElement("div", { className: "card border-0 p-4 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("h3", { className: "fw-bold mb-0" }, selectedAccount.name), /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-muted" }, "Balance: ", selectedAccount.currency, " ", transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)), selectedAccount.allowanceActive && /* @__PURE__ */ import_react2.default.createElement("div", { className: "badge bg-light text-primary border border-primary mt-1" }, "Allowance: ", selectedAccount.allowanceAmount, " / ", selectedAccount.allowanceInterval)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex gap-2 flex-wrap justify-content-end" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true) }, "Deposit"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false) }, "Spend"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-share me-2" }), " Share Account")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item", onClick: handleSetAllowance }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-cash-coin me-2" }), " Set Allowance")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-pencil me-2" }), " Rename Account")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click() }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-image me-2" }), " Set Account Image")), selectedAccount.image && /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-image-fill me-2" }), " Remove Image")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("hr", { className: "dropdown-divider" })), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-trash me-2" }), " Delete Account")))))), transactions.length > 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "mb-4", style: { height: "200px" } }, /* @__PURE__ */ import_react2.default.createElement("canvas", { ref: chartRef })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-0" }, "Goals"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal }, "+ New Goal")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row mb-4" }, goals.map((goal) => {
-          const progress = Math.min(100, Math.round(goal.currentAmount / goal.targetAmount * 100));
-          return /* @__PURE__ */ import_react2.default.createElement("div", { key: goal.id, className: "col-md-6 mb-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card bg-light border-0 p-3 h-100" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, goal.name), /* @__PURE__ */ import_react2.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-three-dots-vertical" })), /* @__PURE__ */ import_react2.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("button", { className: "dropdown-item text-danger", onClick: async () => {
-            await banky?.deleteGoal(goal.id);
-            loadTransactions(selectedAccount);
-          } }, "Delete Goal"))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "progress mb-2", style: { height: "10px" } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "progress-bar bg-success", style: { width: `${progress}%` } })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted" }, selectedAccount.currency, " ", goal.currentAmount, " / ", goal.targetAmount), /* @__PURE__ */ import_react2.default.createElement("div", { className: "btn-group btn-group-sm" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-success", onClick: () => handleGoalTransfer(goal, true) }, "+"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-outline-danger", onClick: () => handleGoalTransfer(goal, false), disabled: goal.currentAmount <= 0 }, "-")))));
-        })), /* @__PURE__ */ import_react2.default.createElement("hr", null), /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Recent Transactions"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, transactions.map((tx) => /* @__PURE__ */ import_react2.default.createElement("div", { key: tx.id, className: `list-group-item d-flex justify-content-between align-items-center px-0 py-3 transaction-item ${tx.amount >= 0 ? "tx-credit" : "tx-debit"}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "ps-3 flex-grow-1" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, tx.description, " ", tx.category === "goals" && /* @__PURE__ */ import_react2.default.createElement("span", { className: "badge bg-light text-secondary border ms-2" }, "Goal")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted" }, tx.date, " \u2022 by ", tx.userId)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: `fw-bold fs-5 me-3 ${tx.amount >= 0 ? "text-success" : "text-danger"}` }, tx.amount >= 0 ? "+" : "", tx.amount.toFixed(2)), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-link text-danger p-0", onClick: () => handleDeleteTransaction(tx) }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-trash" }))))), transactions.length === 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center py-5 text-muted" }, "No transactions yet."))) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-bank fs-1 mb-3" }), /* @__PURE__ */ import_react2.default.createElement("h4", null, "Select an account to view details")))), currentTab === "sharing" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "row justify-content-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 border-0 mb-4 shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-4" }, /* @__PURE__ */ import_react2.default.createElement("h4", { className: "mb-0 fw-bold" }, "Friends & Sharing"), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-primary rounded-pill btn-sm", onClick: () => {
-          showPrompt("Enter User ID to follow:", async (uid2) => {
-            if (uid2) {
-              await sov?.follow(uid2);
-              await sync();
-            }
-          });
-        } }, "+ Follow User")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, following.map((f2) => /* @__PURE__ */ import_react2.default.createElement("div", { key: f2.userId, className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-light rounded-circle p-2 me-3" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-person fs-4" })), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, f2.userId), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted" }, "Last sync: ", f2.lastSync))), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-danger rounded-pill", onClick: async () => {
-          await sov?.unfollow(f2.userId);
-          await sync();
-        } }, "Unfollow"))), following.length === 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center py-4 text-muted" }, "You are not following anyone yet."))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card p-4 border-0 shadow-sm" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold mb-3" }, "Discover Friends"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group list-group-flush" }, registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ import_react2.default.createElement("div", { key: u2.userId, className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-search fs-4" })), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("div", { className: "fw-bold" }, u2.userId), /* @__PURE__ */ import_react2.default.createElement("div", { className: "x-small text-muted" }, "Global Registry"))), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
-          await sov?.follow(u2.userId);
-          await sync();
-        } }, "Follow"))), registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center py-4 text-muted" }, "No new users discovered.")))))), /* @__PURE__ */ import_react2.default.createElement("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }), syncing && /* @__PURE__ */ import_react2.default.createElement("div", { className: "position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center", style: { backgroundColor: "rgba(255,255,255,0.7)", zIndex: 9999 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "text-center bg-white p-4 rounded-4 shadow-lg border" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "spinner-border text-primary mb-3", role: "status", style: { width: "3rem", height: "3rem" } }, /* @__PURE__ */ import_react2.default.createElement("span", { className: "visually-hidden" }, "Loading...")), /* @__PURE__ */ import_react2.default.createElement("h5", { className: "fw-bold text-primary mb-0" }, "Syncing with S3..."), /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-muted small mt-2 mb-0" }, "Please do not refresh the page."))), /* @__PURE__ */ import_react2.default.createElement(Dialog, { dialog, setDialog }), conflict && /* @__PURE__ */ import_react2.default.createElement(
-          ConflictResolutionModal,
-          {
-            conflict,
-            onResolve: (choice) => {
-              if (conflict) {
-                conflict.resolve(choice);
-                setConflict(null);
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "container", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "small text-muted me-3", style: { opacity: 0.6 }, children: [
+                "[",
+                config.paths.userId,
+                "]"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "navbar-brand fw-bold text-primary mb-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-bank me-2" }),
+                "Banky-Sov"
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts"), children: "Accounts" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing"), children: "Friends" }),
+              !config.s3 && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "btn btn-sm btn-primary rounded-pill ms-2", onClick: handleConnectRemote, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-cloud-upload" }),
+                " Connect Cloud"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-outline-secondary ms-2 rounded-pill", onClick: sync, disabled: syncing || !config.s3, children: syncing ? "Syncing..." : !config.s3 ? "Offline" : /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-arrow-repeat me-1" }),
+                " Sync"
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "dropdown ms-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-list" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("li", { className: "px-3 py-2 border-bottom mb-2", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: profile.name || "User" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "x-small text-muted", children: [
+                      "@",
+                      config.paths.userId
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-person-gear me-2" }),
+                    " Edit Profile"
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Legacy Data" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("label", { className: "dropdown-item rounded-3 cursor-pointer", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
+                    " Import Legacy JSON",
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport })
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Transactions" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-file-earmark-arrow-down me-2" }),
+                    " Export Account JSON"
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}`, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
+                    " Import Account JSON",
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount })
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-trash3 me-2" }),
+                    " Clear Local Cache"
+                  ] }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-box-arrow-right me-2" }),
+                    " Logout"
+                  ] }) })
+                ] })
+              ] })
+            ] })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "container", children: [
+            currentTab === "accounts" && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "row", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "col-md-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "mb-0 fw-bold", children: "My Accounts" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount, children: "+ New" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group", children: [
+                  accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc), children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
+                    acc.image ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-primary", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-wallet2 fs-4" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: acc.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "x-small opacity-75", children: acc.id })
+                    ] })
+                  ] }) }, acc.id)),
+                  sharedAccounts.map((group3) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group3.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group3.id, name: group3.name, currency: "USD", createdAt: group3.createdAt, ownerId: "shared" }), children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
+                    group3.image ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: group3.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-info", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-people fs-4" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: group3.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "x-small opacity-75", children: "Shared Account" })
+                    ] })
+                  ] }) }, group3.id))
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-md-8", children: selectedAccount ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card border-0 p-4 mb-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { className: "fw-bold mb-0", children: selectedAccount.name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "text-muted", children: [
+                      "Balance: ",
+                      selectedAccount.currency,
+                      " ",
+                      transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)
+                    ] }),
+                    selectedAccount.allowanceActive && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "badge bg-light text-primary border border-primary mt-1", children: [
+                      "Allowance: ",
+                      selectedAccount.allowanceAmount,
+                      " / ",
+                      selectedAccount.allowanceInterval
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex gap-2 flex-wrap justify-content-end", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true), children: "Deposit" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false), children: "Spend" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "dropdown", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-share me-2" }),
+                          " Share Account"
+                        ] }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item", onClick: handleSetAllowance, children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-cash-coin me-2" }),
+                          " Set Allowance"
+                        ] }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", { className: "dropdown-divider" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-pencil me-2" }),
+                          " Rename Account"
+                        ] }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click(), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-image me-2" }),
+                          " Set Account Image"
+                        ] }) }),
+                        selectedAccount.image && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage, children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-image-fill me-2" }),
+                          " Remove Image"
+                        ] }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", { className: "dropdown-divider" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-trash me-2" }),
+                          " Delete Account"
+                        ] }) })
+                      ] })
+                    ] })
+                  ] })
+                ] }),
+                transactions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "mb-4", style: { height: "200px" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("canvas", { ref: chartRef }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h5", { className: "fw-bold mb-0", children: "Goals" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal, children: "+ New Goal" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "row mb-4", children: goals.map((goal) => {
+                  const progress = Math.min(100, Math.round(goal.currentAmount / goal.targetAmount * 100));
+                  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-md-6 mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card bg-light border-0 p-3 h-100", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: goal.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "dropdown", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "dropdown-item text-danger", onClick: async () => {
+                          await banky?.deleteGoal(goal.id);
+                          loadTransactions(selectedAccount);
+                        }, children: "Delete Goal" }) }) })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "progress mb-2", style: { height: "10px" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "progress-bar bg-success", style: { width: `${progress}%` } }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "small text-muted", children: [
+                        selectedAccount.currency,
+                        " ",
+                        goal.currentAmount,
+                        " / ",
+                        goal.targetAmount
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "btn-group btn-group-sm", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-outline-success", onClick: () => handleGoalTransfer(goal, true), children: "+" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-outline-danger", onClick: () => handleGoalTransfer(goal, false), disabled: goal.currentAmount <= 0, children: "-" })
+                      ] })
+                    ] })
+                  ] }) }, goal.id);
+                }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("hr", {}),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h5", { className: "fw-bold mb-3", children: "Recent Transactions" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  transactions.map((tx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: `list-group-item d-flex justify-content-between align-items-center px-0 py-3 transaction-item ${tx.amount >= 0 ? "tx-credit" : "tx-debit"}`, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "ps-3 flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "fw-bold", children: [
+                        tx.description,
+                        " ",
+                        tx.category === "goals" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "badge bg-light text-secondary border ms-2", children: "Goal" })
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "x-small text-muted", children: [
+                        tx.date,
+                        " \u2022 by ",
+                        tx.userId
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: `fw-bold fs-5 me-3 ${tx.amount >= 0 ? "text-success" : "text-danger"}`, children: [
+                        tx.amount >= 0 ? "+" : "",
+                        tx.amount.toFixed(2)
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-link text-danger p-0", onClick: () => handleDeleteTransaction(tx), children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-trash" }) })
+                    ] })
+                  ] }, tx.id)),
+                  transactions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-center py-5 text-muted", children: "No transactions yet." })
+                ] })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-bank fs-1 mb-3" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { children: "Select an account to view details" })
+              ] }) })
+            ] }),
+            currentTab === "sharing" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "col-md-6", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card p-4 border-0 mb-4 shadow-sm", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "mb-0 fw-bold", children: "Friends & Sharing" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-primary rounded-pill btn-sm", onClick: () => {
+                    showPrompt("Enter User ID to follow:", async (uid2) => {
+                      if (uid2) {
+                        await sov?.follow(uid2);
+                        await sync();
+                      }
+                    });
+                  }, children: "+ Follow User" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  following.map((f2) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-light rounded-circle p-2 me-3", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-person fs-4" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: f2.userId }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "x-small text-muted", children: [
+                          "Last sync: ",
+                          f2.lastSync
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-sm btn-outline-danger rounded-pill", onClick: async () => {
+                      await sov?.unfollow(f2.userId);
+                      await sync();
+                    }, children: "Unfollow" })
+                  ] }, f2.userId)),
+                  following.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-center py-4 text-muted", children: "You are not following anyone yet." })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card p-4 border-0 shadow-sm", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h5", { className: "fw-bold mb-3", children: "Discover Friends" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-search fs-4" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "fw-bold", children: u2.userId }),
+                        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "x-small text-muted", children: "Global Registry" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
+                      await sov?.follow(u2.userId);
+                      await sync();
+                    }, children: "Follow" })
+                  ] }, u2.userId)),
+                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "text-center py-4 text-muted", children: "No new users discovered." })
+                ] })
+              ] })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }),
+          syncing && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center", style: { backgroundColor: "rgba(255,255,255,0.7)", zIndex: 9999 }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "text-center bg-white p-4 rounded-4 shadow-lg border", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status", style: { width: "3rem", height: "3rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "visually-hidden", children: "Loading..." }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h5", { className: "fw-bold text-primary mb-0", children: "Syncing with S3..." }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-muted small mt-2 mb-0", children: "Please do not refresh the page." })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Dialog, { dialog, setDialog }),
+          conflict && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+            ConflictResolutionModal,
+            {
+              conflict,
+              onResolve: (choice) => {
+                if (conflict) {
+                  conflict.resolve(choice);
+                  setConflict(null);
+                }
               }
             }
-          }
-        ));
+          )
+        ] });
       };
       var ConflictResolutionModal = ({ conflict, onResolve }) => {
         if (!conflict) return null;
@@ -113320,7 +114935,42 @@ ${toHex(hashedRequest)}`;
             return "Binary Data (Unable to preview)";
           }
         };
-        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered modal-lg" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-danger" }, /* @__PURE__ */ import_react2.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), "Sync Conflict")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement("p", { className: "text-secondary" }, "A conflict was detected during sync for the following file:"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "alert alert-light border small mb-4" }, /* @__PURE__ */ import_react2.default.createElement("code", null, conflict.path)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "card border-warning-subtle bg-warning-subtle bg-opacity-10 mb-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold text-warning mb-2" }, "Semantic Diff Preview"), /* @__PURE__ */ import_react2.default.createElement("pre", { className: "x-small mb-0", style: { maxHeight: "200px", overflowY: "auto", whiteSpace: "pre-wrap" } }, getDiff(conflict.localData, conflict.remoteData)))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold text-primary mb-2" }, "Local Version"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted mb-0" }, "Size: ", formatSize(conflict.localData.length))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "col-md-6" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card-body" }, /* @__PURE__ */ import_react2.default.createElement("h6", { className: "fw-bold text-success mb-2" }, "Remote Version"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "small text-muted mb-0" }, "Size: ", formatSize(conflict.remoteData.length))))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2" }, localJson && remoteJson && /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4", onClick: handleMerge }, "Auto Merge"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local") }, "Keep Local"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote") }, "Take Remote"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort") }, "Skip for Now")))));
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "modal-header border-0 pb-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h5", { className: "modal-title fw-bold text-danger", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
+            "Sync Conflict"
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-secondary", children: "A conflict was detected during sync for the following file:" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "alert alert-light border small mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("code", { children: conflict.path }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "card border-warning-subtle bg-warning-subtle bg-opacity-10 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h6", { className: "fw-bold text-warning mb-2", children: "Semantic Diff Preview" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("pre", { className: "x-small mb-0", style: { maxHeight: "200px", overflowY: "auto", whiteSpace: "pre-wrap" }, children: getDiff(conflict.localData, conflict.remoteData) })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "row g-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h6", { className: "fw-bold text-primary mb-2", children: "Local Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "small text-muted mb-0", children: [
+                  "Size: ",
+                  formatSize(conflict.localData.length)
+                ] })
+              ] }) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h6", { className: "fw-bold text-success mb-2", children: "Remote Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "small text-muted mb-0", children: [
+                  "Size: ",
+                  formatSize(conflict.remoteData.length)
+                ] })
+              ] }) }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2", children: [
+            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4", onClick: handleMerge, children: "Auto Merge" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local"), children: "Keep Local" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote"), children: "Take Remote" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort"), children: "Skip for Now" })
+          ] })
+        ] }) }) });
       };
       var Dialog = ({ dialog, setDialog }) => {
         const [inputValue, setInputValue] = (0, import_react2.useState)("");
@@ -113335,11 +114985,28 @@ ${toHex(hashedRequest)}`;
             (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
           );
         };
-        return /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 } }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-dialog modal-dialog-centered" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-content shadow-lg border-0 rounded-4" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-header border-0 pb-0" }, /* @__PURE__ */ import_react2.default.createElement("h5", { className: "modal-title fw-bold text-primary" }, dialog.type.toUpperCase()), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn-close", onClick: () => setDialog(null) })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-body py-4" }, /* @__PURE__ */ import_react2.default.createElement("p", { className: "mb-3 text-secondary" }, dialog.message), dialog.type === "prompt" && /* @__PURE__ */ import_react2.default.createElement("input", { autoFocus: true, className: "form-control rounded-pill px-3 shadow-sm", value: inputValue, onChange: (e2) => setInputValue(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue) }), dialog.type === "multiselect" && dialog.options && /* @__PURE__ */ import_react2.default.createElement("div", { className: "list-group" }, dialog.options.map((opt) => /* @__PURE__ */ import_react2.default.createElement("label", { key: opt.value, className: "list-group-item d-flex align-items-center border-0 py-2" }, /* @__PURE__ */ import_react2.default.createElement("input", { type: "checkbox", className: "form-check-input me-3", checked: selectedValues.includes(opt.value), onChange: () => toggleOption(opt.value) }), /* @__PURE__ */ import_react2.default.createElement("span", null, opt.label))))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "modal-footer border-0 pt-0" }, /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: () => setDialog(null) }, "Cancel"), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue) }, "OK")))));
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h5", { className: "modal-title fw-bold text-primary", children: dialog.type.toUpperCase() }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn-close", onClick: () => setDialog(null) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
+            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { autoFocus: true, className: "form-control rounded-pill px-3 shadow-sm", value: inputValue, onChange: (e2) => setInputValue(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue) }),
+            dialog.type === "multiselect" && dialog.options && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "list-group", children: dialog.options.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("input", { type: "checkbox", className: "form-check-input me-3", checked: selectedValues.includes(opt.value), onChange: () => toggleOption(opt.value) }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: opt.label })
+            ] }, opt.value)) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: () => setDialog(null), children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue), children: "OK" })
+          ] })
+        ] }) }) });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
       root2.render(
-        /* @__PURE__ */ import_react2.default.createElement(ErrorBoundary, null, /* @__PURE__ */ import_react2.default.createElement(App, null))
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(App, {}) })
       );
     }
   });
@@ -113420,5 +115087,16 @@ chart.js/dist/chart.js:
    * https://www.chartjs.org
    * (c) 2025 Chart.js Contributors
    * Released under the MIT License
+   *)
+
+react/cjs/react-jsx-runtime.development.js:
+  (**
+   * @license React
+   * react-jsx-runtime.development.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
    *)
 */

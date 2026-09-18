@@ -248,7 +248,7 @@
 
 ### 🚀 4. Marketing, Documentation & Production Readiness
 
-- [ ] **Deploy Interactive Public Demo Sandbox (Cloudflare / GitHub Pages)**
+- [x] **Deploy Interactive Public Demo Sandbox (Cloudflare / GitHub Pages)**
   - **Target File(s)**: `.github/workflows/deploy-demos.yml`, `demo/*/build.js`
   - **Context**: Prospective developers and open-source contributors must currently clone the repo, install Node, and execute `dev.sh` to experience the Social, Banky, and Board demos. A zero-friction web URL will drastically improve conversion and adoption.
   - **Expectations & Acceptance Criteria**:

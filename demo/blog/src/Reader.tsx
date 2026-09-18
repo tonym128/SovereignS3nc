@@ -89,11 +89,14 @@ const Reader = () => {
         setSelectedPostId(null);
         try {
             let currentConfig = config;
+            const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
             if (!config.accessKeyId) {
-                const res = await fetch('config.json');
-                const remoteConfig = await res.json();
-                currentConfig = { ...config, ...remoteConfig };
-                setConfig(currentConfig);
+                try {
+                    const res = await fetch('config.json');
+                    const remoteConfig = await res.json();
+                    currentConfig = { ...config, ...remoteConfig };
+                    setConfig(currentConfig);
+                } catch (e) {}
                 if (!targetAuthor) targetAuthor = currentConfig.authorId || 'author-1';
             }
 
@@ -102,14 +105,18 @@ const Reader = () => {
 
             let instance = sov;
             if (!instance) {
+                const endpointIsLocal = currentConfig.endpoint && (currentConfig.endpoint.includes('127.0.0.1') || currentConfig.endpoint.includes('localhost'));
+                const hasS3 = currentConfig.endpoint && (!endpointIsLocal || isLocalHost);
+
                 instance = await SovereignS3nc.create({
-                    s3: {
+                    s3: hasS3 ? {
                         endpoint: currentConfig.endpoint,
                         region: currentConfig.region,
                         credentials: { accessKeyId: currentConfig.accessKeyId, secretAccessKey: currentConfig.secretAccessKey },
                         bucketName: currentConfig.bucketName,
                         forcePathStyle: true
-                    },
+                    } : undefined,
+                    offline: !hasS3,
                     paths: { appId: currentConfig.appId, userId: 'reader-' + Math.random().toString(36).substring(7), storeId: 'main' },
                     password: 'public-reader-password',
                     useWorker: true,
@@ -119,10 +126,14 @@ const Reader = () => {
             }
             
             // Discover all authors
-            const registeredUsers = await instance.discoverUsers();
-            if (registeredUsers) setAuthors(registeredUsers);
+            try {
+                const registeredUsers = await instance.discoverUsers();
+                if (registeredUsers) setAuthors(registeredUsers);
+            } catch (e) {}
 
-            await instance.follow(authorToFollow);
+            try {
+                await instance.follow(authorToFollow);
+            } catch (e) {}
             await instance.sync();
             
             const today = new Date().toISOString().split('T')[0];

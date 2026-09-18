@@ -233,12 +233,26 @@ const App = () => {
             } catch (e) {}
         }
 
+        const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+        const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+        const requestedMode = urlParams.get('mode');
+
         fetch('config.json')
             .then(res => res.json())
             .then(data => {
-                setConfig(prev => ({ ...prev, ...data }));
+                const endpointIsLocal = data.endpoint && (data.endpoint.includes('127.0.0.1') || data.endpoint.includes('localhost'));
+                let defaultMode = data.syncMode || (isLocalHost ? 's3' : 'webrtc');
+                if (requestedMode) defaultMode = requestedMode;
+                if (!isLocalHost && endpointIsLocal && !requestedMode) {
+                    defaultMode = 'webrtc';
+                }
+                setConfig(prev => ({ ...prev, ...data, syncMode: defaultMode }));
             })
-            .catch(() => {});
+            .catch(() => {
+                if (!isLocalHost) {
+                    setConfig(prev => ({ ...prev, syncMode: requestedMode || 'webrtc' }));
+                }
+            });
     }, []);
 
     const performLogin = async (currentConfig: any) => {

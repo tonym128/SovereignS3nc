@@ -235,3 +235,13 @@
 - Added unresolved conflict tracking with semantic diff summaries (for SQLite, JSON, text, and binary files) and exposed `sov.getDebugSnapshot()`.
 - Implemented interactive in-app visual inspector modal `demo/social/src/components/InspectorModal.tsx` and wired an opt-in floating trigger in `App.tsx` activated via `?debug=inspect`.
 - Created unit tests in `tests/Inspector.unit.test.ts` verifying tree construction, diff generation, snapshot assembly, and conflict resolution (7/7 tests passing).
+
+### WT-62: Deploy Interactive Public Demo Sandbox (Cloudflare / GitHub Pages)
+- Created GitHub Actions workflow `.github/workflows/deploy-demos.yml` building and deploying demos on push to `master` with official GitHub Pages actions.
+- Built unified demo sandbox landing portal in `demo/index.html` showcasing all 5 live interactive applications (Social, Social Local, Board, Banky, Blog).
+- Implemented automatic public URL fallback in Social, Board, Banky, and Blog demos to default to WebRTC P2P mesh or local offline IndexedDB storage when hosted on remote domains without a local S3 instance.
+- Enhanced `demo/board` with WebRTC mesh adapter, BroadcastChannel peer communication, and dynamic sync mode selection in UI.
+- Added PWA manifests (`manifest.json`), service workers (`service-worker.js`), and responsive mobile tags to `demo/banky` and `demo/board`.
+- Implemented master build script `scripts/build-demos.js` and npm script `npm run build:demos` compiling all demos into `demo-dist/` with `.nojekyll` and SQLite WASM assets.
+- Created unit tests in `tests/DemoDeployment.unit.test.ts` verifying GitHub Actions workflow, portal landing page, PWA configuration, remote fallbacks, and build artifacts (5/5 tests passing).
+
