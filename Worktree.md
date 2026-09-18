@@ -164,3 +164,9 @@
 - Added UTC boundary sliding date window querying in `MessagingModule.getInboxMessages` and `FeedModule.getFeedPosts` across UTC yesterday, today, and tomorrow (`i = -1`) to tolerate timezone variance and sender clock skew.
 - Created `tests/TimezoneRollover.unit.test.ts` verifying UTC date consistency, cross-midnight message delivery, clock skew resilience, and feed aggregation.
 
+### WT-52: Network Degradation & Chaos Testing for WebRTC Mesh
+- Enhanced `WebRTCRemoteAdapter` with automatic download retries with jittered backoff, and peer reconnection scheduling with exponential backoff (`reconnectBackoffBaseMs`, `maxReconnectBackoffMs`).
+- Added robust peer disconnection and cleanup handling accepting channel or `userId` string, resetting backoff upon reconnect, and preventing reconnection loops and CPU spikes during peer churn.
+- Added `tests/WebRTC_Chaos.integration.ts` verifying packet drops recovery, partition timeouts, exponential backoff progression, hop limit TTL termination, stale message age drops (>30s), and cyclic mesh termination.
+
+

@@ -130,7 +130,7 @@
     - Validate that messages sent on day boundary are discovered, decrypted, and sorted accurately by timestamp regardless of local system timezone.
     - Validate that `FeedModule` post queries consistently surface posts published during midnight rollover without off-by-one date partition omissions.
 
-- [ ] **Network Degradation & Chaos Testing for WebRTC Mesh**
+- [x] **Network Degradation & Chaos Testing for WebRTC Mesh**
   - **Target File(s)**: `tests/WebRTC_Chaos.integration.ts`, `src/adapters/WebRTCRemoteAdapter.ts`
   - **Context**: In WT-37, token-bucket rate limiting (20 msg/sec burst) and signed message TTLs (30s) were added to prevent gossip flooding. However, real-world peer-to-peer networks suffer from packet loss (5-20%), variable latency jitter (100-500ms), and rapid peer churn (disconnect/reconnect loops).
   - **Expectations & Acceptance Criteria**:

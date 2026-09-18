@@ -37,6 +37,9 @@ export interface WebRTCRemoteAdapterConfig {
     verify?: (data: Uint8Array, signature: Uint8Array, publicKey: string) => boolean;
     signingPublicKey?: string;
     getPublicKey?: (userId: string) => Promise<string | null>;
+    downloadRetries?: number;
+    reconnectBackoffBaseMs?: number;
+    maxReconnectBackoffMs?: number;
 }
 
 export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter {
@@ -72,7 +75,15 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     private channelSendCounts: WeakMap<object, { count: number; windowStart: number }> = new WeakMap();
 
     // Message timestamp TTL enforcement: drop messages older than MSG_MAX_AGE_MS
-    private static readonly MSG_MAX_AGE_MS = 30_000; // 30 seconds
+    public static readonly MSG_MAX_AGE_MS = 30_000; // 30 seconds
+
+    // Retries & Reconnection with Exponential Backoff
+    private defaultRetries: number;
+    public reconnectBackoffBaseMs: number;
+    public maxReconnectBackoffMs: number;
+    private reconnectAttempts: Map<string, number> = new Map();
+    private reconnectTimers: Map<string, any> = new Map();
+    private reconnectHandlers: Map<string, () => Promise<boolean | void>> = new Map();
 
     constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
         super();
@@ -89,6 +100,9 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         this.verify = config.verify;
         this.signingPublicKey = config.signingPublicKey;
         this.getPublicKey = config.getPublicKey;
+        this.defaultRetries = config.downloadRetries ?? 0;
+        this.reconnectBackoffBaseMs = config.reconnectBackoffBaseMs ?? 100;
+        this.maxReconnectBackoffMs = config.maxReconnectBackoffMs ?? 10000;
     }
 
     /**
@@ -165,6 +179,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         this.channels.add(channel);
         if (userId) {
             this.channelsByUserId.set(userId, channel);
+            this.resetReconnectBackoff(userId);
         }
         return {
             channel,
@@ -184,17 +199,110 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     }
 
     /**
-     * Disconnects a channel.
+     * Disconnects a channel (or peer by userId) and triggers exponential backoff reconnect if a handler is registered.
      */
-    public disconnectPeer(channel: any) {
-        this.channels.delete(channel);
-        for (const [uid, ch] of this.channelsByUserId.entries()) {
-            if (ch === channel) {
-                this.channelsByUserId.delete(uid);
-                break;
+    public disconnectPeer(channelOrUserId: any) {
+        let disconnectedUserId: string | undefined;
+        let channelToRemove: any;
+
+        if (typeof channelOrUserId === 'string') {
+            disconnectedUserId = channelOrUserId;
+            channelToRemove = this.channelsByUserId.get(channelOrUserId);
+            if (channelToRemove) {
+                this.channels.delete(channelToRemove);
+                this.channelsByUserId.delete(channelOrUserId);
+            }
+        } else {
+            channelToRemove = channelOrUserId;
+            this.channels.delete(channelToRemove);
+            for (const [uid, ch] of this.channelsByUserId.entries()) {
+                if (ch === channelToRemove) {
+                    this.channelsByUserId.delete(uid);
+                    disconnectedUserId = uid;
+                    break;
+                }
             }
         }
+
         Logger.debug('WebRTC', `Peer disconnected. Active channels: ${this.channels.size}`);
+        if (disconnectedUserId && this.reconnectHandlers.has(disconnectedUserId)) {
+            this.scheduleReconnect(disconnectedUserId);
+        }
+    }
+
+    /**
+     * Registers a callback to re-establish connection to a peer when disconnected.
+     */
+    public registerReconnectHandler(userId: string, handler: () => Promise<boolean | void>) {
+        this.reconnectHandlers.set(userId, handler);
+    }
+
+    /**
+     * Schedules a reconnection attempt using exponential backoff with jitter to prevent CPU spikes.
+     */
+    public scheduleReconnect(userId: string): boolean {
+        if (this.reconnectTimers.has(userId)) {
+            return false;
+        }
+        const handler = this.reconnectHandlers.get(userId);
+        if (!handler) {
+            return false;
+        }
+
+        const currentAttempts = this.reconnectAttempts.get(userId) || 0;
+        const delay = Math.min(
+            this.maxReconnectBackoffMs,
+            this.reconnectBackoffBaseMs * Math.pow(2, currentAttempts)
+        );
+
+        this.emit('reconnect:scheduled', { userId, attempt: currentAttempts + 1, delayMs: delay });
+
+        const timer = setTimeout(async () => {
+            this.reconnectTimers.delete(userId);
+            this.reconnectAttempts.set(userId, currentAttempts + 1);
+            this.emit('reconnect:attempt', { userId, attempt: currentAttempts + 1 });
+
+            try {
+                const res = await handler();
+                if (res !== false) {
+                    this.resetReconnectBackoff(userId);
+                    this.emit('reconnect:success', { userId, attempt: currentAttempts + 1 });
+                    return;
+                }
+            } catch (err) {
+                Logger.warn('WebRTC', `Reconnection attempt to ${userId} failed: ${err}`);
+            }
+
+            if (this.reconnectHandlers.has(userId)) {
+                this.scheduleReconnect(userId);
+            }
+        }, delay);
+
+        this.reconnectTimers.set(userId, timer);
+        return true;
+    }
+
+    /**
+     * Resets exponential backoff counters and clears pending timers for a peer.
+     */
+    public resetReconnectBackoff(userId: string) {
+        if (this.reconnectTimers.has(userId)) {
+            clearTimeout(this.reconnectTimers.get(userId));
+            this.reconnectTimers.delete(userId);
+        }
+        this.reconnectAttempts.delete(userId);
+    }
+
+    public getReconnectAttempts(userId: string): number {
+        return this.reconnectAttempts.get(userId) || 0;
+    }
+
+    public clearAllReconnectTimers() {
+        for (const timer of this.reconnectTimers.values()) {
+            clearTimeout(timer);
+        }
+        this.reconnectTimers.clear();
+        this.reconnectAttempts.clear();
     }
 
     private async handleMessage(msgStr: string, sourceChannel: any) {
@@ -441,7 +549,22 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         return null;
     }
 
-    async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 3000): Promise<DownloadResult | null> {
+    async downloadFile(path: string, ifNoneMatch?: string, timeout: number = 3000, retries?: number): Promise<DownloadResult | null> {
+        const attempts = retries !== undefined ? retries : this.defaultRetries;
+        for (let i = 0; i <= attempts; i++) {
+            const res = await this._downloadFileOnce(path, ifNoneMatch, timeout);
+            if (res !== null) {
+                return res;
+            }
+            if (i < attempts) {
+                const waitMs = Math.min(500, 50 * Math.pow(2, i));
+                await new Promise(r => setTimeout(r, waitMs));
+            }
+        }
+        return null;
+    }
+
+    private async _downloadFileOnce(path: string, ifNoneMatch?: string, timeout: number = 3000): Promise<DownloadResult | null> {
         const key = this.getKey(path);
         
         // 1. Check local cache first
@@ -503,7 +626,8 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
                 reqId,
                 senderId: this.peerId,
                 msgId: this.generateMsgId(),
-                ttl: this.defaultTTL
+                ttl: this.defaultTTL,
+                timestamp: Date.now()
             };
             this.markMessageAsSeen(reqMsg.msgId!);
             this.broadcast(reqMsg);
