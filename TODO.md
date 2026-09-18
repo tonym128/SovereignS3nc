@@ -152,7 +152,7 @@
 
 ### 🏗️ 2. System Design & Architecture
 
-- [ ] **Browser Storage Eviction Protection (`navigator.storage.persist`)**
+- [x] **Browser Storage Eviction Protection (`navigator.storage.persist`)**
   - **Target File(s)**: `src/adapters/IndexedDBStorage.ts`, `src/SovereignS3nc.ts`, `src/types.ts`
   - **Context**: Modern mobile browsers (particularly Safari WebKit and Chromium on low-storage devices) automatically evict IndexedDB databases if storage pressure occurs or after 7 days of inactivity in non-installed web apps unless persistent storage is explicitly requested via the Web Storage API.
   - **Expectations & Acceptance Criteria**:

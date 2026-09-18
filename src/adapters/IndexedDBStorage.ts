@@ -1,4 +1,4 @@
-import { IStorage, FollowedUser } from '../interfaces/IStorage';
+import { IStorage, FollowedUser, StoragePersistenceInfo } from '../interfaces/IStorage';
 import { Logger } from '../utils/Logger';
 import { StorageError } from '../utils/Errors';
 
@@ -13,7 +13,7 @@ export class IndexedDBStorage implements IStorage {
     async init(): Promise<void> {
         if (this.db) return;
         Logger.debug('IDB', `Initializing ${this.dbName}...`);
-        return new Promise((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => {
             try {
                 const request = indexedDB.open(this.dbName, 1);
 
@@ -48,6 +48,9 @@ export class IndexedDBStorage implements IStorage {
                 reject(e);
             }
         });
+
+        // Request persistent storage to protect against browser eviction under storage pressure
+        await this.requestPersistence().catch(() => {});
     }
 
     private getStore(name: string, mode: IDBTransactionMode = 'readonly'): IDBObjectStore {
@@ -399,5 +402,56 @@ export class IndexedDBStorage implements IStorage {
         return Array.from(new Uint8Array(hashBuffer))
             .map(b => b.toString(16).padStart(2, '0'))
             .join('');
+    }
+
+    /**
+     * Attempts to request persistent storage via navigator.storage.persist() to protect
+     * local keys, offline databases, and outbox queues from browser eviction.
+     */
+    async requestPersistence(): Promise<boolean> {
+        if (typeof navigator !== 'undefined' && navigator.storage && typeof navigator.storage.persist === 'function') {
+            try {
+                const isAlreadyPersisted = typeof navigator.storage.persisted === 'function' 
+                    ? await navigator.storage.persisted() 
+                    : false;
+                if (!isAlreadyPersisted) {
+                    const granted = await navigator.storage.persist();
+                    Logger.info('IDB', `Storage persistence request result: ${granted}`);
+                    return granted;
+                }
+                Logger.debug('IDB', 'Storage is already persisted.');
+                return true;
+            } catch (e: any) {
+                Logger.debug('IDB', `Storage persistence request failed: ${e.message}`);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the storage is persisted and retrieves quota / usage estimates if available.
+     */
+    async checkStoragePersistence(): Promise<StoragePersistenceInfo> {
+        let persisted = false;
+        let quota: number | undefined;
+        let usage: number | undefined;
+
+        if (typeof navigator !== 'undefined' && navigator.storage) {
+            try {
+                if (typeof navigator.storage.persisted === 'function') {
+                    persisted = await navigator.storage.persisted();
+                }
+                if (typeof navigator.storage.estimate === 'function') {
+                    const estimate = await navigator.storage.estimate();
+                    quota = estimate.quota;
+                    usage = estimate.usage;
+                }
+            } catch (e: any) {
+                Logger.debug('IDB', `Failed to check storage persistence: ${e.message}`);
+            }
+        }
+
+        return { persisted, quota, usage };
     }
 }

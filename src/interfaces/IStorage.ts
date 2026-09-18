@@ -4,6 +4,12 @@ export interface FollowedUser {
   publicKey: string;
 }
 
+export interface StoragePersistenceInfo {
+  persisted: boolean;
+  quota?: number;
+  usage?: number;
+}
+
 export interface IStorage {
   init(): Promise<void>;
   
@@ -169,6 +175,11 @@ export interface IStorage {
      * Update the last sync date for a followed user.
      */
     updateFollowedUserSync(userId: string, date: string): Promise<void>;
+
+    /**
+     * Checks browser storage persistence status and quota/usage estimates.
+     */
+    checkStoragePersistence?(): Promise<StoragePersistenceInfo>;
   }
 
   

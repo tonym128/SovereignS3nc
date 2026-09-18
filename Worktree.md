@@ -175,5 +175,12 @@
 - Added orchestrated compaction support `SovereignS3nc.compactDatabases()` via `SyncOrchestrator`.
 - Created stress test suite `tests/SQLiteCompaction.unit.test.ts` validating structural integrity, queryability, and >= 40% binary reduction under 1,000 post/message stress scenarios.
 
+### WT-54: Browser Storage Eviction Protection (`navigator.storage.persist`)
+- Added automated `navigator.storage.persist()` request during `IndexedDBStorage.init()` to prevent mobile browser storage eviction.
+- Added `checkStoragePersistence()` on `IndexedDBStorage`, `SQLiteNodeStorage`, `IStorage`, and `SovereignS3nc` returning persisted status, quota, and usage estimates.
+- Added graceful fallbacks for Node.js and unsupported environments.
+- Created unit tests verifying automated persistence requests, existing persistence detection, quota reporting, and rejection handling.
+
+
 
 

@@ -108,4 +108,91 @@ describe('IndexedDBStorage', () => {
         expect(await storage.getGenericRemoteHashCache('non-existent')).toBeNull();
         expect(await storage.getLastSyncDate()).toBeNull();
     });
+
+    describe('Browser Storage Eviction Protection & Persistence', () => {
+        const originalNavigator = (global as any).navigator;
+
+        afterEach(() => {
+            (global as any).navigator = originalNavigator;
+        });
+
+        it('should automatically request navigator.storage.persist() during init() when not yet persisted', async () => {
+            const mockPersist = jest.fn().mockResolvedValue(true);
+            const mockPersisted = jest.fn().mockResolvedValue(false);
+
+            (global as any).navigator = {
+                storage: {
+                    persist: mockPersist,
+                    persisted: mockPersisted
+                }
+            };
+
+            const testStorage = new IndexedDBStorage('test-persist-auto');
+            await testStorage.init();
+
+            expect(mockPersisted).toHaveBeenCalled();
+            expect(mockPersist).toHaveBeenCalled();
+        });
+
+        it('should not call persist() if already persisted', async () => {
+            const mockPersist = jest.fn().mockResolvedValue(true);
+            const mockPersisted = jest.fn().mockResolvedValue(true);
+
+            (global as any).navigator = {
+                storage: {
+                    persist: mockPersist,
+                    persisted: mockPersisted
+                }
+            };
+
+            const testStorage = new IndexedDBStorage('test-persist-already');
+            await testStorage.init();
+
+            expect(mockPersisted).toHaveBeenCalled();
+            expect(mockPersist).not.toHaveBeenCalled();
+        });
+
+        it('should return accurate persistence, quota, and usage estimates via checkStoragePersistence()', async () => {
+            (global as any).navigator = {
+                storage: {
+                    persisted: jest.fn().mockResolvedValue(true),
+                    estimate: jest.fn().mockResolvedValue({
+                        quota: 104857600, // 100 MB
+                        usage: 5242880    // 5 MB
+                    })
+                }
+            };
+
+            const result = await storage.checkStoragePersistence();
+            expect(result.persisted).toBe(true);
+            expect(result.quota).toBe(104857600);
+            expect(result.usage).toBe(5242880);
+        });
+
+        it('should gracefully fallback when navigator.storage is undefined or unsupported', async () => {
+            (global as any).navigator = {};
+
+            const result = await storage.checkStoragePersistence();
+            expect(result).toEqual({ persisted: false, quota: undefined, usage: undefined });
+
+            const requestResult = await storage.requestPersistence();
+            expect(requestResult).toBe(false);
+        });
+
+        it('should gracefully handle errors when navigator.storage APIs reject', async () => {
+            (global as any).navigator = {
+                storage: {
+                    persisted: jest.fn().mockRejectedValue(new Error('Permission denied')),
+                    persist: jest.fn().mockRejectedValue(new Error('Internal storage error')),
+                    estimate: jest.fn().mockRejectedValue(new Error('Storage estimate error'))
+                }
+            };
+
+            const result = await storage.checkStoragePersistence();
+            expect(result.persisted).toBe(false);
+
+            const requestResult = await storage.requestPersistence();
+            expect(requestResult).toBe(false);
+        });
+    });
 });

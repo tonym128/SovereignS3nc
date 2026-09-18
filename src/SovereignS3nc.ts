@@ -1,6 +1,6 @@
 import * as nacl from 'tweetnacl';
 import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage } from './types';
-import { IStorage } from './interfaces/IStorage';
+import { IStorage, StoragePersistenceInfo } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
 import { WebRTCRemoteAdapter } from './adapters/WebRTCRemoteAdapter';
@@ -565,6 +565,12 @@ export class SovereignS3nc extends EventEmitter {
     public async sync(force: boolean = false) { return this.syncOrchestrator.sync(force); }
     public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
     public async compactDatabases(dates?: string[], force: boolean = false) { return this.syncOrchestrator.compactDatabases(dates, force); }
+    public async checkStoragePersistence(): Promise<StoragePersistenceInfo> {
+        if (this.storage && typeof (this.storage as any).checkStoragePersistence === 'function') {
+            return (this.storage as any).checkStoragePersistence();
+        }
+        return { persisted: false };
+    }
 
     public async createGroup(n: string, m: GroupMember[]) { return this.groupManager.createGroup(n, m); }
     public async updateGroup(g: SovereignGroup) { return this.groupManager.updateGroup(g); }

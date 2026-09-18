@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { IStorage } from '../interfaces/IStorage';
+import { IStorage, StoragePersistenceInfo } from '../interfaces/IStorage';
 import { Logger } from '../utils/Logger';
 import { env } from '../utils/Environment';
 import { ModuleError } from '../utils/Errors';
@@ -197,5 +197,9 @@ export class SQLiteNodeStorage implements IStorage {
     private async calculateHash(data: Uint8Array): Promise<string> {
         const { createHash } = await import('crypto');
         return createHash('sha256').update(data).digest('hex');
+    }
+
+    async checkStoragePersistence(): Promise<StoragePersistenceInfo> {
+        return { persisted: true };
     }
 }
