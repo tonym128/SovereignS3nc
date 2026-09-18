@@ -14,6 +14,7 @@ import Peer from 'peerjs';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { PairingModal } from './PairingModal';
 import { ErrorBoundary } from './ErrorBoundary';
+import { InspectorModal } from './components/InspectorModal';
 
 const DEBUG = true;
 
@@ -52,6 +53,7 @@ const App = () => {
     const [autoLogin, setAutoLogin] = useState(localStorage.getItem('sov_auto_login') === 'true');
     const [autoSync, setAutoSync] = useState(localStorage.getItem('sov_auto_sync') !== 'false');
     const [showPairing, setShowPairing] = useState(false);
+    const [showInspector, setShowInspector] = useState(() => new URLSearchParams(window.location.search).get('debug') === 'inspect');
     const [useWebWorkers, setUseWebWorkers] = useState(localStorage.getItem('sov_use_workers') !== 'false');
     const [rememberedUsers, setRememberedUsers] = useState<any[]>(() => {
         const saved = localStorage.getItem('sov_remembered_users');
@@ -2521,6 +2523,39 @@ const App = () => {
                         }
                     }}
                 />
+            )}
+
+            {showInspector && sov && (
+                <InspectorModal 
+                    sov={sov} 
+                    onClose={() => setShowInspector(false)} 
+                />
+            )}
+
+            {/* Floating button when ?debug=inspect is active */}
+            {(new URLSearchParams(window.location.search).get('debug') === 'inspect') && sov && !showInspector && (
+                <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999 }}>
+                    <button
+                        onClick={() => setShowInspector(true)}
+                        style={{
+                            background: '#1e1e24',
+                            color: '#2196f3',
+                            border: '1px solid #333',
+                            padding: '8px 16px',
+                            borderRadius: '30px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            fontSize: '13px',
+                            fontWeight: 600
+                        }}
+                    >
+                        <span>🛠️</span>
+                        <span>Storage Inspector</span>
+                    </button>
+                </div>
             )}
 
             {conflict && (

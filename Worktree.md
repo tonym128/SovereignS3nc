@@ -228,3 +228,10 @@
 - Added `getModuleInstance()` and `isSyncing()` helpers on `SovereignS3nc`.
 - Added `build:react` script and mapped exports in root `package.json`.
 - Created comprehensive unit tests in `tests/ReactHooks.unit.test.ts` verifying all hooks, providers, and lifecycle states (7/7 tests passing).
+
+### WT-61: Browser DevTools / In-App Visual Storage Inspector
+- Implemented `Inspector` in `src/utils/Inspector.ts` collecting local storage partition trees, disk footprints (by category: public, private, followed, blobs, databases), remote sync status, and cached ETags.
+- Enhanced `WebRTCRemoteAdapter` with real-time metrics (`packetsSent`, `packetsReceived`, `packetsDropped`, `peerLatencies`, and `getMeshStats()`).
+- Added unresolved conflict tracking with semantic diff summaries (for SQLite, JSON, text, and binary files) and exposed `sov.getDebugSnapshot()`.
+- Implemented interactive in-app visual inspector modal `demo/social/src/components/InspectorModal.tsx` and wired an opt-in floating trigger in `App.tsx` activated via `?debug=inspect`.
+- Created unit tests in `tests/Inspector.unit.test.ts` verifying tree construction, diff generation, snapshot assembly, and conflict resolution (7/7 tests passing).

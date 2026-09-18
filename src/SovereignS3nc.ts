@@ -22,6 +22,7 @@ import { ModerationEngine } from './core/ModerationEngine';
 import { GlobalRegistry } from './discovery/GlobalRegistry';
 import { BlacklistManager } from './discovery/BlacklistManager';
 import { Repository, RepositoryOptions } from './core/Repository';
+import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
     public static readonly VERSION = '3.1.1';
@@ -38,6 +39,7 @@ export class SovereignS3nc extends EventEmitter {
     private _isSyncing: boolean = false;
     private syncWorker?: SyncWorkerProxy;
     private pendingConflicts: Map<string, (choice: 'local' | 'remote' | 'abort' | { mergedData: Uint8Array }) => void> = new Map();
+    private conflictDetails: Map<string, { id: string; path: string; localData: Uint8Array; remoteData: Uint8Array; timestamp: number }> = new Map();
 
     // Manager instances
     private keyManager: KeyManager;
@@ -882,6 +884,7 @@ export class SovereignS3nc extends EventEmitter {
         const resolve = this.pendingConflicts.get(conflictId);
         if (resolve) {
             this.pendingConflicts.delete(conflictId);
+            this.conflictDetails.delete(conflictId);
             resolve(choice);
         }
     }
@@ -890,8 +893,31 @@ export class SovereignS3nc extends EventEmitter {
         return new Promise((resolve) => {
             const conflictId = env.generateId(12);
             this.pendingConflicts.set(conflictId, resolve);
+            this.conflictDetails.set(conflictId, {
+                id: conflictId,
+                path,
+                localData,
+                remoteData,
+                timestamp: Date.now()
+            });
             this.emit('conflict', { id: conflictId, path, localData, remoteData });
         });
+    }
+
+    public getUnresolvedConflicts(): { id: string; path: string; localData: Uint8Array; remoteData: Uint8Array; timestamp: number }[] {
+        return Array.from(this.conflictDetails.values());
+    }
+
+    public getRemoteAdapter(): IRemoteAdapter | undefined {
+        return this.remote;
+    }
+
+    public getPublicRemoteAdapter(): IRemoteAdapter | undefined {
+        return this.publicRemote;
+    }
+
+    public async getDebugSnapshot(): Promise<DebugSnapshot> {
+        return Inspector.getSnapshot(this);
     }
 
     public async sendEncryptedPayload(recipientId: string, payload: any, namespace: string) {

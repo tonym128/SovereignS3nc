@@ -233,7 +233,7 @@
       - `useFeed(): { posts: Post[], createPost: (content: string) => Promise<void> }`
     - Include unit tests using `@testing-library/react-hooks` or React test renderer.
 
-- [ ] **Browser DevTools / In-App Visual Storage Inspector**
+- [x] **Browser DevTools / In-App Visual Storage Inspector**
   - **Target File(s)**: `src/utils/Inspector.ts`, `demo/social/src/components/InspectorModal.tsx`
   - **Context**: Debugging sync conflicts, inspecting encrypted partition files, and diagnosing WebRTC mesh state currently requires digging through raw browser IndexedDB panels and console logs.
   - **Expectations & Acceptance Criteria**:

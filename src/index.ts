@@ -11,4 +11,5 @@ export * from './modules/Moderation';
 export * from './core/Repository';
 export * from './utils/Logger';
 export * from './utils/MediaUtils';
+export * from './utils/Inspector';
 export * from './utils/Errors';

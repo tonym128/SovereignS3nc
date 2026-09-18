@@ -83,6 +83,25 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
     public maxReconnectBackoffMs: number;
     private reconnectAttempts: Map<string, number> = new Map();
     private reconnectTimers: Map<string, any> = new Map();
+
+    // Packet & Gossip Metrics
+    public packetsSent: number = 0;
+    public packetsReceived: number = 0;
+    public packetsDropped: number = 0;
+    public peerLatencies: Map<string, number> = new Map();
+
+    public getMeshStats() {
+        return {
+            peerId: this.peerId,
+            activePeers: Array.from(this.channelsByUserId.keys()),
+            peerCount: this.channelsByUserId.size,
+            latencies: Object.fromEntries(this.peerLatencies.entries()),
+            packetsSent: this.packetsSent,
+            packetsReceived: this.packetsReceived,
+            packetsDropped: this.packetsDropped,
+            seenMessagesCount: this.seenMessages.size
+        };
+    }
     private reconnectHandlers: Map<string, () => Promise<boolean | void>> = new Map();
 
     constructor(userId: string, prefix: string = '', config: WebRTCRemoteAdapterConfig = {}) {
@@ -307,8 +326,14 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
 
     private async handleMessage(msgStr: string, sourceChannel: any) {
         try {
+            this.packetsReceived++;
             const msg: PeerMessage = JSON.parse(msgStr);
             const key = msg.path;
+
+            if (msg.timestamp && msg.senderId) {
+                const latency = Math.max(0, Date.now() - msg.timestamp);
+                this.peerLatencies.set(msg.senderId, latency);
+            }
 
             // 0. Security Verification
             if (this.verify && msg.signature && msg.signingPublicKey) {
@@ -328,6 +353,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
 
                 if (!this.verify(dataToVerify, signature, knownPublicKey)) {
                     Logger.warn('WebRTC', `Invalid signature from peer ${msg.senderId}. Dropping message.`);
+                    this.packetsDropped++;
                     return;
                 }
             }
@@ -343,6 +369,7 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
             // 1b. Age-based TTL enforcement: drop messages older than MSG_MAX_AGE_MS
             if (msg.timestamp && Date.now() - msg.timestamp > WebRTCRemoteAdapter.MSG_MAX_AGE_MS) {
                 Logger.debug('WebRTC', `Dropping stale message (age ${Date.now() - msg.timestamp}ms) from ${msg.senderId}`);
+                this.packetsDropped++;
                 return;
             }
 
@@ -492,13 +519,15 @@ export class WebRTCRemoteAdapter extends EventEmitter implements IRemoteAdapter 
         }
         if (bucket.count >= WebRTCRemoteAdapter.GOSSIP_BURST_LIMIT) {
             Logger.warn('WebRTC', `Rate limit hit — dropping gossip message to a peer.`);
+            this.packetsDropped++;
             return false;
         }
         bucket.count++;
         try {
             channel.send(msgStr);
+            this.packetsSent++;
         } catch (e) {
-            // channel closed or error
+            this.packetsDropped++;
         }
         return true;
     }
