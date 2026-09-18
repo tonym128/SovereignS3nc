@@ -245,3 +245,14 @@
 - Implemented master build script `scripts/build-demos.js` and npm script `npm run build:demos` compiling all demos into `demo-dist/` with `.nojekyll` and SQLite WASM assets.
 - Created unit tests in `tests/DemoDeployment.unit.test.ts` verifying GitHub Actions workflow, portal landing page, PWA configuration, remote fallbacks, and build artifacts (5/5 tests passing).
 
+### WT-63: Public Documentation Portal (VitePress)
+- Installed and configured VitePress static site generator in `docs/.vitepress/config.mts`.
+- Configured local client-side full-text search, dark/light theme, and multi-tier navigation hierarchy across Introduction, Developer Guide, and Storage Deployments.
+- Created VitePress home page in `docs/index.md` featuring hero metadata, feature badges, and 60-second quickstart installation and usage guides.
+- Created comprehensive architecture guide in `docs/architecture.md` with Mermaid flowcharts for system internals, storage partition isolation, two-way sync pipelines, Merkle tree diffing, and WebRTC mesh gossip.
+- Created comprehensive comparison matrix in `docs/comparison.md` evaluating SovereignS3nc against Supabase/Firebase, RxDB, and Nostr across 10 architectural dimensions.
+- Created official React hooks documentation in `docs/react.md` covering `<SovereignProvider>`, `useSovereign`, `useSyncStatus`, `useRepository`, `useDirectMessages`, and `useFeed`.
+- Added `docs:dev`, `docs:build`, and `docs:preview` npm scripts to `package.json`.
+- Created unit tests in `tests/DocsPortal.unit.test.ts` verifying configuration, content pages, React docs, comparison matrix, npm scripts, and build outputs (7/7 tests passing).
+
+

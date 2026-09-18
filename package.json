@@ -39,6 +39,9 @@
     "build:blog": "node --no-warnings demo/blog/build.js",
     "build:demos": "node --no-warnings scripts/build-demos.js",
     "build": "rimraf dist && tsc -p tsconfig.build.json && npm run build:esm && npm run build:global && npm run build:react",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "prepublishOnly": "npm run build",
     "admin-cli": "ts-node src/admin.ts",
     "perf:audit": "ts-node scripts/perf-audit.ts"
@@ -113,6 +116,7 @@
     "jsdom": "^30.1.0",
     "rimraf": "^6.1.2",
     "ts-jest": "^29.4.9",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vitepress": "^1.6.4"
   }
 }

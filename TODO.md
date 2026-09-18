@@ -256,7 +256,7 @@
     - Configure demos to connect by default to an ephemeral public demo bucket or in-memory IndexedDB with live P2P WebRTC pairing.
     - Verify responsive layouts and PWA installation on mobile devices from the public URL.
 
-- [ ] **Public Documentation Portal (VitePress or Docusaurus)**
+- [x] **Public Documentation Portal (VitePress or Docusaurus)**
   - **Target File(s)**: `docs/.vitepress/config.ts` or `website/`, `docs/**/*.md`
   - **Context**: The documentation in `docs/` is rich (security whitepaper, deployment recipes, API reference, architecture guide), but flat Markdown files in Git lack search, interactive live code blocks, and visual hierarchy.
   - **Expectations & Acceptance Criteria**:

@@ -84,6 +84,10 @@ describe('Interactive Public Demo Sandbox & Deployment (WT-62)', () => {
 
     test('Demo distribution directory contains all required artifacts after build', () => {
         const distDir = path.join(rootDir, 'demo-dist');
+        if (!fs.existsSync(distDir)) {
+            const { execSync } = require('child_process');
+            execSync('node --no-warnings scripts/build-demos.js', { cwd: rootDir, stdio: 'pipe' });
+        }
         expect(fs.existsSync(distDir)).toBe(true);
         expect(fs.existsSync(path.join(distDir, 'index.html'))).toBe(true);
         expect(fs.existsSync(path.join(distDir, '.nojekyll'))).toBe(true);
