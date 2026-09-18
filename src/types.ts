@@ -62,6 +62,8 @@ export interface SovereignConfig {
    */
   workerIntegrity?: string;
   enableP2PPairing?: boolean; // Enable QR code and Bluetooth pairing functionality
+  /** Configurable TTL in ms for caching followed users' manifest ETags to avoid network requests (default: 60000ms). */
+  followManifestCacheTtlMs?: number;
   /** Configurable local data retention policy to prevent unbounded storage growth. */
   retentionPolicy?: RetentionPolicy;
 }

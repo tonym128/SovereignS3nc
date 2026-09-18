@@ -5,6 +5,7 @@ import { Logger } from '../utils/Logger';
 import { SovereignS3nc } from '../SovereignS3nc';
 import { PATHS, DEFAULTS } from '../utils/Constants';
 import { SyncError, NetworkError } from '../utils/Errors';
+import { ManifestFetchResult } from './ManifestManager';
 
 export interface SyncOrchestratorContext {
     config: SovereignConfig;
@@ -27,6 +28,7 @@ export interface SyncOrchestratorContext {
     syncManifest: () => Promise<void>;
     generateManifest: () => Promise<SovereignManifest>;
     fetchManifest: (userId: string) => Promise<SovereignManifest | null>;
+    fetchManifestWithMeta?: (userId: string, options?: { forceRefresh?: boolean; ttlMs?: number }) => Promise<ManifestFetchResult>;
     syncGroups: (today: string) => Promise<void>;
     
     encrypt: (data: Uint8Array, key: string) => Promise<Uint8Array>;
@@ -323,74 +325,93 @@ export class SyncOrchestrator {
         }
 
         const blacklist = this.ctx.config.blacklist || [];
+        const eligibleUsers = usersToSync.filter(u => !blacklist.includes(u.userId));
 
-        for (const user of usersToSync) {
-            if (blacklist.includes(user.userId)) {
-                Logger.info('Sync', `Skipping blacklisted user ${user.userId}`);
-                continue;
+        // Process followed users in concurrent batches
+        const BATCH_SIZE = 5;
+        for (let i = 0; i < eligibleUsers.length; i += BATCH_SIZE) {
+            const batch = eligibleUsers.slice(i, i + BATCH_SIZE);
+            await Promise.all(batch.map(user => this.syncFollowedUser(user, today)));
+        }
+    }
+
+    public async syncFollowedUser(user: any, today: string) {
+        const meta = this.ctx.fetchManifestWithMeta
+            ? await this.ctx.fetchManifestWithMeta(user.userId)
+            : { manifest: await this.ctx.fetchManifest(user.userId), etag: null, unchanged: false, fromCache: false };
+
+        const manifest = meta.manifest;
+        if (manifest) {
+            // Check if manifest ETag is unchanged and we've already synced this exact manifest version
+            const lastProcessedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${user.userId}`);
+            if (meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
+                Logger.info('Sync', `Skipping unchanged manifest for ${user.userId} (ETag: ${meta.etag}, fromCache: ${meta.fromCache})`);
+                await this.ctx.storage.updateFollowedUserSync(user.userId, today);
+                return;
             }
-            const manifest = await this.ctx.fetchManifest(user.userId);
-            
-            if (manifest) {
-                Logger.info('Sync', `Using manifest for ${user.userId}`);
-                if (manifest.modules['core']) {
-                    for (const dateStr of manifest.modules['core']) {
-                        await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                    }
-                }
 
-                for (const [moduleName, dates] of Object.entries(manifest.modules)) {
-                    if (moduleName === 'core') continue;
-                    for (const dateStr of dates) {
-                        const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
-                        const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
-                        const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+            Logger.info('Sync', `Using manifest for ${user.userId}`);
+            if (manifest.modules['core']) {
+                for (const dateStr of manifest.modules['core']) {
+                    await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                }
+            }
+
+            for (const [moduleName, dates] of Object.entries(manifest.modules)) {
+                if (moduleName === 'core') continue;
+                for (const dateStr of dates) {
+                    const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
+                    const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
+                    const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+                    if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+                }
+            }
+
+            const myId = this.ctx.config.paths.userId;
+            if (manifest.dms && manifest.dms[myId]) {
+                for (const dateStr of manifest.dms[myId]) {
+                    for (const moduleDef of this.ctx.registeredModules) {
+                        const moduleName = moduleDef.name;
+                        const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public');
+                        const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
+                        const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
                         if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
                     }
                 }
-
-                const myId = this.ctx.config.paths.userId;
-                if (manifest.dms[myId]) {
-                    for (const dateStr of manifest.dms[myId]) {
-                        for (const moduleDef of this.ctx.registeredModules) {
-                            const moduleName = moduleDef.name;
-                            const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public');
-                            const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
-                            const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                            if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
-                        }
-                    }
-                }
-            } else {
-                const startDate = new Date(user.lastSync);
-                const endDate = new Date(today);
-                
-                let iter = new Date(startDate);
-                iter.setUTCHours(0, 0, 0, 0);
-                endDate.setUTCHours(0, 0, 0, 0);
-
-                while (iter <= endDate) {
-                    const dateStr = SovereignS3nc.getDateStr(iter);
-                    await this.pullUserDay(user.userId, dateStr, user.publicKey);
-                    
-                    for (const moduleDef of this.ctx.registeredModules) {
-                        const moduleName = moduleDef.name;
-                        const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
-                        const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
-                        await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
-
-                        const myId = this.ctx.config.paths.userId;
-                        const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public'); 
-                        const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
-                        await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
-                    }
-
-                    iter.setUTCDate(iter.getUTCDate() + 1);
-                }
             }
+
+            if (meta.etag) {
+                await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${user.userId}`, meta.etag);
+            }
+        } else {
+            const startDate = new Date(user.lastSync);
+            const endDate = new Date(today);
             
-            await this.ctx.storage.updateFollowedUserSync(user.userId, today);
+            let iter = new Date(startDate);
+            iter.setUTCHours(0, 0, 0, 0);
+            endDate.setUTCHours(0, 0, 0, 0);
+
+            while (iter <= endDate) {
+                const dateStr = SovereignS3nc.getDateStr(iter);
+                await this.pullUserDay(user.userId, dateStr, user.publicKey);
+                
+                for (const moduleDef of this.ctx.registeredModules) {
+                    const moduleName = moduleDef.name;
+                    const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
+                    const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
+                    await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
+
+                    const myId = this.ctx.config.paths.userId;
+                    const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public'); 
+                    const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
+                    await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
+                }
+
+                iter.setUTCDate(iter.getUTCDate() + 1);
+            }
         }
+        
+        await this.ctx.storage.updateFollowedUserSync(user.userId, today);
     }
 
     public async pullUserFile(userId: string, remotePath: string, publicKey: string, localPath: string, expectEncrypted: boolean = true): Promise<boolean> {

@@ -193,3 +193,11 @@
 - Remediated Low severity CVEs in `esbuild` (bumped to `^0.28.2`) and `@babel/core`.
 - Fine-tuned SQLite compaction tombstone threshold (`tombstones >= 50 && tombstoneRatio >= 0.5`) in `FeedModule` and `MessagingModule` to preserve single-item soft-deletion tombstones before syncing.
 - Verified all 32 test suites (237/237 tests) and full builds pass cleanly.
+
+### WT-57: Aggregated Follow-Manifest Diffing (S3 ETag Request Optimization)
+- Added `followManifestCacheTtlMs` to `SovereignConfig` (default 60000ms).
+- Enhanced `ManifestManager` with `fetchManifestWithMeta()`, memory and local storage manifest caching, positive ETag conditional requests (`If-None-Match`), and `clearFollowManifestCache()` / `expireFollowManifestCache()`.
+- Enhanced `SyncOrchestrator.syncFollowedUsers()` to sync followed users in concurrent batches of 5.
+- Implemented unchanged manifest ETag skipping in `SyncOrchestrator`: when remote returns 304 or cached manifest is valid and unchanged, skips checking all module and DM date partition files.
+- Added comprehensive benchmark suite `tests/FollowManifestOpt.benchmark.test.ts` demonstrating 100% request elimination for followed users during short auto-sync intervals and > 65% HTTP request reduction on full sync with 20 followed users.
+

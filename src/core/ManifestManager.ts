@@ -5,6 +5,13 @@ import { Logger } from '../utils/Logger';
 import { PATHS } from '../utils/Constants';
 import { SyncError } from '../utils/Errors';
 
+export interface ManifestFetchResult {
+    manifest: SovereignManifest | null;
+    etag: string | null;
+    unchanged: boolean;
+    fromCache: boolean;
+}
+
 export interface ManifestManagerContext {
     userId: string;
     getEncryptionKey: () => string | undefined;
@@ -12,9 +19,16 @@ export interface ManifestManagerContext {
     getPublicRemote: () => IRemoteAdapter | undefined;
     createRemote: (userId: string) => IRemoteAdapter;
     calculateHashedContent: (data: Uint8Array, key?: string) => string;
+    followManifestCacheTtlMs?: number;
 }
 
 export class ManifestManager {
+    private followManifestCache = new Map<string, {
+        etag: string | null;
+        manifest: SovereignManifest;
+        timestamp: number;
+    }>();
+
     constructor(private ctx: ManifestManagerContext) {}
 
     public async syncManifest() {
@@ -124,16 +138,116 @@ export class ManifestManager {
         return manifest;
     }
 
-    public async fetchManifest(userId: string): Promise<SovereignManifest | null> {
+    public async fetchManifestWithMeta(
+        userId: string,
+        options?: { forceRefresh?: boolean; ttlMs?: number }
+    ): Promise<ManifestFetchResult> {
+        const ttl = options?.ttlMs ?? this.ctx.followManifestCacheTtlMs ?? 60000;
+        let cached = this.followManifestCache.get(userId);
+
+        if (!cached) {
+            try {
+                const stored = await this.ctx.storage.getFile(`followed/${userId}/manifest.json`);
+                const storedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${userId}`);
+                if (stored && storedEtag) {
+                    const manifest: SovereignManifest = JSON.parse(new TextDecoder().decode(stored));
+                    cached = {
+                        etag: storedEtag,
+                        manifest,
+                        timestamp: 0 // Expired TTL initially, forcing conditional check
+                    };
+                    this.followManifestCache.set(userId, cached);
+                }
+            } catch (e) {}
+        }
+
+        if (!options?.forceRefresh && cached && (Date.now() - cached.timestamp < ttl)) {
+            Logger.debug('Sync', `Serving cached manifest for ${userId} (TTL valid, etag: ${cached.etag})`);
+            return {
+                manifest: cached.manifest,
+                etag: cached.etag,
+                unchanged: true,
+                fromCache: true
+            };
+        }
+
         try {
             const userRemote = this.ctx.createRemote(userId);
-            const result = await userRemote.downloadFile(PATHS.MANIFEST);
-            if (result && result.data) {
-                return JSON.parse(new TextDecoder().decode(result.data));
+            const ifNoneMatch = (!options?.forceRefresh && cached?.etag) ? cached.etag : undefined;
+            const result = await userRemote.downloadFile(PATHS.MANIFEST, ifNoneMatch);
+
+            if (result) {
+                if (result.notModified && cached) {
+                    cached.timestamp = Date.now();
+                    Logger.debug('Sync', `Manifest for ${userId} 304 Not Modified (etag: ${cached.etag})`);
+                    return {
+                        manifest: cached.manifest,
+                        etag: cached.etag,
+                        unchanged: true,
+                        fromCache: false
+                    };
+                }
+
+                if (result.data) {
+                    const manifest: SovereignManifest = JSON.parse(new TextDecoder().decode(result.data));
+                    const etag = result.etag || null;
+                    this.followManifestCache.set(userId, {
+                        etag,
+                        manifest,
+                        timestamp: Date.now()
+                    });
+                    if (etag) {
+                        await this.ctx.storage.saveFile(`followed/${userId}/manifest.json`, result.data);
+                        await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${userId}`, etag);
+                    }
+                    Logger.debug('Sync', `Downloaded fresh manifest for ${userId} (etag: ${etag})`);
+                    return {
+                        manifest,
+                        etag,
+                        unchanged: false,
+                        fromCache: false
+                    };
+                }
             }
-        } catch (e) {
-            Logger.debug('Sync', `Manifest not found for user ${userId}`);
+        } catch (e: any) {
+            Logger.debug('Sync', `Manifest not found or error for user ${userId}: ${e.message}`);
         }
-        return null;
+
+        return {
+            manifest: null,
+            etag: null,
+            unchanged: false,
+            fromCache: false
+        };
+    }
+
+    public async fetchManifest(userId: string): Promise<SovereignManifest | null> {
+        const res = await this.fetchManifestWithMeta(userId);
+        return res.manifest;
+    }
+
+    public clearFollowManifestCache(userId?: string) {
+        if (userId) {
+            this.followManifestCache.delete(userId);
+        } else {
+            this.followManifestCache.clear();
+        }
+    }
+
+    public expireFollowManifestCache(userId?: string) {
+        if (userId) {
+            const entry = this.followManifestCache.get(userId);
+            if (entry) entry.timestamp = 0;
+        } else {
+            for (const entry of this.followManifestCache.values()) {
+                entry.timestamp = 0;
+            }
+        }
+    }
+
+    public getFollowManifestCache(userId: string) {
+        return this.followManifestCache.get(userId);
     }
 }
+
+

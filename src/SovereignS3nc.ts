@@ -119,7 +119,8 @@ export class SovereignS3nc extends EventEmitter {
             storage: this.storage,
             getPublicRemote: () => this.publicRemote,
             createRemote: (uid) => this.createRemote(uid),
-            calculateHashedContent: (d, k) => this.calculateHashedContent(d, k)
+            calculateHashedContent: (d, k) => this.calculateHashedContent(d, k),
+            followManifestCacheTtlMs: this.config.followManifestCacheTtlMs
         });
 
         this.groupManager = new GroupManager({
@@ -176,6 +177,7 @@ export class SovereignS3nc extends EventEmitter {
             syncManifest: () => this.manifestManager.syncManifest(),
             generateManifest: () => this.manifestManager.generateManifest(),
             fetchManifest: (uid) => this.manifestManager.fetchManifest(uid),
+            fetchManifestWithMeta: (uid, options) => this.manifestManager.fetchManifestWithMeta(uid, options),
             syncGroups: (today) => this.groupManager.syncGroups(today),
             encrypt: (d, k) => this.encrypt(d, k),
             decrypt: (d, k) => this.decrypt(d, k),
@@ -588,6 +590,9 @@ export class SovereignS3nc extends EventEmitter {
     public async getPublicRegistry() { return this.globalRegistry.getPublicRegistry(); }
 
     public async syncManifest() { return this.manifestManager.syncManifest(); }
+    public clearFollowManifestCache(userId?: string) { this.manifestManager.clearFollowManifestCache(userId); }
+    public expireFollowManifestCache(userId?: string) { this.manifestManager.expireFollowManifestCache(userId); }
+    public getFollowManifestCache(userId: string) { return this.manifestManager.getFollowManifestCache(userId); }
 
     /**
      * Creates an encrypted, time-limited device pairing package that can be transmitted
@@ -828,6 +833,9 @@ export class SovereignS3nc extends EventEmitter {
                 userId: isPrivate ? userId : this.getHashedUserId(userId, false),
                 storeId: this.config.paths.storeId
             });
+        }
+        if (this.remote) {
+            return this.remote;
         }
         throw new SovereignError('CONFIG_ERROR', 'Remote configuration missing');
     }

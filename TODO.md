@@ -188,7 +188,7 @@
     - Implement retry with exponential backoff on individual part failures.
     - Provide unit tests mocking AWS SDK multipart commands and error recovery.
 
-- [ ] **Aggregated Follow-Manifest Diffing (S3 ETag Request Optimization)**
+- [x] **Aggregated Follow-Manifest Diffing (S3 ETag Request Optimization)**
   - **Target File(s)**: `src/core/SyncOrchestrator.ts`, `src/core/ManifestManager.ts`
   - **Context**: When a user follows 50+ users, checking remote day-partition updates across recent days performs dozens of individual `HEAD` and `GET` requests to S3 per sync interval. This can result in request amplification and rate limits on some S3 providers.
   - **Expectations & Acceptance Criteria**:
