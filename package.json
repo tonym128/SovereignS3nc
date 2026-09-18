@@ -98,7 +98,12 @@
     "baseline-browser-mapping": "^2.11.0",
     "@babel/core": "^7.29.1",
     "diff": "^4.0.4",
-    "vite": "^6.4.3"
+    "vite": "^6.4.3",
+    "@docsearch/react": {
+      "react": "$react",
+      "react-dom": "$react-dom",
+      "@types/react": "$@types/react"
+    }
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
