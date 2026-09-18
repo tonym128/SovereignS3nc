@@ -189,7 +189,6 @@ export class KeyManager {
         );
         return Buffer.from(derived).toString('hex');
     }
-    }
 
     public getHashedUserId(userId: string, isPrivate: boolean): string {
         if (!isPrivate || userId === 'global' || userId === 'admin' || userId === '' || userId === 'root') {
