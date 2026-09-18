@@ -121,7 +121,7 @@
 
 ### 🧪 1. Testing & Edge-Case Verification
 
-- [ ] **Timezone & Midnight UTC Boundary Rollover Tests**
+- [x] **Timezone & Midnight UTC Boundary Rollover Tests**
   - **Target File(s)**: `tests/TimezoneRollover.unit.test.ts`, `src/modules/Messaging.ts`, `src/modules/Feed.ts`, `src/SovereignS3nc.ts`
   - **Context**: SovereignS3nc partitions data into daily SQLite databases using ISO date strings derived from UTC (`new Date().toISOString().split('T')[0]`). When two users communicate across drastic timezone differences (e.g. UTC+13 New Zealand vs UTC-10 Hawaii), or send messages within seconds of 23:59:59 UTC, message timestamps and partitioned database file paths may span different calendar dates.
   - **Expectations & Acceptance Criteria**:

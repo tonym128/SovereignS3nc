@@ -320,7 +320,9 @@ export class MessagingModule {
         const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const dates: string[] = [];
-        for (let i = 0; i < days; i++) {
+        // Include UTC tomorrow (i = -1) to tolerate clock skew and midnight boundary transitions,
+        // followed by the previous `days` UTC days.
+        for (let i = -1; i < days; i++) {
             const d = new Date();
             d.setUTCDate(d.getUTCDate() - i);
             dates.push(d.toISOString().split('T')[0]);

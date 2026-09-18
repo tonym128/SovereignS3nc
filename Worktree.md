@@ -159,3 +159,8 @@
 
 ### WT-50: Forward Secrecy for Direct Messages
 - Implemented ephemeral-static ECDH forward secrecy with per-message ephemeral X25519 keypair negotiation, HKDF expansion, zeroing of ephemeral private keys, and `ephemeral_pk` storage in recipient boxes with backward-compatible fallbacks.
+
+### WT-51: Timezone & Midnight UTC Boundary Rollover Tests
+- Added UTC boundary sliding date window querying in `MessagingModule.getInboxMessages` and `FeedModule.getFeedPosts` across UTC yesterday, today, and tomorrow (`i = -1`) to tolerate timezone variance and sender clock skew.
+- Created `tests/TimezoneRollover.unit.test.ts` verifying UTC date consistency, cross-midnight message delivery, clock skew resilience, and feed aggregation.
+

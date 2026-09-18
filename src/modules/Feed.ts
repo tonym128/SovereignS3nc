@@ -234,6 +234,51 @@ export class FeedModule {
     }
 
     /**
+     * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
+     * combining own public posts and followed users' posts, with like enrichment and sorting.
+     */
+    async getFeedPosts(days: number = 5, includeFollowed: boolean = true): Promise<Post[]> {
+        const dates: string[] = [];
+        for (let i = -1; i < days; i++) {
+            const d = new Date();
+            d.setUTCDate(d.getUTCDate() - i);
+            dates.push(d.toISOString().split('T')[0]);
+        }
+
+        const allPosts: Post[] = [];
+        // 1. Fetch own public posts
+        for (const date of dates) {
+            const posts = await this.getPosts(date, 'public');
+            allPosts.push(...posts);
+        }
+
+        // 2. Fetch followed users' public posts
+        if (includeFollowed) {
+            const following = await this.db.getFollowing();
+            for (const user of following) {
+                for (const date of dates) {
+                    const posts = await this.getPosts(`${user.userId}/${date}`, 'followed');
+                    allPosts.push(...posts);
+                }
+            }
+        }
+
+        // 3. Deduplicate by ID
+        const postMap = new Map<string, Post>();
+        for (const p of allPosts) {
+            const existing = postMap.get(p.id);
+            if (!existing || p.timestamp > existing.timestamp) {
+                postMap.set(p.id, p);
+            }
+        }
+
+        const deduplicated = Array.from(postMap.values());
+        await this.enrichLikes(deduplicated, days);
+        deduplicated.sort((a, b) => b.timestamp - a.timestamp);
+        return deduplicated;
+    }
+
+    /**
      * Purges expired posts from a given date partition.
      */
     async cleanupExpired(date: string, isPublic: boolean = true): Promise<number> {
