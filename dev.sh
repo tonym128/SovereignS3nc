@@ -149,8 +149,15 @@ EOF
             "Effect": "Allow",
             "Action": ["s3:GetObject"],
             "Resource": [
-                "arn:aws:s3:::$BUCKET_NAME/*/author-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/global/*"
+                "arn:aws:s3:::$BUCKET_NAME/*"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": ["s3:*"],
+            "Resource": [
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/data/*",
+                "arn:aws:s3:::$BUCKET_NAME/*/admin/admin.probe"
             ]
         }
     ]
@@ -166,7 +173,7 @@ EOF
     USER_SECRET="${USER_SECRET:-user-secret-123}"
     $RC_BINARY admin user add local "$USER_ACCESS" "$USER_SECRET" > /dev/null || true
     
-    # Create User Policy (Specific Allows for test users, ensuring admin isolation and functional discovery)
+    # Create User Policy (Allows all app data, ensuring strict admin isolation and functional discovery)
     cat <<EOF > user-policy.json
 {
     "Version": "2012-10-17",
@@ -193,15 +200,7 @@ EOF
             "Effect": "Allow",
             "Action": ["s3:*"],
             "Resource": [
-                "arn:aws:s3:::$BUCKET_NAME/*/regular-user/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/new-user/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/evil-user/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/user-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/author-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/alice-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/bob-*/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/global/*",
-                "arn:aws:s3:::$BUCKET_NAME/*/*/social/*"
+                "arn:aws:s3:::$BUCKET_NAME/*"
             ]
         },
         {
@@ -221,7 +220,6 @@ EOF
                 "arn:aws:s3:::$BUCKET_NAME/*/admin/public_key.json"
             ]
         },
-
         {
             "Sid": "AllowAdminReporting",
             "Effect": "Allow",
@@ -269,7 +267,7 @@ EOF
     echo "$JSON_CONFIG" > "$BOARD_CONFIG"
     echo "$BLOG_READER_JSON_CONFIG" > "$BLOG_CONFIG"
 
-    # Also save admin config for reference/manual testing
+    # Also save admin configs for reference/manual testing
     echo "{
     \"endpoint\": \"http://127.0.0.1:$RUSTFS_PORT\",
     \"region\": \"rustfs\",
@@ -277,6 +275,14 @@ EOF
     \"secretAccessKey\": \"$ADMIN_SECRET\",
     \"bucketName\": \"$BUCKET_NAME\"
 }" > "demo/social/admin_config.json"
+
+    echo "{
+    \"endpoint\": \"http://127.0.0.1:$RUSTFS_PORT\",
+    \"region\": \"rustfs\",
+    \"accessKeyId\": \"$BLOG_ADMIN_ACCESS\",
+    \"secretAccessKey\": \"$BLOG_ADMIN_SECRET\",
+    \"bucketName\": \"$BUCKET_NAME\"
+}" > "demo/blog/admin_config.json"
 
     echo "--- Building Demo Apps ---"
     npm run build:social
@@ -319,9 +325,11 @@ EOF
     echo "RustFS Development environment is ready!"
     echo "RustFS S3 API:           http://127.0.0.1:9000"
     echo "Social Demo App:         http://127.0.0.1:8888"
+    echo "Social Local Demo App:   http://127.0.0.1:8886"
     echo "Banky Demo App:          http://127.0.0.1:8887"
     echo "Board Demo App:          http://127.0.0.1:8885"
-    echo "Blog Demo App:           http://127.0.0.1:8884"
+    echo "Blog Demo App (Reader):  http://127.0.0.1:8884"
+    echo "Blog Demo App (Editor):  http://127.0.0.1:8884/editor.html"
     echo ""
     echo "BLOG CREDENTIALS:"
     echo "  Reader Access: $BLOG_READER_ACCESS"
@@ -360,6 +368,7 @@ function stop() {
     echo "Removing temporary data..."
     rm -rf "$DATA_DIR" "$LOG_FILE" "*_web.log" "rustfs_startup.log" "proxy.log" ".proxy.pid" ".rustfs.pid" ".social_web.pid" ".banky_web.pid" ".board_web.pid" ".blog_web.pid" 2>/dev/null || true
     rm -rf "demo-runtime" 2>/dev/null || true
+    rm -f "demo/blog/admin_config.json" "demo/social/admin_config.json" 2>/dev/null || true
 
     RESET_CONFIG="{
     \"endpoint\": \"http://127.0.0.1:$RUSTFS_PORT\",

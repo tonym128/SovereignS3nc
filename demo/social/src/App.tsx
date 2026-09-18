@@ -15,7 +15,7 @@ import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { PairingModal } from './PairingModal';
 import { ErrorBoundary } from './ErrorBoundary';
 
-const DEBUG = false;
+const DEBUG = true;
 
 // Proxy adapter to simulate S3 path isolation for WebRTC
 class PrefixProxyAdapter implements IRemoteAdapter {
@@ -445,9 +445,9 @@ const App = () => {
             
             setTimeout(() => {
                 instance.sync().then(() => {
-                    loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined);
+                    loadData(instance, fm, mm, pm);
                 }).catch(e => {
-                    loadData(sov || undefined, feed || undefined, messaging || undefined, profileModule || undefined); 
+                    loadData(instance, fm, mm, pm); 
                 });
             }, 100);
         } catch (e: any) {
@@ -690,18 +690,30 @@ const App = () => {
         setTimeout(() => setToast(null), 3000);
     };
 
+    const syncQueuedRef = useRef(false);
+
     const sync = async (force: boolean = false) => {
-        if (!sov || !feed || syncing || !isConnected) return;
+        const isForce = typeof force === 'boolean' ? force : false;
+        if (!sov || !feed || !isConnected) {
+            if (DEBUG) console.log(`[App] sync skipped: sov=${!!sov}, feed=${!!feed}, isConnected=${isConnected}`);
+            return;
+        }
+        if (syncing) {
+            if (DEBUG) console.log(`[App] sync queued: sync already in progress.`);
+            syncQueuedRef.current = true;
+            return;
+        }
         setSyncing(true);
         try {
-            if (DEBUG) console.log('[App] Starting sync...');
-            await sov.sync(force);
+            if (DEBUG) console.log(`[App] Starting sync... (force=${isForce})`);
+            await sov.sync(isForce);
             if (profileModule) await profileModule.syncOtherProfiles();
             setLastSyncTime(new Date().toLocaleTimeString());
             await loadData(sov, feed, messaging, profileModule);
+            if (DEBUG) console.log('[App] Sync finished successfully.');
             
             // Task #30: Show notification on auto-sync (if not manual force sync)
-            if (!force && isLoggedIn) {
+            if (!isForce && isLoggedIn) {
                 showToast('Sync complete: Your data is up to date.');
             }
         } catch (e: any) {
@@ -709,6 +721,10 @@ const App = () => {
             showToast('Sync failed: ' + e.message, 'danger');
         } finally {
             setSyncing(false);
+            if (syncQueuedRef.current) {
+                syncQueuedRef.current = false;
+                setTimeout(() => sync(), 200);
+            }
         }
     };
 
@@ -849,6 +865,7 @@ const App = () => {
                 }
             }
         });
+        if (DEBUG) console.log(`[App] loadData (${config.userId}): newMessages=${newMessages.length}, totalMsgUnread=${totalMsgUnread}, curTab=${curTab}`);
 
         if (curTab === 'messages' && curUser) {
             totalMsgUnread -= (userMsgUnreads[curUser] || 0);
@@ -1290,7 +1307,12 @@ const App = () => {
                         {userId[0].toUpperCase()}
                     </div>
                 )}
-                {size > 30 && <span className="fw-bold">{p.name || userId}</span>}
+                {size > 30 && (
+                    <div className="d-flex flex-column">
+                        <span className="fw-bold">{p.name || userId}</span>
+                        {p.name && p.name !== userId && <small className="text-muted" style={{fontSize: '0.75rem'}}>@{userId}</small>}
+                    </div>
+                )}
             </div>
         );
     };
@@ -1566,11 +1588,11 @@ const App = () => {
                         <UserAvatar userId={config.userId} size={32} />
                     </div>
 
-                    <button className="btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none" onClick={sync} disabled={syncing || config.syncMode === 'offline'} title="Sync Now">
+                    <button className="btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'} title="Sync Now">
                         <i className={`bi bi-arrow-repeat ${syncing ? 'spin' : ''}`}></i>
                     </button>
 
-                    <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={sync} disabled={syncing || config.syncMode === 'offline'}>
+                    <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'}>
                         {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
                     <button className="btn btn-sm btn-outline-danger ms-2 mobile-hide" onClick={logout}>Logout</button>
@@ -1681,12 +1703,12 @@ const App = () => {
                                     {allUsers.filter(u => u.userId !== config.userId).map(u => {
                                         const isNew = (discoveryMap[u.userId] || 0) > highlights.friends;
                                         return (
-                                            <div key={u.userId} className={`list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? 'border-start border-primary' : ''}`} style={isNew ? {backgroundColor: '#f0f7ff', borderLeftWidth: '4px'} : {}}>
+                                            <div key={u.userId} data-testid={`user-item-${u.userId}`} className={`list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? 'border-start border-primary' : ''}`} style={isNew ? {backgroundColor: '#f0f7ff', borderLeftWidth: '4px'} : {}}>
                                                 <UserAvatar userId={u.userId} />
                                                 {following.find(f => f.userId === u.userId) ? (
-                                                    <button className="btn btn-light btn-sm rounded-pill px-3" onClick={() => sov?.unfollow(u.userId).then(loadData)}>Following</button>
+                                                    <button className="btn btn-light btn-sm rounded-pill px-3" onClick={async () => { await sov?.unfollow(u.userId); await loadData(); }}>Following</button>
                                                 ) : (
-                                                    <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={() => sov?.follow(u.userId).then(loadData)}>Follow</button>
+                                                    <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={async () => { await sov?.follow(u.userId, u.publicKey); await loadData(); }}>Follow</button>
                                                 )}
                                             </div>
                                         );

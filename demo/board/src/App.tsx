@@ -37,6 +37,22 @@ const App = () => {
 
     const COLUMNS = ['Todo', 'In Progress', 'Done'];
 
+    useEffect(() => {
+        fetch('config.json')
+            .then(res => res.json())
+            .then(data => {
+                setConfig(prev => ({
+                    ...prev,
+                    endpoint: data.endpoint || prev.endpoint,
+                    region: data.region || prev.region,
+                    accessKeyId: data.accessKeyId || prev.accessKeyId,
+                    secretAccessKey: data.secretAccessKey || prev.secretAccessKey,
+                    bucketName: data.bucketName || prev.bucketName,
+                }));
+            })
+            .catch(() => {});
+    }, []);
+
     // --- Core Logic ---
     const login = async () => {
         setSyncing(true);

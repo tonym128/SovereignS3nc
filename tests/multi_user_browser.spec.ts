@@ -154,8 +154,10 @@ test('Sovereign Social Multi-User Journey', async ({ browser }) => {
     await alicePage.click('.modal button:has-text("Confirm")');
     await expect(alicePage.locator('.modal')).toBeHidden({ timeout: 10000 });
     
-    // Give Alice time to complete her automatic sync after posting
-    await alicePage.waitForTimeout(5000);
+    // Give Alice time to complete her automatic or manual sync after posting
+    await alicePage.waitForTimeout(2000);
+    await alicePage.click('button:has-text("Sync")');
+    await alicePage.waitForTimeout(3000);
 
     await bobPage.click('button:has-text("Home")');
     

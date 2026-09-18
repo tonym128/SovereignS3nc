@@ -347,7 +347,7 @@ export class SovereignS3nc extends EventEmitter {
 
     async init() {
         if (!this.storage) {
-            const isBrowser = env.isBrowser() && typeof env.getIndexedDB() !== 'undefined';
+            const isBrowser = (env.isBrowser() || env.isWorker() || typeof env.getIndexedDB() !== 'undefined');
             if (isBrowser) {
                 const dbName = `sov_${this.config.paths.appId}_${this.config.paths.userId}`;
                 this.storage = new IndexedDBStorage(dbName);
@@ -778,21 +778,18 @@ export class SovereignS3nc extends EventEmitter {
             return null;
             }
 
-    public async follow(userId: string) {
-        const remotePath = 'users.json';
-        let publicKey = '';
-        try {
-            const result = await this.globalRemote?.downloadFile(remotePath);
-            if (result && result.data) {
-                const userList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
-                const user = userList.find(u => u.userId === userId);
+    public async follow(userId: string, publicKey?: string) {
+        if (!publicKey) {
+            try {
+                const registry = await this.getPublicRegistry();
+                const user = registry.find(u => u.userId === userId);
                 if (user) publicKey = user.publicKey;
-            }
-        } catch (e) {}
+            } catch (e) {}
+        }
 
         const startDate = new Date();
         startDate.setUTCDate(startDate.getUTCDate() - 7);
-        await this.storage.followUser(userId, SovereignS3nc.getDateStr(startDate), publicKey);
+        await this.storage.followUser(userId, SovereignS3nc.getDateStr(startDate), publicKey || '');
         Logger.info('Sovereign', `Followed ${userId}.`);
     }
 

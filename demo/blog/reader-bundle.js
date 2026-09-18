@@ -42,13 +42,13 @@
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
-  // node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js
+  // ../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js
   var init_dirname = __esm({
-    "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js"() {
+    "../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js"() {
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/process.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/process.js
   var process_exports = {};
   __export(process_exports, {
     _debugEnd: () => _debugEnd,
@@ -218,7 +218,7 @@
   }
   var queue, draining, currentQueue, queueIndex, title, arch, platform, env, argv, execArgv, version, versions, emitWarning, binding, umask, cwd, chdir, release, browser, _rawDebug, moduleLoadList, domain, _exiting, config, reallyExit, _kill, cpuUsage, resourceUsage, memoryUsage, kill, exit, openStdin, allowedNodeEnvironmentFlags, features, _fatalExceptions, setUncaughtExceptionCaptureCallback, _tickCallback, _debugProcess, _debugEnd, _startProfilerIdleNotifier, _stopProfilerIdleNotifier, stdout, stderr, stdin, abort, pid, ppid, execPath, debugPort, argv0, _preload_modules, setSourceMapsEnabled, _performance, nowOffset, nanoPerSec, _maxListeners, _events, _eventsCount, addListener, once, off, removeListener, removeAllListeners, emit, prependListener, prependOnceListener, process;
   var init_process = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/process.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/process.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -413,14 +413,14 @@
     }
   });
 
-  // node_modules/esbuild-plugin-polyfill-node/polyfills/process.js
+  // ../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js
   var init_process2 = __esm({
-    "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js"() {
+    "../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js"() {
       init_process();
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js
   function dew$2() {
     if (_dewExec$2) return exports$2;
     _dewExec$2 = true;
@@ -2131,7 +2131,7 @@
   }
   var exports$2, _dewExec$2, exports$1, _dewExec$1, exports, _dewExec;
   var init_chunk_DtuTasat = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -2144,10 +2144,10 @@
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/buffer.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/buffer.js
   var exports2, Buffer2, INSPECT_MAX_BYTES, kMaxLength;
   var init_buffer = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/buffer.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/buffer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -2163,16 +2163,16 @@
     }
   });
 
-  // node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js
+  // ../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js
   var init_buffer2 = __esm({
-    "node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js"() {
+    "../SovereignS3nc/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js"() {
       init_buffer();
     }
   });
 
-  // node_modules/react/cjs/react.development.js
+  // ../SovereignS3nc/node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "node_modules/react/cjs/react.development.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/react/cjs/react.development.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3145,9 +3145,9 @@
     }
   });
 
-  // node_modules/react/index.js
+  // ../SovereignS3nc/node_modules/react/index.js
   var require_react = __commonJS({
-    "node_modules/react/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/react/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3160,9 +3160,9 @@
     }
   });
 
-  // node_modules/scheduler/cjs/scheduler.development.js
+  // ../SovereignS3nc/node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "node_modules/scheduler/cjs/scheduler.development.js"(exports22) {
+    "../SovereignS3nc/node_modules/scheduler/cjs/scheduler.development.js"(exports22) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3422,9 +3422,9 @@
     }
   });
 
-  // node_modules/scheduler/index.js
+  // ../SovereignS3nc/node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "node_modules/scheduler/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/scheduler/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3437,9 +3437,9 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom.development.js
+  // ../SovereignS3nc/node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom.development.js"(exports22) {
+    "../SovereignS3nc/node_modules/react-dom/cjs/react-dom.development.js"(exports22) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3684,9 +3684,9 @@
     }
   });
 
-  // node_modules/react-dom/index.js
+  // ../SovereignS3nc/node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "node_modules/react-dom/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/react-dom/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -3700,9 +3700,9 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom-client.development.js
+  // ../SovereignS3nc/node_modules/react-dom/cjs/react-dom-client.development.js
   var require_react_dom_client_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom-client.development.js"(exports22) {
+    "../SovereignS3nc/node_modules/react-dom/cjs/react-dom-client.development.js"(exports22) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -23602,9 +23602,9 @@
     }
   });
 
-  // node_modules/react-dom/client.js
+  // ../SovereignS3nc/node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "node_modules/react-dom/client.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/react-dom/client.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -23618,10 +23618,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
   var getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
   var init_httpExtensionConfiguration = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23649,9 +23649,9 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/index.js
   var init_extensions = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23659,19 +23659,19 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/abort.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/abort.js
   var init_abort = __esm({
-    "node_modules/@smithy/types/dist-es/abort.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/abort.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/auth.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/auth.js
   var HttpAuthLocation;
   var init_auth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/auth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/auth.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23682,10 +23682,10 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
   var HttpApiKeyAuthLocation;
   var init_HttpApiKeyAuth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23696,45 +23696,45 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
   var init_HttpAuthScheme = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
   var init_HttpAuthSchemeProvider = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpSigner.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpSigner.js
   var init_HttpSigner = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
   var init_IdentityProviderConfig = __esm({
-    "node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/index.js
   var init_auth2 = __esm({
-    "node_modules/@smithy/types/dist-es/auth/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/auth/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23747,72 +23747,72 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
   var init_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/checksum.js
   var init_checksum = __esm({
-    "node_modules/@smithy/types/dist-es/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/checksum.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/client.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/client.js
   var init_client = __esm({
-    "node_modules/@smithy/types/dist-es/client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/client.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/command.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/command.js
   var init_command = __esm({
-    "node_modules/@smithy/types/dist-es/command.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/command.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/config.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/config.js
   var init_config = __esm({
-    "node_modules/@smithy/types/dist-es/connection/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/config.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/manager.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/manager.js
   var init_manager = __esm({
-    "node_modules/@smithy/types/dist-es/connection/manager.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/manager.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/pool.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/pool.js
   var init_pool = __esm({
-    "node_modules/@smithy/types/dist-es/connection/pool.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/pool.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/index.js
   var init_connection = __esm({
-    "node_modules/@smithy/types/dist-es/connection/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/connection/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23822,28 +23822,28 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/crypto.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/crypto.js
   var init_crypto = __esm({
-    "node_modules/@smithy/types/dist-es/crypto.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/crypto.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/encode.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/encode.js
   var init_encode = __esm({
-    "node_modules/@smithy/types/dist-es/encode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/encode.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoint.js
   var EndpointURLScheme;
   var init_endpoint = __esm({
-    "node_modules/@smithy/types/dist-es/endpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoint.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23854,54 +23854,54 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
   var init_EndpointRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
   var init_ErrorRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
   var init_RuleSetObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/shared.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/shared.js
   var init_shared = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
   var init_TreeRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/index.js
   var init_endpoints = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/endpoints/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23913,19 +23913,19 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/eventStream.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/eventStream.js
   var init_eventStream = __esm({
-    "node_modules/@smithy/types/dist-es/eventStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/eventStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/checksum.js
   var AlgorithmId;
   var init_checksum2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23939,27 +23939,27 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
   var init_defaultClientConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
   var init_defaultExtensionConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/index.js
   var init_extensions2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/extensions/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23969,19 +23969,19 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/feature-ids.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/feature-ids.js
   var init_feature_ids = __esm({
-    "node_modules/@smithy/types/dist-es/feature-ids.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/feature-ids.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/http.js
   var FieldPosition;
   var init_http = __esm({
-    "node_modules/@smithy/types/dist-es/http.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/http.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -23992,54 +23992,54 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
   var init_httpHandlerInitialization = __esm({
-    "node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
   var init_apiKeyIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
   var init_awsCredentialIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/identity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/identity.js
   var init_identity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/identity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/identity.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
   var init_tokenIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/index.js
   var init_identity2 = __esm({
-    "node_modules/@smithy/types/dist-es/identity/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/identity/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24050,19 +24050,19 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/logger.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/logger.js
   var init_logger = __esm({
-    "node_modules/@smithy/types/dist-es/logger.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/logger.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/middleware.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/middleware.js
   var SMITHY_CONTEXT_KEY;
   var init_middleware = __esm({
-    "node_modules/@smithy/types/dist-es/middleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24070,19 +24070,19 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/pagination.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/pagination.js
   var init_pagination = __esm({
-    "node_modules/@smithy/types/dist-es/pagination.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/pagination.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/profile.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/profile.js
   var IniSectionType;
   var init_profile = __esm({
-    "node_modules/@smithy/types/dist-es/profile.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/profile.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24094,136 +24094,136 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/response.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/response.js
   var init_response = __esm({
-    "node_modules/@smithy/types/dist-es/response.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/response.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/retry.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/retry.js
   var init_retry = __esm({
-    "node_modules/@smithy/types/dist-es/retry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/retry.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema.js
   var init_schema = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/traits.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/traits.js
   var init_traits = __esm({
-    "node_modules/@smithy/types/dist-es/schema/traits.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/traits.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
   var init_schema_deprecated = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/sentinels.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/sentinels.js
   var init_sentinels = __esm({
-    "node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/static-schemas.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/static-schemas.js
   var init_static_schemas = __esm({
-    "node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/serde.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/serde.js
   var init_serde = __esm({
-    "node_modules/@smithy/types/dist-es/serde.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/serde.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/shapes.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/shapes.js
   var init_shapes = __esm({
-    "node_modules/@smithy/types/dist-es/shapes.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/shapes.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/signature.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/signature.js
   var init_signature = __esm({
-    "node_modules/@smithy/types/dist-es/signature.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/signature.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/stream.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/stream.js
   var init_stream = __esm({
-    "node_modules/@smithy/types/dist-es/stream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/stream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
   var init_streaming_blob_common_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
   var init_streaming_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
   var init_streaming_blob_payload_output_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transfer.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transfer.js
   var RequestHandlerProtocol;
   var init_transfer = __esm({
-    "node_modules/@smithy/types/dist-es/transfer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transfer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24235,72 +24235,72 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
   var init_client_payload_blob_type_narrow = __esm({
-    "node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/mutable.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/mutable.js
   var init_mutable = __esm({
-    "node_modules/@smithy/types/dist-es/transform/mutable.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/mutable.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/no-undefined.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/no-undefined.js
   var init_no_undefined = __esm({
-    "node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/type-transform.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/type-transform.js
   var init_type_transform = __esm({
-    "node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/uri.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/uri.js
   var init_uri = __esm({
-    "node_modules/@smithy/types/dist-es/uri.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/uri.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/util.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/util.js
   var init_util = __esm({
-    "node_modules/@smithy/types/dist-es/util.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/util.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/waiter.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/waiter.js
   var init_waiter = __esm({
-    "node_modules/@smithy/types/dist-es/waiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/waiter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/types/dist-es/index.js
   var init_dist_es = __esm({
-    "node_modules/@smithy/types/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/types/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24350,34 +24350,34 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Field.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Field.js
   var init_Field = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Field.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Fields.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Fields.js
   var init_Fields = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpHandler.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpHandler.js
   var init_httpHandler = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpRequest.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpRequest.js
   function cloneQuery(query) {
     return Object.keys(query).reduce((carry, paramName) => {
       const param = query[paramName];
@@ -24389,7 +24389,7 @@
   }
   var HttpRequest;
   var init_httpRequest = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24442,10 +24442,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpResponse.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpResponse.js
   var HttpResponse;
   var init_httpResponse = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24470,27 +24470,27 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
   var init_isValidHostname = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/types.js
   var init_types = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/index.js
   var init_dist_es2 = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/protocol-http/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24505,7 +24505,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
   function addExpectContinueMiddleware(options) {
     return (next) => async (args) => {
       const { request } = args;
@@ -24532,7 +24532,7 @@
   }
   var addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
   var init_dist_es3 = __esm({
-    "node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24551,10 +24551,10 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
   var RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
   var init_constants = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24584,34 +24584,34 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
   var init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
   var init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
   var init_emitWarningIfUnsupportedVersion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
   function setCredentialFeature(credentials, feature, value) {
     if (!credentials.$source) {
       credentials.$source = {};
@@ -24620,17 +24620,17 @@
     return credentials;
   }
   var init_setCredentialFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/config.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/config.js
   var RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
   var init_config2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/config.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24643,10 +24643,10 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/constants.js
   var THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
   var init_constants2 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24673,13 +24673,13 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/index.js
   function isNodeJsHttp2TransientError(error) {
     return error.code === "ERR_HTTP2_STREAM_ERROR" && error.message.includes("NGHTTP2_REFUSED_STREAM");
   }
   var isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
   var init_dist_es4 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/service-error-classification/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24715,10 +24715,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
   var _DefaultRateLimiter, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24836,10 +24836,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/constants.js
   var MAXIMUM_RETRY_DELAY, INITIAL_RETRY_TOKENS, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
   var init_constants3 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24851,10 +24851,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
   var _Retry, Retry;
   var init_retries_2026_config = __esm({
-    "node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24880,10 +24880,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
   var DefaultRetryBackoffStrategy;
   var init_DefaultRetryBackoffStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24906,10 +24906,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
   var DefaultRetryToken;
   var init_DefaultRetryToken = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -24941,10 +24941,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
   var refusal, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25040,10 +25040,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
   var AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25084,27 +25084,27 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
   var init_ConfiguredRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/types.js
   var init_types2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/index.js
   var init_dist_es5 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-retry/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25119,7 +25119,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
   function setFeature(context, feature, value) {
     if (!context.__aws_sdk_context) {
       context.__aws_sdk_context = {
@@ -25132,7 +25132,7 @@
   }
   var _a;
   var init_setFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25141,18 +25141,18 @@
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
   var init_setTokenFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
   var init_client2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25163,10 +25163,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/constants.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/constants.browser.js
   var chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25182,10 +25182,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
   var fromBase64;
   var init_fromBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25226,10 +25226,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf8;
   var init_fromUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25237,10 +25237,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var toUint8Array;
   var init_toUint8Array = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25257,10 +25257,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var toUtf8;
   var init_toUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25276,9 +25276,9 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es6 = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25288,7 +25288,7 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
   function toBase64(_input) {
     let input;
     if (typeof _input === "string") {
@@ -25320,7 +25320,7 @@
     return str;
   }
   var init_toBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25329,9 +25329,9 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/index.js
   var init_dist_es7 = __esm({
-    "node_modules/@smithy/util-base64/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-base64/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25340,10 +25340,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
   var Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
-    "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25373,10 +25373,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
   var ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25387,10 +25387,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/stream-type-check.js
   var isReadableStream;
   var init_stream_type_check = __esm({
-    "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25398,10 +25398,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
   var createChecksumStream;
   var init_createChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25442,10 +25442,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
   var ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
-    "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25484,7 +25484,7 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
   function createBufferedReadableStream(upstream, size, logger2) {
     const reader = upstream.getReader();
     let streamBufferingLoggedWarning = false;
@@ -25577,7 +25577,7 @@
   }
   var createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
-    "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25586,10 +25586,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
   var getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25623,19 +25623,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/headStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/headStream.browser.js
   var init_headStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
   var escapeUri, hexEncode;
   var init_escape_uri = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25644,18 +25644,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
   var init_escape_uri_path = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/index.js
   var init_dist_es8 = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25664,7 +25664,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/querystring-builder/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/querystring-builder/dist-es/index.js
   function buildQueryString(query) {
     const parts = [];
     for (let key of Object.keys(query).sort()) {
@@ -25685,7 +25685,7 @@ ${value}\r
     return parts.join("&");
   }
   var init_dist_es9 = __esm({
-    "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/querystring-builder/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25693,19 +25693,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
   var init_create_request = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
   function requestTimeout(timeoutInMs = 0) {
     return new Promise((resolve3, reject) => {
       if (timeoutInMs) {
@@ -25718,14 +25718,14 @@ ${value}\r
     });
   }
   var init_request_timeout = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
   function buildAbortError(abortSignal) {
     const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
     if (reason) {
@@ -25745,7 +25745,7 @@ ${value}\r
   }
   var keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25890,7 +25890,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
   async function collectBlob(blob) {
     const base64 = await readToBase64(blob);
     const arrayBuffer = fromBase64(base64);
@@ -25936,7 +25936,7 @@ ${value}\r
   }
   var streamCollector;
   var init_stream_collector = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25953,9 +25953,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/index.js
   var init_dist_es10 = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -25964,7 +25964,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-hex-encoding/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-hex-encoding/dist-es/index.js
   function fromHex(encoded) {
     if (encoded.length % 2 !== 0) {
       throw new Error("Hex encoded strings must have an even number length");
@@ -25989,7 +25989,7 @@ ${value}\r
   }
   var SHORT_TO_HEX, HEX_TO_SHORT;
   var init_dist_es11 = __esm({
-    "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26006,10 +26006,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
   var ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26073,18 +26073,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
   var init_splitStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/index.js
   var init_dist_es12 = __esm({
-    "node_modules/@smithy/util-stream/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-stream/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26099,10 +26099,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
   var getChecksumAlgorithmForRequest;
   var init_getChecksumAlgorithmForRequest = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26120,10 +26120,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
   var getChecksumLocationName;
   var init_getChecksumLocationName = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26132,10 +26132,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
   var hasHeader;
   var init_hasHeader = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26151,10 +26151,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
   var hasHeaderWithPrefix;
   var init_hasHeaderWithPrefix = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26170,10 +26170,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/is-array-buffer/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/is-array-buffer/dist-es/index.js
   var isArrayBuffer;
   var init_dist_es13 = __esm({
-    "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26181,10 +26181,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
   var isStreaming;
   var init_isStreaming = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26193,7 +26193,7 @@ ${value}\r
     }
   });
 
-  // node_modules/tslib/tslib.es6.mjs
+  // ../SovereignS3nc/node_modules/tslib/tslib.es6.mjs
   function __awaiter(thisArg, _arguments, P7, generator) {
     function adopt(value) {
       return value instanceof P7 ? value : new P7(function(resolve3) {
@@ -26302,17 +26302,17 @@ ${value}\r
     throw new TypeError(s7 ? "Object is not iterable." : "Symbol.iterator is not defined.");
   }
   var init_tslib_es6 = __esm({
-    "node_modules/tslib/tslib.es6.mjs"() {
+    "../SovereignS3nc/node_modules/tslib/tslib.es6.mjs"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf82;
   var init_fromUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26320,9 +26320,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var init_toUint8Array2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26330,18 +26330,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var init_toUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es14 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26351,7 +26351,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/convertToBuffer.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/convertToBuffer.js
   function convertToBuffer(data) {
     if (data instanceof Uint8Array)
       return data;
@@ -26365,7 +26365,7 @@ ${value}\r
   }
   var fromUtf83;
   var init_convertToBuffer = __esm({
-    "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26376,7 +26376,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/isEmptyData.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/isEmptyData.js
   function isEmptyData(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -26384,14 +26384,14 @@ ${value}\r
     return data.byteLength === 0;
   }
   var init_isEmptyData = __esm({
-    "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/numToUint8.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/numToUint8.js
   function numToUint8(num) {
     return new Uint8Array([
       (num & 4278190080) >> 24,
@@ -26401,14 +26401,14 @@ ${value}\r
     ]);
   }
   var init_numToUint8 = __esm({
-    "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
   function uint32ArrayFrom(a_lookUpTable2) {
     if (!Uint32Array.from) {
       var return_array = new Uint32Array(a_lookUpTable2.length);
@@ -26422,16 +26422,16 @@ ${value}\r
     return Uint32Array.from(a_lookUpTable2);
   }
   var init_uint32ArrayFrom = __esm({
-    "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/util/build/module/index.js
   var init_module = __esm({
-    "node_modules/@aws-crypto/util/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/util/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26442,10 +26442,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
   var AwsCrc32c;
   var init_aws_crc32c = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26477,10 +26477,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/index.js
   var Crc32c, a_lookupTable, lookupTable;
   var init_module2 = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32c/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26777,10 +26777,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
   var generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
   var init_Crc64Nvme = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26867,10 +26867,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
   var crc64NvmeCrtContainer;
   var init_crc64_nvme_crt_container = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26880,9 +26880,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
   var init_dist_es15 = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26891,10 +26891,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
   var AwsCrc32;
   var init_aws_crc32 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -26926,10 +26926,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/index.js
   var Crc32, a_lookUpTable, lookupTable2;
   var init_module3 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/crc32/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27226,10 +27226,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
   var getCrc32ChecksumAlgorithmFunction;
   var init_getCrc32ChecksumAlgorithmFunction_browser = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27238,10 +27238,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
   var CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
   var init_types3 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27263,10 +27263,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
   var selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27303,10 +27303,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
   var stringHasher;
   var init_stringHasher = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27319,10 +27319,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
   var flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27444,10 +27444,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
   var flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27491,10 +27491,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
   var getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27515,10 +27515,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
   var isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27538,10 +27538,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
   var getChecksum;
   var init_getChecksum = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27550,10 +27550,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
   var validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27603,10 +27603,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
   var flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27659,10 +27659,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
   var getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27679,10 +27679,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
   var getSmithyContext;
   var init_getSmithyContext = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27691,10 +27691,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
   var normalizeProvider;
   var init_normalizeProvider = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27707,9 +27707,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/index.js
   var init_dist_es16 = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-middleware/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27718,10 +27718,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
   var resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27739,9 +27739,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
   var init_dist_es17 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27754,13 +27754,13 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
   function resolveHostHeaderConfig(input) {
     return input;
   }
   var hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
   var init_dist_es18 = __esm({
-    "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27796,10 +27796,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
   var loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27847,9 +27847,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/index.js
   var init_dist_es19 = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27857,10 +27857,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
   var recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27874,10 +27874,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
   var recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27885,10 +27885,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
   var getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27902,9 +27902,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
   var init_dist_es20 = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -27913,10 +27913,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
   var getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
   var init_MiddlewareStack = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28186,9 +28186,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/index.js
   var init_dist_es21 = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-stack/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28196,10 +28196,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/client.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/client.js
   var Client;
   var init_client3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/client.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28253,10 +28253,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
   var collectBody;
   var init_collect_stream_body = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28274,24 +28274,24 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
   function extendedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function(c7) {
       return "%" + c7.charCodeAt(0).toString(16).toUpperCase();
     });
   }
   var init_extended_encode_uri_component = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/deref.js
   var deref;
   var init_deref = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28304,10 +28304,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
   var operation;
   var init_operation = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28321,10 +28321,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
   var schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28392,7 +28392,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/querystring-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/querystring-parser/dist-es/index.js
   function parseQueryString(querystring) {
     const query = {};
     querystring = querystring.replace(/^\?/, "");
@@ -28415,17 +28415,17 @@ ${value}\r
     return query;
   }
   var init_dist_es22 = __esm({
-    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/querystring-parser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/url-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/url-parser/dist-es/index.js
   var parseUrl;
   var init_dist_es23 = __esm({
-    "node_modules/@smithy/url-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/url-parser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28450,10 +28450,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
   var toEndpointV1;
   var init_toEndpointV1 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28477,9 +28477,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
   var init_endpoints2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28487,10 +28487,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
   var schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28514,7 +28514,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
   function getSchemaSerdePlugin(config3) {
     return {
       applyToStack: (commandStack) => {
@@ -28526,7 +28526,7 @@ ${value}\r
   }
   var deserializerMiddlewareOption, serializerMiddlewareOption;
   var init_getSchemaSerdePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28547,61 +28547,61 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
   var init_Schema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
   var init_ListSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
   var init_MapSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
   var init_OperationSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
   var init_StructureSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
   var init_ErrorSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
   function translateTraits(indicator) {
     if (typeof indicator === "object") {
       return indicator;
@@ -28629,7 +28629,7 @@ ${value}\r
   }
   var traitsCache;
   var init_translateTraits = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28637,7 +28637,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
   function member(memberSchema, memberName) {
     if (memberSchema instanceof NormalizedSchema) {
       return Object.assign(memberSchema, {
@@ -28650,7 +28650,7 @@ ${value}\r
   }
   var anno, simpleSchemaCacheN, simpleSchemaCacheS, _NormalizedSchema, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -28930,28 +28930,28 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
   var init_SimpleSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
   var init_sentinels2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
   var _TypeRegistry, TypeRegistry;
   var init_TypeRegistry = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29048,9 +29048,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/index.js
   var init_schema2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29071,19 +29071,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
   var init_copyDocumentWithTransform = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
   var expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
   var init_parse_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29178,7 +29178,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
   function dateToUtcString(date2) {
     const year2 = date2.getUTCFullYear();
     const month = date2.getUTCMonth();
@@ -29195,7 +29195,7 @@ ${value}\r
   }
   var DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
   var init_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29302,10 +29302,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
   var randomUUID;
   var init_randomUUID_browser = __esm({
-    "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29313,10 +29313,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/v4.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/v4.js
   var decimalToHex, v4;
   var init_v4 = __esm({
-    "node_modules/@smithy/uuid/dist-es/v4.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/v4.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29335,9 +29335,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/uuid/dist-es/index.js
   var init_dist_es24 = __esm({
-    "node_modules/@smithy/uuid/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/uuid/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29345,9 +29345,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
   var init_generateIdempotencyToken = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29355,10 +29355,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
   var LazyJsonString;
   var init_lazy_json = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29388,7 +29388,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
   function quoteHeader(part) {
     if (part.includes(",") || part.includes('"')) {
       part = `"${part.replace(/"/g, '\\"')}"`;
@@ -29396,14 +29396,14 @@ ${value}\r
     return part;
   }
   var init_quote_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
   function range(v10, min, max) {
     const _v = Number(v10);
     if (_v < min || _v > max) {
@@ -29412,7 +29412,7 @@ ${value}\r
   }
   var ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
   var init_schema_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29510,7 +29510,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
   function splitEvery(value, delimiter2, numDelimiters) {
     if (numDelimiters <= 0 || !Number.isInteger(numDelimiters)) {
       throw new Error("Invalid number of delimiters (" + numDelimiters + ") for splitEvery.");
@@ -29538,17 +29538,17 @@ ${value}\r
     return compoundSegments;
   }
   var init_split_every = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
   var splitHeader;
   var init_split_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29592,10 +29592,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
   var format, NumericValue;
   var init_NumericValue = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29624,9 +29624,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/index.js
   var init_serde2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29643,10 +29643,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
   var SerdeContext;
   var init_SerdeContext = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29661,10 +29661,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
   var EventStreamSerde;
   var init_EventStreamSerde = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29914,13 +29914,13 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
   var event_streams_exports = {};
   __export(event_streams_exports, {
     EventStreamSerde: () => EventStreamSerde
   });
   var init_event_streams = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -29928,10 +29928,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
   var HttpProtocol;
   var init_HttpProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30079,10 +30079,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
   var HttpBindingProtocol;
   var init_HttpBindingProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30358,34 +30358,34 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
   var init_RpcProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
   var init_resolve_path = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
   var init_requestBuilder = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
   function determineTimestampFormat(ns, settings) {
     if (settings.timestampFormat.useTrait) {
       if (ns.isTimestampSchema() && (ns.getSchema() === 5 || ns.getSchema() === 6 || ns.getSchema() === 7)) {
@@ -30397,17 +30397,17 @@ ${value}\r
     return bindingFormat ?? settings.timestampFormat.default;
   }
   var init_determineTimestampFormat = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
   var FromStringShapeDeserializer;
   var init_FromStringShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30480,10 +30480,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
   var HttpInterceptingShapeDeserializer;
   var init_HttpInterceptingShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30531,10 +30531,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
   var ToStringShapeSerializer;
   var init_ToStringShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30631,10 +30631,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
   var HttpInterceptingShapeSerializer;
   var init_HttpInterceptingShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30674,9 +30674,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/index.js
   var init_protocols = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30696,16 +30696,16 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
   var init_collect_stream_body2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
   function schemaLogFilter(schema, data) {
     if (data == null) {
       return data;
@@ -30738,7 +30738,7 @@ ${value}\r
   }
   var SENSITIVE_STRING;
   var init_schemaLogFilter = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30747,10 +30747,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/command.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/command.js
   var Command, ClassBuilder;
   var init_command2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/command.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/command.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30893,19 +30893,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/constants.js
   var init_constants4 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
   var createAggregatedClient;
   var init_create_aggregated_client = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -30957,10 +30957,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/exceptions.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/exceptions.js
   var ServiceException, decorateServiceException;
   var init_exceptions = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31012,19 +31012,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
   var init_default_error_handler = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
   var loadConfigsForDefaultMode;
   var init_defaults_mode = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31057,28 +31057,28 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
   var init_emitWarningIfUnsupportedVersion2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
   var init_extended_encode_uri_component2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
   var knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31132,10 +31132,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
   var getRetryConfiguration, resolveRetryRuntimeConfig;
   var init_retry2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31157,10 +31157,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
   var getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
   var init_defaultExtensionConfiguration2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31175,9 +31175,9 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/index.js
   var init_extensions3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31185,19 +31185,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
   var init_get_array_if_single_item = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
   var getValueFromTextNode;
   var init_get_value_from_text_node = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31215,19 +31215,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
   var init_is_serializable_header_value = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
   var NoOpLogger;
   var init_NoOpLogger = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31246,45 +31246,45 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/object-mapping.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/object-mapping.js
   var init_object_mapping = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/resolve-path.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/resolve-path.js
   var init_resolve_path2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/ser-utils.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/ser-utils.js
   var init_ser_utils = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/serde-json.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/serde-json.js
   var init_serde_json = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/index.js
   var init_dist_es25 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/smithy-client/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31311,7 +31311,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
   function checkContentLengthHeader() {
     return (next, context) => async (args) => {
       const { request } = args;
@@ -31330,7 +31330,7 @@ ${value}\r
   }
   var CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31352,10 +31352,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
   var regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31403,7 +31403,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
   function regionRedirectMiddleware(clientConfig) {
     return (next, context) => async (args) => {
       try {
@@ -31432,7 +31432,7 @@ ${value}\r
   }
   var regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31452,10 +31452,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
   var s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31494,10 +31494,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
   var _S3ExpressIdentityCache, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31544,10 +31544,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
   var S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31568,10 +31568,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
   var _S3ExpressIdentityProviderImpl, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31628,10 +31628,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/constants.js
   var ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
   var init_constants5 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31677,10 +31677,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
   var signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
   var init_credentialDerivation = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31714,10 +31714,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
   var getCanonicalHeaders;
   var init_getCanonicalHeaders = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31741,10 +31741,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
   var getPayloadHash;
   var init_getPayloadHash = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31770,7 +31770,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
   function negate(bytes) {
     for (let i7 = 0; i7 < 8; i7++) {
       bytes[i7] ^= 255;
@@ -31783,7 +31783,7 @@ ${value}\r
   }
   var HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
   var init_HeaderFormatter = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31905,10 +31905,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/headerUtil.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/headerUtil.js
   var hasHeader2;
   var init_headerUtil = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31924,10 +31924,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
   var moveHeadersToQuery;
   var init_moveHeadersToQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31950,10 +31950,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
   var prepareRequest;
   var init_prepareRequest = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -31971,10 +31971,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
   var getCanonicalQuery;
   var init_getCanonicalQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32001,10 +32001,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/utilDate.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/utilDate.js
   var iso8601, toDate;
   var init_utilDate = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32024,10 +32024,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
   var SignatureV4Base;
   var init_SignatureV4Base = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32110,10 +32110,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
   var SignatureV4;
   var init_SignatureV4 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32254,10 +32254,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
   var signatureV4aContainer;
   var init_signature_v4a_container = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32267,9 +32267,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/index.js
   var init_dist_es26 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/signature-v4/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32280,10 +32280,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
   var S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants6 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32295,7 +32295,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
   function getCredentialsWithoutSessionToken(credentials) {
     const credentialsWithoutSessionToken = {
       accessKeyId: credentials.accessKeyId,
@@ -32318,7 +32318,7 @@ ${toHex(hashedRequest)}`;
   }
   var SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32346,10 +32346,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
   var s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32396,19 +32396,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/getSmithyContext.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/getSmithyContext.js
   var init_getSmithyContext2 = __esm({
-    "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
   var resolveAuthOptions;
   var init_resolveAuthOptions = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32435,7 +32435,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
   function convertHttpAuthSchemesToMap(httpAuthSchemes) {
     const map = /* @__PURE__ */ new Map();
     for (const scheme of httpAuthSchemes) {
@@ -32445,7 +32445,7 @@ ${toHex(hashedRequest)}`;
   }
   var httpAuthSchemeMiddleware;
   var init_httpAuthSchemeMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32487,10 +32487,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
   var httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
   var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32514,18 +32514,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
   var init_getHttpAuthSchemePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
   var init_middleware_http_auth_scheme = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32535,10 +32535,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
   var defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32569,10 +32569,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
   var httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32594,9 +32594,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
   var init_middleware_http_signing = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32605,10 +32605,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/normalizeProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/normalizeProvider.js
   var normalizeProvider2;
   var init_normalizeProvider2 = __esm({
-    "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32621,7 +32621,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/pagination/createPaginator.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/pagination/createPaginator.js
   function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
     return async function* paginateOperation(config3, input, ...additionalArguments) {
       const _input = input;
@@ -32648,7 +32648,7 @@ ${toHex(hashedRequest)}`;
   }
   var makePagedClientRequest, get;
   var init_createPaginator = __esm({
-    "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32671,16 +32671,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
   var init_requestBuilder2 = __esm({
-    "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/setFeature.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/setFeature.js
   function setFeature2(context, feature, value) {
     if (!context.__smithy_context) {
       context.__smithy_context = {
@@ -32692,17 +32692,17 @@ ${toHex(hashedRequest)}`;
     context.__smithy_context.features[feature] = value;
   }
   var init_setFeature2 = __esm({
-    "node_modules/@smithy/core/dist-es/setFeature.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/setFeature.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
   var DefaultIdentityProviderConfig;
   var init_DefaultIdentityProviderConfig = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32723,36 +32723,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
   var init_httpApiKeyAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
   var init_httpBearerAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
   var init_noAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
   var init_httpAuthSchemes = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32762,10 +32762,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
   var createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
   var init_memoizeIdentityProvider = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32826,9 +32826,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
   var init_util_identity_and_auth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32838,9 +32838,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/core/dist-es/index.js
   var init_dist_es27 = __esm({
-    "node_modules/@smithy/core/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/core/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32855,10 +32855,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
   var signS3Express;
   var init_signS3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32872,10 +32872,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
   var defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32919,9 +32919,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
   var init_s3_express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32932,10 +32932,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
   var resolveS3Config;
   var init_s3Configuration = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -32958,7 +32958,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
   function toStream(bytes) {
     return new ReadableStream({
       start(controller) {
@@ -32968,17 +32968,17 @@ ${toHex(hashedRequest)}`;
     });
   }
   var init_toStream_browser = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
   var THROW_IF_EMPTY_BODY, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33036,10 +33036,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
   var validate;
   var init_dist_es28 = __esm({
-    "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33047,7 +33047,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
   function bucketEndpointMiddleware(options) {
     return (next, context) => async (args) => {
       if (options.bucketEndpoint) {
@@ -33078,7 +33078,7 @@ ${toHex(hashedRequest)}`;
   }
   var bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33091,7 +33091,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
   function validateBucketNameMiddleware({ bucketEndpoint }) {
     return (next) => async (args) => {
       const { input: { Bucket } } = args;
@@ -33105,7 +33105,7 @@ ${toHex(hashedRequest)}`;
   }
   var validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33126,10 +33126,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
+  // ../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
   var TEXT_ENCODER, calculateBodyLength;
   var init_calculateBodyLength = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33160,9 +33160,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/index.js
   var init_dist_es29 = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33170,10 +33170,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
   var ProtocolLib;
   var init_ProtocolLib = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33314,28 +33314,28 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
   var init_AwsSmithyRpcV2CborProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
   var init_coercing_serializers = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
   var SerdeContextConfig;
   var init_ConfigurableSerdeContext = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33350,10 +33350,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
   var UnionSerde;
   var init_UnionSerde = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33386,94 +33386,94 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
   var init_parseJsonBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
   var init_JsonShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
   var init_JsonShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
   var init_JsonCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
   var init_AwsJsonRpcProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
   var init_AwsJson1_0Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
   var init_AwsJson1_1Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
   var init_AwsRestJsonProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
   var init_awsExpectUnion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
   function escapeAttribute(value) {
     return value.replace(ATTR_ESCAPE_RE, (ch) => ATTR_ESCAPE_MAP[ch]);
   }
   var ATTR_ESCAPE_RE, ATTR_ESCAPE_MAP;
   var init_escape_attribute = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33487,13 +33487,13 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
   function escapeElement(value) {
     return value.replace(ELEMENT_ESCAPE_RE, (ch) => ELEMENT_ESCAPE_MAP[ch]);
   }
   var ELEMENT_ESCAPE_RE, ELEMENT_ESCAPE_MAP;
   var init_escape_element = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33512,10 +33512,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
   var XmlText;
   var init_XmlText = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33532,10 +33532,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
   var XmlNode;
   var init_XmlNode = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33630,7 +33630,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
   function parseXML(xmlString) {
     if (!parser) {
       parser = new DOMParser();
@@ -33686,16 +33686,16 @@ ${toHex(hashedRequest)}`;
   }
   var parser;
   var init_xml_parser_browser = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/index.js
   var init_dist_es30 = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33705,10 +33705,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
   var XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33861,46 +33861,46 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
   var init_QueryShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
   var init_AwsQueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
   var init_AwsEc2QueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
   var init_QuerySerializerSettings = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
   var loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -33918,10 +33918,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
   var XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34200,10 +34200,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
   var XmlCodec;
   var init_XmlCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34230,10 +34230,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
   var AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34332,9 +34332,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
   var init_protocols2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34361,10 +34361,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
   var S3RestXmlProtocol;
   var init_S3RestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34396,9 +34396,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
   var init_dist_es31 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34414,7 +34414,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
   function isValidUserAgentAppId(appId) {
     if (appId === void 0) {
       return true;
@@ -34442,7 +34442,7 @@ ${toHex(hashedRequest)}`;
   }
   var DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34451,10 +34451,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
   var BinaryDecisionDiagram;
   var init_BinaryDecisionDiagram = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34476,10 +34476,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
   var EndpointCache;
   var init_EndpointCache = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34536,10 +34536,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
   var EndpointError;
   var init_EndpointError = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34552,63 +34552,63 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
   var init_EndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
   var init_EndpointRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
   var init_ErrorRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
   var init_RuleSetObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
   var init_TreeRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/shared.js
   var init_shared2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/index.js
   var init_types4 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34622,10 +34622,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
   var debugId;
   var init_debugId = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34633,7 +34633,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
   function toDebugString(input) {
     if (typeof input !== "object" || input == null) {
       return input;
@@ -34647,16 +34647,16 @@ ${toHex(hashedRequest)}`;
     return JSON.stringify(input, null, 2);
   }
   var init_toDebugString = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/index.js
   var init_debug = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34665,10 +34665,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
   var customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34676,10 +34676,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
   var booleanEquals;
   var init_booleanEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34687,7 +34687,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
   function coalesce(...args) {
     for (const arg of args) {
       if (arg != null) {
@@ -34697,17 +34697,17 @@ ${toHex(hashedRequest)}`;
     return void 0;
   }
   var init_coalesce = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
   var getAttrPathList;
   var init_getAttrPathList = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34738,10 +34738,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
   var getAttr;
   var init_getAttr = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34759,10 +34759,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
   var isSet;
   var init_isSet = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34770,10 +34770,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
   var VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34793,22 +34793,22 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
   function ite(condition, trueValue, falseValue) {
     return condition ? trueValue : falseValue;
   }
   var init_ite = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/not.js
   var not;
   var init_not = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34816,10 +34816,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
   var IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34828,10 +34828,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
   var DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34885,7 +34885,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/split.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/split.js
   function split(value, delimiter2, limit) {
     if (limit === 1) {
       return [value];
@@ -34900,17 +34900,17 @@ ${toHex(hashedRequest)}`;
     return parts.slice(0, limit - 1).concat(parts.slice(1).join(delimiter2));
   }
   var init_split = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
   var stringEquals;
   var init_stringEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34918,10 +34918,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
   var substring;
   var init_substring = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34937,10 +34937,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
   var uriEncode;
   var init_uriEncode = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34948,9 +34948,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/index.js
   var init_lib = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34969,10 +34969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
   var endpointFunctions;
   var init_endpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -34994,10 +34994,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
   var evaluateTemplate;
   var init_evaluateTemplate = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35036,10 +35036,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
   var getReferenceValue;
   var init_getReferenceValue = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35049,10 +35049,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
   var evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35102,9 +35102,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
   var init_callFunction = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35112,10 +35112,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
   var evaluateCondition;
   var init_evaluateCondition = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35138,10 +35138,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
   var getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35160,10 +35160,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
   var getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35198,10 +35198,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
   var getEndpointUrl;
   var init_getEndpointUrl = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35222,10 +35222,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
   var RESULT, decideEndpoint;
   var init_decideEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35274,18 +35274,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
   var init_resolveEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/index.js
   var init_dist_es32 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-endpoints/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35300,9 +35300,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
   var init_isIpAddress2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35310,10 +35310,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
   var isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35345,10 +35345,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
   var ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35373,10 +35373,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
   var partitions_default;
   var init_partitions = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
       partitions_default = {
         partitions: [{
           id: "aws",
@@ -35647,10 +35647,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
   var selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35690,10 +35690,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
   var awsEndpointFunctions;
   var init_aws = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35710,81 +35710,81 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
   var init_resolveEndpoint2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
   var init_EndpointError2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
   var init_EndpointRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
   var init_ErrorRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
   var init_RuleSetObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
   var init_TreeRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
   var init_shared3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
   var init_types5 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35797,9 +35797,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/index.js
   var init_dist_es33 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35812,7 +35812,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
   async function checkFeatures(context, config3, args) {
     const request = args.request;
     if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
@@ -35861,7 +35861,7 @@ ${toHex(hashedRequest)}`;
   }
   var ACCOUNT_ID_ENDPOINT_REGEX;
   var init_check_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35871,10 +35871,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
   var USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
   var init_constants7 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35888,7 +35888,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
   function encodeFeatures(features3) {
     let buffer2 = "";
     for (const key in features3) {
@@ -35907,7 +35907,7 @@ ${toHex(hashedRequest)}`;
   }
   var BYTE_LIMIT;
   var init_encode_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35915,10 +35915,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
   var userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
   var init_user_agent_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -35997,9 +35997,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
   var init_dist_es34 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36008,10 +36008,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
   var DEFAULT_USE_DUALSTACK_ENDPOINT;
   var init_NodeUseDualstackEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36019,10 +36019,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
   var DEFAULT_USE_FIPS_ENDPOINT;
   var init_NodeUseFipsEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36030,27 +36030,27 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
   var init_resolveCustomEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
   var init_resolveEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
   var init_endpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36061,19 +36061,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
   var init_config3 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
   var validRegions, checkRegion;
   var init_checkRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36093,10 +36093,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
   var isFipsRegion;
   var init_isFipsRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36104,10 +36104,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
   var getRealRegion;
   var init_getRealRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36116,10 +36116,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
   var resolveRegionConfig;
   var init_resolveRegionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36150,9 +36150,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
   var init_regionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36161,36 +36161,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
   var init_PartitionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
   var init_RegionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
   var init_getRegionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
   var init_regionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36200,9 +36200,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/index.js
   var init_dist_es35 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/config-resolver/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36212,10 +36212,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
   var resolveEventStreamSerdeConfig;
   var init_EventStreamSerdeConfig = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36225,9 +36225,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
   var init_dist_es36 = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36235,7 +36235,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-content-length/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-content-length/dist-es/index.js
   function contentLengthMiddleware(bodyLengthChecker) {
     return (next) => async (args) => {
       const request = args.request;
@@ -36260,7 +36260,7 @@ ${toHex(hashedRequest)}`;
   }
   var CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
   var init_dist_es37 = __esm({
-    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36280,10 +36280,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
   var resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
   var init_s3 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36321,9 +36321,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
   var init_service_customizations = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36331,10 +36331,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
   var createConfigValueProvider;
   var init_createConfigValueProvider = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36390,10 +36390,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
   var getEndpointFromConfig;
   var init_getEndpointFromConfig_browser = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36401,10 +36401,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
   var toEndpointV12;
   var init_toEndpointV12 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36428,10 +36428,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
   var getEndpointFromInstructions, resolveParams;
   var init_getEndpointFromInstructions = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36501,9 +36501,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
   var init_adaptors = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36512,10 +36512,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
   var endpointMiddleware;
   var init_endpointMiddleware = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36558,28 +36558,28 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
   var init_deserializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
   var init_serializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
   var serializerMiddlewareOption2;
   var init_serdePlugin = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36592,9 +36592,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/index.js
   var init_dist_es38 = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-serde/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36604,10 +36604,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
   var endpointMiddlewareOptions, getEndpointPlugin;
   var init_getEndpointPlugin = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36632,10 +36632,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
   var resolveEndpointConfig;
   var init_resolveEndpointConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36666,27 +36666,27 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
   var init_resolveEndpointRequiredConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/types.js
   var init_types6 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/index.js
   var init_dist_es39 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36699,10 +36699,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/util.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/util.js
   var asSdkError;
   var init_util2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/util.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36718,46 +36718,46 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
   var init_delayDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
   var init_retryDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
   var init_StandardRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
   var init_AdaptiveRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/configurations.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/configurations.js
   var resolveRetryConfig;
   var init_configurations2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36776,19 +36776,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
   var init_omitRetryHeadersMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
   var isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36796,7 +36796,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
   function parseRetryAfterHeader(response, logger2) {
     if (!HttpResponse.isInstance(response)) {
       return;
@@ -36837,7 +36837,7 @@ ${toHex(hashedRequest)}`;
     }
   }
   var init_parseRetryAfterHeader = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36846,10 +36846,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
   var retryMiddleware, cooldown, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin;
   var init_retryMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36956,9 +36956,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/index.js
   var init_dist_es40 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/middleware-retry/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36972,10 +36972,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
   var getDateHeader;
   var init_getDateHeader = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36984,10 +36984,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
   var getSkewCorrectedDate;
   var init_getSkewCorrectedDate = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -36995,10 +36995,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
   var isClockSkewed;
   var init_isClockSkewed = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37007,10 +37007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
   var getUpdatedSystemClockOffset;
   var init_getUpdatedSystemClockOffset = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37025,9 +37025,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
   var init_utils = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37037,10 +37037,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
   var throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
   var init_AwsSdkSigV4Signer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37118,10 +37118,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
   var AwsSdkSigV4ASigner;
   var init_AwsSdkSigV4ASigner = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37147,73 +37147,73 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
   var init_getBearerTokenEnvKey = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
   var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/ProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/ProviderError.js
   var init_ProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
   var init_CredentialsProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
   var init_TokenProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/chain.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/chain.js
   var init_chain = __esm({
-    "node_modules/@smithy/property-provider/dist-es/chain.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/chain.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/fromStatic.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/fromStatic.js
   var init_fromStatic = __esm({
-    "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/memoize.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/memoize.js
   var memoize;
   var init_memoize = __esm({
-    "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/memoize.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37264,9 +37264,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/index.js
   var init_dist_es41 = __esm({
-    "node_modules/@smithy/property-provider/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/property-provider/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37279,10 +37279,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
   var resolveAwsSdkSigV4AConfig;
   var init_resolveAwsSdkSigV4AConfig = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37294,7 +37294,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
   function normalizeCredentialProvider(config3, { credentials, credentialDefaultProvider }) {
     let credentialsProvider;
     if (credentials) {
@@ -37328,7 +37328,7 @@ ${toHex(hashedRequest)}`;
   }
   var resolveAwsSdkSigV4Config;
   var init_resolveAwsSdkSigV4Config = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37434,9 +37434,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
   var init_aws_sdk = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37448,9 +37448,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
   var init_httpAuthSchemes2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37459,10 +37459,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
   var signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37472,10 +37472,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
   var SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37569,9 +37569,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
   var init_dist_es42 = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -37580,10 +37580,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
   var av, aw, ax, ay, az, aA, aB, aC, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, as, at, au, _data, root, r, nodes, bdd;
   var init_bdd = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39523,10 +39523,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
   var cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39562,7 +39562,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
   function createAwsAuthSigv4HttpAuthOption(authParameters) {
     return {
       schemeId: "aws.auth#sigv4",
@@ -39595,7 +39595,7 @@ ${toHex(hashedRequest)}`;
   }
   var createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39691,10 +39691,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
   var resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39725,10 +39725,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
   var S3ServiceException;
   var init_S3ServiceException = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39742,10 +39742,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
   var NoSuchUpload, AccessDenied, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -39937,10 +39937,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
   var _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _ADb, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BNu, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMDo, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSHAhe, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _CXXHASH, _CXXHASHh, _CXXHASHhe, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKA, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NEKKAS, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OE, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSE, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UOE, _UOER, _UOERp, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _st, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabn, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacm_, _xacrsba, _xacs, _xacs_, _xacs__, _xacs___, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xacx, _xacx_, _xacx__, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacm, _xafhxacs, _xafhxacs_, _xafhxacs__, _xafhxacx, _xafhxacx_, _xafhxacx__, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, _s_registry, S3ServiceException$, n0_registry, AccessDenied$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, EncryptionTypeMismatch$, IdempotencyParameterMismatch$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, ObjectAlreadyInActiveTierError$, ObjectNotInActiveTierError$, TooManyParts$, errorTypeRegistries, CopySourceSSECustomerKey, NonEmptyKmsKeyArnString, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSEKMSEncryption$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UpdateObjectEncryptionRequest$, UpdateObjectEncryptionResponse$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, ObjectEncryption$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UpdateObjectEncryption$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45143,10 +45143,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
   var CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45169,10 +45169,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/package.json
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/package.json
   var package_default;
   var init_package = __esm({
-    "node_modules/@aws-sdk/client-s3/package.json"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/package.json"() {
       package_default = {
         name: "@aws-sdk/client-s3",
         description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
@@ -45303,10 +45303,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var fromUtf84;
   var init_fromUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45314,9 +45314,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var init_toUint8Array3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45324,18 +45324,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var init_toUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
   var init_dist_es43 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45345,7 +45345,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
   function isEmptyData2(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -45353,17 +45353,17 @@ ${toHex(hashedRequest)}`;
     return data.byteLength === 0;
   }
   var init_isEmptyData2 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/constants.js
   var SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45397,7 +45397,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-locate-window/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-locate-window/dist-es/index.js
   function locateWindow() {
     if (typeof window !== "undefined") {
       return window;
@@ -45408,7 +45408,7 @@ ${toHex(hashedRequest)}`;
   }
   var fallbackWindow;
   var init_dist_es44 = __esm({
-    "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45416,7 +45416,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
   function convertToBuffer2(data) {
     if (typeof data === "string") {
       return fromUtf84(data);
@@ -45428,7 +45428,7 @@ ${toHex(hashedRequest)}`;
   }
   var Sha1;
   var init_webCryptoSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45484,7 +45484,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
   function supportsWebCrypto(window2) {
     if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
       var subtle = window2.crypto.subtle;
@@ -45506,7 +45506,7 @@ ${toHex(hashedRequest)}`;
   }
   var subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45523,9 +45523,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
   var init_module4 = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45533,10 +45533,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
   var Sha12;
   var init_crossPlatformSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45567,9 +45567,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/index.js
   var init_module5 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45578,10 +45578,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/constants.js
   var SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45627,10 +45627,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
   var Sha256;
   var init_webCryptoSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45688,10 +45688,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/constants.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/constants.js
   var BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45777,10 +45777,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
   var RawSha256;
   var init_RawSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45882,7 +45882,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
   function bufferFromSecret(secret) {
     var input = convertToBuffer(secret);
     if (input.byteLength > BLOCK_SIZE) {
@@ -45896,7 +45896,7 @@ ${toHex(hashedRequest)}`;
   }
   var Sha2562;
   var init_jsSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45963,9 +45963,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/index.js
   var init_module6 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -45973,10 +45973,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
   var Sha2563;
   var init_crossPlatformSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46008,9 +46008,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/index.js
+  // ../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/index.js
   var init_module7 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46019,10 +46019,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
   var createDefaultUserAgentProvider, fallback;
   var init_dist_es45 = __esm({
-    "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46080,7 +46080,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Int64.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Int64.js
   function negate2(bytes) {
     for (let i7 = 0; i7 < 8; i7++) {
       bytes[i7] ^= 255;
@@ -46093,7 +46093,7 @@ ${toHex(hashedRequest)}`;
   }
   var Int642;
   var init_Int64 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46134,10 +46134,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
   var HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46327,7 +46327,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
   function splitMessage({ byteLength, byteOffset, buffer: buffer2 }) {
     if (byteLength < MINIMUM_MESSAGE_LENGTH) {
       throw new Error("Provided message too short to accommodate event stream message overhead");
@@ -46355,7 +46355,7 @@ ${toHex(hashedRequest)}`;
   }
   var PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46367,10 +46367,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
   var EventStreamCodec;
   var init_EventStreamCodec = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46442,19 +46442,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Message.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Message.js
   var init_Message = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
   var MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46476,10 +46476,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
   var MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46504,10 +46504,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
   var SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46531,10 +46531,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
   var SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46556,9 +46556,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/index.js
   var init_dist_es46 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46573,7 +46573,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
   function getChunkedStream(source) {
     let currentMessageTotalLength = 0;
     let currentMessagePendingLength = 0;
@@ -46639,14 +46639,14 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_getChunkedStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
   function getMessageUnmarshaller(deserializer, toUtf82) {
     return async function(message) {
       const { value: messageType } = message.headers[":message-type"];
@@ -46678,17 +46678,17 @@ ${toHex(hashedRequest)}`;
     };
   }
   var init_getUnmarshalledStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
   var EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46720,18 +46720,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
   var init_provider = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
   var init_dist_es47 = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46740,10 +46740,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
   var readableStreamtoIterable, iterableToReadableStream;
   var init_utils2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46777,10 +46777,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
   var EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46807,10 +46807,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
   var eventStreamSerdeProvider;
   var init_provider2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46819,9 +46819,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
   var init_dist_es48 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46831,7 +46831,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/chunked-blob-reader/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/chunked-blob-reader/dist-es/index.js
   async function blobReader(blob, onChunk, chunkSize = 1024 * 1024) {
     const size = blob.size;
     let totalBytesRead = 0;
@@ -46842,17 +46842,17 @@ ${toHex(hashedRequest)}`;
     }
   }
   var init_dist_es49 = __esm({
-    "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/hash-blob-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/hash-blob-browser/dist-es/index.js
   var blobHasher;
   var init_dist_es50 = __esm({
-    "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46867,19 +46867,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
   var init_invalidFunction = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
   var invalidProvider;
   var init_invalidProvider = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46887,9 +46887,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/index.js
   var init_dist_es51 = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46898,10 +46898,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/constants.js
   var BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -46911,7 +46911,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/index.js
   function cmn(q6, a7, b8, x7, s7, t14) {
     a7 = (a7 + q6 & 4294967295) + (x7 + t14 & 4294967295) & 4294967295;
     return (a7 << s7 | a7 >>> 32 - s7) + b8 & 4294967295;
@@ -46945,7 +46945,7 @@ ${toHex(hashedRequest)}`;
   }
   var Md5;
   var init_dist_es52 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/md5-js/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47088,10 +47088,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
   var DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47099,10 +47099,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
   var resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47139,9 +47139,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
   var init_dist_es53 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47149,10 +47149,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
   var getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47211,10 +47211,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
   var getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47262,10 +47262,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
   var getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47287,27 +47287,27 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
   var init_awsRegionConfig = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
   var init_stsRegionDefaultResolver_browser = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
   var init_dist_es54 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47317,10 +47317,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
   var getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47364,10 +47364,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
   var resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47383,10 +47383,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
   var S3Client;
   var init_S3Client = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47456,10 +47456,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
   var AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47482,7 +47482,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
   function ssecMiddleware(options) {
     return (next) => async (args) => {
       const input = { ...args.input };
@@ -47535,7 +47535,7 @@ ${toHex(hashedRequest)}`;
   }
   var ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es55 = __esm({
-    "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47553,10 +47553,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
   var CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47581,10 +47581,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
   var CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47611,7 +47611,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
   function locationConstraintMiddleware(options) {
     return (next) => async (args) => {
       const { CreateBucketConfiguration } = args.input;
@@ -47627,7 +47627,7 @@ ${toHex(hashedRequest)}`;
   }
   var locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es56 = __esm({
-    "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47645,10 +47645,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
   var CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47674,10 +47674,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
   var CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47703,10 +47703,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
   var CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47732,10 +47732,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
   var CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47760,10 +47760,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
   var DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47782,10 +47782,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
   var DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47804,10 +47804,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
   var DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47826,10 +47826,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
   var DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47848,10 +47848,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
   var DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47870,10 +47870,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
   var DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47892,10 +47892,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
   var DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47914,10 +47914,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
   var DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47936,10 +47936,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
   var DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47958,10 +47958,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
   var DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -47980,10 +47980,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
   var DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48002,10 +48002,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
   var DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48024,10 +48024,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
   var DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48046,10 +48046,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
   var DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48068,10 +48068,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
   var DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48090,10 +48090,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
   var DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48116,10 +48116,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
   var DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48146,10 +48146,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
   var DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48171,10 +48171,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
   var DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48193,10 +48193,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
   var GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48218,10 +48218,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
   var GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48244,10 +48244,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
   var GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48270,10 +48270,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
   var GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48296,10 +48296,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
   var GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48322,10 +48322,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
   var GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48348,10 +48348,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
   var GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48374,10 +48374,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
   var GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48400,10 +48400,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
   var GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48426,10 +48426,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
   var GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48452,10 +48452,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
   var GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48478,10 +48478,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
   var GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48504,10 +48504,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
   var GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48530,10 +48530,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
   var GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48556,10 +48556,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
   var GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48582,10 +48582,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
   var GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48608,10 +48608,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
   var GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48630,10 +48630,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
   var GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48656,10 +48656,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
   var GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48682,10 +48682,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
   var GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48708,10 +48708,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
   var GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48734,10 +48734,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
   var GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48760,10 +48760,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
   var GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48786,10 +48786,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
   var GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48812,10 +48812,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
   var GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48839,10 +48839,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
   var GetObjectCommand;
   var init_GetObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48873,10 +48873,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
   var GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48898,10 +48898,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
   var GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48923,10 +48923,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
   var GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48948,10 +48948,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
   var GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48973,10 +48973,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
   var GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -48994,10 +48994,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
   var GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49020,10 +49020,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
   var HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49045,10 +49045,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
   var HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49074,10 +49074,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
   var ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49100,10 +49100,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
   var ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49126,10 +49126,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
   var ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49152,10 +49152,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
   var ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49178,10 +49178,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
   var ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49200,10 +49200,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
   var ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49225,10 +49225,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
   var ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49251,10 +49251,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
   var ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49277,10 +49277,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
   var ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49303,10 +49303,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
   var ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49329,10 +49329,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
   var ListPartsCommand;
   var init_ListPartsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49357,10 +49357,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
   var PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49385,10 +49385,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
   var PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49414,10 +49414,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
   var PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49443,10 +49443,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
   var PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49465,10 +49465,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
   var PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49494,10 +49494,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
   var PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49523,10 +49523,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
   var PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49545,10 +49545,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
   var PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49567,10 +49567,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
   var PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49598,10 +49598,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
   var PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49627,10 +49627,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
   var PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49649,10 +49649,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
   var PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49671,10 +49671,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
   var PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49700,10 +49700,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
   var PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49729,10 +49729,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
   var PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49758,10 +49758,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
   var PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49787,10 +49787,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
   var PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49816,10 +49816,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
   var PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49845,10 +49845,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
   var PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49874,10 +49874,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
   var PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49905,10 +49905,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
   var PutObjectCommand;
   var init_PutObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49939,10 +49939,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
   var PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49969,10 +49969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
   var PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -49999,10 +49999,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
   var PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50029,10 +50029,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
   var PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50059,10 +50059,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
   var PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50088,10 +50088,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
   var RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50114,10 +50114,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
   var RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50144,10 +50144,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
   var SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50173,10 +50173,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
   var UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50202,10 +50202,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
   var UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50231,10 +50231,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
   var UpdateObjectEncryptionCommand;
   var init_UpdateObjectEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50261,10 +50261,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
   var UploadPartCommand;
   var init_UploadPartCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50294,10 +50294,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
   var UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50322,10 +50322,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
   var WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50343,10 +50343,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
   var paginateListBuckets;
   var init_ListBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50357,10 +50357,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
   var paginateListDirectoryBuckets;
   var init_ListDirectoryBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50371,10 +50371,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
   var paginateListObjectsV2;
   var init_ListObjectsV2Paginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50385,10 +50385,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
   var paginateListParts;
   var init_ListPartsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50399,10 +50399,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
   var getCircularReplacer;
   var init_circularReplacer = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50421,10 +50421,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
   var sleep;
   var init_sleep = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50434,10 +50434,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/waiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/waiter.js
   var waiterServiceDefaults, WaiterState, checkExceptions;
   var init_waiter2 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50476,10 +50476,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/poller.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/poller.js
   var runPolling, checkWarn403, createMessageFromResponse, exponentialBackoffWithJitter, randomInRange;
   var init_poller = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/poller.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/poller.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50571,10 +50571,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/validate.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/validate.js
   var validateWaiterOptions;
   var init_validate = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50594,9 +50594,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/index.js
   var init_utils3 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50605,10 +50605,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/createWaiter.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/createWaiter.js
   var abortTimeout, createWaiter;
   var init_createWaiter = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50662,9 +50662,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/index.js
   var init_dist_es57 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@smithy/util-waiter/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50673,10 +50673,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
   var checkState, waitUntilBucketExists;
   var init_waitForBucketExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50704,10 +50704,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
   var checkState2, waitUntilBucketNotExists;
   var init_waitForBucketNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50734,10 +50734,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
   var checkState3, waitUntilObjectExists;
   var init_waitForObjectExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50765,10 +50765,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
   var checkState4, waitUntilObjectNotExists;
   var init_waitForObjectNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -50795,10 +50795,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3.js
   var commands, paginators, waiters, S3;
   var init_S3 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51046,9 +51046,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
   var init_commands = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51162,18 +51162,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
   var init_Interfaces = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
   var init_pagination2 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51185,9 +51185,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
   var init_waiters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51198,36 +51198,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
   var init_enums = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
   var init_models_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
   var init_models_1 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/index.js
+  // ../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/index.js
   var init_dist_es58 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
+    "../SovereignS3nc/node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51317,7 +51317,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js
   function dew$12() {
     if (_dewExec$12) return exports$22;
     _dewExec$12 = true;
@@ -51613,7 +51613,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$22, _dewExec$12, exports$12, _dewExec2, exports3, StringDecoder;
   var init_chunk_CcCWfKp1 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51628,7 +51628,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js
   function unimplemented2(name2) {
     throw new Error("Node.js process " + name2 + " is not supported by JSPM core outside of Node.js");
   }
@@ -51724,7 +51724,7 @@ ${toHex(hashedRequest)}`;
   }
   var queue2, draining2, currentQueue2, queueIndex2, title2, arch2, platform2, env2, argv2, execArgv2, version2, versions2, emitWarning2, binding2, umask2, cwd2, chdir2, release2, _rawDebug2, moduleLoadList2, domain2, _exiting2, config2, reallyExit2, _kill2, cpuUsage2, resourceUsage2, memoryUsage2, kill2, exit2, openStdin2, allowedNodeEnvironmentFlags2, features2, _fatalExceptions2, setUncaughtExceptionCaptureCallback2, _tickCallback2, _debugProcess2, _debugEnd2, _startProfilerIdleNotifier2, _stopProfilerIdleNotifier2, stdout2, stderr2, stdin2, abort2, pid2, ppid2, execPath2, debugPort2, argv02, _preload_modules2, setSourceMapsEnabled2, _performance2, nowOffset, nanoPerSec2, _maxListeners2, _events2, _eventsCount2, addListener2, once2, off2, removeListener2, removeAllListeners2, emit2, prependListener2, prependOnceListener2, process2;
   var init_chunk_DEMDiNwt = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51917,7 +51917,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js
   function dew3() {
     if (_dewExec3) return exports4;
     _dewExec3 = true;
@@ -51951,7 +51951,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports4, _dewExec3;
   var init_chunk_CkFCi_G1 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -51960,7 +51960,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-tHuMsdT0.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-tHuMsdT0.js
   function o2() {
     o2.init.call(this);
   }
@@ -52011,7 +52011,7 @@ ${toHex(hashedRequest)}`;
   }
   var e2, t8, n2, r2, i2, s2, y2;
   var init_chunk_tHuMsdT0 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-tHuMsdT0.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-tHuMsdT0.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -52118,9 +52118,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-DtDiafJB.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtDiafJB.js
   var init_chunk_DtDiafJB = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-DtDiafJB.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtDiafJB.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -52208,7 +52208,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-D3uu3VYh.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-D3uu3VYh.js
   function i$2() {
     throw new Error("setTimeout has not been defined");
   }
@@ -52481,7 +52481,7 @@ ${toHex(hashedRequest)}`;
   }
   var e$2, t$3, n$2, r$2, o$3, l$2, s$1, f$1, a$1, T$1, t9, e3, o3, n3, r3, l3, t$1, o$1, n$1, e$1, r$1, c3, u3, i3, t$2, i$1, o$2, u$1, f3, a3, s3, p3, y3, l$1, d2, g2, b2, m2, h3, j2, A2, w2, v3, Q2, X2, Y2, ee, te, re, ne, ie3, Se, Ee, promisify;
   var init_chunk_D3uu3VYh = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-D3uu3VYh.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-D3uu3VYh.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -52800,7 +52800,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-b0rmRow7.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-b0rmRow7.js
   function dew4() {
     if (_dewExec4) return exports5;
     _dewExec4 = true;
@@ -52964,7 +52964,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports5, _dewExec4, _global, process3;
   var init_chunk_b0rmRow7 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-b0rmRow7.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-b0rmRow7.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -52997,7 +52997,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-B738Er4n.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-B738Er4n.js
   function u$22(r8) {
     var t14 = r8.length;
     if (t14 % 4 > 0) throw new Error("Invalid string. Length must be a multiple of 4");
@@ -57388,7 +57388,7 @@ ${toHex(hashedRequest)}`;
   }
   var r$15, t$15, e$25, n$25, o$25, a$15, h$15, a$1$1, e$1$1, n$1$1, i$12, o$1$1, j3, Y3, e4, n4, o4, u4, e$12, s4, i4, exports$2$1, _dewExec$2$1, exports$1$1, _dewExec$1$1, exports$g, _dewExec$g, buffer, exports$f, _dewExec$f, exports$e, _dewExec$e, exports$d, _dewExec$d, exports$c, _dewExec$c, exports$b, _dewExec$b, exports$a, _dewExec$a, exports$9, _dewExec$9, _global$2, exports$8, _dewExec$8, _global$1, exports$7, _dewExec$7, exports$6, _dewExec$6, exports$5, _dewExec$5, exports$4, _dewExec$4, exports$3, _dewExec$3, _global2, exports$23, _dewExec$22, exports$13, _dewExec$13, exports6, _dewExec5;
   var init_chunk_B738Er4n = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-B738Er4n.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-B738Er4n.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -57840,10 +57840,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-CbQqNoLO.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CbQqNoLO.js
   var promisify2;
   var init_chunk_CbQqNoLO = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-CbQqNoLO.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CbQqNoLO.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -57878,7 +57878,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-B6-G-Ftj.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-B6-G-Ftj.js
   function dew6() {
     if (_dewExec6) return exports$14;
     _dewExec6 = true;
@@ -57957,7 +57957,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$14, _dewExec6, _global3, exports7, Readable;
   var init_chunk_B6_G_Ftj = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-B6-G-Ftj.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-B6-G-Ftj.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -57994,7 +57994,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-C4rKjYLo.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-C4rKjYLo.js
   function dew7() {
     if (_dewExec7) return exports8;
     _dewExec7 = true;
@@ -58011,7 +58011,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports8, _dewExec7;
   var init_chunk_C4rKjYLo = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-C4rKjYLo.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-C4rKjYLo.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -58021,7 +58021,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-BsRZ0PEC.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-BsRZ0PEC.js
   function dew8() {
     if (_dewExec8) return exports9;
     _dewExec8 = true;
@@ -58060,7 +58060,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports9, _dewExec8, _global4;
   var init_chunk_BsRZ0PEC = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-BsRZ0PEC.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-BsRZ0PEC.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -58070,7 +58070,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/vm.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/vm.js
   function dew9() {
     if (_dewExec9) return exports$15;
     _dewExec9 = true;
@@ -58195,7 +58195,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$15, _dewExec9, _global5, exports10, Script2, createContext, createScript, isContext, runInContext, runInNewContext, runInThisContext;
   var init_vm = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/vm.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/vm.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -58217,7 +58217,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/crypto.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/crypto.js
   var crypto_exports = {};
   __export(crypto_exports, {
     Cipher: () => Cipher,
@@ -146763,7 +146763,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$3H, _dewExec$3G, _global$1e, exports$3G, _dewExec$3F, exports$3F, _dewExec$3E, exports$3E, _dewExec$3D, exports$3D, _dewExec$3C, _global$1d, exports$3C, _dewExec$3B, _global$1c, exports$3B, _dewExec$3A, _global$1b, exports$3A, _dewExec$3z, _global$1a, exports$3z, _dewExec$3y, _global$19, exports$3y, _dewExec$3x, _global$18, exports$3x, _dewExec$3w, _global$17, exports$3w, _dewExec$3v, module$f, exports$3v, _dewExec$3u, _global$16, exports$3u, _dewExec$3t, exports$3t, _dewExec$3s, exports$3s, _dewExec$3r, exports$3r, _dewExec$3q, _algorithms$2, exports$3q, _dewExec$3p, exports$3p, _dewExec$3o, exports$3o, _dewExec$3n, _global$15, exports$3n, _dewExec$3m, exports$3m, _dewExec$3l, _global$14, exports$3l, _dewExec$3k, _global$13, exports$3k, _dewExec$3j, exports$3j, _dewExec$3i, exports$3i, _dewExec$3h, exports$3h, _dewExec$3g, exports$3g, _dewExec$3f, exports$3f, _dewExec$3e, exports$3e, _dewExec$3d, exports$3d, _dewExec$3c, exports$3c, _dewExec$3b, _global$12, exports$3b, _dewExec$3a, exports$3a, _dewExec$39, exports$39, _dewExec$38, exports$38, _dewExec$37, exports$37, _dewExec$36, exports$36, _dewExec$35, exports$35, _dewExec$34, exports$34, _dewExec$33, exports$33, _dewExec$32, _list$2, exports$32, _dewExec$31, exports$31, _dewExec$30, _global$11, exports$30, _dewExec$2$, _global$10, exports$2$, _dewExec$2_, _global$$, exports$2_, _dewExec$2Z, _global$_, exports$2Z, _dewExec$2Y, exports$2Y, _dewExec$2X, _global$Z, exports$2X, _dewExec$2W, _global$Y, exports$2W, _dewExec$2V, exports$2V, _dewExec$2U, exports$2U, _dewExec$2T, exports$2T, _dewExec$2S, module$e, _global$X, exports$2S, _dewExec$2R, module$d, _global$W, exports$2Q, _dewExec$2P, exports$2P, _dewExec$2O, _global$U, exports$2O, _dewExec$2N, exports$2N, _dewExec$2M, exports$2M, _dewExec$2L, exports$2L, _dewExec$2K, exports$2K, _dewExec$2J, _global$T, exports$2J, _dewExec$2I, _global$S, exports$2I, _dewExec$2H, _global$R, exports$2H, _dewExec$2G, _global$Q, exports$2G, _dewExec$2F, _global$P, exports$2F, _dewExec$2E, _global$O, exports$2E, _dewExec$2D, _global$N, exports$2D, _dewExec$2C, module$b, exports$f$2, _dewExec$f$2, exports$e$2, _dewExec$e$2, exports$d$2, _dewExec$d$2, exports$c$2, _dewExec$c$2, exports$b$2, _dewExec$b$2, exports$a$2, _dewExec$a$2, exports$9$2, _dewExec$9$2, _global$2$2, exports$8$2, _dewExec$8$2, _global$1$2, exports$7$2, _dewExec$7$2, exports$6$2, _dewExec$6$2, exports$5$2, _dewExec$5$2, exports$4$2, _dewExec$4$2, exports$3$2, _dewExec$3$2, _global$M, exports$2$2, _dewExec$2$2, exports$1$2, _dewExec$1$2, exports$2C, _dewExec$2B, exports$2B, _dewExec$2A, _global$L, stream, exports$2A, _dewExec$2z, _global$K, exports$2z, _dewExec$2y, exports$2y, _dewExec$2x, exports$2x, _dewExec$2w, exports$2w, _dewExec$2v, _algorithms$1, exports$2v, _dewExec$2u, exports$2u, _dewExec$2t, exports$2t, _dewExec$2s, _global$J, exports$2s, _dewExec$2r, exports$2r, _dewExec$2q, _global$I, exports$2q, _dewExec$2p, _global$H, exports$2p, _dewExec$2o, exports$2o, _dewExec$2n, exports$2n, _dewExec$2m, exports$2m, _dewExec$2l, exports$2l, _dewExec$2k, exports$2k, _dewExec$2j, exports$2j, _dewExec$2i, exports$2i, _dewExec$2h, exports$2h, _dewExec$2g, _global$G, exports$2g, _dewExec$2f, exports$2f, _dewExec$2e, exports$2e, _dewExec$2d, exports$2d, _dewExec$2c, exports$2c, _dewExec$2b, exports$2b, _dewExec$2a, exports$2a, _dewExec$29, exports$29, _dewExec$28, exports$28, _dewExec$27, _list$1, exports$27, _dewExec$26, exports$26, _dewExec$25, _global$F, exports$25, _dewExec$24, _global$E, exports$24, _dewExec$23, _global$D, exports$232, _dewExec$222, _global$C, exports$222, _dewExec$21, exports$21, _dewExec$20, _global$B, exports$20, _dewExec$1$, _global$A, exports$1$, _dewExec$1_, exports$1_, _dewExec$1Z, exports$1Z, _dewExec$1Y, exports$1Y, _dewExec$1X, module$a, _global$z, exports$1X, _dewExec$1W, module$9, _global$y, exports$1W, _dewExec$1V, exports$1U, _dewExec$1T, exports$1T, _dewExec$1S, _global$w, exports$1S, _dewExec$1R, exports$1R, _dewExec$1Q, exports$1Q, _dewExec$1P, exports$1P, _dewExec$1O, _global$v, exports$1O, _dewExec$1N, _global$u, exports$1N, _dewExec$1M, _global$t, exports$1M, _dewExec$1L, _global$s, exports$1L, _dewExec$1K, _global$r, exports$1K, _dewExec$1J, _global$q, exports$1J, _dewExec$1I, _global$p, exports$1I, _dewExec$1H, module$7, e$g, e$1$12, t$c, r$1$1, r$2$1, t$1$1, c$n, b$j, p$s, g$h, y$n, m$m, S$e, R$7, k$g, M$a, j$a, O$8, P$8, x$a, L$8, D$9, C$9, A$c, q$8, W$5, U$a, H$7, F$8, V$6, G$5, Y$4, z$9, J$5, Q$4, Z$3, $$3, t$2$1, r$3$1, n$1$12, b$1$1, p$1$1, g$1$1, y$1$1, w$1$1, S$1$1, R$1$1, k$1$1, E$1$1, M$1$1, O$1$1, T$1$1, x$1$1, P$1$1, D$1$1, L$1$1, C$1$1, A$1$1, I$1$1, N$1$1, U$1$1, H$1$1, F$1$1, V$1$1, Y$1$1, K$1$1, z$1$1, Q$1$1, X$1$1, t$4$1, t$5$1, n$2$1, i$e, a$p, o$s, s$q, f$2$1, h$2$1, p$2$1, o$1$12, e$3$1, s$1$1, t$6$1, o$2$1, e$4$1, f$3$1, v$2$1, l$r, d$n, f$u, b$i, exports$1H, _dewExec$1G, _global$o, exports$1G, _dewExec$1F, exports$1F, _dewExec$1E, exports$1E, _dewExec$1D, exports$1D, _dewExec$1C, _algorithms, exports$1C, _dewExec$1B, exports$1B, _dewExec$1A, exports$1A, _dewExec$1z, _global$n, exports$1z, _dewExec$1y, exports$1y, _dewExec$1x, _global$m, exports$1x, _dewExec$1w, _global$l, exports$1w, _dewExec$1v, exports$1v, _dewExec$1u, exports$1u, _dewExec$1t, exports$1t, _dewExec$1s, exports$1s, _dewExec$1r, exports$1r, _dewExec$1q, exports$1q, _dewExec$1p, exports$1p, _dewExec$1o, exports$1o, _dewExec$1n, _global$k, exports$1n, _dewExec$1m, exports$1m, _dewExec$1l, exports$1l, _dewExec$1k, exports$1k, _dewExec$1j, exports$1j$1, _dewExec$1i$1, exports$1i$1, _dewExec$1h$1, exports$1h$1, _dewExec$1g$1, exports$1g$1, _dewExec$1f$1, exports$1f$1, _dewExec$1e$1, _list, exports$1e$1, _dewExec$1d$1, exports$1d$1, _dewExec$1c$1, _global$j$1, exports$1c$1, _dewExec$1b$1, _global$i$1, exports$1b$1, _dewExec$1a$1, _global$h$1, exports$1a$1, _dewExec$19$1, _global$g$1, exports$19$1, _dewExec$18$1, exports$18$1, _dewExec$17$1, _global$f$1, exports$17$1, _dewExec$16$1, _global$e$1, exports$16$1, _dewExec$15$1, exports$15$1, _dewExec$14$1, exports$14$1, _dewExec$13$1, exports$13$1, _dewExec$12$1, module$6, _global$d$1, exports$12$1, _dewExec$11$1, module$5, _global$c$1, _global$b$1, exports$11$1, indexOf2, Object_keys2, forEach2, defineProp2, globals2, Script3, o5, n5, t11, f5, a5, e7, o$13, f$13, h5, r5, _3, e$13, u5, h$12, _$1, r$12, e$22, n$22, o$32, f$3, c$13, a$22, l$13, I4, s$13, h$2, _$2, n$3, r$22, o$4, f$4, l$22, a$3, w$1, _$3, e$4, n$4, r$3, l$3, o$5, c$3, d$2, p$2, b$2, w$2, g4, B4, T4, m4, A4, U4, x4, j4, q3, L4, k$2, z4, D4, F4, G3, H3, W3, X3, Y4, Z3, $2, tt, it, st, _t, et, nt, e$5, n$5, s$2, h$3, f$6, m$12, n$6, p$3, s$3, h$4, e$6, r$4, o$6, h$5, n$7, p$4, l$4, d$3, c$4, _$4, m$2, u$4, g$1, v$1, w$3, s$4, f$8, a$7, u$5, h$6, c$5, l$5, p$5, d$4, m$3, y$2, b$3, v$2, w$4, g$2, B$1, k$3, S$1, A$1, H$1, E$2, P$1, U$1, K$1, x$1, z$1, I$2, F$1, M$1, r$5, o$7, r$6, i5, n$8, f$9, o$8, p$6, s$6, a$8, h$7, c$6, l$6, d$5, _$5, b$4, k$4, g$3, m$4, z$2, w$5, E$3, I$3, A$2, U$2, d$6, i$13, f$a, o$9, a$9, c$7, n$9, l$7, e$8, f$b, t$12, a$a, p$8, n$a, i$22, o$a, h$8, y$4, f$c, l$8, m$5, B$3, u$7, C$1, d$7, b$5, A$3, S$3, F$2, U$3, w$6, I$4, M$2, a$b, h$9, o$b, f$d, u$8, _$7, d$8, y$5, S$4, v$5, I$5, U$4, w$7, m$6, E$5, b$6, k$6, T$2, O$2, A$4, M$3, V$1, t$22, f$e, a$c, c$9, s$9, f$f, p$a, u$9, l$a, d$9, y$6, m$7, c$a, s$a, f$g, p$b, l$b, u$a, d$a, m$8, y$7, _$8, t$32, p$c, c$b, o$c, e$9, p$d, n$b, s$b, v$8, y$8, a$d, t$4, i$3, r$7, h$a, n$c, t$5, e$a, r$8, n$d, a$e, f$i, n$e, t$6, o$e, a$f, i$4, b$7, d$c, r$9, t$7, n$f, i$5, o$f, p$e, s$c, m$9, u$b, h$b, w$a, y$9, P$2, B$5, K$2, R$1, S$5, x$2, C$2, D$2, G$1, H$2, T$3, j$1, M$4, q$1, O$3, z$3, F$3, I$6, J$1, N$2, m$a, u$c, n$g, d$d, l$d, r$a, e$b, n$i, a$g, i$7, o$g, c$d, s$d, l$e, u$d, h$c, d$e, r$b, i$8, e$c, a$h, l$f, g$9, r$c, n$j, s$f, o$i, e$d, u$f, a$i, c$f, f$k, v$b, _$a, l$g, p$g, m$c, g$a, k$8, d$f, C$3, s$g, n$k, u$g, a$j, c$g, f$l, _$b, g$b, m$d, p$h, l$h, v$c, d$g, k$9, b$9, j$3, x$4, y$c, w$c, r$e, o$k, a$k, u$h, l$i, c$h, p$i, f$m, g$c, d$h, S$8, _$c, b$a, z$5, k$a, y$d, H$4, w$d, L$3, j$4, A$7, B$7, W$2, q$3, C$4, D$3, E$7, F$4, M$5, N$3, O$4, P$3, Q$1, R$2, T$4, V$2, X$2, Y$1, s$h, h$e, r$f, n$l, a$l, b$b, i$9, n$m, s$i, o$m, u$i, l$j, v$e, y$e, m$f, S$9, g$d, M$6, x$6, _$d, z$6, q$4, R$3, N$4, E$8, k$b, O$5, L$4, B$8, T$5, J$3, X$3, D$4, Y$2, W$3, K$4, U$6, G$3, H$5, Z$1, $$1, ee2, de2, ce2, te2, ae3, re2, be2, ie, ne2, se2, ue2, he2, pe2, le2, ve2, me2, Se2, ge2, Ae2, Ie, we2, xe, _e2, ze, qe, Re, Pe, je2, Ne, Ee2, Oe2, Le, Be2, o$n, s$j, a$m, u$j, c$i, f$n, p$k, d$i, g$e, _$e, v$f, b$c, m$g, S$a, j$6, w$f, B$9, k$c, D$5, U$7, N$5, O$6, A$9, x$7, I$9, q$5, F$6, K$5, R$4, G$4, L$5, M$7, J$4, V$4, z$7, H$6, Q$3, e$f, t$a, s$k, n$n, o$o, h$h, y$g, r$g, u$k, a$n, c$j, k$d, f$o, b$d, l$l, d$j, p$l, j$7, v$g, m$h, q$6, K$6, P$6, s$l, i$a, o$p, d$k, n$o, p$m, u$l, y$h, m$i, f$p, b$e, E$a, h$i, v$h, p$n, d$l, f$q, c$k, g$f, w$g, l$n, m$j, v$i, E$b, L$6, R$5, j$8, T$7, P$7, K$7, W$4, x$8, B$a, S$b, q$7, U$8, V$5, C$7, z$8, i$b, n$p, p$o, s$m, u$m, o$q, f$r, i$c, l$o, u$n, c$m, p$p, d$m, h$j, s$n, g$g, m$k, w$h, v$j, y$k, E$c, b$g, B$b, x$9, L$7, k$f, D$7, U$9, R$6, S$c, j$9, A$b, I$a, M$9, o$r, t$b, f$t, u$o, a$o, s$o, l$p, m$l, p$q, l$q, D$8, s$p, _$g, h$k, y$m, E$d, S$d, C$8, N$6, exports$10$1, _dewExec$10$1, _global$a$1, exports$$$1, _dewExec$$$1, _global$9$1, exports$_$1, _dewExec$_$1, _primes$1, exports$Z$1, _dewExec$Z$1, _global$8$1, exports$Y$1, _dewExec$Y$1, exports$X$1, _dewExec$X$1, module$4$1, _global$7$1, exports$W$1, _dewExec$W$1, _package$1, exports$V$1, _dewExec$V$1, module$3$1, _global$6$1, exports$U$1, _dewExec$U$1, exports$T$1, _dewExec$T$1, exports$S$1, _dewExec$S$1, exports$R$1, _dewExec$R$1, exports$Q$1, _dewExec$Q$1, exports$P$1, _dewExec$P$1, exports$O$1, _dewExec$O$1, exports$N$1, _dewExec$N$1, exports$M$1, _dewExec$M$1, exports$L$1, _dewExec$L$1, exports$K$1, _dewExec$K$1, exports$J$1, _dewExec$J$1, exports$I$1, _dewExec$I$1, exports$H$1, _dewExec$H$1, exports$G$1, _dewExec$G$1, exports$F$1, _dewExec$F$1, exports$E$1, _dewExec$E$1, exports$D$1, _dewExec$D$1, exports$C$1, _dewExec$C$1, exports$B$1, _dewExec$B$1, exports$A$1, _dewExec$A$1, exports$z$1, _dewExec$z$1, exports$y$1, _dewExec$y$1, exports$x$1, _dewExec$x$1, module$2$1, _global$5$1, exports$w$1, _dewExec$w$1, exports$v$1, _dewExec$v$1, exports$u$1, _dewExec$u$1, exports$t$1, _dewExec$t$1, exports$s$1, _dewExec$s$1, exports$r$1, _dewExec$r$1, exports$q$1, _dewExec$q$1, exports$p$1, _dewExec$p$1, exports$o$1, _dewExec$o$1, exports$n$1, _dewExec$n$1, exports$m$1, _dewExec$m$1, exports$l$1, _dewExec$l$1, exports$k$1, _dewExec$k$1, exports$j$1, _dewExec$j$1, exports$i$1, _dewExec$i$1, exports$h$1, _dewExec$h$1, exports$g$1, _dewExec$g$1, _aesid$1, exports$f$1, _dewExec$f$1, exports$e$1, _dewExec$e$1, _curves$1, exports$d$1, _dewExec$d$1, exports$c$1, _dewExec$c$1, exports$b$1, _dewExec$b$1, _global$4$1, exports$a$1, _dewExec$a$1, module$1$1, _global$3$1, exports$9$1, _dewExec$9$1, _global$2$1, exports$8$1, _dewExec$8$1, exports$7$1, _dewExec$7$1, exports$6$1, _dewExec$6$1, module$8, _global$1$1, exports$5$1, _dewExec$5$1, exports$4$1, _dewExec$4$1, exports$3$1, _dewExec$3$1, exports$2$12, _dewExec$2$12, exports$1$12, _dewExec$1$12, _global$x, exports$1V, _dewExec$1U, crypto2, exports$12$2, _dewExec$11$2, _global$a$2, exports$11$2, _dewExec$10$2, _global$9$2, exports$10$2, _dewExec$$$2, _primes$2, exports$$$2, _dewExec$_$2, _global$8$2, exports$_$2, _dewExec$Z$2, exports$Z$2, _dewExec$Y$2, exports$Y$2, _dewExec$X$2, module$4$2, _global$7$2, exports$X$2, _dewExec$W$2, _package$2, exports$W$2, _dewExec$V$2, module$3$2, _global$6$2, exports$V$2, _dewExec$U$2, exports$U$2, _dewExec$T$2, exports$T$2, _dewExec$S$2, exports$S$2, _dewExec$R$2, exports$R$2, _dewExec$Q$2, exports$Q$2, _dewExec$P$2, exports$P$2, _dewExec$O$2, exports$O$2, _dewExec$N$2, exports$N$2, _dewExec$M$2, exports$M$2, _dewExec$L$2, exports$L$2, _dewExec$K$2, exports$K$2, _dewExec$J$2, exports$J$2, _dewExec$I$2, exports$I$2, _dewExec$H$2, exports$H$2, _dewExec$G$2, exports$G$2, _dewExec$F$2, exports$F$2, _dewExec$E$2, exports$E$2, _dewExec$D$2, exports$D$2, _dewExec$C$2, exports$C$2, _dewExec$B$2, exports$B$2, _dewExec$A$2, exports$A$2, _dewExec$z$2, exports$z$2, _dewExec$y$2, exports$y$2, _dewExec$x$2, module$2$2, _global$5$2, exports$x$2, _dewExec$w$2, exports$w$2, _dewExec$v$2, exports$v$2, _dewExec$u$2, exports$u$2, _dewExec$t$2, exports$t$2, _dewExec$s$2, exports$s$2, _dewExec$r$2, exports$r$2, _dewExec$q$2, exports$q$2, _dewExec$p$2, exports$p$2, _dewExec$o$2, exports$o$2, _dewExec$n$2, exports$n$2, _dewExec$m$2, exports$m$2, _dewExec$l$2, exports$l$2, _dewExec$k$2, exports$k$2, _dewExec$j$2, exports$j$2, _dewExec$i$2, exports$i$2, _dewExec$h$2, exports$h$2, _dewExec$g$2, _aesid$2, exports$g$2, _dewExec$f$3, exports$f$3, _dewExec$e$3, _curves$2, exports$e$3, _dewExec$d$3, exports$d$3, _dewExec$c$3, exports$c$3, _dewExec$b$3, _global$4$2, exports$b$3, _dewExec$a$3, module$1$2, _global$3$2, exports$a$3, _dewExec$9$3, _global$2$3, exports$9$3, _dewExec$8$3, exports$8$3, _dewExec$7$3, exports$7$3, _dewExec$6$3, module$c, _global$1$3, exports$6$3, _dewExec$5$3, exports$5$3, _dewExec$4$3, exports$4$3, _dewExec$3$3, exports$3$3, _dewExec$2$3, exports$2$3, _dewExec$1$3, _global$V, exports$1$3, _dewExec$2Q, exports$2R, exports$1j, _dewExec$1i, _global$j, exports$1i, _dewExec$1h, _global$i, exports$1h, _dewExec$1g, _primes, exports$1g, _dewExec$1f, _global$h, exports$1f, _dewExec$1e, exports$1e, _dewExec$1d, exports$1d, _dewExec$1c, exports$1c, _dewExec$1b, exports$1b, _dewExec$1a, exports$1a, _dewExec$19, exports$19, _dewExec$18, exports$18, _dewExec$17, exports$17, _dewExec$16, _global$g, exports$16, _dewExec$15, exports$152, _dewExec$14, _global$f, exports$142, _dewExec$132, exports$132, _dewExec$122, exports$122, _dewExec$11, exports$11, _dewExec$10, module$4, _global$e, exports$10, _dewExec$$, _package, exports$$, _dewExec$_, module$3, _global$d, exports$_, _dewExec$Z, exports$Z, _dewExec$Y, exports$Y, _dewExec$X, exports$X, _dewExec$W, exports$W, _dewExec$V, exports$V, _dewExec$U, exports$U, _dewExec$T, exports$T, _dewExec$S, exports$S, _dewExec$R, exports$R, _dewExec$Q, exports$Q, _dewExec$P, exports$P, _dewExec$O, exports$O, _dewExec$N, exports$N, _dewExec$M, exports$M, _dewExec$L, exports$L, _dewExec$K, exports$K, _dewExec$J, exports$J, _dewExec$I, exports$I, _dewExec$H, exports$H, _dewExec$G, exports$G, _dewExec$F, exports$F, _dewExec$E, exports$E, _dewExec$D, exports$D, _dewExec$C, exports$C, _dewExec$B, exports$B, _dewExec$A, exports$A, _dewExec$z, exports$z, _dewExec$y, exports$y, _dewExec$x, exports$x, _dewExec$w, module$2, _global$c, exports$w, _dewExec$v, _global$b, exports$v, _dewExec$u, _global$a, exports$u, _dewExec$t, _global$9, exports$t, _dewExec$s, _global$8, exports$s, _dewExec$r, exports$r, _dewExec$q, exports$q, _dewExec$p, exports$p, _dewExec$o, _global$7, exports$o, _dewExec$n, _global$6, exports$n, _dewExec$m, exports$m, _dewExec$l, _global$5, exports$l, _dewExec$k, _global$4, exports$k, _dewExec$j, exports$j, _dewExec$i, exports$i, _dewExec$h, exports$h, _dewExec$g2, _aesid, exports$g2, _dewExec$f2, exports$f2, _dewExec$e2, _curves, exports$e2, _dewExec$d2, exports$d2, _dewExec$c2, exports$c2, _dewExec$b2, exports$b2, _dewExec$a2, module$1, _global$3, exports$a2, _dewExec$92, _global$22, exports$92, _dewExec$82, exports$82, _dewExec$72, exports$72, _dewExec$62, module, _global$110, exports$62, _dewExec$52, exports$52, _dewExec$42, exports$42, _dewExec$310, exports$310, _dewExec$210, exports$210, _dewExec$110, _global6, exports$110, _dewExec10, exports11, Cipher, Cipheriv, Decipher, Decipheriv, DiffieHellman, DiffieHellmanGroup, Hash, Hmac, Sign, Verify, constants, createCipher, createCipheriv, createCredentials, createDecipher, createDecipheriv, createDiffieHellman, createDiffieHellmanGroup, createECDH, createHash, createHmac, createSign, createVerify, getCiphers, getDiffieHellman, getHashes, listCiphers, pbkdf2, pbkdf2Sync, privateDecrypt, privateEncrypt, prng, pseudoRandomBytes, publicDecrypt, publicEncrypt, randomBytes, randomFill, randomFillSync, rng, webcrypto, getRandomValues, randomUUID2;
   var init_crypto2 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/crypto.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/crypto.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -153500,7 +153500,7 @@ ${toHex(hashedRequest)}`;
          * Check if running in a Web Worker.
          */
         isWorker: () => {
-          return typeof importScripts !== "undefined";
+          return typeof importScripts !== "undefined" || typeof globalThis.WorkerGlobalScope !== "undefined" && typeof globalThis.postMessage === "function";
         },
         /**
          * Get the indexedDB implementation.
@@ -153614,6 +153614,19 @@ ${toHex(hashedRequest)}`;
           this.supportsMetadataHash = true;
           Logger.debug("S3", `Initializing adapter for ${paths.userId}...`);
           this.endpoint = config3.endpoint || "";
+          if (this.endpoint && this.endpoint.startsWith("http://")) {
+            const isLocalhost = /^http:\/\/(localhost|127\.\d+\.\d+\.\d+|::1)(:\d+)?/.test(this.endpoint);
+            const tlsRequired = config3.requireTLS !== false;
+            if (tlsRequired && !isLocalhost) {
+              throw new NetworkError(
+                `S3 endpoint "${this.endpoint}" uses http:// without TLS. This exposes encrypted payloads to MITM attacks. Use an https:// endpoint, or set requireTLS: false to opt-out for local dev only.`
+              );
+            } else if (isLocalhost) {
+              Logger.debug("S3", `Using http:// on localhost \u2014 TLS not required for local dev.`);
+            } else {
+              Logger.warn("S3", `WARNING: TLS enforcement disabled for non-localhost http:// endpoint "${this.endpoint}". Ensure this is intentional and the network is trusted.`);
+            }
+          }
           const credentials = config3.credentials || {
             accessKeyId: config3.accessKeyId,
             secretAccessKey: config3.secretAccessKey
@@ -153857,7 +153870,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/events.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/events.js
   function dew11() {
     if (_dewExec11) return exports$111;
     _dewExec11 = true;
@@ -154209,7 +154222,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$111, _dewExec11, exports12, EventEmitter, defaultMaxListeners, init, listenerCount, on3, once3;
   var init_events = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/events.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/events.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -154371,6 +154384,9 @@ ${toHex(hashedRequest)}`;
         USER_PROFILE: "public/user.json",
         MANIFEST: "manifest.json",
         USERS_REGISTRY: "users.json",
+        // Legacy — kept for backward compat reads
+        REGISTRY_ENTRIES_PREFIX: "users/",
+        // Per-user signed entries (V2 registry)
         BLACKLIST: "blacklist.json",
         ADMIN_PUBLIC_KEY: "public_key.json",
         MANIFEST_CACHE: ".manifest_cache.json",
@@ -154410,7 +154426,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/adapters/WebRTCRemoteAdapter.ts
-  var WebRTCRemoteAdapter;
+  var _WebRTCRemoteAdapter, WebRTCRemoteAdapter;
   var init_WebRTCRemoteAdapter = __esm({
     "src/adapters/WebRTCRemoteAdapter.ts"() {
       "use strict";
@@ -154423,7 +154439,8 @@ ${toHex(hashedRequest)}`;
       init_LRUCache();
       init_Constants();
       init_Environment();
-      WebRTCRemoteAdapter = class extends EventEmitter {
+      _WebRTCRemoteAdapter = class _WebRTCRemoteAdapter extends EventEmitter {
+        // 30 seconds
         constructor(userId, prefix = "", config3 = {}) {
           super();
           this.channels = /* @__PURE__ */ new Set();
@@ -154434,6 +154451,7 @@ ${toHex(hashedRequest)}`;
           this.enablePEX = false;
           this.seenMessages = /* @__PURE__ */ new Set();
           this.seenMessagesQueue = [];
+          this.channelSendCounts = /* @__PURE__ */ new WeakMap();
           this.peerId = userId;
           this.prefix = prefix;
           if (this.prefix && !this.prefix.endsWith("/")) {
@@ -154568,6 +154586,10 @@ ${toHex(hashedRequest)}`;
               }
               this.markMessageAsSeen(msg.msgId);
             }
+            if (msg.timestamp && Date.now() - msg.timestamp > _WebRTCRemoteAdapter.MSG_MAX_AGE_MS) {
+              Logger.debug("WebRTC", `Dropping stale message (age ${Date.now() - msg.timestamp}ms) from ${msg.senderId}`);
+              return;
+            }
             if (msg.type === "relay_signal") {
               if (msg.to === this.peerId) {
                 Logger.info("WebRTC", `Received relayed signal from ${msg.from}`);
@@ -154588,7 +154610,13 @@ ${toHex(hashedRequest)}`;
             }
             if (msg.type === "peer_list") {
               if (this.enablePEX && msg.peerList) {
-                this.emit("pex:peers", { from: msg.senderId, peers: msg.peerList });
+                const isDirectPeer = Array.from(this.channelsByUserId.entries()).some(([uid, ch]) => uid === msg.senderId && ch === sourceChannel);
+                const wasSignatureVerified = !!(this.verify && msg.signature && msg.signingPublicKey);
+                if (isDirectPeer || wasSignatureVerified) {
+                  this.emit("pex:peers", { from: msg.senderId, peers: msg.peerList });
+                } else {
+                  Logger.warn("WebRTC", `Ignoring unverified peer_list from ${msg.senderId} (not a direct peer, no valid signature).`);
+                }
               }
               return;
             }
@@ -154677,6 +154705,28 @@ ${toHex(hashedRequest)}`;
             Logger.warn("WebRTC", `Failed to parse message: ${e10.message}`);
           }
         }
+        /**
+         * Rate-limited send to a single channel. Returns false if the channel is over its burst limit.
+         * Uses a simple sliding-window token bucket: GOSSIP_BURST_LIMIT sends per GOSSIP_WINDOW_MS.
+         */
+        rateLimitedSend(channel, msgStr) {
+          const now = Date.now();
+          let bucket = this.channelSendCounts.get(channel);
+          if (!bucket || now - bucket.windowStart >= _WebRTCRemoteAdapter.GOSSIP_WINDOW_MS) {
+            bucket = { count: 0, windowStart: now };
+            this.channelSendCounts.set(channel, bucket);
+          }
+          if (bucket.count >= _WebRTCRemoteAdapter.GOSSIP_BURST_LIMIT) {
+            Logger.warn("WebRTC", `Rate limit hit \u2014 dropping gossip message to a peer.`);
+            return false;
+          }
+          bucket.count++;
+          try {
+            channel.send(msgStr);
+          } catch (e10) {
+          }
+          return true;
+        }
         broadcast(msg, excludeChannel) {
           if (this.sign && this.signingPublicKey) {
             msg.signingPublicKey = this.signingPublicKey;
@@ -154686,10 +154736,7 @@ ${toHex(hashedRequest)}`;
           const msgStr = JSON.stringify(msg);
           for (const channel of this.channels) {
             if (channel !== excludeChannel) {
-              try {
-                channel.send(msgStr);
-              } catch (e10) {
-              }
+              this.rateLimitedSend(channel, msgStr);
             }
           }
         }
@@ -154706,7 +154753,8 @@ ${toHex(hashedRequest)}`;
             data: Buffer2.from(data).toString("base64"),
             senderId: this.peerId,
             msgId: this.generateMsgId(),
-            ttl: this.defaultTTL
+            ttl: this.defaultTTL,
+            timestamp: Date.now()
           };
           this.markMessageAsSeen(msg.msgId);
           Logger.debug("WebRTC", `Broadcasting push for ${key} (msgId: ${msg.msgId})`);
@@ -154789,6 +154837,13 @@ ${toHex(hashedRequest)}`;
         async deleteFile(path2) {
         }
       };
+      // Gossip backpressure: token-bucket per channel
+      // Each channel is allowed at most GOSSIP_BURST_LIMIT messages per GOSSIP_WINDOW_MS.
+      _WebRTCRemoteAdapter.GOSSIP_WINDOW_MS = 1e3;
+      _WebRTCRemoteAdapter.GOSSIP_BURST_LIMIT = 20;
+      // Message timestamp TTL enforcement: drop messages older than MSG_MAX_AGE_MS
+      _WebRTCRemoteAdapter.MSG_MAX_AGE_MS = 3e4;
+      WebRTCRemoteAdapter = _WebRTCRemoteAdapter;
     }
   });
 
@@ -155335,12 +155390,41 @@ ${toHex(hashedRequest)}`;
       init_Constants();
       init_Errors();
       SyncWorkerProxy = class extends EventEmitter {
-        constructor(workerUrl) {
+        constructor(workerUrl, integrity) {
           super();
           this.workerUrl = workerUrl;
+          this.integrity = integrity;
           this.worker = null;
           this.messageId = 0;
           this.pendingPromises = /* @__PURE__ */ new Map();
+        }
+        /**
+         * Fetches the worker script and verifies its integrity against the given SRI hash.
+         * Returns a Blob URL that can be used to create a same-origin Worker.
+         * Throws SyncError if the hash does not match.
+         */
+        async fetchAndVerifyWorker(url, integrity) {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new SyncError(`Failed to fetch worker script: ${response.status} ${response.statusText}`);
+          }
+          const scriptText = await response.text();
+          const scriptBytes = new TextEncoder().encode(scriptText);
+          const match = integrity.match(/^(sha(?:256|384|512))-(.+)$/);
+          if (!match) {
+            throw new SyncError(`Invalid integrity format: "${integrity}". Expected "sha256-<base64>", "sha384-...", or "sha512-...".`);
+          }
+          const algorithm = match[1].toUpperCase().replace("SHA", "SHA-");
+          const expectedBase64 = match[2];
+          const hashBuffer = await crypto.subtle.digest(algorithm, scriptBytes);
+          const hashBase64 = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+          if (hashBase64 !== expectedBase64) {
+            throw new SyncError(
+              `Worker script integrity check FAILED for ${url}. Expected: ${expectedBase64}, Got: ${hashBase64}. This may indicate a supply-chain attack or stale deployment.`
+            );
+          }
+          const blob = new Blob([scriptText], { type: "application/javascript" });
+          return URL.createObjectURL(blob);
         }
         /**
          * Initializes the worker and the Sovereign instance inside it.
@@ -155348,7 +155432,11 @@ ${toHex(hashedRequest)}`;
         async init(config3) {
           if (!this.worker) {
             try {
-              this.worker = new Worker(this.workerUrl);
+              let workerSrc = this.workerUrl;
+              if (this.integrity && typeof crypto !== "undefined" && crypto.subtle && typeof fetch !== "undefined") {
+                workerSrc = await this.fetchAndVerifyWorker(this.workerUrl, this.integrity);
+              }
+              this.worker = new Worker(workerSrc);
               this.worker.onmessage = this.handleMessage.bind(this);
               this.worker.onerror = (err) => {
                 console.error("[SyncWorkerProxy] Worker error:", err);
@@ -155438,9 +155526,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/tweetnacl/nacl-fast.js
+  // ../SovereignS3nc/node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
-    "node_modules/tweetnacl/nacl-fast.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/tweetnacl/nacl-fast.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -157679,7 +157767,7 @@ ${toHex(hashedRequest)}`;
       init_S3RemoteAdapter();
       init_Constants();
       init_Errors();
-      KeyManager = class {
+      KeyManager = class _KeyManager {
         constructor(ctx) {
           this.ctx = ctx;
         }
@@ -157718,15 +157806,60 @@ ${toHex(hashedRequest)}`;
             throw new AuthError(`Decryption failed (key: ${key.substring(0, 6)}...): ${e10.message}`);
           }
         }
-        deriveSharedSecret(otherPublicKey) {
+        /**
+         * Derives a shared secret from the local private key and a remote public key using X25519,
+         * then applies HKDF-SHA256 for proper domain separation before returning the hex-encoded AES key.
+         *
+         * @param otherPublicKey - Hex-encoded X25519 public key of the remote party.
+         * @param context - HKDF info label for domain separation. Defaults to 'SovereignS3nc-DM-v2'.
+         *                  Pass 'SovereignS3nc-DM-v1-raw' to obtain the legacy (raw) derived secret
+         *                  for decrypting data encrypted before HKDF was introduced.
+         */
+        deriveSharedSecret(otherPublicKey, context = "SovereignS3nc-DM-v2") {
           if (!this.ctx.config.encryptionKey) throw new AuthError("Identity key not initialized");
           const mySecretKey = Buffer2.from(this.ctx.config.encryptionKey, "hex");
           const theirPublicKey = Buffer2.from(otherPublicKey, "hex");
           if (theirPublicKey.length !== 32) {
             throw new AuthError(`Invalid public key size: expected 32 bytes, got ${theirPublicKey.length}. Key: ${otherPublicKey.substring(0, 10)}...`);
           }
-          const shared = nacl.box.before(theirPublicKey, mySecretKey);
-          return Buffer2.from(shared).toString("hex");
+          const rawShared = nacl.box.before(theirPublicKey, mySecretKey);
+          if (context === "SovereignS3nc-DM-v1-raw") {
+            return Buffer2.from(rawShared).toString("hex");
+          }
+          const derived = _KeyManager.hkdfSha256(
+            rawShared,
+            Buffer2.alloc(0),
+            // zero-length salt
+            Buffer2.from(context, "utf8"),
+            // info / domain label
+            32
+            // 32 bytes = 256-bit AES key
+          );
+          return Buffer2.from(derived).toString("hex");
+        }
+        /**
+         * Cross-platform RFC 5869 HKDF-SHA256 implementation compatible with Node.js and browser runtimes.
+         */
+        static hkdfSha256(ikm, salt, info, length) {
+          const actualSalt = salt.length === 0 ? Buffer2.alloc(32, 0) : Buffer2.from(salt);
+          const prk = createHmac("sha256", actualSalt).update(Buffer2.from(ikm)).digest();
+          const blocks = [];
+          let currentBlock = Buffer2.alloc(0);
+          let generatedBytes = 0;
+          let counter = 1;
+          while (generatedBytes < length) {
+            const hmac2 = createHmac("sha256", prk);
+            if (currentBlock.length > 0) {
+              hmac2.update(currentBlock);
+            }
+            hmac2.update(Buffer2.from(info));
+            hmac2.update(Buffer2.from([counter]));
+            currentBlock = hmac2.digest();
+            blocks.push(currentBlock);
+            generatedBytes += currentBlock.length;
+            counter++;
+          }
+          return Buffer2.concat(blocks).subarray(0, length);
         }
         getHashedUserId(userId, isPrivate) {
           if (!isPrivate || userId === "global" || userId === "admin" || userId === "" || userId === "root") {
@@ -157786,6 +157919,7 @@ ${toHex(hashedRequest)}`;
                 if (new TextDecoder().decode(decrypted) === "SovereignSentinel") {
                   masterKey = derived2;
                   Logger.info("Keys", "Verified V2 keys.");
+                  await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                 }
               } catch (e10) {
               }
@@ -157800,6 +157934,7 @@ ${toHex(hashedRequest)}`;
                   privateId = legacyPrivateId;
                   isLegacy = true;
                   Logger.warn("Keys", "Detected Legacy (1000 iterations) keys. Migration is recommended.");
+                  await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                   if (remote && privateId !== v2PrivateId) {
                     if (!this.ctx.remoteFactory && this.ctx.config.s3) {
                       this.ctx.setRemote(new S3RemoteAdapter(this.ctx.config.s3, {
@@ -158012,6 +158147,39 @@ ${toHex(hashedRequest)}`;
           } catch (e10) {
           }
         }
+        /**
+         * Rotates persistent identity keys independently of password.
+         * Encrypts the new keypair with the master key and updates local/remote storage.
+         */
+        async rotateIdentityKeys(newKeyPair) {
+          if (!this.ctx.config.password) {
+            throw new AuthError("Password is required to rotate identity keys.");
+          }
+          let privateKey;
+          let publicKey;
+          if (newKeyPair) {
+            privateKey = newKeyPair.privateKey;
+            publicKey = newKeyPair.publicKey;
+          } else {
+            const kp = nacl.box.keyPair();
+            privateKey = Buffer2.from(kp.secretKey).toString("hex");
+            publicKey = Buffer2.from(kp.publicKey).toString("hex");
+          }
+          const keyInfo = { privateKey, publicKey };
+          const keysSalt = randomBytes(DEFAULTS.SALT_SIZE);
+          const keysDerivedKey = await this.pbkdf2(this.ctx.config.password, keysSalt, DEFAULTS.PBKDF2_ITERATIONS);
+          const encryptedKeys = await this.encrypt(Buffer2.from(JSON.stringify(keyInfo)), keysDerivedKey.toString("hex"));
+          const v2Keys = Buffer2.concat([keysSalt, encryptedKeys]);
+          await this.ctx.storage.saveDailyDb("_keys", "private", v2Keys);
+          this.ctx.config.encryptionKey = privateKey;
+          this.ctx.config.publicEncryptionKey = publicKey;
+          const remote = this.ctx.getRemote();
+          if (remote) {
+            await remote.uploadFile(PATHS.KEYS, v2Keys);
+          }
+          Logger.info("Keys", `Successfully rotated identity keys for ${this.ctx.config.paths.userId}`);
+          return { privateKey, publicKey };
+        }
       };
     }
   });
@@ -158049,6 +158217,7 @@ ${toHex(hashedRequest)}`;
             if (forceSync) {
               Logger.info("Sync", "FORCE SYNC initiated. Bypassing ETag cache.");
             }
+            this.ctx.emitSyncProgress("start");
             let remoteManifest = null;
             const publicRemote = this.ctx.getPublicRemote();
             if (publicRemote && !forceSync) {
@@ -158085,16 +158254,20 @@ ${toHex(hashedRequest)}`;
               () => this.syncDay(dateStr, "private", void 0, this.ctx.getRemote(), remoteManifest),
               () => this.syncDay(dateStr, "public", void 0, this.ctx.getPublicRemote(), remoteManifest)
             ]);
+            this.ctx.emitSyncProgress("syncing_own_data", 0, dateTasks.length);
             await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE);
+            this.ctx.emitSyncProgress("registering");
             await this.syncUserFile(remoteManifest);
             await this.ctx.ensureGlobalRegistration();
             await this.ctx.updateFollowingPublicKeys();
             if (this.ctx.config.autoFollowDiscoveredUsers !== false) {
+              this.ctx.emitSyncProgress("discovering_users");
               const userList = await this.ctx.discoverUsers();
               if (userList) {
                 await this.ctx.autoFollowUsers(userList);
               }
             }
+            this.ctx.emitSyncProgress("syncing_followed");
             await this.syncFollowedUsers(today);
             await this.ctx.syncGroups(today);
             const localManifest = await this.ctx.generateManifest();
@@ -158114,13 +158287,58 @@ ${toHex(hashedRequest)}`;
               const relativePath = filePath.substring(type.length + 1);
               return () => this.syncGenericFile(relativePath, type, remoteManifest);
             }).filter((t14) => t14 !== null);
+            this.ctx.emitSyncProgress("syncing_blobs", 0, blobTasks.length);
             await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
             await this.ctx.processModerationRequests();
             await this.ctx.syncManifest();
+            await this.applyRetentionPolicy();
             await this.ctx.storage.setLastSyncDate(today);
+            this.ctx.emitSyncProgress("complete");
           } finally {
             this.ctx.setSyncing(false);
           }
+        }
+        /**
+         * Enforces local data retention policy by pruning date-partitioned files
+         * that exceed the configured age limits (maxDaysOwnData, maxDaysFollowedData).
+         * Returns the count of deleted files.
+         */
+        async applyRetentionPolicy() {
+          const policy = this.ctx.config.retentionPolicy;
+          if (!policy) return 0;
+          let prunedCount = 0;
+          const now = /* @__PURE__ */ new Date();
+          const getCutoff = (days) => {
+            const d8 = new Date(now);
+            d8.setUTCDate(d8.getUTCDate() - days);
+            return SovereignS3nc.getDateStr(d8);
+          };
+          const allFiles = await this.ctx.storage.listFiles("");
+          const dateRegex = /\b(\d{4}-\d{2}-\d{2})\b/;
+          for (const file of allFiles) {
+            const match = file.match(dateRegex);
+            if (!match) continue;
+            const fileDate = match[1];
+            if (policy.maxDaysFollowedData !== void 0 && file.startsWith(PATHS.FOLLOWED_PREFIX)) {
+              const cutoff = getCutoff(policy.maxDaysFollowedData);
+              if (fileDate < cutoff) {
+                await this.ctx.storage.deleteFile(file);
+                prunedCount++;
+                Logger.debug("Retention", `Pruned old followed file: ${file}`);
+              }
+            } else if (policy.maxDaysOwnData !== void 0 && !file.startsWith(PATHS.FOLLOWED_PREFIX)) {
+              const cutoff = getCutoff(policy.maxDaysOwnData);
+              if (fileDate < cutoff) {
+                await this.ctx.storage.deleteFile(file);
+                prunedCount++;
+                Logger.debug("Retention", `Pruned old own file: ${file}`);
+              }
+            }
+          }
+          if (prunedCount > 0) {
+            Logger.info("Retention", `Applied retention policy: pruned ${prunedCount} old files.`);
+          }
+          return prunedCount;
         }
         async syncDay(date2, type, localPublicKey, remoteOverride, remoteManifest) {
           try {
@@ -158639,6 +158857,42 @@ ${toHex(hashedRequest)}`;
           }
           Logger.info("Group", `Updated group ${group3.name} (${group3.id})`);
         }
+        /**
+         * Updates granular permissions for a group member. Caller must be group owner or admin.
+         */
+        async setMemberPermissions(groupId, targetUserId, permissions) {
+          const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
+          const localInfo = await this.ctx.storage.getFile(infoPath);
+          if (!localInfo) throw new Error(`Group ${groupId} not found`);
+          const group3 = JSON.parse(new TextDecoder().decode(localInfo));
+          const caller = group3.members.find((m8) => m8.userId === this.ctx.userId);
+          if (!caller || caller.role !== "owner" && caller.role !== "admin") {
+            throw new AuthError(`Permission denied: Only group owners or admins can set member permissions`);
+          }
+          const target = group3.members.find((m8) => m8.userId === targetUserId);
+          if (!target) throw new Error(`Member ${targetUserId} not found in group ${groupId}`);
+          target.permissions = { ...target.permissions, ...permissions };
+          await this.updateGroup(group3);
+          return group3;
+        }
+        /**
+         * Updates a member's role (owner, admin, member). Caller must be the group owner.
+         */
+        async setMemberRole(groupId, targetUserId, role) {
+          const infoPath = `${PATHS.PRIVATE_PREFIX}${PATHS.GROUPS_DIR}${groupId}/info${PATHS.JSON_EXT}`;
+          const localInfo = await this.ctx.storage.getFile(infoPath);
+          if (!localInfo) throw new Error(`Group ${groupId} not found`);
+          const group3 = JSON.parse(new TextDecoder().decode(localInfo));
+          const caller = group3.members.find((m8) => m8.userId === this.ctx.userId);
+          if (!caller || caller.role !== "owner") {
+            throw new AuthError(`Permission denied: Only the group owner can change member roles`);
+          }
+          const target = group3.members.find((m8) => m8.userId === targetUserId);
+          if (!target) throw new Error(`Member ${targetUserId} not found in group ${groupId}`);
+          target.role = role;
+          await this.updateGroup(group3);
+          return group3;
+        }
         async joinGroup(group3) {
           group3.members.forEach((m8) => {
             if (!m8.status) m8.status = "pending";
@@ -158909,7 +159163,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/discovery/GlobalRegistry.ts
-  var GlobalRegistry;
+  var REGISTRY_ENTRIES_PREFIX, LEGACY_REGISTRY_PATH, _GlobalRegistry, GlobalRegistry;
   var init_GlobalRegistry = __esm({
     "src/discovery/GlobalRegistry.ts"() {
       "use strict";
@@ -158919,49 +159173,162 @@ ${toHex(hashedRequest)}`;
       init_Logger();
       init_SovereignS3nc();
       init_Constants();
-      GlobalRegistry = class {
+      REGISTRY_ENTRIES_PREFIX = "users/";
+      LEGACY_REGISTRY_PATH = PATHS.USERS_REGISTRY;
+      _GlobalRegistry = class _GlobalRegistry {
         constructor(ctx) {
           this.ctx = ctx;
+          // 7 days
+          this.lastRegistrationAt = 0;
         }
+        // ─── Internal helpers ───────────────────────────────────────────────────────
+        entryPath(userId) {
+          return `${REGISTRY_ENTRIES_PREFIX}${userId}.json`;
+        }
+        /**
+         * Returns the canonical byte sequence to sign/verify for an entry.
+         * Deliberately excludes `signature` itself.
+         */
+        signPayload(entry) {
+          const payload = JSON.stringify({
+            userId: entry.userId,
+            publicKey: entry.publicKey,
+            signingPublicKey: entry.signingPublicKey,
+            timestamp: entry.timestamp
+          });
+          return new TextEncoder().encode(payload);
+        }
+        verifyEntry(entry) {
+          const now = Date.now();
+          if (entry.timestamp) {
+            const age = now - entry.timestamp;
+            if (age > _GlobalRegistry.ENTRY_MAX_AGE_MS) {
+              Logger.warn("Registry", `Entry for ${entry.userId} is too old (${Math.round(age / 864e5)}d). Rejecting.`);
+              return false;
+            }
+            if (age < -3e5) {
+              Logger.warn("Registry", `Entry for ${entry.userId} has a future timestamp. Possible replay attack. Rejecting.`);
+              return false;
+            }
+          }
+          if (!this.ctx.verify) return true;
+          if (!entry.signature || !entry.signingPublicKey) {
+            Logger.warn("Registry", `Entry for ${entry.userId} is unsigned \u2014 rejecting.`);
+            return false;
+          }
+          try {
+            const payload = this.signPayload(entry);
+            const sig = Buffer2.from(entry.signature, "hex");
+            return this.ctx.verify(payload, sig, entry.signingPublicKey);
+          } catch (e10) {
+            Logger.warn("Registry", `Signature verification failed for ${entry.userId}: ${e10.message}`);
+            return false;
+          }
+        }
+        // ─── Public API ─────────────────────────────────────────────────────────────
+        /**
+         * Uploads the current user's signed registry entry to `users/{userId}.json`.
+         * Only touches the current user's own file — does NOT overwrite other users.
+         * Rate-limited: re-uploads are suppressed within REGISTRATION_COOLDOWN_MS of the last upload.
+         */
         async ensureGlobalRegistration() {
           const globalRemote = this.ctx.getGlobalRemote();
           if (!globalRemote) return;
-          const remotePath = PATHS.USERS_REGISTRY;
           const myUserId = this.ctx.config.paths.userId;
           const myPublicKey = this.ctx.config.publicEncryptionKey;
-          Logger.info("Discovery", `Checking global registry at ${remotePath}`);
-          let userList = [];
-          let remoteData = null;
-          try {
-            const result = await globalRemote.downloadFile(remotePath, void 0, DEFAULTS.NETWORK_TIMEOUT);
-            if (result && result.data) remoteData = result.data;
-          } catch (e10) {
-            Logger.warn("Discovery", `Could not reach global registry (offline?): ${e10.message}`);
+          const signingPublicKey = this.ctx.config.signingPublicKey;
+          if (!myPublicKey) {
+            Logger.warn("Registry", "No public key available \u2014 skipping registration.");
             return;
           }
-          if (remoteData) {
+          const now = Date.now();
+          if (this.lastRegistrationAt > 0 && now - this.lastRegistrationAt < _GlobalRegistry.REGISTRATION_COOLDOWN_MS) {
+            Logger.debug("Discovery", `Registry registration rate-limited \u2014 last upload ${Math.round((now - this.lastRegistrationAt) / 1e3)}s ago, cooldown is ${_GlobalRegistry.REGISTRATION_COOLDOWN_MS / 1e3}s.`);
+            return;
+          }
+          const remotePath = this.entryPath(myUserId);
+          Logger.info("Discovery", `Checking individual registry entry at ${remotePath}`);
+          try {
+            const result = await globalRemote.downloadFile(remotePath, void 0, DEFAULTS.NETWORK_TIMEOUT);
+            if (result?.data) {
+              const existing = JSON.parse(new TextDecoder().decode(result.data));
+              if (existing.userId === myUserId && existing.publicKey === myPublicKey) {
+                Logger.debug("Discovery", `Registry entry for ${myUserId} is already current.`);
+                this.lastRegistrationAt = now;
+                return;
+              }
+            }
+          } catch (e10) {
+            Logger.debug("Discovery", `No existing registry entry for ${myUserId}. Creating.`);
+          }
+          const timestamp = now;
+          const entryWithoutSig = {
+            userId: myUserId,
+            publicKey: myPublicKey,
+            signingPublicKey: signingPublicKey || "",
+            timestamp
+          };
+          let signature = "";
+          if (this.ctx.sign && signingPublicKey) {
+            const payload = this.signPayload(entryWithoutSig);
+            signature = Buffer2.from(this.ctx.sign(payload)).toString("hex");
+          } else {
+            Logger.warn("Registry", "Signing key not available \u2014 publishing unsigned entry.");
+          }
+          const entry = { ...entryWithoutSig, signature };
+          const data = new TextEncoder().encode(JSON.stringify(entry));
+          try {
+            await globalRemote.uploadFile(remotePath, data);
+            this.lastRegistrationAt = now;
+            Logger.info("Discovery", `Registered/Updated entry for ${myUserId}.`);
+          } catch (e10) {
+            Logger.warn("Discovery", `Failed to upload registry entry: ${e10.message}`);
+          }
+        }
+        /**
+         * Fetches and verifies the complete registry by reading all `users/*.json` entries.
+         * Also reads the legacy `users.json` and merges entries (V2 takes priority for duplicates).
+         */
+        async getPublicRegistry() {
+          const globalRemote = this.ctx.getGlobalRemote();
+          if (!globalRemote) return [];
+          Logger.info("Discovery", "Fetching public registry (per-user signed entries)...");
+          const verifiedMap = /* @__PURE__ */ new Map();
+          if (globalRemote.listFiles) {
             try {
-              userList = JSON.parse(new TextDecoder().decode(remoteData));
+              const entryPaths = await globalRemote.listFiles(REGISTRY_ENTRIES_PREFIX);
+              const downloads = entryPaths.map(async (p7) => {
+                try {
+                  const result = await globalRemote.downloadFile(p7, void 0, DEFAULTS.NETWORK_TIMEOUT);
+                  if (!result?.data) return;
+                  const entry = JSON.parse(new TextDecoder().decode(result.data));
+                  if (this.verifyEntry(entry)) {
+                    verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+                  } else {
+                    Logger.warn("Registry", `Dropping unverified entry for ${entry.userId}.`);
+                  }
+                } catch (e10) {
+                }
+              });
+              await Promise.all(downloads);
             } catch (e10) {
-              Logger.warn("Discovery", "Global user registry corrupted. Resetting.");
-              userList = [];
+              Logger.warn("Discovery", `Could not list registry entries: ${e10.message}`);
             }
           }
-          if (!userList.find((u7) => u7.userId === myUserId) || userList.find((u7) => u7.userId === myUserId)?.publicKey !== myPublicKey) {
-            Logger.info("Discovery", `Registering/Updating user ${myUserId} in global registry.`);
-            const existing = userList.find((u7) => u7.userId === myUserId);
-            if (existing) {
-              existing.publicKey = myPublicKey;
-            } else {
-              userList.push({ userId: myUserId, publicKey: myPublicKey });
+          try {
+            const result = await globalRemote.downloadFile(LEGACY_REGISTRY_PATH, void 0, DEFAULTS.NETWORK_TIMEOUT);
+            if (result?.data) {
+              const legacyList = JSON.parse(new TextDecoder().decode(result.data));
+              for (const entry of legacyList) {
+                if (!verifiedMap.has(entry.userId)) {
+                  verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+                }
+              }
+              Logger.debug("Discovery", `Merged ${legacyList.length} legacy users into registry.`);
             }
-            const newData = new TextEncoder().encode(JSON.stringify(userList));
-            try {
-              await globalRemote.uploadFile(remotePath, newData);
-            } catch (e10) {
-              Logger.warn("Discovery", `Failed to update global registry: ${e10.message}`);
-            }
+          } catch (e10) {
           }
+          return Array.from(verifiedMap.values());
         }
         async updateFollowingPublicKeys() {
           try {
@@ -158978,38 +159345,15 @@ ${toHex(hashedRequest)}`;
             Logger.warn("Discovery", `Failed to update following public keys: ${e10.message}`);
           }
         }
-        async getPublicRegistry() {
-          const globalRemote = this.ctx.getGlobalRemote();
-          if (!globalRemote) return [];
-          Logger.info("Discovery", "Fetching public registry...");
-          const remotePath = PATHS.USERS_REGISTRY;
-          const result = await globalRemote.downloadFile(remotePath, void 0, DEFAULTS.NETWORK_TIMEOUT);
-          if (!result || !result.data) return [];
-          try {
-            return JSON.parse(new TextDecoder().decode(result.data));
-          } catch (e10) {
-            return [];
-          }
-        }
         async discoverUsers() {
           const globalRemote = this.ctx.getGlobalRemote();
           if (!globalRemote) return null;
-          const remotePath = PATHS.USERS_REGISTRY;
-          let remoteData = null;
           try {
-            const result = await globalRemote.downloadFile(remotePath, void 0, DEFAULTS.NETWORK_TIMEOUT);
-            if (result && result.data) remoteData = result.data;
-          } catch (e10) {
-            Logger.warn("Discovery", "Failed to download global registry (offline?)", e10.message);
-            return null;
-          }
-          if (!remoteData) return null;
-          try {
-            const users = JSON.parse(new TextDecoder().decode(remoteData));
+            const users = await this.getPublicRegistry();
             const blacklist = this.ctx.config.blacklist || [];
             return users.filter((u7) => !blacklist.includes(u7.userId));
           } catch (e10) {
-            Logger.warn("Discovery", "Failed to parse global registry", e10);
+            Logger.warn("Discovery", "Failed to discover users", e10.message);
             return null;
           }
         }
@@ -159031,6 +159375,12 @@ ${toHex(hashedRequest)}`;
           }
         }
       };
+      /** Cooldown in ms between registry re-uploads (prevents flooding on rapid sync() calls). */
+      _GlobalRegistry.REGISTRATION_COOLDOWN_MS = 5 * 6e4;
+      // 5 minutes
+      /** Maximum acceptable age of a received registry entry — prevents replay of stale entries. */
+      _GlobalRegistry.ENTRY_MAX_AGE_MS = 7 * 24 * 60 * 6e4;
+      GlobalRegistry = _GlobalRegistry;
     }
   });
 
@@ -159072,9 +159422,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/universalify/index.js
+  // ../SovereignS3nc/node_modules/universalify/index.js
   var require_universalify = __commonJS({
-    "node_modules/universalify/index.js"(exports22) {
+    "../SovereignS3nc/node_modules/universalify/index.js"(exports22) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -159103,7 +159453,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-CjPlbOtt.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CjPlbOtt.js
   function e8(e10, r8) {
     if (null == e10) throw new TypeError("Cannot convert first argument to object");
     for (var t14 = Object(e10), n7 = 1; n7 < arguments.length; n7++) {
@@ -159829,7 +160179,7 @@ ${toHex(hashedRequest)}`;
   }
   var r6, t12, e$14, r$13, n7, o7, c7, l9, i7, a7, u7, f8, p7, s7, y6, b5, g5, h6, $3, j5, w5, r$23, e$23, o$14, n$14, a$13, c$14, l$14, u$14, f$14, t$13, f$23, e$32, l$23, t$23, n$23, o$23, r$32, e$42, o$33, t$33, n$32, y$12, a$23, i$14, d5, f$32, u$24, A5, l$32, v7, P5, c$23, t$42, p$13, o$42, i$23, a$32, l$42, r$42, n$42, i$32, o$52, c$32, f$42, u$32, s$14, a$42, l$52, p$22, m5, N5, e$52, i$42, n$52, t$52, u$42, a$52, m$13, o$62, s$22, f$52, c$42, a$62, u$52, l$62, g$12, h$13, y$22, b$12, v$12, d$13, E5, w$12, S6, j$12, O5, x5, q4, R5, A$12, k5, _4, T5, P$12, I5, D5, F5, N$12, L5, M5, X4, Z4, $$12, et2;
   var init_chunk_CjPlbOtt = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-CjPlbOtt.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-CjPlbOtt.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -160172,7 +160522,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-DHWh-hmB.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DHWh-hmB.js
   function dew$111() {
     if (_dewExec$111) return exports$112;
     _dewExec$111 = true;
@@ -161140,7 +161490,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$112, _dewExec$111, exports$211, t$14, o$24, n$24, e$24, r$24, c$15, s6, u$15, a$14, d6, h$14, p$14, n$15, r$14, t13, o$15, h7, e9, a6, o6, n6, i6, l6, p6, c6, u6, f7, m6, v8, g6, y7, b6, exports13, _dewExec12, path, processPlatform$1, CHAR_BACKWARD_SLASH$1, CHAR_FORWARD_SLASH$1, CHAR_LOWERCASE_A$1, CHAR_LOWERCASE_Z$1, isWindows$1, forwardSlashRegEx$1, percentRegEx$1, backslashRegEx$1, newlineRegEx$1, carriageReturnRegEx$1, tabRegEx$1, processPlatform, CHAR_BACKWARD_SLASH, CHAR_FORWARD_SLASH, CHAR_LOWERCASE_A, CHAR_LOWERCASE_Z, isWindows, forwardSlashRegEx, percentRegEx, backslashRegEx, newlineRegEx, carriageReturnRegEx, tabRegEx;
   var init_chunk_DHWh_hmB = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-DHWh-hmB.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DHWh-hmB.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -161469,7 +161819,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/punycode.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/punycode.js
   function dew13() {
     if (_dewExec13) return exports$113;
     _dewExec13 = true;
@@ -161707,7 +162057,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$113, _dewExec13, exports14, decode, encode, toASCII, toUnicode, ucs2, version3;
   var init_punycode = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/punycode.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/punycode.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -161723,7 +162073,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js
   function dew$k2() {
     if (_dewExec$k2) return exports$k2;
     _dewExec$k2 = true;
@@ -162447,7 +162797,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$k2, _dewExec$k2, exports$j2, _dewExec$j2, exports$i2, _dewExec$i2, exports$h2, _dewExec$h2, exports$g3, _dewExec$g3, exports$f3, _dewExec$f3, exports$e3, _dewExec$e3, exports$d3, _dewExec$d3, exports$c3, _dewExec$c3, exports$b3, _dewExec$b3, exports$a3, _dewExec$a3, exports$93, _dewExec$93, exports$83, _dewExec$83, exports$73, _dewExec$73, exports$63, _dewExec$63, exports$53, _dewExec$53, exports$43, _dewExec$43, exports$311, _dewExec$311, exports$212, _dewExec$211, exports$114, _dewExec$112, exports15, _dewExec14;
   var init_chunk_DtcTpLWz = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -162496,7 +162846,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/chunk-BlJi4mNy.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-BlJi4mNy.js
   function dew15() {
     if (_dewExec15) return exports$115;
     _dewExec15 = true;
@@ -162886,7 +163236,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$115, _dewExec15, exports16;
   var init_chunk_BlJi4mNy = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/chunk-BlJi4mNy.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/chunk-BlJi4mNy.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -162897,7 +163247,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/url.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/url.js
   function dew$74() {
     if (_dewExec$74) return exports$84;
     _dewExec$74 = true;
@@ -164831,7 +165181,7 @@ ${toHex(hashedRequest)}`;
   }
   var empty, exports$84, _dewExec$74, _global7, exports$74, _dewExec$64, exports$64, _dewExec$54, exports$54, _dewExec$44, exports$44, _dewExec$312, exports$312, _dewExec$212, exports$213, _dewExec$113, exports$116, _dewExec16, exports17, processPlatform2, Url, format2, resolve, resolveObject, parse, _URL, CHAR_BACKWARD_SLASH2, CHAR_FORWARD_SLASH2, CHAR_LOWERCASE_A2, CHAR_LOWERCASE_Z2, isWindows2, forwardSlashRegEx2, percentRegEx2, backslashRegEx2, newlineRegEx2, carriageReturnRegEx2, tabRegEx2;
   var init_url = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/url.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/url.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -164887,7 +165237,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/fs.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/fs.js
   var fs_exports = {};
   __export(fs_exports, {
     Dir: () => Dir,
@@ -168605,7 +168955,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$h3, _dewExec$f4, exports$g4, _dewExec$e4, exports$f4, _dewExec$d4, exports$e4, _dewExec$c4, exports$d4, _dewExec$b4, _global$32, exports$c4, _dewExec$a4, exports$b4, _dewExec$94, exports$a4, _dewExec$84, _global$23, exports$94, _dewExec$75, exports$85, _dewExec$65, exports$75, _dewExec$55, _global$111, exports$65, _dewExec$45, exports$55, _dewExec$313, exports$45, _dewExec$213, _global8, exports$313, _dewExec$114, exports$214, _dewExec17, exports$117, exports18, vol, createFsFromVolume, fs, appendFile, appendFileSync, access, accessSync, chown, chownSync, chmod, chmodSync, close, closeSync, copyFile, copyFileSync, cp, cpSync, createReadStream, createWriteStream, exists, existsSync, fchown, fchownSync, fchmod, fchmodSync, fdatasync, fdatasyncSync, fstat, fstatSync, fsync, fsyncSync, ftruncate, ftruncateSync, futimes, futimesSync, lchown, lchownSync, lchmod, lchmodSync, link, linkSync, lstat, lstatSync, mkdir, mkdirSync, mkdtemp, mkdtempSync, open, openSync, opendir, opendirSync, readdir, readdirSync, read, readSync, readv, readvSync, readFile, readFileSync, readlink, readlinkSync, realpath, realpathSync, rename, renameSync, rm, rmSync, rmdir, rmdirSync, stat, statSync, symlink, symlinkSync, truncate, truncateSync, unwatchFile, unlink, unlinkSync, utimes, utimesSync, watch, watchFile, writeFile, writeFileSync, write, writeSync, writev, writevSync, Dir, Dirent, Stats, ReadStream, WriteStream, FileReadStream, FileWriteStream, _toUnixTimestamp, F_OK, R_OK, W_OK, X_OK, constants2, promises;
   var init_fs = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/fs.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/fs.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -168832,7 +169182,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/constants.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/constants.js
   var constants_exports = {};
   __export(constants_exports, {
     DH_CHECK_P_NOT_PRIME: () => DH_CHECK_P_NOT_PRIME,
@@ -169046,7 +169396,7 @@ ${toHex(hashedRequest)}`;
   });
   var constants3, DH_CHECK_P_NOT_PRIME, DH_CHECK_P_NOT_SAFE_PRIME, DH_NOT_SUITABLE_GENERATOR, DH_UNABLE_TO_CHECK_GENERATOR, E2BIG, EACCES, EADDRINUSE, EADDRNOTAVAIL, EAFNOSUPPORT, EAGAIN, EALREADY, EBADF, EBADMSG, EBUSY, ECANCELED, ECHILD, ECONNABORTED, ECONNREFUSED, ECONNRESET, EDEADLK, EDESTADDRREQ, EDOM, EDQUOT, EEXIST, EFAULT, EFBIG, EHOSTUNREACH, EIDRM, EILSEQ, EINPROGRESS, EINTR, EINVAL, EIO, EISCONN, EISDIR, ELOOP, EMFILE, EMLINK, EMSGSIZE, EMULTIHOP, ENAMETOOLONG, ENETDOWN, ENETRESET, ENETUNREACH, ENFILE, ENGINE_METHOD_ALL, ENGINE_METHOD_CIPHERS, ENGINE_METHOD_DH, ENGINE_METHOD_DIGESTS, ENGINE_METHOD_DSA, ENGINE_METHOD_ECDH, ENGINE_METHOD_ECDSA, ENGINE_METHOD_NONE, ENGINE_METHOD_PKEY_ASN1_METHS, ENGINE_METHOD_PKEY_METHS, ENGINE_METHOD_RAND, ENGINE_METHOD_STORE, ENOBUFS, ENODATA, ENODEV, ENOENT, ENOEXEC, ENOLCK, ENOLINK, ENOMEM, ENOMSG, ENOPROTOOPT, ENOSPC, ENOSR, ENOSTR, ENOSYS, ENOTCONN, ENOTDIR, ENOTEMPTY, ENOTSOCK, ENOTSUP, ENOTTY, ENXIO, EOPNOTSUPP, EOVERFLOW, EPERM, EPIPE, EPROTO, EPROTONOSUPPORT, EPROTOTYPE, ERANGE, EROFS, ESPIPE, ESRCH, ESTALE, ETIME, ETIMEDOUT, ETXTBSY, EWOULDBLOCK, EXDEV, F_OK2, NPN_ENABLED, O_APPEND, O_CREAT, O_DIRECTORY, O_EXCL, O_NOCTTY, O_NOFOLLOW, O_NONBLOCK, O_RDONLY, O_RDWR, O_SYMLINK, O_SYNC, O_TRUNC, O_WRONLY, POINT_CONVERSION_COMPRESSED, POINT_CONVERSION_HYBRID, POINT_CONVERSION_UNCOMPRESSED, RSA_NO_PADDING, RSA_PKCS1_OAEP_PADDING, RSA_PKCS1_PADDING, RSA_PKCS1_PSS_PADDING, RSA_SSLV23_PADDING, RSA_X931_PADDING, R_OK2, SIGABRT, SIGALRM, SIGBUS, SIGCHLD, SIGCONT, SIGFPE, SIGHUP, SIGILL, SIGINT, SIGIO, SIGIOT, SIGKILL, SIGPIPE, SIGPROF, SIGQUIT, SIGSEGV, SIGSTOP, SIGSYS, SIGTERM, SIGTRAP, SIGTSTP, SIGTTIN, SIGTTOU, SIGURG, SIGUSR1, SIGUSR2, SIGVTALRM, SIGWINCH, SIGXCPU, SIGXFSZ, SSL_OP_ALL, SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION, SSL_OP_CIPHER_SERVER_PREFERENCE, SSL_OP_CISCO_ANYCONNECT, SSL_OP_COOKIE_EXCHANGE, SSL_OP_CRYPTOPRO_TLSEXT_BUG, SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS, SSL_OP_EPHEMERAL_RSA, SSL_OP_LEGACY_SERVER_CONNECT, SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER, SSL_OP_MICROSOFT_SESS_ID_BUG, SSL_OP_MSIE_SSLV2_RSA_PADDING, SSL_OP_NETSCAPE_CA_DN_BUG, SSL_OP_NETSCAPE_CHALLENGE_BUG, SSL_OP_NETSCAPE_DEMO_CIPHER_CHANGE_BUG, SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG, SSL_OP_NO_COMPRESSION, SSL_OP_NO_QUERY_MTU, SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION, SSL_OP_NO_SSLv2, SSL_OP_NO_SSLv3, SSL_OP_NO_TICKET, SSL_OP_NO_TLSv1, SSL_OP_NO_TLSv1_1, SSL_OP_NO_TLSv1_2, SSL_OP_PKCS1_CHECK_1, SSL_OP_PKCS1_CHECK_2, SSL_OP_SINGLE_DH_USE, SSL_OP_SINGLE_ECDH_USE, SSL_OP_SSLEAY_080_CLIENT_DH_BUG, SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG, SSL_OP_TLS_BLOCK_PADDING_BUG, SSL_OP_TLS_D5_BUG, SSL_OP_TLS_ROLLBACK_BUG, S_IFBLK, S_IFCHR, S_IFDIR, S_IFIFO, S_IFLNK, S_IFMT, S_IFREG, S_IFSOCK, S_IRGRP, S_IROTH, S_IRUSR, S_IRWXG, S_IRWXO, S_IRWXU, S_IWGRP, S_IWOTH, S_IWUSR, S_IXGRP, S_IXOTH, S_IXUSR, UV_UDP_REUSEADDR, W_OK2, X_OK2;
   var init_constants13 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/constants.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/constants.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -169469,9 +169819,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/graceful-fs/polyfills.js
+  // ../SovereignS3nc/node_modules/graceful-fs/polyfills.js
   var require_polyfills = __commonJS({
-    "node_modules/graceful-fs/polyfills.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/graceful-fs/polyfills.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -169760,7 +170110,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/util.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/util.js
   var util_exports = {};
   __export(util_exports, {
     TextDecoder: () => TextDecoder2,
@@ -170926,7 +171276,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$c5, _dewExec$b5, exports$b5, _dewExec$a5, exports$a5, _dewExec$95, exports$95, _dewExec$85, exports$86, _dewExec$76, exports$76, _dewExec$66, exports$66, _dewExec$56, _global$24, exports$56, _dewExec$46, _global$112, exports$46, _dewExec$314, exports$314, _dewExec$214, exports$215, _dewExec$115, exports$118, _dewExec18, _global9, exports19, _extend, callbackify, debuglog, deprecate, format3, inherits, inspect, isArray, isBoolean, isBuffer, isDate, isError, isFunction, isNull, isNullOrUndefined, isNumber, isObject, isPrimitive, isRegExp, isString, isSymbol, isUndefined, log, promisify3, types, TextEncoder2, TextDecoder2;
   var init_util3 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/util.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/util.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -171016,7 +171366,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/stream.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/stream.js
   var stream_exports = {};
   __export(stream_exports, {
     Duplex: () => Duplex,
@@ -176535,7 +176885,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$p2, _dewExec$o2, exports$o2, _dewExec$n2, exports$n2, _dewExec$m2, exports$m2, _dewExec$l2, exports$l2, _dewExec$k3, exports$k3, _dewExec$j3, exports$j3, _dewExec$i3, exports$i3, _dewExec$h3, exports$h4, _dewExec$g4, exports$g5, _dewExec$f5, exports$f5, _dewExec$e5, exports$e5, _dewExec$d5, exports$d5, _dewExec$c5, exports$c6, _dewExec$b6, _global$25, exports$b6, _dewExec$a6, _global$113, exports$a6, _dewExec$96, exports$96, _dewExec$86, exports$87, _dewExec$77, exports$77, _dewExec$67, exports$67, _dewExec$57, exports$57, _dewExec$47, exports$47, _dewExec$315, exports$315, _dewExec$215, exports$216, _dewExec$116, _global10, exports$119, _dewExec19, exports20, Readable2, Writable, Duplex, Transform, PassThrough, finished, pipeline, Stream, promises2;
   var init_stream2 = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/stream.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/stream.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -176639,9 +176989,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/graceful-fs/legacy-streams.js
+  // ../SovereignS3nc/node_modules/graceful-fs/legacy-streams.js
   var require_legacy_streams = __commonJS({
-    "node_modules/graceful-fs/legacy-streams.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/graceful-fs/legacy-streams.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -176738,9 +177088,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/graceful-fs/clone.js
+  // ../SovereignS3nc/node_modules/graceful-fs/clone.js
   var require_clone = __commonJS({
-    "node_modules/graceful-fs/clone.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/graceful-fs/clone.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -176764,7 +177114,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/assert.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/assert.js
   var assert_exports = {};
   __export(assert_exports, {
     AssertionError: () => AssertionError,
@@ -178941,7 +179291,7 @@ ${toHex(hashedRequest)}`;
   }
   var exports$i4, _dewExec$h4, exports$h5, _dewExec$g5, exports$g6, _dewExec$f6, exports$f6, _dewExec$e6, exports$e6, _dewExec$d6, exports$d6, _dewExec$c6, exports$c7, _dewExec$b7, exports$b7, _dewExec$a7, exports$a7, _dewExec$97, exports$97, _dewExec$87, exports$88, _dewExec$78, exports$78, _dewExec$68, exports$68, _dewExec$58, exports$58, _dewExec$48, exports$48, _dewExec$316, exports$316, _dewExec$216, exports$217, _dewExec$117, exports$120, _dewExec20, exports21, AssertionError, deepEqual, deepStrictEqual, doesNotReject, doesNotThrow, equal, fail, ifError, notDeepEqual, notDeepStrictEqual, notEqual, notStrictEqual, ok, rejects, strict, strictEqual, throws;
   var init_assert = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/assert.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/assert.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -179006,9 +179356,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/graceful-fs/graceful-fs.js
+  // ../SovereignS3nc/node_modules/graceful-fs/graceful-fs.js
   var require_graceful_fs = __commonJS({
-    "node_modules/graceful-fs/graceful-fs.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/graceful-fs/graceful-fs.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -179379,9 +179729,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/fs/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/fs/index.js
   var require_fs = __commonJS({
-    "node_modules/fs-extra/lib/fs/index.js"(exports22) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/fs/index.js"(exports22) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179498,7 +179848,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@jspm/core/nodelibs/browser/path.js
+  // ../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/path.js
   var path_exports = {};
   __export(path_exports, {
     _makeLong: () => _makeLong,
@@ -179520,7 +179870,7 @@ ${toHex(hashedRequest)}`;
   });
   var _makeLong, basename, delimiter, dirname, extname, format4, isAbsolute, join, normalize, parse2, posix, relative, resolve2, sep, win32;
   var init_path = __esm({
-    "node_modules/@jspm/core/nodelibs/browser/path.js"() {
+    "../SovereignS3nc/node_modules/@jspm/core/nodelibs/browser/path.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -179544,9 +179894,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/mkdirs/utils.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/utils.js
   var require_utils = __commonJS({
-    "node_modules/fs-extra/lib/mkdirs/utils.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/utils.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179565,9 +179915,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/mkdirs/make-dir.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/make-dir.js
   var require_make_dir = __commonJS({
-    "node_modules/fs-extra/lib/mkdirs/make-dir.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/make-dir.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179596,9 +179946,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/mkdirs/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/index.js
   var require_mkdirs = __commonJS({
-    "node_modules/fs-extra/lib/mkdirs/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/mkdirs/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179618,9 +179968,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/path-exists/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/path-exists/index.js
   var require_path_exists = __commonJS({
-    "node_modules/fs-extra/lib/path-exists/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/path-exists/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179637,9 +179987,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/util/utimes.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/util/utimes.js
   var require_utimes = __commonJS({
-    "node_modules/fs-extra/lib/util/utimes.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/util/utimes.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179674,9 +180024,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/util/stat.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/util/stat.js
   var require_stat = __commonJS({
-    "node_modules/fs-extra/lib/util/stat.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/util/stat.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179809,9 +180159,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/util/async.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/util/async.js
   var require_async = __commonJS({
-    "node_modules/fs-extra/lib/util/async.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/util/async.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179840,9 +180190,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/copy/copy.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/copy/copy.js
   var require_copy = __commonJS({
-    "node_modules/fs-extra/lib/copy/copy.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/copy/copy.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -179969,9 +180319,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/copy/copy-sync.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/copy/copy-sync.js
   var require_copy_sync = __commonJS({
-    "node_modules/fs-extra/lib/copy/copy-sync.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/copy/copy-sync.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180110,9 +180460,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/copy/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/copy/index.js
   var require_copy2 = __commonJS({
-    "node_modules/fs-extra/lib/copy/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/copy/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180125,9 +180475,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/remove/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/remove/index.js
   var require_remove = __commonJS({
-    "node_modules/fs-extra/lib/remove/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/remove/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180147,9 +180497,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/empty/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/empty/index.js
   var require_empty = __commonJS({
-    "node_modules/fs-extra/lib/empty/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/empty/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180189,9 +180539,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/file.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/file.js
   var require_file = __commonJS({
-    "node_modules/fs-extra/lib/ensure/file.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/file.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180251,9 +180601,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/link.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/link.js
   var require_link = __commonJS({
-    "node_modules/fs-extra/lib/ensure/link.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/link.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180311,9 +180661,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/symlink-paths.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink-paths.js
   var require_symlink_paths = __commonJS({
-    "node_modules/fs-extra/lib/ensure/symlink-paths.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink-paths.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180387,9 +180737,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/symlink-type.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink-type.js
   var require_symlink_type = __commonJS({
-    "node_modules/fs-extra/lib/ensure/symlink-type.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink-type.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180423,9 +180773,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/symlink.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink.js
   var require_symlink = __commonJS({
-    "node_modules/fs-extra/lib/ensure/symlink.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/symlink.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180507,9 +180857,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/ensure/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/ensure/index.js
   var require_ensure = __commonJS({
-    "node_modules/fs-extra/lib/ensure/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/ensure/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180537,9 +180887,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/jsonfile/utils.js
+  // ../SovereignS3nc/node_modules/jsonfile/utils.js
   var require_utils2 = __commonJS({
-    "node_modules/jsonfile/utils.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/jsonfile/utils.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -180556,9 +180906,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/jsonfile/index.js
+  // ../SovereignS3nc/node_modules/jsonfile/index.js
   var require_jsonfile = __commonJS({
-    "node_modules/jsonfile/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/jsonfile/index.js"(exports22, module2) {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -180631,9 +180981,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/json/jsonfile.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/json/jsonfile.js
   var require_jsonfile2 = __commonJS({
-    "node_modules/fs-extra/lib/json/jsonfile.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/json/jsonfile.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180649,9 +180999,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/output-file/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/output-file/index.js
   var require_output_file = __commonJS({
-    "node_modules/fs-extra/lib/output-file/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/output-file/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180682,9 +181032,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/json/output-json.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/json/output-json.js
   var require_output_json = __commonJS({
-    "node_modules/fs-extra/lib/json/output-json.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/json/output-json.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180699,9 +181049,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/json/output-json-sync.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/json/output-json-sync.js
   var require_output_json_sync = __commonJS({
-    "node_modules/fs-extra/lib/json/output-json-sync.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/json/output-json-sync.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180716,9 +181066,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/json/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/json/index.js
   var require_json = __commonJS({
-    "node_modules/fs-extra/lib/json/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/json/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180737,9 +181087,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/move/move.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/move/move.js
   var require_move = __commonJS({
-    "node_modules/fs-extra/lib/move/move.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/move/move.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180792,9 +181142,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/move/move-sync.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/move/move-sync.js
   var require_move_sync = __commonJS({
-    "node_modules/fs-extra/lib/move/move-sync.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/move/move-sync.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180848,9 +181198,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/move/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/move/index.js
   var require_move2 = __commonJS({
-    "node_modules/fs-extra/lib/move/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/move/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -180863,9 +181213,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/fs-extra/lib/index.js
+  // ../SovereignS3nc/node_modules/fs-extra/lib/index.js
   var require_lib = __commonJS({
-    "node_modules/fs-extra/lib/index.js"(exports22, module2) {
+    "../SovereignS3nc/node_modules/fs-extra/lib/index.js"(exports22, module2) {
       "use strict";
       init_dirname();
       init_buffer2();
@@ -181204,7 +181554,9 @@ ${toHex(hashedRequest)}`;
           this.globalRegistry = new GlobalRegistry({
             config: this.config,
             storage: this.storage,
-            getGlobalRemote: () => this.globalRemote
+            getGlobalRemote: () => this.globalRemote,
+            sign: (data) => this.keyManager.sign(data),
+            verify: (data, sig, pk) => this.keyManager.verify(data, sig, pk)
           });
           this.blacklistManager = new BlacklistManager({
             config: this.config,
@@ -181237,7 +181589,11 @@ ${toHex(hashedRequest)}`;
             createRemote: (uid) => this.createRemote(uid),
             getModulePath: (mn, sp, t14) => this.getModulePath(mn, sp, t14),
             onModuleUpdate: (mn, p7) => this.onModuleUpdate(mn, p7),
-            registeredModules: this.registeredModules
+            registeredModules: this.registeredModules,
+            emitSyncProgress: (stage, done, total) => {
+              this.emit("sync:progress", { stage, done, total });
+              Logger.debug("Sync", `Progress: ${stage}${total !== void 0 ? ` (${done ?? 0}/${total})` : ""}`);
+            }
           });
         }
         static async create(config3, remote, remoteFactory, keys, storage) {
@@ -181292,9 +181648,14 @@ ${toHex(hashedRequest)}`;
           return `${type}/${PATHS.MODULES_DIR}${cleanModule}/${subPath}`;
         }
         registerModule(definition) {
-          if (!this.registeredModules.find((m8) => m8.name === definition.name)) {
-            this.registeredModules.push(definition);
+          const existing = this.registeredModules.find((m8) => m8.name === definition.name);
+          if (existing) {
+            throw new ModuleError(
+              definition.name,
+              `Module name collision: a module named "${definition.name}" is already registered. Each module must have a unique name to avoid path conflicts.`
+            );
           }
+          this.registeredModules.push(definition);
           if (this.syncWorker) {
             this.syncWorker.registerModule(definition).catch((e10) => Logger.warn("Sovereign", "Failed to register module in worker", e10));
           }
@@ -181374,7 +181735,7 @@ ${toHex(hashedRequest)}`;
         }
         async init() {
           if (!this.storage) {
-            const isBrowser = env3.isBrowser() && typeof env3.getIndexedDB() !== "undefined";
+            const isBrowser = env3.isBrowser() || env3.isWorker() || typeof env3.getIndexedDB() !== "undefined";
             if (isBrowser) {
               const dbName = `sov_${this.config.paths.appId}_${this.config.paths.userId}`;
               this.storage = new IndexedDBStorage(dbName);
@@ -181419,7 +181780,7 @@ ${toHex(hashedRequest)}`;
             } else {
               try {
                 Logger.info("Sovereign", `Initializing background sync worker: ${this.config.workerUrl}`);
-                this.syncWorker = new SyncWorkerProxy(this.config.workerUrl);
+                this.syncWorker = new SyncWorkerProxy(this.config.workerUrl, this.config.workerIntegrity);
                 this.syncWorker.on("error", (err) => {
                   Logger.warn("Sovereign", "Background worker error, disabling worker:", err);
                   this.syncWorker = void 0;
@@ -181531,14 +181892,22 @@ ${toHex(hashedRequest)}`;
         async changePassword(old, newP) {
           return this.keyManager.changePassword(old, newP);
         }
+        async rotateIdentityKeys(newKeyPair) {
+          const result = await this.keyManager.rotateIdentityKeys(newKeyPair);
+          try {
+            await this.ensureGlobalRegistration();
+          } catch (e10) {
+          }
+          return result;
+        }
         async encrypt(d8, k6) {
           return this.keyManager.encrypt(d8, k6);
         }
         async decrypt(d8, k6) {
           return this.keyManager.decrypt(d8, k6);
         }
-        deriveSharedSecret(pk) {
-          return this.keyManager.deriveSharedSecret(pk);
+        deriveSharedSecret(pk, context) {
+          return this.keyManager.deriveSharedSecret(pk, context);
         }
         calculateHashedContent(d8, k6) {
           return this.keyManager.calculateHashedContent(d8, k6);
@@ -181548,6 +181917,9 @@ ${toHex(hashedRequest)}`;
         }
         async sync(force = false) {
           return this.syncOrchestrator.sync(force);
+        }
+        async applyRetentionPolicy() {
+          return this.syncOrchestrator.applyRetentionPolicy();
         }
         async createGroup(n7, m8) {
           return this.groupManager.createGroup(n7, m8);
@@ -181570,6 +181942,12 @@ ${toHex(hashedRequest)}`;
         async getGroups() {
           return this.groupManager.getGroups();
         }
+        async setGroupMemberPermissions(gid, uid, p7) {
+          return this.groupManager.setMemberPermissions(gid, uid, p7);
+        }
+        async setGroupMemberRole(gid, uid, r8) {
+          return this.groupManager.setMemberRole(gid, uid, r8);
+        }
         async ensureGlobalRegistration() {
           return this.globalRegistry.ensureGlobalRegistration();
         }
@@ -181584,6 +181962,140 @@ ${toHex(hashedRequest)}`;
         }
         async syncManifest() {
           return this.manifestManager.syncManifest();
+        }
+        /**
+         * Creates an encrypted, time-limited device pairing package that can be transmitted
+         * to a new browser/device via QR code, P2P channel, or manual copy-paste.
+         */
+        async createDevicePairingPackage(pairingPassphrase, validityMs = 3e5) {
+          if (!this.config.encryptionKey || !this.config.publicEncryptionKey) {
+            throw new AuthError("Cannot create pairing package: Identity keys are not loaded.");
+          }
+          const crypto3 = await Promise.resolve().then(() => (init_crypto2(), crypto_exports));
+          const salt = crypto3.randomBytes(16);
+          const derivedKey = crypto3.pbkdf2Sync(pairingPassphrase, salt, 5e4, 32, "sha256");
+          const payload = JSON.stringify({
+            userId: this.config.paths.userId,
+            appId: this.config.paths.appId,
+            encryptionKey: this.config.encryptionKey,
+            publicEncryptionKey: this.config.publicEncryptionKey,
+            password: this.config.password
+          });
+          const iv = crypto3.randomBytes(12);
+          const cipher = crypto3.createCipheriv("aes-256-gcm", derivedKey, iv);
+          const encrypted = Buffer2.concat([cipher.update(Buffer2.from(payload, "utf-8")), cipher.final()]);
+          const tag = cipher.getAuthTag();
+          const pairingPkg = {
+            version: 1,
+            appId: this.config.paths.appId,
+            userId: this.config.paths.userId,
+            salt: salt.toString("hex"),
+            iv: iv.toString("hex"),
+            tag: tag.toString("hex"),
+            ciphertext: encrypted.toString("hex"),
+            createdAt: Date.now(),
+            expiresAt: Date.now() + validityMs
+          };
+          return Buffer2.from(JSON.stringify(pairingPkg)).toString("base64");
+        }
+        /**
+         * Imports an encrypted device pairing package, validates its expiration and authenticity,
+         * restores identity keys, and updates local persistent storage.
+         */
+        async importDevicePairingPackage(pairingCode, pairingPassphrase) {
+          let pkg;
+          try {
+            const json = Buffer2.from(pairingCode, "base64").toString("utf-8");
+            pkg = JSON.parse(json);
+          } catch (e10) {
+            throw new AuthError("Invalid pairing package format.");
+          }
+          if (Date.now() > pkg.expiresAt) {
+            throw new AuthError("Pairing package has expired. Please generate a new one on the host device.");
+          }
+          const crypto3 = await Promise.resolve().then(() => (init_crypto2(), crypto_exports));
+          const salt = Buffer2.from(pkg.salt, "hex");
+          const derivedKey = crypto3.pbkdf2Sync(pairingPassphrase, salt, 5e4, 32, "sha256");
+          let decryptedPayload;
+          try {
+            const decipher = crypto3.createDecipheriv("aes-256-gcm", derivedKey, Buffer2.from(pkg.iv, "hex"));
+            decipher.setAuthTag(Buffer2.from(pkg.tag, "hex"));
+            const decrypted = Buffer2.concat([
+              decipher.update(Buffer2.from(pkg.ciphertext, "hex")),
+              decipher.final()
+            ]);
+            decryptedPayload = JSON.parse(decrypted.toString("utf-8"));
+          } catch (e10) {
+            throw new AuthError("Failed to decrypt pairing package: Incorrect passphrase or tampered package.");
+          }
+          this.config.paths.userId = decryptedPayload.userId;
+          this.config.paths.appId = decryptedPayload.appId;
+          this.config.encryptionKey = decryptedPayload.encryptionKey;
+          this.config.publicEncryptionKey = decryptedPayload.publicEncryptionKey;
+          if (decryptedPayload.password) {
+            this.config.password = decryptedPayload.password;
+          }
+          if (!this.storage) {
+            const dbName = `${this.config.paths.appId}_${this.config.paths.userId}_${this.config.paths.storeId}`;
+            this.storage = new IndexedDBStorage(dbName);
+            await this.storage.init();
+          }
+          if (this.config.password) {
+            const keyInfo = {
+              privateKey: this.config.encryptionKey,
+              publicKey: this.config.publicEncryptionKey
+            };
+            const keysSalt = crypto3.randomBytes(16);
+            const keysDerivedKey = crypto3.pbkdf2Sync(this.config.password, keysSalt, 1e3, 32, "sha256");
+            const iv = crypto3.randomBytes(12);
+            const keyCipher = crypto3.createCipheriv("aes-256-gcm", keysDerivedKey, iv);
+            const encKeys = Buffer2.concat([keyCipher.update(Buffer2.from(JSON.stringify(keyInfo))), keyCipher.final()]);
+            const v2Keys = Buffer2.concat([keysSalt, iv, keyCipher.getAuthTag(), encKeys]);
+            await this.storage.saveDailyDb("_keys", "private", v2Keys);
+          }
+          Logger.info("Device", `Successfully imported pairing package for user ${pkg.userId}`);
+          return { userId: pkg.userId, appId: pkg.appId };
+        }
+        /**
+         * Registers a new device in the user's private device registry.
+         */
+        async registerDevice(deviceName) {
+          const devices = await this.getRegisteredDevices();
+          const deviceId = env3.generateId(12);
+          const device = {
+            deviceId,
+            deviceName,
+            registeredAt: Date.now(),
+            lastSeenAt: Date.now(),
+            status: "active"
+          };
+          devices.push(device);
+          await this.storage.saveFile("private/devices.json", new TextEncoder().encode(JSON.stringify(devices)));
+          return device;
+        }
+        /**
+         * Retrieves the list of active and revoked devices.
+         */
+        async getRegisteredDevices() {
+          const data = await this.storage.getFile("private/devices.json");
+          if (!data) return [];
+          try {
+            return JSON.parse(new TextDecoder().decode(data));
+          } catch (e10) {
+            return [];
+          }
+        }
+        /**
+         * Revokes a registered device by ID.
+         */
+        async revokeDevice(deviceId) {
+          const devices = await this.getRegisteredDevices();
+          const device = devices.find((d8) => d8.deviceId === deviceId);
+          if (device) {
+            device.status = "revoked";
+            await this.storage.saveFile("private/devices.json", new TextEncoder().encode(JSON.stringify(devices)));
+            Logger.info("Device", `Revoked device ${deviceId}`);
+          }
         }
         async saveBlob(data, isPublic = true) {
           const hash = this.calculateHashedContent(data);
@@ -181635,21 +182147,18 @@ ${toHex(hashedRequest)}`;
           }
           return null;
         }
-        async follow(userId) {
-          const remotePath = "users.json";
-          let publicKey = "";
-          try {
-            const result = await this.globalRemote?.downloadFile(remotePath);
-            if (result && result.data) {
-              const userList = JSON.parse(new TextDecoder().decode(result.data));
-              const user = userList.find((u7) => u7.userId === userId);
+        async follow(userId, publicKey) {
+          if (!publicKey) {
+            try {
+              const registry = await this.getPublicRegistry();
+              const user = registry.find((u7) => u7.userId === userId);
               if (user) publicKey = user.publicKey;
+            } catch (e10) {
             }
-          } catch (e10) {
           }
           const startDate = /* @__PURE__ */ new Date();
           startDate.setUTCDate(startDate.getUTCDate() - 7);
-          await this.storage.followUser(userId, _SovereignS3nc.getDateStr(startDate), publicKey);
+          await this.storage.followUser(userId, _SovereignS3nc.getDateStr(startDate), publicKey || "");
           Logger.info("Sovereign", `Followed ${userId}.`);
         }
         async unfollow(userId) {
@@ -181778,8 +182287,12 @@ ${toHex(hashedRequest)}`;
             `
           }
         ],
-        migrations: []
-        // New module, so we start with the full schema
+        migrations: [
+          {
+            version: 2,
+            sql: ["ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
+          }
+        ]
       };
       FeedModule = class {
         constructor(db) {
@@ -181816,7 +182329,7 @@ ${toHex(hashedRequest)}`;
           this.db.applyModuleSchema(db, this.MODULE_NAME);
           return db;
         }
-        async post(content, isPublic = true, image, parentId, parentUserId) {
+        async post(content, isPublic = true, image, parentId, parentUserId, expiresAt) {
           if (content.length > DEFAULTS.MAX_POST_LENGTH) {
             throw new ModuleError("feed", `Post exceeds maximum length of ${DEFAULTS.MAX_POST_LENGTH} characters`);
           }
@@ -181830,8 +182343,8 @@ ${toHex(hashedRequest)}`;
           if (image) {
             imagePath = await this.db.saveBlob(image, isPublic);
           }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0)";
-          db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null]);
+          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)";
+          db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
           const binary = db.export();
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           await this.db.getStorage().saveFile(dbPath, binary);
@@ -181887,6 +182400,7 @@ ${toHex(hashedRequest)}`;
               const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
               if (res && res.length > 0) {
                 const columns = res[0].columns;
+                const now = Date.now();
                 const posts = res[0].values.map((row) => {
                   const post = {};
                   columns.forEach((col, i7) => {
@@ -181900,7 +182414,7 @@ ${toHex(hashedRequest)}`;
                     post.userId = date2.split("/")[0];
                   }
                   return post;
-                });
+                }).filter((p7) => !p7.expiresAt || p7.expiresAt > now);
                 allPosts.push(...posts);
               }
             } catch (e10) {
@@ -181908,6 +182422,36 @@ ${toHex(hashedRequest)}`;
             db.close();
           }
           return allPosts;
+        }
+        /**
+         * Purges expired posts from a given date partition.
+         */
+        async cleanupExpired(date2, isPublic = true) {
+          const type = isPublic ? "public" : "private";
+          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          const data = await this.db.getStorage().getFile(dbPath);
+          if (!data) return 0;
+          const initSqlJs = env3.getSqlJs();
+          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
+          const sqliteInstance = await initSqlJs(env3.getSqlConfig() || {});
+          const db = new sqliteInstance.Database(data);
+          const now = Date.now();
+          let deletedCount = 0;
+          try {
+            const countRes = db.exec("SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+            if (countRes && countRes.length > 0 && countRes[0].values[0]) {
+              deletedCount = Number(countRes[0].values[0][0]);
+            }
+            if (deletedCount > 0) {
+              db.run("DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+              const binary = db.export();
+              await this.db.getStorage().saveFile(dbPath, binary);
+              this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+            }
+          } finally {
+            db.close();
+          }
+          return deletedCount;
         }
         async enrichLikes(posts, days = 5) {
           if (posts.length === 0) return;
@@ -181960,11 +182504,19 @@ ${toHex(hashedRequest)}`;
         }
         // --- Group logic ---
         async postToGroup(groupId, sharedKey, content, image, type = "text") {
+          const groups = await this.db.getGroups();
+          const group3 = groups.find((g8) => g8.id === groupId);
+          const userId = this.db.getConfig().paths.userId;
+          if (group3) {
+            const member2 = group3.members.find((m8) => m8.userId === userId);
+            if (member2?.permissions?.canPost === false) {
+              throw new ModuleError("feed", `Permission denied: User ${userId} is not allowed to post in group ${groupId}`);
+            }
+          }
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const db = await this.getDb(date2, "group", groupId, sharedKey);
           const id = env3.generateId(12);
           const timestamp = Date.now();
-          const userId = this.db.getConfig().paths.userId;
           let imagePath = null;
           if (image) {
             imagePath = await this.db.saveBlob(image, true);
@@ -182000,6 +182552,14 @@ ${toHex(hashedRequest)}`;
           if (authorId === myId) {
             db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
           } else {
+            const groups = await this.db.getGroups();
+            const group3 = groups.find((g8) => g8.id === groupId);
+            const member2 = group3?.members.find((m8) => m8.userId === myId);
+            const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
+            if (!canModerate) {
+              db.close();
+              throw new ModuleError("feed", `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
+            }
             db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
             db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
           }
@@ -182020,8 +182580,9 @@ ${toHex(hashedRequest)}`;
           if (!group3) return [];
           const processModeration = (db, memberId) => {
             try {
-              const memberRole = group3.members.find((m8) => m8.userId === memberId)?.role;
-              if (memberRole !== "owner" && memberRole !== "admin") return;
+              const member2 = group3.members.find((m8) => m8.userId === memberId);
+              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
+              if (!canModerate) return;
               const res = db.exec('SELECT targetId FROM moderation WHERE action = "delete"');
               if (res && res.length > 0) {
                 res[0].values.forEach((row) => {
@@ -182092,7 +182653,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/marked/lib/marked.esm.js
+  // ../SovereignS3nc/node_modules/marked/lib/marked.esm.js
   function M6() {
     return { async: false, breaks: false, extensions: null, gfm: true, hooks: null, pedantic: false, renderer: null, silent: false, tokenizer: null, walkTokens: null };
   }
@@ -182197,7 +182758,7 @@ ${toHex(hashedRequest)}`;
   }
   var T6, _5, Te, m7, Oe3, we3, ye3, B6, Pe2, j6, oe3, ae4, Se3, F6, $e, U6, Le2, _e3, H5, K5, ze2, le3, Me2, W5, se3, Ee3, Ie2, Ae3, Ce, ue3, Be3, I6, Z5, X5, De2, pe3, qe2, ve3, He, ce3, Ze, Ge, he3, Ne2, Qe, je3, Fe, Ue, Ke, We, Xe, Je, Ve, v9, Ye, ke3, de3, et3, ie2, J5, tt3, Q5, nt2, D6, A6, rt, ge3, w6, x6, y8, L6, b7, _a2, P6, q5, z6, Ft, Ut, Kt, Wt, Xt, Vt, Yt;
   var init_marked_esm = __esm({
-    "node_modules/marked/lib/marked.esm.js"() {
+    "../SovereignS3nc/node_modules/marked/lib/marked.esm.js"() {
       init_dirname();
       init_buffer2();
       init_process2();
@@ -183337,7 +183898,7 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
     }
   });
 
-  // node_modules/dompurify/dist/purify.es.mjs
+  // ../SovereignS3nc/node_modules/dompurify/dist/purify.es.mjs
   function _arrayLikeToArray(r8, a7) {
     (null == a7 || a7 > r8.length) && (a7 = r8.length);
     for (var e10 = 0, n7 = Array(a7); e10 < a7; e10++) n7[e10] = r8[e10];
@@ -184319,7 +184880,7 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
   }
   var entries, setPrototypeOf, isFrozen, getPrototypeOf, getOwnPropertyDescriptor, freeze, seal, create, _ref, apply, construct, arrayForEach, arrayLastIndexOf, arrayPop, arrayPush, arraySplice, arrayIsArray, stringToLowerCase, stringToString, stringMatch, stringReplace, stringIndexOf, stringTrim, numberToString, booleanToString, bigintToString, symbolToString, objectHasOwnProperty, objectToString, regExpTest, typeErrorCreate, html$1, svg$1, svgFilters, svgDisallowed, mathMl$1, mathMlDisallowed, text, html, svg, mathMl, xml, MUSTACHE_EXPR, ERB_EXPR, TMPLIT_EXPR, DATA_ATTR, ARIA_ATTR, IS_ALLOWED_URI, IS_SCRIPT_OR_DATA, ATTR_WHITESPACE, DOCTYPE_NAME, CUSTOM_ELEMENT, NODE_TYPE, getGlobal, _createTrustedTypesPolicy, _createHooksMap, purify;
   var init_purify_es = __esm({
-    "node_modules/dompurify/dist/purify.es.mjs"() {
+    "../SovereignS3nc/node_modules/dompurify/dist/purify.es.mjs"() {
       init_dirname();
       init_buffer2();
       init_process2();

@@ -90,14 +90,41 @@ export class KeyManager {
         // V2: Apply HKDF-SHA256 for proper domain separation.
         // Salt is omitted (zero-length) as per RFC 5869 §2.2 — the X25519 output already has
         // high entropy. The info label provides domain separation across use cases.
-        const derived = crypto.hkdfSync(
-            'sha256',
+        const derived = KeyManager.hkdfSha256(
             rawShared,
             Buffer.alloc(0),  // zero-length salt
             Buffer.from(context, 'utf8'), // info / domain label
             32  // 32 bytes = 256-bit AES key
         );
         return Buffer.from(derived).toString('hex');
+    }
+
+    /**
+     * Cross-platform RFC 5869 HKDF-SHA256 implementation compatible with Node.js and browser runtimes.
+     */
+    public static hkdfSha256(ikm: Uint8Array | Buffer, salt: Uint8Array | Buffer, info: Uint8Array | Buffer, length: number): Buffer {
+        // RFC 5869 Extract: PRK = HMAC-Hash(salt, IKM)
+        const actualSalt = salt.length === 0 ? Buffer.alloc(32, 0) : Buffer.from(salt);
+        const prk = crypto.createHmac('sha256', actualSalt).update(Buffer.from(ikm)).digest();
+
+        // RFC 5869 Expand
+        const blocks: Buffer[] = [];
+        let currentBlock = Buffer.alloc(0);
+        let generatedBytes = 0;
+        let counter = 1;
+        while (generatedBytes < length) {
+            const hmac = crypto.createHmac('sha256', prk);
+            if (currentBlock.length > 0) {
+                hmac.update(currentBlock);
+            }
+            hmac.update(Buffer.from(info));
+            hmac.update(Buffer.from([counter]));
+            currentBlock = hmac.digest();
+            blocks.push(currentBlock);
+            generatedBytes += currentBlock.length;
+            counter++;
+        }
+        return Buffer.concat(blocks).subarray(0, length);
     }
 
     public getHashedUserId(userId: string, isPrivate: boolean): string {
@@ -173,6 +200,7 @@ export class KeyManager {
                     if (new TextDecoder().decode(decrypted) === 'SovereignSentinel') {
                         masterKey = derived;
                         Logger.info('Keys', 'Verified V2 keys.');
+                        await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                     }
                 } catch (e) {}
             }
@@ -189,6 +217,7 @@ export class KeyManager {
                         privateId = legacyPrivateId;
                         isLegacy = true;
                         Logger.warn('Keys', 'Detected Legacy (1000 iterations) keys. Migration is recommended.');
+                        await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                         
                         // If we are legacy, we need to point the remote to the legacy ID
                         if (remote && privateId !== v2PrivateId) {
