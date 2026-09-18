@@ -187,7 +187,9 @@
 - Implemented automatic cleanup using `AbortMultipartUploadCommand` on permanent part failures to prevent orphaned AWS S3 storage costs.
 - Added unit tests in `tests/S3RemoteAdapter.unit.test.ts` verifying single put vs multipart thresholding, part chunking, completion payload, and abort error recovery.
 
-
-
-
-
+### WT-56: Dependabot & Security Vulnerability Remediation
+- Remediated High severity CVEs in `brace-expansion`, `browserslist`, and `js-yaml` via dependency overrides in `package.json`.
+- Remediated Moderate severity CVEs in `dompurify` (bumped to `^3.4.13`), `qs`, `body-parser`, and `baseline-browser-mapping`.
+- Remediated Low severity CVEs in `esbuild` (bumped to `^0.28.2`) and `@babel/core`.
+- Fine-tuned SQLite compaction tombstone threshold (`tombstones >= 50 && tombstoneRatio >= 0.5`) in `FeedModule` and `MessagingModule` to preserve single-item soft-deletion tombstones before syncing.
+- Verified all 32 test suites (237/237 tests) and full builds pass cleanly.

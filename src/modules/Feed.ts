@@ -353,7 +353,7 @@ export class FeedModule {
 
             tombstoneRatio = total > 0 ? tombstones / total : 0;
 
-            if (force || (tombstones > 0 && tombstoneRatio >= 0.5)) {
+            if (force || (tombstones >= 50 && tombstoneRatio >= 0.5)) {
                 db.run('DELETE FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)', [now]);
                 db.run('VACUUM');
                 const compactedBinary = db.export();

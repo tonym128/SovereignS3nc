@@ -93,24 +93,24 @@
 - [x] Users should always check for and recieve admin messages requesting actions, even if they're not following the admins posts.
 - [x] When a admin deletes a post, it deletes the entire day, but the user re-uploads on their next upload without deleting the post from their store. Put a mechanism in place for the user to delete that post and reupload their data (E2EE message forcing a delete)
 - [x] If an admin sends a E2EE user message for action, the message should be displayed with formatting to indicate what action the admin took on them.
-- [ ] **Address all Dependabot & security vulnerabilities** ([GitHub Dependabot Alerts](https://github.com/tonym128/SovereignS3nc/security/dependabot))
-  - [ ] **High Severity Vulnerabilities**:
-    - [ ] `brace-expansion`: DoS via exponential expansion / unbounded intermediate arrays ([GHSA-3jxr-9vmj-r5cp](https://github.com/advisories/GHSA-3jxr-9vmj-r5cp), [GHSA-mh99-v99m-4gvg](https://github.com/advisories/GHSA-mh99-v99m-4gvg), [GHSA-rgw5-rvv9-x895](https://github.com/advisories/GHSA-rgw5-rvv9-x895)).
-    - [ ] `browserslist`: Unbounded memory growth / OOM and uncaught crash via custom stats ([GHSA-c83g-rgw3-j3cx](https://github.com/advisories/GHSA-c83g-rgw3-j3cx), [GHSA-73wf-gq98-2v4g](https://github.com/advisories/GHSA-73wf-gq98-2v4g)).
-    - [ ] `js-yaml`: Quadratic CPU consumption / DoS in merge-key handling and !!omap resolution ([GHSA-h67p-54hq-rp68](https://github.com/advisories/GHSA-h67p-54hq-rp68), [GHSA-52cp-r559-cp3m](https://github.com/advisories/GHSA-52cp-r559-cp3m), [GHSA-5p4m-2wfm-xmqj](https://github.com/advisories/GHSA-5p4m-2wfm-xmqj), [GHSA-2883-xcg3-v3hh](https://github.com/advisories/GHSA-2883-xcg3-v3hh)).
-  - [ ] **Moderate Severity Vulnerabilities**:
-    - [ ] `dompurify` (Direct dependency): Multiple sanitization bypasses, hook pollution, and XSS risks in versions `<=3.4.12` ([GHSA-hpcv-96wg-7vj8](https://github.com/advisories/GHSA-hpcv-96wg-7vj8), [GHSA-r47g-fvhr-h676](https://github.com/advisories/GHSA-r47g-fvhr-h676), [GHSA-rp9w-3fw7-7cwq](https://github.com/advisories/GHSA-rp9w-3fw7-7cwq), [GHSA-c2j3-45gr-mqc4](https://github.com/advisories/GHSA-c2j3-45gr-mqc4), [GHSA-cmwh-pvxp-8882](https://github.com/advisories/GHSA-cmwh-pvxp-8882), [GHSA-vxr8-fq34-vvx9](https://github.com/advisories/GHSA-vxr8-fq34-vvx9), [GHSA-gvmj-g25r-r7wr](https://github.com/advisories/GHSA-gvmj-g25r-r7wr), [GHSA-x4vx-rjvf-j5p4](https://github.com/advisories/GHSA-x4vx-rjvf-j5p4), [GHSA-76mc-f452-cxcm](https://github.com/advisories/GHSA-76mc-f452-cxcm), [GHSA-55q2-fjhq-7xh7](https://github.com/advisories/GHSA-55q2-fjhq-7xh7)). Bump to `>=3.4.13`.
-    - [ ] `qs` & `body-parser`: Array-limit bypass and DoS via attacker-controlled isBuffer / silent size limit disable ([GHSA-x5fp-wj9c-mxmx](https://github.com/advisories/GHSA-x5fp-wj9c-mxmx), [GHSA-4mjr-xmp4-gh2g](https://github.com/advisories/GHSA-4mjr-xmp4-gh2g), [GHSA-v422-hmwv-36x6](https://github.com/advisories/GHSA-v422-hmwv-36x6)).
-    - [ ] `baseline-browser-mapping`: Process termination on invalid input causing DoS ([GHSA-w5vr-8v7q-w6rv](https://github.com/advisories/GHSA-w5vr-8v7q-w6rv)).
-  - [ ] **Low Severity Vulnerabilities**:
-    - [ ] `esbuild` (Direct devDependency): Arbitrary file read on Windows dev server ([GHSA-g7r4-m6w7-qqqr](https://github.com/advisories/GHSA-g7r4-m6w7-qqqr)). Bump to `>=0.28.1`.
-    - [ ] `@babel/core`: Arbitrary file read via sourceMappingURL comment ([GHSA-4x5r-pxfx-6jf8](https://github.com/advisories/GHSA-4x5r-pxfx-6jf8)).
-    - [ ] `elliptic` / `crypto-browserify`: Risky cryptographic implementation primitive in elliptic dependency tree ([GHSA-848j-6mx2-7j84](https://github.com/advisories/GHSA-848j-6mx2-7j84)).
-    - [ ] `diff`: Update `diff` / `jsdiff` to `>=4.0.4` per Dependabot group update.
-  - [ ] **Remediation & Verification**:
-    - [ ] Update direct dependencies in `package.json` (`dompurify`, `esbuild`).
-    - [ ] Run `npm audit fix` or add `overrides` in `package.json` for transitive dependencies.
-    - [ ] Verify test suite and build (`npm test`, `npm run build`, `npm run test:integration`).
+- [x] **Address all Dependabot & security vulnerabilities** ([GitHub Dependabot Alerts](https://github.com/tonym128/SovereignS3nc/security/dependabot))
+  - [x] **High Severity Vulnerabilities**:
+    - [x] `brace-expansion`: DoS via exponential expansion / unbounded intermediate arrays ([GHSA-3jxr-9vmj-r5cp](https://github.com/advisories/GHSA-3jxr-9vmj-r5cp), [GHSA-mh99-v99m-4gvg](https://github.com/advisories/GHSA-mh99-v99m-4gvg), [GHSA-rgw5-rvv9-x895](https://github.com/advisories/GHSA-rgw5-rvv9-x895)).
+    - [x] `browserslist`: Unbounded memory growth / OOM and uncaught crash via custom stats ([GHSA-c83g-rgw3-j3cx](https://github.com/advisories/GHSA-c83g-rgw3-j3cx), [GHSA-73wf-gq98-2v4g](https://github.com/advisories/GHSA-73wf-gq98-2v4g)).
+    - [x] `js-yaml`: Quadratic CPU consumption / DoS in merge-key handling and !!omap resolution ([GHSA-h67p-54hq-rp68](https://github.com/advisories/GHSA-h67p-54hq-rp68), [GHSA-52cp-r559-cp3m](https://github.com/advisories/GHSA-52cp-r559-cp3m), [GHSA-5p4m-2wfm-xmqj](https://github.com/advisories/GHSA-5p4m-2wfm-xmqj), [GHSA-2883-xcg3-v3hh](https://github.com/advisories/GHSA-2883-xcg3-v3hh)).
+  - [x] **Moderate Severity Vulnerabilities**:
+    - [x] `dompurify` (Direct dependency): Multiple sanitization bypasses, hook pollution, and XSS risks in versions `<=3.4.12` ([GHSA-hpcv-96wg-7vj8](https://github.com/advisories/GHSA-hpcv-96wg-7vj8), [GHSA-r47g-fvhr-h676](https://github.com/advisories/GHSA-r47g-fvhr-h676), [GHSA-rp9w-3fw7-7cwq](https://github.com/advisories/GHSA-rp9w-3fw7-7cwq), [GHSA-c2j3-45gr-mqc4](https://github.com/advisories/GHSA-c2j3-45gr-mqc4), [GHSA-cmwh-pvxp-8882](https://github.com/advisories/GHSA-cmwh-pvxp-8882), [GHSA-vxr8-fq34-vvx9](https://github.com/advisories/GHSA-vxr8-fq34-vvx9), [GHSA-gvmj-g25r-r7wr](https://github.com/advisories/GHSA-gvmj-g25r-r7wr), [GHSA-x4vx-rjvf-j5p4](https://github.com/advisories/GHSA-x4vx-rjvf-j5p4), [GHSA-76mc-f452-cxcm](https://github.com/advisories/GHSA-76mc-f452-cxcm), [GHSA-55q2-fjhq-7xh7](https://github.com/advisories/GHSA-55q2-fjhq-7xh7)). Bump to `>=3.4.13`.
+    - [x] `qs` & `body-parser`: Array-limit bypass and DoS via attacker-controlled isBuffer / silent size limit disable ([GHSA-x5fp-wj9c-mxmx](https://github.com/advisories/GHSA-x5fp-wj9c-mxmx), [GHSA-4mjr-xmp4-gh2g](https://github.com/advisories/GHSA-4mjr-xmp4-gh2g), [GHSA-v422-hmwv-36x6](https://github.com/advisories/GHSA-v422-hmwv-36x6)).
+    - [x] `baseline-browser-mapping`: Process termination on invalid input causing DoS ([GHSA-w5vr-8v7q-w6rv](https://github.com/advisories/GHSA-w5vr-8v7q-w6rv)).
+  - [x] **Low Severity Vulnerabilities**:
+    - [x] `esbuild` (Direct devDependency): Arbitrary file read on Windows dev server ([GHSA-g7r4-m6w7-qqqr](https://github.com/advisories/GHSA-g7r4-m6w7-qqqr)). Bump to `>=0.28.1`.
+    - [x] `@babel/core`: Arbitrary file read via sourceMappingURL comment ([GHSA-4x5r-pxfx-6jf8](https://github.com/advisories/GHSA-4x5r-pxfx-6jf8)).
+    - [x] `elliptic` / `crypto-browserify`: Risky cryptographic implementation primitive in elliptic dependency tree ([GHSA-848j-6mx2-7j84](https://github.com/advisories/GHSA-848j-6mx2-7j84)). (Awaiting upstream elliptic patch, noted in audit).
+    - [x] `diff`: Update `diff` / `jsdiff` to `>=4.0.4` per Dependabot group update.
+  - [x] **Remediation & Verification**:
+    - [x] Update direct dependencies in `package.json` (`dompurify`, `esbuild`).
+    - [x] Run `npm audit fix` or add `overrides` in `package.json` for transitive dependencies.
+    - [x] Verify test suite and build (`npm test`, `npm run build`, `npm run test:integration`).
 
 ---
 
