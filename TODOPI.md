@@ -88,6 +88,11 @@ Generated from in-depth security, architecture, feature, and UX review.
   - Silently strips characters — `"feed; DROP TABLE"` becomes `"feedDROP TABLE"`
   - Could cause path collisions or confusion
 
+- [ ] **Address all Dependabot & dependency security vulnerabilities** ([GitHub Dependabot Alerts](https://github.com/tonym128/SovereignS3nc/security/dependabot))
+  - Remediate High severity advisories: `brace-expansion` (DoS, GHSA-3jxr-9vmj-r5cp, GHSA-mh99-v99m-4gvg, GHSA-rgw5-rvv9-x895), `browserslist` (OOM/crash, GHSA-c83g-rgw3-j3cx, GHSA-73wf-gq98-2v4g), `js-yaml` (DoS/CPU exhaustion, GHSA-h67p-54hq-rp68, GHSA-52cp-r559-cp3m, GHSA-5p4m-2wfm-xmqj, GHSA-2883-xcg3-v3hh).
+  - Remediate Moderate & Low advisories: `dompurify` (sanitization bypass / XSS in <=3.4.12, bump to >=3.4.13), `qs` / `body-parser` (DoS), `baseline-browser-mapping` (DoS), `esbuild` (dev server file read, bump to >=0.28.1), `@babel/core` (file read), `elliptic` (crypto primitive), and `diff` (jsdiff).
+  - Apply direct package version bumps, `overrides` in `package.json`, and run full regression test suite.
+
 ---
 
 ## 🟡 P1 — UX Issues in Demos (High Impact)
