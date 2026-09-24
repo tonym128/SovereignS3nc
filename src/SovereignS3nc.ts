@@ -25,7 +25,7 @@ import { Repository, RepositoryOptions } from './core/Repository';
 import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
-    public static readonly VERSION = '3.1.1';
+    public static readonly VERSION = '3.2.0';
     private storage: IStorage;
     private remote?: IRemoteAdapter; 
     private publicRemote?: IRemoteAdapter;

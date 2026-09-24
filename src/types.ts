@@ -89,6 +89,7 @@ export interface SubManifest {
     modules?: Record<string, string[]>;
     dms?: Record<string, string[]>;
     groups?: Record<string, string[]>;
+    receipts?: Record<string, string[]>;  // senderId -> [dateStr, ...]
     blobs?: string[];
     files?: Record<string, { hash: string, updatedAt: number }>;
 }
@@ -101,6 +102,7 @@ export interface SovereignManifest {
     modules: Record<string, string[]>;                 // moduleName -> [dateStr, ...]
     dms: Record<string, string[]>;                     // recipientId -> [dateStr, ...]
     groups: Record<string, string[]>;                  // groupId -> [dateStr, ...]
+    receipts?: Record<string, string[]>;               // senderId -> [dateStr, ...] for read receipt DBs
     blobs: string[];                                   // List of blob hashes or paths
     profileHash?: string;
     files?: Record<string, { hash: string, updatedAt: number }>;

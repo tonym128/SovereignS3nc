@@ -380,6 +380,20 @@ export class SyncOrchestrator {
                 }
             }
 
+            // Pull read receipt files that the followed user has written acknowledging our messages.
+            // Receipt path on sender (followed user): public/modules/{module}/receipts/{myId}/{date}.db
+            // Pulled to local: followed/{userId}/modules/{module}/receipts/{myId}/{date}.db
+            if (manifest.receipts && manifest.receipts[myId]) {
+                for (const dateStr of manifest.receipts[myId]) {
+                    for (const moduleDef of this.ctx.registeredModules) {
+                        const moduleName = moduleDef.name;
+                        const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, 'public');
+                        const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, 'followed');
+                        await this.pullUserFile(user.userId, receiptPath, user.publicKey, localPath, false);
+                    }
+                }
+            }
+
             if (meta.etag) {
                 await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${user.userId}`, meta.etag);
             }
@@ -405,6 +419,11 @@ export class SyncOrchestrator {
                     const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public'); 
                     const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
                     await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
+
+                    // Fallback: also try pulling receipt files per date
+                    const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, 'public');
+                    const receiptLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, 'followed');
+                    await this.pullUserFile(user.userId, receiptPath, user.publicKey, receiptLocalPath, false);
                 }
 
                 iter.setUTCDate(iter.getUTCDate() + 1);

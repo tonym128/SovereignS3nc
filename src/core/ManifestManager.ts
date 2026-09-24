@@ -90,6 +90,7 @@ export class ManifestManager {
             modules: {},
             dms: {},
             groups: {},
+            receipts: {},
             blobs: [],
             files: {},
             subManifests: {}
@@ -111,6 +112,7 @@ export class ManifestManager {
                     modules: {},
                     dms: {},
                     groups: {},
+                    receipts: {},
                     blobs: key === 'blobs' ? [] : undefined,
                     files: {}
                 };
@@ -165,6 +167,14 @@ export class ManifestManager {
                         dateStr = fileName.replace(PATHS.DB_EXT, '');
                         if (!rootManifest.dms[recipientId]) rootManifest.dms[recipientId] = [];
                         if (!rootManifest.dms[recipientId].includes(dateStr)) rootManifest.dms[recipientId].push(dateStr);
+                    } else if (parts.length === 6 && parts[3] === 'receipts') {
+                        // Read receipt DB: public/modules/{module}/receipts/{senderId}/{date}.db
+                        // These are tracked so the original sender can pull them on syncFollowedUser.
+                        const senderId = parts[4];
+                        dateStr = fileName.replace(PATHS.DB_EXT, '');
+                        if (!rootManifest.receipts) rootManifest.receipts = {};
+                        if (!rootManifest.receipts[senderId]) rootManifest.receipts[senderId] = [];
+                        if (!rootManifest.receipts[senderId].includes(dateStr)) rootManifest.receipts[senderId].push(dateStr);
                     }
                 } else if (file.includes(`/${PATHS.GROUPS_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
                     const groupId = parts[2];
@@ -201,6 +211,11 @@ export class ManifestManager {
                             const recipientId = parts[4];
                             if (!partition.dms![recipientId]) partition.dms![recipientId] = [];
                             if (!partition.dms![recipientId].includes(dateStr)) partition.dms![recipientId].push(dateStr);
+                        } else if (parts.length === 6 && parts[3] === 'receipts') {
+                            const senderId = parts[4];
+                            if (!partition.receipts) partition.receipts = {};
+                            if (!partition.receipts[senderId]) partition.receipts[senderId] = [];
+                            if (!partition.receipts[senderId].includes(dateStr)) partition.receipts[senderId].push(dateStr);
                         }
                     } else if (file.includes(`/${PATHS.GROUPS_DIR}`)) {
                         const groupId = parts[2];

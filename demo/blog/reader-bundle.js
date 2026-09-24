@@ -158802,6 +158802,16 @@ ${toHex(hashedRequest)}`;
                 }
               }
             }
+            if (manifest.receipts && manifest.receipts[myId]) {
+              for (const dateStr of manifest.receipts[myId]) {
+                for (const moduleDef of this.ctx.registeredModules) {
+                  const moduleName = moduleDef.name;
+                  const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, "public");
+                  const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, "followed");
+                  await this.pullUserFile(user.userId, receiptPath, user.publicKey, localPath, false);
+                }
+              }
+            }
             if (meta.etag) {
               await this.ctx.storage.setGenericRemoteHashCache(`manifest_etag:${user.userId}`, meta.etag);
             }
@@ -158823,6 +158833,9 @@ ${toHex(hashedRequest)}`;
                 const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
                 const dmLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
                 await this.pullUserFile(user.userId, dmPath, user.publicKey, dmLocalPath, false);
+                const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, "public");
+                const receiptLocalPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, "followed");
+                await this.pullUserFile(user.userId, receiptPath, user.publicKey, receiptLocalPath, false);
               }
               iter.setUTCDate(iter.getUTCDate() + 1);
             }
@@ -159111,6 +159124,7 @@ ${toHex(hashedRequest)}`;
             modules: {},
             dms: {},
             groups: {},
+            receipts: {},
             blobs: [],
             files: {},
             subManifests: {}
@@ -159129,6 +159143,7 @@ ${toHex(hashedRequest)}`;
                 modules: {},
                 dms: {},
                 groups: {},
+                receipts: {},
                 blobs: key === "blobs" ? [] : void 0,
                 files: {}
               };
@@ -159176,6 +159191,12 @@ ${toHex(hashedRequest)}`;
                   dateStr = fileName.replace(PATHS.DB_EXT, "");
                   if (!rootManifest.dms[recipientId]) rootManifest.dms[recipientId] = [];
                   if (!rootManifest.dms[recipientId].includes(dateStr)) rootManifest.dms[recipientId].push(dateStr);
+                } else if (parts.length === 6 && parts[3] === "receipts") {
+                  const senderId = parts[4];
+                  dateStr = fileName.replace(PATHS.DB_EXT, "");
+                  if (!rootManifest.receipts) rootManifest.receipts = {};
+                  if (!rootManifest.receipts[senderId]) rootManifest.receipts[senderId] = [];
+                  if (!rootManifest.receipts[senderId].includes(dateStr)) rootManifest.receipts[senderId].push(dateStr);
                 }
               } else if (file.includes(`/${PATHS.GROUPS_DIR}`) && fileName.endsWith(PATHS.DB_EXT)) {
                 const groupId = parts[2];
@@ -159208,6 +159229,11 @@ ${toHex(hashedRequest)}`;
                     const recipientId = parts[4];
                     if (!partition2.dms[recipientId]) partition2.dms[recipientId] = [];
                     if (!partition2.dms[recipientId].includes(dateStr)) partition2.dms[recipientId].push(dateStr);
+                  } else if (parts.length === 6 && parts[3] === "receipts") {
+                    const senderId = parts[4];
+                    if (!partition2.receipts) partition2.receipts = {};
+                    if (!partition2.receipts[senderId]) partition2.receipts[senderId] = [];
+                    if (!partition2.receipts[senderId].includes(dateStr)) partition2.receipts[senderId].push(dateStr);
                   }
                 } else if (file.includes(`/${PATHS.GROUPS_DIR}`)) {
                   const groupId = parts[2];
@@ -183313,7 +183339,7 @@ ${toHex(hashedRequest)}`;
           };
         }
       };
-      _SovereignS3nc.VERSION = "3.1.1";
+      _SovereignS3nc.VERSION = "3.2.0";
       SovereignS3nc = _SovereignS3nc;
     }
   });
