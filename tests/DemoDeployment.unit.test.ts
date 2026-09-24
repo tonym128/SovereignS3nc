@@ -84,7 +84,7 @@ describe('Interactive Public Demo Sandbox & Deployment (WT-62)', () => {
 
     test('Demo distribution directory contains all required artifacts after build', () => {
         const distDir = path.join(rootDir, 'demo-dist');
-        if (!fs.existsSync(distDir)) {
+        if (!fs.existsSync(distDir) || !fs.existsSync(path.join(distDir, 'index.html'))) {
             const { execSync } = require('child_process');
             execSync('node --no-warnings scripts/build-demos.js', { cwd: rootDir, stdio: 'pipe' });
         }
