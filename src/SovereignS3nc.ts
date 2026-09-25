@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage } from './types';
+import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage, SyncDiagnostic, SyncRunResult } from './types';
 import { IStorage, StoragePersistenceInfo } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -191,10 +191,12 @@ export class SovereignS3nc extends EventEmitter {
             onModuleUpdate: (mn, p) => this.onModuleUpdate(mn, p),
             registeredModules: this.registeredModules,
             getModuleInstances: () => this.moduleInstances,
-            emitSyncProgress: (stage, done, total) => {
-                this.emit('sync:progress', { stage, done, total });
+            emitSyncProgress: (stage, done, total, runId, state, phase) => {
+                this.emit('sync:progress', { stage, done, total, runId, state, phase });
                 Logger.debug('Sync', `Progress: ${stage}${total !== undefined ? ` (${done ?? 0}/${total})` : ''}`);
-            }
+            },
+            emitSyncDiagnostic: (diagnostic: SyncDiagnostic) => this.emit('sync:diagnostic', diagnostic),
+            emitSyncResult: (result: SyncRunResult) => this.emit('sync:result', result)
         });
     }
 
@@ -438,6 +440,9 @@ export class SovereignS3nc extends EventEmitter {
                             this.emit(`${data.moduleName}:update`, data);
                         }
                     });
+                    this.syncWorker.on('sync:progress', (data) => this.emit('sync:progress', data));
+                    this.syncWorker.on('sync:diagnostic', (data) => this.emit('sync:diagnostic', data));
+                    this.syncWorker.on('sync:result', (data) => this.emit('sync:result', data));
                     this.syncWorker.on('conflict', (data) => {
                         this.emit('conflict', data);
                     });
@@ -575,7 +580,7 @@ export class SovereignS3nc extends EventEmitter {
     public calculateHashedContent(d: Uint8Array, k?: string) { return this.keyManager.calculateHashedContent(d, k); }
     private getHashedUserId(uid: string, ip: boolean) { return this.keyManager.getHashedUserId(uid, ip); }
 
-    public async sync(force: boolean = false) { return this.syncOrchestrator.sync(force); }
+    public async sync(force: boolean = false): Promise<SyncRunResult> { return this.syncOrchestrator.sync(force); }
     public isSyncing(): boolean { return this._isSyncing; }
     public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
     public async compactDatabases(dates?: string[], force: boolean = false) { return this.syncOrchestrator.compactDatabases(dates, force); }
@@ -805,8 +810,9 @@ export class SovereignS3nc extends EventEmitter {
                     // Verify hash
                     const expectedHash = path.split('/').pop();
                     const actualHash = this.calculateHashedContent(data);
-                    if (expectedHash !== actualHash) {
-                        Logger.error('Sovereign', `Hash mismatch for own blob ${path}. Expected ${expectedHash}, got ${actualHash}`);
+                    const localOnlyDmAttachment = path.startsWith('private/dm-attachments/');
+                    if (!localOnlyDmAttachment && expectedHash !== actualHash) {
+                        Logger.error('Sovereign', `Hash mismatch for own blob ${path}.`);
                         throw new SyncError(`Blob corruption detected for ${path}`);
                     }
 

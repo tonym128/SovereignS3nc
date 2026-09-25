@@ -1,5 +1,5 @@
 
-import { SovereignConfig } from '../types';
+import { SovereignConfig, SyncRunResult } from '../types';
 import { EventEmitter } from 'events';
 import { DEFAULTS } from '../utils/Constants';
 import { SyncError } from '../utils/Errors';
@@ -93,7 +93,7 @@ export class SyncWorkerProxy extends EventEmitter {
     /**
      * Triggers a sync operation in the worker.
      */
-    async sync(forceSync: boolean = false): Promise<void> {
+    async sync(forceSync: boolean = false): Promise<SyncRunResult> {
         return this.sendMessage('SYNC', { forceSync }, 60000); // 60s timeout for sync
     }
 
@@ -151,6 +151,24 @@ export class SyncWorkerProxy extends EventEmitter {
             this.emit('update', payload);
             return;
         }
+
+        if (type === 'EVENT_SYNC_PROGRESS') {
+            this.emit('sync:progress', payload);
+            return;
+        }
+
+        if (type === 'EVENT_SYNC_DIAGNOSTIC') {
+            this.emit('sync:diagnostic', payload);
+            return;
+        }
+
+        if (type === 'EVENT_SYNC_RESULT') {
+            this.emit('sync:result', payload);
+            return;
+        }
+
+        // SYNC_RESULT follows the legacy SYNC_SUCCESS notification and carries the structured result.
+        if (type === 'SYNC_SUCCESS') return;
 
         if (type === 'EVENT_CONFLICT') {
             this.emit('conflict', {

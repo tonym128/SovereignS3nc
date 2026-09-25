@@ -64,7 +64,8 @@ export class ManifestManager {
             await publicRemote.uploadFile(PATHS.MANIFEST, rootData);
             Logger.info('Sync', `Hierarchical manifest uploaded successfully (merkleRoot: ${rootManifest.merkleRoot?.substring(0, 8)}).`);
         } catch (e: any) {
-            Logger.warn('Sync', `Failed to sync manifest: ${e.message}`);
+            Logger.warn('Sync', `Failed to sync manifest (${e?.name || 'Error'}).`);
+            throw e;
         }
     }
 
@@ -423,5 +424,3 @@ export class ManifestManager {
         return this.followManifestCache.get(userId);
     }
 }
-
-

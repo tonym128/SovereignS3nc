@@ -1,10 +1,11 @@
-import { SovereignConfig, SovereignManifest, SovereignGroup } from '../types';
+import { SovereignConfig, SovereignManifest, SovereignGroup, SyncDiagnostic, SyncPhaseName, SyncPhaseResult, SyncRunResult } from '../types';
 import { IStorage } from '../interfaces/IStorage';
 import { IRemoteAdapter } from '../interfaces/IRemoteAdapter';
 import { Logger } from '../utils/Logger';
 import { SovereignS3nc } from '../SovereignS3nc';
 import { PATHS, DEFAULTS } from '../utils/Constants';
 import { SyncError, NetworkError } from '../utils/Errors';
+import { env } from '../utils/Environment';
 import { ManifestFetchResult } from './ManifestManager';
 
 export interface SyncOrchestratorContext {
@@ -41,13 +42,54 @@ export interface SyncOrchestratorContext {
     registeredModules: any[];
     getModuleInstances?: () => any[];
     /** Emit a sync progress event. Stage describes the current phase; total/done are optional file counts. */
-    emitSyncProgress: (stage: string, done?: number, total?: number) => void;
+    emitSyncProgress: (stage: string, done?: number, total?: number, runId?: string, state?: 'running' | 'succeeded' | 'failed', phase?: SyncPhaseName) => void;
+    emitSyncDiagnostic: (diagnostic: SyncDiagnostic) => void;
+    emitSyncResult: (result: SyncRunResult) => void;
 }
 
 export class SyncOrchestrator {
     constructor(private ctx: SyncOrchestratorContext) {}
 
-    async sync(forceSync: boolean = false) {
+    async sync(forceSync: boolean = false): Promise<SyncRunResult> {
+        const startedAt = Date.now();
+        const runId = `${startedAt}-${env.generateId(12)}`;
+        const phases: SyncPhaseResult[] = [];
+        const diagnostics: SyncDiagnostic[] = [];
+        const legacyStages: Partial<Record<SyncPhaseName, string>> = {
+            own_data: 'syncing_own_data', registration: 'registering', discovery: 'discovering_users',
+            followed_data: 'syncing_followed', blobs: 'syncing_blobs'
+        };
+        const finish = (): SyncRunResult => {
+            const failed = phases.filter(p => p.status === 'failed').length;
+            const succeeded = phases.filter(p => p.status === 'succeeded').length;
+            const status = failed === 0 ? (succeeded === 0 ? 'skipped' : 'succeeded') : (succeeded === 0 ? 'failed' : 'partial');
+            const result = { runId, status, startedAt, completedAt: Date.now(), phases, diagnostics } as SyncRunResult;
+            this.ctx.emitSyncResult(result);
+            return result;
+        };
+        const phase = async (name: SyncPhaseName, operation: () => Promise<void>, total?: number): Promise<boolean> => {
+            const phaseStartedAt = Date.now();
+            const stage = legacyStages[name] || name;
+            this.ctx.emitSyncProgress(stage, total === undefined ? undefined : 0, total, runId, 'running', name);
+            try {
+                await operation();
+                phases.push({ name, status: 'succeeded', startedAt: phaseStartedAt, completedAt: Date.now() });
+                this.ctx.emitSyncProgress(stage, total, total, runId, 'succeeded', name);
+                return true;
+            } catch (error: any) {
+                const diagnostic: SyncDiagnostic = {
+                    code: 'SYNC_PHASE_FAILED', runId, timestamp: Date.now(), severity: 'error', phase: name,
+                    message: `Sync phase '${name}' failed.`,
+                    ...(Number.isInteger(error?.failedTasks) ? { failedTasks: error.failedTasks } : {})
+                };
+                diagnostics.push(diagnostic);
+                phases.push({ name, status: 'failed', startedAt: phaseStartedAt, completedAt: Date.now(), diagnosticCode: 'SYNC_PHASE_FAILED', failedTasks: diagnostic.failedTasks });
+                this.ctx.emitSyncDiagnostic(diagnostic);
+                this.ctx.emitSyncProgress(stage, undefined, undefined, runId, 'failed', name);
+                return false;
+            }
+        };
+
         if (this.ctx.syncWorker) {
             Logger.info('Sovereign', 'Delegating sync to background worker...');
             return this.ctx.syncWorker.sync(forceSync);
@@ -55,34 +97,39 @@ export class SyncOrchestrator {
 
         if (!this.ctx.getRemote() || !this.ctx.getPublicRemote() || !this.ctx.getGlobalRemote()) {
             Logger.info('Sovereign', 'Remote not connected, skipping sync.');
-            return;
+            const diagnostic: SyncDiagnostic = { code: 'SYNC_REMOTE_UNAVAILABLE', runId, timestamp: Date.now(), severity: 'warning', phase: 'remote_preflight', message: 'Sync was skipped because one or more remote adapters are unavailable.' };
+            diagnostics.push(diagnostic);
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            phases.push({ name: 'remote_preflight', status: 'skipped', startedAt, completedAt: Date.now() });
+            return finish();
         }
 
         if (this.ctx.isSyncing()) {
             Logger.info('Sovereign', 'Sync already in progress, skipping...');
-            return;
+            const diagnostic: SyncDiagnostic = { code: 'SYNC_ALREADY_RUNNING', runId, timestamp: Date.now(), severity: 'warning', phase: 'preflight', message: 'Sync was skipped because another sync is already running.' };
+            diagnostics.push(diagnostic);
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            phases.push({ name: 'preflight', status: 'skipped', startedAt, completedAt: Date.now() });
+            return finish();
         }
+        this.ctx.emitSyncProgress('start', undefined, undefined, runId, 'running');
         this.ctx.setSyncing(true);
         try {
             if (forceSync) {
                 Logger.info('Sync', 'FORCE SYNC initiated. Bypassing ETag cache.');
             }
 
-            this.ctx.emitSyncProgress('start');
-
             let remoteManifest: SovereignManifest | null = null;
             const publicRemote = this.ctx.getPublicRemote();
-            if (publicRemote && !forceSync) {
-                try {
+            await phase('manifest_fetch', async () => {
+                if (publicRemote && !forceSync) {
                     const result = await publicRemote.downloadFile(PATHS.MANIFEST);
                     if (result && result.data) {
                         remoteManifest = JSON.parse(new TextDecoder().decode(result.data));
                         Logger.info('Sync', 'Remote manifest downloaded for diffing.');
                     }
-                } catch (e) {
-                    Logger.debug('Sync', 'No remote manifest found.');
                 }
-            }
+            });
 
             const lastSync = forceSync ? null : await this.ctx.storage.getLastSyncDate();
             const today = SovereignS3nc.getDateStr(new Date()); 
@@ -112,57 +159,69 @@ export class SyncOrchestrator {
                 () => this.syncDay(dateStr, 'private', undefined, this.ctx.getRemote(), remoteManifest),
                 () => this.syncDay(dateStr, 'public', undefined, this.ctx.getPublicRemote(), remoteManifest)
             ]);
-            this.ctx.emitSyncProgress('syncing_own_data', 0, dateTasks.length);
-            await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE);
+            await phase('own_data', async () => { await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE); }, dateTasks.length);
 
-            this.ctx.emitSyncProgress('registering');
-            await this.syncUserFile(remoteManifest);
-            await this.ctx.ensureGlobalRegistration();
-            await this.ctx.updateFollowingPublicKeys();
+            await phase('registration', async () => {
+                await this.syncUserFile(remoteManifest);
+                await this.ctx.ensureGlobalRegistration();
+                await this.ctx.updateFollowingPublicKeys();
+            });
             
             if (this.ctx.config.autoFollowDiscoveredUsers !== false) {
-                this.ctx.emitSyncProgress('discovering_users');
-                const userList = await this.ctx.discoverUsers();
-                if (userList) {
-                    await this.ctx.autoFollowUsers(userList);
-                }
+                await phase('discovery', async () => {
+                    const userList = await this.ctx.discoverUsers();
+                    if (userList) await this.ctx.autoFollowUsers(userList);
+                });
             }
 
-            this.ctx.emitSyncProgress('syncing_followed');
-            await this.syncFollowedUsers(today);
-            await this.ctx.syncGroups(today);
+            await phase('followed_data', async () => { await this.syncFollowedUsers(today); });
+            await phase('groups', async () => { await this.ctx.syncGroups(today); });
 
-            const localManifest = await this.ctx.generateManifest();
-            const allFilePaths = new Set([
-                ...localManifest.blobs,
-                ...(remoteManifest && remoteManifest.files ? Object.keys(remoteManifest.files) : [])
-            ]);
+            await phase('blobs', async () => {
+                const localManifest = await this.ctx.generateManifest();
+                const allFilePaths = new Set([
+                    ...localManifest.blobs,
+                    ...(remoteManifest && remoteManifest.files ? Object.keys(remoteManifest.files) : [])
+                ]);
 
-            const blobTasks = Array.from(allFilePaths).map(filePath => {
-                if (filePath.includes(PATHS.USER_PROFILE) || filePath.includes(PATHS.MANIFEST) || 
-                    filePath.includes(PATHS.KEYS) || filePath.includes(PATHS.SENTINEL) ||
-                    filePath.includes('.probe')) {
-                    return null;
-                }
-                
-                const parts = filePath.split('/');
-                if (parts.length === 2 && filePath.endsWith(PATHS.DB_EXT)) {
-                    return null;
-                }
+                const blobTasks = Array.from(allFilePaths).map(filePath => {
+                    if (filePath.includes(PATHS.USER_PROFILE) || filePath.includes(PATHS.MANIFEST) ||
+                        filePath.includes(PATHS.KEYS) || filePath.includes(PATHS.SENTINEL) ||
+                        filePath.includes('.probe')) return null;
+                    const parts = filePath.split('/');
+                    if (parts.length === 2 && filePath.endsWith(PATHS.DB_EXT)) return null;
 
-                const type = filePath.startsWith(PATHS.PUBLIC_PREFIX) ? 'public' : 'private';
-                const relativePath = filePath.substring(type.length + 1);
-                return () => this.syncGenericFile(relativePath, type, remoteManifest);
-            }).filter(t => t !== null) as (() => Promise<void>)[];
+                    const type = filePath.startsWith(PATHS.PUBLIC_PREFIX) ? 'public' : 'private';
+                    const relativePath = filePath.substring(type.length + 1);
+                    return () => this.syncGenericFile(relativePath, type, remoteManifest);
+                }).filter(t => t !== null) as (() => Promise<void>)[];
 
-            this.ctx.emitSyncProgress('syncing_blobs', 0, blobTasks.length);
-            await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
+                this.ctx.emitSyncProgress('syncing_blobs', 0, blobTasks.length, runId, 'running', 'blobs');
+                await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
+            });
 
-            await this.ctx.processModerationRequests();
-            await this.ctx.syncManifest();
-            await this.applyRetentionPolicy();
-            await this.ctx.storage.setLastSyncDate(today);
-            this.ctx.emitSyncProgress('complete');
+            await phase('moderation', async () => { await this.ctx.processModerationRequests(); });
+            await phase('manifest_publish', async () => { await this.ctx.syncManifest(); });
+            await phase('retention', async () => { await this.applyRetentionPolicy(); });
+            if (phases.some(p => p.status === 'failed')) {
+                phases.push({ name: 'checkpoint', status: 'skipped', startedAt: Date.now(), completedAt: Date.now() });
+            } else {
+                await phase('checkpoint', async () => { await this.ctx.storage.setLastSyncDate(today); });
+            }
+            const result = finish();
+            this.ctx.emitSyncProgress('complete', undefined, undefined, runId, result.status === 'succeeded' ? 'succeeded' : 'failed');
+            return result;
+        } catch (_error) {
+            const diagnostic: SyncDiagnostic = {
+                code: 'SYNC_PHASE_FAILED', runId, timestamp: Date.now(), severity: 'error', phase: 'orchestration',
+                message: 'Sync orchestration failed before all phases completed.'
+            };
+            diagnostics.push(diagnostic);
+            phases.push({ name: 'orchestration', status: 'failed', startedAt: Date.now(), completedAt: Date.now(), diagnosticCode: 'SYNC_PHASE_FAILED' });
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            const result = finish();
+            this.ctx.emitSyncProgress('complete', undefined, undefined, runId, 'failed');
+            return result;
         } finally {
             this.ctx.setSyncing(false);
         }
@@ -305,8 +364,8 @@ export class SyncOrchestrator {
                 await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, localHash);
             }
         } catch (e: any) {
-            Logger.warn('Sync', `syncDay failed for ${date}/${type}: ${e.message}`);
-            if (e.message.includes('Sync aborted')) throw e;
+            Logger.warn('Sync', `syncDay failed for ${date}/${type} (${e?.name || 'Error'}).`);
+            throw e;
         }
     }
 
@@ -630,21 +689,31 @@ export class SyncOrchestrator {
                 await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, localHash);
             }
         } catch (e: any) {
-            Logger.warn('Sync', `syncGenericFile failed for ${relativePath}: ${e.message}`);
-            if (e.message?.includes('Sync aborted')) throw e;
+            Logger.warn('Sync', `syncGenericFile failed for ${relativePath} (${e?.name || 'Error'}).`);
+            throw e;
         }
     }
 
     private async runBatched<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]> {
         const results: T[] = new Array(tasks.length);
+        const errors: unknown[] = [];
         let currentIndex = 0;
         const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
             while (currentIndex < tasks.length) {
                 const index = currentIndex++;
-                results[index] = await tasks[index]();
+                try {
+                    results[index] = await tasks[index]();
+                } catch (error) {
+                    errors.push(error);
+                }
             }
         });
         await Promise.all(workers);
+        if (errors.length > 0) {
+            const error = new Error(`${errors.length} sync task(s) failed`);
+            (error as any).failedTasks = errors.length;
+            throw error;
+        }
         return results;
     }
 

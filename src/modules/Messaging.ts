@@ -12,6 +12,10 @@ export interface Message {
     senderId: string;
     recipientId: string;
     image?: string;
+    /** Metadata needed to decrypt a DM attachment stored as public ciphertext. */
+    imageEncryption?: { version: 1; ephemeralPublicKey: string };
+    /** Sender-only local plaintext attachment path. Never included in the encrypted wire payload. */
+    localImage?: string;
     isEdited?: boolean;
     isDeleted?: boolean;
     status?: 'sent' | 'delivered' | 'read';
@@ -48,6 +52,14 @@ export class MessagingModule {
                 {
                     version: 3,
                     sql: ['ALTER TABLE messages ADD COLUMN expiresAt INTEGER DEFAULT NULL;']
+                },
+                {
+                    version: 4,
+                    sql: ['ALTER TABLE messages ADD COLUMN localImage TEXT DEFAULT NULL;']
+                },
+                {
+                    version: 5,
+                    sql: ['ALTER TABLE messages ADD COLUMN imageEphemeralPk TEXT DEFAULT NULL;']
                 }
             ]
         });
@@ -115,20 +127,37 @@ export class MessagingModule {
         const timestamp = Date.now();
         const senderId = this.db.getConfig().paths.userId;
 
-        let imagePath = null;
-        if (image) {
-            imagePath = await this.db.saveBlob(image, true);
-        }
-
-        const message: Message = { id, content, timestamp, senderId, recipientId, image: imagePath || undefined, isEdited: false, isDeleted: false, status: 'sent', expiresAt };
-        await this._saveAndSendDM(recipientId, message, date);
+        const message: Message = { id, content, timestamp, senderId, recipientId, isEdited: false, isDeleted: false, status: 'sent', expiresAt };
+        await this._saveAndSendDM(recipientId, message, date, image);
     }
 
-    private async _saveAndSendDM(recipientId: string, message: Message, date: string) {
+    private async _saveAndSendDM(recipientId: string, message: Message, date: string, image?: Uint8Array) {
+        const registry = await this.db.getPublicRegistry();
+        let recipient = registry.find(u => u.userId === recipientId);
+        if (!recipient) {
+            const following = await this.db.getFollowing();
+            const f = following.find(u => u.userId === recipientId);
+            if (f?.publicKey) recipient = { userId: f.userId, publicKey: f.publicKey };
+        }
+        if (!recipient?.publicKey) throw new AuthError('Recipient public key not found');
+
+        // Use one fresh per-message key for both the payload and its optional attachment.
+        const { ephemeralPublicKey, sharedSecret } = this.db.deriveEphemeralSharedSecret(recipient.publicKey);
+        let outgoing: Message = { ...message };
+        let localImage: string | undefined;
+        if (image?.byteLength) {
+            const encryptedImage = await this.db.encrypt(image, sharedSecret);
+            outgoing.image = await this.db.saveBlob(encryptedImage, true);
+            outgoing.imageEncryption = { version: 1, ephemeralPublicKey };
+            localImage = `private/dm-attachments/${env.generateId(32)}`;
+            await this.db.getStorage().saveFile(localImage, image);
+        }
+
         // 1. Save to my Outbox (using my private key)
         const outboxDb = await this.getMessageDb(date, 'outbox');
-        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || 'sent', message.expiresAt ?? null]);
+        const localMessage = { ...outgoing, localImage: localImage || outgoing.localImage };
+        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt, localImage, imageEphemeralPk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [localMessage.id, localMessage.content, localMessage.timestamp, localMessage.senderId, localMessage.recipientId, localMessage.image || null, localMessage.isEdited ? 1 : 0, localMessage.isDeleted ? 1 : 0, localMessage.status || 'sent', localMessage.expiresAt ?? null, localMessage.localImage || null, localMessage.imageEncryption?.ephemeralPublicKey || null]);
 
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
@@ -154,22 +183,9 @@ export class MessagingModule {
             publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
         } catch (e) {}
 
-        const registry = await this.db.getPublicRegistry();
-        let recipient = registry.find(u => u.userId === recipientId);
-        
-        if (!recipient) {
-            const following = await this.db.getFollowing();
-            const f = following.find(u => u.userId === recipientId);
-            if (f && f.publicKey) {
-                recipient = { userId: f.userId, publicKey: f.publicKey };
-            }
-        }
-
-        if (!recipient || !recipient.publicKey) throw new AuthError('Recipient public key not found');
-
-        // V3: Ephemeral ECDH forward secrecy
-        const { ephemeralPublicKey, sharedSecret } = this.db.deriveEphemeralSharedSecret(recipient.publicKey);
-        const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
+        // Do not serialize the sender-only local plaintext path into the wire payload.
+        const { localImage: _localOnly, ...wireMessage } = outgoing;
+        const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(wireMessage)), sharedSecret);
         
         publicDb.run('INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)', [message.id, encrypted, ephemeralPublicKey]);
 
@@ -179,15 +195,33 @@ export class MessagingModule {
         this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
     }
 
+    /** Loads a DM attachment and decrypts it on the recipient device. Legacy attachments remain readable. */
+    async getMessageImage(message: Message): Promise<Uint8Array | null> {
+        if (message.localImage) return this.db.getBlob(message.localImage);
+        const path = message.image;
+        if (!path) return null;
+        const data = await this.db.getBlob(path, message.senderId);
+        if (!data || !message.imageEncryption) return data;
+        if (message.imageEncryption.version !== 1 || !message.imageEncryption.ephemeralPublicKey) {
+            throw new AuthError('Unsupported encrypted DM attachment format');
+        }
+        const key = this.db.deriveRecipientSharedSecret(message.imageEncryption.ephemeralPublicKey);
+        return this.db.decrypt(data, key);
+    }
+
     async editMessage(recipientId: string, messageId: string, date: string, newContent: string) {
         const timestamp = Date.now();
         const senderId = this.db.getConfig().paths.userId;
         
         const outboxDb = await this.getMessageDb(date, 'outbox');
-        const res = outboxDb.exec('SELECT image FROM messages WHERE id = ?', [messageId]);
+        const res = outboxDb.exec('SELECT image, localImage, imageEphemeralPk FROM messages WHERE id = ?', [messageId]);
         let imagePath = null;
+        let localImagePath = null;
+        let imageEphemeralPk: string | null = null;
         if (res && res.length > 0 && res[0].values.length > 0) {
             imagePath = res[0].values[0][0];
+            localImagePath = res[0].values[0][1];
+            imageEphemeralPk = res[0].values[0][2];
         }
         outboxDb.close();
 
@@ -198,6 +232,8 @@ export class MessagingModule {
             senderId, 
             recipientId, 
             image: imagePath || undefined,
+            localImage: localImagePath || undefined,
+            imageEncryption: imageEphemeralPk ? { version: 1, ephemeralPublicKey: imageEphemeralPk } : undefined,
             isEdited: true,
             isDeleted: false,
             status: 'sent'
@@ -456,6 +492,10 @@ export class MessagingModule {
                                 }
                                 msg[col] = val;
                             });
+                            if (msg.imageEphemeralPk) {
+                                msg.imageEncryption = { version: 1, ephemeralPublicKey: msg.imageEphemeralPk };
+                                delete msg.imageEphemeralPk;
+                            }
                             return msg as Message;
                         });
                         messages.push(...myMsgs);

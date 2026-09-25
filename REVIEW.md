@@ -3,11 +3,13 @@
 **Review Date**: September 18, 2026  
 **Evaluated Components**: Core Sync Engine, Cryptographic Primitives, Storage Adapters (`S3`, `IndexedDB`, `WebRTC`, `SQLiteNode`), Application Modules (`Messaging`, `Feed`, `Profile`, `GroupManager`), Demo Applications (`Social`, `Social-Local`, `Banky`, `Board`, `Blog`), Test Suites, and Infrastructure.
 
+> Historical planning document, not a security audit. The maturity scores and security claims below are unverified and are superseded by the scoped [security model and threat model](docs/security.md).
+
 ---
 
 ## Executive Summary
 
-Following the completion of 50 remediation worktrees (WT-1 through WT-50), SovereignS3nc has evolved from an experimental sync prototype into a **hardened, offline-first, zero-trust decentralized database and synchronization library**. It uniquely bridges client-side SQLite in IndexedDB with arbitrary S3-compliant object storage (AWS S3, Cloudflare R2, MinIO, Backblaze B2, Oracle OCI) and serverless WebRTC/BLE mesh networking.
+SovereignS3nc is an offline-first synchronization library bridging client-side storage with S3-compatible object storage and optional peer-to-peer transports. Its security properties and limitations are documented in the linked threat model.
 
 All initial P0, P1, P2, and P3 issues identified in earlier audits have been resolved. This review evaluates the project across five core professional dimensions—**Testing & QA**, **System Design & Architecture**, **Engineering & Developer Experience (DX)**, **Product & Engineering Management**, and **Marketing & Commercialization**—identifying what is complete, what remains incomplete, and what requires deeper verification.
 
@@ -23,10 +25,10 @@ All initial P0, P1, P2, and P3 issues identified in earlier audits have been res
 
 ## 1. Feature Status Breakdown: Complete, Incomplete & Missing
 
-### ✅ Completed & Production-Ready Features
-* **Zero-Trust Identity & Cryptography**:
+### Implemented Features (not production-readiness guarantees)
+* **Identity & Cryptography**:
   * Asymmetric identity negotiation via TweetNaCl (X25519) and Ed25519 identity signing.
-  * Ephemeral-static Forward Secrecy (PFS) for Direct Messages (`KeyManager.ts` & `Messaging.ts`).
+  * Per-message ephemeral sender keys for DM payloads and attachments. This is not a Double Ratchet and does not protect stored messages from later compromise of the recipient's long-term identity key.
   * HKDF-SHA256 expansion with domain isolation labels (`SovereignS3nc-DM-v2`, `SovereignS3nc-DM-v3-ephemeral`).
   * Master password encryption using PBKDF2 (600k iterations, SHA-256) and AES-256-GCM authenticated payloads.
   * Independent identity key rotation with master-key re-encryption (`rotateIdentityKeys`).
@@ -42,7 +44,7 @@ All initial P0, P1, P2, and P3 issues identified in earlier audits have been res
   * WebRTC peer-to-peer gossip protocol with token-bucket backpressure and signed PEX.
   * Background synchronization offloaded to dedicated Web Workers with Subresource Integrity (SRI) verification.
 * **Specialized Application Modules**:
-  * **Messaging**: Ephemeral PFS encryption, outbox/inbox partitioning, delivery & read receipts, message TTL expiration.
+  * **Messaging**: Encrypted DM payloads and attachments, outbox/inbox partitioning, delivery & read receipts, message TTL expiration.
   * **Feed**: Daily partitioning, comments, likes, granular moderation, post expiration TTL.
   * **Group Manager**: Role-based access control (`owner`, `admin`, `member`) and fine-grained `GroupPermissions` (`canPost`, `canModerate`, `canInvite`).
 
@@ -112,7 +114,7 @@ All initial P0, P1, P2, and P3 issues identified in earlier audits have been res
 ```
 
 ### Architectural Strengths
-1. **Zero-Trust Client Isolation**: S3 holds only opaque AES-256-GCM encrypted bytes and signed identity records. Even complete compromise of S3 root access yields zero plaintext user data.
+1. **Client-side payload encryption**: Private partitions and DM payloads are encrypted before remote upload. Public data, object metadata, access patterns, deletion, replay, and local endpoint compromise are outside that confidentiality property; see the threat model.
 2. **Date-Partitioned SQLite Design**: By avoiding one monolithic SQLite database, sync operations only transfer the day partitions that changed (`YYYY-MM-DD.db`), achieving near-constant sync latency regardless of total account history size.
 3. **Multi-Transport Topology**: Gracefully falls back from high-throughput S3 cloud sync to local WebRTC mesh sync when internet access is severed.
 
@@ -149,7 +151,7 @@ All initial P0, P1, P2, and P3 issues identified in earlier audits have been res
 ## 5. Product & Engineering Management Perspective
 
 ### Milestones Completed
-* ✅ **M1: Core Stabilization & Security Remediation**: Eliminated hardcoded secrets, enforced TLS, added Ed25519 registry signatures, and implemented forward secrecy.
+* ✅ **M1: Core Stabilization & Security Remediation**: TLS enforcement and Ed25519 registry signatures are implemented. These controls have not been independently audited; the DM protocol does not implement a Double Ratchet.
 * ✅ **M2: Performance Benchmarking**: CI-integrated `perf-audit.ts` preventing sync latency and memory regressions.
 * ✅ **M3: Multi-Device & Lifecycle**: Added device pairing, identity key rotation, data retention policies, and message expiration.
 * ✅ **M4: Production Deployment Packaging**: Docker Compose, Kubernetes manifests, and cloud provider configuration recipes.
@@ -174,11 +176,11 @@ Q4 2026 Roadmap
 
 ### Market Positioning & Unique Value Proposition (UVP)
 
-> **"SovereignS3nc: The Zero-Trust, Local-First Database Powered by Your Own S3 Bucket."**
+> **"SovereignS3nc: Local-first data sync powered by your own S3-compatible storage."**
 
 | Solution | Zero-Trust E2EE | Offline-First | Bring-Your-Own S3 | No Central Server Required |
 | :--- | :---: | :---: | :---: | :---: |
-| **SovereignS3nc** | ✅ **Yes (PFS + AES-GCM)** | ✅ **Yes (SQLite WASM)** | ✅ **Yes (AWS, R2, B2, MinIO)** | ✅ **Yes (Direct to S3 / P2P)** |
+| **SovereignS3nc** | ⚠️ **Client-side encryption; see threat model** | ✅ **Yes (SQLite WASM)** | ✅ **Yes (AWS, R2, B2, MinIO)** | ⚠️ **S3 or optional P2P; signaling may be centralized** |
 | **Supabase** | ❌ Server-side auth | ❌ Requires server | ❌ Managed Postgres | ❌ Hosted Backend |
 | **RxDB** | ⚠️ Plugin-dependent | ✅ Yes | ❌ Requires CouchDB/GraphQL | ❌ Needs sync server |
 | **ElectricSQL / PowerSync** | ❌ Postgres auth | ✅ Yes (SQLite) | ❌ Needs sync service | ❌ Cloud service required |

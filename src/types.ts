@@ -68,6 +68,50 @@ export interface SovereignConfig {
   retentionPolicy?: RetentionPolicy;
 }
 
+/** Stable result returned from every sync attempt, including skipped attempts. */
+export type SyncPhaseName =
+  | 'remote_preflight' | 'preflight' | 'manifest_fetch' | 'own_data' | 'registration'
+  | 'discovery' | 'followed_data' | 'groups' | 'blobs' | 'moderation'
+  | 'manifest_publish' | 'retention' | 'checkpoint' | 'orchestration';
+
+export interface SyncRunResult {
+  runId: string;
+  status: 'succeeded' | 'partial' | 'failed' | 'skipped';
+  startedAt: number;
+  completedAt: number;
+  phases: SyncPhaseResult[];
+  diagnostics: SyncDiagnostic[];
+}
+
+export interface SyncPhaseResult {
+  name: SyncPhaseName;
+  status: 'succeeded' | 'failed' | 'skipped';
+  startedAt: number;
+  completedAt: number;
+  diagnosticCode?: 'SYNC_PHASE_FAILED';
+  failedTasks?: number;
+}
+
+/** Machine-readable sync diagnostic. Codes are stable API; messages contain no remote error text or credentials. */
+export interface SyncDiagnostic {
+  code: 'SYNC_REMOTE_UNAVAILABLE' | 'SYNC_ALREADY_RUNNING' | 'SYNC_PHASE_FAILED';
+  runId: string;
+  timestamp: number;
+  severity: 'warning' | 'error';
+  phase?: SyncPhaseName;
+  failedTasks?: number;
+  message: string;
+}
+
+export interface SyncProgressEvent {
+  stage: string;
+  phase?: SyncPhaseName;
+  done?: number;
+  total?: number;
+  runId?: string;
+  state?: 'running' | 'succeeded' | 'failed';
+}
+
 export interface RetentionPolicy {
   /** Maximum number of days of own daily partition databases to keep locally. Older files are pruned. */
   maxDaysOwnData?: number;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SovereignS3nc, SovereignConfig, Post, Message, Repository } from 'sovereigns3nc';
+import { SovereignS3nc, SovereignConfig, Post, Message, Repository, SyncRunResult, SyncDiagnostic } from 'sovereigns3nc';
 
 export interface SovereignContextValue {
     sov: SovereignS3nc;
@@ -19,7 +19,9 @@ export interface SyncStatus {
     progress: number;
     stage: string;
     error: Error | null;
-    sync: (force?: boolean) => Promise<void>;
+    lastResult: SyncRunResult | null;
+    diagnostics: SyncDiagnostic[];
+    sync: (force?: boolean) => Promise<SyncRunResult>;
 }
 
 export interface UseFeedOptions {

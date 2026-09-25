@@ -1,138 +1,98 @@
-# SovereignS3nc Formal Security Whitepaper & Threat Model
+# Security model and threat model
 
-**Version**: 3.2.0  
-**Status**: Formal Specification & Threat Model  
-**Classification**: Public  
+This document describes the security properties implemented by SovereignS3nc and the assumptions they depend on. It is a design description, not an independent cryptographic audit or a certification.
 
----
+## Scope and security goals
 
-## 1. Executive Summary & Zero-Trust Architecture
+SovereignS3nc is a client-side storage and synchronization library. Its security goals are to:
 
-SovereignS3nc provides decentralized, offline-first data storage and synchronization with zero trust placed in the remote storage layer. Whether deployed against AWS S3, MinIO, RustFS, Oracle OCI, or peer-to-peer WebRTC meshes, SovereignS3nc guarantees client-side confidentiality, data authenticity, cryptographic identity validation, and access privacy.
+- Encrypt private partitions before remote upload.
+- Encrypt direct-message payloads for the intended recipient using X25519, HKDF-SHA256, and AES-256-GCM.
+- Keep DM attachment plaintext out of public remote blob storage.
+- Detect modification of authenticated ciphertext and content-addressed blobs.
+- Use TLS for remote S3 endpoints by default.
 
-### Core Security Guarantees
-1. **Zero-Trust Backend**: The S3 bucket and object store provider are assumed to be adversarial or compromised. Data at rest is authenticated and encrypted prior to network transmission.
-2. **True End-to-End Encryption (E2EE)**: Asymmetric Elliptic-Curve Diffie-Hellman (X25519) with HKDF-SHA256 key derivation and AES-256-GCM authenticated payload encryption.
-3. **Cryptographic Identity & Non-Repudiation**: Independent Ed25519 digital signatures secure global registry discovery, preventing unauthorized identity takeover.
-4. **Metadata Isolation**: Deterministic PBKDF2-derived Private GUIDs obscure private storage paths, preventing user enumeration by untrusted bucket observers.
-5. **Transport & Network Hardening**: Mandatory TLS enforcement for non-localhost S3 endpoints, Strict Content Security Policies (CSP), Subresource Integrity (SRI) for Web Workers, and token-bucket gossip backpressure.
+These goals apply to data after it reaches the library's encryption functions. Applications remain responsible for authenticating users, protecting runtime secrets, validating peer identity keys, and securing their own UI and deployment.
 
----
+## Assets and trust boundaries
 
-## 2. Cryptographic Primitives & Specifications
+| Asset | Stored locally | Stored remotely |
+| --- | --- | --- |
+| Private module databases and files | Plaintext in the local storage adapter | AES-GCM ciphertext |
+| DM text and application metadata | Plaintext in the sender's outbox and recipient's decrypted inbox | AES-GCM ciphertext; message IDs, recipient inbox path, date partition, ephemeral public key, and approximate payload size remain visible |
+| DM attachments | Sender's plaintext copy in the private local store; recipient ciphertext may be cached | AES-GCM ciphertext in a public content-addressed blob and an encrypted sender-private backup |
+| Public posts and public attachments | Plaintext | Plaintext |
+| Identity keys and passwords | Runtime and local key-management state | Encrypted key records / password-derived private namespace, depending on configuration |
+| Sync metadata | Local cache | Paths, object sizes, ETags, timestamps, public manifests, and public registry data may be visible |
 
-SovereignS3nc employs modern, audited cryptographic primitives implemented via WebCrypto, Node.js `crypto`, and `tweetnacl`.
+The remote object store is outside the trusted computing base for confidentiality of encrypted payloads. The browser or Node.js process, local storage, application code, and cryptographic runtime are trusted. A compromised endpoint can read plaintext and keys while the user is active.
 
-| Function | Primitive | Standard / Parameters | Purpose |
-| :--- | :--- | :--- | :--- |
-| **Identity & DH** | X25519 (Curve25519) | RFC 7748, 256-bit scalar multiplication | Persistent identity, E2EE key exchange |
-| **Digital Signatures** | Ed25519 (EdDSA) | RFC 8032, SHA-512 | Registry entries, PEX trust verification |
-| **Key Derivation** | HKDF-SHA256 | RFC 5869, Extract-and-Expand | X25519 shared secret to AES symmetric key |
-| **Password KDF** | PBKDF2-HMAC-SHA256 | RFC 8018, 1,000 to 600,000 iterations | Master key, Sentinel, Private GUID, Backups |
-| **Authenticated Encryption** | AES-256-GCM | NIST SP 800-38D, 12-byte IV, 16-byte Tag | Private partitions, DMs, Admin backups |
-| **Hashing & Digests** | SHA-256 / SHA-384 | FIPS 180-4 | Content addressing, SRI verification |
+## Threats and mitigations
 
-### 2.1 E2EE Direct Messaging Pipeline
-Direct Messages utilize ephemeral and persistent asymmetric key negotiation:
-1. **Key Agreement**: Alice and Bob compute a raw 32-byte shared point on Curve25519:
-   $$\sigma = \text{X25519}(sk_A, pk_B) = \text{X25519}(sk_B, pk_A)$$
-2. **Key Derivation (HKDF)**: To avoid raw DH point usage, key material is expanded via HKDF-SHA256:
-   $$K_{\text{DM}} = \text{HKDF-Expand}(\text{HKDF-Extract}(\text{salt}=\text{""}, \text{IKM}=\sigma), \text{info}=\text{"SovereignS3nc-DM-v2"}, L=32)$$
-3. **Authenticated Encryption**: The message $P$ is encrypted with a fresh random 12-byte initialization vector $IV$:
-   $$(C, T) = \text{AES-256-GCM}_{\text{Encrypt}}(K_{\text{DM}}, IV, P)$$
-   Payload wire format: `[IV (12B)] + [Auth Tag (16B)] + [Ciphertext C]`
+### Remote storage inspection or compromise
 
-### 2.2 Backup Security Pipeline
-Administrative backups export all local namespaces into single encrypted bundles:
-- **KDF**: Password derived via PBKDF2-HMAC-SHA256 with 600,000 iterations and 16 bytes of cryptographically secure random salt.
-- **Envelope Format**: Magic Header `SOV_BACKUP_V1 (13B)` + `Salt (16B)` + `IV (12B)` + `Auth Tag (16B)` + `Ciphertext`.
+An object-store operator or someone with read access can inspect all objects available to that credential. Private database and DM payloads are encrypted client-side. DM attachments are encrypted with the same fresh ephemeral message key as their corresponding message before being written under `public/blobs/`.
 
----
+The store can still learn object paths, approximate ciphertext sizes, update timing, and public social data. Content-addressed attachment paths hash the ciphertext, not the original image, but equal ciphertext objects can still be correlated if the same encrypted object is reused.
 
-## 3. Formal STRIDE Threat Model
+Sender-side DM attachment copies use random private object IDs, so their paths do not expose a plaintext content hash. Other private blobs created with the general content-addressed blob API use an unkeyed SHA-256 ID; if those paths appear in public manifests, they may permit content-guessing correlation.
 
-The threat model evaluates SovereignS3nc across six threat classifications under the STRIDE methodology.
+### Public-key substitution
 
-```
-+-----------------------------------------------------------------------------------------+
-|                                    STRIDE Threat Matrix                                 |
-+----------------------+---------------------------------+--------------------------------+
-| Threat Category      | Adversary Capability            | SovereignS3nc Mitigation       |
-+----------------------+---------------------------------+--------------------------------+
-| Spoofing             | Malicious peer injects fake     | - Ed25519 signed registry      |
-|                      | identity into global registry   | - PEX verified signature check |
-|                      | or PEX mesh.                    | - Reject unauthorized peers    |
-+----------------------+---------------------------------+--------------------------------+
-| Tampering            | S3 provider or MITM modifies    | - AES-256-GCM auth tags        |
-|                      | ciphertext, SQLite DBs, or      | - SQLite corruption recovery   |
-|                      | worker script.                  | - Subresource Integrity (SRI)  |
-+----------------------+---------------------------------+--------------------------------+
-| Repudiation          | User claims they did not update | - Canonical signed registry    |
-|                      | their public profile/key.       |   entries with timestamps      |
-+----------------------+---------------------------------+--------------------------------+
-| Information          | Observer inspects S3 bucket or  | - AES-256-GCM encryption       |
-| Disclosure           | sniffs traffic to harvest user  | - PBKDF2 Private GUID paths    |
-|                      | identity or plaintext.          | - S3 TLS enforcement (HTTPS)   |
-|                      |                                 | - Strict CSP headers on demos  |
-+----------------------+---------------------------------+--------------------------------+
-| Denial of Service    | Flooding gossip mesh or         | - Token-bucket rate limiting   |
-|                      | spamming global registry with   | - 5-minute registry cooldown   |
-|                      | rapid updates.                  | - 2D TTL message expiration    |
-+----------------------+---------------------------------+--------------------------------+
-| Elevation of         | Non-admin member attempts to    | - Cryptographic group keys     |
-| Privilege            | moderate or post in a group.    | - Granular permissions matrix  |
-|                      |                                 |   (canPost, canModerate)       |
-+----------------------+---------------------------------+--------------------------------+
-```
+DM confidentiality depends on resolving the intended recipient's authentic X25519 public key. If the registry or the application's key-verification path accepts a substituted key, the sender can encrypt to an attacker-controlled key. Users do not currently get an out-of-band fingerprint verification flow in the DM API. Deployments should protect registry writes, validate signed records, and treat registry/key distribution as a trust boundary; high-assurance applications should add key-change warnings or fingerprint verification.
 
-### 3.1 Detailed Threat Analysis
+### Remote object tampering
 
-#### 3.1.1 Spoofing & Sybil Attacks
-- **Vulnerability**: In decentralized registries, an attacker could overwrite `users/{userId}.json` or inject rogue peers through Peer Exchange (PEX).
-- **Mitigation**: Every registry update requires an Ed25519 digital signature over canonicalized JSON (`userId`, `publicKey`, `signingPublicKey`, `timestamp`). `PEX` messages are only accepted if sent by directly-connected peers or if accompanying Ed25519 signatures verify against known identities.
+AES-GCM authentication detects modification of private partitions and DM ciphertext when decrypted. Blob retrieval checks the content hash encoded in the blob path. These checks detect corruption, but do not provide a signed, globally consistent history: an attacker can delete objects, replay older valid data, or manipulate unsigned public data and manifests. Applications needing rollback resistance or authoritative public state need signed versioning or an external trust anchor.
 
-#### 3.1.2 Tampering & Data Integrity
-- **Vulnerability**: An untrusted storage provider could tamper with SQLite daily databases or inject compromised worker scripts.
-- **Mitigation**:
-  - All private and DM files are authenticated using AES-256-GCM 128-bit authentication tags. Any byte mutation causes authentication failure and immediate abort.
-  - SQLite database files that fail opening due to storage-level corruption are detected gracefully, logged, and isolated without crashing the application.
-  - Background sync workers can be verified against an SRI hash (`sha384-...`) before execution.
+### Network interception
 
-#### 3.1.3 Information Disclosure & Metadata Leakage
-- **Vulnerability**: Path traversal and bucket listing allows adversaries to discover active users.
-- **Mitigation**:
-  - **Private GUID**: Remote path is `/{appId}/{privateId}/{storeId}/` where `privateId = PBKDF2(password, userId + "-private-id")`. Without the password, bucket contents cannot be associated with any public user ID.
-  - **TLS Enforcement**: `S3RemoteAdapter` throws `NetworkError` if an endpoint begins with `http://` unless explicitly disabled for localhost development.
-  - **CSP Hardening**: Demo HTML files enforce `Content-Security-Policy` prohibiting unauthorized script sources and object embeds (`object-src 'none'`).
+S3 endpoints using `http://` are rejected by default except localhost. Applications can explicitly disable this check, so production configuration must keep TLS required. TLS protects transport; it does not hide metadata from the storage provider.
 
-#### 3.1.4 Denial of Service (DoS) & Mesh Amplification
-- **Vulnerability**: An adversary sends rapid gossip messages to trigger $O(n^2)$ network amplification.
-- **Mitigation**:
-  - **Token-Bucket Backpressure**: WebRTC channels enforce a strict rate limit (20 messages/second window) per peer via WeakMap accounting.
-  - **Two-Dimensional TTL Enforcement**: Messages carry hop-count TTL decrement and a 30-second timestamp freshness limit (`MSG_MAX_AGE_MS = 30000`). Stale messages are discarded immediately.
-  - **Registry Upload Cooldown**: `GlobalRegistry` throttles uploads to at most once per 5 minutes unless keys change.
+### Malicious or compromised client
 
-#### 3.1.5 Elevation of Privilege (Group Governance)
-- **Vulnerability**: Rogue group participants attempting to moderate posts or write to restricted group partitions.
-- **Mitigation**: Group state maintains cryptographic group member lists with roles (`owner`, `admin`, `member`) and granular permissions (`canPost`, `canModerate`, `canInvite`). Feed post creation checks `canPost !== false`, and moderation deletion strictly validates that the actor is group owner/admin or possesses `canModerate: true`.
+An attacker controlling application JavaScript, a browser extension with sufficient access, the host process, or the device can capture plaintext before encryption or after decryption. End-to-end encryption does not protect against compromised endpoints, malicious dependencies, unsafe application logging, screenshots, or local backups.
 
----
+### Credential theft and weak passwords
 
-## 4. Cryptographic Proofs & Security Arguments
+Password-derived keys are vulnerable to offline guessing if an attacker obtains the relevant encrypted key material. Use a high-entropy password and protect S3 credentials. The library does not provide account authentication or prevent a stolen S3 credential from deleting or replacing objects within its allowed scope.
 
-### 4.1 Confidentiality (IND-CCA2)
-Let $\mathcal{AE} = (\text{Enc}, \text{Dec})$ be AES-256-GCM. Under the standard assumption that AES is a pseudorandom permutation (PRP), AES-GCM provides IND-CCA2 security as long as no IV is reused under the same key.
-- **IV Uniqueness**: SovereignS3nc generates a fresh 96-bit cryptographic pseudorandom IV from `crypto.getRandomValues()` for every encryption operation. The probability of an IV collision under a single key within $2^{32}$ operations is bounded by $2^{-65}$, well below NIST collision limits.
+### Public data exposure
 
-### 4.2 Forward Secrecy & Key Ratcheting
-Currently, direct messages use semi-static ECDH (each user uses their persistent identity key). While HKDF-SHA256 provides domain separation and key hygiene, compromise of Alice's private key allows passive retrospective decryption of stored DMs. 
-- **Future Roadmap**: The next major protocol revision integrates a Double Ratchet mechanism (similar to Signal/Matrix) for ephemeral ratchet keys per conversation.
+Public feeds, profiles, registries, receipts, manifests, and public blobs are intentionally readable wherever their S3 policy permits. Do not place private or sensitive content in public modules. A private post must use the private data path; public content is not encrypted by default.
 
----
+### Deletion and expiry
 
-## 5. Security Checklist & Best Practices for Developers
+Deleting or expiring a message does not currently guarantee deletion of its attachment objects from every remote store or peer cache. Treat TTL as an application visibility/cleanup feature, not cryptographic erasure. Remote orphan-blob collection and deletion propagation need an explicit retention policy.
 
-1. **Always enable TLS**: Do not set `requireTLS: false` in production S3 configurations.
-2. **Use Strong Passwords**: Because `masterKey` and `privateId` are PBKDF2-derived from the user password, password entropy directly dictates resilience against offline dictionary attacks.
-3. **Specify Worker SRI Hashes**: When deploying `SyncWorkerProxy` in production, configure `workerIntegrity: "sha384-..."`.
-4. **Configure Data Retention**: Prevent local storage exhaustion by supplying `retentionPolicy` with appropriate `maxDaysOwnData` and `maxDaysFollowedData`.
+## Direct-message attachment format
+
+For a new message with an attachment:
+
+1. The sender creates a fresh ephemeral X25519 key pair and derives a 256-bit key with HKDF-SHA256 against the recipient's public key.
+2. The attachment is encrypted with AES-256-GCM under that key. The encrypted bytes are content-addressed and stored under the sender's public blob namespace.
+3. The encrypted message contains the opaque blob path and the ephemeral public key. The message payload itself is encrypted under the same derived key.
+4. The recipient derives the same key from the ephemeral public key and their private identity key, fetches the ciphertext, verifies its content hash, and decrypts it.
+5. The sender keeps a private copy for the outbox under a random private object ID. The private copy is encrypted when synchronized, and its path is not included in the transmitted DM payload.
+
+Previously sent attachments may have been uploaded as plaintext public blobs. This change does not retroactively encrypt or delete those objects. Deployments should identify and remove old DM attachment objects according to their retention and recovery requirements. Legacy messages without attachment encryption metadata remain readable for compatibility and should be treated as publicly exposed if they point into a public blob namespace.
+
+## Explicitly out of scope
+
+- Availability against object deletion, account suspension, quota exhaustion, or network partition.
+- Hiding access patterns, object sizes, timing, public social graphs, or public registry entries.
+- Protecting plaintext stored by local adapters from a person or process with access to the device.
+- Protecting against malicious application code or dependencies.
+- Providing non-repudiation for arbitrary application data, rollback protection, or a complete secure group messaging protocol.
+- Guaranteeing forward secrecy after device compromise. DM attachments and messages use per-message ephemeral keys, but there is no Double Ratchet, and recipients retain identity private keys and decrypted local data.
+
+## Deployment guidance
+
+- Keep `requireTLS` enabled for every non-local S3 endpoint.
+- Scope S3 credentials to the required app, user, and public/private prefixes; avoid long-lived bucket-wide credentials in browser apps.
+- Keep admin credentials out of client applications.
+- Use strong account passwords and keep runtime secrets out of logs, URLs, and source control.
+- Set retention and backup policies for both local stores and remote buckets.
+- Treat public namespaces and all legacy DM attachment blobs as public data.
+
+Report suspected security issues privately to the project maintainers before publishing exploit details.

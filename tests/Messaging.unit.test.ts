@@ -124,7 +124,7 @@ describe('MessagingModule Unit Tests', () => {
         const spy = jest.spyOn(messagingModule as any, '_saveAndSendDM').mockResolvedValue(undefined);
         const expiresAt = Date.now() + 60000;
         await messagingModule.sendDirectMessage('bob', 'self-destruct message', undefined, expiresAt);
-        expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ content: 'self-destruct message', expiresAt }), expect.any(String));
+        expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ content: 'self-destruct message', expiresAt }), expect.any(String), undefined);
     });
 
     test('getInboxMessages should filter out expired messages', async () => {

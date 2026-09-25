@@ -35,7 +35,7 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 
 | Method | Description |
 | :--- | :--- |
-| `sync(force?: boolean)` | Performs a two-way synchronization. Returns a promise that resolves when complete. |
+| `sync(force?: boolean)` | Performs a two-way synchronization and resolves to a `SyncRunResult` describing each phase and any diagnostics. |
 | `getStorage()` | Returns the local `IStorage` adapter (IndexedDB or Node FS). |
 | `getConfig()` | Returns the active `SovereignConfig`. |
 | `registerModule(def)` | Registers a custom module definition (schema and migrations). |
@@ -46,6 +46,24 @@ const sovereign = await SovereignS3nc.create(config: SovereignConfig);
 | `resolveConflict(id, choice)`| Resolves a pending sync conflict (`'local' \| 'remote' \| 'abort'`). |
 | `saveBlob(data, public?)` | Saves a binary blob and returns its deterministic path. |
 | `getBlob(path, userId?)` | Retrieves a blob from local storage or a remote peer/S3. |
+
+`SyncRunResult` contains a unique `runId`, an overall status (`succeeded`, `partial`, `failed`, or `skipped`), timestamps, per-phase status, and stable diagnostic codes. A partial result means at least one phase failed; the library will not advance the last-sync checkpoint after a failed phase.
+
+```typescript
+const result = await sovereign.sync();
+if (result.status !== 'succeeded') {
+  for (const diagnostic of result.diagnostics) {
+    console.warn(diagnostic.code, diagnostic.phase, diagnostic.runId);
+  }
+}
+
+sovereign.on('sync:diagnostic', diagnostic => {
+  // Codes are stable API; diagnostic messages intentionally omit raw remote errors.
+  reportSyncIssue({ code: diagnostic.code, runId: diagnostic.runId });
+});
+```
+
+Progress events (`sync:progress`) include `runId`, `phase`, and `state` alongside the existing `stage`, `done`, and `total` fields. Diagnostics currently use `SYNC_REMOTE_UNAVAILABLE`, `SYNC_ALREADY_RUNNING`, and `SYNC_PHASE_FAILED`.
 
 ---
 
@@ -74,6 +92,7 @@ End-to-end encrypted direct messaging using X25519 (tweetnacl) and AES-256-GCM.
   *Limits: Content max 5000 chars.*
 - **`getInboxMessages(days: number = 5)`**: 
   Retrieves and decrypts DM history for the last `X` days from all followed users.
+- **`getMessageImage(message: Message)`**: Loads a DM attachment and decrypts new encrypted attachments on the client. Older messages without attachment encryption metadata remain readable; their public blobs should be treated as exposed.
 - **`editMessage(recipientId: string, messageId: string, date: string, newContent: string)`**: 
   Overwrites a previously sent message.
 - **`deleteMessage(recipientId: string, messageId: string, date: string)`**: 

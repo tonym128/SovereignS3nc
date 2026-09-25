@@ -70,14 +70,14 @@ const PostItem = ({ post, userId, profileCache, resolveImage }: { post: Post, us
     );
 };
 
-const MessageItem = ({ m, myId, resolveImage }: { m: Message, myId: string, resolveImage: any }) => {
+const MessageItem = ({ m, myId, resolveImage, resolveMessageImage }: { m: Message, myId: string, resolveImage: any, resolveMessageImage?: (message: Message) => Promise<string | null> }) => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     useEffect(() => {
         if (m.image) {
-            resolveImage(m.image, m.senderId).then(setImageUrl);
+            (resolveMessageImage ? resolveMessageImage(m) : resolveImage(m.image, m.senderId)).then(setImageUrl);
         }
-    }, [m.image]);
+    }, [m.image, m.localImage, m.imageEncryption]);
 
     return (
         <div className={`d-flex mb-3 ${m.senderId === myId ? 'justify-content-end' : 'justify-content-start'}`}>
@@ -159,6 +159,13 @@ const App = () => {
             console.error('[App] Failed to resolve image:', path, e);
         }
         return null;
+    };
+
+    const resolveMessageImage = async (message: Message): Promise<string | null> => {
+        if (!messaging) return null;
+        const data = await messaging.getMessageImage(message);
+        if (!data) return null;
+        return URL.createObjectURL(new Blob([data]));
     };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'post' | 'msg' | 'profile') => {
@@ -513,7 +520,7 @@ const App = () => {
                                                     .filter(m => (m.senderId === selectedUser && m.recipientId === config.userId) || (m.senderId === config.userId && m.recipientId === selectedUser))
                                                     .sort((a,b) => a.timestamp - b.timestamp)
                                                     .map(m => (
-                                                        <MessageItem key={m.id} m={m} myId={config.userId} resolveImage={resolveImage} />
+                                                        <MessageItem key={m.id} m={m} myId={config.userId} resolveImage={resolveImage} resolveMessageImage={resolveMessageImage} />
                                                     ))
                                                 }
                                             </div>

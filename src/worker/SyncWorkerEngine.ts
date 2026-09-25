@@ -33,10 +33,13 @@ export class SyncWorkerEngine {
                     this.postMessage({ id, type: 'INIT_SUCCESS' });
                     break;
 
-                case 'SYNC':
-                    await this.handleSync(payload);
+                case 'SYNC': {
+                    const result = await this.handleSync(payload);
+                    // Keep the original success notification shape for existing worker clients.
                     this.postMessage({ id, type: 'SYNC_SUCCESS' });
+                    this.postMessage({ id, type: 'SYNC_RESULT', payload: result });
                     break;
+                }
 
                 case 'TERMINATE':
                     this.sovereign = null;
@@ -80,6 +83,18 @@ export class SyncWorkerEngine {
             this.postMessage({ type: 'EVENT_UPDATE', payload: data });
         });
 
+        this.sovereign.on('sync:progress', (data) => {
+            this.postMessage({ type: 'EVENT_SYNC_PROGRESS', payload: data });
+        });
+
+        this.sovereign.on('sync:diagnostic', (data) => {
+            this.postMessage({ type: 'EVENT_SYNC_DIAGNOSTIC', payload: data });
+        });
+
+        this.sovereign.on('sync:result', (data) => {
+            this.postMessage({ type: 'EVENT_SYNC_RESULT', payload: data });
+        });
+
         this.sovereign.on('conflict', (data) => {
             // Forward conflict to main thread
             this.postMessage({ type: 'EVENT_CONFLICT', payload: { id: data.id, path: data.path } });
@@ -95,8 +110,9 @@ export class SyncWorkerEngine {
         }
 
         Logger.info('Worker', 'Starting background sync...');
-        await this.sovereign.sync(payload.forceSync);
+        const result = await this.sovereign.sync(payload.forceSync);
         Logger.info('Worker', 'Background sync complete.');
+        return result;
     }
 
     /**

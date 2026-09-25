@@ -1279,11 +1279,14 @@ const App = () => {
         }
     }, [selectedGroup, lastSyncTime, isLoggedIn]);
 
-    const BlobImage = ({ path, userId }: { path: string, userId: string }) => {
+    const BlobImage = ({ path, userId, message }: { path: string, userId: string, message?: Message }) => {
         const [src, setSrc] = useState<string | null>(blobCache[path]);
         useEffect(() => {
             if (!src && sov) {
-                sov.getBlob(path, userId).then(data => {
+                const imagePromise = message && messaging
+                    ? messaging.getMessageImage(message)
+                    : sov.getBlob(path, userId);
+                imagePromise.then(data => {
                     if (data) {
                         const reader = new FileReader();
                         reader.onloadend = () => {
@@ -1295,7 +1298,7 @@ const App = () => {
                     }
                 });
             }
-        }, [path, userId, sov]);
+        }, [path, userId, sov, message?.localImage, message?.imageEncryption, messaging]);
 
         if (!src) return <div className="bg-light p-5 text-center text-muted">Loading image...</div>;
         return <img src={src} className="img-fluid rounded" style={{maxHeight: '500px'}} />;
@@ -1818,7 +1821,7 @@ const App = () => {
                                                                             </div>
                                                                         ) : (
                                                                             <>
-                                                                                {m.image && <BlobImage path={m.image} userId={m.senderId} />}
+                                                                                {m.image && <BlobImage path={m.image} userId={m.senderId} message={m} />}
                                                                                 <div>{m.content}</div>
                                                                             </>
                                                                         )}

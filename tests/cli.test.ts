@@ -19,7 +19,7 @@ describe('CLI Integration Tests', () => {
         consoleSpy = jest.spyOn(console, 'log').mockImplementation();
         jest.spyOn(console, 'error').mockImplementation();
         // Mock sync to avoid network
-        jest.spyOn(SovereignS3nc.prototype, 'sync').mockResolvedValue(undefined);
+        jest.spyOn(SovereignS3nc.prototype, 'sync').mockResolvedValue(undefined as any);
     });
 
     afterEach(() => {

@@ -356,7 +356,7 @@ describe('Goal 4 — Message Expiration & Read Receipts', () => {
 
         const ttl = Date.now() + 30_000;
         await msg.sendDirectMessage('bob', 'auto-destruct in 30s', undefined, ttl);
-        expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ expiresAt: ttl }), expect.any(String));
+        expect(spy).toHaveBeenCalledWith('bob', expect.objectContaining({ expiresAt: ttl }), expect.any(String), undefined);
     });
 
     test('Message.expiresAt is propagated through Message type', () => {

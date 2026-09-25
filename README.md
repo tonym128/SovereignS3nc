@@ -52,8 +52,13 @@ const sovereign = await SovereignS3nc.create({
 });
 
 // 2. Sync changes (Pull updates from followed users & Push local changes)
-await sovereign.sync();
+const syncResult = await sovereign.sync();
+if (syncResult.status !== 'succeeded') {
+  console.warn('Sync needs attention:', syncResult.diagnostics.map(d => d.code));
+}
 ```
+
+`sync()` resolves with per-phase status and stable diagnostic codes; listen to `sync:progress`, `sync:diagnostic`, and `sync:result` for live state. See the [security model and threat model](docs/security.md) for the data and metadata the remote store can observe.
 
 ## Module System
 
