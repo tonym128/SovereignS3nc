@@ -80,7 +80,9 @@ export class ManifestManager {
             if (cacheData) {
                 cachedManifest = JSON.parse(new TextDecoder().decode(cacheData));
             }
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.debug('Sync', `Could not read cached manifest: ${e.message}`);
+        }
 
         const allFiles = await this.ctx.storage.listFiles('');
         Logger.debug('Sync', `generateManifest: Scanning ${allFiles.length} files (Incremental)`);
@@ -269,7 +271,9 @@ export class ManifestManager {
             if (data) {
                 try {
                     return JSON.parse(new TextDecoder().decode(data));
-                } catch (e) {}
+                } catch (e: any) {
+                    Logger.warn('Sync', `Failed to parse submanifest cache for ${userId}: ${e.message}`);
+                }
             }
         }
 
@@ -333,7 +337,9 @@ export class ManifestManager {
                     };
                     this.followManifestCache.set(userId, cached);
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.debug('Sync', `Could not populate follow manifest cache for ${userId}: ${e.message}`);
+            }
         }
 
         if (!options?.forceRefresh && cached && (Date.now() - cached.timestamp < ttl)) {

@@ -166,7 +166,9 @@ export class GroupManager {
                 try {
                     const { status } = JSON.parse(new TextDecoder().decode(statusData));
                     member.status = status;
-                } catch(e) {}
+                } catch(e: any) {
+                    Logger.warn('GroupManager', `Failed to parse status for member ${member.userId} in group ${groupId}: ${e.message}`);
+                }
             }
         }
 
@@ -261,7 +263,9 @@ export class GroupManager {
                             member.status = status;
                             anyMemberStatusChanged = true;
                         }
-                    } catch(e) {}
+                    } catch(e: any) {
+                        Logger.warn('GroupManager', `Failed to parse synced status for member ${member.userId} in group ${group.id}: ${e.message}`);
+                    }
                 }
 
                 if (member.status === 'joined') {

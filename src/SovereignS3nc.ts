@@ -568,7 +568,9 @@ export class SovereignS3nc extends EventEmitter {
         const result = await this.keyManager.rotateIdentityKeys(newKeyPair);
         try {
             await this.ensureGlobalRegistration();
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.warn('Sovereign', `Failed to update global registration after key rotation: ${e.message}`);
+        }
         return result;
     }
     public async encrypt(d: Uint8Array, k: string) { return this.keyManager.encrypt(d, k); }
@@ -849,7 +851,9 @@ export class SovereignS3nc extends EventEmitter {
                 const registry = await this.getPublicRegistry();
                 const user = registry.find(u => u.userId === userId);
                 if (user) publicKey = user.publicKey;
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.warn('Sovereign', `Failed to fetch public registry while following ${userId}: ${e.message}`);
+            }
         }
 
         const startDate = new Date();
