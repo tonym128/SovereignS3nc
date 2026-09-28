@@ -248,45 +248,45 @@
 
 ### P0 — Critical (Do First)
 
-| # | Item | Owner | Effort |
-|---|---|---|---|
-| 1 | Fix silent error swallowing — replace all empty `catch` blocks with logging | Senior Engineer | 1-2 days |
-| 2 | Extract `DailyDatabase` utility to eliminate SQLite boilerplate duplication | Senior Engineer | 2-3 days |
-| 3 | Implement debounced/batched SQLite export (stop full-DB rewrite per mutation) | Principal Dev | 3-5 days |
-| 4 | Publish to npm with proper `exports` map | Marketing / Eng | 1 day |
-| 5 | Add security regression tests for protocol downgrade attacks | Testing Dev | 1-2 days |
+| # | Item | Owner | Effort | Status |
+|---|---|---|---|---|
+| 1 | Fix silent error swallowing — replace all empty `catch` blocks with logging | Senior Engineer | 1-2 days | ✅ Completed |
+| 2 | Extract `DailyDatabase` utility to eliminate SQLite boilerplate duplication | Senior Engineer | 2-3 days | Pending |
+| 3 | Implement debounced/batched SQLite export (stop full-DB rewrite per mutation) | Principal Dev | 3-5 days | Pending |
+| 4 | Publish to npm with proper `exports` map | Marketing / Eng | 1 day | Pending |
+| 5 | Add security regression tests for protocol downgrade attacks | Testing Dev | 1-2 days | Pending |
 
 ### P1 — High (Do Next)
 
-| # | Item | Owner | Effort |
-|---|---|---|---|
-| 6 | Add "Quick Start" offline mode to demo onboarding | Product Designer | 2-3 days |
-| 7 | Introduce `ModuleContext` to fix encapsulation leaks | Principal Dev | 3-5 days |
-| 8 | Decompose monolithic `App.tsx` files into feature components | Senior Engineer | 3-5 days |
-| 9 | Add cursor-based pagination to Feed and Messaging queries | Senior Engineer | 2-3 days |
-| 10 | Ship `@sovereign-s3nc/react` hooks package | Marketing / Eng | 5-7 days |
+| # | Item | Owner | Effort | Status |
+|---|---|---|---|---|
+| 6 | Add "Quick Start" offline mode to demo onboarding | Product Designer | 2-3 days | Pending |
+| 7 | Introduce `ModuleContext` to fix encapsulation leaks | Principal Dev | 3-5 days | Pending |
+| 8 | Decompose monolithic `App.tsx` files into feature components | Senior Engineer | 3-5 days | Pending |
+| 9 | Add cursor-based pagination to Feed and Messaging queries | Senior Engineer | 2-3 days | Pending |
+| 10 | Ship `@sovereign-s3nc/react` hooks package | Marketing / Eng | 5-7 days | Pending |
 
 ### P2 — Medium (Plan For)
 
-| # | Item | Owner | Effort |
-|---|---|---|---|
-| 11 | Deploy hosted interactive playground | Marketing | 2-3 days |
-| 12 | Add accessibility audit (axe-core) to CI | Testing Dev | 1-2 days |
-| 13 | Create shared `demo/build-common.js` and `demo/shared/` UI components | Senior Engineer | 3-4 days |
-| 14 | Replace `window.alert()` with toast notification system | Product Designer | 1-2 days |
-| 15 | Add failure-mode test suites (corrupted data, network errors) | Testing Dev | 3-5 days |
+| # | Item | Owner | Effort | Status |
+|---|---|---|---|---|
+| 11 | Deploy hosted interactive playground | Marketing | 2-3 days | Pending |
+| 12 | Add accessibility audit (axe-core) to CI | Testing Dev | 1-2 days | Pending |
+| 13 | Create shared `demo/build-common.js` and `demo/shared/` UI components | Senior Engineer | 3-4 days | Pending |
+| 14 | Replace `window.alert()` with toast notification system | Product Designer | 1-2 days | Pending |
+| 15 | Add failure-mode test suites (corrupted data, network errors) | Testing Dev | 3-5 days | Pending |
 
 ### P3 — Nice to Have (Backlog)
 
-| # | Item | Owner | Effort |
-|---|---|---|---|
-| 16 | Migrate to hierarchical Merkle-tree manifest | Principal Dev | 1-2 weeks |
-| 17 | Investigate CRDT integration for collaborative modules | Principal Dev | 2-3 weeks |
-| 18 | Create "How SovereignS3nc compares" documentation page | Marketing | 1-2 days |
-| 19 | Record 3-minute getting-started video | Marketing | 1 day |
-| 20 | Add mutation testing (Stryker) for crypto modules | Testing Dev | 2-3 days |
-| 21 | Implement dark mode across all demos | Product Designer | 2-3 days |
-| 22 | Add CI stages for integration, browser, and perf tests | Testing Dev | 2-3 days |
+| # | Item | Owner | Effort | Status |
+|---|---|---|---|---|
+| 16 | Migrate to hierarchical Merkle-tree manifest | Principal Dev | 1-2 weeks | Pending |
+| 17 | Investigate CRDT integration for collaborative modules | Principal Dev | 2-3 weeks | Pending |
+| 18 | Create "How SovereignS3nc compares" documentation page | Marketing | 1-2 days | Pending |
+| 19 | Record 3-minute getting-started video | Marketing | 1 day | Pending |
+| 20 | Add mutation testing (Stryker) for crypto modules | Testing Dev | 2-3 days | Pending |
+| 21 | Implement dark mode across all demos | Product Designer | 2-3 days | Pending |
+| 22 | Add CI stages for integration, browser, and perf tests | Testing Dev | 2-3 days | Pending |
 
 ---
 
