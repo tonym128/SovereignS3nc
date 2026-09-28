@@ -4,6 +4,7 @@ import { Logger } from '../utils/Logger';
 import { env } from '../utils/Environment';
 import { ModuleError, AuthError } from '../utils/Errors';
 import { DEFAULTS } from '../utils/Constants';
+import { DailyDatabase } from '../core/DailyDatabase';
 
 export interface Message {
     id: string;
@@ -25,6 +26,7 @@ export interface Message {
 
 export class MessagingModule {
     private readonly MODULE_NAME = 'messaging';
+    private dailyDb: DailyDatabase;
 
     constructor(private db: SovereignS3nc) {
         this.db.registerModule({
@@ -63,51 +65,21 @@ export class MessagingModule {
                 }
             ]
         });
+        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME);
         this.db.registerModuleInstance(this);
     }
 
     private async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
         const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}.db`, 'private');
-        const data = await this.db.getStorage().getFile(path);
-        
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        
-        let db: any;
-        try {
-            db = new sqliteInstance.Database(data || undefined);
-        } catch (e: any) {
-            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
-                Logger.error('Messaging', `Database corruption detected at ${path}. Deleting.`);
-                await this.db.getStorage().deleteFile(path);
-                db = new sqliteInstance.Database();
-            } else {
-                throw e;
-            }
-        }
-
-        this.db.applyModuleSchema(db, this.MODULE_NAME);
-        return db;
+        const session = await this.dailyDb.openDatabase(path, { applySchema: true });
+        return session.db;
     }
 
     private async getReceiptsDb(userId: string, date: string, type: 'public' | 'followed'): Promise<any> {
         const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date}.db`, type);
-        const data = await this.db.getStorage().getFile(path);
-        
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        
-        let db: any;
-        try {
-            db = new sqliteInstance.Database(data || undefined);
-        } catch (e: any) {
-            db = new sqliteInstance.Database();
-        }
-
-        db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
-        return db;
+        const session = await this.dailyDb.openDatabase(path, { applySchema: false });
+        session.db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+        return session.db;
     }
 
     /**
@@ -165,34 +137,20 @@ export class MessagingModule {
 
         // 2. Send to Recipient's Public DM box (End-to-End Encrypted)
         const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date}.db`, 'public');
-        const publicDmData = await this.db.getStorage().getFile(publicDmPath);
-        
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        
-        let publicDb: any;
-        try {
-            publicDb = new sqliteInstance.Database(publicDmData || undefined);
-        } catch (e: any) {
-            publicDb = new sqliteInstance.Database();
-        }
-        
-        publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
-        try {
-            publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
-        } catch (e: any) {
-            Logger.debug('Messaging', 'Column ephemeral_pk already exists or alter table ignored');
-        }
+        await this.dailyDb.withDatabase(publicDmPath, async (publicDb: any) => {
+            publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
+            try {
+                publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
+            } catch (e: any) {
+                Logger.debug('Messaging', 'Column ephemeral_pk already exists or alter table ignored');
+            }
 
-        // Do not serialize the sender-only local plaintext path into the wire payload.
-        const { localImage: _localOnly, ...wireMessage } = outgoing;
-        const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(wireMessage)), sharedSecret);
-        
-        publicDb.run('INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)', [message.id, encrypted, ephemeralPublicKey]);
-
-        await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
-        publicDb.close();
+            // Do not serialize the sender-only local plaintext path into the wire payload.
+            const { localImage: _localOnly, ...wireMessage } = outgoing;
+            const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(wireMessage)), sharedSecret);
+            
+            publicDb.run('INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)', [message.id, encrypted, ephemeralPublicKey]);
+        }, { save: true, applySchema: false });
 
         this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
     }
@@ -336,28 +294,20 @@ export class MessagingModule {
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         const data = await this.db.getStorage().getFile(outboxPath);
         if (!data) return null;
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        const db = new sqliteInstance.Database(data);
-        try {
+        return await this.dailyDb.withDatabase(outboxPath, (db: any) => {
             const res = db.exec('SELECT status FROM messages WHERE id = ?', [messageId]);
             if (res && res.length > 0 && res[0].values.length > 0) {
                 return (res[0].values[0][0] as any) || 'sent';
             }
             return null;
-        } finally {
-            db.close();
-        }
+        }, { applySchema: true });
     }
 
     async getInboxMessages(days: number = 5): Promise<Message[]> {
         const messages: Message[] = [];
         const following = await this.db.getFollowing();
         const myId = this.db.getConfig().paths.userId;
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+        const sqliteInstance = await DailyDatabase.getSqliteInstance();
 
         const dates: string[] = [];
         // Include UTC tomorrow (i = -1) to tolerate clock skew and midnight boundary transitions,
@@ -494,10 +444,9 @@ export class MessagingModule {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
             const data = await this.db.getStorage().getFile(outboxPath);
             if (data) {
-                const db = new sqliteInstance.Database(data);
-                try {
+                await this.dailyDb.withDatabase(outboxPath, (db: any) => {
                     const res = db.exec('SELECT * FROM messages');
-                    if (res && res.length > 0) {
+                    if (res && res.length > 0 && res[0].values && res[0].columns) {
                         const columns = res[0].columns;
                         const myMsgs = res[0].values.map((row: any) => {
                             const msg: any = {};
@@ -516,10 +465,7 @@ export class MessagingModule {
                         });
                         messages.push(...myMsgs);
                     }
-                } catch (e: any) {
-                    Logger.warn('Messaging', `Failed to process outbox SQLite db for date ${date}: ${e.message}`);
-                }
-                db.close();
+                }, { applySchema: true });
             }
         }
 
@@ -547,29 +493,24 @@ export class MessagingModule {
         const targetDates = dates && dates.length > 0 ? dates : [new Date().toISOString().split('T')[0]];
         let deleted = 0;
         const now = Date.now();
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         for (const date of targetDates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
             const data = await this.db.getStorage().getFile(outboxPath);
             if (data) {
-                const db = new sqliteInstance.Database(data);
-                try {
+                const count = await this.dailyDb.withDatabase(outboxPath, (db: any) => {
                     const countRes = db.exec('SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
+                    let c = 0;
                     if (countRes && countRes.length > 0 && countRes[0].values[0]) {
-                        const count = Number(countRes[0].values[0][0]);
-                        if (count > 0) {
+                        c = Number(countRes[0].values[0][0]);
+                        if (c > 0) {
                             db.run('DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
                             db.run('VACUUM');
-                            await this.db.getStorage().saveFile(outboxPath, db.export());
-                            deleted += count;
                         }
                     }
-                } finally {
-                    db.close();
-                }
+                    return c;
+                }, { save: true, emitUpdate: true, applySchema: true });
+                deleted += count;
             }
         }
         return deleted;
@@ -595,17 +536,12 @@ export class MessagingModule {
         }
 
         const originalSize = data.byteLength;
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('messaging', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-
-        const db = new sqliteInstance.Database(data);
         const now = Date.now();
         let compacted = false;
         let newSize = originalSize;
         let tombstoneRatio = 0;
 
-        try {
+        await this.dailyDb.withDatabase(outboxPath, (db: any) => {
             const totalRes = db.exec('SELECT COUNT(*) FROM messages');
             const total = (totalRes && totalRes.length > 0 && totalRes[0].values[0]) ? Number(totalRes[0].values[0][0]) : 0;
 
@@ -619,13 +555,9 @@ export class MessagingModule {
                 db.run('VACUUM');
                 const compactedBinary = db.export();
                 newSize = compactedBinary.byteLength;
-                await this.db.getStorage().saveFile(outboxPath, compactedBinary);
-                this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
                 compacted = true;
             }
-        } finally {
-            db.close();
-        }
+        }, { save: true, emitUpdate: true, applySchema: true });
 
         return {
             compacted,

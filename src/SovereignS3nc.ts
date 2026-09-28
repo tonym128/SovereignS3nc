@@ -22,6 +22,7 @@ import { ModerationEngine } from './core/ModerationEngine';
 import { GlobalRegistry } from './discovery/GlobalRegistry';
 import { BlacklistManager } from './discovery/BlacklistManager';
 import { Repository, RepositoryOptions } from './core/Repository';
+import { DailyDatabase } from './core/DailyDatabase';
 import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
@@ -49,6 +50,7 @@ export class SovereignS3nc extends EventEmitter {
     private moderationEngine: ModerationEngine;
     private globalRegistry: GlobalRegistry;
     private blacklistManager: BlacklistManager;
+    private dailyDatabase!: DailyDatabase;
 
     public static async create(
         config: SovereignConfig, 
@@ -94,6 +96,8 @@ export class SovereignS3nc extends EventEmitter {
             remoteFactory: this.remoteFactory,
             createRemote: (uid, isPrivate) => this.createRemote(uid, isPrivate)
         });
+
+        this.dailyDatabase = new DailyDatabase(this);
 
         if (remote) {
             this.remote = remote;
@@ -632,6 +636,14 @@ export class SovereignS3nc extends EventEmitter {
             type,
             idColumn
         });
+    }
+
+    /**
+     * Retrieves the DailyDatabase utility for managing SQLite database lifecycles.
+     * Optionally scoped to a specific module name.
+     */
+    public getDailyDatabase(moduleName?: string): DailyDatabase {
+        return moduleName ? new DailyDatabase(this, moduleName) : this.dailyDatabase;
     }
 
     /**

@@ -5,6 +5,7 @@ import { ModuleDefinition } from '../types';
 import { env } from '../utils/Environment';
 import { ModuleError } from '../utils/Errors';
 import { DEFAULTS } from '../utils/Constants';
+import { DailyDatabase } from '../core/DailyDatabase';
 
 export interface Post {
     id: string;
@@ -69,8 +70,10 @@ export const FEED_MODULE_DEFINITION: ModuleDefinition = {
 
 export class FeedModule {
     private readonly MODULE_NAME = 'feed';
+    private dailyDb: DailyDatabase;
 
     constructor(private db: SovereignS3nc) {
+        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME);
         this.db.registerModule(FEED_MODULE_DEFINITION);
         this.db.registerModuleInstance(this);
     }
@@ -86,32 +89,9 @@ export class FeedModule {
         } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
         }
-            
-        let data = await this.db.getStorage().getFile(dbPath);
-        
-        // Use env to get sql.js
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-        
-        let db: any;
-        try {
-            db = new sqliteInstance.Database(data || undefined);
-        } catch (e: any) {
-            if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
-                Logger.error('Feed', `Database corruption detected at ${dbPath}. Deleting corrupted file.`);
-                await this.db.getStorage().deleteFile(dbPath);
-                // Return an empty DB for now, sync will recover it later
-                db = new sqliteInstance.Database();
-            } else {
-                throw e;
-            }
-        }
 
-        // Use Core Schema Management
-        this.db.applyModuleSchema(db, this.MODULE_NAME);
-
-        return db;
+        const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
+        return session.db;
     }
 
     async post(content: string, isPublic: boolean = true, image?: Uint8Array, parentId?: string, parentUserId?: string, expiresAt?: number) {
@@ -196,18 +176,11 @@ export class FeedModule {
 
     async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-
         let allPosts: Post[] = [];
-
-        // Use env to get sql.js
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const data = await this.db.getStorage().getFile(dbPath);
         if (data) {
-            const db = new sqliteInstance.Database(data);
-            try {
+            await this.dailyDb.withDatabase(dbPath, (db) => {
                 const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
                 if (res && res.length > 0) {
                     const columns = res[0].columns;
@@ -228,10 +201,7 @@ export class FeedModule {
                     }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
                     allPosts.push(...posts);
                 }
-            } catch (e: any) {
-                Logger.warn('Feed', `Failed to read posts from SQLite for ${date} (${type}): ${e.message}`);
-            }
-            db.close();
+            }, { applySchema: true });
         }
 
         return allPosts;
@@ -291,14 +261,9 @@ export class FeedModule {
         const data = await this.db.getStorage().getFile(dbPath);
         if (!data) return 0;
 
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-
-        const db = new sqliteInstance.Database(data);
         const now = Date.now();
-        let deletedCount = 0;
-        try {
+        return await this.dailyDb.withDatabase(dbPath, (db) => {
+            let deletedCount = 0;
             const countRes = db.exec('SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
             if (countRes && countRes.length > 0 && countRes[0].values[0]) {
                 deletedCount = Number(countRes[0].values[0][0]);
@@ -306,14 +271,9 @@ export class FeedModule {
             if (deletedCount > 0) {
                 db.run('DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
                 db.run('VACUUM');
-                const binary = db.export();
-                await this.db.getStorage().saveFile(dbPath, binary);
-                this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
             }
-        } finally {
-            db.close();
-        }
-        return deletedCount;
+            return deletedCount;
+        }, { save: true, emitUpdate: true, applySchema: true });
     }
 
     /**
@@ -336,17 +296,12 @@ export class FeedModule {
         }
 
         const originalSize = data.byteLength;
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-
-        const db = new sqliteInstance.Database(data);
         const now = Date.now();
         let compacted = false;
         let newSize = originalSize;
         let tombstoneRatio = 0;
 
-        try {
+        await this.dailyDb.withDatabase(dbPath, (db) => {
             const totalRes = db.exec('SELECT COUNT(*) FROM posts');
             const total = (totalRes && totalRes.length > 0 && totalRes[0].values[0]) ? Number(totalRes[0].values[0][0]) : 0;
 
@@ -360,13 +315,9 @@ export class FeedModule {
                 db.run('VACUUM');
                 const compactedBinary = db.export();
                 newSize = compactedBinary.byteLength;
-                await this.db.getStorage().saveFile(dbPath, compactedBinary);
-                this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
                 compacted = true;
             }
-        } finally {
-            db.close();
-        }
+        }, { save: true, emitUpdate: true, applySchema: true });
 
         return {
             compacted,
@@ -397,11 +348,6 @@ export class FeedModule {
             dates.push(d.toISOString().split('T')[0]);
         }
 
-        // Use env to get sql.js
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-
         const processDb = async (date: string, type: 'public' | 'followed') => {
             const dbPath = type === 'followed' 
                 ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
@@ -410,8 +356,7 @@ export class FeedModule {
             const data = await this.db.getStorage().getFile(dbPath);
             if (!data) return;
 
-            const db = new sqliteInstance.Database(data);
-            try {
+            await this.dailyDb.withDatabase(dbPath, (db) => {
                 const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
                 if (tableCheck.length > 0) {
                     const res = db.exec('SELECT postId, userId FROM likes');
@@ -427,10 +372,7 @@ export class FeedModule {
                         }
                     }
                 }
-            } catch (e: any) {
-                Logger.warn('Feed', `Failed to aggregate likes from SQLite for ${date} (${type}): ${e.message}`);
-            }
-            db.close();
+            }, { applySchema: true });
         };
 
         for (const date of dates) await processDb(date, 'public');
@@ -527,11 +469,6 @@ export class FeedModule {
 
     async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
         const deletedPostIds = new Set<string>();
-        
-        // Use env to get sql.js
-        const initSqlJs = env.getSqlJs();
-        if (!initSqlJs) throw new ModuleError('feed', 'sql.js not loaded');
-        const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
 
         const groups = await this.db.getGroups();
         const group = groups.find(g => g.id === groupId);
@@ -590,15 +527,10 @@ export class FeedModule {
         const myPath = `public/groups/${groupId}/${date}.db`;
         const myData = await this.db.getStorage().getFile(myPath);
         if (myData) {
-            try {
-                const decrypted = await this.db.decrypt(myData, group.sharedKey);
-                const db = new sqliteInstance.Database(decrypted);
+            await this.dailyDb.withDatabase(myPath, async (db) => {
                 processModeration(db, this.db.getConfig().paths.userId);
                 await processPosts(db);
-                db.close();
-            } catch(e: any) {
-                Logger.warn('Feed', `Failed to load/decrypt own group database for ${groupId}/${date}: ${e.message}`);
-            }
+            }, { decryptKey: group.sharedKey, applySchema: false });
         }
 
         // 2. Member data
@@ -608,15 +540,10 @@ export class FeedModule {
             
             const memberData = await this.db.getStorage().getFile(memberPath);
             if (memberData) {
-                try {
-                    const decrypted = await this.db.decrypt(memberData, group.sharedKey);
-                    const db = new sqliteInstance.Database(decrypted);
+                await this.dailyDb.withDatabase(memberPath, async (db) => {
                     processModeration(db, member.userId);
                     await processPosts(db);
-                    db.close();
-                } catch(e: any) {
-                    Logger.warn('Feed', `Failed to load/decrypt member group database for ${member.userId}/${groupId}/${date}: ${e.message}`);
-                }
+                }, { decryptKey: group.sharedKey, applySchema: false });
             }
         }
 
