@@ -236,7 +236,9 @@ export class KeyManager {
                 } else if (this.ctx.remoteFactory) {
                     this.ctx.setRemote(this.ctx.remoteFactory(v2PrivateId));
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.warn('Keys', `Failed to initialize remote during key check: ${e.message}`);
+            }
         }
 
         let remote = this.ctx.getRemote();
@@ -244,7 +246,9 @@ export class KeyManager {
             try {
                 const result = await remote.downloadFile(PATHS.SENTINEL);
                 if (result && result.data) sentinelData = result.data;
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.debug('Keys', `Could not download sentinel from remote: ${e.message}`);
+            }
         }
 
         let masterKey: Buffer | null = null;
@@ -265,7 +269,9 @@ export class KeyManager {
                         Logger.info('Keys', 'Verified V2 keys.');
                         await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                     }
-                } catch (e) {}
+                } catch (e: any) {
+                    Logger.debug('Keys', `V2 sentinel decryption failed: ${e.message}`);
+                }
             }
 
             // Fallback to Legacy if V2 failed
@@ -296,7 +302,9 @@ export class KeyManager {
                             remote = this.ctx.getRemote();
                         }
                     }
-                } catch (e) {}
+                } catch (e: any) {
+                    Logger.debug('Keys', `Legacy sentinel decryption failed: ${e.message}`);
+                }
             }
         }
 
@@ -329,7 +337,9 @@ export class KeyManager {
         let localKeyData: Uint8Array | null = null;
         try {
             localKeyData = await this.ctx.storage.getDailyDb('_keys', 'private'); 
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.debug('Keys', `Could not retrieve local keys: ${e.message}`);
+        }
         
         if (localKeyData) {
             try {
@@ -365,7 +375,9 @@ export class KeyManager {
                         keyInfo = JSON.parse(decrypted.toString());
                     }
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.debug('Keys', `Could not download remote keys: ${e.message}`);
+            }
         }
 
         if (!keyInfo) {
@@ -400,7 +412,9 @@ export class KeyManager {
         if (remote) {
             try {
                 await remote.uploadFile(PATHS.KEYS, v2KeyData);
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.warn('Keys', `Failed to upload V2 keys to remote: ${e.message}`);
+            }
         }
 
         this.ctx.config.encryptionKey = keyInfo.privateKey;
@@ -442,7 +456,9 @@ export class KeyManager {
                 const encrypted = await this.encrypt(Buffer.from(JSON.stringify(keyInfo)), derived.toString('hex'));
                 await remote.uploadFile(PATHS.KEYS, Buffer.concat([salt, encrypted]));
             }
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.warn('Keys', `ensureKeysAreRemote failed: ${e.message}`);
+        }
     }
 
     public async changePassword(oldPassword: string, newPassword: string): Promise<void> {

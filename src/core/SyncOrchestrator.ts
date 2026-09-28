@@ -575,7 +575,9 @@ export class SyncOrchestrator {
                         if (localObj.updatedAt && remoteObj.updatedAt && localObj.updatedAt > remoteObj.updatedAt) {
                             shouldKeepLocal = true;
                         }
-                    } catch (e) {}
+                    } catch (e: any) {
+                        Logger.warn('Sync', `Failed to compare user.json timestamps: ${e.message}`);
+                    }
                 }
 
                 if (!shouldKeepLocal) {

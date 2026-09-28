@@ -181,7 +181,9 @@ export class MessagingModule {
         publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
         try {
             publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.debug('Messaging', 'Column ephemeral_pk already exists or alter table ignored');
+        }
 
         // Do not serialize the sender-only local plaintext path into the wire payload.
         const { localImage: _localOnly, ...wireMessage } = outgoing;
@@ -391,7 +393,9 @@ export class MessagingModule {
                             await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
                             outboxDb.close();
                         }
-                    } catch (e) {}
+                    } catch (e: any) {
+                        Logger.warn('Messaging', `Failed to apply receipt update from ${user.userId}: ${e.message}`);
+                    }
                     rdb.close();
                 }
             }
@@ -415,7 +419,9 @@ export class MessagingModule {
                             if (tableInfo && tableInfo.length > 0) {
                                 hasEphemeralCol = tableInfo[0].values.some((col: any) => col[1] === 'ephemeral_pk');
                             }
-                        } catch (e) {}
+                        } catch (e: any) {
+                            Logger.debug('Messaging', `PRAGMA table_info check failed: ${e.message}`);
+                        }
 
                         const query = hasEphemeralCol 
                             ? 'SELECT encrypted_data, ephemeral_pk FROM messages'
@@ -434,21 +440,27 @@ export class MessagingModule {
                                         try {
                                             const sharedSecretV3 = this.db.deriveRecipientSharedSecret(ephemeralPk);
                                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV3);
-                                        } catch (e) {}
+                                        } catch (e: any) {
+                                            Logger.debug('Messaging', `V3 ephemeral decrypt failed: ${e.message}`);
+                                        }
                                     }
 
                                     // V2: Fall back to static HKDF shared secret
                                     if (!decrypted) {
                                         try {
                                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV2);
-                                        } catch (e) {}
+                                        } catch (e: any) {
+                                            Logger.debug('Messaging', `V2 static HKDF decrypt failed: ${e.message}`);
+                                        }
                                     }
 
                                     // V1: Fall back to raw legacy shared secret (pre-HKDF)
                                     if (!decrypted) {
                                         try {
                                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV1);
-                                        } catch (e) {}
+                                        } catch (e: any) {
+                                            Logger.debug('Messaging', `V1 raw legacy decrypt failed: ${e.message}`);
+                                        }
                                     }
 
                                     if (decrypted) {
@@ -458,7 +470,9 @@ export class MessagingModule {
                                         messages.push(parsed);
                                         newMsgsForUser.push(parsed);
                                     }
-                                } catch (e) {}
+                                } catch (e: any) {
+                                    Logger.warn('Messaging', `Failed to decrypt/parse message: ${e.message}`);
+                                }
                             }
                             if (newMsgsForUser.length > 0) {
                                 await this.markBatchAsDelivered(user.userId, newMsgsForUser.map(m => ({
@@ -467,7 +481,9 @@ export class MessagingModule {
                                 })));
                             }
                         }
-                    } catch (e) {}
+                    } catch (e: any) {
+                        Logger.warn('Messaging', `Failed to process incoming DM SQLite db from ${user.userId}: ${e.message}`);
+                    }
                     db.close();
                 }
             }
@@ -500,7 +516,9 @@ export class MessagingModule {
                         });
                         messages.push(...myMsgs);
                     }
-                } catch (e) {}
+                } catch (e: any) {
+                    Logger.warn('Messaging', `Failed to process outbox SQLite db for date ${date}: ${e.message}`);
+                }
                 db.close();
             }
         }

@@ -197,7 +197,9 @@ export class ModerationModule {
             if (result && result.data) {
                 blacklist = JSON.parse(new TextDecoder().decode(result.data));
             }
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.debug('Moderation', `Could not download blacklist: ${e.message}`);
+        }
 
         if (!blacklist.includes(userId)) {
             blacklist.push(userId);
@@ -229,7 +231,9 @@ export class ModerationModule {
                     Logger.info('Moderation', `User ${userId} removed from global registry.`);
                 }
             }
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.warn('Moderation', `Failed to update global registry during user removal: ${e.message}`);
+        }
 
         try {
             const entryPath = `${PATHS.REGISTRY_ENTRIES_PREFIX}${userId}.json`;
@@ -237,7 +241,9 @@ export class ModerationModule {
                 await globalRemote.deleteFile(entryPath);
                 Logger.info('Moderation', `User ${userId} entry removed from V2 global registry.`);
             }
-        } catch (e) {}
+        } catch (e: any) {
+            Logger.warn('Moderation', `Failed to delete entry from V2 global registry: ${e.message}`);
+        }
     }
 
     /**
@@ -324,7 +330,9 @@ export class ModerationModule {
                     const registry: { userId: string }[] = JSON.parse(new TextDecoder().decode(result.data));
                     registry.forEach(u => users.add(u.userId));
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.debug('Moderation', `Could not fetch registry users during listAllUsers: ${e.message}`);
+            }
         }
 
         // 2. Get from S3 Directory Listing (Finds literal names AND hashes)

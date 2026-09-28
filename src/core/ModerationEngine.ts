@@ -72,7 +72,9 @@ export class ModerationEngine {
                     if (publicRemote && (publicRemote as any).deleteFile) {
                         try {
                             await (publicRemote as any).deleteFile(file);
-                        } catch (e) {}
+                        } catch (e: any) {
+                            Logger.warn('Moderation', `Failed to delete moderation request from remote: ${file}`, e);
+                        }
                     }
                     
                     if (modified) {

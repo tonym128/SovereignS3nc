@@ -228,7 +228,9 @@ export class FeedModule {
                     }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
                     allPosts.push(...posts);
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.warn('Feed', `Failed to read posts from SQLite for ${date} (${type}): ${e.message}`);
+            }
             db.close();
         }
 
@@ -425,7 +427,9 @@ export class FeedModule {
                         }
                     }
                 }
-            } catch (e) {}
+            } catch (e: any) {
+                Logger.warn('Feed', `Failed to aggregate likes from SQLite for ${date} (${type}): ${e.message}`);
+            }
             db.close();
         };
 
@@ -545,7 +549,9 @@ export class FeedModule {
                         deletedPostIds.add(row[0]);
                     });
                 }
-            } catch(e) {}
+            } catch(e: any) {
+                Logger.warn('Feed', `Failed to process moderation entries for member ${memberId}: ${e.message}`);
+            }
         };
 
         const postsMap = new Map<string, Post>();
@@ -575,7 +581,9 @@ export class FeedModule {
                         }
                     });
                 }
-            } catch (e: any) {}
+            } catch (e: any) {
+                Logger.warn('Feed', `Failed to process group posts: ${e.message}`);
+            }
         };
 
         // 1. My data
@@ -588,7 +596,9 @@ export class FeedModule {
                 processModeration(db, this.db.getConfig().paths.userId);
                 await processPosts(db);
                 db.close();
-            } catch(e: any) {}
+            } catch(e: any) {
+                Logger.warn('Feed', `Failed to load/decrypt own group database for ${groupId}/${date}: ${e.message}`);
+            }
         }
 
         // 2. Member data
@@ -604,7 +614,9 @@ export class FeedModule {
                     processModeration(db, member.userId);
                     await processPosts(db);
                     db.close();
-                } catch(e: any) {}
+                } catch(e: any) {
+                    Logger.warn('Feed', `Failed to load/decrypt member group database for ${member.userId}/${groupId}/${date}: ${e.message}`);
+                }
             }
         }
 
