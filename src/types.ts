@@ -228,3 +228,6 @@ export interface WebRTCSignalingData {
     senderId: string;
 }
 
+export type { PaginationOptions, PaginatedResult, DecodedCursor } from './core/Pagination';
+
+

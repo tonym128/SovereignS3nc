@@ -28,7 +28,7 @@ export class QueryBuilder<T = Record<string, any>> implements IQueryBuilder<T> {
     private _tableName: string;
     private _columns: string = '*';
     private _whereConditions: { condition: string; params: any[] }[] = [];
-    private _orderBy?: string;
+    private _orderByParts: string[] = [];
     private _limit?: number;
     private _offset?: number;
 
@@ -58,7 +58,7 @@ export class QueryBuilder<T = Record<string, any>> implements IQueryBuilder<T> {
     orderBy(column: string, direction: 'ASC' | 'DESC' = 'ASC'): this {
         validateIdentifier(column, 'column');
         const cleanDir = direction.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
-        this._orderBy = `"${column}" ${cleanDir}`;
+        this._orderByParts.push(`"${column}" ${cleanDir}`);
         return this;
     }
 
@@ -84,8 +84,8 @@ export class QueryBuilder<T = Record<string, any>> implements IQueryBuilder<T> {
             sql += ` WHERE ${clauses.join(' AND ')}`;
         }
 
-        if (this._orderBy) {
-            sql += ` ORDER BY ${this._orderBy}`;
+        if (this._orderByParts.length > 0) {
+            sql += ` ORDER BY ${this._orderByParts.join(', ')}`;
         }
 
         if (this._limit !== undefined) {

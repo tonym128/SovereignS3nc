@@ -1,6 +1,7 @@
 import { SovereignS3nc } from '../SovereignS3nc';
 import { env } from '../utils/Environment';
 import { RepositoryError } from '../utils/Errors';
+import { PaginationOptions, PaginatedResult, paginateItems } from './Pagination';
 
 export interface RepositoryOptions {
     idColumn?: string;
@@ -108,6 +109,21 @@ export class Repository<T extends Record<string, any>> {
         } finally {
             close();
         }
+    }
+
+    public async findPaginated(
+        query?: Partial<T>,
+        options?: PaginationOptions & {
+            sortColumn?: string;
+        }
+    ): Promise<PaginatedResult<T>> {
+        const rows = await this.find(query);
+        const sortCol = options?.sortColumn || 'timestamp';
+        const idCol = this.idColumn;
+        return paginateItems(rows, options, (item: any) => ({
+            timestamp: typeof item[sortCol] === 'number' ? item[sortCol] : 0,
+            id: String(item[idCol] ?? '')
+        }));
     }
 
     public async findById(id: string): Promise<T | null> {
