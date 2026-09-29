@@ -369,7 +369,7 @@ export class BankyManager {
             if (txs.length > 0) {
                 // Open (or create) the group DB for this date
                 const groupDb = await this.getDb(date, 'group', groupId, sharedKey);
-                Logger.info(`[Banky] Publishing ${txs.length} transactions from account ${accountId} to group ${groupId}`);
+                Logger.info('Banky', `Publishing ${txs.length} transactions from account ${accountId} to group ${groupId}`);
                 for (const tx of txs) {
                     // Important: Use groupId as the accountId in the shared DB
                     groupDb.run(`INSERT OR REPLACE INTO transactions (id, date, description, amount, category, timestamp, accountId, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,

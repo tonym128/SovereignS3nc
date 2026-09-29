@@ -7,6 +7,7 @@ import { env } from '../utils/Environment';
 import { ModuleError } from '../utils/Errors';
 import { DEFAULTS } from '../utils/Constants';
 import { DailyDatabase } from '../core/DailyDatabase';
+import { PaginationOptions, PaginatedResult, PaginationCursor, paginateItems } from '../core/Pagination';
 
 export interface Post {
     id: string;
@@ -23,6 +24,11 @@ export interface Post {
     isDeleted?: boolean;
     /** Optional expiration timestamp (Unix ms). Posts past this time are filtered out and cleaned up. */
     expiresAt?: number;
+}
+
+export interface FeedPaginationOptions extends PaginationOptions {
+    days?: number;
+    includeFollowed?: boolean;
 }
 
 export const FEED_MODULE_DEFINITION: ModuleDefinition = {
@@ -65,6 +71,10 @@ export const FEED_MODULE_DEFINITION: ModuleDefinition = {
         {
             version: 2,
             sql: ['ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;']
+        },
+        {
+            version: 3,
+            sql: ['CREATE INDEX IF NOT EXISTS idx_posts_timestamp_id ON posts(timestamp DESC, id DESC);']
         }
     ]
 };
@@ -163,37 +173,89 @@ export class FeedModule {
         await this.post(content, true, image, parentId, parentUserId);
     }
 
-    async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
+    /**
+     * Retrieves paginated posts from a single date partition database using keyset cursor pagination.
+     */
+    async getPostsPaginated(
+        date: string,
+        type: 'private' | 'public' | 'followed',
+        options?: PaginationOptions
+    ): Promise<PaginatedResult<Post>> {
         const dbPath = this.context.storage.getPath(`${date}.db`, type);
         if (!(await this.dailyDb.exists(dbPath))) {
-            return [];
+            return { items: [], nextCursor: null, prevCursor: null, hasMore: false, total: 0 };
         }
-        let allPosts: Post[] = [];
-        await this.dailyDb.withDatabase(dbPath, (db) => {
-                const now = Date.now();
-                const rawPosts = this.context.createQueryBuilder<any>('posts')
-                    .orderBy('timestamp', 'DESC')
-                    .execute(db);
-                const posts = rawPosts.map((row: any) => {
-                    const post = { ...row };
-                    if (typeof post.isEdited === 'number') post.isEdited = !!post.isEdited;
-                    if (typeof post.isDeleted === 'number') post.isDeleted = !!post.isDeleted;
-                    if (!post.userId && type === 'followed') {
-                        post.userId = date.split('/')[0];
-                    }
-                    return post as Post;
-                }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
-                allPosts.push(...posts);
-            }, { applySchema: true });
 
-        return allPosts;
+        const limit = Math.max(1, options?.limit ?? 50);
+        const direction = options?.direction ?? 'before';
+        const decoded = PaginationCursor.decode(options?.cursor);
+
+        return await this.dailyDb.withDatabase(dbPath, (db) => {
+            const now = Date.now();
+            const qb = this.context.createQueryBuilder<any>('posts')
+                .where('(expiresAt IS NULL OR expiresAt > ?)', now);
+
+            if (decoded) {
+                if (direction === 'before') {
+                    qb.where('(timestamp < ? OR (timestamp = ? AND id < ?))', decoded.timestamp, decoded.timestamp, decoded.id);
+                    qb.orderBy('timestamp', 'DESC').orderBy('id', 'DESC');
+                } else {
+                    qb.where('(timestamp > ? OR (timestamp = ? AND id > ?))', decoded.timestamp, decoded.timestamp, decoded.id);
+                    qb.orderBy('timestamp', 'ASC').orderBy('id', 'ASC');
+                }
+            } else {
+                if (direction === 'before') {
+                    qb.orderBy('timestamp', 'DESC').orderBy('id', 'DESC');
+                } else {
+                    qb.orderBy('timestamp', 'ASC').orderBy('id', 'ASC');
+                }
+            }
+
+            qb.limit(limit + 1);
+
+            const rawPosts = qb.execute(db);
+            const posts = rawPosts.map((row: any) => {
+                const post = { ...row };
+                if (typeof post.isEdited === 'number') post.isEdited = !!post.isEdited;
+                if (typeof post.isDeleted === 'number') post.isDeleted = !!post.isDeleted;
+                if (!post.userId && type === 'followed') {
+                    post.userId = date.split('/')[0];
+                }
+                return post as Post;
+            });
+
+            const hasMore = posts.length > limit;
+            const items = posts.slice(0, limit);
+
+            const nextCursor = (hasMore && items.length > 0)
+                ? PaginationCursor.encode(items[items.length - 1].timestamp, items[items.length - 1].id)
+                : null;
+            const prevCursor = items.length > 0
+                ? PaginationCursor.encode(items[0].timestamp, items[0].id)
+                : null;
+
+            return {
+                items,
+                nextCursor,
+                prevCursor,
+                hasMore
+            };
+        }, { applySchema: true });
+    }
+
+    async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
+        const res = await this.getPostsPaginated(date, type, { limit: 100000 });
+        return res.items;
     }
 
     /**
-     * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
-     * combining own public posts and followed users' posts, with like enrichment and sorting.
+     * Retrieves paginated feed posts across a sliding date window (including UTC tomorrow for clock skew),
+     * combining own public posts and followed users' posts, with like enrichment for the returned page.
      */
-    async getFeedPosts(days: number = 5, includeFollowed: boolean = true): Promise<Post[]> {
+    async getFeedPostsPaginated(options?: FeedPaginationOptions): Promise<PaginatedResult<Post>> {
+        const days = options?.days ?? 5;
+        const includeFollowed = options?.includeFollowed ?? true;
+
         const dates: string[] = [];
         for (let i = -1; i < days; i++) {
             const d = new Date();
@@ -229,9 +291,18 @@ export class FeedModule {
         }
 
         const deduplicated = Array.from(postMap.values());
-        await this.enrichLikes(deduplicated, days);
-        deduplicated.sort((a, b) => b.timestamp - a.timestamp);
-        return deduplicated;
+        const paginated = paginateItems(deduplicated, options);
+        await this.enrichLikes(paginated.items, days);
+        return paginated;
+    }
+
+    /**
+     * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
+     * combining own public posts and followed users' posts, with like enrichment and sorting.
+     */
+    async getFeedPosts(days: number = 5, includeFollowed: boolean = true): Promise<Post[]> {
+        const res = await this.getFeedPostsPaginated({ days, includeFollowed, limit: 100000 });
+        return res.items;
     }
 
     /**
@@ -445,7 +516,17 @@ export class FeedModule {
         this.context.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
+    async getGroupPostsPaginated(groupId: string, date: string, options?: PaginationOptions): Promise<PaginatedResult<Post>> {
+        const posts = await this._fetchGroupPostsRaw(groupId, date);
+        return paginateItems(posts, options);
+    }
+
     async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
+        const res = await this.getGroupPostsPaginated(groupId, date, { limit: 100000 });
+        return res.items;
+    }
+
+    private async _fetchGroupPostsRaw(groupId: string, date: string): Promise<Post[]> {
         const deletedPostIds = new Set<string>();
 
         const groups = await this.context.sovereign.getGroups();

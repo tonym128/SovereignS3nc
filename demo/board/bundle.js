@@ -160179,6 +160179,128 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // src/core/Pagination.ts
+  function paginateItems(items, options, keyExtractor = (item) => ({
+    timestamp: item.timestamp,
+    id: item.id
+  })) {
+    const limit = Math.max(1, options?.limit ?? 50);
+    const direction = options?.direction ?? "before";
+    const decodedCursor = PaginationCursor.decode(options?.cursor);
+    let candidates = [...items];
+    if (decodedCursor) {
+      candidates = candidates.filter((item) => {
+        const key = keyExtractor(item);
+        if (direction === "before") {
+          return key.timestamp < decodedCursor.timestamp || key.timestamp === decodedCursor.timestamp && key.id < decodedCursor.id;
+        } else {
+          return key.timestamp > decodedCursor.timestamp || key.timestamp === decodedCursor.timestamp && key.id > decodedCursor.id;
+        }
+      });
+    }
+    if (direction === "before") {
+      candidates.sort((a8, b7) => {
+        const ka = keyExtractor(a8);
+        const kb = keyExtractor(b7);
+        if (kb.timestamp !== ka.timestamp) return kb.timestamp - ka.timestamp;
+        return kb.id.localeCompare(ka.id);
+      });
+    } else {
+      candidates.sort((a8, b7) => {
+        const ka = keyExtractor(a8);
+        const kb = keyExtractor(b7);
+        if (ka.timestamp !== kb.timestamp) return ka.timestamp - kb.timestamp;
+        return ka.id.localeCompare(kb.id);
+      });
+    }
+    const hasMore = candidates.length > limit;
+    const pageItems = candidates.slice(0, limit);
+    const nextCursor = hasMore && pageItems.length > 0 ? (() => {
+      const last = keyExtractor(pageItems[pageItems.length - 1]);
+      return PaginationCursor.encode(last.timestamp, last.id);
+    })() : null;
+    const prevCursor = pageItems.length > 0 ? (() => {
+      const first = keyExtractor(pageItems[0]);
+      return PaginationCursor.encode(first.timestamp, first.id);
+    })() : null;
+    return {
+      items: pageItems,
+      nextCursor,
+      prevCursor,
+      hasMore,
+      total: items.length
+    };
+  }
+  var PaginationCursor;
+  var init_Pagination = __esm({
+    "src/core/Pagination.ts"() {
+      "use strict";
+      init_dirname();
+      init_buffer2();
+      init_process2();
+      PaginationCursor = class {
+        /**
+         * Encodes a compound key (timestamp, id) and optional extra metadata into a URL-safe Base64 cursor.
+         */
+        static encode(timestamp, id, extra) {
+          const payload = { t: timestamp, i: id, ...extra || {} };
+          const json = JSON.stringify(payload);
+          let base64;
+          if (typeof Buffer2 !== "undefined") {
+            base64 = Buffer2.from(json, "utf8").toString("base64");
+          } else if (typeof btoa !== "undefined") {
+            base64 = btoa(unescape(encodeURIComponent(json)));
+          } else {
+            base64 = encodeURIComponent(json);
+          }
+          return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+        }
+        /**
+         * Decodes an opaque URL-safe Base64 cursor into its constituent timestamp and id.
+         * Returns `null` if the cursor is invalid, corrupted, or does not contain required fields.
+         */
+        static decode(cursor) {
+          if (!cursor || typeof cursor !== "string" || cursor.trim().length === 0) {
+            return null;
+          }
+          try {
+            let base64 = cursor.trim().replace(/-/g, "+").replace(/_/g, "/");
+            while (base64.length % 4 !== 0) {
+              base64 += "=";
+            }
+            let json;
+            if (typeof Buffer2 !== "undefined") {
+              json = Buffer2.from(base64, "base64").toString("utf8");
+            } else if (typeof atob !== "undefined") {
+              const raw = atob(base64);
+              try {
+                json = decodeURIComponent(escape(raw));
+              } catch {
+                json = raw;
+              }
+            } else {
+              json = decodeURIComponent(cursor);
+            }
+            const parsed = JSON.parse(json);
+            if (typeof parsed !== "object" || parsed === null) {
+              return null;
+            }
+            if (typeof parsed.t !== "number" || typeof parsed.i !== "string" || isNaN(parsed.t)) {
+              return null;
+            }
+            return {
+              timestamp: parsed.t,
+              id: parsed.i,
+              ...parsed
+            };
+          } catch {
+            return null;
+          }
+        }
+      };
+    }
+  });
+
   // src/core/Repository.ts
   function validateIdentifier(name2, type) {
     if (typeof name2 !== "string" || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(name2)) {
@@ -160197,6 +160319,7 @@ ${toHex(hashedRequest)}`;
       init_process2();
       init_Environment();
       init_Errors();
+      init_Pagination();
       Repository = class {
         constructor(contextOrSov, tableNameOrModuleName, tableNameOrOptions, options) {
           if (typeof tableNameOrOptions === "string") {
@@ -160264,6 +160387,15 @@ ${toHex(hashedRequest)}`;
           } finally {
             close2();
           }
+        }
+        async findPaginated(query, options) {
+          const rows = await this.find(query);
+          const sortCol = options?.sortColumn || "timestamp";
+          const idCol = this.idColumn;
+          return paginateItems(rows, options, (item) => ({
+            timestamp: typeof item[sortCol] === "number" ? item[sortCol] : 0,
+            id: String(item[idCol] ?? "")
+          }));
         }
         async findById(id) {
           const { db, close: close2 } = await this.getDb();
@@ -160788,6 +160920,7 @@ ${toHex(hashedRequest)}`;
         constructor(tableName) {
           this._columns = "*";
           this._whereConditions = [];
+          this._orderByParts = [];
           this._tableName = validateIdentifier2(tableName, "table");
         }
         select(columns) {
@@ -160810,7 +160943,7 @@ ${toHex(hashedRequest)}`;
         orderBy(column, direction = "ASC") {
           validateIdentifier2(column, "column");
           const cleanDir = direction.toUpperCase() === "DESC" ? "DESC" : "ASC";
-          this._orderBy = `"${column}" ${cleanDir}`;
+          this._orderByParts.push(`"${column}" ${cleanDir}`);
           return this;
         }
         limit(count) {
@@ -160831,8 +160964,8 @@ ${toHex(hashedRequest)}`;
             });
             sql += ` WHERE ${clauses.join(" AND ")}`;
           }
-          if (this._orderBy) {
-            sql += ` ORDER BY ${this._orderBy}`;
+          if (this._orderByParts.length > 0) {
+            sql += ` ORDER BY ${this._orderByParts.join(", ")}`;
           }
           if (this._limit !== void 0) {
             sql += ` LIMIT ${this._limit}`;
@@ -184221,6 +184354,7 @@ ${toHex(hashedRequest)}`;
       init_Environment();
       init_Errors();
       init_Constants();
+      init_Pagination();
       FEED_MODULE_DEFINITION = {
         name: "feed",
         tables: [
@@ -184261,6 +184395,10 @@ ${toHex(hashedRequest)}`;
           {
             version: 2,
             sql: ["ALTER TABLE posts ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
+          },
+          {
+            version: 3,
+            sql: ["CREATE INDEX IF NOT EXISTS idx_posts_timestamp_id ON posts(timestamp DESC, id DESC);"]
           }
         ]
       };
@@ -184340,15 +184478,37 @@ ${toHex(hashedRequest)}`;
         async comment(parentId, parentUserId, content, image) {
           await this.post(content, true, image, parentId, parentUserId);
         }
-        async getPosts(date2, type) {
+        /**
+         * Retrieves paginated posts from a single date partition database using keyset cursor pagination.
+         */
+        async getPostsPaginated(date2, type, options) {
           const dbPath = this.context.storage.getPath(`${date2}.db`, type);
           if (!await this.dailyDb.exists(dbPath)) {
-            return [];
+            return { items: [], nextCursor: null, prevCursor: null, hasMore: false, total: 0 };
           }
-          let allPosts = [];
-          await this.dailyDb.withDatabase(dbPath, (db) => {
+          const limit = Math.max(1, options?.limit ?? 50);
+          const direction = options?.direction ?? "before";
+          const decoded = PaginationCursor.decode(options?.cursor);
+          return await this.dailyDb.withDatabase(dbPath, (db) => {
             const now = Date.now();
-            const rawPosts = this.context.createQueryBuilder("posts").orderBy("timestamp", "DESC").execute(db);
+            const qb = this.context.createQueryBuilder("posts").where("(expiresAt IS NULL OR expiresAt > ?)", now);
+            if (decoded) {
+              if (direction === "before") {
+                qb.where("(timestamp < ? OR (timestamp = ? AND id < ?))", decoded.timestamp, decoded.timestamp, decoded.id);
+                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
+              } else {
+                qb.where("(timestamp > ? OR (timestamp = ? AND id > ?))", decoded.timestamp, decoded.timestamp, decoded.id);
+                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
+              }
+            } else {
+              if (direction === "before") {
+                qb.orderBy("timestamp", "DESC").orderBy("id", "DESC");
+              } else {
+                qb.orderBy("timestamp", "ASC").orderBy("id", "ASC");
+              }
+            }
+            qb.limit(limit + 1);
+            const rawPosts = qb.execute(db);
             const posts = rawPosts.map((row) => {
               const post = { ...row };
               if (typeof post.isEdited === "number") post.isEdited = !!post.isEdited;
@@ -184357,16 +184517,30 @@ ${toHex(hashedRequest)}`;
                 post.userId = date2.split("/")[0];
               }
               return post;
-            }).filter((p8) => !p8.expiresAt || p8.expiresAt > now);
-            allPosts.push(...posts);
+            });
+            const hasMore = posts.length > limit;
+            const items = posts.slice(0, limit);
+            const nextCursor = hasMore && items.length > 0 ? PaginationCursor.encode(items[items.length - 1].timestamp, items[items.length - 1].id) : null;
+            const prevCursor = items.length > 0 ? PaginationCursor.encode(items[0].timestamp, items[0].id) : null;
+            return {
+              items,
+              nextCursor,
+              prevCursor,
+              hasMore
+            };
           }, { applySchema: true });
-          return allPosts;
+        }
+        async getPosts(date2, type) {
+          const res = await this.getPostsPaginated(date2, type, { limit: 1e5 });
+          return res.items;
         }
         /**
-         * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
-         * combining own public posts and followed users' posts, with like enrichment and sorting.
+         * Retrieves paginated feed posts across a sliding date window (including UTC tomorrow for clock skew),
+         * combining own public posts and followed users' posts, with like enrichment for the returned page.
          */
-        async getFeedPosts(days = 5, includeFollowed = true) {
+        async getFeedPostsPaginated(options) {
+          const days = options?.days ?? 5;
+          const includeFollowed = options?.includeFollowed ?? true;
           const dates = [];
           for (let i8 = -1; i8 < days; i8++) {
             const d7 = /* @__PURE__ */ new Date();
@@ -184395,9 +184569,17 @@ ${toHex(hashedRequest)}`;
             }
           }
           const deduplicated = Array.from(postMap.values());
-          await this.enrichLikes(deduplicated, days);
-          deduplicated.sort((a8, b7) => b7.timestamp - a8.timestamp);
-          return deduplicated;
+          const paginated = paginateItems(deduplicated, options);
+          await this.enrichLikes(paginated.items, days);
+          return paginated;
+        }
+        /**
+         * Retrieves feed posts across a sliding date window (including UTC tomorrow for clock skew),
+         * combining own public posts and followed users' posts, with like enrichment and sorting.
+         */
+        async getFeedPosts(days = 5, includeFollowed = true) {
+          const res = await this.getFeedPostsPaginated({ days, includeFollowed, limit: 1e5 });
+          return res.items;
         }
         /**
          * Purges expired posts from a given date partition.
@@ -184577,7 +184759,15 @@ ${toHex(hashedRequest)}`;
           });
           this.context.emit(`group:${groupId}:update`, { path: dbPath });
         }
+        async getGroupPostsPaginated(groupId, date2, options) {
+          const posts = await this._fetchGroupPostsRaw(groupId, date2);
+          return paginateItems(posts, options);
+        }
         async getGroupPosts(groupId, date2) {
+          const res = await this.getGroupPostsPaginated(groupId, date2, { limit: 1e5 });
+          return res.items;
+        }
+        async _fetchGroupPostsRaw(groupId, date2) {
           const deletedPostIds = /* @__PURE__ */ new Set();
           const groups = await this.context.sovereign.getGroups();
           const group3 = groups.find((g7) => g7.id === groupId);

@@ -5,6 +5,7 @@ import { env } from '../utils/Environment';
 import { ModuleError, AuthError } from '../utils/Errors';
 import { DEFAULTS } from '../utils/Constants';
 import { DailyDatabase } from '../core/DailyDatabase';
+import { PaginationOptions, PaginatedResult, PaginationCursor, paginateItems } from '../core/Pagination';
 
 export interface Message {
     id: string;
@@ -34,6 +35,11 @@ export interface MessagingOptions {
      * - 'v1': Allows all legacy formats (default for backward compatibility)
      */
     minProtocolVersion?: MessagingProtocolVersion;
+}
+
+export interface MessagingPaginationOptions extends PaginationOptions {
+    days?: number;
+    conversationWith?: string;
 }
 
 export class MessagingModule {
@@ -83,6 +89,10 @@ export class MessagingModule {
                 {
                     version: 5,
                     sql: ['ALTER TABLE messages ADD COLUMN imageEphemeralPk TEXT DEFAULT NULL;']
+                },
+                {
+                    version: 6,
+                    sql: ['CREATE INDEX IF NOT EXISTS idx_messages_timestamp_id ON messages(timestamp DESC, id DESC);']
                 }
             ]
         });
@@ -329,7 +339,13 @@ export class MessagingModule {
         }, { applySchema: true });
     }
 
-    async getInboxMessages(days: number = 5): Promise<Message[]> {
+    /**
+     * Retrieves paginated inbox and outbox messages across a sliding date window (including UTC tomorrow for clock skew),
+     * applying receipt updates, decryption across supported protocol versions, and keyset cursor pagination.
+     */
+    async getInboxMessagesPaginated(options?: MessagingPaginationOptions): Promise<PaginatedResult<Message>> {
+        const days = options?.days ?? 5;
+        const conversationWith = options?.conversationWith;
         const messages: Message[] = [];
         const following = await this.context.getFollowing();
         const myId = this.context.userId;
@@ -344,8 +360,12 @@ export class MessagingModule {
             dates.push(d.toISOString().split('T')[0]);
         }
 
+        const targetUsers = conversationWith
+            ? following.filter(u => u.userId === conversationWith)
+            : following;
+
         // 1. Pull Receipts and update local outbox
-        for (const user of following) {
+        for (const user of targetUsers) {
             for (const date of dates) {
                 const receiptPath = this.context.storage.getPath(`${user.userId}/receipts/${myId}/${date}.db`, 'followed');
                 const receiptData = await this.context.storage.raw.getFile(receiptPath);
@@ -377,7 +397,7 @@ export class MessagingModule {
         }
 
         // 2. Fetch Incoming Messages
-        for (const user of following) {
+        for (const user of targetUsers) {
             // V2: HKDF-derived shared secret (default)
             const sharedSecretV2 = this.context.deriveSharedSecret(user.publicKey);
             // V1: Raw shared secret — for backward compat with messages sent before HKDF was introduced
@@ -446,7 +466,9 @@ export class MessagingModule {
                                         const parsed = JSON.parse(new TextDecoder().decode(decrypted)) as Message;
                                         if (typeof (parsed as any).isEdited === 'number') parsed.isEdited = !!(parsed as any).isEdited;
                                         if (typeof (parsed as any).isDeleted === 'number') parsed.isDeleted = !!(parsed as any).isDeleted;
-                                        messages.push(parsed);
+                                        if (!conversationWith || parsed.senderId === conversationWith || parsed.recipientId === conversationWith) {
+                                            messages.push(parsed);
+                                        }
                                         newMsgsForUser.push(parsed);
                                     }
                                 } catch (e: any) {
@@ -490,7 +512,7 @@ export class MessagingModule {
                                 delete msg.imageEphemeralPk;
                             }
                             return msg as Message;
-                        });
+                        }).filter((m: Message) => !conversationWith || m.recipientId === conversationWith || m.senderId === conversationWith);
                         messages.push(...myMsgs);
                     }
                 }, { applySchema: true });
@@ -510,8 +532,12 @@ export class MessagingModule {
         }
 
         const finalMsgs = Array.from(msgMap.values());
-        finalMsgs.sort((a, b) => b.timestamp - a.timestamp);
-        return finalMsgs;
+        return paginateItems(finalMsgs, options);
+    }
+
+    async getInboxMessages(days: number = 5): Promise<Message[]> {
+        const res = await this.getInboxMessagesPaginated({ days, limit: 100000 });
+        return res.items;
     }
 
     /**
