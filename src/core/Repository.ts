@@ -23,18 +23,31 @@ export class Repository<T extends Record<string, any>> {
     public readonly idColumn: string;
     public readonly datePartition: string;
     public readonly type: 'public' | 'private';
+    private sov: SovereignS3nc;
 
     constructor(
-        private sov: SovereignS3nc,
-        moduleName: string,
-        tableName: string,
+        contextOrSov: any,
+        tableNameOrModuleName: string,
+        tableNameOrOptions?: string | RepositoryOptions,
         options?: RepositoryOptions
     ) {
-        this.moduleName = moduleName;
-        this.tableName = validateIdentifier(tableName, 'table');
-        this.idColumn = validateIdentifier(options?.idColumn || 'id', 'column');
-        this.datePartition = options?.datePartition || new Date().toISOString().split('T')[0];
-        this.type = options?.type || 'public';
+        if (typeof tableNameOrOptions === 'string') {
+            this.sov = 'sovereign' in contextOrSov ? contextOrSov.sovereign : contextOrSov;
+            this.moduleName = tableNameOrModuleName;
+            this.tableName = validateIdentifier(tableNameOrOptions, 'table');
+            const opts = options;
+            this.idColumn = validateIdentifier(opts?.idColumn || 'id', 'column');
+            this.datePartition = opts?.datePartition || new Date().toISOString().split('T')[0];
+            this.type = opts?.type || 'public';
+        } else {
+            this.sov = 'sovereign' in contextOrSov ? contextOrSov.sovereign : contextOrSov;
+            this.moduleName = 'moduleName' in contextOrSov ? contextOrSov.moduleName : tableNameOrModuleName;
+            this.tableName = validateIdentifier(tableNameOrModuleName, 'table');
+            const opts = tableNameOrOptions;
+            this.idColumn = validateIdentifier(opts?.idColumn || 'id', 'column');
+            this.datePartition = opts?.datePartition || new Date().toISOString().split('T')[0];
+            this.type = opts?.type || 'public';
+        }
     }
 
     private async getDb(): Promise<{ db: any; close: () => void; save: () => Promise<void> }> {

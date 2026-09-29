@@ -72,6 +72,8 @@ describe('npm Package & Exports Verification (Item 4)', () => {
         expect(core.MessagingModule).toBeDefined();
         expect(core.ProfileModule).toBeDefined();
         expect(core.Repository).toBeDefined();
+        expect(core.ModuleContext).toBeDefined();
+        expect(core.QueryBuilder).toBeDefined();
         expect(core.Logger).toBeDefined();
     });
 

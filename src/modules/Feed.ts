@@ -1,5 +1,6 @@
 
 import { SovereignS3nc } from '../SovereignS3nc';
+import { IModuleContext } from '../interfaces/IModuleContext';
 import { Logger } from '../utils/Logger';
 import { ModuleDefinition } from '../types';
 import { env } from '../utils/Environment';
@@ -70,12 +71,24 @@ export const FEED_MODULE_DEFINITION: ModuleDefinition = {
 
 export class FeedModule {
     private readonly MODULE_NAME = 'feed';
+    private context: IModuleContext;
     private dailyDb: DailyDatabase;
 
-    constructor(private db: SovereignS3nc) {
-        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
-        this.db.registerModule(FEED_MODULE_DEFINITION);
-        this.db.registerModuleInstance(this);
+    constructor(contextOrDb: IModuleContext | SovereignS3nc) {
+        this.context = 'sovereign' in contextOrDb
+            ? (contextOrDb as IModuleContext)
+            : (contextOrDb as SovereignS3nc).createModuleContext(this.MODULE_NAME);
+        this.dailyDb = this.context.getDailyDatabase({ debounceMs: 500 });
+        this.context.registerDefinition(FEED_MODULE_DEFINITION);
+        this.context.registerInstance(this);
+    }
+
+    public get db(): SovereignS3nc {
+        return this.context.sovereign;
+    }
+
+    public get sovereign(): SovereignS3nc {
+        return this.context.sovereign;
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string, sharedKey?: string): Promise<any> {
@@ -89,9 +102,9 @@ export class FeedModule {
             });
             return session.db;
         } else if (type === 'followed') {
-            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
+            dbPath = this.context.storage.getPath(`${date}.db`, 'followed');
         } else {
-            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
+            dbPath = this.context.storage.getPath(`${date}.db`, type as any);
         }
 
         const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
@@ -107,11 +120,11 @@ export class FeedModule {
         const type = isPublic ? 'public' : 'private';
         const id = env.generateId(12);
         const timestamp = Date.now();
-        const userId = this.db.getConfig().paths.userId;
+        const userId = this.context.userId;
 
         let imagePath = null;
         if (image) {
-            imagePath = await this.db.saveBlob(image, isPublic);
+            imagePath = await this.context.saveBlob(image, isPublic);
         }
 
         const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)';
@@ -138,7 +151,7 @@ export class FeedModule {
     async like(postId: string, isPublic: boolean = true) {
         const date = new Date().toISOString().split('T')[0];
         const type = isPublic ? 'public' : 'private';
-        const userId = this.db.getConfig().paths.userId;
+        const userId = this.context.userId;
         const timestamp = Date.now();
 
         await this.dailyDb.withDailyDatabase(date, type, (db) => {
@@ -151,32 +164,26 @@ export class FeedModule {
     }
 
     async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        const dbPath = this.context.storage.getPath(`${date}.db`, type);
         if (!(await this.dailyDb.exists(dbPath))) {
             return [];
         }
         let allPosts: Post[] = [];
         await this.dailyDb.withDatabase(dbPath, (db) => {
-                const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
-                if (res && res.length > 0) {
-                    const columns = res[0].columns;
-                    const now = Date.now();
-                    const posts = res[0].values.map((row: any) => {
-                        const post: any = {};
-                        columns.forEach((col: string, i: number) => {
-                            let val = row[i];
-                            if ((col === 'isEdited' || col === 'isDeleted') && typeof val === 'number') {
-                                val = !!val;
-                            }
-                            post[col] = val;
-                        });
-                        if (!post.userId && type === 'followed') {
-                            post.userId = date.split('/')[0];
-                        }
-                        return post as Post;
-                    }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
-                    allPosts.push(...posts);
-                }
+                const now = Date.now();
+                const rawPosts = this.context.createQueryBuilder<any>('posts')
+                    .orderBy('timestamp', 'DESC')
+                    .execute(db);
+                const posts = rawPosts.map((row: any) => {
+                    const post = { ...row };
+                    if (typeof post.isEdited === 'number') post.isEdited = !!post.isEdited;
+                    if (typeof post.isDeleted === 'number') post.isDeleted = !!post.isDeleted;
+                    if (!post.userId && type === 'followed') {
+                        post.userId = date.split('/')[0];
+                    }
+                    return post as Post;
+                }).filter((p: Post) => !p.expiresAt || p.expiresAt > now);
+                allPosts.push(...posts);
             }, { applySchema: true });
 
         return allPosts;
@@ -203,7 +210,7 @@ export class FeedModule {
 
         // 2. Fetch followed users' public posts
         if (includeFollowed) {
-            const following = await this.db.getFollowing();
+            const following = await this.context.getFollowing();
             for (const user of following) {
                 for (const date of dates) {
                     const posts = await this.getPosts(`${user.userId}/${date}`, 'followed');
@@ -232,7 +239,7 @@ export class FeedModule {
      */
     async cleanupExpired(date: string, isPublic: boolean = true): Promise<number> {
         const type = isPublic ? 'public' : 'private';
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        const dbPath = this.context.storage.getPath(`${date}.db`, type);
         if (!(await this.dailyDb.exists(dbPath))) return 0;
 
         const now = Date.now();
@@ -263,7 +270,7 @@ export class FeedModule {
         tombstoneRatio: number;
     }> {
         const type = isPublic ? 'public' : 'private';
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        const dbPath = this.context.storage.getPath(`${date}.db`, type);
         if (!(await this.dailyDb.exists(dbPath))) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
         }
@@ -311,8 +318,8 @@ export class FeedModule {
             postMap.set(p.id, p);
         });
 
-        const myId = this.db.getConfig().paths.userId;
-        const following = await this.db.getFollowing();
+        const myId = this.context.userId;
+        const following = await this.context.getFollowing();
         
         const dates: string[] = [];
         for (let i = 0; i < days; i++) {
@@ -323,8 +330,8 @@ export class FeedModule {
 
         const processDb = async (date: string, type: 'public' | 'followed') => {
             const dbPath = type === 'followed' 
-                ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
-                : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+                ? this.context.storage.getPath(`${date}.db`, 'followed')
+                : this.context.storage.getPath(`${date}.db`, type);
 
             if (!(await this.dailyDb.exists(dbPath))) return;
 
@@ -356,11 +363,11 @@ export class FeedModule {
     // --- Group logic ---
     
     async postToGroup(groupId: string, sharedKey: string, content: string, image?: Uint8Array, type: 'text' | 'system' = 'text') {
-        const groups = await this.db.getGroups();
-        const group = groups.find(g => g.id === groupId);
-        const userId = this.db.getConfig().paths.userId;
+        const groups = await this.context.sovereign.getGroups();
+        const group = groups.find((g: any) => g.id === groupId);
+        const userId = this.context.userId;
         if (group) {
-            const member = group.members.find(m => m.userId === userId);
+            const member = group.members.find((m: any) => m.userId === userId);
             if (member?.permissions?.canPost === false) {
                 throw new ModuleError('feed', `Permission denied: User ${userId} is not allowed to post in group ${groupId}`);
             }
@@ -372,7 +379,7 @@ export class FeedModule {
 
         let imagePath = null;
         if (image) {
-            imagePath = await this.db.saveBlob(image, true);
+            imagePath = await this.context.saveBlob(image, true);
         }
 
         const dbPath = `public/groups/${groupId}/${date}.db`;
@@ -386,12 +393,12 @@ export class FeedModule {
             applySchema: true,
             emitUpdate: true
         });
-        this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        this.context.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
     async editGroupPost(groupId: string, sharedKey: string, postId: string, date: string, newContent: string) {
         const dbPath = `public/groups/${groupId}/${date}.db`;
-        const userId = this.db.getConfig().paths.userId;
+        const userId = this.context.userId;
         
         await this.dailyDb.withDatabase(dbPath, (db) => {
             const sql = `
@@ -407,20 +414,20 @@ export class FeedModule {
             applySchema: true,
             emitUpdate: true
         });
-        this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        this.context.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
     async deleteGroupPost(groupId: string, sharedKey: string, postId: string, date: string, authorId: string) {
-        const myId = this.db.getConfig().paths.userId;
+        const myId = this.context.userId;
         const dbPath = `public/groups/${groupId}/${date}.db`;
         
         await this.dailyDb.withDatabase(dbPath, async (db) => {
             if (authorId === myId) {
                 db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
             } else {
-                const groups = await this.db.getGroups();
-                const group = groups.find(g => g.id === groupId);
-                const member = group?.members.find(m => m.userId === myId);
+                const groups = await this.context.sovereign.getGroups();
+                const group = groups.find((g: any) => g.id === groupId);
+                const member = group?.members.find((m: any) => m.userId === myId);
                 const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
                 if (!canModerate) {
                     throw new ModuleError('feed', `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
@@ -435,19 +442,19 @@ export class FeedModule {
             applySchema: true,
             emitUpdate: true
         });
-        this.db.emit(`group:${groupId}:update`, { path: dbPath });
+        this.context.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
     async getGroupPosts(groupId: string, date: string): Promise<Post[]> {
         const deletedPostIds = new Set<string>();
 
-        const groups = await this.db.getGroups();
-        const group = groups.find(g => g.id === groupId);
+        const groups = await this.context.sovereign.getGroups();
+        const group = groups.find((g: any) => g.id === groupId);
         if (!group) return [];
 
         const processModeration = (db: any, memberId: string) => {
             try {
-                const member = group.members.find(m => m.userId === memberId);
+                const member = group.members.find((m: any) => m.userId === memberId);
                 const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
                 if (!canModerate) return;
 
@@ -498,14 +505,14 @@ export class FeedModule {
         const myPath = `public/groups/${groupId}/${date}.db`;
         if (await this.dailyDb.exists(myPath)) {
             await this.dailyDb.withDatabase(myPath, async (db) => {
-                processModeration(db, this.db.getConfig().paths.userId);
+                processModeration(db, this.context.userId);
                 await processPosts(db);
             }, { decryptKey: group.sharedKey, applySchema: true });
         }
 
         // 2. Member data
         for (const member of group.members) {
-            if (member.userId === this.db.getConfig().paths.userId) continue;
+            if (member.userId === this.context.userId) continue;
             const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
             
             if (await this.dailyDb.exists(memberPath)) {

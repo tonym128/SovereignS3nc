@@ -160198,13 +160198,24 @@ ${toHex(hashedRequest)}`;
       init_Environment();
       init_Errors();
       Repository = class {
-        constructor(sov, moduleName, tableName, options) {
-          this.sov = sov;
-          this.moduleName = moduleName;
-          this.tableName = validateIdentifier(tableName, "table");
-          this.idColumn = validateIdentifier(options?.idColumn || "id", "column");
-          this.datePartition = options?.datePartition || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          this.type = options?.type || "public";
+        constructor(contextOrSov, tableNameOrModuleName, tableNameOrOptions, options) {
+          if (typeof tableNameOrOptions === "string") {
+            this.sov = "sovereign" in contextOrSov ? contextOrSov.sovereign : contextOrSov;
+            this.moduleName = tableNameOrModuleName;
+            this.tableName = validateIdentifier(tableNameOrOptions, "table");
+            const opts = options;
+            this.idColumn = validateIdentifier(opts?.idColumn || "id", "column");
+            this.datePartition = opts?.datePartition || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+            this.type = opts?.type || "public";
+          } else {
+            this.sov = "sovereign" in contextOrSov ? contextOrSov.sovereign : contextOrSov;
+            this.moduleName = "moduleName" in contextOrSov ? contextOrSov.moduleName : tableNameOrModuleName;
+            this.tableName = validateIdentifier(tableNameOrModuleName, "table");
+            const opts = tableNameOrOptions;
+            this.idColumn = validateIdentifier(opts?.idColumn || "id", "column");
+            this.datePartition = opts?.datePartition || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+            this.type = opts?.type || "public";
+          }
         }
         async getDb() {
           const dbPath = this.sov.getModulePath(this.moduleName, `${this.datePartition}.db`, this.type);
@@ -160753,6 +160764,244 @@ ${toHex(hashedRequest)}`;
       _DailyDatabase.sqliteInitPromise = null;
       _DailyDatabase.lastInitSqlJs = null;
       DailyDatabase = _DailyDatabase;
+    }
+  });
+
+  // src/core/ModuleContext.ts
+  function validateIdentifier2(name2, type) {
+    if (typeof name2 !== "string" || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(name2)) {
+      throw new Error(`Invalid ${type} identifier: "${name2}". Identifiers must match /^[a-zA-Z_][a-zA-Z0-9_]*$/.`);
+    }
+    return name2;
+  }
+  var QueryBuilder, ModuleContext;
+  var init_ModuleContext = __esm({
+    "src/core/ModuleContext.ts"() {
+      "use strict";
+      init_dirname();
+      init_buffer2();
+      init_process2();
+      init_Repository();
+      init_Errors();
+      init_Constants();
+      QueryBuilder = class {
+        constructor(tableName) {
+          this._columns = "*";
+          this._whereConditions = [];
+          this._tableName = validateIdentifier2(tableName, "table");
+        }
+        select(columns) {
+          if (Array.isArray(columns)) {
+            columns.forEach((col) => {
+              if (col !== "*" && !col.includes("(")) {
+                validateIdentifier2(col, "column");
+              }
+            });
+            this._columns = columns.map((c8) => c8 === "*" || c8.includes("(") ? c8 : `"${c8}"`).join(", ");
+          } else {
+            this._columns = columns;
+          }
+          return this;
+        }
+        where(condition, ...params) {
+          this._whereConditions.push({ condition, params });
+          return this;
+        }
+        orderBy(column, direction = "ASC") {
+          validateIdentifier2(column, "column");
+          const cleanDir = direction.toUpperCase() === "DESC" ? "DESC" : "ASC";
+          this._orderBy = `"${column}" ${cleanDir}`;
+          return this;
+        }
+        limit(count) {
+          this._limit = Math.max(0, count);
+          return this;
+        }
+        offset(count) {
+          this._offset = Math.max(0, count);
+          return this;
+        }
+        toSql() {
+          let sql = `SELECT ${this._columns} FROM "${this._tableName}"`;
+          const params = [];
+          if (this._whereConditions.length > 0) {
+            const clauses = this._whereConditions.map((w6) => {
+              params.push(...w6.params);
+              return `(${w6.condition})`;
+            });
+            sql += ` WHERE ${clauses.join(" AND ")}`;
+          }
+          if (this._orderBy) {
+            sql += ` ORDER BY ${this._orderBy}`;
+          }
+          if (this._limit !== void 0) {
+            sql += ` LIMIT ${this._limit}`;
+          }
+          if (this._offset !== void 0) {
+            sql += ` OFFSET ${this._offset}`;
+          }
+          return { sql, params };
+        }
+        execute(db) {
+          const { sql, params } = this.toSql();
+          const stmt = db.prepare(sql);
+          try {
+            if (params.length > 0) {
+              stmt.bind(params);
+            }
+            const results = [];
+            while (stmt.step()) {
+              results.push(stmt.getAsObject());
+            }
+            return results;
+          } finally {
+            stmt.free();
+          }
+        }
+        first(db) {
+          const prevLimit = this._limit;
+          this._limit = 1;
+          const results = this.execute(db);
+          this._limit = prevLimit;
+          return results.length > 0 ? results[0] : null;
+        }
+      };
+      ModuleContext = class {
+        constructor(sovereign, moduleName) {
+          if (!/^[a-z0-9_-]+$/i.test(moduleName)) {
+            throw new ModuleError(moduleName, `Invalid module name: "${moduleName}". Only alphanumeric, underscore, and hyphen are allowed.`);
+          }
+          this.sovereign = sovereign;
+          this.moduleName = moduleName.toLowerCase();
+          this.storage = {
+            getPath: (subPath, type = "public") => {
+              return this.sovereign.getModulePath(this.moduleName, subPath, type);
+            },
+            getFile: async (subPath, type = "public") => {
+              const path2 = this.sovereign.getModulePath(this.moduleName, subPath, type);
+              return this.sovereign.getStorage().getFile(path2);
+            },
+            saveFile: async (subPath, data, type = "public") => {
+              const path2 = this.sovereign.getModulePath(this.moduleName, subPath, type);
+              await this.sovereign.getStorage().saveFile(path2, data);
+              this.sovereign.emit(`${this.moduleName}:update`, { path: path2 });
+              this.sovereign.emit("update", { moduleName: this.moduleName, path: path2 });
+            },
+            deleteFile: async (subPath, type = "public") => {
+              const path2 = this.sovereign.getModulePath(this.moduleName, subPath, type);
+              await this.sovereign.getStorage().deleteFile(path2);
+              this.sovereign.emit(`${this.moduleName}:update`, { path: path2, deleted: true });
+              this.sovereign.emit("update", { moduleName: this.moduleName, path: path2, deleted: true });
+            },
+            hasFile: async (subPath, type = "public") => {
+              const path2 = this.sovereign.getModulePath(this.moduleName, subPath, type);
+              const file = await this.sovereign.getStorage().getFile(path2);
+              return file !== null;
+            },
+            savePublicUserFile: async (data) => {
+              await this.sovereign.getStorage().savePublicUserFile(data);
+              this.sovereign.emit(`${this.moduleName}:update`, { path: PATHS.USER_PROFILE });
+              this.sovereign.emit("update", { moduleName: this.moduleName, path: PATHS.USER_PROFILE });
+            },
+            getPublicUserFile: async () => {
+              return this.sovereign.getStorage().getPublicUserFile();
+            },
+            get raw() {
+              return sovereign.getStorage();
+            }
+          };
+          this.remotes = {
+            getPublicRemote: () => this.sovereign.getPublicRemote(),
+            getPrivateRemote: () => this.sovereign.getRemote(),
+            getAdminRemote: () => this.sovereign.getAdminRemote(),
+            getRootRemote: () => this.sovereign.getRootRemote(),
+            getGlobalRemote: () => this.sovereign.getGlobalRemote(),
+            createRemote: (userId, isPrivate = false) => this.sovereign.createRemote(userId, isPrivate)
+          };
+        }
+        get userId() {
+          return this.sovereign.getConfig().paths.userId;
+        }
+        get appId() {
+          return this.sovereign.getConfig().paths.appId;
+        }
+        get storeId() {
+          return this.sovereign.getConfig().paths.storeId;
+        }
+        get config() {
+          return this.sovereign.getConfig();
+        }
+        get publicKey() {
+          return this.sovereign.getConfig().publicEncryptionKey;
+        }
+        get adminPublicKey() {
+          return this.sovereign.getConfig().adminPublicKey;
+        }
+        encrypt(data, key) {
+          const k6 = key || this.sovereign.getConfig().encryptionKey;
+          if (!k6) throw new AuthError("Cannot encrypt: No encryption key provided or configured.");
+          return this.sovereign.encrypt(data, k6);
+        }
+        decrypt(data, key) {
+          const k6 = key || this.sovereign.getConfig().encryptionKey;
+          if (!k6) throw new AuthError("Cannot decrypt: No encryption key provided or configured.");
+          return this.sovereign.decrypt(data, k6);
+        }
+        deriveSharedSecret(peerPublicKey, context) {
+          return this.sovereign.deriveSharedSecret(peerPublicKey, context);
+        }
+        deriveEphemeralSharedSecret(recipientPublicKey) {
+          return this.sovereign.deriveEphemeralSharedSecret(recipientPublicKey);
+        }
+        deriveRecipientSharedSecret(ephemeralPublicKey) {
+          return this.sovereign.deriveRecipientSharedSecret(ephemeralPublicKey);
+        }
+        saveBlob(data, isPublic = false) {
+          return this.sovereign.saveBlob(data, isPublic);
+        }
+        getBlob(blobPath, userId) {
+          return this.sovereign.getBlob(blobPath, userId);
+        }
+        getDailyDatabase(config3) {
+          return this.sovereign.getDailyDatabase(this.moduleName, config3);
+        }
+        createQueryBuilder(tableName) {
+          return new QueryBuilder(tableName);
+        }
+        getRepository(tableName, options) {
+          return new Repository(this, tableName, options);
+        }
+        registerDefinition(definition) {
+          this.sovereign.registerModule(definition);
+        }
+        registerInstance(instance) {
+          this.sovereign.registerModuleInstance(instance);
+        }
+        emit(event, payload) {
+          this.sovereign.emit(event, payload);
+        }
+        on(event, handler) {
+          this.sovereign.on(event, handler);
+        }
+        off(event, handler) {
+          this.sovereign.off(event, handler);
+        }
+        getFollowing() {
+          return this.sovereign.getFollowing();
+        }
+        follow(userId) {
+          return this.sovereign.follow(userId);
+        }
+        unfollow(userId) {
+          return this.sovereign.unfollow(userId);
+        }
+        getPublicRegistry() {
+          return this.sovereign.getPublicRegistry();
+        }
+        sync() {
+          return this.sovereign.sync();
+        }
+      };
     }
   });
 
@@ -183048,6 +183297,7 @@ ${toHex(hashedRequest)}`;
       init_BlacklistManager();
       init_Repository();
       init_DailyDatabase();
+      init_ModuleContext();
       init_Inspector();
       _SovereignS3nc = class _SovereignS3nc extends EventEmitter {
         constructor(config3, remote, remoteFactory, keys, storage) {
@@ -183214,6 +183464,34 @@ ${toHex(hashedRequest)}`;
         }
         getConfig() {
           return this.config;
+        }
+        getRemote() {
+          return this.remote;
+        }
+        getPublicRemote() {
+          return this.publicRemote;
+        }
+        getGlobalRemote() {
+          return this.globalRemote;
+        }
+        getAdminRemote() {
+          return this.adminRemote;
+        }
+        getRootRemote() {
+          return this.rootRemote;
+        }
+        /**
+         * Creates an encapsulated ModuleContext for a given module, providing
+         * scoped storage, scoped remote adapters, and typed query building.
+         */
+        createModuleContext(moduleName) {
+          return new ModuleContext(this, moduleName);
+        }
+        /**
+         * Retrieves an active module instance by constructor class or registered module name.
+         */
+        getModule(predicateOrName) {
+          return this.getModuleInstance(predicateOrName);
         }
         getModulePath(moduleName, subPath, type) {
           if (!/^[a-z0-9_-]+$/i.test(moduleName)) {
@@ -183987,12 +184265,18 @@ ${toHex(hashedRequest)}`;
         ]
       };
       FeedModule = class {
-        constructor(db) {
-          this.db = db;
+        constructor(contextOrDb) {
           this.MODULE_NAME = "feed";
-          this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
-          this.db.registerModule(FEED_MODULE_DEFINITION);
-          this.db.registerModuleInstance(this);
+          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
+          this.dailyDb = this.context.getDailyDatabase({ debounceMs: 500 });
+          this.context.registerDefinition(FEED_MODULE_DEFINITION);
+          this.context.registerInstance(this);
+        }
+        get db() {
+          return this.context.sovereign;
+        }
+        get sovereign() {
+          return this.context.sovereign;
         }
         async getDb(date2, type, groupId, sharedKey) {
           let dbPath;
@@ -184005,9 +184289,9 @@ ${toHex(hashedRequest)}`;
             });
             return session2.db;
           } else if (type === "followed") {
-            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed");
+            dbPath = this.context.storage.getPath(`${date2}.db`, "followed");
           } else {
-            dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+            dbPath = this.context.storage.getPath(`${date2}.db`, type);
           }
           const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
           return session.db;
@@ -184020,10 +184304,10 @@ ${toHex(hashedRequest)}`;
           const type = isPublic ? "public" : "private";
           const id = env3.generateId(12);
           const timestamp = Date.now();
-          const userId = this.db.getConfig().paths.userId;
+          const userId = this.context.userId;
           let imagePath = null;
           if (image) {
-            imagePath = await this.db.saveBlob(image, isPublic);
+            imagePath = await this.context.saveBlob(image, isPublic);
           }
           const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)";
           await this.dailyDb.withDailyDatabase(date2, type, (db) => {
@@ -184047,7 +184331,7 @@ ${toHex(hashedRequest)}`;
         async like(postId, isPublic = true) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const type = isPublic ? "public" : "private";
-          const userId = this.db.getConfig().paths.userId;
+          const userId = this.context.userId;
           const timestamp = Date.now();
           await this.dailyDb.withDailyDatabase(date2, type, (db) => {
             db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
@@ -184057,32 +184341,24 @@ ${toHex(hashedRequest)}`;
           await this.post(content, true, image, parentId, parentUserId);
         }
         async getPosts(date2, type) {
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
           if (!await this.dailyDb.exists(dbPath)) {
             return [];
           }
           let allPosts = [];
           await this.dailyDb.withDatabase(dbPath, (db) => {
-            const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
-            if (res && res.length > 0) {
-              const columns = res[0].columns;
-              const now = Date.now();
-              const posts = res[0].values.map((row) => {
-                const post = {};
-                columns.forEach((col, i8) => {
-                  let val = row[i8];
-                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
-                    val = !!val;
-                  }
-                  post[col] = val;
-                });
-                if (!post.userId && type === "followed") {
-                  post.userId = date2.split("/")[0];
-                }
-                return post;
-              }).filter((p8) => !p8.expiresAt || p8.expiresAt > now);
-              allPosts.push(...posts);
-            }
+            const now = Date.now();
+            const rawPosts = this.context.createQueryBuilder("posts").orderBy("timestamp", "DESC").execute(db);
+            const posts = rawPosts.map((row) => {
+              const post = { ...row };
+              if (typeof post.isEdited === "number") post.isEdited = !!post.isEdited;
+              if (typeof post.isDeleted === "number") post.isDeleted = !!post.isDeleted;
+              if (!post.userId && type === "followed") {
+                post.userId = date2.split("/")[0];
+              }
+              return post;
+            }).filter((p8) => !p8.expiresAt || p8.expiresAt > now);
+            allPosts.push(...posts);
           }, { applySchema: true });
           return allPosts;
         }
@@ -184103,7 +184379,7 @@ ${toHex(hashedRequest)}`;
             allPosts.push(...posts);
           }
           if (includeFollowed) {
-            const following = await this.db.getFollowing();
+            const following = await this.context.getFollowing();
             for (const user of following) {
               for (const date2 of dates) {
                 const posts = await this.getPosts(`${user.userId}/${date2}`, "followed");
@@ -184128,7 +184404,7 @@ ${toHex(hashedRequest)}`;
          */
         async cleanupExpired(date2, isPublic = true) {
           const type = isPublic ? "public" : "private";
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
           if (!await this.dailyDb.exists(dbPath)) return 0;
           const now = Date.now();
           return await this.dailyDb.withDatabase(dbPath, (db) => {
@@ -184151,7 +184427,7 @@ ${toHex(hashedRequest)}`;
          */
         async compactDatabase(date2, isPublic = true, force = false) {
           const type = isPublic ? "public" : "private";
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+          const dbPath = this.context.storage.getPath(`${date2}.db`, type);
           if (!await this.dailyDb.exists(dbPath)) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
           }
@@ -184191,8 +184467,8 @@ ${toHex(hashedRequest)}`;
             p8.likedByMe = false;
             postMap.set(p8.id, p8);
           });
-          const myId = this.db.getConfig().paths.userId;
-          const following = await this.db.getFollowing();
+          const myId = this.context.userId;
+          const following = await this.context.getFollowing();
           const dates = [];
           for (let i8 = 0; i8 < days; i8++) {
             const d7 = /* @__PURE__ */ new Date();
@@ -184200,7 +184476,7 @@ ${toHex(hashedRequest)}`;
             dates.push(d7.toISOString().split("T")[0]);
           }
           const processDb = async (date2, type) => {
-            const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
+            const dbPath = type === "followed" ? this.context.storage.getPath(`${date2}.db`, "followed") : this.context.storage.getPath(`${date2}.db`, type);
             if (!await this.dailyDb.exists(dbPath)) return;
             await this.dailyDb.withDatabase(dbPath, (db) => {
               const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
@@ -184227,9 +184503,9 @@ ${toHex(hashedRequest)}`;
         }
         // --- Group logic ---
         async postToGroup(groupId, sharedKey, content, image, type = "text") {
-          const groups = await this.db.getGroups();
+          const groups = await this.context.sovereign.getGroups();
           const group3 = groups.find((g7) => g7.id === groupId);
-          const userId = this.db.getConfig().paths.userId;
+          const userId = this.context.userId;
           if (group3) {
             const member2 = group3.members.find((m7) => m7.userId === userId);
             if (member2?.permissions?.canPost === false) {
@@ -184241,7 +184517,7 @@ ${toHex(hashedRequest)}`;
           const timestamp = Date.now();
           let imagePath = null;
           if (image) {
-            imagePath = await this.db.saveBlob(image, true);
+            imagePath = await this.context.saveBlob(image, true);
           }
           const dbPath = `public/groups/${groupId}/${date2}.db`;
           await this.dailyDb.withDatabase(dbPath, (db) => {
@@ -184254,11 +184530,11 @@ ${toHex(hashedRequest)}`;
             applySchema: true,
             emitUpdate: true
           });
-          this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
           const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const userId = this.db.getConfig().paths.userId;
+          const userId = this.context.userId;
           await this.dailyDb.withDatabase(dbPath, (db) => {
             const sql = `
                 INSERT OR REPLACE INTO posts 
@@ -184273,16 +184549,16 @@ ${toHex(hashedRequest)}`;
             applySchema: true,
             emitUpdate: true
           });
-          this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
-          const myId = this.db.getConfig().paths.userId;
+          const myId = this.context.userId;
           const dbPath = `public/groups/${groupId}/${date2}.db`;
           await this.dailyDb.withDatabase(dbPath, async (db) => {
             if (authorId === myId) {
               db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
             } else {
-              const groups = await this.db.getGroups();
+              const groups = await this.context.sovereign.getGroups();
               const group3 = groups.find((g7) => g7.id === groupId);
               const member2 = group3?.members.find((m7) => m7.userId === myId);
               const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
@@ -184299,11 +184575,11 @@ ${toHex(hashedRequest)}`;
             applySchema: true,
             emitUpdate: true
           });
-          this.db.emit(`group:${groupId}:update`, { path: dbPath });
+          this.context.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async getGroupPosts(groupId, date2) {
           const deletedPostIds = /* @__PURE__ */ new Set();
-          const groups = await this.db.getGroups();
+          const groups = await this.context.sovereign.getGroups();
           const group3 = groups.find((g7) => g7.id === groupId);
           if (!group3) return [];
           const processModeration = (db, memberId) => {
@@ -184351,12 +184627,12 @@ ${toHex(hashedRequest)}`;
           const myPath = `public/groups/${groupId}/${date2}.db`;
           if (await this.dailyDb.exists(myPath)) {
             await this.dailyDb.withDatabase(myPath, async (db) => {
-              processModeration(db, this.db.getConfig().paths.userId);
+              processModeration(db, this.context.userId);
               await processPosts(db);
             }, { decryptKey: group3.sharedKey, applySchema: true });
           }
           for (const member2 of group3.members) {
-            if (member2.userId === this.db.getConfig().paths.userId) continue;
+            if (member2.userId === this.context.userId) continue;
             const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
             if (await this.dailyDb.exists(memberPath)) {
               await this.dailyDb.withDatabase(memberPath, async (db) => {
@@ -184505,9 +184781,18 @@ ${toHex(hashedRequest)}`;
       init_Constants();
       init_Errors();
       ProfileModule = class {
-        constructor(db) {
-          this.db = db;
+        constructor(contextOrDb) {
           this.MODULE_NAME = "profile";
+          this.context = "sovereign" in contextOrDb ? contextOrDb : contextOrDb.createModuleContext(this.MODULE_NAME);
+        }
+        /**
+         * Backward-compatible reference to the host SovereignS3nc instance.
+         */
+        get db() {
+          return this.context.sovereign;
+        }
+        get sovereign() {
+          return this.context.sovereign;
         }
         /**
          * Updates the current user's profile.
@@ -184532,24 +184817,22 @@ ${toHex(hashedRequest)}`;
             bio,
             avatar: finalAvatar,
             updatedAt: Date.now(),
-            userId: this.db.getConfig().paths.userId
+            userId: this.context.userId
           };
           const data = new TextEncoder().encode(JSON.stringify(profile));
-          await this.db.getStorage().savePublicUserFile(data);
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: PATHS.USER_PROFILE });
+          await this.context.storage.savePublicUserFile(data);
         }
         /**
          * Retrieves a profile for a given user.
          */
         async getProfile(userId) {
-          const myId = this.db.getConfig().paths.userId;
+          const myId = this.context.userId;
           const targetId = userId || myId;
           if (targetId === myId) {
-            const data2 = await this.db.getStorage().getPublicUserFile();
+            const data2 = await this.context.storage.getPublicUserFile();
             return data2 ? JSON.parse(new TextDecoder().decode(data2)) : null;
           }
-          const path2 = this.db.getModulePath(this.MODULE_NAME, `${targetId}/profile`, "followed");
-          const data = await this.db.getStorage().getFile(path2);
+          const data = await this.context.storage.getFile(`${targetId}/profile`, "followed");
           if (data) {
             return JSON.parse(new TextDecoder().decode(data));
           }
@@ -184559,11 +184842,11 @@ ${toHex(hashedRequest)}`;
          * Syncs profiles of followed users from their remotes.
          */
         async syncOtherProfiles() {
-          const following = await this.db.getFollowing();
+          const following = await this.context.getFollowing();
           for (const user of following) {
             try {
-              const userRemote = this.db.createRemote(user.userId);
-              const cachedEtag = await this.db.getStorage().getGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`);
+              const userRemote = this.context.remotes.createRemote(user.userId);
+              const cachedEtag = await this.context.storage.raw.getGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`);
               const result = await userRemote.downloadFile(PATHS.USER_PROFILE, cachedEtag || void 0);
               if (result && !result.notModified && result.data) {
                 const data = result.data;
@@ -184572,17 +184855,15 @@ ${toHex(hashedRequest)}`;
                   JSON.parse(new TextDecoder().decode(data));
                 } catch (e10) {
                   try {
-                    finalData = await this.db.decrypt(data, user.publicKey);
+                    finalData = await this.context.decrypt(data, user.publicKey);
                   } catch (de3) {
                     continue;
                   }
                 }
-                const localPath = this.db.getModulePath(this.MODULE_NAME, `${user.userId}/profile`, "followed");
-                await this.db.getStorage().saveFile(localPath, finalData);
+                await this.context.storage.saveFile(`${user.userId}/profile`, finalData, "followed");
                 if (result.etag) {
-                  await this.db.getStorage().setGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`, result.etag);
+                  await this.context.storage.raw.setGenericRemoteHashCache(`${user.userId}:${PATHS.USER_PROFILE}`, result.etag);
                 }
-                this.db.emit(`${this.MODULE_NAME}:update`, { path: localPath, userId: user.userId });
               }
             } catch (e10) {
               Logger.debug("Profile", `Failed to sync profile for ${user.userId}: ${e10.message}`);
@@ -184593,20 +184874,20 @@ ${toHex(hashedRequest)}`;
          * Follow a new user.
          */
         async follow(userId) {
-          await this.db.follow(userId);
+          await this.context.follow(userId);
           await this.syncOtherProfiles();
         }
         /**
          * Unfollow a user.
          */
         async unfollow(userId) {
-          await this.db.unfollow(userId);
+          await this.context.unfollow(userId);
         }
         /**
          * Get list of followed users.
          */
         async getFollowing() {
-          return this.db.getFollowing();
+          return this.context.getFollowing();
         }
       };
     }
