@@ -24,11 +24,28 @@ export interface Message {
     expiresAt?: number;
 }
 
+export type MessagingProtocolVersion = 'v1' | 'v2' | 'v3';
+
+export interface MessagingOptions {
+    /**
+     * Minimum messaging encryption protocol version to accept:
+     * - 'v3': Requires forward-secret ephemeral public key (rejects V1/V2 downgrade attacks)
+     * - 'v2': Requires HKDF-derived shared secret (rejects V1 raw legacy downgrade attacks)
+     * - 'v1': Allows all legacy formats (default for backward compatibility)
+     */
+    minProtocolVersion?: MessagingProtocolVersion;
+}
+
 export class MessagingModule {
     private readonly MODULE_NAME = 'messaging';
     private dailyDb: DailyDatabase;
+    private options: MessagingOptions;
 
-    constructor(private db: SovereignS3nc) {
+    constructor(private db: SovereignS3nc, options?: MessagingOptions) {
+        this.options = {
+            minProtocolVersion: options?.minProtocolVersion ?? 'v1',
+            ...options
+        };
         this.db.registerModule({
             name: this.MODULE_NAME,
             tables: [
@@ -67,6 +84,20 @@ export class MessagingModule {
         });
         this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
         this.db.registerModuleInstance(this);
+    }
+
+    /**
+     * Set the minimum accepted protocol version.
+     */
+    setMinProtocolVersion(version: MessagingProtocolVersion): void {
+        this.options.minProtocolVersion = version;
+    }
+
+    /**
+     * Get the current minimum accepted protocol version.
+     */
+    getMinProtocolVersion(): MessagingProtocolVersion {
+        return this.options.minProtocolVersion ?? 'v1';
     }
 
 
@@ -147,7 +178,13 @@ export class MessagingModule {
         const path = message.image;
         if (!path) return null;
         const data = await this.db.getBlob(path, message.senderId);
-        if (!data || !message.imageEncryption) return data;
+        if (!data) return null;
+        if (!message.imageEncryption) {
+            if ((this.options.minProtocolVersion ?? 'v1') === 'v3') {
+                throw new AuthError('Unencrypted or legacy DM attachment rejected under V3 policy');
+            }
+            return data;
+        }
         if (message.imageEncryption.version !== 1 || !message.imageEncryption.ephemeralPublicKey) {
             throw new AuthError('Unsupported encrypted DM attachment format');
         }
@@ -362,6 +399,8 @@ export class MessagingModule {
                                     const ephemeralPk = hasEphemeralCol ? (row[1] as string | null) : null;
                                     let decrypted: Uint8Array | null = null;
 
+                                    const minVersion = this.options.minProtocolVersion ?? 'v1';
+
                                     // V3: Try forward-secret ephemeral key if present
                                     if (ephemeralPk) {
                                         try {
@@ -370,10 +409,12 @@ export class MessagingModule {
                                         } catch (e: any) {
                                             Logger.debug('Messaging', `V3 ephemeral decrypt failed: ${e.message}`);
                                         }
+                                    } else if (minVersion === 'v3') {
+                                        Logger.warn('Messaging', `Protocol downgrade rejected: message missing required V3 ephemeral key from user ${user.userId}`);
                                     }
 
-                                    // V2: Fall back to static HKDF shared secret
-                                    if (!decrypted) {
+                                    // V2: Fall back to static HKDF shared secret (only allowed if minVersion is not 'v3')
+                                    if (!decrypted && minVersion !== 'v3') {
                                         try {
                                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV2);
                                         } catch (e: any) {
@@ -381,8 +422,8 @@ export class MessagingModule {
                                         }
                                     }
 
-                                    // V1: Fall back to raw legacy shared secret (pre-HKDF)
-                                    if (!decrypted) {
+                                    // V1: Fall back to raw legacy shared secret (pre-HKDF) (only allowed if minVersion is 'v1')
+                                    if (!decrypted && minVersion === 'v1') {
                                         try {
                                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV1);
                                         } catch (e: any) {
