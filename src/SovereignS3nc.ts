@@ -850,6 +850,11 @@ export class SovereignS3nc extends EventEmitter {
             throw new SyncError('Only public blobs can be fetched from other users');
         }
 
+        const cachedLocal = await this.storage.getFile(`${PATHS.FOLLOWED_PREFIX}${userId}/${path}`);
+        if (cachedLocal) {
+            return cachedLocal;
+        }
+
         const userRemote = this.createRemote(userId);
         const result = await userRemote.downloadFile(path);
         if (result && result.data) {

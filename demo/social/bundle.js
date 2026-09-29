@@ -98704,6 +98704,10 @@ ${toHex(hashedRequest)}`;
           if (!path2.startsWith("public/")) {
             throw new SyncError("Only public blobs can be fetched from other users");
           }
+          const cachedLocal = await this.storage.getFile(`${PATHS.FOLLOWED_PREFIX}${userId}/${path2}`);
+          if (cachedLocal) {
+            return cachedLocal;
+          }
           const userRemote = this.createRemote(userId);
           const result = await userRemote.downloadFile(path2);
           if (result && result.data) {
@@ -99285,9 +99289,13 @@ ${toHex(hashedRequest)}`;
       init_Constants();
       init_DailyDatabase();
       MessagingModule = class {
-        constructor(db) {
+        constructor(db, options) {
           this.db = db;
           this.MODULE_NAME = "messaging";
+          this.options = {
+            minProtocolVersion: options?.minProtocolVersion ?? "v1",
+            ...options
+          };
           this.db.registerModule({
             name: this.MODULE_NAME,
             tables: [
@@ -99326,6 +99334,18 @@ ${toHex(hashedRequest)}`;
           });
           this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
           this.db.registerModuleInstance(this);
+        }
+        /**
+         * Set the minimum accepted protocol version.
+         */
+        setMinProtocolVersion(version) {
+          this.options.minProtocolVersion = version;
+        }
+        /**
+         * Get the current minimum accepted protocol version.
+         */
+        getMinProtocolVersion() {
+          return this.options.minProtocolVersion ?? "v1";
         }
         /**
          * Send a direct encrypted message to a recipient.
@@ -99392,7 +99412,13 @@ ${toHex(hashedRequest)}`;
           const path2 = message.image;
           if (!path2) return null;
           const data = await this.db.getBlob(path2, message.senderId);
-          if (!data || !message.imageEncryption) return data;
+          if (!data) return null;
+          if (!message.imageEncryption) {
+            if ((this.options.minProtocolVersion ?? "v1") === "v3") {
+              throw new AuthError("Unencrypted or legacy DM attachment rejected under V3 policy");
+            }
+            return data;
+          }
           if (message.imageEncryption.version !== 1 || !message.imageEncryption.ephemeralPublicKey) {
             throw new AuthError("Unsupported encrypted DM attachment format");
           }
@@ -99582,6 +99608,7 @@ ${toHex(hashedRequest)}`;
                         const encryptedData = row[0];
                         const ephemeralPk = hasEphemeralCol ? row[1] : null;
                         let decrypted = null;
+                        const minVersion = this.options.minProtocolVersion ?? "v1";
                         if (ephemeralPk) {
                           try {
                             const sharedSecretV3 = this.db.deriveRecipientSharedSecret(ephemeralPk);
@@ -99589,15 +99616,17 @@ ${toHex(hashedRequest)}`;
                           } catch (e2) {
                             Logger.debug("Messaging", `V3 ephemeral decrypt failed: ${e2.message}`);
                           }
+                        } else if (minVersion === "v3") {
+                          Logger.warn("Messaging", `Protocol downgrade rejected: message missing required V3 ephemeral key from user ${user.userId}`);
                         }
-                        if (!decrypted) {
+                        if (!decrypted && minVersion !== "v3") {
                           try {
                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV2);
                           } catch (e2) {
                             Logger.debug("Messaging", `V2 static HKDF decrypt failed: ${e2.message}`);
                           }
                         }
-                        if (!decrypted) {
+                        if (!decrypted && minVersion === "v1") {
                           try {
                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV1);
                           } catch (e2) {
