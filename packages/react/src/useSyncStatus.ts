@@ -117,3 +117,6 @@ export function useSyncStatus(): SyncStatus {
         sync
     };
 }
+
+/** Alias for useSyncStatus matching common developer conventions. */
+export const useSync = useSyncStatus;

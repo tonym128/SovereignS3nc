@@ -1,5 +1,14 @@
 import React from 'react';
-import { SovereignS3nc, SovereignConfig, Post, Message, Repository, SyncRunResult, SyncDiagnostic } from 'sovereigns3nc';
+import {
+    SovereignS3nc,
+    SovereignConfig,
+    Post,
+    Message,
+    Profile,
+    Repository,
+    SyncRunResult,
+    SyncDiagnostic
+} from 'sovereigns3nc';
 
 export interface SovereignContextValue {
     sov: SovereignS3nc;
@@ -27,16 +36,40 @@ export interface SyncStatus {
 export interface UseFeedOptions {
     days?: number;
     includeFollowed?: boolean;
+    limit?: number;
     autoRefreshOnUpdate?: boolean;
 }
 
 export interface UseFeedResult {
     posts: Post[];
     isLoading: boolean;
+    isLoadingMore?: boolean;
     error: Error | null;
+    hasMore?: boolean;
+    nextCursor?: string | null;
+    loadMore?: () => Promise<void>;
     createPost: (content: string, mediaAttachment?: Uint8Array, isPublic?: boolean, parentId?: string, expiresAt?: number) => Promise<void>;
     likePost: (postId: string, isPublic?: boolean) => Promise<void>;
     deletePost: (postId: string, date: string, isPublic?: boolean) => Promise<void>;
+    refresh: () => Promise<void>;
+}
+
+export interface UseMessagingOptions {
+    days?: number;
+    conversationWith?: string;
+    limit?: number;
+    autoRefreshOnUpdate?: boolean;
+}
+
+export interface UseMessagingResult {
+    messages: Message[];
+    isLoading: boolean;
+    isLoadingMore?: boolean;
+    error: Error | null;
+    hasMore?: boolean;
+    nextCursor?: string | null;
+    loadMore?: () => Promise<void>;
+    sendDM: (targetRecipientId: string, content: string, mediaAttachment?: Uint8Array, expiresAt?: number) => Promise<void>;
     refresh: () => Promise<void>;
 }
 
@@ -50,6 +83,19 @@ export interface UseDirectMessagesResult {
     isLoading: boolean;
     error: Error | null;
     sendDM: (content: string, mediaAttachment?: Uint8Array, expiresAt?: number) => Promise<void>;
+    refresh: () => Promise<void>;
+}
+
+export interface UseProfileOptions {
+    userId?: string;
+    autoRefreshOnUpdate?: boolean;
+}
+
+export interface UseProfileResult {
+    profile: Profile | null;
+    isLoading: boolean;
+    error: Error | null;
+    updateProfile: (name: string, bio: string, avatar?: string) => Promise<void>;
     refresh: () => Promise<void>;
 }
 

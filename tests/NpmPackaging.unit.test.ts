@@ -83,8 +83,11 @@ describe('npm Package & Exports Verification (Item 4)', () => {
         expect(reactPkg.useSovereign).toBeDefined();
         expect(reactPkg.useFeed).toBeDefined();
         expect(reactPkg.useDirectMessages).toBeDefined();
+        expect(reactPkg.useMessaging).toBeDefined();
+        expect(reactPkg.useProfile).toBeDefined();
         expect(reactPkg.useRepository).toBeDefined();
         expect(reactPkg.useSyncStatus).toBeDefined();
+        expect(reactPkg.useSync).toBeDefined();
     });
 
     test('automated publishing workflow exists and is configured for npm release', () => {

@@ -63,7 +63,7 @@ export const SovereignProvider: React.FC<SovereignProviderProps> = ({
                             setInitError(null);
                         }
                     })
-                    .catch((err) => {
+                    .catch((err: any) => {
                         if (active) {
                             setInitError(err instanceof Error ? err : new Error(String(err)));
                             setIsInitialized(false);

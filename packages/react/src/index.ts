@@ -3,5 +3,7 @@ export * from './SovereignContext';
 export * from './useSovereign';
 export * from './useSyncStatus';
 export * from './useDirectMessages';
+export * from './useMessaging';
 export * from './useFeed';
+export * from './useProfile';
 export * from './useRepository';

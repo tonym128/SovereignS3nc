@@ -8,8 +8,11 @@ import {
     useSovereign,
     useSovereignContext,
     useSyncStatus,
+    useSync,
     useDirectMessages,
+    useMessaging,
     useFeed,
+    useProfile,
     useRepository
 } from '../packages/react/src';
 import { SovereignConfig } from '../src/types';
@@ -282,6 +285,10 @@ describe('@sovereigns3nc/react Reactive Hooks Package', () => {
 
             await unmount();
         });
+
+        it('provides useSync alias identically', () => {
+            expect(useSync).toBe(useSyncStatus);
+        });
     });
 
     describe('useFeed', () => {
@@ -324,6 +331,36 @@ describe('@sovereigns3nc/react Reactive Hooks Package', () => {
 
             expect(result.current.posts.length).toBe(1);
             expect(result.current.posts[0].isDeleted).toBe(true);
+
+            await unmount();
+        });
+
+        it('supports keyset pagination via limit and loadMore', async () => {
+            const wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
+                React.createElement(SovereignProvider, { instance: sov }, children);
+
+            const { result, unmount } = await renderHook(() => useFeed({ limit: 1 }), wrapper);
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.createPost('First Post');
+            });
+            await act(async () => {
+                await result.current.createPost('Second Post');
+            });
+
+            expect(result.current.posts.length).toBe(1);
+            expect(result.current.hasMore).toBe(true);
+            expect(result.current.nextCursor).not.toBeNull();
+
+            await act(async () => {
+                await result.current.loadMore?.();
+            });
+
+            expect(result.current.posts.length).toBe(2);
 
             await unmount();
         });
@@ -418,6 +455,71 @@ describe('@sovereigns3nc/react Reactive Hooks Package', () => {
             });
             expect(result.current.data.length).toBe(1);
             expect(result.current.data[0].id).toBe('t2');
+
+            await unmount();
+        });
+    });
+
+    describe('useMessaging', () => {
+        it('supports keyset pagination and conversation filtering', async () => {
+            const peerId = peerSov.getConfig().paths.userId;
+            const peerPk = peerSov.getConfig().publicEncryptionKey;
+            if (peerPk) {
+                await sov.follow(peerId, peerPk);
+            }
+
+            const wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
+                React.createElement(SovereignProvider, { instance: sov }, children);
+
+            const { result, unmount } = await renderHook(
+                () => useMessaging({ conversationWith: peerId, limit: 1 }),
+                wrapper
+            );
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+
+            await act(async () => {
+                await result.current.sendDM(peerId, 'First message');
+            });
+            await act(async () => {
+                await result.current.sendDM(peerId, 'Second message');
+            });
+
+            expect(result.current.messages.length).toBe(1);
+            expect(result.current.hasMore).toBe(true);
+
+            await act(async () => {
+                await result.current.loadMore?.();
+            });
+
+            expect(result.current.messages.length).toBe(2);
+
+            await unmount();
+        });
+    });
+
+    describe('useProfile', () => {
+        it('loads profile, updates profile, and auto-refreshes on updates', async () => {
+            const wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =>
+                React.createElement(SovereignProvider, { instance: sov }, children);
+
+            const { result, unmount } = await renderHook(() => useProfile(), wrapper);
+
+            await waitFor(() => {
+                expect(result.current.isLoading).toBe(false);
+            });
+            expect(result.current.profile).toBeNull();
+
+            await act(async () => {
+                await result.current.updateProfile('Alice Wonderland', 'Decentralized developer');
+            });
+
+            expect(result.current.profile).not.toBeNull();
+            expect(result.current.profile?.name).toBe('Alice Wonderland');
+            expect(result.current.profile?.bio).toBe('Decentralized developer');
+            expect(result.current.profile?.userId).toBe(sov.getConfig().paths.userId);
 
             await unmount();
         });

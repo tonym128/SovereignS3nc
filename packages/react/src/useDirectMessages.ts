@@ -42,13 +42,13 @@ export function useDirectMessages(
             const allInbox = await messaging.getInboxMessages(days);
 
             // Filter for conversation between local user and recipient
-            const convoMessages = allInbox.filter(m =>
+            const convoMessages = allInbox.filter((m: Message) =>
                 (m.senderId === recipientId && m.recipientId === myId) ||
                 (m.senderId === myId && m.recipientId === recipientId)
             );
 
             // Sort chronologically ascending
-            convoMessages.sort((a, b) => a.timestamp - b.timestamp);
+            convoMessages.sort((a: Message, b: Message) => a.timestamp - b.timestamp);
 
             if (isMountedRef.current) {
                 setMessages(convoMessages);
