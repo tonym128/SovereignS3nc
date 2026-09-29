@@ -187676,7 +187676,7 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
           try {
             const isLocalHost = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
             const endpointIsLocal = config3.endpoint && (config3.endpoint.includes("127.0.0.1") || config3.endpoint.includes("localhost"));
-            const hasS3 = config3.endpoint && (!endpointIsLocal || isLocalHost);
+            const hasS3 = config3.endpoint && (!endpointIsLocal || isLocalHost) && Boolean(config3.accessKeyId);
             const instance = await SovereignS3nc.create({
               s3: hasS3 ? {
                 endpoint: config3.endpoint,
@@ -187705,6 +187705,29 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
             await loadMedia(instance);
           } catch (err) {
             alert("Login failed: " + err.message);
+          } finally {
+            setSyncing(false);
+          }
+        };
+        const startOffline = async (userId = "author-1") => {
+          setSyncing(true);
+          try {
+            const password = "password123";
+            setConfig((prev) => ({ ...prev, userId, password }));
+            const instance = await SovereignS3nc.create({
+              offline: true,
+              paths: { appId: config3.appId, userId, storeId: "main" },
+              password,
+              useWorker: true,
+              workerUrl: "sync-worker.js"
+            });
+            setSov(instance);
+            setFeed(new FeedModule(instance));
+            setIsLoggedIn(true);
+            await loadPosts(new FeedModule(instance));
+            await loadMedia(instance);
+          } catch (err) {
+            alert("Offline launch failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -187917,32 +187940,71 @@ Please report this to https://github.com/markedjs/marked.`, e10) {
           ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col-md-6 card p-4 shadow-sm", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "mb-4", children: "Author Login" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "S3 Endpoint" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "S3 Endpoint", value: config3.endpoint, onChange: (e10) => setConfig({ ...config3, endpoint: e10.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Access Key ID" }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "Access Key ID", value: config3.accessKeyId, onChange: (e10) => setConfig({ ...config3, accessKeyId: e10.target.value }) })
+          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "container mt-5", style: { maxWidth: "640px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card p-4 shadow-sm mb-4 border-primary", style: { backgroundColor: "#f0f7ff" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex align-items-center justify-content-between mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", { className: "mb-0 text-primary fw-bold", children: "\u26A1 Quick Start (Offline Mode)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "badge bg-primary", children: "Instant Preview" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Secret Access Key" }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Secret Key", value: config3.secretAccessKey, onChange: (e10) => setConfig({ ...config3, secretAccessKey: e10.target.value }) })
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small mb-3", children: "Draft and preview blog posts immediately using offline-first local storage. Zero configuration or AWS/S3 setup needed." }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex gap-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                  "button",
+                  {
+                    className: "btn btn-primary w-100",
+                    onClick: () => startOffline("author-1"),
+                    disabled: syncing,
+                    children: "Launch Offline as Author 1"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                  "button",
+                  {
+                    className: "btn btn-outline-primary w-100",
+                    onClick: () => startOffline("author-2"),
+                    disabled: syncing,
+                    children: "Launch Offline as Author 2"
+                  }
+                )
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "User ID" }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "User ID", value: config3.userId, onChange: (e10) => setConfig({ ...config3, userId: e10.target.value }) })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card p-4 shadow-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", { className: "mb-3", children: "Author Account & Sync" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small mb-3", children: "Optionally provide S3 storage credentials to sync published posts and media to a public bucket." }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "User ID" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "User ID", value: config3.userId, onChange: (e10) => setConfig({ ...config3, userId: e10.target.value }) })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Passphrase" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config3.password, onChange: (e10) => setConfig({ ...config3, password: e10.target.value }) })
+                ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Passphrase" }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config3.password, onChange: (e10) => setConfig({ ...config3, password: e10.target.value }) })
-              ] })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary w-100 mt-2", onClick: login, disabled: syncing, children: syncing ? "Logging in..." : "Enter Editor" })
-          ] }) }) });
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("details", { className: "mb-3 border rounded p-2 bg-light", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("summary", { className: "small fw-semibold text-secondary", style: { cursor: "pointer" }, children: "\u2601\uFE0F S3 Cloud Sync Settings (Optional)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "mt-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "S3 Endpoint" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "S3 Endpoint", value: config3.endpoint, onChange: (e10) => setConfig({ ...config3, endpoint: e10.target.value }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Access Key ID" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", placeholder: "Access Key ID", value: config3.accessKeyId, onChange: (e10) => setConfig({ ...config3, accessKeyId: e10.target.value }) })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Secret Access Key" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Secret Key", value: config3.secretAccessKey, onChange: (e10) => setConfig({ ...config3, secretAccessKey: e10.target.value }) })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "row", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label small", children: "Bucket Name" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config3.bucketName, onChange: (e10) => setConfig({ ...config3, bucketName: e10.target.value }) })
+                  ] }) })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-secondary w-100 mt-2", onClick: login, disabled: syncing, children: syncing ? "Logging in..." : "Enter Editor" })
+            ] })
+          ] });
         }
         return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", { className: "navbar px-4", children: [

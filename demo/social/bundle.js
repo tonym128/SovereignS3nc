@@ -138819,8 +138819,40 @@ ${toHex(hashedRequest)}`;
                   u2.userId
                 )) })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Sync Mode" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "btn-group w-100 mb-4 flex-wrap", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center justify-content-center mb-1", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "fs-5 me-2", children: "\u{1F680}" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "fw-bold text-primary", children: "Instant Quick Start" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-muted small mb-3", children: "Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                  "button",
+                  {
+                    type: "button",
+                    className: "btn btn-primary w-100 py-2 fw-bold shadow-sm",
+                    onClick: () => {
+                      const guestConfig = {
+                        ...config,
+                        syncMode: "offline",
+                        userId: config.userId || "guest-" + Math.random().toString(36).substring(7),
+                        password: config.password || "password123"
+                      };
+                      performLogin(guestConfig);
+                    },
+                    children: "\u26A1 Start Instantly (Offline Mode)"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Configure Workspace" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "Sync Mode" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-light text-muted border small", children: "Select Architecture" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "btn-group w-100 mb-3 flex-wrap", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline", children: "Offline-First" }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }),
@@ -138828,12 +138860,23 @@ ${toHex(hashedRequest)}`;
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc", children: "WebRTC Mesh" })
               ] }),
-              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Connection Settings" }),
+              config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-info py-2 small mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Offline-First Mode:" }),
+                " All data is stored securely in your browser's IndexedDB. You can connect to S3 cloud storage or P2P WebRTC at any time from the settings panel."
+              ] }),
+              config.syncMode === "webrtc" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-success py-2 small mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "WebRTC P2P Mesh:" }),
+                " Synchronizes directly between browser tabs and devices without storing data on any centralized server."
+              ] }),
+              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "border rounded p-3 mb-3 bg-light", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "S3 Cloud Credentials" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary small", children: "Advanced" })
+                ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-4", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-0", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Account Credentials" }),
               /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),

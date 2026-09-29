@@ -238,7 +238,35 @@ const App = () => {
                     <div className="col-md-6">
                         <div className="card shadow">
                             <div className="card-body">
-                                <h3 className="card-title mb-4">Sovereign Board Login</h3>
+                                <h3 className="card-title mb-3">Sovereign Board Login</h3>
+
+                                {/* Quick Start Card */}
+                                <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
+                                    <div className="d-flex align-items-center justify-content-center mb-1">
+                                        <span className="fs-5 me-2">🚀</span>
+                                        <span className="fw-bold text-primary">Quick Start (Offline Board)</span>
+                                    </div>
+                                    <p className="text-muted small mb-2">
+                                        Try Kanban boards locally with IndexedDB storage. No credentials needed.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary w-100 py-2 fw-bold shadow-sm"
+                                        onClick={() => {
+                                            setConfig(prev => ({ ...prev, syncMode: 'offline' }));
+                                            setTimeout(login, 50);
+                                        }}
+                                    >
+                                        ⚡ Launch Instant Board
+                                    </button>
+                                </div>
+
+                                <div className="d-flex align-items-center my-3">
+                                    <hr className="flex-grow-1 my-0 text-muted" />
+                                    <span className="px-2 text-muted x-small text-uppercase fw-bold">Or Custom Mode</span>
+                                    <hr className="flex-grow-1 my-0 text-muted" />
+                                </div>
+
                                 <div className="mb-3">
                                     <label className="form-label fw-bold">Sync Mode</label>
                                     <div className="btn-group w-100 mb-2" role="group">

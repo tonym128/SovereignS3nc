@@ -185095,7 +185095,31 @@ ${toHex(hashedRequest)}`;
         }, [isLoggedIn, selectedGroup]);
         if (!isLoggedIn) {
           return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "card shadow", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card-body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "card-title mb-4", children: "Sovereign Board Login" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { className: "card-title mb-3", children: "Sovereign Board Login" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex align-items-center justify-content-center mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "fs-5 me-2", children: "\u{1F680}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "fw-bold text-primary", children: "Quick Start (Offline Board)" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small mb-2", children: "Try Kanban boards locally with IndexedDB storage. No credentials needed." }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn-primary w-100 py-2 fw-bold shadow-sm",
+                  onClick: () => {
+                    setConfig((prev) => ({ ...prev, syncMode: "offline" }));
+                    setTimeout(login, 50);
+                  },
+                  children: "\u26A1 Launch Instant Board"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Custom Mode" }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
+            ] }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "mb-3", children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { className: "form-label fw-bold", children: "Sync Mode" }),
               /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "btn-group w-100 mb-2", role: "group", children: [
