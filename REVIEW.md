@@ -262,7 +262,7 @@
 |---|---|---|---|---|
 | 6 | Add "Quick Start" offline mode to demo onboarding | Product Designer | 2-3 days | ✅ Completed |
 | 7 | Introduce `ModuleContext` to fix encapsulation leaks | Principal Dev | 3-5 days | ✅ Completed |
-| 8 | Decompose monolithic `App.tsx` files into feature components | Senior Engineer | 3-5 days | Pending |
+| 8 | Decompose monolithic `App.tsx` files into feature components | Senior Engineer | 3-5 days | ✅ Completed |
 | 9 | Add cursor-based pagination to Feed and Messaging queries | Senior Engineer | 2-3 days | Pending |
 | 10 | Ship `@sovereign-s3nc/react` hooks package | Marketing / Eng | 5-7 days | Pending |
 
