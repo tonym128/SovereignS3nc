@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSovereign } from './useSovereign';
-import { FeedModule, Post } from 'sovereigns3nc';
-import { UseFeedOptions, UseFeedResult } from './types';
+import { MessagingModule, Message, PaginatedResult } from 'sovereigns3nc';
+import { UseMessagingOptions, UseMessagingResult } from './types';
 
 /**
- * Reactive hook for social feed posts, auto-updating on local writes and remote sync events.
- * Supports cursor-based keyset pagination.
+ * Reactive hook for direct end-to-end encrypted messaging.
+ * Supports cursor-based keyset pagination, conversation filtering, and auto-refresh on updates.
  */
-export function useFeed(options: UseFeedOptions = {}): UseFeedResult {
-    const { days = 7, includeFollowed = true, limit = 50, autoRefreshOnUpdate = true } = options;
+export function useMessaging(options: UseMessagingOptions = {}): UseMessagingResult {
+    const { days = 7, conversationWith, limit = 50, autoRefreshOnUpdate = true } = options;
     const sov = useSovereign();
 
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
@@ -20,26 +20,26 @@ export function useFeed(options: UseFeedOptions = {}): UseFeedResult {
 
     const isMountedRef = useRef<boolean>(true);
 
-    const getFeedModule = useCallback((): FeedModule => {
-        let instance = sov.getModuleInstance<FeedModule>('feed');
+    const getMessagingModule = useCallback((): MessagingModule => {
+        let instance = sov.getModuleInstance<MessagingModule>('messaging');
         if (!instance) {
-            instance = new FeedModule(sov);
+            instance = new MessagingModule(sov);
         }
         return instance;
     }, [sov]);
 
-    const loadPosts = useCallback(async () => {
+    const loadInitialMessages = useCallback(async () => {
         try {
-            const feed = getFeedModule();
-            const result = await feed.getFeedPostsPaginated({
+            const messaging = getMessagingModule();
+            const result: PaginatedResult<Message> = await messaging.getInboxMessagesPaginated({
                 days,
-                includeFollowed,
+                conversationWith,
                 limit,
                 direction: 'before'
             });
 
             if (isMountedRef.current) {
-                setPosts(result.items);
+                setMessages(result.items);
                 setNextCursor(result.nextCursor);
                 setHasMore(result.hasMore);
                 setError(null);
@@ -53,23 +53,23 @@ export function useFeed(options: UseFeedOptions = {}): UseFeedResult {
                 setIsLoading(false);
             }
         }
-    }, [getFeedModule, days, includeFollowed, limit]);
+    }, [getMessagingModule, days, conversationWith, limit]);
 
     const loadMore = useCallback(async () => {
         if (!hasMore || !nextCursor || isLoadingMore) return;
         setIsLoadingMore(true);
         try {
-            const feed = getFeedModule();
-            const result = await feed.getFeedPostsPaginated({
+            const messaging = getMessagingModule();
+            const result: PaginatedResult<Message> = await messaging.getInboxMessagesPaginated({
                 days,
-                includeFollowed,
+                conversationWith,
                 limit,
                 cursor: nextCursor,
                 direction: 'before'
             });
 
             if (isMountedRef.current) {
-                setPosts(prev => [...prev, ...result.items]);
+                setMessages(prev => [...prev, ...result.items]);
                 setNextCursor(result.nextCursor);
                 setHasMore(result.hasMore);
             }
@@ -82,12 +82,12 @@ export function useFeed(options: UseFeedOptions = {}): UseFeedResult {
                 setIsLoadingMore(false);
             }
         }
-    }, [getFeedModule, days, includeFollowed, limit, hasMore, nextCursor, isLoadingMore]);
+    }, [getMessagingModule, days, conversationWith, limit, hasMore, nextCursor, isLoadingMore]);
 
     useEffect(() => {
         isMountedRef.current = true;
         setIsLoading(true);
-        loadPosts();
+        loadInitialMessages();
 
         if (!autoRefreshOnUpdate) {
             return () => {
@@ -96,60 +96,45 @@ export function useFeed(options: UseFeedOptions = {}): UseFeedResult {
         }
 
         const handleUpdate = () => {
-            loadPosts();
+            loadInitialMessages();
         };
 
-        const handleSyncProgress = (data: { stage: string }) => {
+        const handleSync = (data: { stage: string }) => {
             if (data.stage === 'complete') {
-                loadPosts();
+                loadInitialMessages();
             }
         };
 
-        sov.on('feed:update', handleUpdate);
-        sov.on('sync:progress', handleSyncProgress);
+        sov.on('messaging:update', handleUpdate);
+        sov.on('sync:progress', handleSync);
 
         return () => {
             isMountedRef.current = false;
-            sov.off('feed:update', handleUpdate);
-            sov.off('sync:progress', handleSyncProgress);
+            sov.off('messaging:update', handleUpdate);
+            sov.off('sync:progress', handleSync);
         };
-    }, [sov, loadPosts, autoRefreshOnUpdate]);
+    }, [sov, loadInitialMessages, autoRefreshOnUpdate]);
 
-    const createPost = useCallback(async (
+    const sendDM = useCallback(async (
+        targetRecipientId: string,
         content: string,
         mediaAttachment?: Uint8Array,
-        isPublic: boolean = true,
-        parentId?: string,
         expiresAt?: number
     ) => {
-        const feed = getFeedModule();
-        await feed.post(content, isPublic, mediaAttachment, parentId, undefined, expiresAt);
-        await loadPosts();
-    }, [getFeedModule, loadPosts]);
-
-    const likePost = useCallback(async (postId: string, isPublic: boolean = true) => {
-        const feed = getFeedModule();
-        await feed.like(postId, isPublic);
-        await loadPosts();
-    }, [getFeedModule, loadPosts]);
-
-    const deletePost = useCallback(async (postId: string, date: string, isPublic: boolean = true) => {
-        const feed = getFeedModule();
-        await feed.deletePost(postId, date, isPublic);
-        await loadPosts();
-    }, [getFeedModule, loadPosts]);
+        const messaging = getMessagingModule();
+        await messaging.sendDirectMessage(targetRecipientId, content, mediaAttachment, expiresAt);
+        await loadInitialMessages();
+    }, [getMessagingModule, loadInitialMessages]);
 
     return {
-        posts,
+        messages,
         isLoading,
         isLoadingMore,
         error,
         hasMore,
         nextCursor,
         loadMore,
-        createPost,
-        likePost,
-        deletePost,
-        refresh: loadPosts
+        sendDM,
+        refresh: loadInitialMessages
     };
 }
