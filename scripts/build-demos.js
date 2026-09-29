@@ -46,14 +46,72 @@ async function buildAllDemos() {
         }
     }
 
-    // 3. Ensure wasm is present in board and blog
+    // 3. Ensure wasm is present in board, blog, and playground
     const wasmSource = path.join(rootDir, 'node_modules/sql.js/dist/sql-wasm.wasm');
+    const wasmJsSource = path.join(rootDir, 'node_modules/sql.js/dist/sql-wasm.js');
     if (fs.existsSync(wasmSource)) {
         fs.copyFileSync(wasmSource, path.join(outDir, 'board/sql-wasm.wasm'));
         fs.copyFileSync(wasmSource, path.join(outDir, 'blog/sql-wasm.wasm'));
     }
 
-    // 4. Copy root demo portal landing page and icons
+    // 4. Copy Interactive Playground
+    const playgroundSrcDir = path.join(rootDir, 'demo/playground');
+    const playgroundDstDir = path.join(outDir, 'playground');
+    if (fs.existsSync(playgroundSrcDir)) {
+        fs.mkdirSync(playgroundDstDir, { recursive: true });
+        const playgroundFiles = fs.readdirSync(playgroundSrcDir);
+        for (const file of playgroundFiles) {
+            const src = path.join(playgroundSrcDir, file);
+            if (fs.statSync(src).isFile()) {
+                fs.copyFileSync(src, path.join(playgroundDstDir, file));
+            }
+        }
+        if (fs.existsSync(wasmSource)) {
+            fs.copyFileSync(wasmSource, path.join(playgroundDstDir, 'sql-wasm.wasm'));
+        }
+        if (fs.existsSync(wasmJsSource)) {
+            fs.copyFileSync(wasmJsSource, path.join(playgroundDstDir, 'sql-wasm.js'));
+        }
+    }
+
+    // 5. Copy Global SovereignS3nc Browser Bundle to root and playground for offline/standalone execution
+    const globalBundle = path.join(rootDir, 'dist/sovereigns3nc.global.js');
+    const globalBundleMap = path.join(rootDir, 'dist/sovereigns3nc.global.js.map');
+    if (fs.existsSync(globalBundle)) {
+        fs.copyFileSync(globalBundle, path.join(outDir, 'sovereigns3nc.global.js'));
+        if (fs.existsSync(playgroundDstDir)) {
+            fs.copyFileSync(globalBundle, path.join(playgroundDstDir, 'sovereigns3nc.global.js'));
+        }
+    }
+    if (fs.existsSync(globalBundleMap)) {
+        fs.copyFileSync(globalBundleMap, path.join(outDir, 'sovereigns3nc.global.js.map'));
+        if (fs.existsSync(playgroundDstDir)) {
+            fs.copyFileSync(globalBundleMap, path.join(playgroundDstDir, 'sovereigns3nc.global.js.map'));
+        }
+    }
+
+    // 6. Copy Quickstart Starter Example to demo-dist for hosted download & inspection
+    const quickstartSrc = path.join(rootDir, 'examples/quickstart');
+    const quickstartDst = path.join(outDir, 'examples/quickstart');
+    if (fs.existsSync(quickstartSrc)) {
+        const copyDirRecursive = (src, dest) => {
+            fs.mkdirSync(dest, { recursive: true });
+            for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+                const s = path.join(src, entry.name);
+                const d = path.join(dest, entry.name);
+                if (entry.isDirectory()) {
+                    if (entry.name !== 'node_modules' && entry.name !== 'dist') {
+                        copyDirRecursive(s, d);
+                    }
+                } else {
+                    fs.copyFileSync(s, d);
+                }
+            }
+        };
+        copyDirRecursive(quickstartSrc, quickstartDst);
+    }
+
+    // 7. Copy root demo portal landing page and icons
     fs.copyFileSync(path.join(rootDir, 'demo/index.html'), path.join(outDir, 'index.html'));
     fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
 

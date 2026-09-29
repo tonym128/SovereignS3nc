@@ -18,6 +18,15 @@ SovereignS3nc empowers developers to build local-first, decentralized applicatio
 - **Multi-writer Groups**: Support for shared group stores with symmetric encryption.
 - **Universal Storage**: Seamlessly transition between Browser (IndexedDB) and Node.js (SQLite/FileSystem) environments.
 
+## 🎮 Interactive Playground & Cloud Sandboxes
+
+Try SovereignS3nc instantly in your browser without installing anything:
+
+- **[Live In-Browser API Playground](https://tonym128.github.io/SovereignS3nc/playground/)**: Run live code snippets with real-time IndexedDB inspection and recipes for E2EE, SQLite partitions, and cursor pagination.
+- **[⚡ Open in StackBlitz](https://stackblitz.com/github/tonym128/SovereignS3nc/tree/master/examples/quickstart)**: Full Vite + React + TypeScript starter sandbox.
+- **[📦 Open in CodeSandbox](https://codesandbox.io/p/sandbox/github/tonym128/SovereignS3nc/tree/master/examples/quickstart)**: Zero-config cloud workspace.
+- **[Hosted Interactive Demos](https://tonym128.github.io/SovereignS3nc/)**: Explore Social (E2EE DMs), Kanban Board (SQLite WASM), Banking Ledger, and Blog apps.
+
 ## Installation
 
 ```bash

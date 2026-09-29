@@ -1,4 +1,4 @@
-name: Deploy Interactive Demos to GitHub Pages
+name: Deploy Interactive Demos & Playground to GitHub Pages
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
       - name: Build Core Library & React Package
         run: npm run build
 
-      - name: Build All Interactive Demos & Sandbox
+      - name: Build All Interactive Demos, Playground & Starter Sandbox
         run: npm run build:demos
 
       - name: Setup Pages

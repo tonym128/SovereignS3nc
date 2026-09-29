@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d1117">
+    <meta name="description" content="Interactive API Playground for SovereignS3nc - Run live offline-first encrypted storage code directly in your browser.">
+    <title>SovereignS3nc Interactive Playground & Sandbox</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --card-header: #21262d;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --heading-color: #f0f6fc;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --accent-red: #f85149;
+            --accent-amber: #d29922;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: rgba(22, 27, 34, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+        }
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+            min-height: 600px;
+        }
+        .panel-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        .panel-header {
+            background-color: var(--card-header);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .code-textarea {
+            background-color: #0d1117;
+            color: #79c0ff;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: none;
+            outline: none;
+            width: 100%;
+            height: 100%;
+            padding: 1rem;
+            resize: none;
+            tab-size: 4;
+            white-space: pre;
+        }
+        .console-output {
+            background-color: #090d13;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.85rem;
+            padding: 1rem;
+            height: 100%;
+            overflow-y: auto;
+            color: #c9d1d9;
+        }
+        .log-entry {
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+            word-break: break-word;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .log-badge {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .log-log { color: #8b949e; }
+        .log-info { color: var(--accent-blue); }
+        .log-warn { color: var(--accent-amber); }
+        .log-error { color: var(--accent-red); }
+        .log-success { color: var(--accent-green); }
+        .nav-tabs .nav-link {
+            color: #8b949e;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.85rem;
+        }
+        .nav-tabs .nav-link.active {
+            background: transparent;
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
+            font-weight: 600;
+        }
+        .nav-tabs {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+        }
+        .storage-table {
+            color: #c9d1d9;
+            font-size: 0.85rem;
+        }
+        .storage-table th {
+            color: #8b949e;
+            border-bottom-color: var(--border-color);
+        }
+        .storage-table td {
+            border-bottom-color: rgba(48, 54, 61, 0.5);
+        }
+        .btn-shortcut {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 0.1rem 0.35rem;
+            font-size: 0.75rem;
+            margin-left: 0.4rem;
+        }
+        .json-key { color: #7ee787; }
+        .json-string { color: #a5d6ff; }
+        .json-number { color: #79c0ff; }
+        .json-boolean { color: #ff7b72; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold text-white d-flex align-items-center gap-2" href="../index.html">
+                <i class="bi bi-shield-lock-fill text-primary"></i> SovereignS3nc
+                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 fw-normal fs-6">Playground</span>
+            </a>
+
+            <div class="d-flex align-items-center gap-2 flex-wrap ms-auto">
+                <!-- Preset Recipes -->
+                <div class="d-flex align-items-center gap-2">
+                    <label class="text-secondary small d-none d-md-inline" for="recipeSelect">Recipe:</label>
+                    <select id="recipeSelect" class="form-select form-select-sm bg-dark text-white border-secondary" style="min-width: 220px;">
+                        <option value="quickstart">⚡ Quick Start (Client & Profile)</option>
+                        <option value="e2ee">🔐 End-to-End Encryption (E2EE)</option>
+                        <option value="sqlite">🗄️ Daily Database & Partitions</option>
+                        <option value="pagination">📄 Keyset Cursor Pagination</option>
+                        <option value="inspector">🔍 Storage & Hash Inspector</option>
+                    </select>
+                </div>
+
+                <button id="runBtn" class="btn btn-sm btn-success fw-bold d-flex align-items-center gap-1 shadow-sm">
+                    <i class="bi bi-play-fill fs-6"></i> Run
+                    <span class="btn-shortcut d-none d-lg-inline">Ctrl+↵</span>
+                </button>
+
+                <button id="resetBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Reset code to recipe default">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
+
+                <button id="copyBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Copy code to clipboard">
+                    <i class="bi bi-clipboard"></i>
+                </button>
+
+                <div class="vr bg-secondary mx-1 my-1"></div>
+
+                <!-- Launch in Cloud Sandboxes -->
+                <button id="stackblitzBtn" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" title="Launch editable project in StackBlitz">
+                    <i class="bi bi-lightning-charge-fill"></i> StackBlitz
+                </button>
+
+                <a href="https://codesandbox.io/p/sandbox/github/tonym128/SovereignS3nc/tree/master/examples/quickstart" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info d-flex align-items-center gap-1" title="Open template in CodeSandbox">
+                    <i class="bi bi-box"></i> CodeSandbox
+                </a>
+
+                <div class="vr bg-secondary mx-1 my-1"></div>
+
+                <a href="../index.html" class="btn btn-sm btn-outline-light" title="Return to Demo Portal">
+                    <i class="bi bi-grid-fill me-1"></i> Demos
+                </a>
+
+                <a href="https://github.com/tonym128/SovereignS3nc" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary text-white">
+                    <i class="bi bi-github"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <div class="container-fluid px-3 py-3 flex-grow-1">
+        <div class="row g-3 editor-container">
+            <!-- Left Panel: Code Editor -->
+            <div class="col-lg-6 h-100">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-code-square text-primary"></i>
+                            <span class="fw-semibold small text-white">Live In-Browser Code</span>
+                            <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary border-opacity-25 x-small">TypeScript / JS</span>
+                        </div>
+                        <div class="small text-secondary">
+                            Runs directly in your browser's runtime
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 position-relative">
+                        <textarea id="codeEditor" class="code-textarea" spellcheck="false" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Output Console & Storage Inspector -->
+            <div class="col-lg-6 h-100">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <!-- Navigation Tabs -->
+                        <ul class="nav nav-tabs border-0" id="outputTabs" role="tablist">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="tabConsole" data-bs-toggle="tab" data-bs-target="#paneConsole" type="button" role="tab">
+                                    <i class="bi bi-terminal me-1"></i> Console Output
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="tabStorage" data-bs-toggle="tab" data-bs-target="#paneStorage" type="button" role="tab">
+                                    <i class="bi bi-hdd-network me-1"></i> Storage Inspector
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="tabResult" data-bs-toggle="tab" data-bs-target="#paneResult" type="button" role="tab">
+                                    <i class="bi bi-braces me-1"></i> Return Value
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <span id="statusBadge" class="status-pill bg-secondary text-light">
+                                <span class="bi bi-circle-fill" style="font-size: 0.5rem;"></span> Ready
+                            </span>
+                            <span id="execTimeBadge" class="text-secondary small font-monospace d-none">0ms</span>
+                            <button id="clearConsoleBtn" class="btn btn-sm btn-link text-secondary p-0 ms-1" title="Clear console">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content flex-grow-1 overflow-hidden" style="height: calc(100% - 46px);">
+                        <!-- Console Output Tab -->
+                        <div class="tab-pane fade show active h-100" id="paneConsole" role="tabpanel">
+                            <div id="consoleOutput" class="console-output">
+                                <div class="text-secondary fst-italic">
+                                    Click <strong>Run (Ctrl+Enter)</strong> to execute the code against SovereignS3nc in this browser tab.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Storage Inspector Tab -->
+                        <div class="tab-pane fade h-100 p-3 overflow-auto" id="paneStorage" role="tabpanel" style="background-color: #090d13;">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="text-white fw-bold mb-0">IndexedDB Sovereign Databases</h6>
+                                    <small class="text-secondary">Inspect keys, files, and partitions persisted locally</small>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button id="refreshStorageBtn" class="btn btn-sm btn-outline-secondary text-secondary">
+                                        <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+                                    </button>
+                                    <button id="clearStorageBtn" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash me-1"></i> Clear Sandbox Storage
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="storageView">
+                                <div class="text-secondary small fst-italic">Storage inspector ready. Run code or click Refresh.</div>
+                            </div>
+                        </div>
+
+                        <!-- Return Value Tab -->
+                        <div class="tab-pane fade h-100 p-3 overflow-auto font-monospace" id="paneResult" role="tabpanel" style="background-color: #090d13;">
+                            <pre id="resultOutput" class="text-info mb-0 small" style="white-space: pre-wrap; word-break: break-all;">No return value yet.</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden form for direct StackBlitz dynamic project generation -->
+    <form id="stackblitzForm" method="post" action="https://stackblitz.com/run" target="_blank" style="display: none;">
+        <input type="hidden" name="project[title]" value="SovereignS3nc Playground Sandbox" />
+        <input type="hidden" name="project[description]" value="Offline-first zero-trust data storage with SovereignS3nc" />
+        <input type="hidden" name="project[template]" value="node" />
+        <input type="hidden" name="project[tags][]" value="sovereigns3nc" />
+        <input type="hidden" name="project[tags][]" value="offline-first" />
+        <input type="hidden" name="project[tags][]" value="e2ee" />
+        <input type="hidden" id="sb_package_json" name="project[files][package.json]" value="" />
+        <input type="hidden" id="sb_index_html" name="project[files][index.html]" value="" />
+        <input type="hidden" id="sb_index_ts" name="project[files][src/index.ts]" value="" />
+        <input type="hidden" id="sb_vite_config" name="project[files][vite.config.ts]" value="" />
+        <input type="hidden" id="sb_tsconfig" name="project[files][tsconfig.json]" value="" />
+    </form>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Load SovereignS3nc Global Bundle -->
+    <script src="./sovereigns3nc.global.js" onerror="console.warn('Local bundle not found, attempting parent path...');"></script>
+    <script>
+        if (!window.Sovereign && typeof window.SovereignS3nc !== 'undefined') {
+            window.Sovereign = { SovereignS3nc: window.SovereignS3nc };
+        }
+        // Fallback loader if accessed directly from /demo/playground/ during dev
+        if (!window.Sovereign) {
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = '../../dist/sovereigns3nc.global.js';
+            document.head.appendChild(fallbackScript);
+        }
+    </script>
+
+    <!-- Playground Application Engine -->
+    <script>
+        // Preset Code Recipes
+        const RECIPES = {
+            quickstart: `// ⚡ Recipe 1: Quick Start (Offline Client & Profile)
+// Initialize SovereignS3nc in offline-first mode (zero cloud credentials needed)
+const client = new Sovereign.SovereignS3nc({
+    userId: 'user-' + Math.floor(Math.random() * 1000),
+    password: 'secure-demo-passphrase',
+    syncMode: 'offline',
+    autoSync: false
+});
+
+await client.init();
+console.log('✅ SovereignS3nc initialized successfully!');
+console.log('👤 User ID:', client.getUserId());
+console.log('🔑 Public Identity Key:', client.getPublicKey());
+
+// Access Profile module to store user identity
+const profileModule = client.getModule('profile');
+await profileModule.setProfile({
+    name: 'Sovereign Explorer',
+    bio: 'Testing client-side zero-trust storage in the browser.',
+    updatedAt: Date.now()
+});
+
+const profile = await profileModule.getProfile();
+console.log('📋 Stored Profile in IndexedDB:', profile);
+
+// Inspect local storage files
+const storage = client.getStorage();
+const files = await storage.listFiles();
+console.log('📁 Local Storage Files:', files);
+
+return {
+    userId: client.getUserId(),
+    publicKey: client.getPublicKey(),
+    profile,
+    fileCount: files.length
+};`,
+
+            e2ee: `// 🔐 Recipe 2: End-to-End Encryption (X25519 & AES-256-GCM)
+// Create two separate client identities (Alice and Bob)
+const alice = new Sovereign.SovereignS3nc({
+    userId: 'alice-e2ee',
+    password: 'alice-super-secure-key',
+    syncMode: 'offline'
+});
+await alice.init();
+
+const bob = new Sovereign.SovereignS3nc({
+    userId: 'bob-e2ee',
+    password: 'bob-super-secure-key',
+    syncMode: 'offline'
+});
+await bob.init();
+
+console.log('🔑 Alice Public Key:', alice.getPublicKey());
+console.log('🔑 Bob Public Key:  ', bob.getPublicKey());
+
+// Diffie-Hellman Key Exchange (X25519)
+const secretAlice = alice.deriveSharedSecret(bob.getPublicKey());
+const secretBob = bob.deriveSharedSecret(alice.getPublicKey());
+
+const match = secretAlice === secretBob;
+console.log('🤝 Diffie-Hellman Shared Secrets Match:', match);
+
+// Encrypt payload using AES-256-GCM with derived shared key
+const confidentialMessage = "Confidential: True data sovereignty without centralized trust.";
+const encrypted = await alice.encrypt(confidentialMessage, secretAlice);
+console.log('🔒 Encrypted Ciphertext (length bytes):', encrypted.length);
+
+// Bob decrypts the message using derived shared key
+const decryptedBytes = await bob.decrypt(encrypted, secretBob);
+const decrypted = new TextDecoder().decode(decryptedBytes);
+console.log('🔓 Bob successfully decrypted:', decrypted);
+
+return {
+    aliceKey: alice.getPublicKey(),
+    bobKey: bob.getPublicKey(),
+    sharedSecretMatched: match,
+    ciphertextLength: encrypted.length,
+    decryptedMessage: decrypted
+};`,
+
+            sqlite: `// 🗄️ Recipe 3: Daily Database & SQLite Partitions
+// Demonstrate DailyDatabase for partition-based SQLite storage
+const client = new Sovereign.SovereignS3nc({
+    userId: 'sqlite-tester',
+    password: 'partition-password',
+    syncMode: 'offline'
+});
+await client.init();
+
+const storage = client.getStorage();
+const today = new Date().toISOString().split('T')[0];
+console.log('📅 Creating DailyDatabase SQLite partition for:', today);
+
+const dailyDb = new Sovereign.DailyDatabase(
+    storage,
+    'metrics',
+    today,
+    'public',
+    {
+        version: 1,
+        up: async (db) => {
+            db.exec(\`
+                CREATE TABLE IF NOT EXISTS metrics (
+                    id TEXT PRIMARY KEY,
+                    metric TEXT NOT NULL,
+                    value REAL NOT NULL,
+                    timestamp INTEGER NOT NULL
+                );
+                CREATE INDEX IF NOT EXISTS idx_metrics_ts ON metrics(timestamp DESC);
+            \`);
+        }
+    }
+);
+
+await dailyDb.init();
+
+// Insert records
+dailyDb.exec(
+    "INSERT INTO metrics (id, metric, value, timestamp) VALUES ('m1', 'cpu_usage', 14.5, ?)",
+    [Date.now()]
+);
+dailyDb.exec(
+    "INSERT INTO metrics (id, metric, value, timestamp) VALUES ('m2', 'memory_mb', 256.0, ?)",
+    [Date.now() + 50]
+);
+
+// Query records
+const rows = dailyDb.query("SELECT * FROM metrics ORDER BY timestamp DESC");
+console.log('📊 Queried Records from in-browser SQLite:', rows);
+
+await dailyDb.flush();
+console.log('💾 Daily database partition successfully persisted.');
+
+return { partition: today, count: rows.length, rows };`,
+
+            pagination: `// 📄 Recipe 4: Keyset Cursor Pagination
+// Test the opaque PaginationCursor utility
+const { PaginationCursor, paginateItems } = Sovereign;
+
+// 1. Generate 20 items sorted in descending order
+const items = [];
+const now = Date.now();
+for (let i = 1; i <= 20; i++) {
+    items.push({
+        id: \`post_\${i.toString().padStart(2, '0')}\`,
+        timestamp: now - (i * 1000),
+        title: \`Decentralized Post #\${i}\`
+    });
+}
+
+console.log(\`📦 Total sample dataset size: \${items.length} items\`);
+
+// 2. Fetch Page 1 (limit 5)
+const page1 = paginateItems(items, { limit: 5 });
+console.log('📄 Page 1 fetched items count:', page1.items.length);
+console.log('🔗 Page 1 nextCursor:', page1.nextCursor);
+
+// Decode the opaque cursor
+const decoded = PaginationCursor.decode(page1.nextCursor);
+console.log('🔍 Decoded opaque cursor:', decoded);
+
+// 3. Fetch Page 2 using the returned cursor
+const page2 = paginateItems(items, { cursor: page1.nextCursor, limit: 5 });
+console.log('📄 Page 2 fetched items count:', page2.items.length);
+console.log('First item of Page 2:', page2.items[0]);
+console.log('Has more pages?', page2.hasMore);
+
+return {
+    page1ItemIds: page1.items.map(x => x.id),
+    page1Cursor: page1.nextCursor,
+    decodedCursor: decoded,
+    page2ItemIds: page2.items.map(x => x.id),
+    hasMore: page2.hasMore
+};`,
+
+            inspector: `// 🔍 Recipe 5: Storage & Hash Inspector
+// Write multiple files and inspect local IndexedDB state
+const client = new Sovereign.SovereignS3nc({
+    userId: 'inspector-demo',
+    password: 'inspector-password',
+    syncMode: 'offline'
+});
+await client.init();
+
+const storage = client.getStorage();
+
+// Write several structured application files
+await storage.writeFile('public/config.json', JSON.stringify({ theme: 'dark', version: 3 }));
+await storage.writeFile('public/notes.txt', 'Offline-first zero-trust encrypted notes.');
+await storage.writeFile('public/feed/status.json', JSON.stringify({ active: true, ping: Date.now() }));
+
+const files = await storage.listFiles();
+console.log('📂 Local Storage Files List:', files);
+
+const details = [];
+for (const file of files) {
+    const content = await storage.readFile(file);
+    details.push({
+        name: file,
+        sizeBytes: content.length,
+        preview: content.length > 50 ? content.slice(0, 50) + '...' : content
+    });
+}
+
+console.log('📊 File inspection summary:');
+details.forEach(d => console.log(\`  - \${d.name} (\${d.sizeBytes} bytes)\`));
+
+return { totalFiles: files.length, details };`
+        };
+
+        const editor = document.getElementById('codeEditor');
+        const recipeSelect = document.getElementById('recipeSelect');
+        const runBtn = document.getElementById('runBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const consoleOutput = document.getElementById('consoleOutput');
+        const clearConsoleBtn = document.getElementById('clearConsoleBtn');
+        const statusBadge = document.getElementById('statusBadge');
+        const execTimeBadge = document.getElementById('execTimeBadge');
+        const resultOutput = document.getElementById('resultOutput');
+        const refreshStorageBtn = document.getElementById('refreshStorageBtn');
+        const clearStorageBtn = document.getElementById('clearStorageBtn');
+        const storageView = document.getElementById('storageView');
+        const stackblitzBtn = document.getElementById('stackblitzBtn');
+
+        // Initial recipe load
+        editor.value = RECIPES.quickstart;
+
+        recipeSelect.addEventListener('change', (e) => {
+            const recipeKey = e.target.value;
+            if (RECIPES[recipeKey]) {
+                editor.value = RECIPES[recipeKey];
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            const recipeKey = recipeSelect.value;
+            if (RECIPES[recipeKey]) {
+                editor.value = RECIPES[recipeKey];
+            }
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            await navigator.clipboard.writeText(editor.value);
+            copyBtn.innerHTML = '<i class="bi bi-check text-success"></i>';
+            setTimeout(() => {
+                copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+            }, 1500);
+        });
+
+        clearConsoleBtn.addEventListener('click', () => {
+            consoleOutput.innerHTML = '<div class="text-secondary fst-italic">Console cleared.</div>';
+        });
+
+        // Tab key support in textarea
+        editor.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                editor.value = editor.value.substring(0, start) + '    ' + editor.value.substring(end);
+                editor.selectionStart = editor.selectionEnd = start + 4;
+            } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                runCode();
+            }
+        });
+
+        runBtn.addEventListener('click', runCode);
+
+        function logToConsole(type, ...args) {
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+
+            const badge = document.createElement('span');
+            badge.className = `log-badge bg-secondary bg-opacity-25 text-${type === 'error' ? 'danger' : type === 'warn' ? 'warning' : type === 'info' ? 'info' : 'secondary'}`;
+            badge.textContent = type;
+
+            const content = document.createElement('div');
+            content.className = 'flex-grow-1';
+
+            const formatted = args.map(arg => {
+                if (typeof arg === 'object' && arg !== null) {
+                    try {
+                        return JSON.stringify(arg, null, 2);
+                    } catch (e) {
+                        return String(arg);
+                    }
+                }
+                return String(arg);
+            }).join(' ');
+
+            content.textContent = formatted;
+            entry.appendChild(badge);
+            entry.appendChild(content);
+
+            consoleOutput.appendChild(entry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        async function runCode() {
+            if (!window.Sovereign) {
+                logToConsole('error', 'Sovereign library is still loading. Please wait a moment and try again.');
+                return;
+            }
+
+            consoleOutput.innerHTML = '';
+            statusBadge.className = 'status-pill bg-warning text-dark';
+            statusBadge.innerHTML = '<span class="spinner-border spinner-border-sm me-1" style="width:0.75rem;height:0.75rem;"></span> Running...';
+            execTimeBadge.classList.add('d-none');
+
+            // Intercept console
+            const originalLog = console.log;
+            const originalInfo = console.info;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+
+            console.log = (...args) => { originalLog(...args); logToConsole('log', ...args); };
+            console.info = (...args) => { originalInfo(...args); logToConsole('info', ...args); };
+            console.warn = (...args) => { originalWarn(...args); logToConsole('warn', ...args); };
+            console.error = (...args) => { originalError(...args); logToConsole('error', ...args); };
+
+            const startTime = performance.now();
+
+            try {
+                // Execute code inside an async wrapper
+                const userCode = editor.value;
+                const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+                const fn = new AsyncFunction('Sovereign', userCode);
+
+                const result = await fn(window.Sovereign);
+                const duration = Math.round(performance.now() - startTime);
+
+                statusBadge.className = 'status-pill bg-success text-white';
+                statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Completed';
+                execTimeBadge.textContent = `${duration}ms`;
+                execTimeBadge.classList.remove('d-none');
+
+                if (result !== undefined) {
+                    resultOutput.textContent = JSON.stringify(result, null, 2);
+                } else {
+                    resultOutput.textContent = '// Code executed successfully (no return value)';
+                }
+
+                await refreshStorage();
+            } catch (err) {
+                const duration = Math.round(performance.now() - startTime);
+                console.error(err.message || err);
+                statusBadge.className = 'status-pill bg-danger text-white';
+                statusBadge.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> Failed';
+                execTimeBadge.textContent = `${duration}ms`;
+                execTimeBadge.classList.remove('d-none');
+                resultOutput.textContent = `Error: ${err.message}\n${err.stack || ''}`;
+            } finally {
+                console.log = originalLog;
+                console.info = originalInfo;
+                console.warn = originalWarn;
+                console.error = originalError;
+            }
+        }
+
+        async function refreshStorage() {
+            if (!('indexedDB' in window)) {
+                storageView.innerHTML = '<div class="text-muted">IndexedDB not supported in this browser.</div>';
+                return;
+            }
+
+            try {
+                let dbs = [];
+                if (indexedDB.databases) {
+                    dbs = await indexedDB.databases();
+                } else {
+                    dbs = [{ name: 'sovereign_s3nc' }];
+                }
+
+                const sovDbs = dbs.filter(d => d.name && (d.name.includes('sovereign') || d.name.includes('s3nc') || d.name.includes('user')));
+
+                if (sovDbs.length === 0) {
+                    storageView.innerHTML = '<div class="text-secondary small fst-italic">No IndexedDB databases created yet. Run a code recipe to create one!</div>';
+                    return;
+                }
+
+                let html = '<div class="d-flex flex-column gap-3">';
+                for (const dbInfo of sovDbs) {
+                    html += `
+                        <div class="card bg-dark border-secondary p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold text-white small"><i class="bi bi-database me-1 text-primary"></i> ${dbInfo.name}</span>
+                                <span class="badge bg-secondary">v${dbInfo.version || 1}</span>
+                            </div>
+                            <div class="small text-secondary">Object store active in browser IndexedDB.</div>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                storageView.innerHTML = html;
+            } catch (e) {
+                storageView.innerHTML = `<div class="text-muted small">Could not list databases: ${e.message}</div>`;
+            }
+        }
+
+        async function clearSandboxStorage() {
+            if (confirm('Clear all Sovereign sandbox IndexedDB storage databases?')) {
+                if (indexedDB.databases) {
+                    const dbs = await indexedDB.databases();
+                    for (const db of dbs) {
+                        if (db.name) indexedDB.deleteDatabase(db.name);
+                    }
+                } else {
+                    indexedDB.deleteDatabase('sovereign_s3nc');
+                }
+                logToConsole('info', 'IndexedDB sandbox databases cleared.');
+                await refreshStorage();
+            }
+        }
+
+        refreshStorageBtn.addEventListener('click', refreshStorage);
+        clearStorageBtn.addEventListener('click', clearSandboxStorage);
+
+        // StackBlitz dynamic project generator
+        stackblitzBtn.addEventListener('click', () => {
+            const form = document.getElementById('stackblitzForm');
+            const code = editor.value;
+
+            document.getElementById('sb_package_json').value = JSON.stringify({
+                name: "sovereigns3nc-playground-sandbox",
+                version: "1.0.0",
+                scripts: { "dev": "vite", "build": "vite build" },
+                dependencies: {
+                    "sovereigns3nc": "^3.2.0"
+                },
+                devDependencies: {
+                    "typescript": "^5.3.3",
+                    "vite": "^5.1.4"
+                }
+            }, null, 2);
+
+            document.getElementById('sb_index_html').value = `<!DOCTYPE html>
+<html>
+<head>
+    <title>SovereignS3nc StackBlitz</title>
+</head>
+<body style="background:#0d1117;color:#c9d1d9;font-family:sans-serif;padding:2rem;">
+    <h2>SovereignS3nc StackBlitz Sandbox</h2>
+    <p>Check browser console or inspect output below:</p>
+    <pre id="output" style="background:#161b22;padding:1rem;border-radius:6px;"></pre>
+    <script type="module" src="/src/index.ts"><\\/script>
+</body>
+</html>`;
+
+            document.getElementById('sb_index_ts').value = `import * as Sovereign from 'sovereigns3nc';
+
+async function main() {
+    const outputEl = document.getElementById('output');
+    const log = (msg: string) => {
+        console.log(msg);
+        if (outputEl) outputEl.textContent += msg + '\\n';
+    };
+
+    log('🚀 Running SovereignS3nc in StackBlitz...');
+    try {
+        ${code}
+    } catch (err: any) {
+        log('❌ Error: ' + err.message);
+    }
+}
+
+main();`;
+
+            document.getElementById('sb_vite_config').value = `import { defineConfig } from 'vite';
+export default defineConfig({});`;
+
+            document.getElementById('sb_tsconfig').value = JSON.stringify({
+                compilerOptions: {
+                    target: "ES2020",
+                    module: "ESNext",
+                    moduleResolution: "bundler"
+                }
+            }, null, 2);
+
+            form.submit();
+        });
+
+        // Initialize storage on load
+        setTimeout(refreshStorage, 500);
+    </script>
+</body>
+</html>

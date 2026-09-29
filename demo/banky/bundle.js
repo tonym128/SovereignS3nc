@@ -98284,10 +98284,19 @@ ${toHex(hashedRequest)}`;
           this._isSyncing = false;
           this.pendingConflicts = /* @__PURE__ */ new Map();
           this.conflictDetails = /* @__PURE__ */ new Map();
-          this.config = config;
+          const normalizedPaths = {
+            appId: config.paths?.appId || config.appId || "sovereign-default-app",
+            userId: config.paths?.userId || config.userId || "guest-" + Math.random().toString(36).substring(7),
+            storeId: config.paths?.storeId || config.storeId || "main"
+          };
+          const normalizedConfig = {
+            ...config,
+            paths: normalizedPaths
+          };
+          this.config = normalizedConfig;
           this.remoteFactory = remoteFactory;
-          Logger.setLevel(config.debug ? 0 /* DEBUG */ : 2 /* WARN */);
-          Logger.setPrefix(`[Sovereign:${config.paths.userId}]`);
+          Logger.setLevel(this.config.debug ? 0 /* DEBUG */ : 2 /* WARN */);
+          Logger.setPrefix(`[Sovereign:${this.config.paths.userId}]`);
           if (keys) {
             this.config.encryptionKey = keys.privateKey;
             this.config.publicEncryptionKey = keys.publicKey;
@@ -98459,6 +98468,12 @@ ${toHex(hashedRequest)}`;
         }
         getRootRemote() {
           return this.rootRemote;
+        }
+        getUserId() {
+          return this.config.paths?.userId || this.config.userId || "";
+        }
+        getPublicKey() {
+          return this.config.publicEncryptionKey;
         }
         /**
          * Creates an encapsulated ModuleContext for a given module, providing
@@ -98758,7 +98773,8 @@ ${toHex(hashedRequest)}`;
           return result;
         }
         async encrypt(d2, k2) {
-          return this.keyManager.encrypt(d2, k2);
+          const data = typeof d2 === "string" ? new TextEncoder().encode(d2) : d2;
+          return this.keyManager.encrypt(data, k2);
         }
         async decrypt(d2, k2) {
           return this.keyManager.decrypt(d2, k2);

@@ -1,5 +1,5 @@
 import * as nacl from 'tweetnacl';
-import { SovereignConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage, SyncDiagnostic, SyncRunResult } from './types';
+import { SovereignConfig, SovereignInputConfig, SovereignManifest, ModuleDefinition, ModuleMigration, SovereignGroup, GroupMember, GroupPermissions, DeviceInfo, DevicePairingPackage, SyncDiagnostic, SyncRunResult } from './types';
 import { IStorage, StoragePersistenceInfo } from './interfaces/IStorage';
 import { IRemoteAdapter } from './interfaces/IRemoteAdapter';
 import { S3RemoteAdapter } from './adapters/S3RemoteAdapter';
@@ -54,7 +54,7 @@ export class SovereignS3nc extends EventEmitter {
     private dailyDatabase!: DailyDatabase;
 
     public static async create(
-        config: SovereignConfig, 
+        config: SovereignConfig | SovereignInputConfig, 
         remote?: IRemoteAdapter, 
         remoteFactory?: (userId: string) => IRemoteAdapter,
         keys?: { privateKey: string, publicKey: string },
@@ -66,18 +66,27 @@ export class SovereignS3nc extends EventEmitter {
     }
 
     constructor(
-        config: SovereignConfig, 
+        config: SovereignConfig | SovereignInputConfig, 
         remote?: IRemoteAdapter, 
         remoteFactory?: (userId: string) => IRemoteAdapter,
         keys?: { privateKey: string, publicKey: string },
         storage?: IStorage
     ) {
         super();
-        this.config = config;
+        const normalizedPaths = {
+            appId: config.paths?.appId || config.appId || 'sovereign-default-app',
+            userId: config.paths?.userId || config.userId || ('guest-' + Math.random().toString(36).substring(7)),
+            storeId: config.paths?.storeId || config.storeId || 'main'
+        };
+        const normalizedConfig: SovereignConfig = {
+            ...config,
+            paths: normalizedPaths
+        };
+        this.config = normalizedConfig;
         this.remoteFactory = remoteFactory;
 
-        Logger.setLevel(config.debug ? LogLevel.DEBUG : LogLevel.WARN);
-        Logger.setPrefix(`[Sovereign:${config.paths.userId}]`);
+        Logger.setLevel(this.config.debug ? LogLevel.DEBUG : LogLevel.WARN);
+        Logger.setPrefix(`[Sovereign:${this.config.paths.userId}]`);
         
         if (keys) {
             this.config.encryptionKey = keys.privateKey;
@@ -262,6 +271,14 @@ export class SovereignS3nc extends EventEmitter {
 
     public getRootRemote(): IRemoteAdapter | undefined {
         return this.rootRemote;
+    }
+
+    public getUserId(): string {
+        return this.config.paths?.userId || this.config.userId || '';
+    }
+
+    public getPublicKey(): string | undefined {
+        return this.config.publicEncryptionKey;
     }
 
     /**
@@ -615,7 +632,10 @@ export class SovereignS3nc extends EventEmitter {
         }
         return result;
     }
-    public async encrypt(d: Uint8Array, k: string) { return this.keyManager.encrypt(d, k); }
+    public async encrypt(d: Uint8Array | string, k: string) {
+        const data = typeof d === 'string' ? new TextEncoder().encode(d) : d;
+        return this.keyManager.encrypt(data, k);
+    }
     public async decrypt(d: Uint8Array, k: string) { return this.keyManager.decrypt(d, k); }
     public deriveSharedSecret(pk: string, context?: string) { return this.keyManager.deriveSharedSecret(pk, context); }
     public deriveEphemeralSharedSecret(pk: string, context?: string) { return this.keyManager.deriveEphemeralSharedSecret(pk, context); }

@@ -5,6 +5,8 @@ export * from './interfaces/IRemoteAdapter';
 export * from './interfaces/IModuleContext';
 export * from './core/ModuleContext';
 export * from './adapters/S3RemoteAdapter';
+export * from './adapters/IndexedDBStorage';
+export * from './adapters/WebRTCRemoteAdapter';
 export * from './adapters/SQLiteNodeStorage';
 export * from './modules/Profile';
 export * from './modules/Messaging';

@@ -28,6 +28,11 @@ export interface S3Config {
 export interface SovereignConfig {
   s3?: S3Config;
   offline?: boolean; // Flag for explicit offline-first initialization
+  syncMode?: 'offline' | 's3' | 'webrtc' | 'peerjs';
+  autoSync?: boolean;
+  appId?: string;
+  userId?: string;
+  storeId?: string;
   ociParUrl?: string; // OCI Pre-Authenticated Request URL (alternative to S3 Config)
   paths: {
     appId: string;   // Unique GUID for the application
@@ -67,6 +72,15 @@ export interface SovereignConfig {
   /** Configurable local data retention policy to prevent unbounded storage growth. */
   retentionPolicy?: RetentionPolicy;
 }
+
+/** Configuration parameter type allowing optional paths or flat userId/appId/storeId shorthand. */
+export type SovereignInputConfig = Omit<SovereignConfig, 'paths'> & {
+  paths?: {
+    appId?: string;
+    userId?: string;
+    storeId?: string;
+  };
+};
 
 /** Stable result returned from every sync attempt, including skipped attempts. */
 export type SyncPhaseName =
