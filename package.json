@@ -1,24 +1,51 @@
 {
   "name": "sovereigns3nc",
   "version": "3.2.0",
-  "description": "",
+  "description": "Offline-first, zero-trust encrypted data storage library with S3 synchronization",
   "main": "dist/index.js",
   "module": "dist/sovereigns3nc.esm.js",
+  "browser": "dist/sovereigns3nc.esm.js",
   "unpkg": "dist/sovereigns3nc.global.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "browser": "./dist/sovereigns3nc.esm.js",
       "import": "./dist/sovereigns3nc.esm.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./react": {
-      "types": "./packages/react/dist/index.d.ts",
-      "import": "./packages/react/dist/index.js",
-      "require": "./packages/react/dist/index.js"
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
     },
+    "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonym128/SovereignS3nc.git"
+  },
+  "homepage": "https://github.com/tonym128/SovereignS3nc#readme",
+  "bugs": {
+    "url": "https://github.com/tonym128/SovereignS3nc/issues"
+  },
+  "keywords": [
+    "offline-first",
+    "s3",
+    "sync",
+    "sqlite",
+    "e2ee",
+    "encryption",
+    "zero-trust",
+    "decentralized",
+    "indexeddb",
+    "storage"
+  ],
+  "author": "Tony Mobily",
+  "license": "ISC",
   "bin": {
     "sov": "dist/cli.js",
     "sov-admin": "dist/admin.js"
@@ -31,7 +58,7 @@
     "test:browser": "NODE_OPTIONS=--experimental-vm-modules npx playwright test -c tests/playwright.config.ts",
     "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
-    "build:react": "tsc -p packages/react/tsconfig.json",
+    "build:react": "tsc -p packages/react/tsconfig.json && node -e \"require('fs-extra').copySync('packages/react/dist', 'dist/react')\"",
     "build:social": "node --no-warnings demo/social/build.js",
     "build:social-local": "node --no-warnings demo/social-local/build.js",
     "build:banky": "node --no-warnings demo/banky/build.js",
@@ -46,16 +73,11 @@
     "admin-cli": "ts-node src/admin.ts",
     "perf:audit": "ts-node scripts/perf-audit.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "commonjs",
   "files": [
     "dist",
-    "docs",
     "README.md",
-    "GEMINI.md",
-    "AGENT.md"
+    "LICENSE"
   ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1013.0",
