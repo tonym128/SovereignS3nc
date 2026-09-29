@@ -23,6 +23,7 @@ import { GlobalRegistry } from './discovery/GlobalRegistry';
 import { BlacklistManager } from './discovery/BlacklistManager';
 import { Repository, RepositoryOptions } from './core/Repository';
 import { DailyDatabase, DailyDatabaseConfig } from './core/DailyDatabase';
+import { ModuleContext } from './core/ModuleContext';
 import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
@@ -241,6 +242,41 @@ export class SovereignS3nc extends EventEmitter {
 
     public getConfig(): SovereignConfig {
         return this.config;
+    }
+
+    public getRemote(): IRemoteAdapter | undefined {
+        return this.remote;
+    }
+
+    public getPublicRemote(): IRemoteAdapter | undefined {
+        return this.publicRemote;
+    }
+
+    public getGlobalRemote(): IRemoteAdapter | undefined {
+        return this.globalRemote;
+    }
+
+    public getAdminRemote(): IRemoteAdapter | undefined {
+        return this.adminRemote;
+    }
+
+    public getRootRemote(): IRemoteAdapter | undefined {
+        return this.rootRemote;
+    }
+
+    /**
+     * Creates an encapsulated ModuleContext for a given module, providing
+     * scoped storage, scoped remote adapters, and typed query building.
+     */
+    public createModuleContext(moduleName: string): ModuleContext {
+        return new ModuleContext(this, moduleName);
+    }
+
+    /**
+     * Retrieves an active module instance by constructor class or registered module name.
+     */
+    public getModule<T = any>(predicateOrName: string | (new (...args: any[]) => T)): T | undefined {
+        return this.getModuleInstance<T>(predicateOrName);
     }
 
     public getModulePath(moduleName: string, subPath: string, type: 'private' | 'public' | 'followed'): string {

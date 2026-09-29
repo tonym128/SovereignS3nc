@@ -1,5 +1,5 @@
-
 import { SovereignS3nc } from '../SovereignS3nc';
+import { IModuleContext } from '../interfaces/IModuleContext';
 import { Logger } from '../utils/Logger';
 import { Buffer } from 'buffer';
 import { PATHS } from '../utils/Constants';
@@ -18,13 +18,27 @@ export interface Report {
 }
 
 export class ModerationModule {
-    constructor(private sovereign: SovereignS3nc) {}
+    private readonly MODULE_NAME = 'moderation';
+    private context: IModuleContext;
+
+    constructor(contextOrSov: IModuleContext | SovereignS3nc) {
+        this.context = 'sovereign' in contextOrSov
+            ? (contextOrSov as IModuleContext)
+            : (contextOrSov as SovereignS3nc).createModuleContext(this.MODULE_NAME);
+    }
+
+    /**
+     * Backward-compatible reference to the host SovereignS3nc instance.
+     */
+    public get sovereign(): SovereignS3nc {
+        return this.context.sovereign;
+    }
 
     /**
      * Determine if the current user has write access to the admin prefix by probing S3.
      */
     async isAdmin(): Promise<boolean> {
-        const adminRemote = (this.sovereign as any).adminRemote;
+        const adminRemote = this.context.remotes.getAdminRemote();
         if (!adminRemote) return false;
         
         try {
@@ -43,8 +57,8 @@ export class ModerationModule {
      * (Admin Only) Publishes the admin's public key so users can encrypt reports to them.
      */
     async publishAdminKey() {
-        const adminRemote = (this.sovereign as any).adminRemote;
-        const pk = this.sovereign.getConfig().publicEncryptionKey;
+        const adminRemote = this.context.remotes.getAdminRemote();
+        const pk = this.context.publicKey;
         if (adminRemote && pk) {
             try {
                 await adminRemote.uploadFile(PATHS.ADMIN_PUBLIC_KEY, new TextEncoder().encode(JSON.stringify({ publicKey: pk })));
@@ -61,11 +75,11 @@ export class ModerationModule {
      * Reports are encrypted with the Admin's public key and saved to 'admin/reports/'.
      */
     async reportContent(targetUserId: string, contentId: string, contentType: 'post' | 'comment' | 'message', reason: string, evidence?: any) {
-        const adminRemote = (this.sovereign as any).adminRemote;
+        const adminRemote = this.context.remotes.getAdminRemote();
         if (!adminRemote) throw new SovereignError('CONFIG_ERROR', 'Admin remote not configured.');
 
         // 1. Get Admin Public Key (Try cache first, then S3)
-        let adminPublicKey = this.sovereign.getConfig().adminPublicKey;
+        let adminPublicKey = this.context.adminPublicKey;
         
         if (!adminPublicKey) {
             try {
@@ -85,7 +99,7 @@ export class ModerationModule {
         // 2. Prepare Report
         const report: Report = {
             id: `report-${env.generateId(12)}`,
-            reporterId: this.sovereign.getConfig().paths.userId,
+            reporterId: this.context.userId,
             targetUserId,
             contentId,
             contentType,
@@ -97,11 +111,11 @@ export class ModerationModule {
         const reportData = new TextEncoder().encode(JSON.stringify(report));
 
         // 3. Encrypt Report for Admin
-        const sharedSecret = this.sovereign.deriveSharedSecret(adminPublicKey!);
-        const encryptedData = await this.sovereign.encrypt(reportData, sharedSecret);
+        const sharedSecret = this.context.deriveSharedSecret(adminPublicKey!);
+        const encryptedData = await this.context.encrypt(reportData, sharedSecret);
 
         // 4. Upload to Admin Remote
-        const myPublicKey = this.sovereign.getConfig().publicEncryptionKey;
+        const myPublicKey = this.context.publicKey;
         // We include PK in filename as fallback for metadata-stripped backends (like RustFS)
         const reportPath = `reports/${myPublicKey}.${report.id}.enc`;
         
@@ -113,7 +127,7 @@ export class ModerationModule {
      * (Admin Only) Fetch and decrypt all pending reports.
      */
     async getReports(): Promise<Report[]> {
-        const adminRemote = (this.sovereign as any).adminRemote;
+        const adminRemote = this.context.remotes.getAdminRemote();
         if (!adminRemote || !adminRemote.listFiles) return [];
 
         Logger.info('Moderation', 'Admin fetching and decrypting reports...');
@@ -140,8 +154,8 @@ export class ModerationModule {
                 const result = await adminRemote.downloadFile(file);
                 
                 if (result && result.data && reporterPk) {
-                    const sharedSecret = this.sovereign.deriveSharedSecret(reporterPk);
-                    const decrypted = await this.sovereign.decrypt(result.data, sharedSecret);
+                    const sharedSecret = this.context.deriveSharedSecret(reporterPk);
+                    const decrypted = await this.context.decrypt(result.data, sharedSecret);
                     const report: Report = JSON.parse(new TextDecoder().decode(decrypted));
                     reports.push(report);
                 }
@@ -157,7 +171,7 @@ export class ModerationModule {
      * Path should be relative to the appId root (e.g., 'user-123/public/modules/feed/2026-03-22.db')
      */
     async deleteUserFile(path: string) {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote || !rootRemote.deleteFile) {
             throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing deleteFile capability.');
         }
@@ -169,7 +183,7 @@ export class ModerationModule {
      * (Admin Only) Deletes a report after processing.
      */
     async deleteReport(reportId: string) {
-        const adminRemote = (this.sovereign as any).adminRemote;
+        const adminRemote = this.context.remotes.getAdminRemote();
         if (!adminRemote || !adminRemote.listFiles || !adminRemote.deleteFile) return;
 
         // Find the encrypted report file (it contains the PK in the name)
@@ -186,7 +200,7 @@ export class ModerationModule {
      * (Admin Only) Add a user to the global blacklist.
      */
     async blacklistUser(userId: string) {
-        const globalRemote = (this.sovereign as any).globalRemote;
+        const globalRemote = this.context.remotes.getGlobalRemote();
         if (!globalRemote) return;
 
         const path = PATHS.BLACKLIST;
@@ -217,7 +231,7 @@ export class ModerationModule {
      * (Admin Only) Removes a user from the global registry.
      */
     async removeFromGlobalRegistry(userId: string) {
-        const globalRemote = (this.sovereign as any).globalRemote;
+        const globalRemote = this.context.remotes.getGlobalRemote();
         if (!globalRemote) return;
 
         const path = PATHS.USERS_REGISTRY;
@@ -257,7 +271,7 @@ export class ModerationModule {
         await this.removeFromGlobalRegistry(userId);
         
         // 2. Infrastructure Wipe (Delete everything under userId/ prefix)
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (rootRemote && rootRemote.listFiles && rootRemote.deleteFile) {
             try {
                 const userFiles = await rootRemote.listFiles(`${userId}/`);
@@ -278,11 +292,11 @@ export class ModerationModule {
      * This is an E2EE request sent to the user's public prefix.
      */
     async requestPostDeletion(targetUserId: string, postId: string, date: string) {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote) throw new SovereignError('CONFIG_ERROR', 'Root remote not configured.');
 
         // 1. Get Target User Public Key
-        const registry = await this.sovereign.getPublicRegistry();
+        const registry = await this.context.getPublicRegistry();
         const user = registry.find(u => u.userId === targetUserId);
         if (!user || !user.publicKey) throw new AuthError(`User ${targetUserId} not found or has no public key.`);
 
@@ -298,12 +312,12 @@ export class ModerationModule {
         const requestData = new TextEncoder().encode(JSON.stringify(request));
 
         // 3. Encrypt Request for User
-        const sharedSecret = this.sovereign.deriveSharedSecret(user.publicKey);
-        const encryptedData = await this.sovereign.encrypt(requestData, sharedSecret);
+        const sharedSecret = this.context.deriveSharedSecret(user.publicKey);
+        const encryptedData = await this.context.encrypt(requestData, sharedSecret);
 
         // 4. Upload to User's Public Prefix
         // Path: [targetUserId]/[storeId]/public/moderation/requests/[postId].enc
-        const storeId = this.sovereign.getConfig().paths.storeId;
+        const storeId = this.context.storeId;
         const path = `${targetUserId}/${storeId}/public/moderation/requests/${postId}.enc`;
         await rootRemote.uploadFile(path, encryptedData);
         Logger.info('Moderation', `Deletion request for post ${postId} sent to user ${targetUserId}.`);
@@ -314,8 +328,8 @@ export class ModerationModule {
      * Combines literal directory names, global registry entries, and hashed private folders.
      */
     async listUsers(): Promise<string[]> {
-        const rootRemote = (this.sovereign as any).rootRemote;
-        const globalRemote = (this.sovereign as any).globalRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
+        const globalRemote = this.context.remotes.getGlobalRemote();
         if (!rootRemote || !rootRemote.listFiles) {
             throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability.');
         }
@@ -355,7 +369,7 @@ export class ModerationModule {
      * (Admin Only) Lists all files in the appId namespace, optionally filtered by prefix.
      */
     async listFiles(prefix: string = ''): Promise<string[]> {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote || !rootRemote.listFiles) {
             throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability.');
         }
@@ -366,7 +380,7 @@ export class ModerationModule {
      * (Admin Only) Exports all data under the appId namespace as a JSON string containing base64 encoded files.
      */
     async exportAllData(): Promise<string> {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote || !rootRemote.listFiles || !rootRemote.downloadFile) {
             throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing listFiles capability. Are you an admin?');
         }
@@ -393,7 +407,7 @@ export class ModerationModule {
      * (Admin Only) Imports a JSON dump of base64 files and overwrites/creates them on the remote.
      */
     async importAllData(jsonData: string) {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote) throw new SovereignError('CONFIG_ERROR', 'Root remote not configured. Are you an admin?');
         
         Logger.info('Moderation', 'Importing data...');
@@ -413,7 +427,7 @@ export class ModerationModule {
      * (Admin Only) Deletes all files in the appId namespace permanently.
      */
     async burnItToTheGround() {
-        const rootRemote = (this.sovereign as any).rootRemote;
+        const rootRemote = this.context.remotes.getRootRemote();
         if (!rootRemote || !rootRemote.listFiles || !rootRemote.deleteFile) {
             throw new SovereignError('CONFIG_ERROR', 'Root remote not configured or missing deleteFile capability. Are you an admin?');
         }

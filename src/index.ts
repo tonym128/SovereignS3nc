@@ -2,6 +2,8 @@ export * from './SovereignS3nc';
 export * from './types';
 export * from './interfaces/IStorage';
 export * from './interfaces/IRemoteAdapter';
+export * from './interfaces/IModuleContext';
+export * from './core/ModuleContext';
 export * from './adapters/S3RemoteAdapter';
 export * from './adapters/SQLiteNodeStorage';
 export * from './modules/Profile';
