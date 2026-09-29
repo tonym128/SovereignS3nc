@@ -254,7 +254,7 @@
 | 2 | Extract `DailyDatabase` utility to eliminate SQLite boilerplate duplication | Senior Engineer | 2-3 days | ✅ Completed |
 | 3 | Implement debounced/batched SQLite export (stop full-DB rewrite per mutation) | Principal Dev | 3-5 days | ✅ Completed |
 | 4 | Publish to npm with proper `exports` map | Marketing / Eng | 1 day | ✅ Completed |
-| 5 | Add security regression tests for protocol downgrade attacks | Testing Dev | 1-2 days | Pending |
+| 5 | Add security regression tests for protocol downgrade attacks | Testing Dev | 1-2 days | ✅ Completed |
 
 ### P1 — High (Do Next)
 
