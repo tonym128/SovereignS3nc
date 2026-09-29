@@ -41,6 +41,7 @@ export interface SyncOrchestratorContext {
     onModuleUpdate: (moduleName: string, path: string) => void;
     registeredModules: any[];
     getModuleInstances?: () => any[];
+    flushDatabases?: () => Promise<void>;
     /** Emit a sync progress event. Stage describes the current phase; total/done are optional file counts. */
     emitSyncProgress: (stage: string, done?: number, total?: number, runId?: string, state?: 'running' | 'succeeded' | 'failed', phase?: SyncPhaseName) => void;
     emitSyncDiagnostic: (diagnostic: SyncDiagnostic) => void;
@@ -115,6 +116,14 @@ export class SyncOrchestrator {
         this.ctx.emitSyncProgress('start', undefined, undefined, runId, 'running');
         this.ctx.setSyncing(true);
         try {
+            if (this.ctx.flushDatabases) {
+                try {
+                    await this.ctx.flushDatabases();
+                } catch (err: any) {
+                    Logger.warn('Sync', `Failed to flush pending database writes before sync: ${err.message}`);
+                }
+            }
+
             if (forceSync) {
                 Logger.info('Sync', 'FORCE SYNC initiated. Bypassing ETag cache.');
             }

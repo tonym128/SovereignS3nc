@@ -13,6 +13,7 @@ export interface ModerationEngineContext {
     decrypt: (data: Uint8Array, key: string) => Promise<Uint8Array>;
     syncGenericFile: (relativePath: string, type: 'private' | 'public', remoteManifest: any) => Promise<void>;
     getModulePath: (moduleName: string, subPath: string, type: 'private' | 'public' | 'followed') => string;
+    getDailyDatabase?: (moduleName?: string) => any;
 }
 
 export class ModerationEngine {
@@ -96,28 +97,48 @@ export class ModerationEngine {
         
         for (const type of types) {
             const dbPath = this.ctx.getModulePath('feed', `${date}${PATHS.DB_EXT}`, type);
-            const data = await this.ctx.storage.getFile(dbPath);
-            if (!data) continue;
-
-            try {
-                const initSqlJs = env.getSqlJs();
-                if (!initSqlJs) throw new ModuleError('moderation', 'sql.js not found');
-                const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-                const db = new sqliteInstance.Database(data);
-                
-                const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
-                if (tableCheck.length > 0) {
-                    db.run('DELETE FROM posts WHERE id = ?', [postId]);
-                    if (db.getRowsModified() > 0) {
-                        const binary = db.export();
-                        await this.ctx.storage.saveFile(dbPath, binary);
-                        anyModified = true;
-                        Logger.info('Moderation', `Deleted post ${postId} from ${dbPath}`);
+            if (this.ctx.getDailyDatabase) {
+                const dailyDb = this.ctx.getDailyDatabase('feed');
+                if (await dailyDb.exists(dbPath)) {
+                    try {
+                        await dailyDb.withDatabase(dbPath, (db: any) => {
+                            const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+                            if (tableCheck.length > 0) {
+                                db.run('DELETE FROM posts WHERE id = ?', [postId]);
+                                if (db.getRowsModified() > 0) {
+                                    anyModified = true;
+                                    Logger.info('Moderation', `Deleted post ${postId} from ${dbPath}`);
+                                }
+                            }
+                        }, { save: true, emitUpdate: true, immediate: true, applySchema: true });
+                    } catch (e: any) {
+                        Logger.warn('Moderation', `Failed to surgically delete post from ${dbPath}: ${e.message}`);
                     }
                 }
-                db.close();
-            } catch (e: any) {
-                Logger.warn('Moderation', `Failed to surgically delete post from ${dbPath}: ${e.message}`);
+            } else {
+                const data = await this.ctx.storage.getFile(dbPath);
+                if (!data) continue;
+
+                try {
+                    const initSqlJs = env.getSqlJs();
+                    if (!initSqlJs) throw new ModuleError('moderation', 'sql.js not found');
+                    const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+                    const db = new sqliteInstance.Database(data);
+                    
+                    const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+                    if (tableCheck.length > 0) {
+                        db.run('DELETE FROM posts WHERE id = ?', [postId]);
+                        if (db.getRowsModified() > 0) {
+                            const binary = db.export();
+                            await this.ctx.storage.saveFile(dbPath, binary);
+                            anyModified = true;
+                            Logger.info('Moderation', `Deleted post ${postId} from ${dbPath}`);
+                        }
+                    }
+                    db.close();
+                } catch (e: any) {
+                    Logger.warn('Moderation', `Failed to surgically delete post from ${dbPath}: ${e.message}`);
+                }
             }
         }
         return anyModified;

@@ -73,18 +73,22 @@ export class FeedModule {
     private dailyDb: DailyDatabase;
 
     constructor(private db: SovereignS3nc) {
-        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME);
+        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
         this.db.registerModule(FEED_MODULE_DEFINITION);
         this.db.registerModuleInstance(this);
     }
 
     private async getDb(date: string, type: 'private' | 'public' | 'followed' | 'group', groupId?: string, sharedKey?: string): Promise<any> {
-        if (type === 'group' && groupId && sharedKey) {
-            return this.db.getGroupStore(groupId, this.MODULE_NAME, date, sharedKey);
-        }
-
         let dbPath: string;
-        if (type === 'followed') {
+        if (type === 'group' && groupId) {
+            dbPath = `public/groups/${groupId}/${date}.db`;
+            const session = await this.dailyDb.openDatabase(dbPath, {
+                applySchema: true,
+                encryptKey: sharedKey,
+                decryptKey: sharedKey
+            });
+            return session.db;
+        } else if (type === 'followed') {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed');
         } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type as any);
@@ -101,8 +105,6 @@ export class FeedModule {
         
         const date = new Date().toISOString().split('T')[0];
         const type = isPublic ? 'public' : 'private';
-        const db = await this.getDb(date, type);
-        
         const id = env.generateId(12);
         const timestamp = Date.now();
         const userId = this.db.getConfig().paths.userId;
@@ -113,61 +115,35 @@ export class FeedModule {
         }
 
         const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)';
-        db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
-
-        const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        await this.db.getStorage().saveFile(dbPath, binary);
-        db.close();
-
-        this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        await this.dailyDb.withDailyDatabase(date, type, (db) => {
+            db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
+        }, { save: true, emitUpdate: true });
     }
 
     async editPost(postId: string, date: string, newContent: string, isPublic: boolean = true) {
         const type = isPublic ? 'public' : 'private';
-        const db = await this.getDb(date, type);
-        
-        db.run('UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?', [newContent, Date.now(), postId]);
-
-        const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        await this.db.getStorage().saveFile(dbPath, binary);
-        db.close();
-
-        this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        await this.dailyDb.withDailyDatabase(date, type, (db) => {
+            db.run('UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?', [newContent, Date.now(), postId]);
+        }, { save: true, emitUpdate: true });
     }
 
     async deletePost(postId: string, date: string, isPublic: boolean = true) {
         const type = isPublic ? 'public' : 'private';
-        const db = await this.getDb(date, type);
-        
-        db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-
-        const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        await this.db.getStorage().saveFile(dbPath, binary);
-        db.close();
-
-        this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        await this.dailyDb.withDailyDatabase(date, type, (db) => {
+            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+        }, { save: true, emitUpdate: true });
         await this.compactDatabase(date, isPublic, false).catch(() => {});
     }
 
     async like(postId: string, isPublic: boolean = true) {
         const date = new Date().toISOString().split('T')[0];
         const type = isPublic ? 'public' : 'private';
-        const db = await this.getDb(date, type);
-        
         const userId = this.db.getConfig().paths.userId;
         const timestamp = Date.now();
 
-        db.run('INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)', [postId, userId, timestamp]);
-
-        const binary = db.export();
-        const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        await this.db.getStorage().saveFile(dbPath, binary);
-        db.close();
-
-        this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+        await this.dailyDb.withDailyDatabase(date, type, (db) => {
+            db.run('INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)', [postId, userId, timestamp]);
+        }, { save: true, emitUpdate: true });
     }
 
     async comment(parentId: string, parentUserId: string, content: string, image?: Uint8Array) {
@@ -176,11 +152,11 @@ export class FeedModule {
 
     async getPosts(date: string, type: 'private' | 'public' | 'followed'): Promise<Post[]> {
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
+        if (!(await this.dailyDb.exists(dbPath))) {
+            return [];
+        }
         let allPosts: Post[] = [];
-
-        const data = await this.db.getStorage().getFile(dbPath);
-        if (data) {
-            await this.dailyDb.withDatabase(dbPath, (db) => {
+        await this.dailyDb.withDatabase(dbPath, (db) => {
                 const res = db.exec('SELECT * FROM posts ORDER BY timestamp DESC');
                 if (res && res.length > 0) {
                     const columns = res[0].columns;
@@ -202,7 +178,6 @@ export class FeedModule {
                     allPosts.push(...posts);
                 }
             }, { applySchema: true });
-        }
 
         return allPosts;
     }
@@ -258,8 +233,7 @@ export class FeedModule {
     async cleanupExpired(date: string, isPublic: boolean = true): Promise<number> {
         const type = isPublic ? 'public' : 'private';
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        const data = await this.db.getStorage().getFile(dbPath);
-        if (!data) return 0;
+        if (!(await this.dailyDb.exists(dbPath))) return 0;
 
         const now = Date.now();
         return await this.dailyDb.withDatabase(dbPath, (db) => {
@@ -273,7 +247,7 @@ export class FeedModule {
                 db.run('VACUUM');
             }
             return deletedCount;
-        }, { save: true, emitUpdate: true, applySchema: true });
+        }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
     }
 
     /**
@@ -290,12 +264,11 @@ export class FeedModule {
     }> {
         const type = isPublic ? 'public' : 'private';
         const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
-        const data = await this.db.getStorage().getFile(dbPath);
-        if (!data) {
+        if (!(await this.dailyDb.exists(dbPath))) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
         }
-
-        const originalSize = data.byteLength;
+        const data = await this.db.getStorage().getFile(dbPath);
+        const originalSize = data ? data.byteLength : 0;
         const now = Date.now();
         let compacted = false;
         let newSize = originalSize;
@@ -317,7 +290,7 @@ export class FeedModule {
                 newSize = compactedBinary.byteLength;
                 compacted = true;
             }
-        }, { save: true, emitUpdate: true, applySchema: true });
+        }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
 
         return {
             compacted,
@@ -353,8 +326,7 @@ export class FeedModule {
                 ? this.db.getModulePath(this.MODULE_NAME, `${date}.db`, 'followed')
                 : this.db.getModulePath(this.MODULE_NAME, `${date}.db`, type);
 
-            const data = await this.db.getStorage().getFile(dbPath);
-            if (!data) return;
+            if (!(await this.dailyDb.exists(dbPath))) return;
 
             await this.dailyDb.withDatabase(dbPath, (db) => {
                 const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
@@ -395,8 +367,6 @@ export class FeedModule {
         }
 
         const date = new Date().toISOString().split('T')[0];
-        const db = await this.getDb(date, 'group', groupId, sharedKey);
-        
         const id = env.generateId(12);
         const timestamp = Date.now();
 
@@ -405,65 +375,66 @@ export class FeedModule {
             imagePath = await this.db.saveBlob(image, true);
         }
 
-        const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)';
-        db.run(sql, [id, content, timestamp, userId, imagePath, type]);
-
-        const binary = db.export();
         const dbPath = `public/groups/${groupId}/${date}.db`;
-        
-        const encrypted = await this.db.encrypt(binary, sharedKey);
-        await this.db.getStorage().saveFile(dbPath, encrypted);
-        
-        db.close();
+        await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = 'INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)';
+            db.run(sql, [id, content, timestamp, userId, imagePath, type]);
+        }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+        });
         this.db.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
     async editGroupPost(groupId: string, sharedKey: string, postId: string, date: string, newContent: string) {
-        const db = await this.getDb(date, 'group', groupId, sharedKey);
+        const dbPath = `public/groups/${groupId}/${date}.db`;
         const userId = this.db.getConfig().paths.userId;
         
-        // Use INSERT OR REPLACE to support collaborative editing of posts created by others
-        // We need all columns for the REPLACE to work if it hits the PK
-        const sql = `
-            INSERT OR REPLACE INTO posts 
-            (id, content, timestamp, userId, isEdited, isDeleted) 
-            VALUES (?, ?, ?, ?, 1, 0)
-        `;
-        db.run(sql, [postId, newContent, Date.now(), userId]);
-        
-        const binary = db.export();
-        const dbPath = `public/groups/${groupId}/${date}.db`;
-        const encrypted = await this.db.encrypt(binary, sharedKey);
-        await this.db.getStorage().saveFile(dbPath, encrypted);
-        db.close();
+        await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = `
+                INSERT OR REPLACE INTO posts 
+                (id, content, timestamp, userId, isEdited, isDeleted) 
+                VALUES (?, ?, ?, ?, 1, 0)
+            `;
+            db.run(sql, [postId, newContent, Date.now(), userId]);
+        }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+        });
         this.db.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
     async deleteGroupPost(groupId: string, sharedKey: string, postId: string, date: string, authorId: string) {
         const myId = this.db.getConfig().paths.userId;
-        const db = await this.getDb(date, 'group', groupId, sharedKey);
-        
-        if (authorId === myId) {
-            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-        } else {
-            // Check moderation permission (owner, admin, or member with canModerate permission)
-            const groups = await this.db.getGroups();
-            const group = groups.find(g => g.id === groupId);
-            const member = group?.members.find(m => m.userId === myId);
-            const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
-            if (!canModerate) {
-                db.close();
-                throw new ModuleError('feed', `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
-            }
-            db.run('CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)');
-            db.run('INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)', [postId, 'delete', Date.now()]);
-        }
-        
-        const binary = db.export();
         const dbPath = `public/groups/${groupId}/${date}.db`;
-        const encrypted = await this.db.encrypt(binary, sharedKey);
-        await this.db.getStorage().saveFile(dbPath, encrypted);
-        db.close();
+        
+        await this.dailyDb.withDatabase(dbPath, async (db) => {
+            if (authorId === myId) {
+                db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+            } else {
+                const groups = await this.db.getGroups();
+                const group = groups.find(g => g.id === groupId);
+                const member = group?.members.find(m => m.userId === myId);
+                const canModerate = member?.role === 'owner' || member?.role === 'admin' || member?.permissions?.canModerate === true;
+                if (!canModerate) {
+                    throw new ModuleError('feed', `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
+                }
+                db.run('CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)');
+                db.run('INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)', [postId, 'delete', Date.now()]);
+            }
+        }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+        });
         this.db.emit(`group:${groupId}:update`, { path: dbPath });
     }
 
@@ -525,12 +496,11 @@ export class FeedModule {
 
         // 1. My data
         const myPath = `public/groups/${groupId}/${date}.db`;
-        const myData = await this.db.getStorage().getFile(myPath);
-        if (myData) {
+        if (await this.dailyDb.exists(myPath)) {
             await this.dailyDb.withDatabase(myPath, async (db) => {
                 processModeration(db, this.db.getConfig().paths.userId);
                 await processPosts(db);
-            }, { decryptKey: group.sharedKey, applySchema: false });
+            }, { decryptKey: group.sharedKey, applySchema: true });
         }
 
         // 2. Member data
@@ -538,12 +508,11 @@ export class FeedModule {
             if (member.userId === this.db.getConfig().paths.userId) continue;
             const memberPath = `followed/${member.userId}/groups/${groupId}/${date}.db`;
             
-            const memberData = await this.db.getStorage().getFile(memberPath);
-            if (memberData) {
+            if (await this.dailyDb.exists(memberPath)) {
                 await this.dailyDb.withDatabase(memberPath, async (db) => {
                     processModeration(db, member.userId);
                     await processPosts(db);
-                }, { decryptKey: group.sharedKey, applySchema: false });
+                }, { decryptKey: group.sharedKey, applySchema: true });
             }
         }
 

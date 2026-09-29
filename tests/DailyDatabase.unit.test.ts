@@ -133,4 +133,127 @@ describe('DailyDatabase Lifecycle & Management Utility', () => {
 
         expect(secretVal).toBe('TopSecretData');
     });
+
+    describe('Debounced & Batched Export', () => {
+        test('should debounce multiple rapid writes into a single storage write', async () => {
+            const debouncedDb = sov.getDailyDatabase('debounced_module', { debounceMs: 150 });
+            const testPath = 'public/modules/debounced_module/batch_test.db';
+            const saveFileSpy = jest.spyOn(sov.getStorage(), 'saveFile');
+
+            saveFileSpy.mockClear();
+
+            // Perform 5 rapid writes
+            for (let i = 0; i < 5; i++) {
+                await debouncedDb.withDatabase(testPath, (db) => {
+                    db.exec('CREATE TABLE IF NOT EXISTS counts (num INTEGER);');
+                    db.run('INSERT INTO counts (num) VALUES (?)', [i]);
+                }, { save: true, debounce: true });
+            }
+
+            // Immediately after writes: isDirty should be true, but storage saveFile not called yet
+            expect(debouncedDb.isDirty(testPath)).toBe(true);
+            expect(saveFileSpy).not.toHaveBeenCalled();
+
+            // Read consistency: query immediately sees all 5 inserts in memory!
+            const countBeforeFlush = await debouncedDb.withDatabase(testPath, (db) => {
+                const res = db.exec('SELECT COUNT(*) FROM counts');
+                return res[0].values[0][0];
+            });
+            expect(countBeforeFlush).toBe(5);
+
+            // Wait for debounce timer to fire (150ms + margin)
+            await new Promise(resolve => setTimeout(resolve, 250));
+
+            // Now saveFile should have been called exactly once!
+            expect(saveFileSpy).toHaveBeenCalledTimes(1);
+            expect(debouncedDb.isDirty(testPath)).toBe(false);
+
+            saveFileSpy.mockRestore();
+        });
+
+        test('should immediately commit when flush() or immediate: true is called', async () => {
+            const debouncedDb = sov.getDailyDatabase('debounced_module', { debounceMs: 500 });
+            const testPath = 'public/modules/debounced_module/flush_test.db';
+            const saveFileSpy = jest.spyOn(sov.getStorage(), 'saveFile');
+
+            saveFileSpy.mockClear();
+
+            // Write with debounce
+            await debouncedDb.withDatabase(testPath, (db) => {
+                db.exec('CREATE TABLE IF NOT EXISTS entries (val TEXT);');
+                db.run('INSERT INTO entries VALUES (?)', ['alpha']);
+            }, { save: true, debounce: true });
+
+            expect(debouncedDb.isDirty(testPath)).toBe(true);
+            expect(saveFileSpy).not.toHaveBeenCalled();
+
+            // Call flush()
+            await debouncedDb.flush(testPath);
+            expect(debouncedDb.isDirty(testPath)).toBe(false);
+            expect(saveFileSpy).toHaveBeenCalledTimes(1);
+
+            // Write with immediate: true
+            await debouncedDb.withDatabase(testPath, (db) => {
+                db.run('INSERT INTO entries VALUES (?)', ['beta']);
+            }, { save: true, immediate: true });
+
+            expect(saveFileSpy).toHaveBeenCalledTimes(2);
+            expect(debouncedDb.isDirty(testPath)).toBe(false);
+
+            saveFileSpy.mockRestore();
+        });
+
+        test('should flush all dirty databases across modules via flushAll()', async () => {
+            const dbA = sov.getDailyDatabase('mod_a', { debounceMs: 500 });
+            const dbB = sov.getDailyDatabase('mod_b', { debounceMs: 500 });
+            const pathA = 'public/modules/mod_a/a.db';
+            const pathB = 'public/modules/mod_b/b.db';
+
+            await dbA.withDatabase(pathA, (db) => {
+                db.exec('CREATE TABLE IF NOT EXISTS t (v TEXT);');
+                db.run('INSERT INTO t VALUES (?)', ['from_a']);
+            }, { save: true, debounce: true });
+
+            await dbB.withDatabase(pathB, (db) => {
+                db.exec('CREATE TABLE IF NOT EXISTS t (v TEXT);');
+                db.run('INSERT INTO t VALUES (?)', ['from_b']);
+            }, { save: true, debounce: true });
+
+            expect(sov.getDailyDatabase().isDirty()).toBe(true);
+
+            // flushAll from root dailyDb flushes all modules sharing the pool
+            await sov.getDailyDatabase().flushAll();
+            expect(sov.getDailyDatabase().isDirty()).toBe(false);
+
+            const fileA = await sov.getStorage().getFile(pathA);
+            const fileB = await sov.getStorage().getFile(pathB);
+            expect(fileA).not.toBeNull();
+            expect(fileB).not.toBeNull();
+        });
+
+        test('should force flush under continuous writes when maxWaitMs is exceeded', async () => {
+            // Configure short debounce (100ms) and short maxWait (200ms)
+            const debouncedDb = sov.getDailyDatabase('stream_mod', { debounceMs: 100, maxWaitMs: 200 });
+            const testPath = 'public/modules/stream_mod/stream.db';
+            const saveFileSpy = jest.spyOn(sov.getStorage(), 'saveFile');
+
+            saveFileSpy.mockClear();
+
+            // Simulate continuous writes every 50ms (which would endlessly reset a normal debounce)
+            for (let i = 0; i < 6; i++) {
+                await debouncedDb.withDatabase(testPath, (db) => {
+                    db.exec('CREATE TABLE IF NOT EXISTS stream (i INTEGER);');
+                    db.run('INSERT INTO stream VALUES (?)', [i]);
+                }, { save: true, debounce: true });
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+
+            // At least one max-wait flush should have fired despite writes arriving every 50ms
+            expect(saveFileSpy.mock.calls.length).toBeGreaterThanOrEqual(1);
+
+            // Clean up
+            await debouncedDb.flushAll();
+            saveFileSpy.mockRestore();
+        });
+    });
 });
