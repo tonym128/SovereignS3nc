@@ -1,17 +1,25 @@
 {
   "name": "@sovereigns3nc/react",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Official React hooks and context provider for SovereignS3nc",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonym128/SovereignS3nc.git",
+    "directory": "packages/react"
+  },
+  "author": "Tony Mobily",
   "scripts": {
     "build": "tsc"
   },
