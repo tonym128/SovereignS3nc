@@ -65,22 +65,10 @@ export class MessagingModule {
                 }
             ]
         });
-        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME);
+        this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
         this.db.registerModuleInstance(this);
     }
 
-    private async getMessageDb(date: string, type: 'inbox' | 'outbox'): Promise<any> {
-        const path = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date}.db`, 'private');
-        const session = await this.dailyDb.openDatabase(path, { applySchema: true });
-        return session.db;
-    }
-
-    private async getReceiptsDb(userId: string, date: string, type: 'public' | 'followed'): Promise<any> {
-        const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date}.db`, type);
-        const session = await this.dailyDb.openDatabase(path, { applySchema: false });
-        session.db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
-        return session.db;
-    }
 
     /**
      * Send a direct encrypted message to a recipient.
@@ -126,14 +114,12 @@ export class MessagingModule {
         }
 
         // 1. Save to my Outbox (using my private key)
-        const outboxDb = await this.getMessageDb(date, 'outbox');
-        const localMessage = { ...outgoing, localImage: localImage || outgoing.localImage };
-        outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt, localImage, imageEphemeralPk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [localMessage.id, localMessage.content, localMessage.timestamp, localMessage.senderId, localMessage.recipientId, localMessage.image || null, localMessage.isEdited ? 1 : 0, localMessage.isDeleted ? 1 : 0, localMessage.status || 'sent', localMessage.expiresAt ?? null, localMessage.localImage || null, localMessage.imageEncryption?.ephemeralPublicKey || null]);
-
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-        await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
-        outboxDb.close();
+        const localMessage = { ...outgoing, localImage: localImage || outgoing.localImage };
+        await this.dailyDb.withDatabase(outboxPath, (outboxDb: any) => {
+            outboxDb.run('INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt, localImage, imageEphemeralPk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [localMessage.id, localMessage.content, localMessage.timestamp, localMessage.senderId, localMessage.recipientId, localMessage.image || null, localMessage.isEdited ? 1 : 0, localMessage.isDeleted ? 1 : 0, localMessage.status || 'sent', localMessage.expiresAt ?? null, localMessage.localImage || null, localMessage.imageEncryption?.ephemeralPublicKey || null]);
+        }, { save: true, emitUpdate: true, applySchema: true });
 
         // 2. Send to Recipient's Public DM box (End-to-End Encrypted)
         const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date}.db`, 'public');
@@ -173,17 +159,20 @@ export class MessagingModule {
         const timestamp = Date.now();
         const senderId = this.db.getConfig().paths.userId;
         
-        const outboxDb = await this.getMessageDb(date, 'outbox');
-        const res = outboxDb.exec('SELECT image, localImage, imageEphemeralPk FROM messages WHERE id = ?', [messageId]);
+        const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
         let imagePath = null;
         let localImagePath = null;
         let imageEphemeralPk: string | null = null;
-        if (res && res.length > 0 && res[0].values.length > 0) {
-            imagePath = res[0].values[0][0];
-            localImagePath = res[0].values[0][1];
-            imageEphemeralPk = res[0].values[0][2];
+        if (await this.dailyDb.exists(outboxPath)) {
+            await this.dailyDb.withDatabase(outboxPath, (outboxDb: any) => {
+                const res = outboxDb.exec('SELECT image, localImage, imageEphemeralPk FROM messages WHERE id = ?', [messageId]);
+                if (res && res.length > 0 && res[0].values.length > 0) {
+                    imagePath = res[0].values[0][0];
+                    localImagePath = res[0].values[0][1];
+                    imageEphemeralPk = res[0].values[0][2];
+                }
+            }, { applySchema: true });
         }
-        outboxDb.close();
 
         const message: Message = { 
             id: messageId, 
@@ -223,67 +212,57 @@ export class MessagingModule {
     }
 
     async markAsRead(senderId: string, messageId: string, date: string) {
-        const db = await this.getReceiptsDb(senderId, date, 'public');
-        db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'read', Date.now()]);
-        
         const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
-        await this.db.getStorage().saveFile(path, db.export());
-        db.close();
-        
-        this.db.emit(`${this.MODULE_NAME}:update`, { path });
+        await this.dailyDb.withDatabase(path, (db: any) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'read', Date.now()]);
+        }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
     }
 
     async markBatchAsRead(senderId: string, messages: {id: string, date: string}[]) {
         const dates = [...new Set(messages.map(m => m.date))];
         for (const date of dates) {
-            const db = await this.getReceiptsDb(senderId, date, 'public');
-            const msgsForDate = messages.filter(m => m.date === date);
-            for (const m of msgsForDate) {
-                db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'read', Date.now()]);
-            }
             const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
-            await this.db.getStorage().saveFile(path, db.export());
-            db.close();
-            this.db.emit(`${this.MODULE_NAME}:update`, { path });
+            const msgsForDate = messages.filter(m => m.date === date);
+            await this.dailyDb.withDatabase(path, (db: any) => {
+                db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+                for (const m of msgsForDate) {
+                    db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'read', Date.now()]);
+                }
+            }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
         }
     }
 
     async markAsDelivered(senderId: string, messageId: string, date: string) {
-        const db = await this.getReceiptsDb(senderId, date, 'public');
-        const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [messageId]);
-        if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read') {
-            db.close();
-            return;
-        }
-        
-        db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'delivered', Date.now()]);
-        
         const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
-        await this.db.getStorage().saveFile(path, db.export());
-        db.close();
-        
-        this.db.emit(`${this.MODULE_NAME}:update`, { path });
+        await this.dailyDb.withDatabase(path, (db: any) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [messageId]);
+            if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read') {
+                return false;
+            }
+            db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [messageId, 'delivered', Date.now()]);
+            return true;
+        }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
     }
 
     async markBatchAsDelivered(senderId: string, messages: {id: string, date: string}[]) {
         const dates = [...new Set(messages.map(m => m.date))];
         for (const date of dates) {
-            const db = await this.getReceiptsDb(senderId, date, 'public');
+            const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
             const msgsForDate = messages.filter(m => m.date === date);
-            let changed = false;
-            for (const m of msgsForDate) {
-                const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [m.id]);
-                if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read')) {
-                    db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'delivered', Date.now()]);
-                    changed = true;
+            await this.dailyDb.withDatabase(path, (db: any) => {
+                db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+                let changed = false;
+                for (const m of msgsForDate) {
+                    const existing = db.exec('SELECT status FROM receipts WHERE messageId = ?', [m.id]);
+                    if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === 'read')) {
+                        db.run('INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)', [m.id, 'delivered', Date.now()]);
+                        changed = true;
+                    }
                 }
-            }
-            if (changed) {
-                const path = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date}.db`, 'public');
-                await this.db.getStorage().saveFile(path, db.export());
-                this.db.emit(`${this.MODULE_NAME}:update`, { path });
-            }
-            db.close();
+                return changed;
+            }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
         }
     }
 
@@ -292,8 +271,7 @@ export class MessagingModule {
      */
     async getMessageReceipt(messageId: string, date: string): Promise<'sent' | 'delivered' | 'read' | null> {
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-        const data = await this.db.getStorage().getFile(outboxPath);
-        if (!data) return null;
+        if (!(await this.dailyDb.exists(outboxPath))) return null;
         return await this.dailyDb.withDatabase(outboxPath, (db: any) => {
             const res = db.exec('SELECT status FROM messages WHERE id = ?', [messageId]);
             if (res && res.length > 0 && res[0].values.length > 0) {
@@ -328,20 +306,19 @@ export class MessagingModule {
                     try {
                         const res = rdb.exec('SELECT messageId, status FROM receipts');
                         if (res && res.length > 0) {
-                            const outboxDb = await this.getMessageDb(date, 'outbox');
-                            for (const row of res[0].values) {
-                                const [mid, status] = row;
-                                outboxDb.run(`
-                                    UPDATE messages SET status = ? 
-                                    WHERE id = ? AND (
-                                        (status = 'sent' AND ? IN ('delivered', 'read')) OR
-                                        (status = 'delivered' AND ? = 'read')
-                                    )
-                                `, [status, mid, status, status]);
-                            }
                             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-                            await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
-                            outboxDb.close();
+                            await this.dailyDb.withDatabase(outboxPath, (outboxDb: any) => {
+                                for (const row of res[0].values) {
+                                    const [mid, status] = row;
+                                    outboxDb.run(`
+                                        UPDATE messages SET status = ? 
+                                        WHERE id = ? AND (
+                                            (status = 'sent' AND ? IN ('delivered', 'read')) OR
+                                            (status = 'delivered' AND ? = 'read')
+                                        )
+                                    `, [status, mid, status, status]);
+                                }
+                            }, { save: true, emitUpdate: true, applySchema: true });
                         }
                     } catch (e: any) {
                         Logger.warn('Messaging', `Failed to apply receipt update from ${user.userId}: ${e.message}`);
@@ -442,8 +419,7 @@ export class MessagingModule {
         // 3. Fetch My Outbox
         for (const date of dates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-            const data = await this.db.getStorage().getFile(outboxPath);
-            if (data) {
+            if (await this.dailyDb.exists(outboxPath)) {
                 await this.dailyDb.withDatabase(outboxPath, (db: any) => {
                     const res = db.exec('SELECT * FROM messages');
                     if (res && res.length > 0 && res[0].values && res[0].columns) {
@@ -496,8 +472,7 @@ export class MessagingModule {
 
         for (const date of targetDates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date}.db`, 'private');
-            const data = await this.db.getStorage().getFile(outboxPath);
-            if (data) {
+            if (await this.dailyDb.exists(outboxPath)) {
                 const count = await this.dailyDb.withDatabase(outboxPath, (db: any) => {
                     const countRes = db.exec('SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?', [now]);
                     let c = 0;
@@ -509,7 +484,7 @@ export class MessagingModule {
                         }
                     }
                     return c;
-                }, { save: true, emitUpdate: true, applySchema: true });
+                }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
                 deleted += count;
             }
         }
@@ -530,12 +505,11 @@ export class MessagingModule {
     }> {
         const targetDate = date || new Date().toISOString().split('T')[0];
         const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${targetDate}.db`, 'private');
-        const data = await this.db.getStorage().getFile(outboxPath);
-        if (!data) {
+        if (!(await this.dailyDb.exists(outboxPath))) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
         }
-
-        const originalSize = data.byteLength;
+        const data = await this.db.getStorage().getFile(outboxPath);
+        const originalSize = data ? data.byteLength : 0;
         const now = Date.now();
         let compacted = false;
         let newSize = originalSize;
@@ -557,7 +531,7 @@ export class MessagingModule {
                 newSize = compactedBinary.byteLength;
                 compacted = true;
             }
-        }, { save: true, emitUpdate: true, applySchema: true });
+        }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
 
         return {
             compacted,

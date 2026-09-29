@@ -22,7 +22,7 @@ import { ModerationEngine } from './core/ModerationEngine';
 import { GlobalRegistry } from './discovery/GlobalRegistry';
 import { BlacklistManager } from './discovery/BlacklistManager';
 import { Repository, RepositoryOptions } from './core/Repository';
-import { DailyDatabase } from './core/DailyDatabase';
+import { DailyDatabase, DailyDatabaseConfig } from './core/DailyDatabase';
 import { Inspector, DebugSnapshot } from './utils/Inspector';
 
 export class SovereignS3nc extends EventEmitter {
@@ -149,7 +149,8 @@ export class SovereignS3nc extends EventEmitter {
             deriveSharedSecret: (pk) => this.deriveSharedSecret(pk),
             decrypt: (d, k) => this.decrypt(d, k),
             syncGenericFile: (rp, t, rm) => this.syncOrchestrator.syncGenericFile(rp, t, rm),
-            getModulePath: (mn, sp, t) => this.getModulePath(mn, sp, t)
+            getModulePath: (mn, sp, t) => this.getModulePath(mn, sp, t),
+            getDailyDatabase: (mn) => this.getDailyDatabase(mn)
         });
 
         this.globalRegistry = new GlobalRegistry({
@@ -195,6 +196,7 @@ export class SovereignS3nc extends EventEmitter {
             onModuleUpdate: (mn, p) => this.onModuleUpdate(mn, p),
             registeredModules: this.registeredModules,
             getModuleInstances: () => this.moduleInstances,
+            flushDatabases: () => this.dailyDatabase.flushAll(),
             emitSyncProgress: (stage, done, total, runId, state, phase) => {
                 this.emit('sync:progress', { stage, done, total, runId, state, phase });
                 Logger.debug('Sync', `Progress: ${stage}${total !== undefined ? ` (${done ?? 0}/${total})` : ''}`);
@@ -586,7 +588,12 @@ export class SovereignS3nc extends EventEmitter {
     public calculateHashedContent(d: Uint8Array, k?: string) { return this.keyManager.calculateHashedContent(d, k); }
     private getHashedUserId(uid: string, ip: boolean) { return this.keyManager.getHashedUserId(uid, ip); }
 
-    public async sync(force: boolean = false): Promise<SyncRunResult> { return this.syncOrchestrator.sync(force); }
+    public async sync(force: boolean = false): Promise<SyncRunResult> {
+        await this.dailyDatabase.flushAll();
+        return this.syncOrchestrator.sync(force);
+    }
+    public async flushDatabases(): Promise<void> { return this.dailyDatabase.flushAll(); }
+    public async closeDatabases(): Promise<void> { return this.dailyDatabase.closeAll(); }
     public isSyncing(): boolean { return this._isSyncing; }
     public async applyRetentionPolicy() { return this.syncOrchestrator.applyRetentionPolicy(); }
     public async compactDatabases(dates?: string[], force: boolean = false) { return this.syncOrchestrator.compactDatabases(dates, force); }
@@ -640,10 +647,13 @@ export class SovereignS3nc extends EventEmitter {
 
     /**
      * Retrieves the DailyDatabase utility for managing SQLite database lifecycles.
-     * Optionally scoped to a specific module name.
+     * Optionally scoped to a specific module name and configuration.
      */
-    public getDailyDatabase(moduleName?: string): DailyDatabase {
-        return moduleName ? new DailyDatabase(this, moduleName) : this.dailyDatabase;
+    public getDailyDatabase(moduleName?: string, config?: DailyDatabaseConfig): DailyDatabase {
+        if (moduleName || config) {
+            return new DailyDatabase(this, moduleName, this.dailyDatabase, config);
+        }
+        return this.dailyDatabase;
     }
 
     /**

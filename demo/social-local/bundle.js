@@ -48,11 +48,11 @@
     mod
   ));
 
-  // node_modules/base64-js/index.js
+  // ../../node_modules/base64-js/index.js
   var require_base64_js = __commonJS({
-    "node_modules/base64-js/index.js"(exports) {
+    "../../node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -150,10 +150,10 @@
     }
   });
 
-  // node_modules/ieee754/index.js
+  // ../../node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
-    "node_modules/ieee754/index.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/ieee754/index.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -234,11 +234,11 @@
     }
   });
 
-  // node_modules/buffer/index.js
+  // ../../node_modules/buffer/index.js
   var require_buffer = __commonJS({
-    "node_modules/buffer/index.js"(exports) {
+    "../../node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1827,10 +1827,10 @@
     }
   });
 
-  // node_modules/process/browser.js
+  // ../../node_modules/process/browser.js
   var require_browser = __commonJS({
-    "node_modules/process/browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/process/browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -2060,11 +2060,11 @@
     }
   });
 
-  // node_modules/react/cjs/react.development.js
+  // ../../node_modules/react/cjs/react.development.js
   var require_react_development = __commonJS({
-    "node_modules/react/cjs/react.development.js"(exports, module) {
+    "../../node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component.prototype, methodName, {
@@ -3033,11 +3033,11 @@
     }
   });
 
-  // node_modules/react/index.js
+  // ../../node_modules/react/index.js
   var require_react = __commonJS({
-    "node_modules/react/index.js"(exports, module) {
+    "../../node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3046,11 +3046,11 @@
     }
   });
 
-  // node_modules/scheduler/cjs/scheduler.development.js
+  // ../../node_modules/scheduler/cjs/scheduler.development.js
   var require_scheduler_development = __commonJS({
-    "node_modules/scheduler/cjs/scheduler.development.js"(exports) {
+    "../../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3306,11 +3306,11 @@
     }
   });
 
-  // node_modules/scheduler/index.js
+  // ../../node_modules/scheduler/index.js
   var require_scheduler = __commonJS({
-    "node_modules/scheduler/index.js"(exports, module) {
+    "../../node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3319,11 +3319,11 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom.development.js
+  // ../../node_modules/react-dom/cjs/react-dom.development.js
   var require_react_dom_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom.development.js"(exports) {
+    "../../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3564,11 +3564,11 @@
     }
   });
 
-  // node_modules/react-dom/index.js
+  // ../../node_modules/react-dom/index.js
   var require_react_dom = __commonJS({
-    "node_modules/react-dom/index.js"(exports, module) {
+    "../../node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3578,11 +3578,11 @@
     }
   });
 
-  // node_modules/react-dom/cjs/react-dom-client.development.js
+  // ../../node_modules/react-dom/cjs/react-dom-client.development.js
   var require_react_dom_client_development = __commonJS({
-    "node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
+    "../../node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -23478,11 +23478,11 @@
     }
   });
 
-  // node_modules/react-dom/client.js
+  // ../../node_modules/react-dom/client.js
   var require_client = __commonJS({
-    "node_modules/react-dom/client.js"(exports, module) {
+    "../../node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -23492,10 +23492,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js
   var import_polyfills, getHttpHandlerExtensionConfiguration, resolveHttpHandlerRuntimeConfig;
   var init_httpExtensionConfiguration = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/extensions/httpExtensionConfiguration.js"() {
       import_polyfills = __toESM(require_polyfills());
       getHttpHandlerExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -23521,27 +23521,27 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/extensions/index.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/extensions/index.js
   var import_polyfills2;
   var init_extensions = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/extensions/index.js"() {
       import_polyfills2 = __toESM(require_polyfills());
       init_httpExtensionConfiguration();
     }
   });
 
-  // node_modules/@smithy/types/dist-es/abort.js
+  // ../../node_modules/@smithy/types/dist-es/abort.js
   var import_polyfills3;
   var init_abort = __esm({
-    "node_modules/@smithy/types/dist-es/abort.js"() {
+    "../../node_modules/@smithy/types/dist-es/abort.js"() {
       import_polyfills3 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/auth.js
+  // ../../node_modules/@smithy/types/dist-es/auth/auth.js
   var import_polyfills4, HttpAuthLocation;
   var init_auth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/auth.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/auth.js"() {
       import_polyfills4 = __toESM(require_polyfills());
       (function(HttpAuthLocation2) {
         HttpAuthLocation2["HEADER"] = "header";
@@ -23550,10 +23550,10 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
+  // ../../node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js
   var import_polyfills5, HttpApiKeyAuthLocation;
   var init_HttpApiKeyAuth = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/HttpApiKeyAuth.js"() {
       import_polyfills5 = __toESM(require_polyfills());
       (function(HttpApiKeyAuthLocation2) {
         HttpApiKeyAuthLocation2["HEADER"] = "header";
@@ -23562,42 +23562,42 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
+  // ../../node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js
   var import_polyfills6;
   var init_HttpAuthScheme = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/HttpAuthScheme.js"() {
       import_polyfills6 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
+  // ../../node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js
   var import_polyfills7;
   var init_HttpAuthSchemeProvider = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/HttpAuthSchemeProvider.js"() {
       import_polyfills7 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/HttpSigner.js
+  // ../../node_modules/@smithy/types/dist-es/auth/HttpSigner.js
   var import_polyfills8;
   var init_HttpSigner = __esm({
-    "node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/HttpSigner.js"() {
       import_polyfills8 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
+  // ../../node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js
   var import_polyfills9;
   var init_IdentityProviderConfig = __esm({
-    "node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/IdentityProviderConfig.js"() {
       import_polyfills9 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/auth/index.js
+  // ../../node_modules/@smithy/types/dist-es/auth/index.js
   var import_polyfills10;
   var init_auth2 = __esm({
-    "node_modules/@smithy/types/dist-es/auth/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/auth/index.js"() {
       import_polyfills10 = __toESM(require_polyfills());
       init_auth();
       init_HttpApiKeyAuth();
@@ -23608,66 +23608,66 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
+  // ../../node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js
   var import_polyfills11;
   var init_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
+    "../../node_modules/@smithy/types/dist-es/blob/blob-payload-input-types.js"() {
       import_polyfills11 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/checksum.js
+  // ../../node_modules/@smithy/types/dist-es/checksum.js
   var import_polyfills12;
   var init_checksum = __esm({
-    "node_modules/@smithy/types/dist-es/checksum.js"() {
+    "../../node_modules/@smithy/types/dist-es/checksum.js"() {
       import_polyfills12 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/client.js
+  // ../../node_modules/@smithy/types/dist-es/client.js
   var import_polyfills13;
   var init_client = __esm({
-    "node_modules/@smithy/types/dist-es/client.js"() {
+    "../../node_modules/@smithy/types/dist-es/client.js"() {
       import_polyfills13 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/command.js
+  // ../../node_modules/@smithy/types/dist-es/command.js
   var import_polyfills14;
   var init_command = __esm({
-    "node_modules/@smithy/types/dist-es/command.js"() {
+    "../../node_modules/@smithy/types/dist-es/command.js"() {
       import_polyfills14 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/config.js
+  // ../../node_modules/@smithy/types/dist-es/connection/config.js
   var import_polyfills15;
   var init_config = __esm({
-    "node_modules/@smithy/types/dist-es/connection/config.js"() {
+    "../../node_modules/@smithy/types/dist-es/connection/config.js"() {
       import_polyfills15 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/manager.js
+  // ../../node_modules/@smithy/types/dist-es/connection/manager.js
   var import_polyfills16;
   var init_manager = __esm({
-    "node_modules/@smithy/types/dist-es/connection/manager.js"() {
+    "../../node_modules/@smithy/types/dist-es/connection/manager.js"() {
       import_polyfills16 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/pool.js
+  // ../../node_modules/@smithy/types/dist-es/connection/pool.js
   var import_polyfills17;
   var init_pool = __esm({
-    "node_modules/@smithy/types/dist-es/connection/pool.js"() {
+    "../../node_modules/@smithy/types/dist-es/connection/pool.js"() {
       import_polyfills17 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/connection/index.js
+  // ../../node_modules/@smithy/types/dist-es/connection/index.js
   var import_polyfills18;
   var init_connection = __esm({
-    "node_modules/@smithy/types/dist-es/connection/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/connection/index.js"() {
       import_polyfills18 = __toESM(require_polyfills());
       init_config();
       init_manager();
@@ -23675,26 +23675,26 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/crypto.js
+  // ../../node_modules/@smithy/types/dist-es/crypto.js
   var import_polyfills19;
   var init_crypto = __esm({
-    "node_modules/@smithy/types/dist-es/crypto.js"() {
+    "../../node_modules/@smithy/types/dist-es/crypto.js"() {
       import_polyfills19 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/encode.js
+  // ../../node_modules/@smithy/types/dist-es/encode.js
   var import_polyfills20;
   var init_encode = __esm({
-    "node_modules/@smithy/types/dist-es/encode.js"() {
+    "../../node_modules/@smithy/types/dist-es/encode.js"() {
       import_polyfills20 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoint.js
+  // ../../node_modules/@smithy/types/dist-es/endpoint.js
   var import_polyfills21, EndpointURLScheme;
   var init_endpoint = __esm({
-    "node_modules/@smithy/types/dist-es/endpoint.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoint.js"() {
       import_polyfills21 = __toESM(require_polyfills());
       (function(EndpointURLScheme2) {
         EndpointURLScheme2["HTTP"] = "http";
@@ -23703,50 +23703,50 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js
   var import_polyfills22;
   var init_EndpointRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/EndpointRuleObject.js"() {
       import_polyfills22 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js
   var import_polyfills23;
   var init_ErrorRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/ErrorRuleObject.js"() {
       import_polyfills23 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js
   var import_polyfills24;
   var init_RuleSetObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/RuleSetObject.js"() {
       import_polyfills24 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/shared.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/shared.js
   var import_polyfills25;
   var init_shared = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/shared.js"() {
       import_polyfills25 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js
   var import_polyfills26;
   var init_TreeRuleObject = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/TreeRuleObject.js"() {
       import_polyfills26 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/endpoints/index.js
+  // ../../node_modules/@smithy/types/dist-es/endpoints/index.js
   var import_polyfills27;
   var init_endpoints = __esm({
-    "node_modules/@smithy/types/dist-es/endpoints/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/endpoints/index.js"() {
       import_polyfills27 = __toESM(require_polyfills());
       init_EndpointRuleObject();
       init_ErrorRuleObject();
@@ -23756,18 +23756,18 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/eventStream.js
+  // ../../node_modules/@smithy/types/dist-es/eventStream.js
   var import_polyfills28;
   var init_eventStream = __esm({
-    "node_modules/@smithy/types/dist-es/eventStream.js"() {
+    "../../node_modules/@smithy/types/dist-es/eventStream.js"() {
       import_polyfills28 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/checksum.js
+  // ../../node_modules/@smithy/types/dist-es/extensions/checksum.js
   var import_polyfills29, AlgorithmId;
   var init_checksum2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
+    "../../node_modules/@smithy/types/dist-es/extensions/checksum.js"() {
       import_polyfills29 = __toESM(require_polyfills());
       (function(AlgorithmId2) {
         AlgorithmId2["MD5"] = "md5";
@@ -23779,26 +23779,26 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
+  // ../../node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js
   var import_polyfills30;
   var init_defaultClientConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
+    "../../node_modules/@smithy/types/dist-es/extensions/defaultClientConfiguration.js"() {
       import_polyfills30 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../../node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js
   var import_polyfills31;
   var init_defaultExtensionConfiguration = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../../node_modules/@smithy/types/dist-es/extensions/defaultExtensionConfiguration.js"() {
       import_polyfills31 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/extensions/index.js
+  // ../../node_modules/@smithy/types/dist-es/extensions/index.js
   var import_polyfills32;
   var init_extensions2 = __esm({
-    "node_modules/@smithy/types/dist-es/extensions/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/extensions/index.js"() {
       import_polyfills32 = __toESM(require_polyfills());
       init_defaultClientConfiguration();
       init_defaultExtensionConfiguration();
@@ -23806,18 +23806,18 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/feature-ids.js
+  // ../../node_modules/@smithy/types/dist-es/feature-ids.js
   var import_polyfills33;
   var init_feature_ids = __esm({
-    "node_modules/@smithy/types/dist-es/feature-ids.js"() {
+    "../../node_modules/@smithy/types/dist-es/feature-ids.js"() {
       import_polyfills33 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http.js
+  // ../../node_modules/@smithy/types/dist-es/http.js
   var import_polyfills34, FieldPosition;
   var init_http = __esm({
-    "node_modules/@smithy/types/dist-es/http.js"() {
+    "../../node_modules/@smithy/types/dist-es/http.js"() {
       import_polyfills34 = __toESM(require_polyfills());
       (function(FieldPosition2) {
         FieldPosition2[FieldPosition2["HEADER"] = 0] = "HEADER";
@@ -23826,50 +23826,50 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
+  // ../../node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js
   var import_polyfills35;
   var init_httpHandlerInitialization = __esm({
-    "node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
+    "../../node_modules/@smithy/types/dist-es/http/httpHandlerInitialization.js"() {
       import_polyfills35 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
+  // ../../node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js
   var import_polyfills36;
   var init_apiKeyIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
+    "../../node_modules/@smithy/types/dist-es/identity/apiKeyIdentity.js"() {
       import_polyfills36 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
+  // ../../node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js
   var import_polyfills37;
   var init_awsCredentialIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
+    "../../node_modules/@smithy/types/dist-es/identity/awsCredentialIdentity.js"() {
       import_polyfills37 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/identity.js
+  // ../../node_modules/@smithy/types/dist-es/identity/identity.js
   var import_polyfills38;
   var init_identity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/identity.js"() {
+    "../../node_modules/@smithy/types/dist-es/identity/identity.js"() {
       import_polyfills38 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
+  // ../../node_modules/@smithy/types/dist-es/identity/tokenIdentity.js
   var import_polyfills39;
   var init_tokenIdentity = __esm({
-    "node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
+    "../../node_modules/@smithy/types/dist-es/identity/tokenIdentity.js"() {
       import_polyfills39 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/identity/index.js
+  // ../../node_modules/@smithy/types/dist-es/identity/index.js
   var import_polyfills40;
   var init_identity2 = __esm({
-    "node_modules/@smithy/types/dist-es/identity/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/identity/index.js"() {
       import_polyfills40 = __toESM(require_polyfills());
       init_apiKeyIdentity();
       init_awsCredentialIdentity();
@@ -23878,35 +23878,35 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/logger.js
+  // ../../node_modules/@smithy/types/dist-es/logger.js
   var import_polyfills41;
   var init_logger = __esm({
-    "node_modules/@smithy/types/dist-es/logger.js"() {
+    "../../node_modules/@smithy/types/dist-es/logger.js"() {
       import_polyfills41 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/middleware.js
+  // ../../node_modules/@smithy/types/dist-es/middleware.js
   var import_polyfills42, SMITHY_CONTEXT_KEY;
   var init_middleware = __esm({
-    "node_modules/@smithy/types/dist-es/middleware.js"() {
+    "../../node_modules/@smithy/types/dist-es/middleware.js"() {
       import_polyfills42 = __toESM(require_polyfills());
       SMITHY_CONTEXT_KEY = "__smithy_context";
     }
   });
 
-  // node_modules/@smithy/types/dist-es/pagination.js
+  // ../../node_modules/@smithy/types/dist-es/pagination.js
   var import_polyfills43;
   var init_pagination = __esm({
-    "node_modules/@smithy/types/dist-es/pagination.js"() {
+    "../../node_modules/@smithy/types/dist-es/pagination.js"() {
       import_polyfills43 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/profile.js
+  // ../../node_modules/@smithy/types/dist-es/profile.js
   var import_polyfills44, IniSectionType;
   var init_profile = __esm({
-    "node_modules/@smithy/types/dist-es/profile.js"() {
+    "../../node_modules/@smithy/types/dist-es/profile.js"() {
       import_polyfills44 = __toESM(require_polyfills());
       (function(IniSectionType2) {
         IniSectionType2["PROFILE"] = "profile";
@@ -23916,122 +23916,122 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/response.js
+  // ../../node_modules/@smithy/types/dist-es/response.js
   var import_polyfills45;
   var init_response = __esm({
-    "node_modules/@smithy/types/dist-es/response.js"() {
+    "../../node_modules/@smithy/types/dist-es/response.js"() {
       import_polyfills45 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/retry.js
+  // ../../node_modules/@smithy/types/dist-es/retry.js
   var import_polyfills46;
   var init_retry = __esm({
-    "node_modules/@smithy/types/dist-es/retry.js"() {
+    "../../node_modules/@smithy/types/dist-es/retry.js"() {
       import_polyfills46 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema.js
+  // ../../node_modules/@smithy/types/dist-es/schema/schema.js
   var import_polyfills47;
   var init_schema = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema.js"() {
+    "../../node_modules/@smithy/types/dist-es/schema/schema.js"() {
       import_polyfills47 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/traits.js
+  // ../../node_modules/@smithy/types/dist-es/schema/traits.js
   var import_polyfills48;
   var init_traits = __esm({
-    "node_modules/@smithy/types/dist-es/schema/traits.js"() {
+    "../../node_modules/@smithy/types/dist-es/schema/traits.js"() {
       import_polyfills48 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
+  // ../../node_modules/@smithy/types/dist-es/schema/schema-deprecated.js
   var import_polyfills49;
   var init_schema_deprecated = __esm({
-    "node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
+    "../../node_modules/@smithy/types/dist-es/schema/schema-deprecated.js"() {
       import_polyfills49 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/sentinels.js
+  // ../../node_modules/@smithy/types/dist-es/schema/sentinels.js
   var import_polyfills50;
   var init_sentinels = __esm({
-    "node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
+    "../../node_modules/@smithy/types/dist-es/schema/sentinels.js"() {
       import_polyfills50 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/schema/static-schemas.js
+  // ../../node_modules/@smithy/types/dist-es/schema/static-schemas.js
   var import_polyfills51;
   var init_static_schemas = __esm({
-    "node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
+    "../../node_modules/@smithy/types/dist-es/schema/static-schemas.js"() {
       import_polyfills51 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/serde.js
+  // ../../node_modules/@smithy/types/dist-es/serde.js
   var import_polyfills52;
   var init_serde = __esm({
-    "node_modules/@smithy/types/dist-es/serde.js"() {
+    "../../node_modules/@smithy/types/dist-es/serde.js"() {
       import_polyfills52 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/shapes.js
+  // ../../node_modules/@smithy/types/dist-es/shapes.js
   var import_polyfills53;
   var init_shapes = __esm({
-    "node_modules/@smithy/types/dist-es/shapes.js"() {
+    "../../node_modules/@smithy/types/dist-es/shapes.js"() {
       import_polyfills53 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/signature.js
+  // ../../node_modules/@smithy/types/dist-es/signature.js
   var import_polyfills54;
   var init_signature = __esm({
-    "node_modules/@smithy/types/dist-es/signature.js"() {
+    "../../node_modules/@smithy/types/dist-es/signature.js"() {
       import_polyfills54 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/stream.js
+  // ../../node_modules/@smithy/types/dist-es/stream.js
   var import_polyfills55;
   var init_stream = __esm({
-    "node_modules/@smithy/types/dist-es/stream.js"() {
+    "../../node_modules/@smithy/types/dist-es/stream.js"() {
       import_polyfills55 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
+  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js
   var import_polyfills56;
   var init_streaming_blob_common_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
+    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-common-types.js"() {
       import_polyfills56 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
+  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js
   var import_polyfills57;
   var init_streaming_blob_payload_input_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
+    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-input-types.js"() {
       import_polyfills57 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
+  // ../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js
   var import_polyfills58;
   var init_streaming_blob_payload_output_types = __esm({
-    "node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
+    "../../node_modules/@smithy/types/dist-es/streaming-payload/streaming-blob-payload-output-types.js"() {
       import_polyfills58 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transfer.js
+  // ../../node_modules/@smithy/types/dist-es/transfer.js
   var import_polyfills59, RequestHandlerProtocol;
   var init_transfer = __esm({
-    "node_modules/@smithy/types/dist-es/transfer.js"() {
+    "../../node_modules/@smithy/types/dist-es/transfer.js"() {
       import_polyfills59 = __toESM(require_polyfills());
       (function(RequestHandlerProtocol2) {
         RequestHandlerProtocol2["HTTP_0_9"] = "http/0.9";
@@ -24041,66 +24041,66 @@
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
+  // ../../node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js
   var import_polyfills60;
   var init_client_payload_blob_type_narrow = __esm({
-    "node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
+    "../../node_modules/@smithy/types/dist-es/transform/client-payload-blob-type-narrow.js"() {
       import_polyfills60 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/mutable.js
+  // ../../node_modules/@smithy/types/dist-es/transform/mutable.js
   var import_polyfills61;
   var init_mutable = __esm({
-    "node_modules/@smithy/types/dist-es/transform/mutable.js"() {
+    "../../node_modules/@smithy/types/dist-es/transform/mutable.js"() {
       import_polyfills61 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/no-undefined.js
+  // ../../node_modules/@smithy/types/dist-es/transform/no-undefined.js
   var import_polyfills62;
   var init_no_undefined = __esm({
-    "node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
+    "../../node_modules/@smithy/types/dist-es/transform/no-undefined.js"() {
       import_polyfills62 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/transform/type-transform.js
+  // ../../node_modules/@smithy/types/dist-es/transform/type-transform.js
   var import_polyfills63;
   var init_type_transform = __esm({
-    "node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
+    "../../node_modules/@smithy/types/dist-es/transform/type-transform.js"() {
       import_polyfills63 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/uri.js
+  // ../../node_modules/@smithy/types/dist-es/uri.js
   var import_polyfills64;
   var init_uri = __esm({
-    "node_modules/@smithy/types/dist-es/uri.js"() {
+    "../../node_modules/@smithy/types/dist-es/uri.js"() {
       import_polyfills64 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/util.js
+  // ../../node_modules/@smithy/types/dist-es/util.js
   var import_polyfills65;
   var init_util = __esm({
-    "node_modules/@smithy/types/dist-es/util.js"() {
+    "../../node_modules/@smithy/types/dist-es/util.js"() {
       import_polyfills65 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/waiter.js
+  // ../../node_modules/@smithy/types/dist-es/waiter.js
   var import_polyfills66;
   var init_waiter = __esm({
-    "node_modules/@smithy/types/dist-es/waiter.js"() {
+    "../../node_modules/@smithy/types/dist-es/waiter.js"() {
       import_polyfills66 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/types/dist-es/index.js
+  // ../../node_modules/@smithy/types/dist-es/index.js
   var import_polyfills67;
   var init_dist_es = __esm({
-    "node_modules/@smithy/types/dist-es/index.js"() {
+    "../../node_modules/@smithy/types/dist-es/index.js"() {
       import_polyfills67 = __toESM(require_polyfills());
       init_abort();
       init_auth2();
@@ -24148,31 +24148,31 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Field.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/Field.js
   var import_polyfills68;
   var init_Field = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Field.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/Field.js"() {
       import_polyfills68 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/Fields.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/Fields.js
   var import_polyfills69;
   var init_Fields = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/Fields.js"() {
       import_polyfills69 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpHandler.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/httpHandler.js
   var import_polyfills70;
   var init_httpHandler = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/httpHandler.js"() {
       import_polyfills70 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpRequest.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/httpRequest.js
   function cloneQuery(query) {
     return Object.keys(query).reduce((carry, paramName) => {
       const param = query[paramName];
@@ -24184,7 +24184,7 @@
   }
   var import_polyfills71, HttpRequest;
   var init_httpRequest = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/httpRequest.js"() {
       import_polyfills71 = __toESM(require_polyfills());
       HttpRequest = class _HttpRequest {
         method;
@@ -24235,10 +24235,10 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/httpResponse.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/httpResponse.js
   var import_polyfills72, HttpResponse;
   var init_httpResponse = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/httpResponse.js"() {
       import_polyfills72 = __toESM(require_polyfills());
       HttpResponse = class {
         statusCode;
@@ -24261,26 +24261,26 @@
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/isValidHostname.js
   var import_polyfills73;
   var init_isValidHostname = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/isValidHostname.js"() {
       import_polyfills73 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/types.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/types.js
   var import_polyfills74;
   var init_types = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/types.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/types.js"() {
       import_polyfills74 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/protocol-http/dist-es/index.js
+  // ../../node_modules/@smithy/protocol-http/dist-es/index.js
   var import_polyfills75;
   var init_dist_es2 = __esm({
-    "node_modules/@smithy/protocol-http/dist-es/index.js"() {
+    "../../node_modules/@smithy/protocol-http/dist-es/index.js"() {
       import_polyfills75 = __toESM(require_polyfills());
       init_extensions();
       init_Field();
@@ -24293,7 +24293,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js
   function addExpectContinueMiddleware(options) {
     return (next) => async (args) => {
       const { request } = args;
@@ -24320,7 +24320,7 @@
   }
   var import_polyfills76, addExpectContinueMiddlewareOptions, getAddExpectContinuePlugin;
   var init_dist_es3 = __esm({
-    "node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-expect-continue/dist-es/index.js"() {
       import_polyfills76 = __toESM(require_polyfills());
       init_dist_es2();
       addExpectContinueMiddlewareOptions = {
@@ -24337,10 +24337,10 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js
   var import_polyfills77, RequestChecksumCalculation, DEFAULT_REQUEST_CHECKSUM_CALCULATION, ResponseChecksumValidation, DEFAULT_RESPONSE_CHECKSUM_VALIDATION, ChecksumAlgorithm, ChecksumLocation, DEFAULT_CHECKSUM_ALGORITHM;
   var init_constants = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/constants.js"() {
       import_polyfills77 = __toESM(require_polyfills());
       RequestChecksumCalculation = {
         WHEN_SUPPORTED: "WHEN_SUPPORTED",
@@ -24368,31 +24368,31 @@
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js
   var import_polyfills78;
   var init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS.js"() {
       import_polyfills78 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js
   var import_polyfills79;
   var init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS.js"() {
       import_polyfills79 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
   var import_polyfills80;
   var init_emitWarningIfUnsupportedVersion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
       import_polyfills80 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js
   function setCredentialFeature(credentials, feature, value) {
     if (!credentials.$source) {
       credentials.$source = {};
@@ -24402,15 +24402,15 @@
   }
   var import_polyfills81;
   var init_setCredentialFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setCredentialFeature.js"() {
       import_polyfills81 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/config.js
+  // ../../node_modules/@smithy/util-retry/dist-es/config.js
   var import_polyfills82, RETRY_MODES, DEFAULT_MAX_ATTEMPTS, DEFAULT_RETRY_MODE;
   var init_config2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/config.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/config.js"() {
       import_polyfills82 = __toESM(require_polyfills());
       (function(RETRY_MODES2) {
         RETRY_MODES2["STANDARD"] = "standard";
@@ -24421,10 +24421,10 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/constants.js
+  // ../../node_modules/@smithy/service-error-classification/dist-es/constants.js
   var import_polyfills83, THROTTLING_ERROR_CODES, TRANSIENT_ERROR_CODES, TRANSIENT_ERROR_STATUS_CODES, NODEJS_TIMEOUT_ERROR_CODES, NODEJS_NETWORK_ERROR_CODES;
   var init_constants2 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
+    "../../node_modules/@smithy/service-error-classification/dist-es/constants.js"() {
       import_polyfills83 = __toESM(require_polyfills());
       THROTTLING_ERROR_CODES = [
         "BandwidthLimitExceeded",
@@ -24449,13 +24449,13 @@
     }
   });
 
-  // node_modules/@smithy/service-error-classification/dist-es/index.js
+  // ../../node_modules/@smithy/service-error-classification/dist-es/index.js
   function isNodeJsHttp2TransientError(error) {
     return error.code === "ERR_HTTP2_STREAM_ERROR" && error.message.includes("NGHTTP2_REFUSED_STREAM");
   }
   var import_polyfills84, isRetryableByTrait, isClockSkewCorrectedError, isBrowserNetworkError, isThrottlingError, isTransientError, isServerError;
   var init_dist_es4 = __esm({
-    "node_modules/@smithy/service-error-classification/dist-es/index.js"() {
+    "../../node_modules/@smithy/service-error-classification/dist-es/index.js"() {
       import_polyfills84 = __toESM(require_polyfills());
       init_constants2();
       isRetryableByTrait = (error) => error?.$retryable !== void 0;
@@ -24489,10 +24489,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
+  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js
   var import_polyfills85, DefaultRateLimiter;
   var init_DefaultRateLimiter = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/DefaultRateLimiter.js"() {
       import_polyfills85 = __toESM(require_polyfills());
       init_dist_es4();
       DefaultRateLimiter = class _DefaultRateLimiter {
@@ -24607,10 +24607,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/constants.js
+  // ../../node_modules/@smithy/util-retry/dist-es/constants.js
   var import_polyfills86, MAXIMUM_RETRY_DELAY, INITIAL_RETRY_TOKENS, NO_RETRY_INCREMENT, INVOCATION_ID_HEADER, REQUEST_HEADER;
   var init_constants3 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/constants.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/constants.js"() {
       import_polyfills86 = __toESM(require_polyfills());
       MAXIMUM_RETRY_DELAY = 20 * 1e3;
       INITIAL_RETRY_TOKENS = 500;
@@ -24620,10 +24620,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
+  // ../../node_modules/@smithy/util-retry/dist-es/retries-2026-config.js
   var import_polyfills87, Retry;
   var init_retries_2026_config = __esm({
-    "node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/retries-2026-config.js"() {
       import_polyfills87 = __toESM(require_polyfills());
       Retry = class _Retry {
         static v2026 = typeof process !== "undefined" && process.env?.SMITHY_NEW_RETRIES_2026 === "true";
@@ -24646,10 +24646,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
+  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js
   var import_polyfills88, DefaultRetryBackoffStrategy;
   var init_DefaultRetryBackoffStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/DefaultRetryBackoffStrategy.js"() {
       import_polyfills88 = __toESM(require_polyfills());
       init_constants3();
       init_retries_2026_config();
@@ -24668,10 +24668,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
+  // ../../node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js
   var import_polyfills89, DefaultRetryToken;
   var init_DefaultRetryToken = __esm({
-    "node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/DefaultRetryToken.js"() {
       import_polyfills89 = __toESM(require_polyfills());
       init_constants3();
       DefaultRetryToken = class {
@@ -24701,10 +24701,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
+  // ../../node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js
   var import_polyfills90, refusal, StandardRetryStrategy;
   var init_StandardRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/StandardRetryStrategy.js"() {
       import_polyfills90 = __toESM(require_polyfills());
       init_config2();
       init_constants3();
@@ -24798,10 +24798,10 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
+  // ../../node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js
   var import_polyfills91, AdaptiveRetryStrategy;
   var init_AdaptiveRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/AdaptiveRetryStrategy.js"() {
       import_polyfills91 = __toESM(require_polyfills());
       init_config2();
       init_DefaultRateLimiter();
@@ -24840,26 +24840,26 @@
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
+  // ../../node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js
   var import_polyfills92;
   var init_ConfiguredRetryStrategy = __esm({
-    "node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/ConfiguredRetryStrategy.js"() {
       import_polyfills92 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/types.js
+  // ../../node_modules/@smithy/util-retry/dist-es/types.js
   var import_polyfills93;
   var init_types2 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/types.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/types.js"() {
       import_polyfills93 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-retry/dist-es/index.js
+  // ../../node_modules/@smithy/util-retry/dist-es/index.js
   var import_polyfills94;
   var init_dist_es5 = __esm({
-    "node_modules/@smithy/util-retry/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-retry/dist-es/index.js"() {
       import_polyfills94 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy();
       init_ConfiguredRetryStrategy();
@@ -24872,7 +24872,7 @@
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
   function setFeature(context, feature, value) {
     if (!context.__aws_sdk_context) {
       context.__aws_sdk_context = {
@@ -24885,25 +24885,25 @@
   }
   var import_polyfills95;
   var init_setFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
       import_polyfills95 = __toESM(require_polyfills());
       init_dist_es5();
       Retry.v2026 ||= typeof process === "object" && process.env?.AWS_NEW_RETRIES_2026 === "true";
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js
   var import_polyfills96;
   var init_setTokenFeature = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setTokenFeature.js"() {
       import_polyfills96 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
   var import_polyfills97;
   var init_client2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
       import_polyfills97 = __toESM(require_polyfills());
       init_emitWarningIfUnsupportedVersion();
       init_setCredentialFeature();
@@ -24912,10 +24912,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/constants.browser.js
+  // ../../node_modules/@smithy/util-base64/dist-es/constants.browser.js
   var import_polyfills98, chars, alphabetByEncoding, alphabetByValue, bitsPerLetter, bitsPerByte, maxLetterValue;
   var init_constants_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
+    "../../node_modules/@smithy/util-base64/dist-es/constants.browser.js"() {
       import_polyfills98 = __toESM(require_polyfills());
       chars = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
       alphabetByEncoding = Object.entries(chars).reduce((acc, [i2, c2]) => {
@@ -24929,10 +24929,10 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
+  // ../../node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js
   var import_polyfills99, fromBase64;
   var init_fromBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
+    "../../node_modules/@smithy/util-base64/dist-es/fromBase64.browser.js"() {
       import_polyfills99 = __toESM(require_polyfills());
       init_constants_browser();
       fromBase64 = (input) => {
@@ -24971,19 +24971,19 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../../node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills100, fromUtf8;
   var init_fromUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../../node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills100 = __toESM(require_polyfills());
       fromUtf8 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../../node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills101, toUint8Array;
   var init_toUint8Array = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../../node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills101 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       toUint8Array = (data) => {
@@ -24998,10 +24998,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../../node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills102, toUtf8;
   var init_toUtf8_browser = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../../node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills102 = __toESM(require_polyfills());
       toUtf8 = (input) => {
         if (typeof input === "string") {
@@ -25015,10 +25015,10 @@
     }
   });
 
-  // node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../../node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills103;
   var init_dist_es6 = __esm({
-    "node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills103 = __toESM(require_polyfills());
       init_fromUtf8_browser();
       init_toUint8Array();
@@ -25026,7 +25026,7 @@
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
+  // ../../node_modules/@smithy/util-base64/dist-es/toBase64.browser.js
   function toBase64(_input) {
     let input;
     if (typeof _input === "string") {
@@ -25059,27 +25059,27 @@
   }
   var import_polyfills104;
   var init_toBase64_browser = __esm({
-    "node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
+    "../../node_modules/@smithy/util-base64/dist-es/toBase64.browser.js"() {
       import_polyfills104 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants_browser();
     }
   });
 
-  // node_modules/@smithy/util-base64/dist-es/index.js
+  // ../../node_modules/@smithy/util-base64/dist-es/index.js
   var import_polyfills105;
   var init_dist_es7 = __esm({
-    "node_modules/@smithy/util-base64/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-base64/dist-es/index.js"() {
       import_polyfills105 = __toESM(require_polyfills());
       init_fromBase64_browser();
       init_toBase64_browser();
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
+  // ../../node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js
   var import_polyfills106, Uint8ArrayBlobAdapter;
   var init_Uint8ArrayBlobAdapter = __esm({
-    "node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/blob/Uint8ArrayBlobAdapter.js"() {
       import_polyfills106 = __toESM(require_polyfills());
       init_dist_es7();
       init_dist_es6();
@@ -25107,10 +25107,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js
   var import_polyfills107, ReadableStreamRef, ChecksumStream;
   var init_ChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/checksum/ChecksumStream.browser.js"() {
       import_polyfills107 = __toESM(require_polyfills());
       ReadableStreamRef = typeof ReadableStream === "function" ? ReadableStream : function() {
       };
@@ -25119,19 +25119,19 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/stream-type-check.js
+  // ../../node_modules/@smithy/util-stream/dist-es/stream-type-check.js
   var import_polyfills108, isReadableStream;
   var init_stream_type_check = __esm({
-    "node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/stream-type-check.js"() {
       import_polyfills108 = __toESM(require_polyfills());
       isReadableStream = (stream) => typeof ReadableStream === "function" && (stream?.constructor?.name === ReadableStream.name || stream instanceof ReadableStream);
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js
   var import_polyfills109, createChecksumStream;
   var init_createChecksumStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/checksum/createChecksumStream.browser.js"() {
       import_polyfills109 = __toESM(require_polyfills());
       init_dist_es7();
       init_stream_type_check();
@@ -25170,10 +25170,10 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
+  // ../../node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js
   var import_polyfills110, ByteArrayCollector;
   var init_ByteArrayCollector = __esm({
-    "node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/ByteArrayCollector.js"() {
       import_polyfills110 = __toESM(require_polyfills());
       ByteArrayCollector = class {
         allocByteArray;
@@ -25210,7 +25210,7 @@
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
+  // ../../node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js
   function createBufferedReadableStream(upstream, size, logger2) {
     const reader = upstream.getReader();
     let streamBufferingLoggedWarning = false;
@@ -25303,17 +25303,17 @@
   }
   var import_polyfills111, createBufferedReadable;
   var init_createBufferedReadableStream = __esm({
-    "node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/createBufferedReadableStream.js"() {
       import_polyfills111 = __toESM(require_polyfills());
       init_ByteArrayCollector();
       createBufferedReadable = createBufferedReadableStream;
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js
   var import_polyfills112, getAwsChunkedEncodingStream;
   var init_getAwsChunkedEncodingStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/getAwsChunkedEncodingStream.browser.js"() {
       import_polyfills112 = __toESM(require_polyfills());
       getAwsChunkedEncodingStream = (readableStream, options) => {
         const { base64Encoder, bodyLengthChecker, checksumAlgorithmFn, checksumLocationName, streamHasher } = options;
@@ -25345,43 +25345,43 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/headStream.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/headStream.browser.js
   var import_polyfills113;
   var init_headStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/headStream.browser.js"() {
       import_polyfills113 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
+  // ../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js
   var import_polyfills114, escapeUri, hexEncode;
   var init_escape_uri = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
+    "../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri.js"() {
       import_polyfills114 = __toESM(require_polyfills());
       escapeUri = (uri) => encodeURIComponent(uri).replace(/[!'()*]/g, hexEncode);
       hexEncode = (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`;
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
+  // ../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js
   var import_polyfills115;
   var init_escape_uri_path = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
+    "../../node_modules/@smithy/util-uri-escape/dist-es/escape-uri-path.js"() {
       import_polyfills115 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-uri-escape/dist-es/index.js
+  // ../../node_modules/@smithy/util-uri-escape/dist-es/index.js
   var import_polyfills116;
   var init_dist_es8 = __esm({
-    "node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-uri-escape/dist-es/index.js"() {
       import_polyfills116 = __toESM(require_polyfills());
       init_escape_uri();
       init_escape_uri_path();
     }
   });
 
-  // node_modules/@smithy/querystring-builder/dist-es/index.js
+  // ../../node_modules/@smithy/querystring-builder/dist-es/index.js
   function buildQueryString(query) {
     const parts = [];
     for (let key of Object.keys(query).sort()) {
@@ -25403,24 +25403,24 @@ ${value}\r
   }
   var import_polyfills117;
   var init_dist_es9 = __esm({
-    "node_modules/@smithy/querystring-builder/dist-es/index.js"() {
+    "../../node_modules/@smithy/querystring-builder/dist-es/index.js"() {
       import_polyfills117 = __toESM(require_polyfills());
       init_dist_es8();
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
+  // ../../node_modules/@smithy/fetch-http-handler/dist-es/create-request.js
   function createRequest(url, requestOptions) {
     return new Request(url, requestOptions);
   }
   var import_polyfills118;
   var init_create_request = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
+    "../../node_modules/@smithy/fetch-http-handler/dist-es/create-request.js"() {
       import_polyfills118 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
+  // ../../node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js
   function requestTimeout(timeoutInMs = 0) {
     return new Promise((resolve, reject) => {
       if (timeoutInMs) {
@@ -25434,12 +25434,12 @@ ${value}\r
   }
   var import_polyfills119;
   var init_request_timeout = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
+    "../../node_modules/@smithy/fetch-http-handler/dist-es/request-timeout.js"() {
       import_polyfills119 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
+  // ../../node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js
   function buildAbortError(abortSignal) {
     const reason = abortSignal && typeof abortSignal === "object" && "reason" in abortSignal ? abortSignal.reason : void 0;
     if (reason) {
@@ -25459,7 +25459,7 @@ ${value}\r
   }
   var import_polyfills120, keepAliveSupport, FetchHttpHandler;
   var init_fetch_http_handler = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
+    "../../node_modules/@smithy/fetch-http-handler/dist-es/fetch-http-handler.js"() {
       import_polyfills120 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es9();
@@ -25602,7 +25602,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
+  // ../../node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js
   async function collectBlob(blob) {
     const base64 = await readToBase64(blob);
     const arrayBuffer = fromBase64(base64);
@@ -25648,7 +25648,7 @@ ${value}\r
   }
   var import_polyfills121, streamCollector;
   var init_stream_collector = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
+    "../../node_modules/@smithy/fetch-http-handler/dist-es/stream-collector.js"() {
       import_polyfills121 = __toESM(require_polyfills());
       init_dist_es7();
       streamCollector = async (stream) => {
@@ -25663,17 +25663,17 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/fetch-http-handler/dist-es/index.js
+  // ../../node_modules/@smithy/fetch-http-handler/dist-es/index.js
   var import_polyfills122;
   var init_dist_es10 = __esm({
-    "node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
+    "../../node_modules/@smithy/fetch-http-handler/dist-es/index.js"() {
       import_polyfills122 = __toESM(require_polyfills());
       init_fetch_http_handler();
       init_stream_collector();
     }
   });
 
-  // node_modules/@smithy/util-hex-encoding/dist-es/index.js
+  // ../../node_modules/@smithy/util-hex-encoding/dist-es/index.js
   function fromHex(encoded) {
     if (encoded.length % 2 !== 0) {
       throw new Error("Hex encoded strings must have an even number length");
@@ -25698,7 +25698,7 @@ ${value}\r
   }
   var import_polyfills123, SHORT_TO_HEX, HEX_TO_SHORT;
   var init_dist_es11 = __esm({
-    "node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-hex-encoding/dist-es/index.js"() {
       import_polyfills123 = __toESM(require_polyfills());
       SHORT_TO_HEX = {};
       HEX_TO_SHORT = {};
@@ -25713,10 +25713,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js
   var import_polyfills124, ERR_MSG_STREAM_HAS_BEEN_TRANSFORMED, sdkStreamMixin, isBlobInstance;
   var init_sdk_stream_mixin_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/sdk-stream-mixin.browser.js"() {
       import_polyfills124 = __toESM(require_polyfills());
       init_dist_es10();
       init_dist_es7();
@@ -25778,18 +25778,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
+  // ../../node_modules/@smithy/util-stream/dist-es/splitStream.browser.js
   var import_polyfills125;
   var init_splitStream_browser = __esm({
-    "node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/splitStream.browser.js"() {
       import_polyfills125 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-stream/dist-es/index.js
+  // ../../node_modules/@smithy/util-stream/dist-es/index.js
   var import_polyfills126;
   var init_dist_es12 = __esm({
-    "node_modules/@smithy/util-stream/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-stream/dist-es/index.js"() {
       import_polyfills126 = __toESM(require_polyfills());
       init_Uint8ArrayBlobAdapter();
       init_ChecksumStream_browser();
@@ -25802,10 +25802,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js
   var import_polyfills127, getChecksumAlgorithmForRequest;
   var init_getChecksumAlgorithmForRequest = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmForRequest.js"() {
       import_polyfills127 = __toESM(require_polyfills());
       init_constants();
       getChecksumAlgorithmForRequest = (input, { requestChecksumRequired, requestAlgorithmMember, requestChecksumCalculation }) => {
@@ -25821,20 +25821,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js
   var import_polyfills128, getChecksumLocationName;
   var init_getChecksumLocationName = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumLocationName.js"() {
       import_polyfills128 = __toESM(require_polyfills());
       init_constants();
       getChecksumLocationName = (algorithm) => algorithm === ChecksumAlgorithm.MD5 ? "content-md5" : `x-amz-checksum-${algorithm.toLowerCase()}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js
   var import_polyfills129, hasHeader;
   var init_hasHeader = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeader.js"() {
       import_polyfills129 = __toESM(require_polyfills());
       hasHeader = (header, headers) => {
         const soughtHeader = header.toLowerCase();
@@ -25848,10 +25848,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js
   var import_polyfills130, hasHeaderWithPrefix;
   var init_hasHeaderWithPrefix = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/hasHeaderWithPrefix.js"() {
       import_polyfills130 = __toESM(require_polyfills());
       hasHeaderWithPrefix = (headerPrefix, headers) => {
         const soughtHeaderPrefix = headerPrefix.toLowerCase();
@@ -25865,26 +25865,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/is-array-buffer/dist-es/index.js
+  // ../../node_modules/@smithy/is-array-buffer/dist-es/index.js
   var import_polyfills131, isArrayBuffer;
   var init_dist_es13 = __esm({
-    "node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
+    "../../node_modules/@smithy/is-array-buffer/dist-es/index.js"() {
       import_polyfills131 = __toESM(require_polyfills());
       isArrayBuffer = (arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js
   var import_polyfills132, isStreaming;
   var init_isStreaming = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isStreaming.js"() {
       import_polyfills132 = __toESM(require_polyfills());
       init_dist_es13();
       isStreaming = (body) => body !== void 0 && typeof body !== "string" && !ArrayBuffer.isView(body) && !isArrayBuffer(body);
     }
   });
 
-  // node_modules/tslib/tslib.es6.mjs
+  // ../../node_modules/tslib/tslib.es6.mjs
   function __awaiter(thisArg, _arguments, P2, generator) {
     function adopt(value) {
       return value instanceof P2 ? value : new P2(function(resolve) {
@@ -25994,41 +25994,41 @@ ${value}\r
   }
   var import_polyfills133;
   var init_tslib_es6 = __esm({
-    "node_modules/tslib/tslib.es6.mjs"() {
+    "../../node_modules/tslib/tslib.es6.mjs"() {
       import_polyfills133 = __toESM(require_polyfills(), 1);
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills134, fromUtf82;
   var init_fromUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills134 = __toESM(require_polyfills());
       fromUtf82 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills135;
   var init_toUint8Array2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills135 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills136;
   var init_toUtf8_browser2 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills136 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills137;
   var init_dist_es14 = __esm({
-    "node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills137 = __toESM(require_polyfills());
       init_fromUtf8_browser2();
       init_toUint8Array2();
@@ -26036,7 +26036,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/convertToBuffer.js
+  // ../../node_modules/@aws-crypto/util/build/module/convertToBuffer.js
   function convertToBuffer(data) {
     if (data instanceof Uint8Array)
       return data;
@@ -26050,7 +26050,7 @@ ${value}\r
   }
   var import_polyfills138, fromUtf83;
   var init_convertToBuffer = __esm({
-    "node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
+    "../../node_modules/@aws-crypto/util/build/module/convertToBuffer.js"() {
       import_polyfills138 = __toESM(require_polyfills());
       init_dist_es14();
       fromUtf83 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
@@ -26059,7 +26059,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/isEmptyData.js
+  // ../../node_modules/@aws-crypto/util/build/module/isEmptyData.js
   function isEmptyData(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -26068,12 +26068,12 @@ ${value}\r
   }
   var import_polyfills139;
   var init_isEmptyData = __esm({
-    "node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
+    "../../node_modules/@aws-crypto/util/build/module/isEmptyData.js"() {
       import_polyfills139 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/numToUint8.js
+  // ../../node_modules/@aws-crypto/util/build/module/numToUint8.js
   function numToUint8(num) {
     return new Uint8Array([
       (num & 4278190080) >> 24,
@@ -26084,12 +26084,12 @@ ${value}\r
   }
   var import_polyfills140;
   var init_numToUint8 = __esm({
-    "node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
+    "../../node_modules/@aws-crypto/util/build/module/numToUint8.js"() {
       import_polyfills140 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
+  // ../../node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js
   function uint32ArrayFrom(a_lookUpTable2) {
     if (!Uint32Array.from) {
       var return_array = new Uint32Array(a_lookUpTable2.length);
@@ -26104,15 +26104,15 @@ ${value}\r
   }
   var import_polyfills141;
   var init_uint32ArrayFrom = __esm({
-    "node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
+    "../../node_modules/@aws-crypto/util/build/module/uint32ArrayFrom.js"() {
       import_polyfills141 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/util/build/module/index.js
+  // ../../node_modules/@aws-crypto/util/build/module/index.js
   var import_polyfills142;
   var init_module = __esm({
-    "node_modules/@aws-crypto/util/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/util/build/module/index.js"() {
       import_polyfills142 = __toESM(require_polyfills());
       init_convertToBuffer();
       init_isEmptyData();
@@ -26121,10 +26121,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
+  // ../../node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js
   var import_polyfills143, AwsCrc32c;
   var init_aws_crc32c = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
+    "../../node_modules/@aws-crypto/crc32c/build/module/aws_crc32c.js"() {
       import_polyfills143 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26154,10 +26154,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32c/build/module/index.js
+  // ../../node_modules/@aws-crypto/crc32c/build/module/index.js
   var import_polyfills144, Crc32c, a_lookupTable, lookupTable;
   var init_module2 = __esm({
-    "node_modules/@aws-crypto/crc32c/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/crc32c/build/module/index.js"() {
       import_polyfills144 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26452,10 +26452,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
+  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js
   var import_polyfills145, generateCRC64NVMETable, CRC64_NVME_REVERSED_TABLE, t0, t1, t2, t3, t4, t5, t6, t7, ensureTablesInitialized, Crc64Nvme;
   var init_Crc64Nvme = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
+    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/Crc64Nvme.js"() {
       import_polyfills145 = __toESM(require_polyfills());
       generateCRC64NVMETable = () => {
         const sliceLength = 8;
@@ -26540,10 +26540,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
+  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js
   var import_polyfills146, crc64NvmeCrtContainer;
   var init_crc64_nvme_crt_container = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
+    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/crc64-nvme-crt-container.js"() {
       import_polyfills146 = __toESM(require_polyfills());
       crc64NvmeCrtContainer = {
         CrtCrc64Nvme: null
@@ -26551,20 +26551,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
+  // ../../node_modules/@aws-sdk/crc64-nvme/dist-es/index.js
   var import_polyfills147;
   var init_dist_es15 = __esm({
-    "node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/crc64-nvme/dist-es/index.js"() {
       import_polyfills147 = __toESM(require_polyfills());
       init_Crc64Nvme();
       init_crc64_nvme_crt_container();
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
+  // ../../node_modules/@aws-crypto/crc32/build/module/aws_crc32.js
   var import_polyfills148, AwsCrc32;
   var init_aws_crc32 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
+    "../../node_modules/@aws-crypto/crc32/build/module/aws_crc32.js"() {
       import_polyfills148 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26594,10 +26594,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-crypto/crc32/build/module/index.js
+  // ../../node_modules/@aws-crypto/crc32/build/module/index.js
   var import_polyfills149, Crc32, a_lookUpTable, lookupTable2;
   var init_module3 = __esm({
-    "node_modules/@aws-crypto/crc32/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/crc32/build/module/index.js"() {
       import_polyfills149 = __toESM(require_polyfills());
       init_tslib_es6();
       init_module();
@@ -26892,20 +26892,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js
   var import_polyfills150, getCrc32ChecksumAlgorithmFunction;
   var init_getCrc32ChecksumAlgorithmFunction_browser = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getCrc32ChecksumAlgorithmFunction.browser.js"() {
       import_polyfills150 = __toESM(require_polyfills());
       init_module3();
       getCrc32ChecksumAlgorithmFunction = () => AwsCrc32;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js
   var import_polyfills151, CLIENT_SUPPORTED_ALGORITHMS, PRIORITY_ORDER_ALGORITHMS;
   var init_types3 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/types.js"() {
       import_polyfills151 = __toESM(require_polyfills());
       init_constants();
       CLIENT_SUPPORTED_ALGORITHMS = [
@@ -26925,10 +26925,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js
   var import_polyfills152, selectChecksumAlgorithmFunction;
   var init_selectChecksumAlgorithmFunction = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/selectChecksumAlgorithmFunction.js"() {
       import_polyfills152 = __toESM(require_polyfills());
       init_module2();
       init_dist_es15();
@@ -26963,10 +26963,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js
   var import_polyfills153, stringHasher;
   var init_stringHasher = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/stringHasher.js"() {
       import_polyfills153 = __toESM(require_polyfills());
       init_dist_es6();
       stringHasher = (checksumAlgorithmFn, body) => {
@@ -26977,10 +26977,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js
   var import_polyfills154, flexibleChecksumsMiddlewareOptions, flexibleChecksumsMiddleware;
   var init_flexibleChecksumsMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsMiddleware.js"() {
       import_polyfills154 = __toESM(require_polyfills());
       init_client2();
       init_dist_es2();
@@ -27100,10 +27100,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js
   var import_polyfills155, flexibleChecksumsInputMiddlewareOptions, flexibleChecksumsInputMiddleware;
   var init_flexibleChecksumsInputMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsInputMiddleware.js"() {
       import_polyfills155 = __toESM(require_polyfills());
       init_client2();
       init_constants();
@@ -27145,10 +27145,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js
   var import_polyfills156, getChecksumAlgorithmListForResponse;
   var init_getChecksumAlgorithmListForResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksumAlgorithmListForResponse.js"() {
       import_polyfills156 = __toESM(require_polyfills());
       init_types3();
       getChecksumAlgorithmListForResponse = (responseAlgorithms = []) => {
@@ -27167,10 +27167,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js
   var import_polyfills157, isChecksumWithPartNumber;
   var init_isChecksumWithPartNumber = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/isChecksumWithPartNumber.js"() {
       import_polyfills157 = __toESM(require_polyfills());
       isChecksumWithPartNumber = (checksum) => {
         const lastHyphenIndex = checksum.lastIndexOf("-");
@@ -27188,20 +27188,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js
   var import_polyfills158, getChecksum;
   var init_getChecksum = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getChecksum.js"() {
       import_polyfills158 = __toESM(require_polyfills());
       init_stringHasher();
       getChecksum = async (body, { checksumAlgorithmFn, base64Encoder }) => base64Encoder(await stringHasher(checksumAlgorithmFn, body));
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js
   var import_polyfills159, validateChecksumFromResponse;
   var init_validateChecksumFromResponse = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/validateChecksumFromResponse.js"() {
       import_polyfills159 = __toESM(require_polyfills());
       init_dist_es12();
       init_constants();
@@ -27249,10 +27249,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js
   var import_polyfills160, flexibleChecksumsResponseMiddlewareOptions, flexibleChecksumsResponseMiddleware;
   var init_flexibleChecksumsResponseMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/flexibleChecksumsResponseMiddleware.js"() {
       import_polyfills160 = __toESM(require_polyfills());
       init_dist_es2();
       init_getChecksumAlgorithmListForResponse();
@@ -27303,10 +27303,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js
   var import_polyfills161, getFlexibleChecksumsPlugin;
   var init_getFlexibleChecksumsPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/getFlexibleChecksumsPlugin.js"() {
       import_polyfills161 = __toESM(require_polyfills());
       init_flexibleChecksumsInputMiddleware();
       init_flexibleChecksumsMiddleware();
@@ -27321,20 +27321,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
+  // ../../node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js
   var import_polyfills162, getSmithyContext;
   var init_getSmithyContext = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
+    "../../node_modules/@smithy/util-middleware/dist-es/getSmithyContext.js"() {
       import_polyfills162 = __toESM(require_polyfills());
       init_dist_es();
       getSmithyContext = (context) => context[SMITHY_CONTEXT_KEY] || (context[SMITHY_CONTEXT_KEY] = {});
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
+  // ../../node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js
   var import_polyfills163, normalizeProvider;
   var init_normalizeProvider = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
+    "../../node_modules/@smithy/util-middleware/dist-es/normalizeProvider.js"() {
       import_polyfills163 = __toESM(require_polyfills());
       normalizeProvider = (input) => {
         if (typeof input === "function")
@@ -27345,20 +27345,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/util-middleware/dist-es/index.js
+  // ../../node_modules/@smithy/util-middleware/dist-es/index.js
   var import_polyfills164;
   var init_dist_es16 = __esm({
-    "node_modules/@smithy/util-middleware/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-middleware/dist-es/index.js"() {
       import_polyfills164 = __toESM(require_polyfills());
       init_getSmithyContext();
       init_normalizeProvider();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js
   var import_polyfills165, resolveFlexibleChecksumsConfig;
   var init_resolveFlexibleChecksumsConfig = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/resolveFlexibleChecksumsConfig.js"() {
       import_polyfills165 = __toESM(require_polyfills());
       init_dist_es16();
       init_constants();
@@ -27374,10 +27374,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js
   var import_polyfills166;
   var init_dist_es17 = __esm({
-    "node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-es/index.js"() {
       import_polyfills166 = __toESM(require_polyfills());
       init_NODE_REQUEST_CHECKSUM_CALCULATION_CONFIG_OPTIONS();
       init_NODE_RESPONSE_CHECKSUM_VALIDATION_CONFIG_OPTIONS();
@@ -27388,13 +27388,13 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-host-header/dist-es/index.js
   function resolveHostHeaderConfig(input) {
     return input;
   }
   var import_polyfills167, hostHeaderMiddleware, hostHeaderMiddlewareOptions, getHostHeaderPlugin;
   var init_dist_es18 = __esm({
-    "node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-host-header/dist-es/index.js"() {
       import_polyfills167 = __toESM(require_polyfills());
       init_dist_es2();
       hostHeaderMiddleware = (options) => (next) => async (args) => {
@@ -27428,10 +27428,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js
   var import_polyfills168, loggerMiddleware, loggerMiddlewareOptions, getLoggerPlugin;
   var init_loggerMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-logger/dist-es/loggerMiddleware.js"() {
       import_polyfills168 = __toESM(require_polyfills());
       loggerMiddleware = () => (next, context) => async (args) => {
         try {
@@ -27477,19 +27477,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-logger/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-logger/dist-es/index.js
   var import_polyfills169;
   var init_dist_es19 = __esm({
-    "node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-logger/dist-es/index.js"() {
       import_polyfills169 = __toESM(require_polyfills());
       init_loggerMiddleware();
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
+  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js
   var import_polyfills170, recursionDetectionMiddlewareOptions;
   var init_configuration = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
+    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/configuration.js"() {
       import_polyfills170 = __toESM(require_polyfills());
       recursionDetectionMiddlewareOptions = {
         step: "build",
@@ -27501,19 +27501,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
+  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js
   var import_polyfills171, recursionDetectionMiddleware;
   var init_recursionDetectionMiddleware_browser = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
+    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/recursionDetectionMiddleware.browser.js"() {
       import_polyfills171 = __toESM(require_polyfills());
       recursionDetectionMiddleware = () => (next) => async (args) => next(args);
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
+  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js
   var import_polyfills172, getRecursionDetectionPlugin;
   var init_getRecursionDetectionPlugin = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
+    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/getRecursionDetectionPlugin.js"() {
       import_polyfills172 = __toESM(require_polyfills());
       init_configuration();
       init_recursionDetectionMiddleware_browser();
@@ -27525,20 +27525,20 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js
   var import_polyfills173;
   var init_dist_es20 = __esm({
-    "node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-recursion-detection/dist-es/index.js"() {
       import_polyfills173 = __toESM(require_polyfills());
       init_getRecursionDetectionPlugin();
       init_recursionDetectionMiddleware_browser();
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
+  // ../../node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js
   var import_polyfills174, getAllAliases, getMiddlewareNameWithAliases, constructStack, stepWeights, priorityWeights;
   var init_MiddlewareStack = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
+    "../../node_modules/@smithy/middleware-stack/dist-es/MiddlewareStack.js"() {
       import_polyfills174 = __toESM(require_polyfills());
       getAllAliases = (name, aliases) => {
         const _aliases = [];
@@ -27806,19 +27806,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/middleware-stack/dist-es/index.js
+  // ../../node_modules/@smithy/middleware-stack/dist-es/index.js
   var import_polyfills175;
   var init_dist_es21 = __esm({
-    "node_modules/@smithy/middleware-stack/dist-es/index.js"() {
+    "../../node_modules/@smithy/middleware-stack/dist-es/index.js"() {
       import_polyfills175 = __toESM(require_polyfills());
       init_MiddlewareStack();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/client.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/client.js
   var import_polyfills176, Client;
   var init_client3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/client.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/client.js"() {
       import_polyfills176 = __toESM(require_polyfills());
       init_dist_es21();
       Client = class {
@@ -27870,10 +27870,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js
   var import_polyfills177, collectBody;
   var init_collect_stream_body = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/collect-stream-body.js"() {
       import_polyfills177 = __toESM(require_polyfills());
       init_dist_es12();
       collectBody = async (streamBody = new Uint8Array(), context) => {
@@ -27889,7 +27889,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js
   function extendedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
       return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
@@ -27897,15 +27897,15 @@ ${value}\r
   }
   var import_polyfills178;
   var init_extended_encode_uri_component = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/extended-encode-uri-component.js"() {
       import_polyfills178 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/deref.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/deref.js
   var import_polyfills179, deref;
   var init_deref = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/deref.js"() {
       import_polyfills179 = __toESM(require_polyfills());
       deref = (schemaRef) => {
         if (typeof schemaRef === "function") {
@@ -27916,10 +27916,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js
   var import_polyfills180, operation;
   var init_operation = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/operation.js"() {
       import_polyfills180 = __toESM(require_polyfills());
       operation = (namespace, name, traits, input, output) => ({
         name,
@@ -27931,10 +27931,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js
   var import_polyfills181, schemaDeserializationMiddleware, findHeader;
   var init_schemaDeserializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaDeserializationMiddleware.js"() {
       import_polyfills181 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es16();
@@ -28000,7 +28000,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/querystring-parser/dist-es/index.js
+  // ../../node_modules/@smithy/querystring-parser/dist-es/index.js
   function parseQueryString(querystring) {
     const query = {};
     querystring = querystring.replace(/^\?/, "");
@@ -28024,15 +28024,15 @@ ${value}\r
   }
   var import_polyfills182;
   var init_dist_es22 = __esm({
-    "node_modules/@smithy/querystring-parser/dist-es/index.js"() {
+    "../../node_modules/@smithy/querystring-parser/dist-es/index.js"() {
       import_polyfills182 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/url-parser/dist-es/index.js
+  // ../../node_modules/@smithy/url-parser/dist-es/index.js
   var import_polyfills183, parseUrl;
   var init_dist_es23 = __esm({
-    "node_modules/@smithy/url-parser/dist-es/index.js"() {
+    "../../node_modules/@smithy/url-parser/dist-es/index.js"() {
       import_polyfills183 = __toESM(require_polyfills());
       init_dist_es22();
       parseUrl = (url) => {
@@ -28055,10 +28055,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js
   var import_polyfills184, toEndpointV1;
   var init_toEndpointV1 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/endpoints/toEndpointV1.js"() {
       import_polyfills184 = __toESM(require_polyfills());
       init_dist_es23();
       toEndpointV1 = (endpoint) => {
@@ -28080,19 +28080,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/endpoints/index.js
   var import_polyfills185;
   var init_endpoints2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/endpoints/index.js"() {
       import_polyfills185 = __toESM(require_polyfills());
       init_toEndpointV1();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js
   var import_polyfills186, schemaSerializationMiddleware;
   var init_schemaSerializationMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/schemaSerializationMiddleware.js"() {
       import_polyfills186 = __toESM(require_polyfills());
       init_endpoints2();
       init_dist_es16();
@@ -28114,7 +28114,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js
   function getSchemaSerdePlugin(config) {
     return {
       applyToStack: (commandStack) => {
@@ -28126,7 +28126,7 @@ ${value}\r
   }
   var import_polyfills187, deserializerMiddlewareOption, serializerMiddlewareOption;
   var init_getSchemaSerdePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/middleware/getSchemaSerdePlugin.js"() {
       import_polyfills187 = __toESM(require_polyfills());
       init_schemaDeserializationMiddleware();
       init_schemaSerializationMiddleware();
@@ -28145,55 +28145,55 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js
   var import_polyfills188;
   var init_Schema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/Schema.js"() {
       import_polyfills188 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js
   var import_polyfills189;
   var init_ListSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ListSchema.js"() {
       import_polyfills189 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js
   var import_polyfills190;
   var init_MapSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/MapSchema.js"() {
       import_polyfills190 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js
   var import_polyfills191;
   var init_OperationSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/OperationSchema.js"() {
       import_polyfills191 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js
   var import_polyfills192;
   var init_StructureSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/StructureSchema.js"() {
       import_polyfills192 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js
   var import_polyfills193;
   var init_ErrorSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/ErrorSchema.js"() {
       import_polyfills193 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js
   function translateTraits(indicator) {
     if (typeof indicator === "object") {
       return indicator;
@@ -28221,13 +28221,13 @@ ${value}\r
   }
   var import_polyfills194, traitsCache;
   var init_translateTraits = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/translateTraits.js"() {
       import_polyfills194 = __toESM(require_polyfills());
       traitsCache = [];
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js
   function member(memberSchema, memberName) {
     if (memberSchema instanceof NormalizedSchema) {
       return Object.assign(memberSchema, {
@@ -28240,7 +28240,7 @@ ${value}\r
   }
   var import_polyfills195, anno, simpleSchemaCacheN, simpleSchemaCacheS, NormalizedSchema, isMemberSchema, isStaticSchema;
   var init_NormalizedSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/NormalizedSchema.js"() {
       import_polyfills195 = __toESM(require_polyfills());
       init_deref();
       init_translateTraits();
@@ -28517,26 +28517,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js
   var import_polyfills196;
   var init_SimpleSchema = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/SimpleSchema.js"() {
       import_polyfills196 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js
   var import_polyfills197;
   var init_sentinels2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/schemas/sentinels.js"() {
       import_polyfills197 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js
   var import_polyfills198, TypeRegistry;
   var init_TypeRegistry = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/TypeRegistry.js"() {
       import_polyfills198 = __toESM(require_polyfills());
       TypeRegistry = class _TypeRegistry {
         namespace;
@@ -28630,10 +28630,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/schema/index.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/schema/index.js
   var import_polyfills199;
   var init_schema2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/schema/index.js"() {
       import_polyfills199 = __toESM(require_polyfills());
       init_deref();
       init_getSchemaSerdePlugin();
@@ -28652,18 +28652,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js
   var import_polyfills200;
   var init_copyDocumentWithTransform = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/copyDocumentWithTransform.js"() {
       import_polyfills200 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js
   var import_polyfills201, expectNumber, MAX_FLOAT, expectFloat32, expectLong, expectShort, expectByte, expectSizedInt, castInt, strictParseFloat32, NUMBER_REGEX, parseNumber, strictParseShort, strictParseByte, stackTraceWarning, logger;
   var init_parse_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/parse-utils.js"() {
       import_polyfills201 = __toESM(require_polyfills());
       expectNumber = (value) => {
         if (value === null || value === void 0) {
@@ -28756,7 +28756,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js
   function dateToUtcString(date2) {
     const year2 = date2.getUTCFullYear();
     const month = date2.getUTCMonth();
@@ -28773,7 +28773,7 @@ ${value}\r
   }
   var import_polyfills202, DAYS, MONTHS, RFC3339, RFC3339_WITH_OFFSET, IMF_FIXDATE, RFC_850_DATE, ASC_TIME, parseRfc7231DateTime, buildDate, parseTwoDigitYear, FIFTY_YEARS_IN_MILLIS, adjustRfc850Year, parseMonthByShortName, DAYS_IN_MONTH, validateDayOfMonth, isLeapYear, parseDateValue, parseMilliseconds, stripLeadingZeroes;
   var init_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/date-utils.js"() {
       import_polyfills202 = __toESM(require_polyfills());
       init_parse_utils();
       DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -28878,19 +28878,19 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
+  // ../../node_modules/@smithy/uuid/dist-es/randomUUID.browser.js
   var import_polyfills203, randomUUID;
   var init_randomUUID_browser = __esm({
-    "node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
+    "../../node_modules/@smithy/uuid/dist-es/randomUUID.browser.js"() {
       import_polyfills203 = __toESM(require_polyfills());
       randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/v4.js
+  // ../../node_modules/@smithy/uuid/dist-es/v4.js
   var import_polyfills204, decimalToHex, v4;
   var init_v4 = __esm({
-    "node_modules/@smithy/uuid/dist-es/v4.js"() {
+    "../../node_modules/@smithy/uuid/dist-es/v4.js"() {
       import_polyfills204 = __toESM(require_polyfills());
       init_randomUUID_browser();
       decimalToHex = Array.from({ length: 256 }, (_, i2) => i2.toString(16).padStart(2, "0"));
@@ -28907,28 +28907,28 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/uuid/dist-es/index.js
+  // ../../node_modules/@smithy/uuid/dist-es/index.js
   var import_polyfills205;
   var init_dist_es24 = __esm({
-    "node_modules/@smithy/uuid/dist-es/index.js"() {
+    "../../node_modules/@smithy/uuid/dist-es/index.js"() {
       import_polyfills205 = __toESM(require_polyfills());
       init_v4();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js
   var import_polyfills206;
   var init_generateIdempotencyToken = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/generateIdempotencyToken.js"() {
       import_polyfills206 = __toESM(require_polyfills());
       init_dist_es24();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js
   var import_polyfills207, LazyJsonString;
   var init_lazy_json = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/lazy-json.js"() {
       import_polyfills207 = __toESM(require_polyfills());
       LazyJsonString = function LazyJsonString2(val) {
         const str = Object.assign(new String(val), {
@@ -28956,7 +28956,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js
   function quoteHeader(part) {
     if (part.includes(",") || part.includes('"')) {
       part = `"${part.replace(/"/g, '\\"')}"`;
@@ -28965,12 +28965,12 @@ ${value}\r
   }
   var import_polyfills208;
   var init_quote_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/quote-header.js"() {
       import_polyfills208 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js
   function range(v2, min, max) {
     const _v = Number(v2);
     if (_v < min || _v > max) {
@@ -28979,7 +28979,7 @@ ${value}\r
   }
   var import_polyfills209, ddd, mmm, time, date, year, RFC3339_WITH_OFFSET2, IMF_FIXDATE2, RFC_850_DATE2, ASC_TIME2, months, _parseEpochTimestamp, _parseRfc3339DateTimeWithOffset, _parseRfc7231DateTime;
   var init_schema_date_utils = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/schema-serde-lib/schema-date-utils.js"() {
       import_polyfills209 = __toESM(require_polyfills());
       ddd = `(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)(?:[ne|u?r]?s?day)?`;
       mmm = `(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)`;
@@ -29075,7 +29075,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/split-every.js
   function splitEvery(value, delimiter, numDelimiters) {
     if (numDelimiters <= 0 || !Number.isInteger(numDelimiters)) {
       throw new Error("Invalid number of delimiters (" + numDelimiters + ") for splitEvery.");
@@ -29104,15 +29104,15 @@ ${value}\r
   }
   var import_polyfills210;
   var init_split_every = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/split-every.js"() {
       import_polyfills210 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/split-header.js
   var import_polyfills211, splitHeader;
   var init_split_header = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/split-header.js"() {
       import_polyfills211 = __toESM(require_polyfills());
       splitHeader = (value) => {
         const z2 = value.length;
@@ -29154,10 +29154,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js
   var import_polyfills212, format, NumericValue;
   var init_NumericValue = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/value/NumericValue.js"() {
       import_polyfills212 = __toESM(require_polyfills());
       format = /^-?\d*(\.\d+)?$/;
       NumericValue = class _NumericValue {
@@ -29184,10 +29184,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/serde/index.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/serde/index.js
   var import_polyfills213;
   var init_serde2 = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/serde/index.js"() {
       import_polyfills213 = __toESM(require_polyfills());
       init_copyDocumentWithTransform();
       init_date_utils();
@@ -29202,10 +29202,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js
   var import_polyfills214, SerdeContext;
   var init_SerdeContext = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/SerdeContext.js"() {
       import_polyfills214 = __toESM(require_polyfills());
       SerdeContext = class {
         serdeContext;
@@ -29216,10 +29216,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js
   var import_polyfills215, EventStreamSerde;
   var init_EventStreamSerde = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/event-streams/EventStreamSerde.js"() {
       import_polyfills215 = __toESM(require_polyfills());
       init_dist_es6();
       EventStreamSerde = class {
@@ -29467,23 +29467,23 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/event-streams/index.js
   var event_streams_exports = {};
   __export(event_streams_exports, {
     EventStreamSerde: () => EventStreamSerde
   });
   var import_polyfills216;
   var init_event_streams = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/event-streams/index.js"() {
       import_polyfills216 = __toESM(require_polyfills());
       init_EventStreamSerde();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js
   var import_polyfills217, HttpProtocol;
   var init_HttpProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpProtocol.js"() {
       import_polyfills217 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es2();
@@ -29629,10 +29629,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js
   var import_polyfills218, HttpBindingProtocol;
   var init_HttpBindingProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/HttpBindingProtocol.js"() {
       import_polyfills218 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -29906,31 +29906,31 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js
   var import_polyfills219;
   var init_RpcProtocol = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/RpcProtocol.js"() {
       import_polyfills219 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js
   var import_polyfills220;
   var init_resolve_path = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/resolve-path.js"() {
       import_polyfills220 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js
   var import_polyfills221;
   var init_requestBuilder = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/requestBuilder.js"() {
       import_polyfills221 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js
   function determineTimestampFormat(ns, settings) {
     if (settings.timestampFormat.useTrait) {
       if (ns.isTimestampSchema() && (ns.getSchema() === 5 || ns.getSchema() === 6 || ns.getSchema() === 7)) {
@@ -29943,15 +29943,15 @@ ${value}\r
   }
   var import_polyfills222;
   var init_determineTimestampFormat = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/determineTimestampFormat.js"() {
       import_polyfills222 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js
   var import_polyfills223, FromStringShapeDeserializer;
   var init_FromStringShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/FromStringShapeDeserializer.js"() {
       import_polyfills223 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -30022,10 +30022,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js
   var import_polyfills224, HttpInterceptingShapeDeserializer;
   var init_HttpInterceptingShapeDeserializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeDeserializer.js"() {
       import_polyfills224 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es6();
@@ -30071,10 +30071,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js
   var import_polyfills225, ToStringShapeSerializer;
   var init_ToStringShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/ToStringShapeSerializer.js"() {
       import_polyfills225 = __toESM(require_polyfills());
       init_schema2();
       init_serde2();
@@ -30169,10 +30169,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js
   var import_polyfills226, HttpInterceptingShapeSerializer;
   var init_HttpInterceptingShapeSerializer = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/serde/HttpInterceptingShapeSerializer.js"() {
       import_polyfills226 = __toESM(require_polyfills());
       init_schema2();
       init_ToStringShapeSerializer();
@@ -30210,10 +30210,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/core/dist-es/submodules/protocols/index.js
+  // ../../node_modules/@smithy/core/dist-es/submodules/protocols/index.js
   var import_polyfills227;
   var init_protocols = __esm({
-    "node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/submodules/protocols/index.js"() {
       import_polyfills227 = __toESM(require_polyfills());
       init_collect_stream_body();
       init_extended_encode_uri_component();
@@ -30231,15 +30231,15 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js
   var import_polyfills228;
   var init_collect_stream_body2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/collect-stream-body.js"() {
       import_polyfills228 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js
   function schemaLogFilter(schema, data) {
     if (data == null) {
       return data;
@@ -30272,17 +30272,17 @@ ${value}\r
   }
   var import_polyfills229, SENSITIVE_STRING;
   var init_schemaLogFilter = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/schemaLogFilter.js"() {
       import_polyfills229 = __toESM(require_polyfills());
       init_schema2();
       SENSITIVE_STRING = "***SensitiveInformation***";
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/command.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/command.js
   var import_polyfills230, Command, ClassBuilder;
   var init_command2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/command.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/command.js"() {
       import_polyfills230 = __toESM(require_polyfills());
       init_dist_es21();
       init_dist_es();
@@ -30419,18 +30419,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/constants.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/constants.js
   var import_polyfills231;
   var init_constants4 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/constants.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/constants.js"() {
       import_polyfills231 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js
   var import_polyfills232, createAggregatedClient;
   var init_create_aggregated_client = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/create-aggregated-client.js"() {
       import_polyfills232 = __toESM(require_polyfills());
       createAggregatedClient = (commands2, Client2, options) => {
         for (const [command, CommandCtor] of Object.entries(commands2)) {
@@ -30480,10 +30480,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/exceptions.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/exceptions.js
   var import_polyfills233, ServiceException, decorateServiceException;
   var init_exceptions = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/exceptions.js"() {
       import_polyfills233 = __toESM(require_polyfills());
       ServiceException = class _ServiceException extends Error {
         $fault;
@@ -30533,18 +30533,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/default-error-handler.js
   var import_polyfills234;
   var init_default_error_handler = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/default-error-handler.js"() {
       import_polyfills234 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/defaults-mode.js
   var import_polyfills235, loadConfigsForDefaultMode;
   var init_defaults_mode = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/defaults-mode.js"() {
       import_polyfills235 = __toESM(require_polyfills());
       loadConfigsForDefaultMode = (mode) => {
         switch (mode) {
@@ -30575,26 +30575,26 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
   var import_polyfills236;
   var init_emitWarningIfUnsupportedVersion2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js"() {
       import_polyfills236 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js
   var import_polyfills237;
   var init_extended_encode_uri_component2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/extended-encode-uri-component.js"() {
       import_polyfills237 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js
   var import_polyfills238, knownAlgorithms, getChecksumConfiguration, resolveChecksumRuntimeConfig;
   var init_checksum3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/extensions/checksum.js"() {
       import_polyfills238 = __toESM(require_polyfills());
       init_dist_es();
       knownAlgorithms = Object.values(AlgorithmId);
@@ -30646,10 +30646,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/retry.js
   var import_polyfills239, getRetryConfiguration, resolveRetryRuntimeConfig;
   var init_retry2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/extensions/retry.js"() {
       import_polyfills239 = __toESM(require_polyfills());
       getRetryConfiguration = (runtimeConfig) => {
         return {
@@ -30669,10 +30669,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js
   var import_polyfills240, getDefaultExtensionConfiguration, resolveDefaultRuntimeConfig;
   var init_defaultExtensionConfiguration2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/extensions/defaultExtensionConfiguration.js"() {
       import_polyfills240 = __toESM(require_polyfills());
       init_checksum3();
       init_retry2();
@@ -30685,27 +30685,27 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/extensions/index.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/extensions/index.js
   var import_polyfills241;
   var init_extensions3 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/extensions/index.js"() {
       import_polyfills241 = __toESM(require_polyfills());
       init_defaultExtensionConfiguration2();
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js
   var import_polyfills242;
   var init_get_array_if_single_item = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/get-array-if-single-item.js"() {
       import_polyfills242 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js
   var import_polyfills243, getValueFromTextNode;
   var init_get_value_from_text_node = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/get-value-from-text-node.js"() {
       import_polyfills243 = __toESM(require_polyfills());
       getValueFromTextNode = (obj) => {
         const textNodeName = "#text";
@@ -30721,18 +30721,18 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js
   var import_polyfills244;
   var init_is_serializable_header_value = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/is-serializable-header-value.js"() {
       import_polyfills244 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js
   var import_polyfills245, NoOpLogger;
   var init_NoOpLogger = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/NoOpLogger.js"() {
       import_polyfills245 = __toESM(require_polyfills());
       NoOpLogger = class {
         trace() {
@@ -30749,42 +30749,42 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/object-mapping.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/object-mapping.js
   var import_polyfills246;
   var init_object_mapping = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/object-mapping.js"() {
       import_polyfills246 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/resolve-path.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/resolve-path.js
   var import_polyfills247;
   var init_resolve_path2 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/resolve-path.js"() {
       import_polyfills247 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/ser-utils.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/ser-utils.js
   var import_polyfills248;
   var init_ser_utils = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/ser-utils.js"() {
       import_polyfills248 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/serde-json.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/serde-json.js
   var import_polyfills249;
   var init_serde_json = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/serde-json.js"() {
       import_polyfills249 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/smithy-client/dist-es/index.js
+  // ../../node_modules/@smithy/smithy-client/dist-es/index.js
   var import_polyfills250;
   var init_dist_es25 = __esm({
-    "node_modules/@smithy/smithy-client/dist-es/index.js"() {
+    "../../node_modules/@smithy/smithy-client/dist-es/index.js"() {
       import_polyfills250 = __toESM(require_polyfills());
       init_client3();
       init_collect_stream_body2();
@@ -30809,7 +30809,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js
   function checkContentLengthHeader() {
     return (next, context) => async (args) => {
       const { request } = args;
@@ -30828,7 +30828,7 @@ ${value}\r
   }
   var import_polyfills251, CONTENT_LENGTH_HEADER, DECODED_CONTENT_LENGTH_HEADER, checkContentLengthHeaderMiddlewareOptions, getCheckContentLengthHeaderPlugin;
   var init_check_content_length_header = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/check-content-length-header.js"() {
       import_polyfills251 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es25();
@@ -30848,10 +30848,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js
   var import_polyfills252, regionRedirectEndpointMiddleware, regionRedirectEndpointMiddlewareOptions;
   var init_region_redirect_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-endpoint-middleware.js"() {
       import_polyfills252 = __toESM(require_polyfills());
       regionRedirectEndpointMiddleware = (config) => {
         return (next, context) => async (args) => {
@@ -30897,7 +30897,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js
   function regionRedirectMiddleware(clientConfig) {
     return (next, context) => async (args) => {
       try {
@@ -30926,7 +30926,7 @@ ${value}\r
   }
   var import_polyfills253, regionRedirectMiddlewareOptions, getRegionRedirectMiddlewarePlugin;
   var init_region_redirect_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/region-redirect-middleware.js"() {
       import_polyfills253 = __toESM(require_polyfills());
       init_region_redirect_endpoint_middleware();
       regionRedirectMiddlewareOptions = {
@@ -30944,10 +30944,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js
   var import_polyfills254, s3ExpiresMiddleware, s3ExpiresMiddlewareOptions, getS3ExpiresMiddlewarePlugin;
   var init_s3_expires_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-expires-middleware.js"() {
       import_polyfills254 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es25();
@@ -30984,10 +30984,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js
   var import_polyfills255, S3ExpressIdentityCache;
   var init_S3ExpressIdentityCache = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCache.js"() {
       import_polyfills255 = __toESM(require_polyfills());
       S3ExpressIdentityCache = class _S3ExpressIdentityCache {
         data;
@@ -31031,10 +31031,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js
   var import_polyfills256, S3ExpressIdentityCacheEntry;
   var init_S3ExpressIdentityCacheEntry = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityCacheEntry.js"() {
       import_polyfills256 = __toESM(require_polyfills());
       S3ExpressIdentityCacheEntry = class {
         _identity;
@@ -31053,10 +31053,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js
   var import_polyfills257, S3ExpressIdentityProviderImpl;
   var init_S3ExpressIdentityProviderImpl = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/S3ExpressIdentityProviderImpl.js"() {
       import_polyfills257 = __toESM(require_polyfills());
       init_S3ExpressIdentityCache();
       init_S3ExpressIdentityCacheEntry();
@@ -31110,10 +31110,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/constants.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/constants.js
   var import_polyfills258, ALGORITHM_QUERY_PARAM, CREDENTIAL_QUERY_PARAM, AMZ_DATE_QUERY_PARAM, SIGNED_HEADERS_QUERY_PARAM, EXPIRES_QUERY_PARAM, SIGNATURE_QUERY_PARAM, TOKEN_QUERY_PARAM, AUTH_HEADER, AMZ_DATE_HEADER, DATE_HEADER, GENERATED_HEADERS, SIGNATURE_HEADER, SHA256_HEADER, TOKEN_HEADER, ALWAYS_UNSIGNABLE_HEADERS, PROXY_HEADER_PATTERN, SEC_HEADER_PATTERN, ALGORITHM_IDENTIFIER, EVENT_ALGORITHM_IDENTIFIER, UNSIGNED_PAYLOAD, MAX_CACHE_SIZE, KEY_TYPE_IDENTIFIER, MAX_PRESIGNED_TTL;
   var init_constants5 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/constants.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/constants.js"() {
       import_polyfills258 = __toESM(require_polyfills());
       ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
       CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
@@ -31157,10 +31157,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js
   var import_polyfills259, signingKeyCache, cacheQueue, createScope, getSigningKey, hmac;
   var init_credentialDerivation = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/credentialDerivation.js"() {
       import_polyfills259 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31192,10 +31192,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js
   var import_polyfills260, getCanonicalHeaders;
   var init_getCanonicalHeaders = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/getCanonicalHeaders.js"() {
       import_polyfills260 = __toESM(require_polyfills());
       init_constants5();
       getCanonicalHeaders = ({ headers }, unsignableHeaders, signableHeaders) => {
@@ -31217,10 +31217,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js
   var import_polyfills261, getPayloadHash;
   var init_getPayloadHash = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/getPayloadHash.js"() {
       import_polyfills261 = __toESM(require_polyfills());
       init_dist_es13();
       init_dist_es11();
@@ -31244,7 +31244,7 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js
   function negate(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -31257,7 +31257,7 @@ ${value}\r
   }
   var import_polyfills262, HeaderFormatter, HEADER_VALUE_TYPE, UUID_PATTERN, Int64;
   var init_HeaderFormatter = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/HeaderFormatter.js"() {
       import_polyfills262 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31377,10 +31377,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/headerUtil.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/headerUtil.js
   var import_polyfills263, hasHeader2;
   var init_headerUtil = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/headerUtil.js"() {
       import_polyfills263 = __toESM(require_polyfills());
       hasHeader2 = (soughtHeader, headers) => {
         soughtHeader = soughtHeader.toLowerCase();
@@ -31394,10 +31394,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js
   var import_polyfills264, moveHeadersToQuery;
   var init_moveHeadersToQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/moveHeadersToQuery.js"() {
       import_polyfills264 = __toESM(require_polyfills());
       init_dist_es2();
       moveHeadersToQuery = (request, options = {}) => {
@@ -31418,10 +31418,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/prepareRequest.js
   var import_polyfills265, prepareRequest;
   var init_prepareRequest = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/prepareRequest.js"() {
       import_polyfills265 = __toESM(require_polyfills());
       init_dist_es2();
       init_constants5();
@@ -31437,10 +31437,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js
   var import_polyfills266, getCanonicalQuery;
   var init_getCanonicalQuery = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/getCanonicalQuery.js"() {
       import_polyfills266 = __toESM(require_polyfills());
       init_dist_es8();
       init_constants5();
@@ -31465,10 +31465,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/utilDate.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/utilDate.js
   var import_polyfills267, iso8601, toDate;
   var init_utilDate = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/utilDate.js"() {
       import_polyfills267 = __toESM(require_polyfills());
       iso8601 = (time2) => toDate(time2).toISOString().replace(/\.\d{3}Z$/, "Z");
       toDate = (time2) => {
@@ -31486,10 +31486,10 @@ ${value}\r
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js
   var import_polyfills268, SignatureV4Base;
   var init_SignatureV4Base = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/SignatureV4Base.js"() {
       import_polyfills268 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es16();
@@ -31570,10 +31570,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/SignatureV4.js
   var import_polyfills269, SignatureV4;
   var init_SignatureV4 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/SignatureV4.js"() {
       import_polyfills269 = __toESM(require_polyfills());
       init_dist_es11();
       init_dist_es6();
@@ -31712,10 +31712,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js
   var import_polyfills270, signatureV4aContainer;
   var init_signature_v4a_container = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/signature-v4a-container.js"() {
       import_polyfills270 = __toESM(require_polyfills());
       signatureV4aContainer = {
         SignatureV4a: null
@@ -31723,10 +31723,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/signature-v4/dist-es/index.js
+  // ../../node_modules/@smithy/signature-v4/dist-es/index.js
   var import_polyfills271;
   var init_dist_es26 = __esm({
-    "node_modules/@smithy/signature-v4/dist-es/index.js"() {
+    "../../node_modules/@smithy/signature-v4/dist-es/index.js"() {
       import_polyfills271 = __toESM(require_polyfills());
       init_SignatureV4();
       init_constants5();
@@ -31735,10 +31735,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js
   var import_polyfills272, S3_EXPRESS_BUCKET_TYPE, S3_EXPRESS_BACKEND, S3_EXPRESS_AUTH_SCHEME, SESSION_TOKEN_QUERY_PARAM, SESSION_TOKEN_HEADER;
   var init_constants6 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/constants.js"() {
       import_polyfills272 = __toESM(require_polyfills());
       S3_EXPRESS_BUCKET_TYPE = "Directory";
       S3_EXPRESS_BACKEND = "S3Express";
@@ -31748,7 +31748,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js
   function getCredentialsWithoutSessionToken(credentials) {
     const credentialsWithoutSessionToken = {
       accessKeyId: credentials.accessKeyId,
@@ -31771,7 +31771,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills273, SignatureV4S3Express;
   var init_SignatureV4S3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/classes/SignatureV4S3Express.js"() {
       import_polyfills273 = __toESM(require_polyfills());
       init_dist_es26();
       init_constants6();
@@ -31797,10 +31797,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js
   var import_polyfills274, s3ExpressMiddleware, s3ExpressMiddlewareOptions, getS3ExpressPlugin;
   var init_s3ExpressMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressMiddleware.js"() {
       import_polyfills274 = __toESM(require_polyfills());
       init_client2();
       init_dist_es2();
@@ -31845,18 +31845,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/getSmithyContext.js
+  // ../../node_modules/@smithy/core/dist-es/getSmithyContext.js
   var import_polyfills275;
   var init_getSmithyContext2 = __esm({
-    "node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
+    "../../node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
       import_polyfills275 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js
   var import_polyfills276, resolveAuthOptions;
   var init_resolveAuthOptions = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/resolveAuthOptions.js"() {
       import_polyfills276 = __toESM(require_polyfills());
       resolveAuthOptions = (candidateAuthOptions, authSchemePreference) => {
         if (!authSchemePreference || authSchemePreference.length === 0) {
@@ -31881,7 +31881,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
   function convertHttpAuthSchemesToMap(httpAuthSchemes) {
     const map = /* @__PURE__ */ new Map();
     for (const scheme of httpAuthSchemes) {
@@ -31891,7 +31891,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills277, httpAuthSchemeMiddleware;
   var init_httpAuthSchemeMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
       import_polyfills277 = __toESM(require_polyfills());
       init_dist_es16();
       init_resolveAuthOptions();
@@ -31931,10 +31931,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
   var import_polyfills278, httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
   var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
       import_polyfills278 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
@@ -31956,18 +31956,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
   var import_polyfills279;
   var init_getHttpAuthSchemePlugin = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
       import_polyfills279 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
   var import_polyfills280;
   var init_middleware_http_auth_scheme = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
       import_polyfills280 = __toESM(require_polyfills());
       init_httpAuthSchemeMiddleware();
       init_getHttpAuthSchemeEndpointRuleSetPlugin();
@@ -31975,10 +31975,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
   var import_polyfills281, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
   var init_httpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
       import_polyfills281 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es16();
@@ -32007,10 +32007,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
   var import_polyfills282, httpSigningMiddlewareOptions, getHttpSigningPlugin;
   var init_getHttpSigningMiddleware = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
       import_polyfills282 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       httpSigningMiddlewareOptions = {
@@ -32030,20 +32030,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
+  // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
   var import_polyfills283;
   var init_middleware_http_signing = __esm({
-    "node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
       import_polyfills283 = __toESM(require_polyfills());
       init_httpSigningMiddleware();
       init_getHttpSigningMiddleware();
     }
   });
 
-  // node_modules/@smithy/core/dist-es/normalizeProvider.js
+  // ../../node_modules/@smithy/core/dist-es/normalizeProvider.js
   var import_polyfills284, normalizeProvider2;
   var init_normalizeProvider2 = __esm({
-    "node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
+    "../../node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
       import_polyfills284 = __toESM(require_polyfills());
       normalizeProvider2 = (input) => {
         if (typeof input === "function")
@@ -32054,7 +32054,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/pagination/createPaginator.js
+  // ../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js
   function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
     return async function* paginateOperation(config, input, ...additionalArguments) {
       const _input = input;
@@ -32081,7 +32081,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills285, makePagedClientRequest, get;
   var init_createPaginator = __esm({
-    "node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
+    "../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
       import_polyfills285 = __toESM(require_polyfills());
       makePagedClientRequest = async (CommandCtor, client, input, withCommand = (_) => _, ...args) => {
         let command = new CommandCtor(input);
@@ -32102,15 +32102,15 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
+  // ../../node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js
   var import_polyfills286;
   var init_requestBuilder2 = __esm({
-    "node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
+    "../../node_modules/@smithy/core/dist-es/request-builder/requestBuilder.js"() {
       import_polyfills286 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/setFeature.js
+  // ../../node_modules/@smithy/core/dist-es/setFeature.js
   function setFeature2(context, feature, value) {
     if (!context.__smithy_context) {
       context.__smithy_context = {
@@ -32123,15 +32123,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills287;
   var init_setFeature2 = __esm({
-    "node_modules/@smithy/core/dist-es/setFeature.js"() {
+    "../../node_modules/@smithy/core/dist-es/setFeature.js"() {
       import_polyfills287 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
   var import_polyfills288, DefaultIdentityProviderConfig;
   var init_DefaultIdentityProviderConfig = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
       import_polyfills288 = __toESM(require_polyfills());
       DefaultIdentityProviderConfig = class {
         authSchemes = /* @__PURE__ */ new Map();
@@ -32150,34 +32150,34 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
   var import_polyfills289;
   var init_httpApiKeyAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
       import_polyfills289 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
   var import_polyfills290;
   var init_httpBearerAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
       import_polyfills290 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
   var import_polyfills291;
   var init_noAuth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
       import_polyfills291 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
   var import_polyfills292;
   var init_httpAuthSchemes = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
       import_polyfills292 = __toESM(require_polyfills());
       init_httpApiKeyAuth();
       init_httpBearerAuth();
@@ -32185,10 +32185,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
   var import_polyfills293, createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
   var init_memoizeIdentityProvider = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
       import_polyfills293 = __toESM(require_polyfills());
       createIsIdentityExpiredFunction = (expirationMs) => function isIdentityExpired2(identity) {
         return doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
@@ -32247,10 +32247,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
+  // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
   var import_polyfills294;
   var init_util_identity_and_auth = __esm({
-    "node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
       import_polyfills294 = __toESM(require_polyfills());
       init_DefaultIdentityProviderConfig();
       init_httpAuthSchemes();
@@ -32258,10 +32258,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/core/dist-es/index.js
+  // ../../node_modules/@smithy/core/dist-es/index.js
   var import_polyfills295;
   var init_dist_es27 = __esm({
-    "node_modules/@smithy/core/dist-es/index.js"() {
+    "../../node_modules/@smithy/core/dist-es/index.js"() {
       import_polyfills295 = __toESM(require_polyfills());
       init_getSmithyContext2();
       init_middleware_http_auth_scheme();
@@ -32274,10 +32274,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js
   var import_polyfills296, signS3Express;
   var init_signS3Express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/signS3Express.js"() {
       import_polyfills296 = __toESM(require_polyfills());
       signS3Express = async (s3ExpressIdentity, signingOptions, request, sigV4MultiRegionSigner) => {
         const signedRequest = await sigV4MultiRegionSigner.signWithCredentials(request, s3ExpressIdentity, {});
@@ -32289,10 +32289,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js
   var import_polyfills297, defaultErrorHandler2, defaultSuccessHandler2, s3ExpressHttpSigningMiddleware, getS3ExpressHttpSigningPlugin;
   var init_s3ExpressHttpSigningMiddleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/functions/s3ExpressHttpSigningMiddleware.js"() {
       import_polyfills297 = __toESM(require_polyfills());
       init_dist_es27();
       init_dist_es2();
@@ -32334,10 +32334,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js
   var import_polyfills298;
   var init_s3_express = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3-express/index.js"() {
       import_polyfills298 = __toESM(require_polyfills());
       init_S3ExpressIdentityProviderImpl();
       init_SignatureV4S3Express();
@@ -32346,10 +32346,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js
   var import_polyfills299, resolveS3Config;
   var init_s3Configuration = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/s3Configuration.js"() {
       import_polyfills299 = __toESM(require_polyfills());
       init_s3_express();
       resolveS3Config = (input, { session }) => {
@@ -32370,7 +32370,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js
   function toStream(bytes) {
     return new ReadableStream({
       start(controller) {
@@ -32381,15 +32381,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills300;
   var init_toStream_browser = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/toStream.browser.js"() {
       import_polyfills300 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js
   var import_polyfills301, THROW_IF_EMPTY_BODY, throw200ExceptionsMiddleware, collectBody2, throw200ExceptionsMiddlewareOptions, getThrow200ExceptionsPlugin;
   var init_throw_200_exceptions = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/throw-200-exceptions.js"() {
       import_polyfills301 = __toESM(require_polyfills());
       init_dist_es2();
       init_toStream_browser();
@@ -32445,16 +32445,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
+  // ../../node_modules/@aws-sdk/util-arn-parser/dist-es/index.js
   var import_polyfills302, validate;
   var init_dist_es28 = __esm({
-    "node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/util-arn-parser/dist-es/index.js"() {
       import_polyfills302 = __toESM(require_polyfills());
       validate = (str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js
   function bucketEndpointMiddleware(options) {
     return (next, context) => async (args) => {
       if (options.bucketEndpoint) {
@@ -32485,7 +32485,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills303, bucketEndpointMiddlewareOptions;
   var init_bucket_endpoint_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/bucket-endpoint-middleware.js"() {
       import_polyfills303 = __toESM(require_polyfills());
       bucketEndpointMiddlewareOptions = {
         name: "bucketEndpointMiddleware",
@@ -32496,7 +32496,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js
   function validateBucketNameMiddleware({ bucketEndpoint }) {
     return (next) => async (args) => {
       const { input: { Bucket } } = args;
@@ -32510,7 +32510,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills304, validateBucketNameMiddlewareOptions, getValidateBucketNamePlugin;
   var init_validate_bucket_name = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/validate-bucket-name.js"() {
       import_polyfills304 = __toESM(require_polyfills());
       init_dist_es28();
       init_bucket_endpoint_middleware();
@@ -32529,10 +32529,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
+  // ../../node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js
   var import_polyfills305, TEXT_ENCODER, calculateBodyLength;
   var init_calculateBodyLength = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
+    "../../node_modules/@smithy/util-body-length-browser/dist-es/calculateBodyLength.js"() {
       import_polyfills305 = __toESM(require_polyfills());
       TEXT_ENCODER = typeof TextEncoder == "function" ? new TextEncoder() : null;
       calculateBodyLength = (body) => {
@@ -32561,19 +32561,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-body-length-browser/dist-es/index.js
+  // ../../node_modules/@smithy/util-body-length-browser/dist-es/index.js
   var import_polyfills306;
   var init_dist_es29 = __esm({
-    "node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-body-length-browser/dist-es/index.js"() {
       import_polyfills306 = __toESM(require_polyfills());
       init_calculateBodyLength();
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js
   var import_polyfills307, ProtocolLib;
   var init_ProtocolLib = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ProtocolLib.js"() {
       import_polyfills307 = __toESM(require_polyfills());
       init_schema2();
       init_dist_es25();
@@ -32712,26 +32712,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js
   var import_polyfills308;
   var init_AwsSmithyRpcV2CborProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/cbor/AwsSmithyRpcV2CborProtocol.js"() {
       import_polyfills308 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js
   var import_polyfills309;
   var init_coercing_serializers = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/coercing-serializers.js"() {
       import_polyfills309 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js
   var import_polyfills310, SerdeContextConfig;
   var init_ConfigurableSerdeContext = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/ConfigurableSerdeContext.js"() {
       import_polyfills310 = __toESM(require_polyfills());
       SerdeContextConfig = class {
         serdeContext;
@@ -32742,10 +32742,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js
   var import_polyfills311, UnionSerde;
   var init_UnionSerde = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/UnionSerde.js"() {
       import_polyfills311 = __toESM(require_polyfills());
       UnionSerde = class {
         from;
@@ -32776,85 +32776,85 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js
   var import_polyfills312;
   var init_parseJsonBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/parseJsonBody.js"() {
       import_polyfills312 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js
   var import_polyfills313;
   var init_JsonShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeDeserializer.js"() {
       import_polyfills313 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js
   var import_polyfills314;
   var init_JsonShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonShapeSerializer.js"() {
       import_polyfills314 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js
   var import_polyfills315;
   var init_JsonCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/JsonCodec.js"() {
       import_polyfills315 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js
   var import_polyfills316;
   var init_AwsJsonRpcProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJsonRpcProtocol.js"() {
       import_polyfills316 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js
   var import_polyfills317;
   var init_AwsJson1_0Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_0Protocol.js"() {
       import_polyfills317 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js
   var import_polyfills318;
   var init_AwsJson1_1Protocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsJson1_1Protocol.js"() {
       import_polyfills318 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js
   var import_polyfills319;
   var init_AwsRestJsonProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/AwsRestJsonProtocol.js"() {
       import_polyfills319 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
   var import_polyfills320;
   var init_awsExpectUnion = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
       import_polyfills320 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
   function escapeAttribute(value) {
     return value.replace(ATTR_ESCAPE_RE, (ch) => ATTR_ESCAPE_MAP[ch]);
   }
   var import_polyfills321, ATTR_ESCAPE_RE, ATTR_ESCAPE_MAP;
   var init_escape_attribute = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js"() {
       import_polyfills321 = __toESM(require_polyfills());
       ATTR_ESCAPE_RE = /[&<>"]/g;
       ATTR_ESCAPE_MAP = {
@@ -32866,13 +32866,13 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js
   function escapeElement(value) {
     return value.replace(ELEMENT_ESCAPE_RE, (ch) => ELEMENT_ESCAPE_MAP[ch]);
   }
   var import_polyfills322, ELEMENT_ESCAPE_RE, ELEMENT_ESCAPE_MAP;
   var init_escape_element = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/escape-element.js"() {
       import_polyfills322 = __toESM(require_polyfills());
       ELEMENT_ESCAPE_RE = /[&"'<>\r\n\u0085\u2028]/g;
       ELEMENT_ESCAPE_MAP = {
@@ -32889,10 +32889,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js
   var import_polyfills323, XmlText;
   var init_XmlText = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/XmlText.js"() {
       import_polyfills323 = __toESM(require_polyfills());
       init_escape_element();
       XmlText = class {
@@ -32907,10 +32907,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js
   var import_polyfills324, XmlNode;
   var init_XmlNode = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/XmlNode.js"() {
       import_polyfills324 = __toESM(require_polyfills());
       init_escape_attribute();
       init_XmlText();
@@ -33003,7 +33003,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js
   function parseXML(xmlString) {
     if (!parser) {
       parser = new DOMParser();
@@ -33059,15 +33059,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills325, parser;
   var init_xml_parser_browser = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/xml-parser.browser.js"() {
       import_polyfills325 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/xml-builder/dist-es/index.js
+  // ../../node_modules/@aws-sdk/xml-builder/dist-es/index.js
   var import_polyfills326;
   var init_dist_es30 = __esm({
-    "node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/xml-builder/dist-es/index.js"() {
       import_polyfills326 = __toESM(require_polyfills());
       init_XmlNode();
       init_XmlText();
@@ -33075,10 +33075,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js
   var import_polyfills327, XmlShapeDeserializer;
   var init_XmlShapeDeserializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeDeserializer.js"() {
       import_polyfills327 = __toESM(require_polyfills());
       init_dist_es30();
       init_protocols();
@@ -33229,42 +33229,42 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js
   var import_polyfills328;
   var init_QueryShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QueryShapeSerializer.js"() {
       import_polyfills328 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js
   var import_polyfills329;
   var init_AwsQueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsQueryProtocol.js"() {
       import_polyfills329 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js
   var import_polyfills330;
   var init_AwsEc2QueryProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/AwsEc2QueryProtocol.js"() {
       import_polyfills330 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js
   var import_polyfills331;
   var init_QuerySerializerSettings = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/query/QuerySerializerSettings.js"() {
       import_polyfills331 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
   var import_polyfills332, loadRestXmlErrorCode;
   var init_parseXmlBody = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
       import_polyfills332 = __toESM(require_polyfills());
       loadRestXmlErrorCode = (output, data) => {
         if (data?.Error?.Code !== void 0) {
@@ -33280,10 +33280,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js
   var import_polyfills333, XmlShapeSerializer;
   var init_XmlShapeSerializer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlShapeSerializer.js"() {
       import_polyfills333 = __toESM(require_polyfills());
       init_dist_es30();
       init_protocols();
@@ -33560,10 +33560,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js
   var import_polyfills334, XmlCodec;
   var init_XmlCodec = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/XmlCodec.js"() {
       import_polyfills334 = __toESM(require_polyfills());
       init_ConfigurableSerdeContext();
       init_XmlShapeDeserializer();
@@ -33588,10 +33588,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js
   var import_polyfills335, AwsRestXmlProtocol;
   var init_AwsRestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/AwsRestXmlProtocol.js"() {
       import_polyfills335 = __toESM(require_polyfills());
       init_protocols();
       init_schema2();
@@ -33688,10 +33688,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js
   var import_polyfills336;
   var init_protocols2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/index.js"() {
       import_polyfills336 = __toESM(require_polyfills());
       init_AwsSmithyRpcV2CborProtocol();
       init_coercing_serializers();
@@ -33716,10 +33716,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js
   var import_polyfills337, S3RestXmlProtocol;
   var init_S3RestXmlProtocol = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/protocol/S3RestXmlProtocol.js"() {
       import_polyfills337 = __toESM(require_polyfills());
       init_protocols2();
       init_schema2();
@@ -33749,10 +33749,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js
   var import_polyfills338;
   var init_dist_es31 = __esm({
-    "node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-sdk-s3/dist-es/index.js"() {
       import_polyfills338 = __toESM(require_polyfills());
       init_check_content_length_header();
       init_region_redirect_endpoint_middleware();
@@ -33766,7 +33766,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js
   function isValidUserAgentAppId(appId) {
     if (appId === void 0) {
       return true;
@@ -33794,17 +33794,17 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills339, DEFAULT_UA_APP_ID;
   var init_configurations = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/configurations.js"() {
       import_polyfills339 = __toESM(require_polyfills());
       init_dist_es27();
       DEFAULT_UA_APP_ID = void 0;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js
   var import_polyfills340, BinaryDecisionDiagram;
   var init_BinaryDecisionDiagram = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/bdd/BinaryDecisionDiagram.js"() {
       import_polyfills340 = __toESM(require_polyfills());
       BinaryDecisionDiagram = class _BinaryDecisionDiagram {
         nodes;
@@ -33824,10 +33824,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js
   var import_polyfills341, EndpointCache;
   var init_EndpointCache = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/cache/EndpointCache.js"() {
       import_polyfills341 = __toESM(require_polyfills());
       EndpointCache = class {
         capacity;
@@ -33882,10 +33882,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js
   var import_polyfills342, EndpointError;
   var init_EndpointError = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointError.js"() {
       import_polyfills342 = __toESM(require_polyfills());
       EndpointError = class extends Error {
         constructor(message) {
@@ -33896,58 +33896,58 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js
   var import_polyfills343;
   var init_EndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointFunctions.js"() {
       import_polyfills343 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js
   var import_polyfills344;
   var init_EndpointRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills344 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js
   var import_polyfills345;
   var init_ErrorRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       import_polyfills345 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js
   var import_polyfills346;
   var init_RuleSetObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/RuleSetObject.js"() {
       import_polyfills346 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js
   var import_polyfills347;
   var init_TreeRuleObject2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       import_polyfills347 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/shared.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/shared.js
   var import_polyfills348;
   var init_shared2 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/shared.js"() {
       import_polyfills348 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/types/index.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/types/index.js
   var import_polyfills349;
   var init_types4 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/types/index.js"() {
       import_polyfills349 = __toESM(require_polyfills());
       init_EndpointError();
       init_EndpointFunctions();
@@ -33959,16 +33959,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js
   var import_polyfills350, debugId;
   var init_debugId = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/debug/debugId.js"() {
       import_polyfills350 = __toESM(require_polyfills());
       debugId = "endpoints";
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js
   function toDebugString(input) {
     if (typeof input !== "object" || input == null) {
       return input;
@@ -33983,40 +33983,40 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills351;
   var init_toDebugString = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/debug/toDebugString.js"() {
       import_polyfills351 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/debug/index.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/debug/index.js
   var import_polyfills352;
   var init_debug = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/debug/index.js"() {
       import_polyfills352 = __toESM(require_polyfills());
       init_debugId();
       init_toDebugString();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js
   var import_polyfills353, customEndpointFunctions;
   var init_customEndpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/customEndpointFunctions.js"() {
       import_polyfills353 = __toESM(require_polyfills());
       customEndpointFunctions = {};
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js
   var import_polyfills354, booleanEquals;
   var init_booleanEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/booleanEquals.js"() {
       import_polyfills354 = __toESM(require_polyfills());
       booleanEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js
   function coalesce(...args) {
     for (const arg of args) {
       if (arg != null) {
@@ -34027,15 +34027,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills355;
   var init_coalesce = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/coalesce.js"() {
       import_polyfills355 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js
   var import_polyfills356, getAttrPathList;
   var init_getAttrPathList = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttrPathList.js"() {
       import_polyfills356 = __toESM(require_polyfills());
       init_types4();
       getAttrPathList = (path2) => {
@@ -34064,10 +34064,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js
   var import_polyfills357, getAttr;
   var init_getAttr = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/getAttr.js"() {
       import_polyfills357 = __toESM(require_polyfills());
       init_types4();
       init_getAttrPathList();
@@ -34083,19 +34083,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js
   var import_polyfills358, isSet;
   var init_isSet = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isSet.js"() {
       import_polyfills358 = __toESM(require_polyfills());
       isSet = (value) => value != null;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js
   var import_polyfills359, VALID_HOST_LABEL_REGEX, isValidHostLabel;
   var init_isValidHostLabel = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isValidHostLabel.js"() {
       import_polyfills359 = __toESM(require_polyfills());
       VALID_HOST_LABEL_REGEX = new RegExp(`^(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$`);
       isValidHostLabel = (value, allowSubDomains = false) => {
@@ -34113,40 +34113,40 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/ite.js
   function ite(condition, trueValue, falseValue) {
     return condition ? trueValue : falseValue;
   }
   var import_polyfills360;
   var init_ite = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/ite.js"() {
       import_polyfills360 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/not.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/not.js
   var import_polyfills361, not;
   var init_not = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/not.js"() {
       import_polyfills361 = __toESM(require_polyfills());
       not = (value) => !value;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js
   var import_polyfills362, IP_V4_REGEX, isIpAddress;
   var init_isIpAddress = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/isIpAddress.js"() {
       import_polyfills362 = __toESM(require_polyfills());
       IP_V4_REGEX = new RegExp(`^(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}$`);
       isIpAddress = (value) => IP_V4_REGEX.test(value) || value.startsWith("[") && value.endsWith("]");
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js
   var import_polyfills363, DEFAULT_PORTS, parseURL;
   var init_parseURL = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/parseURL.js"() {
       import_polyfills363 = __toESM(require_polyfills());
       init_dist_es();
       init_isIpAddress();
@@ -34198,7 +34198,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/split.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/split.js
   function split(value, delimiter, limit) {
     if (limit === 1) {
       return [value];
@@ -34214,24 +34214,24 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills364;
   var init_split = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/split.js"() {
       import_polyfills364 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js
   var import_polyfills365, stringEquals;
   var init_stringEquals = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/stringEquals.js"() {
       import_polyfills365 = __toESM(require_polyfills());
       stringEquals = (value1, value2) => value1 === value2;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/substring.js
   var import_polyfills366, substring;
   var init_substring = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/substring.js"() {
       import_polyfills366 = __toESM(require_polyfills());
       substring = (input, start, stop, reverse) => {
         if (input == null || start >= stop || input.length < stop || /[^\u0000-\u007f]/.test(input)) {
@@ -34245,19 +34245,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js
   var import_polyfills367, uriEncode;
   var init_uriEncode = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/uriEncode.js"() {
       import_polyfills367 = __toESM(require_polyfills());
       uriEncode = (value) => encodeURIComponent(value).replace(/[!*'()]/g, (c2) => `%${c2.charCodeAt(0).toString(16).toUpperCase()}`);
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/lib/index.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/lib/index.js
   var import_polyfills368;
   var init_lib = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/lib/index.js"() {
       import_polyfills368 = __toESM(require_polyfills());
       init_booleanEquals();
       init_coalesce();
@@ -34274,10 +34274,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js
   var import_polyfills369, endpointFunctions;
   var init_endpointFunctions = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/endpointFunctions.js"() {
       import_polyfills369 = __toESM(require_polyfills());
       init_lib();
       endpointFunctions = {
@@ -34297,10 +34297,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js
   var import_polyfills370, evaluateTemplate;
   var init_evaluateTemplate = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateTemplate.js"() {
       import_polyfills370 = __toESM(require_polyfills());
       init_lib();
       evaluateTemplate = (template, options) => {
@@ -34337,10 +34337,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js
   var import_polyfills371, getReferenceValue;
   var init_getReferenceValue = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getReferenceValue.js"() {
       import_polyfills371 = __toESM(require_polyfills());
       getReferenceValue = ({ ref }, options) => {
         return options.referenceRecord[ref] ?? options.endpointParams[ref];
@@ -34348,10 +34348,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js
   var import_polyfills372, evaluateExpression, callFunction, group;
   var init_evaluateExpression = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateExpression.js"() {
       import_polyfills372 = __toESM(require_polyfills());
       init_types4();
       init_customEndpointFunctions();
@@ -34399,19 +34399,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js
   var import_polyfills373;
   var init_callFunction = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/callFunction.js"() {
       import_polyfills373 = __toESM(require_polyfills());
       init_evaluateExpression();
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js
   var import_polyfills374, evaluateCondition;
   var init_evaluateCondition = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/evaluateCondition.js"() {
       import_polyfills374 = __toESM(require_polyfills());
       init_debug();
       init_types4();
@@ -34432,10 +34432,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js
   var import_polyfills375, getEndpointHeaders;
   var init_getEndpointHeaders = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointHeaders.js"() {
       import_polyfills375 = __toESM(require_polyfills());
       init_types4();
       init_evaluateExpression();
@@ -34452,10 +34452,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js
   var import_polyfills376, getEndpointProperties, getEndpointProperty, group2;
   var init_getEndpointProperties = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointProperties.js"() {
       import_polyfills376 = __toESM(require_polyfills());
       init_types4();
       init_evaluateTemplate();
@@ -34488,10 +34488,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js
   var import_polyfills377, getEndpointUrl;
   var init_getEndpointUrl = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/utils/getEndpointUrl.js"() {
       import_polyfills377 = __toESM(require_polyfills());
       init_types4();
       init_evaluateExpression();
@@ -34510,10 +34510,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js
   var import_polyfills378, RESULT, decideEndpoint;
   var init_decideEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/decideEndpoint.js"() {
       import_polyfills378 = __toESM(require_polyfills());
       init_types4();
       init_evaluateCondition();
@@ -34560,18 +34560,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js
   var import_polyfills379;
   var init_resolveEndpoint = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/resolveEndpoint.js"() {
       import_polyfills379 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/util-endpoints/dist-es/index.js
+  // ../../node_modules/@smithy/util-endpoints/dist-es/index.js
   var import_polyfills380;
   var init_dist_es32 = __esm({
-    "node_modules/@smithy/util-endpoints/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-endpoints/dist-es/index.js"() {
       import_polyfills380 = __toESM(require_polyfills());
       init_BinaryDecisionDiagram();
       init_EndpointCache();
@@ -34584,19 +34584,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js
   var import_polyfills381;
   var init_isIpAddress2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/isIpAddress.js"() {
       import_polyfills381 = __toESM(require_polyfills());
       init_dist_es32();
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js
   var import_polyfills382, isVirtualHostableS3Bucket;
   var init_isVirtualHostableS3Bucket = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/isVirtualHostableS3Bucket.js"() {
       import_polyfills382 = __toESM(require_polyfills());
       init_dist_es32();
       init_isIpAddress2();
@@ -34626,10 +34626,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js
   var import_polyfills383, ARN_DELIMITER, RESOURCE_DELIMITER, parseArn;
   var init_parseArn = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/parseArn.js"() {
       import_polyfills383 = __toESM(require_polyfills());
       ARN_DELIMITER = ":";
       RESOURCE_DELIMITER = "/";
@@ -34652,10 +34652,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json
   var partitions_default;
   var init_partitions = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partitions.json"() {
       partitions_default = {
         partitions: [{
           id: "aws",
@@ -34926,10 +34926,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js
   var import_polyfills384, selectedPartitionsInfo, selectedUserAgentPrefix, partition, getUserAgentPrefix;
   var init_partition = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/lib/aws/partition.js"() {
       import_polyfills384 = __toESM(require_polyfills());
       init_partitions();
       selectedPartitionsInfo = partitions_default;
@@ -34967,10 +34967,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/aws.js
   var import_polyfills385, awsEndpointFunctions;
   var init_aws = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/aws.js"() {
       import_polyfills385 = __toESM(require_polyfills());
       init_dist_es32();
       init_isVirtualHostableS3Bucket();
@@ -34985,74 +34985,74 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js
   var import_polyfills386;
   var init_resolveDefaultAwsRegionalEndpointsConfig = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveDefaultAwsRegionalEndpointsConfig.js"() {
       import_polyfills386 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js
   var import_polyfills387;
   var init_resolveEndpoint2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/resolveEndpoint.js"() {
       import_polyfills387 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js
   var import_polyfills388;
   var init_EndpointError2 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointError.js"() {
       import_polyfills388 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js
   var import_polyfills389;
   var init_EndpointRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/EndpointRuleObject.js"() {
       import_polyfills389 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js
   var import_polyfills390;
   var init_ErrorRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/ErrorRuleObject.js"() {
       import_polyfills390 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js
   var import_polyfills391;
   var init_RuleSetObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/RuleSetObject.js"() {
       import_polyfills391 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js
   var import_polyfills392;
   var init_TreeRuleObject3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/TreeRuleObject.js"() {
       import_polyfills392 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js
   var import_polyfills393;
   var init_shared3 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/shared.js"() {
       import_polyfills393 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js
   var import_polyfills394;
   var init_types5 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/types/index.js"() {
       import_polyfills394 = __toESM(require_polyfills());
       init_EndpointError2();
       init_EndpointRuleObject3();
@@ -35063,10 +35063,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-endpoints/dist-es/index.js
+  // ../../node_modules/@aws-sdk/util-endpoints/dist-es/index.js
   var import_polyfills395;
   var init_dist_es33 = __esm({
-    "node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/util-endpoints/dist-es/index.js"() {
       import_polyfills395 = __toESM(require_polyfills());
       init_aws();
       init_partition();
@@ -35077,7 +35077,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js
   async function checkFeatures(context, config, args) {
     const request = args.request;
     if (request?.headers?.["smithy-protocol"] === "rpc-v2-cbor") {
@@ -35126,7 +35126,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills396, ACCOUNT_ID_ENDPOINT_REGEX;
   var init_check_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/check-features.js"() {
       import_polyfills396 = __toESM(require_polyfills());
       init_client2();
       init_dist_es5();
@@ -35134,10 +35134,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js
   var import_polyfills397, USER_AGENT, X_AMZ_USER_AGENT, SPACE, UA_NAME_SEPARATOR, UA_NAME_ESCAPE_REGEX, UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR;
   var init_constants7 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/constants.js"() {
       import_polyfills397 = __toESM(require_polyfills());
       USER_AGENT = "user-agent";
       X_AMZ_USER_AGENT = "x-amz-user-agent";
@@ -35149,7 +35149,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js
   function encodeFeatures(features) {
     let buffer = "";
     for (const key in features) {
@@ -35168,16 +35168,16 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills398, BYTE_LIMIT;
   var init_encode_features = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/encode-features.js"() {
       import_polyfills398 = __toESM(require_polyfills());
       BYTE_LIMIT = 1024;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js
   var import_polyfills399, userAgentMiddleware, escapeUserAgent, getUserAgentMiddlewareOptions, getUserAgentPlugin;
   var init_user_agent_middleware = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/user-agent-middleware.js"() {
       import_polyfills399 = __toESM(require_polyfills());
       init_dist_es33();
       init_dist_es2();
@@ -35254,54 +35254,54 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js
   var import_polyfills400;
   var init_dist_es34 = __esm({
-    "node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-user-agent/dist-es/index.js"() {
       import_polyfills400 = __toESM(require_polyfills());
       init_configurations();
       init_user_agent_middleware();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js
   var import_polyfills401, DEFAULT_USE_DUALSTACK_ENDPOINT;
   var init_NodeUseDualstackEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseDualstackEndpointConfigOptions.js"() {
       import_polyfills401 = __toESM(require_polyfills());
       DEFAULT_USE_DUALSTACK_ENDPOINT = false;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js
   var import_polyfills402, DEFAULT_USE_FIPS_ENDPOINT;
   var init_NodeUseFipsEndpointConfigOptions = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/NodeUseFipsEndpointConfigOptions.js"() {
       import_polyfills402 = __toESM(require_polyfills());
       DEFAULT_USE_FIPS_ENDPOINT = false;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js
   var import_polyfills403;
   var init_resolveCustomEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveCustomEndpointsConfig.js"() {
       import_polyfills403 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js
   var import_polyfills404;
   var init_resolveEndpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/resolveEndpointsConfig.js"() {
       import_polyfills404 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js
   var import_polyfills405;
   var init_endpointsConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/endpointsConfig/index.js"() {
       import_polyfills405 = __toESM(require_polyfills());
       init_NodeUseDualstackEndpointConfigOptions();
       init_NodeUseFipsEndpointConfigOptions();
@@ -35310,18 +35310,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js
   var import_polyfills406;
   var init_config3 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/config.js"() {
       import_polyfills406 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js
   var import_polyfills407, validRegions, checkRegion;
   var init_checkRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/checkRegion.js"() {
       import_polyfills407 = __toESM(require_polyfills());
       init_dist_es32();
       validRegions = /* @__PURE__ */ new Set();
@@ -35339,29 +35339,29 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js
   var import_polyfills408, isFipsRegion;
   var init_isFipsRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/isFipsRegion.js"() {
       import_polyfills408 = __toESM(require_polyfills());
       isFipsRegion = (region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips"));
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js
   var import_polyfills409, getRealRegion;
   var init_getRealRegion = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/getRealRegion.js"() {
       import_polyfills409 = __toESM(require_polyfills());
       init_isFipsRegion();
       getRealRegion = (region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js
   var import_polyfills410, resolveRegionConfig;
   var init_resolveRegionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/resolveRegionConfig.js"() {
       import_polyfills410 = __toESM(require_polyfills());
       init_checkRegion();
       init_getRealRegion();
@@ -35390,44 +35390,44 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js
   var import_polyfills411;
   var init_regionConfig = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionConfig/index.js"() {
       import_polyfills411 = __toESM(require_polyfills());
       init_config3();
       init_resolveRegionConfig();
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js
   var import_polyfills412;
   var init_PartitionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/PartitionHash.js"() {
       import_polyfills412 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js
   var import_polyfills413;
   var init_RegionHash = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/RegionHash.js"() {
       import_polyfills413 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js
   var import_polyfills414;
   var init_getRegionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/getRegionInfo.js"() {
       import_polyfills414 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js
   var import_polyfills415;
   var init_regionInfo = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/regionInfo/index.js"() {
       import_polyfills415 = __toESM(require_polyfills());
       init_PartitionHash();
       init_RegionHash();
@@ -35435,10 +35435,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/config-resolver/dist-es/index.js
+  // ../../node_modules/@smithy/config-resolver/dist-es/index.js
   var import_polyfills416;
   var init_dist_es35 = __esm({
-    "node_modules/@smithy/config-resolver/dist-es/index.js"() {
+    "../../node_modules/@smithy/config-resolver/dist-es/index.js"() {
       import_polyfills416 = __toESM(require_polyfills());
       init_endpointsConfig();
       init_regionConfig();
@@ -35446,10 +35446,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
+  // ../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js
   var import_polyfills417, resolveEventStreamSerdeConfig;
   var init_EventStreamSerdeConfig = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
+    "../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/EventStreamSerdeConfig.js"() {
       import_polyfills417 = __toESM(require_polyfills());
       resolveEventStreamSerdeConfig = (input) => Object.assign(input, {
         eventStreamMarshaller: input.eventStreamSerdeProvider(input)
@@ -35457,16 +35457,16 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
+  // ../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js
   var import_polyfills418;
   var init_dist_es36 = __esm({
-    "node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
+    "../../node_modules/@smithy/eventstream-serde-config-resolver/dist-es/index.js"() {
       import_polyfills418 = __toESM(require_polyfills());
       init_EventStreamSerdeConfig();
     }
   });
 
-  // node_modules/@smithy/middleware-content-length/dist-es/index.js
+  // ../../node_modules/@smithy/middleware-content-length/dist-es/index.js
   function contentLengthMiddleware(bodyLengthChecker) {
     return (next) => async (args) => {
       const request = args.request;
@@ -35491,7 +35491,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills419, CONTENT_LENGTH_HEADER2, contentLengthMiddlewareOptions, getContentLengthPlugin;
   var init_dist_es37 = __esm({
-    "node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
+    "../../node_modules/@smithy/middleware-content-length/dist-es/index.js"() {
       import_polyfills419 = __toESM(require_polyfills());
       init_dist_es2();
       CONTENT_LENGTH_HEADER2 = "content-length";
@@ -35509,10 +35509,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js
   var import_polyfills420, resolveParamsForS3, DOMAIN_PATTERN, IP_ADDRESS_PATTERN, DOTS_PATTERN, isDnsCompatibleBucketName, isArnBucketName;
   var init_s3 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/s3.js"() {
       import_polyfills420 = __toESM(require_polyfills());
       resolveParamsForS3 = async (endpointParams) => {
         const bucket = endpointParams?.Bucket || "";
@@ -35548,19 +35548,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js
   var import_polyfills421;
   var init_service_customizations = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/service-customizations/index.js"() {
       import_polyfills421 = __toESM(require_polyfills());
       init_s3();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js
   var import_polyfills422, createConfigValueProvider;
   var init_createConfigValueProvider = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/createConfigValueProvider.js"() {
       import_polyfills422 = __toESM(require_polyfills());
       createConfigValueProvider = (configKey, canonicalEndpointParamKey, config, isClientContextParam = false) => {
         const configProvider = async () => {
@@ -35614,19 +35614,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js
   var import_polyfills423, getEndpointFromConfig;
   var init_getEndpointFromConfig_browser = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromConfig.browser.js"() {
       import_polyfills423 = __toESM(require_polyfills());
       getEndpointFromConfig = async (serviceId) => void 0;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js
   var import_polyfills424, toEndpointV12;
   var init_toEndpointV12 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/toEndpointV1.js"() {
       import_polyfills424 = __toESM(require_polyfills());
       init_dist_es23();
       toEndpointV12 = (endpoint) => {
@@ -35648,10 +35648,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js
   var import_polyfills425, getEndpointFromInstructions, resolveParams;
   var init_getEndpointFromInstructions = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/getEndpointFromInstructions.js"() {
       import_polyfills425 = __toESM(require_polyfills());
       init_service_customizations();
       init_createConfigValueProvider();
@@ -35719,20 +35719,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js
   var import_polyfills426;
   var init_adaptors = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/adaptors/index.js"() {
       import_polyfills426 = __toESM(require_polyfills());
       init_getEndpointFromInstructions();
       init_toEndpointV12();
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js
   var import_polyfills427, endpointMiddleware;
   var init_endpointMiddleware = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/endpointMiddleware.js"() {
       import_polyfills427 = __toESM(require_polyfills());
       init_dist_es27();
       init_dist_es16();
@@ -35773,26 +35773,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
+  // ../../node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js
   var import_polyfills428;
   var init_deserializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
+    "../../node_modules/@smithy/middleware-serde/dist-es/deserializerMiddleware.js"() {
       import_polyfills428 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
+  // ../../node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js
   var import_polyfills429;
   var init_serializerMiddleware = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
+    "../../node_modules/@smithy/middleware-serde/dist-es/serializerMiddleware.js"() {
       import_polyfills429 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
+  // ../../node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js
   var import_polyfills430, serializerMiddlewareOption2;
   var init_serdePlugin = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
+    "../../node_modules/@smithy/middleware-serde/dist-es/serdePlugin.js"() {
       import_polyfills430 = __toESM(require_polyfills());
       serializerMiddlewareOption2 = {
         name: "serializerMiddleware",
@@ -35803,10 +35803,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-serde/dist-es/index.js
+  // ../../node_modules/@smithy/middleware-serde/dist-es/index.js
   var import_polyfills431;
   var init_dist_es38 = __esm({
-    "node_modules/@smithy/middleware-serde/dist-es/index.js"() {
+    "../../node_modules/@smithy/middleware-serde/dist-es/index.js"() {
       import_polyfills431 = __toESM(require_polyfills());
       init_deserializerMiddleware();
       init_serdePlugin();
@@ -35814,10 +35814,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js
   var import_polyfills432, endpointMiddlewareOptions, getEndpointPlugin;
   var init_getEndpointPlugin = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/getEndpointPlugin.js"() {
       import_polyfills432 = __toESM(require_polyfills());
       init_dist_es38();
       init_endpointMiddleware();
@@ -35840,10 +35840,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js
   var import_polyfills433, resolveEndpointConfig;
   var init_resolveEndpointConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointConfig.js"() {
       import_polyfills433 = __toESM(require_polyfills());
       init_dist_es16();
       init_getEndpointFromConfig_browser();
@@ -35872,26 +35872,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js
   var import_polyfills434;
   var init_resolveEndpointRequiredConfig = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/resolveEndpointRequiredConfig.js"() {
       import_polyfills434 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/types.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/types.js
   var import_polyfills435;
   var init_types6 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/types.js"() {
       import_polyfills435 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-endpoint/dist-es/index.js
+  // ../../node_modules/@smithy/middleware-endpoint/dist-es/index.js
   var import_polyfills436;
   var init_dist_es39 = __esm({
-    "node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
+    "../../node_modules/@smithy/middleware-endpoint/dist-es/index.js"() {
       import_polyfills436 = __toESM(require_polyfills());
       init_adaptors();
       init_endpointMiddleware();
@@ -35902,10 +35902,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/util.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/util.js
   var import_polyfills437, asSdkError;
   var init_util2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/util.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/util.js"() {
       import_polyfills437 = __toESM(require_polyfills());
       asSdkError = (error) => {
         if (error instanceof Error)
@@ -35919,42 +35919,42 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js
   var import_polyfills438;
   var init_delayDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/delayDecider.js"() {
       import_polyfills438 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js
   var import_polyfills439;
   var init_retryDecider = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/retryDecider.js"() {
       import_polyfills439 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js
   var import_polyfills440;
   var init_StandardRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/StandardRetryStrategy.js"() {
       import_polyfills440 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js
   var import_polyfills441;
   var init_AdaptiveRetryStrategy2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/retry-pre-sra-deprecated/AdaptiveRetryStrategy.js"() {
       import_polyfills441 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/configurations.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/configurations.js
   var import_polyfills442, resolveRetryConfig;
   var init_configurations2 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/configurations.js"() {
       import_polyfills442 = __toESM(require_polyfills());
       init_dist_es16();
       init_dist_es5();
@@ -35971,24 +35971,24 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js
   var import_polyfills443;
   var init_omitRetryHeadersMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/omitRetryHeadersMiddleware.js"() {
       import_polyfills443 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js
   var import_polyfills444, isStreamingPayload;
   var init_isStreamingPayload_browser = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/isStreamingPayload/isStreamingPayload.browser.js"() {
       import_polyfills444 = __toESM(require_polyfills());
       isStreamingPayload = (request) => request?.body instanceof ReadableStream;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js
   function parseRetryAfterHeader(response, logger2) {
     if (!HttpResponse.isInstance(response)) {
       return;
@@ -36030,17 +36030,17 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills445;
   var init_parseRetryAfterHeader = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/parseRetryAfterHeader.js"() {
       import_polyfills445 = __toESM(require_polyfills());
       init_serde2();
       init_dist_es2();
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js
   var import_polyfills446, retryMiddleware, cooldown, isRetryStrategyV2, getRetryErrorInfo, getRetryErrorType, retryMiddlewareOptions, getRetryPlugin;
   var init_retryMiddleware = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/retryMiddleware.js"() {
       import_polyfills446 = __toESM(require_polyfills());
       init_dist_es2();
       init_dist_es4();
@@ -36145,10 +36145,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/middleware-retry/dist-es/index.js
+  // ../../node_modules/@smithy/middleware-retry/dist-es/index.js
   var import_polyfills447;
   var init_dist_es40 = __esm({
-    "node_modules/@smithy/middleware-retry/dist-es/index.js"() {
+    "../../node_modules/@smithy/middleware-retry/dist-es/index.js"() {
       import_polyfills447 = __toESM(require_polyfills());
       init_AdaptiveRetryStrategy2();
       init_StandardRetryStrategy2();
@@ -36160,39 +36160,39 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js
   var import_polyfills448, getDateHeader;
   var init_getDateHeader = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getDateHeader.js"() {
       import_polyfills448 = __toESM(require_polyfills());
       init_dist_es2();
       getDateHeader = (response) => HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js
   var import_polyfills449, getSkewCorrectedDate;
   var init_getSkewCorrectedDate = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.js"() {
       import_polyfills449 = __toESM(require_polyfills());
       getSkewCorrectedDate = (systemClockOffset) => new Date(Date.now() + systemClockOffset);
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js
   var import_polyfills450, isClockSkewed;
   var init_isClockSkewed = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/isClockSkewed.js"() {
       import_polyfills450 = __toESM(require_polyfills());
       init_getSkewCorrectedDate();
       isClockSkewed = (clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js
   var import_polyfills451, getUpdatedSystemClockOffset;
   var init_getUpdatedSystemClockOffset = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.js"() {
       import_polyfills451 = __toESM(require_polyfills());
       init_isClockSkewed();
       getUpdatedSystemClockOffset = (clockTime, currentSystemClockOffset) => {
@@ -36205,10 +36205,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js
   var import_polyfills452;
   var init_utils = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/index.js"() {
       import_polyfills452 = __toESM(require_polyfills());
       init_getDateHeader();
       init_getSkewCorrectedDate();
@@ -36216,10 +36216,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
   var import_polyfills453, throwSigningPropertyError, validateSigningProperties, AwsSdkSigV4Signer;
   var init_AwsSdkSigV4Signer = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"() {
       import_polyfills453 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
@@ -36295,10 +36295,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
   var import_polyfills454, AwsSdkSigV4ASigner;
   var init_AwsSdkSigV4ASigner = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
       import_polyfills454 = __toESM(require_polyfills());
       init_dist_es2();
       init_utils();
@@ -36322,66 +36322,66 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js
   var import_polyfills455;
   var init_getBearerTokenEnvKey = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.js"() {
       import_polyfills455 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js
   var import_polyfills456;
   var init_NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.js"() {
       import_polyfills456 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/ProviderError.js
+  // ../../node_modules/@smithy/property-provider/dist-es/ProviderError.js
   var import_polyfills457;
   var init_ProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/ProviderError.js"() {
       import_polyfills457 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
+  // ../../node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js
   var import_polyfills458;
   var init_CredentialsProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/CredentialsProviderError.js"() {
       import_polyfills458 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
+  // ../../node_modules/@smithy/property-provider/dist-es/TokenProviderError.js
   var import_polyfills459;
   var init_TokenProviderError = __esm({
-    "node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/TokenProviderError.js"() {
       import_polyfills459 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/chain.js
+  // ../../node_modules/@smithy/property-provider/dist-es/chain.js
   var import_polyfills460;
   var init_chain = __esm({
-    "node_modules/@smithy/property-provider/dist-es/chain.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/chain.js"() {
       import_polyfills460 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/fromStatic.js
+  // ../../node_modules/@smithy/property-provider/dist-es/fromStatic.js
   var import_polyfills461;
   var init_fromStatic = __esm({
-    "node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/fromStatic.js"() {
       import_polyfills461 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/memoize.js
+  // ../../node_modules/@smithy/property-provider/dist-es/memoize.js
   var import_polyfills462, memoize;
   var init_memoize = __esm({
-    "node_modules/@smithy/property-provider/dist-es/memoize.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/memoize.js"() {
       import_polyfills462 = __toESM(require_polyfills());
       memoize = (provider, isExpired, requiresRefresh) => {
         let resolved;
@@ -36430,10 +36430,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/property-provider/dist-es/index.js
+  // ../../node_modules/@smithy/property-provider/dist-es/index.js
   var import_polyfills463;
   var init_dist_es41 = __esm({
-    "node_modules/@smithy/property-provider/dist-es/index.js"() {
+    "../../node_modules/@smithy/property-provider/dist-es/index.js"() {
       import_polyfills463 = __toESM(require_polyfills());
       init_CredentialsProviderError();
       init_ProviderError();
@@ -36444,10 +36444,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js
   var import_polyfills464, resolveAwsSdkSigV4AConfig;
   var init_resolveAwsSdkSigV4AConfig = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.js"() {
       import_polyfills464 = __toESM(require_polyfills());
       init_dist_es27();
       resolveAwsSdkSigV4AConfig = (config) => {
@@ -36457,7 +36457,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
   function normalizeCredentialProvider(config, { credentials, credentialDefaultProvider }) {
     let credentialsProvider;
     if (credentials) {
@@ -36491,7 +36491,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills465, resolveAwsSdkSigV4Config;
   var init_resolveAwsSdkSigV4Config = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
       import_polyfills465 = __toESM(require_polyfills());
       init_client2();
       init_dist_es27();
@@ -36595,10 +36595,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js
   var import_polyfills466;
   var init_aws_sdk = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
       import_polyfills466 = __toESM(require_polyfills());
       init_AwsSdkSigV4Signer();
       init_AwsSdkSigV4ASigner();
@@ -36608,20 +36608,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
+  // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
   var import_polyfills467;
   var init_httpAuthSchemes2 = __esm({
-    "node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
+    "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
       import_polyfills467 = __toESM(require_polyfills());
       init_aws_sdk();
       init_getBearerTokenEnvKey();
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
+  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js
   var import_polyfills468, signatureV4CrtContainer;
   var init_signature_v4_crt_container = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
+    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/signature-v4-crt-container.js"() {
       import_polyfills468 = __toESM(require_polyfills());
       signatureV4CrtContainer = {
         CrtSignerV4: null
@@ -36629,10 +36629,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
+  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js
   var import_polyfills469, SignatureV4MultiRegion;
   var init_SignatureV4MultiRegion = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
+    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/SignatureV4MultiRegion.js"() {
       import_polyfills469 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es26();
@@ -36724,20 +36724,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
+  // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js
   var import_polyfills470;
   var init_dist_es42 = __esm({
-    "node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-es/index.js"() {
       import_polyfills470 = __toESM(require_polyfills());
       init_SignatureV4MultiRegion();
       init_signature_v4_crt_container();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js
   var import_polyfills471, av, aw, ax, ay, az, aA, aB, aC, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, as, at, au, _data, root, r, nodes, bdd;
   var init_bdd = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/bdd.js"() {
       import_polyfills471 = __toESM(require_polyfills());
       init_dist_es32();
       av = "ref";
@@ -38675,10 +38675,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js
   var import_polyfills472, cache, defaultEndpointResolver;
   var init_endpointResolver = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/endpointResolver.js"() {
       import_polyfills472 = __toESM(require_polyfills());
       init_dist_es33();
       init_dist_es32();
@@ -38712,7 +38712,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js
   function createAwsAuthSigv4HttpAuthOption(authParameters) {
     return {
       schemeId: "aws.auth#sigv4",
@@ -38745,7 +38745,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills473, createEndpointRuleSetHttpAuthSchemeParametersProvider, _defaultS3HttpAuthSchemeParametersProvider, defaultS3HttpAuthSchemeParametersProvider, createEndpointRuleSetHttpAuthSchemeProvider, _defaultS3HttpAuthSchemeProvider, defaultS3HttpAuthSchemeProvider, resolveHttpAuthSchemeConfig;
   var init_httpAuthSchemeProvider = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthSchemeProvider.js"() {
       import_polyfills473 = __toESM(require_polyfills());
       init_httpAuthSchemes2();
       init_dist_es42();
@@ -38839,10 +38839,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js
   var import_polyfills474, resolveClientEndpointParameters, commonParams;
   var init_EndpointParameters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/endpoint/EndpointParameters.js"() {
       import_polyfills474 = __toESM(require_polyfills());
       resolveClientEndpointParameters = (options) => {
         return Object.assign(options, {
@@ -38871,10 +38871,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js
   var import_polyfills475, S3ServiceException;
   var init_S3ServiceException = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/models/S3ServiceException.js"() {
       import_polyfills475 = __toESM(require_polyfills());
       init_dist_es25();
       S3ServiceException = class _S3ServiceException extends ServiceException {
@@ -38886,10 +38886,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/errors.js
   var import_polyfills476, NoSuchUpload, AccessDenied, ObjectNotInActiveTierError, BucketAlreadyExists, BucketAlreadyOwnedByYou, NoSuchBucket, InvalidObjectState, NoSuchKey, NotFound, EncryptionTypeMismatch, InvalidRequest, InvalidWriteOffset, TooManyParts, IdempotencyParameterMismatch, ObjectAlreadyInActiveTierError;
   var init_errors = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/models/errors.js"() {
       import_polyfills476 = __toESM(require_polyfills());
       init_S3ServiceException();
       NoSuchUpload = class _NoSuchUpload extends S3ServiceException {
@@ -39079,10 +39079,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js
   var import_polyfills477, _A, _AAO, _AC, _ACL, _ACL_, _ACLn, _ACP, _ACT, _ACn, _AD, _ADb, _AED, _AF, _AH, _AHl, _AI, _AIMU, _AKI, _AM, _AMU, _AMUO, _AMUR, _AMl, _AO, _AOl, _APA, _APAc, _AQRD, _AR, _ARI, _AS, _ASBD, _ASSEBD, _ASr, _AT, _An, _B, _BA, _BAE, _BAI, _BAOBY, _BET, _BGR, _BI, _BKE, _BLC, _BLN, _BLS, _BLT, _BN, _BNu, _BP, _BPA, _BPP, _BR, _BRy, _BS, _Bo, _Bu, _C, _CA, _CACL, _CB, _CBC, _CBMC, _CBMCR, _CBMTC, _CBMTCR, _CBO, _CBR, _CC, _CCRC, _CCRCC, _CCRCNVME, _CC_, _CD, _CD_, _CDo, _CE, _CE_, _CEo, _CF, _CFC, _CL, _CL_, _CL__, _CLo, _CM, _CMD, _CMDo, _CMU, _CMUO, _CMUOr, _CMUR, _CMURo, _CMURr, _CMUo, _CMUr, _CMh, _CO, _COO, _COR, _CORSC, _CORSR, _CORSRu, _CORo, _CP, _CPL, _CPLo, _CPR, _CPo, _CPom, _CR, _CRSBA, _CR_, _CS, _CSHA, _CSHAh, _CSHAhe, _CSIM, _CSIMS, _CSINM, _CSIUS, _CSO, _CSR, _CSRo, _CSRr, _CSSSECA, _CSSSECK, _CSSSECKMD, _CSV, _CSVI, _CSVIn, _CSVO, _CSo, _CSr, _CT, _CT_, _CTl, _CTo, _CTom, _CTon, _CXXHASH, _CXXHASHh, _CXXHASHhe, _Co, _Cod, _Com, _Con, _Cont, _Cr, _D, _DAI, _DB, _DBAC, _DBACR, _DBC, _DBCR, _DBE, _DBER, _DBIC, _DBICR, _DBITC, _DBITCR, _DBL, _DBLR, _DBMC, _DBMCR, _DBMCRe, _DBMCe, _DBMTC, _DBMTCR, _DBOC, _DBOCR, _DBP, _DBPR, _DBR, _DBRR, _DBRe, _DBT, _DBTR, _DBW, _DBWR, _DE, _DIM, _DIMS, _DINM, _DIUS, _DM, _DME, _DMR, _DMVI, _DMe, _DN, _DO, _DOO, _DOOe, _DOR, _DORe, _DOT, _DOTO, _DOTR, _DOe, _DOel, _DOele, _DPAB, _DPABR, _DR, _DRe, _DRel, _DRes, _Da, _De, _Del, _Deli, _Des, _Desc, _Det, _E, _EA, _EBC, _EBO, _EC, _ECr, _ED, _EDr, _EE, _EH, _EHx, _EM, _EODM, _EOR, _ES, _ESBO, _ET, _ETL, _ETM, _ETa, _ETn, _ETv, _ETx, _En, _Ena, _End, _Er, _Err, _Ev, _Eve, _Ex, _Exp, _F, _FD, _FHI, _FO, _FR, _FRL, _FRi, _Fi, _Fo, _Fr, _G, _GBA, _GBAC, _GBACO, _GBACOe, _GBACR, _GBACRe, _GBACe, _GBAO, _GBAOe, _GBAR, _GBARe, _GBAe, _GBC, _GBCO, _GBCR, _GBE, _GBEO, _GBER, _GBIC, _GBICO, _GBICR, _GBITC, _GBITCO, _GBITCR, _GBL, _GBLC, _GBLCO, _GBLCR, _GBLO, _GBLOe, _GBLR, _GBLRe, _GBLe, _GBMC, _GBMCO, _GBMCOe, _GBMCR, _GBMCRe, _GBMCRet, _GBMCe, _GBMTC, _GBMTCO, _GBMTCR, _GBMTCRe, _GBNC, _GBNCR, _GBOC, _GBOCO, _GBOCR, _GBP, _GBPO, _GBPR, _GBPS, _GBPSO, _GBPSR, _GBR, _GBRO, _GBRP, _GBRPO, _GBRPR, _GBRR, _GBT, _GBTO, _GBTR, _GBV, _GBVO, _GBVR, _GBW, _GBWO, _GBWR, _GFC, _GJP, _GO, _GOA, _GOAO, _GOAOe, _GOAP, _GOAR, _GOARe, _GOARet, _GOAe, _GOLC, _GOLCO, _GOLCR, _GOLH, _GOLHO, _GOLHR, _GOO, _GOR, _GORO, _GORR, _GORe, _GOT, _GOTO, _GOTOe, _GOTR, _GOTRe, _GOTe, _GPAB, _GPABO, _GPABR, _GR, _GRACP, _GW, _GWACP, _Gr, _Gra, _HB, _HBO, _HBR, _HECRE, _HN, _HO, _HOO, _HOR, _HRC, _I, _IC, _ICL, _ID, _IDn, _IDnv, _IE, _IEn, _IF, _IL, _IM, _IMIT, _IMLMT, _IMS, _IMS_, _IMSf, _IMUR, _IM_, _INM, _INM_, _IOF, _IOS, _IOV, _IP, _IPA, _IPM, _IR, _IRIP, _IS, _ISBD, _ISn, _IT, _ITAO, _ITC, _ITCL, _ITCR, _ITCU, _ITCn, _ITF, _IUS, _IUS_, _IWO, _In, _Ini, _JSON, _JSONI, _JSONO, _JTC, _JTCR, _JTCU, _K, _KC, _KI, _KKA, _KM, _KMSC, _KMSKA, _KMSKI, _KMSMKID, _KPE, _L, _LAMBR, _LAMDBR, _LB, _LBAC, _LBACO, _LBACR, _LBACRi, _LBIC, _LBICO, _LBICR, _LBITC, _LBITCO, _LBITCR, _LBMC, _LBMCO, _LBMCR, _LBO, _LBR, _LBRi, _LC, _LCi, _LDB, _LDBO, _LDBR, _LE, _LEi, _LFA, _LFC, _LFCL, _LFCa, _LH, _LI, _LICR, _LM, _LMCR, _LMT, _LMU, _LMUO, _LMUR, _LMURi, _LM_, _LO, _LOO, _LOR, _LOV, _LOVO, _LOVOi, _LOVR, _LOVRi, _LOVi, _LP, _LPO, _LPR, _LPRi, _LR, _LRAO, _LRF, _LRi, _LVR, _M, _MAO, _MAS, _MB, _MC, _MCL, _MCR, _MCe, _MD, _MDB, _MDf, _ME, _MF, _MFA, _MFAD, _MK, _MM, _MOS, _MP, _MTC, _MTCR, _MTEC, _MU, _MUL, _MUa, _Ma, _Me, _Mes, _Mi, _Mo, _N, _NC, _NCF, _NCT, _ND, _NEKKAS, _NF, _NKM, _NM, _NNV, _NPNM, _NSB, _NSK, _NSU, _NUIM, _NVE, _NVIM, _NVT, _NVTL, _NVTo, _O, _OA, _OAIATE, _OC, _OCR, _OCRw, _OE, _OF, _OI, _OIL, _OL, _OLC, _OLE, _OLEFB, _OLLH, _OLLHS, _OLM, _OLR, _OLRUD, _OLRb, _OLb, _ONIATE, _OO, _OOA, _OP, _OPb, _OS, _OSGT, _OSLT, _OSV, _OSu, _OV, _OVL, _Ob, _Obj, _P, _PABC, _PBA, _PBAC, _PBACR, _PBACRu, _PBACu, _PBAR, _PBARu, _PBAu, _PBC, _PBCR, _PBE, _PBER, _PBIC, _PBICR, _PBITC, _PBITCR, _PBL, _PBLC, _PBLCO, _PBLCR, _PBLR, _PBMC, _PBMCR, _PBNC, _PBNCR, _PBOC, _PBOCR, _PBP, _PBPR, _PBR, _PBRP, _PBRPR, _PBRR, _PBT, _PBTR, _PBV, _PBVR, _PBW, _PBWR, _PC, _PDS, _PE, _PI, _PL, _PN, _PNM, _PO, _POA, _POAO, _POAR, _POLC, _POLCO, _POLCR, _POLH, _POLHO, _POLHR, _POO, _POR, _PORO, _PORR, _PORu, _POT, _POTO, _POTR, _PP, _PPAB, _PPABR, _PS, _Pa, _Par, _Parq, _Pay, _Payl, _Pe, _Po, _Pr, _Pri, _Pro, _Q, _QA, _QC, _QCL, _QCu, _QCue, _QEC, _QF, _Qu, _R, _RART, _RC, _RCC, _RCD, _RCE, _RCL, _RCT, _RCe, _RD, _RE, _RED, _REe, _REec, _RKKID, _RKPW, _RKW, _RM, _RO, _ROO, _ROOe, _ROP, _ROR, _RORe, _ROe, _RP, _RPB, _RPC, _RPe, _RR, _RRAO, _RRF, _RRe, _RRep, _RReq, _RRes, _RRo, _RS, _RSe, _RSen, _RT, _RTV, _RTe, _RUD, _Ra, _Re, _Rec, _Red, _Ret, _Ro, _Ru, _S, _SA, _SAK, _SAs, _SB, _SBD, _SC, _SCA, _SCADE, _SCV, _SCe, _SCt, _SDV, _SE, _SIM, _SIMS, _SINM, _SIUS, _SK, _SKEO, _SKF, _SKe, _SL, _SM, _SOC, _SOCES, _SOCO, _SOCR, _SP, _SPi, _SR, _SS, _SSC, _SSE, _SSEA, _SSEBD, _SSEC, _SSECA, _SSECK, _SSECKMD, _SSEKMS, _SSEKMSE, _SSEKMSEC, _SSEKMSKI, _SSER, _SSERe, _SSES, _ST, _STD, _STDR, _S_, _Sc, _Si, _St, _Sta, _Su, _T, _TA, _TAo, _TB, _TBA, _TBT, _TC, _TCL, _TCo, _TCop, _TD, _TDMOS, _TG, _TGa, _TL, _TLr, _TMP, _TN, _TNa, _TOKF, _TP, _TPC, _TS, _TSa, _Ta, _Tag, _Ti, _Tie, _Tier, _Tim, _To, _Top, _Tr, _Tra, _Ty, _U, _UBMITC, _UBMITCR, _UBMJTC, _UBMJTCR, _UI, _UIM, _UM, _UOE, _UOER, _UOERp, _UP, _UPC, _UPCO, _UPCR, _UPO, _UPR, _URI, _Up, _V, _VC, _VI, _VIM, _Ve, _Ver, _WC, _WGOR, _WGORR, _WOB, _WRL, _Y, _ar, _br, _c, _ct, _d, _e, _eP, _en, _et, _fo, _h, _hC, _hE, _hH, _hL, _hP, _hPH, _hQ, _hi, _i, _iT, _km, _m, _mb, _mdb, _mk, _mp, _mu, _p, _pN, _pnm, _rcc, _rcd, _rce, _rcl, _rct, _re, _s, _sa, _st, _uI, _uim, _vI, _vim, _x, _xA, _xF, _xN, _xNm, _xaa, _xaad, _xaapa, _xaari, _xaas, _xaba, _xabgr, _xabln, _xablt, _xabn, _xabole, _xabolt, _xabr, _xaca, _xacc, _xacc_, _xacc__, _xacm, _xacm_, _xacrsba, _xacs, _xacs_, _xacs__, _xacs___, _xacsim, _xacsims, _xacsinm, _xacsius, _xacsm, _xacsr, _xacssseca, _xacssseck, _xacssseckM, _xacsvi, _xact, _xact_, _xacx, _xacx_, _xacx__, _xadm, _xae, _xaebo, _xafec, _xafem, _xafhCC, _xafhCD, _xafhCE, _xafhCL, _xafhCR, _xafhCT, _xafhE, _xafhE_, _xafhLM, _xafhar, _xafhxacc, _xafhxacc_, _xafhxacc__, _xafhxacm, _xafhxacs, _xafhxacs_, _xafhxacs__, _xafhxacx, _xafhxacx_, _xafhxacx__, _xafhxadm, _xafhxae, _xafhxamm, _xafhxampc, _xafhxaollh, _xafhxaolm, _xafhxaolrud, _xafhxar, _xafhxarc, _xafhxars, _xafhxasc, _xafhxasse, _xafhxasseakki, _xafhxassebke, _xafhxasseca, _xafhxasseckM, _xafhxatc, _xafhxavi, _xafs, _xagfc, _xagr, _xagra, _xagw, _xagwa, _xaimit, _xaimlmt, _xaims, _xam, _xam_, _xamd, _xamm, _xamos, _xamp, _xampc, _xaoa, _xaollh, _xaolm, _xaolrud, _xaoo, _xaooa, _xaos, _xapnm, _xar, _xarc, _xarop, _xarp, _xarr, _xars, _xars_, _xarsim, _xarsims, _xarsinm, _xarsius, _xart, _xasc, _xasca, _xasdv, _xasebo, _xasse, _xasseakki, _xassebke, _xassec, _xasseca, _xasseck, _xasseckM, _xat, _xatc, _xatd, _xatdmos, _xavi, _xawob, _xawrl, _xs, n0, _s_registry, S3ServiceException$, n0_registry, AccessDenied$, BucketAlreadyExists$, BucketAlreadyOwnedByYou$, EncryptionTypeMismatch$, IdempotencyParameterMismatch$, InvalidObjectState$, InvalidRequest$, InvalidWriteOffset$, NoSuchBucket$, NoSuchKey$, NoSuchUpload$, NotFound$, ObjectAlreadyInActiveTierError$, ObjectNotInActiveTierError$, TooManyParts$, errorTypeRegistries, CopySourceSSECustomerKey, NonEmptyKmsKeyArnString, SessionCredentialValue, SSECustomerKey, SSEKMSEncryptionContext, SSEKMSKeyId, StreamingBlob, AbacStatus$, AbortIncompleteMultipartUpload$, AbortMultipartUploadOutput$, AbortMultipartUploadRequest$, AccelerateConfiguration$, AccessControlPolicy$, AccessControlTranslation$, AnalyticsAndOperator$, AnalyticsConfiguration$, AnalyticsExportDestination$, AnalyticsS3BucketDestination$, BlockedEncryptionTypes$, Bucket$, BucketInfo$, BucketLifecycleConfiguration$, BucketLoggingStatus$, Checksum$, CommonPrefix$, CompletedMultipartUpload$, CompletedPart$, CompleteMultipartUploadOutput$, CompleteMultipartUploadRequest$, Condition$, ContinuationEvent$, CopyObjectOutput$, CopyObjectRequest$, CopyObjectResult$, CopyPartResult$, CORSConfiguration$, CORSRule$, CreateBucketConfiguration$, CreateBucketMetadataConfigurationRequest$, CreateBucketMetadataTableConfigurationRequest$, CreateBucketOutput$, CreateBucketRequest$, CreateMultipartUploadOutput$, CreateMultipartUploadRequest$, CreateSessionOutput$, CreateSessionRequest$, CSVInput$, CSVOutput$, DefaultRetention$, Delete$, DeleteBucketAnalyticsConfigurationRequest$, DeleteBucketCorsRequest$, DeleteBucketEncryptionRequest$, DeleteBucketIntelligentTieringConfigurationRequest$, DeleteBucketInventoryConfigurationRequest$, DeleteBucketLifecycleRequest$, DeleteBucketMetadataConfigurationRequest$, DeleteBucketMetadataTableConfigurationRequest$, DeleteBucketMetricsConfigurationRequest$, DeleteBucketOwnershipControlsRequest$, DeleteBucketPolicyRequest$, DeleteBucketReplicationRequest$, DeleteBucketRequest$, DeleteBucketTaggingRequest$, DeleteBucketWebsiteRequest$, DeletedObject$, DeleteMarkerEntry$, DeleteMarkerReplication$, DeleteObjectOutput$, DeleteObjectRequest$, DeleteObjectsOutput$, DeleteObjectsRequest$, DeleteObjectTaggingOutput$, DeleteObjectTaggingRequest$, DeletePublicAccessBlockRequest$, Destination$, DestinationResult$, Encryption$, EncryptionConfiguration$, EndEvent$, _Error$, ErrorDetails$, ErrorDocument$, EventBridgeConfiguration$, ExistingObjectReplication$, FilterRule$, GetBucketAbacOutput$, GetBucketAbacRequest$, GetBucketAccelerateConfigurationOutput$, GetBucketAccelerateConfigurationRequest$, GetBucketAclOutput$, GetBucketAclRequest$, GetBucketAnalyticsConfigurationOutput$, GetBucketAnalyticsConfigurationRequest$, GetBucketCorsOutput$, GetBucketCorsRequest$, GetBucketEncryptionOutput$, GetBucketEncryptionRequest$, GetBucketIntelligentTieringConfigurationOutput$, GetBucketIntelligentTieringConfigurationRequest$, GetBucketInventoryConfigurationOutput$, GetBucketInventoryConfigurationRequest$, GetBucketLifecycleConfigurationOutput$, GetBucketLifecycleConfigurationRequest$, GetBucketLocationOutput$, GetBucketLocationRequest$, GetBucketLoggingOutput$, GetBucketLoggingRequest$, GetBucketMetadataConfigurationOutput$, GetBucketMetadataConfigurationRequest$, GetBucketMetadataConfigurationResult$, GetBucketMetadataTableConfigurationOutput$, GetBucketMetadataTableConfigurationRequest$, GetBucketMetadataTableConfigurationResult$, GetBucketMetricsConfigurationOutput$, GetBucketMetricsConfigurationRequest$, GetBucketNotificationConfigurationRequest$, GetBucketOwnershipControlsOutput$, GetBucketOwnershipControlsRequest$, GetBucketPolicyOutput$, GetBucketPolicyRequest$, GetBucketPolicyStatusOutput$, GetBucketPolicyStatusRequest$, GetBucketReplicationOutput$, GetBucketReplicationRequest$, GetBucketRequestPaymentOutput$, GetBucketRequestPaymentRequest$, GetBucketTaggingOutput$, GetBucketTaggingRequest$, GetBucketVersioningOutput$, GetBucketVersioningRequest$, GetBucketWebsiteOutput$, GetBucketWebsiteRequest$, GetObjectAclOutput$, GetObjectAclRequest$, GetObjectAttributesOutput$, GetObjectAttributesParts$, GetObjectAttributesRequest$, GetObjectLegalHoldOutput$, GetObjectLegalHoldRequest$, GetObjectLockConfigurationOutput$, GetObjectLockConfigurationRequest$, GetObjectOutput$, GetObjectRequest$, GetObjectRetentionOutput$, GetObjectRetentionRequest$, GetObjectTaggingOutput$, GetObjectTaggingRequest$, GetObjectTorrentOutput$, GetObjectTorrentRequest$, GetPublicAccessBlockOutput$, GetPublicAccessBlockRequest$, GlacierJobParameters$, Grant$, Grantee$, HeadBucketOutput$, HeadBucketRequest$, HeadObjectOutput$, HeadObjectRequest$, IndexDocument$, Initiator$, InputSerialization$, IntelligentTieringAndOperator$, IntelligentTieringConfiguration$, IntelligentTieringFilter$, InventoryConfiguration$, InventoryDestination$, InventoryEncryption$, InventoryFilter$, InventoryS3BucketDestination$, InventorySchedule$, InventoryTableConfiguration$, InventoryTableConfigurationResult$, InventoryTableConfigurationUpdates$, JournalTableConfiguration$, JournalTableConfigurationResult$, JournalTableConfigurationUpdates$, JSONInput$, JSONOutput$, LambdaFunctionConfiguration$, LifecycleExpiration$, LifecycleRule$, LifecycleRuleAndOperator$, LifecycleRuleFilter$, ListBucketAnalyticsConfigurationsOutput$, ListBucketAnalyticsConfigurationsRequest$, ListBucketIntelligentTieringConfigurationsOutput$, ListBucketIntelligentTieringConfigurationsRequest$, ListBucketInventoryConfigurationsOutput$, ListBucketInventoryConfigurationsRequest$, ListBucketMetricsConfigurationsOutput$, ListBucketMetricsConfigurationsRequest$, ListBucketsOutput$, ListBucketsRequest$, ListDirectoryBucketsOutput$, ListDirectoryBucketsRequest$, ListMultipartUploadsOutput$, ListMultipartUploadsRequest$, ListObjectsOutput$, ListObjectsRequest$, ListObjectsV2Output$, ListObjectsV2Request$, ListObjectVersionsOutput$, ListObjectVersionsRequest$, ListPartsOutput$, ListPartsRequest$, LocationInfo$, LoggingEnabled$, MetadataConfiguration$, MetadataConfigurationResult$, MetadataEntry$, MetadataTableConfiguration$, MetadataTableConfigurationResult$, MetadataTableEncryptionConfiguration$, Metrics$, MetricsAndOperator$, MetricsConfiguration$, MultipartUpload$, NoncurrentVersionExpiration$, NoncurrentVersionTransition$, NotificationConfiguration$, NotificationConfigurationFilter$, _Object$, ObjectIdentifier$, ObjectLockConfiguration$, ObjectLockLegalHold$, ObjectLockRetention$, ObjectLockRule$, ObjectPart$, ObjectVersion$, OutputLocation$, OutputSerialization$, Owner$, OwnershipControls$, OwnershipControlsRule$, ParquetInput$, Part$, PartitionedPrefix$, PolicyStatus$, Progress$, ProgressEvent$, PublicAccessBlockConfiguration$, PutBucketAbacRequest$, PutBucketAccelerateConfigurationRequest$, PutBucketAclRequest$, PutBucketAnalyticsConfigurationRequest$, PutBucketCorsRequest$, PutBucketEncryptionRequest$, PutBucketIntelligentTieringConfigurationRequest$, PutBucketInventoryConfigurationRequest$, PutBucketLifecycleConfigurationOutput$, PutBucketLifecycleConfigurationRequest$, PutBucketLoggingRequest$, PutBucketMetricsConfigurationRequest$, PutBucketNotificationConfigurationRequest$, PutBucketOwnershipControlsRequest$, PutBucketPolicyRequest$, PutBucketReplicationRequest$, PutBucketRequestPaymentRequest$, PutBucketTaggingRequest$, PutBucketVersioningRequest$, PutBucketWebsiteRequest$, PutObjectAclOutput$, PutObjectAclRequest$, PutObjectLegalHoldOutput$, PutObjectLegalHoldRequest$, PutObjectLockConfigurationOutput$, PutObjectLockConfigurationRequest$, PutObjectOutput$, PutObjectRequest$, PutObjectRetentionOutput$, PutObjectRetentionRequest$, PutObjectTaggingOutput$, PutObjectTaggingRequest$, PutPublicAccessBlockRequest$, QueueConfiguration$, RecordExpiration$, RecordsEvent$, Redirect$, RedirectAllRequestsTo$, RenameObjectOutput$, RenameObjectRequest$, ReplicaModifications$, ReplicationConfiguration$, ReplicationRule$, ReplicationRuleAndOperator$, ReplicationRuleFilter$, ReplicationTime$, ReplicationTimeValue$, RequestPaymentConfiguration$, RequestProgress$, RestoreObjectOutput$, RestoreObjectRequest$, RestoreRequest$, RestoreStatus$, RoutingRule$, S3KeyFilter$, S3Location$, S3TablesDestination$, S3TablesDestinationResult$, ScanRange$, SelectObjectContentOutput$, SelectObjectContentRequest$, SelectParameters$, ServerSideEncryptionByDefault$, ServerSideEncryptionConfiguration$, ServerSideEncryptionRule$, SessionCredentials$, SimplePrefix$, SourceSelectionCriteria$, SSEKMS$, SseKmsEncryptedObjects$, SSEKMSEncryption$, SSES3$, Stats$, StatsEvent$, StorageClassAnalysis$, StorageClassAnalysisDataExport$, Tag$, Tagging$, TargetGrant$, TargetObjectKeyFormat$, Tiering$, TopicConfiguration$, Transition$, UpdateBucketMetadataInventoryTableConfigurationRequest$, UpdateBucketMetadataJournalTableConfigurationRequest$, UpdateObjectEncryptionRequest$, UpdateObjectEncryptionResponse$, UploadPartCopyOutput$, UploadPartCopyRequest$, UploadPartOutput$, UploadPartRequest$, VersioningConfiguration$, WebsiteConfiguration$, WriteGetObjectResponseRequest$, __Unit, AllowedHeaders, AllowedMethods, AllowedOrigins, AnalyticsConfigurationList, Buckets, ChecksumAlgorithmList, CommonPrefixList, CompletedPartList, CORSRules, DeletedObjects, DeleteMarkers, EncryptionTypeList, Errors, EventList, ExposeHeaders, FilterRuleList, Grants, IntelligentTieringConfigurationList, InventoryConfigurationList, InventoryOptionalFields, LambdaFunctionConfigurationList, LifecycleRules, MetricsConfigurationList, MultipartUploadList, NoncurrentVersionTransitionList, ObjectAttributesList, ObjectIdentifierList, ObjectList, ObjectVersionList, OptionalObjectAttributesList, OwnershipControlsRules, Parts, PartsList, QueueConfigurationList, ReplicationRules, RoutingRules, ServerSideEncryptionRules, TagSet, TargetGrants, TieringList, TopicConfigurationList, TransitionList, UserMetadata, Metadata, AnalyticsFilter$, MetricsFilter$, ObjectEncryption$, SelectObjectContentEventStream$, AbortMultipartUpload$, CompleteMultipartUpload$, CopyObject$, CreateBucket$, CreateBucketMetadataConfiguration$, CreateBucketMetadataTableConfiguration$, CreateMultipartUpload$, CreateSession$, DeleteBucket$, DeleteBucketAnalyticsConfiguration$, DeleteBucketCors$, DeleteBucketEncryption$, DeleteBucketIntelligentTieringConfiguration$, DeleteBucketInventoryConfiguration$, DeleteBucketLifecycle$, DeleteBucketMetadataConfiguration$, DeleteBucketMetadataTableConfiguration$, DeleteBucketMetricsConfiguration$, DeleteBucketOwnershipControls$, DeleteBucketPolicy$, DeleteBucketReplication$, DeleteBucketTagging$, DeleteBucketWebsite$, DeleteObject$, DeleteObjects$, DeleteObjectTagging$, DeletePublicAccessBlock$, GetBucketAbac$, GetBucketAccelerateConfiguration$, GetBucketAcl$, GetBucketAnalyticsConfiguration$, GetBucketCors$, GetBucketEncryption$, GetBucketIntelligentTieringConfiguration$, GetBucketInventoryConfiguration$, GetBucketLifecycleConfiguration$, GetBucketLocation$, GetBucketLogging$, GetBucketMetadataConfiguration$, GetBucketMetadataTableConfiguration$, GetBucketMetricsConfiguration$, GetBucketNotificationConfiguration$, GetBucketOwnershipControls$, GetBucketPolicy$, GetBucketPolicyStatus$, GetBucketReplication$, GetBucketRequestPayment$, GetBucketTagging$, GetBucketVersioning$, GetBucketWebsite$, GetObject$, GetObjectAcl$, GetObjectAttributes$, GetObjectLegalHold$, GetObjectLockConfiguration$, GetObjectRetention$, GetObjectTagging$, GetObjectTorrent$, GetPublicAccessBlock$, HeadBucket$, HeadObject$, ListBucketAnalyticsConfigurations$, ListBucketIntelligentTieringConfigurations$, ListBucketInventoryConfigurations$, ListBucketMetricsConfigurations$, ListBuckets$, ListDirectoryBuckets$, ListMultipartUploads$, ListObjects$, ListObjectsV2$, ListObjectVersions$, ListParts$, PutBucketAbac$, PutBucketAccelerateConfiguration$, PutBucketAcl$, PutBucketAnalyticsConfiguration$, PutBucketCors$, PutBucketEncryption$, PutBucketIntelligentTieringConfiguration$, PutBucketInventoryConfiguration$, PutBucketLifecycleConfiguration$, PutBucketLogging$, PutBucketMetricsConfiguration$, PutBucketNotificationConfiguration$, PutBucketOwnershipControls$, PutBucketPolicy$, PutBucketReplication$, PutBucketRequestPayment$, PutBucketTagging$, PutBucketVersioning$, PutBucketWebsite$, PutObject$, PutObjectAcl$, PutObjectLegalHold$, PutObjectLockConfiguration$, PutObjectRetention$, PutObjectTagging$, PutPublicAccessBlock$, RenameObject$, RestoreObject$, SelectObjectContent$, UpdateBucketMetadataInventoryTableConfiguration$, UpdateBucketMetadataJournalTableConfiguration$, UpdateObjectEncryption$, UploadPart$, UploadPartCopy$, WriteGetObjectResponse$;
   var init_schemas_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/schemas/schemas_0.js"() {
       import_polyfills477 = __toESM(require_polyfills());
       init_schema2();
       init_errors();
@@ -44283,10 +44283,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js
   var import_polyfills478, CreateSessionCommand;
   var init_CreateSessionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateSessionCommand.js"() {
       import_polyfills478 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -44307,10 +44307,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/package.json
+  // ../../node_modules/@aws-sdk/client-s3/package.json
   var package_default;
   var init_package = __esm({
-    "node_modules/@aws-sdk/client-s3/package.json"() {
+    "../../node_modules/@aws-sdk/client-s3/package.json"() {
       package_default = {
         name: "@aws-sdk/client-s3",
         description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
@@ -44441,36 +44441,36 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
+  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js
   var import_polyfills479, fromUtf84;
   var init_fromUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/fromUtf8.browser.js"() {
       import_polyfills479 = __toESM(require_polyfills());
       fromUtf84 = (input) => new TextEncoder().encode(input);
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
+  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js
   var import_polyfills480;
   var init_toUint8Array3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUint8Array.js"() {
       import_polyfills480 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
+  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js
   var import_polyfills481;
   var init_toUtf8_browser3 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/toUtf8.browser.js"() {
       import_polyfills481 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
+  // ../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js
   var import_polyfills482;
   var init_dist_es43 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/node_modules/@smithy/util-utf8/dist-es/index.js"() {
       import_polyfills482 = __toESM(require_polyfills());
       init_fromUtf8_browser3();
       init_toUint8Array3();
@@ -44478,7 +44478,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
+  // ../../node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js
   function isEmptyData2(data) {
     if (typeof data === "string") {
       return data.length === 0;
@@ -44487,15 +44487,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills483;
   var init_isEmptyData2 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/build/module/isEmptyData.js"() {
       import_polyfills483 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/constants.js
+  // ../../node_modules/@aws-crypto/sha1-browser/build/module/constants.js
   var import_polyfills484, SHA_1_HASH, SHA_1_HMAC_ALGO, EMPTY_DATA_SHA_1;
   var init_constants8 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/build/module/constants.js"() {
       import_polyfills484 = __toESM(require_polyfills());
       SHA_1_HASH = { name: "SHA-1" };
       SHA_1_HMAC_ALGO = {
@@ -44527,7 +44527,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/util-locate-window/dist-es/index.js
+  // ../../node_modules/@aws-sdk/util-locate-window/dist-es/index.js
   function locateWindow() {
     if (typeof window !== "undefined") {
       return window;
@@ -44538,13 +44538,13 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills485, fallbackWindow;
   var init_dist_es44 = __esm({
-    "node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/util-locate-window/dist-es/index.js"() {
       import_polyfills485 = __toESM(require_polyfills());
       fallbackWindow = {};
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
+  // ../../node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js
   function convertToBuffer2(data) {
     if (typeof data === "string") {
       return fromUtf84(data);
@@ -44556,7 +44556,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills486, Sha1;
   var init_webCryptoSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/build/module/webCryptoSha1.js"() {
       import_polyfills486 = __toESM(require_polyfills());
       init_dist_es43();
       init_isEmptyData2();
@@ -44610,7 +44610,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
+  // ../../node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js
   function supportsWebCrypto(window2) {
     if (supportsSecureRandom(window2) && typeof window2.crypto.subtle === "object") {
       var subtle = window2.crypto.subtle;
@@ -44632,7 +44632,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills487, subtleCryptoMethods;
   var init_supportsWebCrypto = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
+    "../../node_modules/@aws-crypto/supports-web-crypto/build/module/supportsWebCrypto.js"() {
       import_polyfills487 = __toESM(require_polyfills());
       subtleCryptoMethods = [
         "decrypt",
@@ -44647,19 +44647,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
+  // ../../node_modules/@aws-crypto/supports-web-crypto/build/module/index.js
   var import_polyfills488;
   var init_module4 = __esm({
-    "node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/supports-web-crypto/build/module/index.js"() {
       import_polyfills488 = __toESM(require_polyfills());
       init_supportsWebCrypto();
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
+  // ../../node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js
   var import_polyfills489, Sha12;
   var init_crossPlatformSha1 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/build/module/crossPlatformSha1.js"() {
       import_polyfills489 = __toESM(require_polyfills());
       init_webCryptoSha1();
       init_module4();
@@ -44688,20 +44688,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha1-browser/build/module/index.js
+  // ../../node_modules/@aws-crypto/sha1-browser/build/module/index.js
   var import_polyfills490;
   var init_module5 = __esm({
-    "node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/sha1-browser/build/module/index.js"() {
       import_polyfills490 = __toESM(require_polyfills());
       init_crossPlatformSha1();
       init_webCryptoSha1();
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/constants.js
+  // ../../node_modules/@aws-crypto/sha256-browser/build/module/constants.js
   var import_polyfills491, SHA_256_HASH, SHA_256_HMAC_ALGO, EMPTY_DATA_SHA_256;
   var init_constants9 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
+    "../../node_modules/@aws-crypto/sha256-browser/build/module/constants.js"() {
       import_polyfills491 = __toESM(require_polyfills());
       SHA_256_HASH = { name: "SHA-256" };
       SHA_256_HMAC_ALGO = {
@@ -44745,10 +44745,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
+  // ../../node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js
   var import_polyfills492, Sha256;
   var init_webCryptoSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
+    "../../node_modules/@aws-crypto/sha256-browser/build/module/webCryptoSha256.js"() {
       import_polyfills492 = __toESM(require_polyfills());
       init_module();
       init_constants9();
@@ -44804,10 +44804,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/constants.js
+  // ../../node_modules/@aws-crypto/sha256-js/build/module/constants.js
   var import_polyfills493, BLOCK_SIZE, DIGEST_LENGTH, KEY, INIT, MAX_HASHABLE_LENGTH;
   var init_constants10 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
+    "../../node_modules/@aws-crypto/sha256-js/build/module/constants.js"() {
       import_polyfills493 = __toESM(require_polyfills());
       BLOCK_SIZE = 64;
       DIGEST_LENGTH = 32;
@@ -44891,10 +44891,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
+  // ../../node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js
   var import_polyfills494, RawSha256;
   var init_RawSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
+    "../../node_modules/@aws-crypto/sha256-js/build/module/RawSha256.js"() {
       import_polyfills494 = __toESM(require_polyfills());
       init_constants10();
       RawSha256 = /** @class */
@@ -44994,7 +44994,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
+  // ../../node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js
   function bufferFromSecret(secret) {
     var input = convertToBuffer(secret);
     if (input.byteLength > BLOCK_SIZE) {
@@ -45008,7 +45008,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills495, Sha2562;
   var init_jsSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
+    "../../node_modules/@aws-crypto/sha256-js/build/module/jsSha256.js"() {
       import_polyfills495 = __toESM(require_polyfills());
       init_tslib_es6();
       init_constants10();
@@ -45073,19 +45073,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-js/build/module/index.js
+  // ../../node_modules/@aws-crypto/sha256-js/build/module/index.js
   var import_polyfills496;
   var init_module6 = __esm({
-    "node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/sha256-js/build/module/index.js"() {
       import_polyfills496 = __toESM(require_polyfills());
       init_jsSha256();
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
+  // ../../node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js
   var import_polyfills497, Sha2563;
   var init_crossPlatformSha256 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
+    "../../node_modules/@aws-crypto/sha256-browser/build/module/crossPlatformSha256.js"() {
       import_polyfills497 = __toESM(require_polyfills());
       init_webCryptoSha256();
       init_module6();
@@ -45115,20 +45115,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-crypto/sha256-browser/build/module/index.js
+  // ../../node_modules/@aws-crypto/sha256-browser/build/module/index.js
   var import_polyfills498;
   var init_module7 = __esm({
-    "node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
+    "../../node_modules/@aws-crypto/sha256-browser/build/module/index.js"() {
       import_polyfills498 = __toESM(require_polyfills());
       init_crossPlatformSha256();
       init_webCryptoSha256();
     }
   });
 
-  // node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
+  // ../../node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js
   var import_polyfills499, createDefaultUserAgentProvider, fallback;
   var init_dist_es45 = __esm({
-    "node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/util-user-agent-browser/dist-es/index.js"() {
       import_polyfills499 = __toESM(require_polyfills());
       createDefaultUserAgentProvider = ({ serviceId, clientVersion }) => async (config) => {
         const navigator2 = typeof window !== "undefined" ? window.navigator : void 0;
@@ -45184,7 +45184,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Int64.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/Int64.js
   function negate2(bytes) {
     for (let i2 = 0; i2 < 8; i2++) {
       bytes[i2] ^= 255;
@@ -45197,7 +45197,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills500, Int642;
   var init_Int64 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/Int64.js"() {
       import_polyfills500 = __toESM(require_polyfills());
       init_dist_es11();
       Int642 = class _Int64 {
@@ -45236,10 +45236,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js
   var import_polyfills501, HeaderMarshaller, HEADER_VALUE_TYPE2, BOOLEAN_TAG, BYTE_TAG, SHORT_TAG, INT_TAG, LONG_TAG, BINARY_TAG, STRING_TAG, TIMESTAMP_TAG, UUID_TAG, UUID_PATTERN2;
   var init_HeaderMarshaller = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/HeaderMarshaller.js"() {
       import_polyfills501 = __toESM(require_polyfills());
       init_dist_es11();
       init_Int64();
@@ -45427,7 +45427,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js
   function splitMessage({ byteLength, byteOffset, buffer }) {
     if (byteLength < MINIMUM_MESSAGE_LENGTH) {
       throw new Error("Provided message too short to accommodate event stream message overhead");
@@ -45455,7 +45455,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills502, PRELUDE_MEMBER_LENGTH, PRELUDE_LENGTH, CHECKSUM_LENGTH, MINIMUM_MESSAGE_LENGTH;
   var init_splitMessage = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/splitMessage.js"() {
       import_polyfills502 = __toESM(require_polyfills());
       init_module3();
       PRELUDE_MEMBER_LENGTH = 4;
@@ -45465,10 +45465,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js
   var import_polyfills503, EventStreamCodec;
   var init_EventStreamCodec = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/EventStreamCodec.js"() {
       import_polyfills503 = __toESM(require_polyfills());
       init_module3();
       init_HeaderMarshaller();
@@ -45538,18 +45538,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/Message.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/Message.js
   var import_polyfills504;
   var init_Message = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/Message.js"() {
       import_polyfills504 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js
   var import_polyfills505, MessageDecoderStream;
   var init_MessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/MessageDecoderStream.js"() {
       import_polyfills505 = __toESM(require_polyfills());
       MessageDecoderStream = class {
         options;
@@ -45569,10 +45569,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js
   var import_polyfills506, MessageEncoderStream;
   var init_MessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/MessageEncoderStream.js"() {
       import_polyfills506 = __toESM(require_polyfills());
       MessageEncoderStream = class {
         options;
@@ -45595,10 +45595,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js
   var import_polyfills507, SmithyMessageDecoderStream;
   var init_SmithyMessageDecoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageDecoderStream.js"() {
       import_polyfills507 = __toESM(require_polyfills());
       SmithyMessageDecoderStream = class {
         options;
@@ -45620,10 +45620,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js
   var import_polyfills508, SmithyMessageEncoderStream;
   var init_SmithyMessageEncoderStream = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/SmithyMessageEncoderStream.js"() {
       import_polyfills508 = __toESM(require_polyfills());
       SmithyMessageEncoderStream = class {
         options;
@@ -45643,10 +45643,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-codec/dist-es/index.js
+  // ../../node_modules/@smithy/eventstream-codec/dist-es/index.js
   var import_polyfills509;
   var init_dist_es46 = __esm({
-    "node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
+    "../../node_modules/@smithy/eventstream-codec/dist-es/index.js"() {
       import_polyfills509 = __toESM(require_polyfills());
       init_EventStreamCodec();
       init_HeaderMarshaller();
@@ -45659,7 +45659,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
+  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js
   function getChunkedStream(source) {
     let currentMessageTotalLength = 0;
     let currentMessagePendingLength = 0;
@@ -45726,12 +45726,12 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills510;
   var init_getChunkedStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
+    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/getChunkedStream.js"() {
       import_polyfills510 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
+  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js
   function getMessageUnmarshaller(deserializer, toUtf82) {
     return async function(message) {
       const { value: messageType } = message.headers[":message-type"];
@@ -45764,15 +45764,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills511;
   var init_getUnmarshalledStream = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
+    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/getUnmarshalledStream.js"() {
       import_polyfills511 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
+  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js
   var import_polyfills512, EventStreamMarshaller;
   var init_EventStreamMarshaller = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
+    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/EventStreamMarshaller.js"() {
       import_polyfills512 = __toESM(require_polyfills());
       init_dist_es46();
       init_getChunkedStream();
@@ -45802,28 +45802,28 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
+  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js
   var import_polyfills513;
   var init_provider = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
+    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/provider.js"() {
       import_polyfills513 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
+  // ../../node_modules/@smithy/eventstream-serde-universal/dist-es/index.js
   var import_polyfills514;
   var init_dist_es47 = __esm({
-    "node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
+    "../../node_modules/@smithy/eventstream-serde-universal/dist-es/index.js"() {
       import_polyfills514 = __toESM(require_polyfills());
       init_EventStreamMarshaller();
       init_provider();
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
+  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js
   var import_polyfills515, readableStreamtoIterable, iterableToReadableStream;
   var init_utils2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
+    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/utils.js"() {
       import_polyfills515 = __toESM(require_polyfills());
       readableStreamtoIterable = (readableStream) => ({
         [Symbol.asyncIterator]: async function* () {
@@ -45855,10 +45855,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
+  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js
   var import_polyfills516, EventStreamMarshaller2, isReadableStream2;
   var init_EventStreamMarshaller2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
+    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/EventStreamMarshaller.js"() {
       import_polyfills516 = __toESM(require_polyfills());
       init_dist_es47();
       init_utils2();
@@ -45883,20 +45883,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
+  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js
   var import_polyfills517, eventStreamSerdeProvider;
   var init_provider2 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
+    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/provider.js"() {
       import_polyfills517 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       eventStreamSerdeProvider = (options) => new EventStreamMarshaller2(options);
     }
   });
 
-  // node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
+  // ../../node_modules/@smithy/eventstream-serde-browser/dist-es/index.js
   var import_polyfills518;
   var init_dist_es48 = __esm({
-    "node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
+    "../../node_modules/@smithy/eventstream-serde-browser/dist-es/index.js"() {
       import_polyfills518 = __toESM(require_polyfills());
       init_EventStreamMarshaller2();
       init_provider2();
@@ -45904,7 +45904,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/chunked-blob-reader/dist-es/index.js
+  // ../../node_modules/@smithy/chunked-blob-reader/dist-es/index.js
   async function blobReader(blob, onChunk, chunkSize = 1024 * 1024) {
     const size = blob.size;
     let totalBytesRead = 0;
@@ -45916,15 +45916,15 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills519;
   var init_dist_es49 = __esm({
-    "node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
+    "../../node_modules/@smithy/chunked-blob-reader/dist-es/index.js"() {
       import_polyfills519 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/hash-blob-browser/dist-es/index.js
+  // ../../node_modules/@smithy/hash-blob-browser/dist-es/index.js
   var import_polyfills520, blobHasher;
   var init_dist_es50 = __esm({
-    "node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
+    "../../node_modules/@smithy/hash-blob-browser/dist-es/index.js"() {
       import_polyfills520 = __toESM(require_polyfills());
       init_dist_es49();
       blobHasher = async function blobHasher2(hashCtor, blob) {
@@ -45937,37 +45937,37 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
+  // ../../node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js
   var import_polyfills521;
   var init_invalidFunction = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
+    "../../node_modules/@smithy/invalid-dependency/dist-es/invalidFunction.js"() {
       import_polyfills521 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
+  // ../../node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js
   var import_polyfills522, invalidProvider;
   var init_invalidProvider = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
+    "../../node_modules/@smithy/invalid-dependency/dist-es/invalidProvider.js"() {
       import_polyfills522 = __toESM(require_polyfills());
       invalidProvider = (message) => () => Promise.reject(message);
     }
   });
 
-  // node_modules/@smithy/invalid-dependency/dist-es/index.js
+  // ../../node_modules/@smithy/invalid-dependency/dist-es/index.js
   var import_polyfills523;
   var init_dist_es51 = __esm({
-    "node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
+    "../../node_modules/@smithy/invalid-dependency/dist-es/index.js"() {
       import_polyfills523 = __toESM(require_polyfills());
       init_invalidFunction();
       init_invalidProvider();
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/constants.js
+  // ../../node_modules/@smithy/md5-js/dist-es/constants.js
   var import_polyfills524, BLOCK_SIZE2, DIGEST_LENGTH2, INIT2;
   var init_constants11 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/constants.js"() {
+    "../../node_modules/@smithy/md5-js/dist-es/constants.js"() {
       import_polyfills524 = __toESM(require_polyfills());
       BLOCK_SIZE2 = 64;
       DIGEST_LENGTH2 = 16;
@@ -45975,7 +45975,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/md5-js/dist-es/index.js
+  // ../../node_modules/@smithy/md5-js/dist-es/index.js
   function cmn(q2, a2, b2, x2, s2, t8) {
     a2 = (a2 + q2 & 4294967295) + (x2 + t8 & 4294967295) & 4294967295;
     return (a2 << s2 | a2 >>> 32 - s2) + b2 & 4294967295;
@@ -46009,7 +46009,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills525, Md5;
   var init_dist_es52 = __esm({
-    "node_modules/@smithy/md5-js/dist-es/index.js"() {
+    "../../node_modules/@smithy/md5-js/dist-es/index.js"() {
       import_polyfills525 = __toESM(require_polyfills());
       init_dist_es6();
       init_constants11();
@@ -46150,19 +46150,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
+  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js
   var import_polyfills526, DEFAULTS_MODE_OPTIONS;
   var init_constants12 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
+    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/constants.js"() {
       import_polyfills526 = __toESM(require_polyfills());
       DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
+  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js
   var import_polyfills527, resolveDefaultsModeConfig, useMobileConfiguration;
   var init_resolveDefaultsModeConfig = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
+    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/resolveDefaultsModeConfig.js"() {
       import_polyfills527 = __toESM(require_polyfills());
       init_dist_es41();
       init_constants12();
@@ -46197,19 +46197,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
+  // ../../node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js
   var import_polyfills528;
   var init_dist_es53 = __esm({
-    "node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-defaults-mode-browser/dist-es/index.js"() {
       import_polyfills528 = __toESM(require_polyfills());
       init_resolveDefaultsModeConfig();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js
   var import_polyfills529, getRuntimeConfig;
   var init_runtimeConfig_shared = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.shared.js"() {
       import_polyfills529 = __toESM(require_polyfills());
       init_httpAuthSchemes2();
       init_dist_es31();
@@ -46266,10 +46266,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js
   var import_polyfills530, getRuntimeConfig2;
   var init_runtimeConfig_browser = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.browser.js"() {
       import_polyfills530 = __toESM(require_polyfills());
       init_package();
       init_module5();
@@ -46315,10 +46315,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
+  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js
   var import_polyfills531, getAwsRegionExtensionConfiguration, resolveAwsRegionExtensionConfiguration;
   var init_extensions4 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
+    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/extensions/index.js"() {
       import_polyfills531 = __toESM(require_polyfills());
       getAwsRegionExtensionConfiguration = (runtimeConfig) => {
         return {
@@ -46338,26 +46338,26 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
+  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js
   var import_polyfills532;
   var init_awsRegionConfig = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
+    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/awsRegionConfig.js"() {
       import_polyfills532 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
+  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js
   var import_polyfills533;
   var init_stsRegionDefaultResolver_browser = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
+    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/regionConfig/stsRegionDefaultResolver.browser.js"() {
       import_polyfills533 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
+  // ../../node_modules/@aws-sdk/region-config-resolver/dist-es/index.js
   var import_polyfills534;
   var init_dist_es54 = __esm({
-    "node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/region-config-resolver/dist-es/index.js"() {
       import_polyfills534 = __toESM(require_polyfills());
       init_extensions4();
       init_awsRegionConfig();
@@ -46365,10 +46365,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js
   var import_polyfills535, getHttpAuthExtensionConfiguration, resolveHttpAuthRuntimeConfig;
   var init_httpAuthExtensionConfiguration = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/auth/httpAuthExtensionConfiguration.js"() {
       import_polyfills535 = __toESM(require_polyfills());
       getHttpAuthExtensionConfiguration = (runtimeConfig) => {
         const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
@@ -46410,10 +46410,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js
   var import_polyfills536, resolveRuntimeExtensions;
   var init_runtimeExtensions = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/runtimeExtensions.js"() {
       import_polyfills536 = __toESM(require_polyfills());
       init_dist_es54();
       init_dist_es2();
@@ -46427,10 +46427,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
   var import_polyfills537, S3Client;
   var init_S3Client = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/S3Client.js"() {
       import_polyfills537 = __toESM(require_polyfills());
       init_dist_es3();
       init_dist_es17();
@@ -46498,10 +46498,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js
   var import_polyfills538, AbortMultipartUploadCommand;
   var init_AbortMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/AbortMultipartUploadCommand.js"() {
       import_polyfills538 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -46522,7 +46522,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-ssec/dist-es/index.js
   function ssecMiddleware(options) {
     return (next) => async (args) => {
       const input = { ...args.input };
@@ -46575,7 +46575,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills539, ssecMiddlewareOptions, getSsecPlugin;
   var init_dist_es55 = __esm({
-    "node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-ssec/dist-es/index.js"() {
       import_polyfills539 = __toESM(require_polyfills());
       ssecMiddlewareOptions = {
         name: "ssecMiddleware",
@@ -46591,10 +46591,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js
   var import_polyfills540, CompleteMultipartUploadCommand;
   var init_CompleteMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CompleteMultipartUploadCommand.js"() {
       import_polyfills540 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46617,10 +46617,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js
   var import_polyfills541, CopyObjectCommand;
   var init_CopyObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CopyObjectCommand.js"() {
       import_polyfills541 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46645,7 +46645,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
+  // ../../node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js
   function locationConstraintMiddleware(options) {
     return (next) => async (args) => {
       const { CreateBucketConfiguration } = args.input;
@@ -46661,7 +46661,7 @@ ${toHex(hashedRequest)}`;
   }
   var import_polyfills542, locationConstraintMiddlewareOptions, getLocationConstraintPlugin;
   var init_dist_es56 = __esm({
-    "node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/middleware-location-constraint/dist-es/index.js"() {
       import_polyfills542 = __toESM(require_polyfills());
       locationConstraintMiddlewareOptions = {
         step: "initialize",
@@ -46677,10 +46677,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js
   var import_polyfills543, CreateBucketCommand;
   var init_CreateBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketCommand.js"() {
       import_polyfills543 = __toESM(require_polyfills());
       init_dist_es56();
       init_dist_es31();
@@ -46704,10 +46704,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js
   var import_polyfills544, CreateBucketMetadataConfigurationCommand;
   var init_CreateBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataConfigurationCommand.js"() {
       import_polyfills544 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -46731,10 +46731,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js
   var import_polyfills545, CreateBucketMetadataTableConfigurationCommand;
   var init_CreateBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills545 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -46758,10 +46758,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js
   var import_polyfills546, CreateMultipartUploadCommand;
   var init_CreateMultipartUploadCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/CreateMultipartUploadCommand.js"() {
       import_polyfills546 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -46784,10 +46784,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js
   var import_polyfills547, DeleteBucketAnalyticsConfigurationCommand;
   var init_DeleteBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills547 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46804,10 +46804,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js
   var import_polyfills548, DeleteBucketCommand;
   var init_DeleteBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCommand.js"() {
       import_polyfills548 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46824,10 +46824,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js
   var import_polyfills549, DeleteBucketCorsCommand;
   var init_DeleteBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketCorsCommand.js"() {
       import_polyfills549 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46844,10 +46844,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js
   var import_polyfills550, DeleteBucketEncryptionCommand;
   var init_DeleteBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketEncryptionCommand.js"() {
       import_polyfills550 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46864,10 +46864,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills551, DeleteBucketIntelligentTieringConfigurationCommand;
   var init_DeleteBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills551 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46884,10 +46884,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js
   var import_polyfills552, DeleteBucketInventoryConfigurationCommand;
   var init_DeleteBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketInventoryConfigurationCommand.js"() {
       import_polyfills552 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46904,10 +46904,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js
   var import_polyfills553, DeleteBucketLifecycleCommand;
   var init_DeleteBucketLifecycleCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketLifecycleCommand.js"() {
       import_polyfills553 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46924,10 +46924,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js
   var import_polyfills554, DeleteBucketMetadataConfigurationCommand;
   var init_DeleteBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataConfigurationCommand.js"() {
       import_polyfills554 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46944,10 +46944,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js
   var import_polyfills555, DeleteBucketMetadataTableConfigurationCommand;
   var init_DeleteBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills555 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46964,10 +46964,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js
   var import_polyfills556, DeleteBucketMetricsConfigurationCommand;
   var init_DeleteBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketMetricsConfigurationCommand.js"() {
       import_polyfills556 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -46984,10 +46984,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js
   var import_polyfills557, DeleteBucketOwnershipControlsCommand;
   var init_DeleteBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketOwnershipControlsCommand.js"() {
       import_polyfills557 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47004,10 +47004,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js
   var import_polyfills558, DeleteBucketPolicyCommand;
   var init_DeleteBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketPolicyCommand.js"() {
       import_polyfills558 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47024,10 +47024,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js
   var import_polyfills559, DeleteBucketReplicationCommand;
   var init_DeleteBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketReplicationCommand.js"() {
       import_polyfills559 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47044,10 +47044,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js
   var import_polyfills560, DeleteBucketTaggingCommand;
   var init_DeleteBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketTaggingCommand.js"() {
       import_polyfills560 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47064,10 +47064,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js
   var import_polyfills561, DeleteBucketWebsiteCommand;
   var init_DeleteBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteBucketWebsiteCommand.js"() {
       import_polyfills561 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47084,10 +47084,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js
   var import_polyfills562, DeleteObjectCommand;
   var init_DeleteObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectCommand.js"() {
       import_polyfills562 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47108,10 +47108,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js
   var import_polyfills563, DeleteObjectsCommand;
   var init_DeleteObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectsCommand.js"() {
       import_polyfills563 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -47136,10 +47136,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js
   var import_polyfills564, DeleteObjectTaggingCommand;
   var init_DeleteObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeleteObjectTaggingCommand.js"() {
       import_polyfills564 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47159,10 +47159,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js
   var import_polyfills565, DeletePublicAccessBlockCommand;
   var init_DeletePublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/DeletePublicAccessBlockCommand.js"() {
       import_polyfills565 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47179,10 +47179,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js
   var import_polyfills566, GetBucketAbacCommand;
   var init_GetBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAbacCommand.js"() {
       import_polyfills566 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47202,10 +47202,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js
   var import_polyfills567, GetBucketAccelerateConfigurationCommand;
   var init_GetBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAccelerateConfigurationCommand.js"() {
       import_polyfills567 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47226,10 +47226,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js
   var import_polyfills568, GetBucketAclCommand;
   var init_GetBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAclCommand.js"() {
       import_polyfills568 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47250,10 +47250,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js
   var import_polyfills569, GetBucketAnalyticsConfigurationCommand;
   var init_GetBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills569 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47274,10 +47274,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js
   var import_polyfills570, GetBucketCorsCommand;
   var init_GetBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketCorsCommand.js"() {
       import_polyfills570 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47298,10 +47298,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js
   var import_polyfills571, GetBucketEncryptionCommand;
   var init_GetBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketEncryptionCommand.js"() {
       import_polyfills571 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47322,10 +47322,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills572, GetBucketIntelligentTieringConfigurationCommand;
   var init_GetBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills572 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47346,10 +47346,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js
   var import_polyfills573, GetBucketInventoryConfigurationCommand;
   var init_GetBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketInventoryConfigurationCommand.js"() {
       import_polyfills573 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47370,10 +47370,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js
   var import_polyfills574, GetBucketLifecycleConfigurationCommand;
   var init_GetBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLifecycleConfigurationCommand.js"() {
       import_polyfills574 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47394,10 +47394,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js
   var import_polyfills575, GetBucketLocationCommand;
   var init_GetBucketLocationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLocationCommand.js"() {
       import_polyfills575 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47418,10 +47418,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js
   var import_polyfills576, GetBucketLoggingCommand;
   var init_GetBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketLoggingCommand.js"() {
       import_polyfills576 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47442,10 +47442,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js
   var import_polyfills577, GetBucketMetadataConfigurationCommand;
   var init_GetBucketMetadataConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataConfigurationCommand.js"() {
       import_polyfills577 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47466,10 +47466,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js
   var import_polyfills578, GetBucketMetadataTableConfigurationCommand;
   var init_GetBucketMetadataTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetadataTableConfigurationCommand.js"() {
       import_polyfills578 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47490,10 +47490,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js
   var import_polyfills579, GetBucketMetricsConfigurationCommand;
   var init_GetBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketMetricsConfigurationCommand.js"() {
       import_polyfills579 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47514,10 +47514,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js
   var import_polyfills580, GetBucketNotificationConfigurationCommand;
   var init_GetBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketNotificationConfigurationCommand.js"() {
       import_polyfills580 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47538,10 +47538,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js
   var import_polyfills581, GetBucketOwnershipControlsCommand;
   var init_GetBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketOwnershipControlsCommand.js"() {
       import_polyfills581 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47562,10 +47562,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js
   var import_polyfills582, GetBucketPolicyCommand;
   var init_GetBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyCommand.js"() {
       import_polyfills582 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47582,10 +47582,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js
   var import_polyfills583, GetBucketPolicyStatusCommand;
   var init_GetBucketPolicyStatusCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketPolicyStatusCommand.js"() {
       import_polyfills583 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47606,10 +47606,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js
   var import_polyfills584, GetBucketReplicationCommand;
   var init_GetBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketReplicationCommand.js"() {
       import_polyfills584 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47630,10 +47630,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js
   var import_polyfills585, GetBucketRequestPaymentCommand;
   var init_GetBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketRequestPaymentCommand.js"() {
       import_polyfills585 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47654,10 +47654,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js
   var import_polyfills586, GetBucketTaggingCommand;
   var init_GetBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketTaggingCommand.js"() {
       import_polyfills586 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47678,10 +47678,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js
   var import_polyfills587, GetBucketVersioningCommand;
   var init_GetBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketVersioningCommand.js"() {
       import_polyfills587 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47702,10 +47702,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js
   var import_polyfills588, GetBucketWebsiteCommand;
   var init_GetBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetBucketWebsiteCommand.js"() {
       import_polyfills588 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47726,10 +47726,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js
   var import_polyfills589, GetObjectAclCommand;
   var init_GetObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAclCommand.js"() {
       import_polyfills589 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47750,10 +47750,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js
   var import_polyfills590, GetObjectAttributesCommand;
   var init_GetObjectAttributesCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectAttributesCommand.js"() {
       import_polyfills590 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -47775,10 +47775,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js
   var import_polyfills591, GetObjectCommand;
   var init_GetObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectCommand.js"() {
       import_polyfills591 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -47807,10 +47807,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js
   var import_polyfills592, GetObjectLegalHoldCommand;
   var init_GetObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLegalHoldCommand.js"() {
       import_polyfills592 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47830,10 +47830,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js
   var import_polyfills593, GetObjectLockConfigurationCommand;
   var init_GetObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectLockConfigurationCommand.js"() {
       import_polyfills593 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47853,10 +47853,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js
   var import_polyfills594, GetObjectRetentionCommand;
   var init_GetObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectRetentionCommand.js"() {
       import_polyfills594 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47876,10 +47876,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js
   var import_polyfills595, GetObjectTaggingCommand;
   var init_GetObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTaggingCommand.js"() {
       import_polyfills595 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47899,10 +47899,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js
   var import_polyfills596, GetObjectTorrentCommand;
   var init_GetObjectTorrentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetObjectTorrentCommand.js"() {
       import_polyfills596 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -47918,10 +47918,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js
   var import_polyfills597, GetPublicAccessBlockCommand;
   var init_GetPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/GetPublicAccessBlockCommand.js"() {
       import_polyfills597 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47942,10 +47942,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js
   var import_polyfills598, HeadBucketCommand;
   var init_HeadBucketCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadBucketCommand.js"() {
       import_polyfills598 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -47965,10 +47965,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js
   var import_polyfills599, HeadObjectCommand;
   var init_HeadObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/HeadObjectCommand.js"() {
       import_polyfills599 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -47992,10 +47992,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js
   var import_polyfills600, ListBucketAnalyticsConfigurationsCommand;
   var init_ListBucketAnalyticsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketAnalyticsConfigurationsCommand.js"() {
       import_polyfills600 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48016,10 +48016,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js
   var import_polyfills601, ListBucketIntelligentTieringConfigurationsCommand;
   var init_ListBucketIntelligentTieringConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketIntelligentTieringConfigurationsCommand.js"() {
       import_polyfills601 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48040,10 +48040,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js
   var import_polyfills602, ListBucketInventoryConfigurationsCommand;
   var init_ListBucketInventoryConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketInventoryConfigurationsCommand.js"() {
       import_polyfills602 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48064,10 +48064,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js
   var import_polyfills603, ListBucketMetricsConfigurationsCommand;
   var init_ListBucketMetricsConfigurationsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketMetricsConfigurationsCommand.js"() {
       import_polyfills603 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48088,10 +48088,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js
   var import_polyfills604, ListBucketsCommand;
   var init_ListBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListBucketsCommand.js"() {
       import_polyfills604 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48108,10 +48108,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js
   var import_polyfills605, ListDirectoryBucketsCommand;
   var init_ListDirectoryBucketsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListDirectoryBucketsCommand.js"() {
       import_polyfills605 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48131,10 +48131,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js
   var import_polyfills606, ListMultipartUploadsCommand;
   var init_ListMultipartUploadsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListMultipartUploadsCommand.js"() {
       import_polyfills606 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48155,10 +48155,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js
   var import_polyfills607, ListObjectsCommand;
   var init_ListObjectsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsCommand.js"() {
       import_polyfills607 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48179,10 +48179,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js
   var import_polyfills608, ListObjectsV2Command;
   var init_ListObjectsV2Command = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectsV2Command.js"() {
       import_polyfills608 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48203,10 +48203,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js
   var import_polyfills609, ListObjectVersionsCommand;
   var init_ListObjectVersionsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListObjectVersionsCommand.js"() {
       import_polyfills609 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48227,10 +48227,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js
   var import_polyfills610, ListPartsCommand;
   var init_ListPartsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/ListPartsCommand.js"() {
       import_polyfills610 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -48253,10 +48253,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js
   var import_polyfills611, PutBucketAbacCommand;
   var init_PutBucketAbacCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAbacCommand.js"() {
       import_polyfills611 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48279,10 +48279,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js
   var import_polyfills612, PutBucketAccelerateConfigurationCommand;
   var init_PutBucketAccelerateConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAccelerateConfigurationCommand.js"() {
       import_polyfills612 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48306,10 +48306,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js
   var import_polyfills613, PutBucketAclCommand;
   var init_PutBucketAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAclCommand.js"() {
       import_polyfills613 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48333,10 +48333,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js
   var import_polyfills614, PutBucketAnalyticsConfigurationCommand;
   var init_PutBucketAnalyticsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketAnalyticsConfigurationCommand.js"() {
       import_polyfills614 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48353,10 +48353,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js
   var import_polyfills615, PutBucketCorsCommand;
   var init_PutBucketCorsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketCorsCommand.js"() {
       import_polyfills615 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48380,10 +48380,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js
   var import_polyfills616, PutBucketEncryptionCommand;
   var init_PutBucketEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketEncryptionCommand.js"() {
       import_polyfills616 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48407,10 +48407,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js
   var import_polyfills617, PutBucketIntelligentTieringConfigurationCommand;
   var init_PutBucketIntelligentTieringConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketIntelligentTieringConfigurationCommand.js"() {
       import_polyfills617 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48427,10 +48427,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js
   var import_polyfills618, PutBucketInventoryConfigurationCommand;
   var init_PutBucketInventoryConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketInventoryConfigurationCommand.js"() {
       import_polyfills618 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48447,10 +48447,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js
   var import_polyfills619, PutBucketLifecycleConfigurationCommand;
   var init_PutBucketLifecycleConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLifecycleConfigurationCommand.js"() {
       import_polyfills619 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48476,10 +48476,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js
   var import_polyfills620, PutBucketLoggingCommand;
   var init_PutBucketLoggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketLoggingCommand.js"() {
       import_polyfills620 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48503,10 +48503,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js
   var import_polyfills621, PutBucketMetricsConfigurationCommand;
   var init_PutBucketMetricsConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketMetricsConfigurationCommand.js"() {
       import_polyfills621 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48523,10 +48523,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js
   var import_polyfills622, PutBucketNotificationConfigurationCommand;
   var init_PutBucketNotificationConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketNotificationConfigurationCommand.js"() {
       import_polyfills622 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -48543,10 +48543,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js
   var import_polyfills623, PutBucketOwnershipControlsCommand;
   var init_PutBucketOwnershipControlsCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketOwnershipControlsCommand.js"() {
       import_polyfills623 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48570,10 +48570,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js
   var import_polyfills624, PutBucketPolicyCommand;
   var init_PutBucketPolicyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketPolicyCommand.js"() {
       import_polyfills624 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48597,10 +48597,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js
   var import_polyfills625, PutBucketReplicationCommand;
   var init_PutBucketReplicationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketReplicationCommand.js"() {
       import_polyfills625 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48624,10 +48624,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js
   var import_polyfills626, PutBucketRequestPaymentCommand;
   var init_PutBucketRequestPaymentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketRequestPaymentCommand.js"() {
       import_polyfills626 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48651,10 +48651,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js
   var import_polyfills627, PutBucketTaggingCommand;
   var init_PutBucketTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketTaggingCommand.js"() {
       import_polyfills627 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48678,10 +48678,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js
   var import_polyfills628, PutBucketVersioningCommand;
   var init_PutBucketVersioningCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketVersioningCommand.js"() {
       import_polyfills628 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48705,10 +48705,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js
   var import_polyfills629, PutBucketWebsiteCommand;
   var init_PutBucketWebsiteCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutBucketWebsiteCommand.js"() {
       import_polyfills629 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48732,10 +48732,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js
   var import_polyfills630, PutObjectAclCommand;
   var init_PutObjectAclCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectAclCommand.js"() {
       import_polyfills630 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48761,10 +48761,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js
   var import_polyfills631, PutObjectCommand;
   var init_PutObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectCommand.js"() {
       import_polyfills631 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48793,10 +48793,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js
   var import_polyfills632, PutObjectLegalHoldCommand;
   var init_PutObjectLegalHoldCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLegalHoldCommand.js"() {
       import_polyfills632 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48821,10 +48821,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js
   var import_polyfills633, PutObjectLockConfigurationCommand;
   var init_PutObjectLockConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectLockConfigurationCommand.js"() {
       import_polyfills633 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48849,10 +48849,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js
   var import_polyfills634, PutObjectRetentionCommand;
   var init_PutObjectRetentionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectRetentionCommand.js"() {
       import_polyfills634 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48877,10 +48877,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js
   var import_polyfills635, PutObjectTaggingCommand;
   var init_PutObjectTaggingCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutObjectTaggingCommand.js"() {
       import_polyfills635 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48905,10 +48905,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js
   var import_polyfills636, PutPublicAccessBlockCommand;
   var init_PutPublicAccessBlockCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/PutPublicAccessBlockCommand.js"() {
       import_polyfills636 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -48932,10 +48932,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js
   var import_polyfills637, RenameObjectCommand;
   var init_RenameObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/RenameObjectCommand.js"() {
       import_polyfills637 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es39();
@@ -48956,10 +48956,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js
   var import_polyfills638, RestoreObjectCommand;
   var init_RestoreObjectCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/RestoreObjectCommand.js"() {
       import_polyfills638 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -48984,10 +48984,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js
   var import_polyfills639, SelectObjectContentCommand;
   var init_SelectObjectContentCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/SelectObjectContentCommand.js"() {
       import_polyfills639 = __toESM(require_polyfills());
       init_dist_es55();
       init_dist_es39();
@@ -49011,10 +49011,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js
   var import_polyfills640, UpdateBucketMetadataInventoryTableConfigurationCommand;
   var init_UpdateBucketMetadataInventoryTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.js"() {
       import_polyfills640 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -49038,10 +49038,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js
   var import_polyfills641, UpdateBucketMetadataJournalTableConfigurationCommand;
   var init_UpdateBucketMetadataJournalTableConfigurationCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateBucketMetadataJournalTableConfigurationCommand.js"() {
       import_polyfills641 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es39();
@@ -49065,10 +49065,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js
   var import_polyfills642, UpdateObjectEncryptionCommand;
   var init_UpdateObjectEncryptionCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UpdateObjectEncryptionCommand.js"() {
       import_polyfills642 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -49093,10 +49093,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js
   var import_polyfills643, UploadPartCommand;
   var init_UploadPartCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCommand.js"() {
       import_polyfills643 = __toESM(require_polyfills());
       init_dist_es17();
       init_dist_es31();
@@ -49124,10 +49124,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js
   var import_polyfills644, UploadPartCopyCommand;
   var init_UploadPartCopyCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/UploadPartCopyCommand.js"() {
       import_polyfills644 = __toESM(require_polyfills());
       init_dist_es31();
       init_dist_es55();
@@ -49150,10 +49150,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js
   var import_polyfills645, WriteGetObjectResponseCommand;
   var init_WriteGetObjectResponseCommand = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/WriteGetObjectResponseCommand.js"() {
       import_polyfills645 = __toESM(require_polyfills());
       init_dist_es39();
       init_dist_es25();
@@ -49169,10 +49169,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js
   var import_polyfills646, paginateListBuckets;
   var init_ListBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListBucketsPaginator.js"() {
       import_polyfills646 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListBucketsCommand();
@@ -49181,10 +49181,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js
   var import_polyfills647, paginateListDirectoryBuckets;
   var init_ListDirectoryBucketsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListDirectoryBucketsPaginator.js"() {
       import_polyfills647 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListDirectoryBucketsCommand();
@@ -49193,10 +49193,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js
   var import_polyfills648, paginateListObjectsV2;
   var init_ListObjectsV2Paginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListObjectsV2Paginator.js"() {
       import_polyfills648 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListObjectsV2Command();
@@ -49205,10 +49205,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js
   var import_polyfills649, paginateListParts;
   var init_ListPartsPaginator = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/ListPartsPaginator.js"() {
       import_polyfills649 = __toESM(require_polyfills());
       init_dist_es27();
       init_ListPartsCommand();
@@ -49217,10 +49217,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/circularReplacer.js
   var import_polyfills650, getCircularReplacer;
   var init_circularReplacer = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/circularReplacer.js"() {
       import_polyfills650 = __toESM(require_polyfills());
       getCircularReplacer = () => {
         const seen = /* @__PURE__ */ new WeakSet();
@@ -49237,10 +49237,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/utils/sleep.js
   var import_polyfills651, sleep;
   var init_sleep = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/utils/sleep.js"() {
       import_polyfills651 = __toESM(require_polyfills());
       sleep = (seconds) => {
         return new Promise((resolve) => setTimeout(resolve, seconds * 1e3));
@@ -49248,10 +49248,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/waiter.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/waiter.js
   var import_polyfills652, waiterServiceDefaults, WaiterState, checkExceptions;
   var init_waiter2 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/waiter.js"() {
       import_polyfills652 = __toESM(require_polyfills());
       init_circularReplacer();
       waiterServiceDefaults = {
@@ -49288,10 +49288,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/poller.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/poller.js
   var import_polyfills653, runPolling, checkWarn403, createMessageFromResponse, exponentialBackoffWithJitter, randomInRange;
   var init_poller = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/poller.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/poller.js"() {
       import_polyfills653 = __toESM(require_polyfills());
       init_circularReplacer();
       init_sleep();
@@ -49381,10 +49381,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/validate.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/utils/validate.js
   var import_polyfills654, validateWaiterOptions;
   var init_validate = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/utils/validate.js"() {
       import_polyfills654 = __toESM(require_polyfills());
       validateWaiterOptions = (options) => {
         if (options.maxWaitTime <= 0) {
@@ -49402,20 +49402,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/utils/index.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/utils/index.js
   var import_polyfills655;
   var init_utils3 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/utils/index.js"() {
       import_polyfills655 = __toESM(require_polyfills());
       init_sleep();
       init_validate();
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/createWaiter.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/createWaiter.js
   var import_polyfills656, abortTimeout, createWaiter;
   var init_createWaiter = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/createWaiter.js"() {
       import_polyfills656 = __toESM(require_polyfills());
       init_poller();
       init_utils3();
@@ -49467,20 +49467,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@smithy/util-waiter/dist-es/index.js
+  // ../../node_modules/@smithy/util-waiter/dist-es/index.js
   var import_polyfills657;
   var init_dist_es57 = __esm({
-    "node_modules/@smithy/util-waiter/dist-es/index.js"() {
+    "../../node_modules/@smithy/util-waiter/dist-es/index.js"() {
       import_polyfills657 = __toESM(require_polyfills());
       init_createWaiter();
       init_waiter2();
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js
   var import_polyfills658, checkState, waitUntilBucketExists;
   var init_waitForBucketExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketExists.js"() {
       import_polyfills658 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49506,10 +49506,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js
   var import_polyfills659, checkState2, waitUntilBucketNotExists;
   var init_waitForBucketNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForBucketNotExists.js"() {
       import_polyfills659 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadBucketCommand();
@@ -49534,10 +49534,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js
   var import_polyfills660, checkState3, waitUntilObjectExists;
   var init_waitForObjectExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectExists.js"() {
       import_polyfills660 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49563,10 +49563,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js
   var import_polyfills661, checkState4, waitUntilObjectNotExists;
   var init_waitForObjectNotExists = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/waitForObjectNotExists.js"() {
       import_polyfills661 = __toESM(require_polyfills());
       init_dist_es57();
       init_HeadObjectCommand();
@@ -49591,10 +49591,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/S3.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/S3.js
   var import_polyfills662, commands, paginators, waiters, S3;
   var init_S3 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/S3.js"() {
       import_polyfills662 = __toESM(require_polyfills());
       init_dist_es25();
       init_AbortMultipartUploadCommand();
@@ -49840,10 +49840,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/commands/index.js
   var import_polyfills663;
   var init_commands = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/commands/index.js"() {
       import_polyfills663 = __toESM(require_polyfills());
       init_AbortMultipartUploadCommand();
       init_CompleteMultipartUploadCommand();
@@ -49955,18 +49955,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js
   var import_polyfills664;
   var init_Interfaces = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/Interfaces.js"() {
       import_polyfills664 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js
   var import_polyfills665;
   var init_pagination2 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/pagination/index.js"() {
       import_polyfills665 = __toESM(require_polyfills());
       init_Interfaces();
       init_ListBucketsPaginator();
@@ -49976,10 +49976,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js
   var import_polyfills666;
   var init_waiters = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/waiters/index.js"() {
       import_polyfills666 = __toESM(require_polyfills());
       init_waitForBucketExists();
       init_waitForBucketNotExists();
@@ -49988,34 +49988,34 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/enums.js
   var import_polyfills667;
   var init_enums = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/models/enums.js"() {
       import_polyfills667 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js
   var import_polyfills668;
   var init_models_0 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/models/models_0.js"() {
       import_polyfills668 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js
   var import_polyfills669;
   var init_models_1 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/models/models_1.js"() {
       import_polyfills669 = __toESM(require_polyfills());
     }
   });
 
-  // node_modules/@aws-sdk/client-s3/dist-es/index.js
+  // ../../node_modules/@aws-sdk/client-s3/dist-es/index.js
   var import_polyfills670;
   var init_dist_es58 = __esm({
-    "node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
+    "../../node_modules/@aws-sdk/client-s3/dist-es/index.js"() {
       import_polyfills670 = __toESM(require_polyfills());
       init_S3Client();
       init_S3();
@@ -50107,10 +50107,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/safe-buffer/index.js
+  // ../../node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
-    "node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -50166,11 +50166,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/randombytes/browser.js
+  // ../../node_modules/randombytes/browser.js
   var require_browser2 = __commonJS({
-    "node_modules/randombytes/browser.js"(exports, module) {
+    "../../node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -50205,10 +50205,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/inherits/inherits_browser.js
+  // ../../node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
-    "node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/inherits/inherits_browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -50238,11 +50238,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/events/events.js
+  // ../../node_modules/events/events.js
   var require_events = __commonJS({
-    "node_modules/events/events.js"(exports, module) {
+    "../../node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -50608,19 +50608,19 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // node_modules/has-symbols/shams.js
+  // ../../node_modules/has-symbols/shams.js
   var require_shams = __commonJS({
-    "node_modules/has-symbols/shams.js"(exports, module) {
+    "../../node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -50672,11 +50672,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-tostringtag/shams.js
+  // ../../node_modules/has-tostringtag/shams.js
   var require_shams2 = __commonJS({
-    "node_modules/has-tostringtag/shams.js"(exports, module) {
+    "../../node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -50684,148 +50684,148 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/es-object-atoms/index.js
+  // ../../node_modules/es-object-atoms/index.js
   var require_es_object_atoms = __commonJS({
-    "node_modules/es-object-atoms/index.js"(exports, module) {
+    "../../node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
 
-  // node_modules/es-errors/index.js
+  // ../../node_modules/es-errors/index.js
   var require_es_errors = __commonJS({
-    "node_modules/es-errors/index.js"(exports, module) {
+    "../../node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
 
-  // node_modules/es-errors/eval.js
+  // ../../node_modules/es-errors/eval.js
   var require_eval = __commonJS({
-    "node_modules/es-errors/eval.js"(exports, module) {
+    "../../node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
 
-  // node_modules/es-errors/range.js
+  // ../../node_modules/es-errors/range.js
   var require_range = __commonJS({
-    "node_modules/es-errors/range.js"(exports, module) {
+    "../../node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
 
-  // node_modules/es-errors/ref.js
+  // ../../node_modules/es-errors/ref.js
   var require_ref = __commonJS({
-    "node_modules/es-errors/ref.js"(exports, module) {
+    "../../node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
 
-  // node_modules/es-errors/syntax.js
+  // ../../node_modules/es-errors/syntax.js
   var require_syntax = __commonJS({
-    "node_modules/es-errors/syntax.js"(exports, module) {
+    "../../node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
 
-  // node_modules/es-errors/type.js
+  // ../../node_modules/es-errors/type.js
   var require_type = __commonJS({
-    "node_modules/es-errors/type.js"(exports, module) {
+    "../../node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
 
-  // node_modules/es-errors/uri.js
+  // ../../node_modules/es-errors/uri.js
   var require_uri = __commonJS({
-    "node_modules/es-errors/uri.js"(exports, module) {
+    "../../node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
 
-  // node_modules/math-intrinsics/abs.js
+  // ../../node_modules/math-intrinsics/abs.js
   var require_abs = __commonJS({
-    "node_modules/math-intrinsics/abs.js"(exports, module) {
+    "../../node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
 
-  // node_modules/math-intrinsics/floor.js
+  // ../../node_modules/math-intrinsics/floor.js
   var require_floor = __commonJS({
-    "node_modules/math-intrinsics/floor.js"(exports, module) {
+    "../../node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
 
-  // node_modules/math-intrinsics/max.js
+  // ../../node_modules/math-intrinsics/max.js
   var require_max = __commonJS({
-    "node_modules/math-intrinsics/max.js"(exports, module) {
+    "../../node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
 
-  // node_modules/math-intrinsics/min.js
+  // ../../node_modules/math-intrinsics/min.js
   var require_min = __commonJS({
-    "node_modules/math-intrinsics/min.js"(exports, module) {
+    "../../node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
 
-  // node_modules/math-intrinsics/pow.js
+  // ../../node_modules/math-intrinsics/pow.js
   var require_pow = __commonJS({
-    "node_modules/math-intrinsics/pow.js"(exports, module) {
+    "../../node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
 
-  // node_modules/math-intrinsics/round.js
+  // ../../node_modules/math-intrinsics/round.js
   var require_round = __commonJS({
-    "node_modules/math-intrinsics/round.js"(exports, module) {
+    "../../node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
 
-  // node_modules/math-intrinsics/isNaN.js
+  // ../../node_modules/math-intrinsics/isNaN.js
   var require_isNaN = __commonJS({
-    "node_modules/math-intrinsics/isNaN.js"(exports, module) {
+    "../../node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
     }
   });
 
-  // node_modules/math-intrinsics/sign.js
+  // ../../node_modules/math-intrinsics/sign.js
   var require_sign = __commonJS({
-    "node_modules/math-intrinsics/sign.js"(exports, module) {
+    "../../node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign2(number) {
         if ($isNaN(number) || number === 0) {
@@ -50836,20 +50836,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/gopd/gOPD.js
+  // ../../node_modules/gopd/gOPD.js
   var require_gOPD = __commonJS({
-    "node_modules/gopd/gOPD.js"(exports, module) {
+    "../../node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
 
-  // node_modules/gopd/index.js
+  // ../../node_modules/gopd/index.js
   var require_gopd = __commonJS({
-    "node_modules/gopd/index.js"(exports, module) {
+    "../../node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -50862,11 +50862,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/es-define-property/index.js
+  // ../../node_modules/es-define-property/index.js
   var require_es_define_property = __commonJS({
-    "node_modules/es-define-property/index.js"(exports, module) {
+    "../../node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -50879,11 +50879,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-symbols/index.js
+  // ../../node_modules/has-symbols/index.js
   var require_has_symbols = __commonJS({
-    "node_modules/has-symbols/index.js"(exports, module) {
+    "../../node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -50904,30 +50904,30 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-proto/Reflect.getPrototypeOf.js
+  // ../../node_modules/get-proto/Reflect.getPrototypeOf.js
   var require_Reflect_getPrototypeOf = __commonJS({
-    "node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
+    "../../node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
 
-  // node_modules/get-proto/Object.getPrototypeOf.js
+  // ../../node_modules/get-proto/Object.getPrototypeOf.js
   var require_Object_getPrototypeOf = __commonJS({
-    "node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
+    "../../node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
   });
 
-  // node_modules/function-bind/implementation.js
+  // ../../node_modules/function-bind/implementation.js
   var require_implementation = __commonJS({
-    "node_modules/function-bind/implementation.js"(exports, module) {
+    "../../node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -51000,48 +51000,48 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/function-bind/index.js
+  // ../../node_modules/function-bind/index.js
   var require_function_bind = __commonJS({
-    "node_modules/function-bind/index.js"(exports, module) {
+    "../../node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/functionCall.js
+  // ../../node_modules/call-bind-apply-helpers/functionCall.js
   var require_functionCall = __commonJS({
-    "node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/functionApply.js
+  // ../../node_modules/call-bind-apply-helpers/functionApply.js
   var require_functionApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/reflectApply.js
+  // ../../node_modules/call-bind-apply-helpers/reflectApply.js
   var require_reflectApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/actualApply.js
+  // ../../node_modules/call-bind-apply-helpers/actualApply.js
   var require_actualApply = __commonJS({
-    "node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -51050,11 +51050,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/index.js
+  // ../../node_modules/call-bind-apply-helpers/index.js
   var require_call_bind_apply_helpers = __commonJS({
-    "node_modules/call-bind-apply-helpers/index.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -51068,11 +51068,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/dunder-proto/get.js
+  // ../../node_modules/dunder-proto/get.js
   var require_get = __commonJS({
-    "node_modules/dunder-proto/get.js"(exports, module) {
+    "../../node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -51100,11 +51100,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-proto/index.js
+  // ../../node_modules/get-proto/index.js
   var require_get_proto = __commonJS({
-    "node_modules/get-proto/index.js"(exports, module) {
+    "../../node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -51121,11 +51121,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hasown/index.js
+  // ../../node_modules/hasown/index.js
   var require_hasown = __commonJS({
-    "node_modules/hasown/index.js"(exports, module) {
+    "../../node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -51133,11 +51133,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/get-intrinsic/index.js
+  // ../../node_modules/get-intrinsic/index.js
   var require_get_intrinsic = __commonJS({
-    "node_modules/get-intrinsic/index.js"(exports, module) {
+    "../../node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -51465,11 +51465,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bound/index.js
+  // ../../node_modules/call-bound/index.js
   var require_call_bound = __commonJS({
-    "node_modules/call-bound/index.js"(exports, module) {
+    "../../node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -51489,11 +51489,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-arguments/index.js
+  // ../../node_modules/is-arguments/index.js
   var require_is_arguments = __commonJS({
-    "node_modules/is-arguments/index.js"(exports, module) {
+    "../../node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -51517,11 +51517,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-regex/index.js
+  // ../../node_modules/is-regex/index.js
   var require_is_regex = __commonJS({
-    "node_modules/is-regex/index.js"(exports, module) {
+    "../../node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -51587,11 +51587,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/safe-regex-test/index.js
+  // ../../node_modules/safe-regex-test/index.js
   var require_safe_regex_test = __commonJS({
-    "node_modules/safe-regex-test/index.js"(exports, module) {
+    "../../node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -51607,11 +51607,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/generator-function/index.js
+  // ../../node_modules/generator-function/index.js
   var require_generator_function = __commonJS({
-    "node_modules/generator-function/index.js"(exports, module) {
+    "../../node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -51621,11 +51621,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-generator-function/index.js
+  // ../../node_modules/is-generator-function/index.js
   var require_is_generator_function = __commonJS({
-    "node_modules/is-generator-function/index.js"(exports, module) {
+    "../../node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -51654,11 +51654,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-callable/index.js
+  // ../../node_modules/is-callable/index.js
   var require_is_callable = __commonJS({
-    "node_modules/is-callable/index.js"(exports, module) {
+    "../../node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -51773,11 +51773,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/for-each/index.js
+  // ../../node_modules/for-each/index.js
   var require_for_each = __commonJS({
-    "node_modules/for-each/index.js"(exports, module) {
+    "../../node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -51834,11 +51834,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/possible-typed-array-names/index.js
+  // ../../node_modules/possible-typed-array-names/index.js
   var require_possible_typed_array_names = __commonJS({
-    "node_modules/possible-typed-array-names/index.js"(exports, module) {
+    "../../node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -51856,11 +51856,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/available-typed-arrays/index.js
+  // ../../node_modules/available-typed-arrays/index.js
   var require_available_typed_arrays = __commonJS({
-    "node_modules/available-typed-arrays/index.js"(exports, module) {
+    "../../node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -51875,11 +51875,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/define-data-property/index.js
+  // ../../node_modules/define-data-property/index.js
   var require_define_data_property = __commonJS({
-    "node_modules/define-data-property/index.js"(exports, module) {
+    "../../node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -51924,11 +51924,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/has-property-descriptors/index.js
+  // ../../node_modules/has-property-descriptors/index.js
   var require_has_property_descriptors = __commonJS({
-    "node_modules/has-property-descriptors/index.js"(exports, module) {
+    "../../node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -51947,11 +51947,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/set-function-length/index.js
+  // ../../node_modules/set-function-length/index.js
   var require_set_function_length = __commonJS({
-    "node_modules/set-function-length/index.js"(exports, module) {
+    "../../node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define2 = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -52001,11 +52001,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind-apply-helpers/applyBind.js
+  // ../../node_modules/call-bind-apply-helpers/applyBind.js
   var require_applyBind = __commonJS({
-    "node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
+    "../../node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -52015,11 +52015,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/call-bind/index.js
+  // ../../node_modules/call-bind/index.js
   var require_call_bind = __commonJS({
-    "node_modules/call-bind/index.js"(exports, module) {
+    "../../node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -52041,11 +52041,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/which-typed-array/index.js
+  // ../../node_modules/which-typed-array/index.js
   var require_which_typed_array = __commonJS({
-    "node_modules/which-typed-array/index.js"(exports, module) {
+    "../../node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -52163,11 +52163,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/is-typed-array/index.js
+  // ../../node_modules/is-typed-array/index.js
   var require_is_typed_array = __commonJS({
-    "node_modules/is-typed-array/index.js"(exports, module) {
+    "../../node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -52175,11 +52175,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util/support/types.js
+  // ../../node_modules/util/support/types.js
   var require_types = __commonJS({
-    "node_modules/util/support/types.js"(exports) {
+    "../../node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -52406,20 +52406,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util/support/isBufferBrowser.js
+  // ../../node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
-    "node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/util/support/isBufferBrowser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
     }
   });
 
-  // node_modules/util/util.js
+  // ../../node_modules/util/util.js
   var require_util = __commonJS({
-    "node_modules/util/util.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/util/util.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -52976,11 +52976,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js
   var require_buffer_list = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -53219,11 +53219,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function destroy(err, cb) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -53309,11 +53309,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js
   var require_errors_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -53419,11 +53419,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js
   var require_state = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -53445,10 +53445,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/util-deprecate/browser.js
+  // ../../node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
-    "node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/util-deprecate/browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -53483,11 +53483,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -53955,11 +53955,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -54049,10 +54049,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/string_decoder/node_modules/safe-buffer/index.js
+  // ../../node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
-    "node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -54107,11 +54107,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/string_decoder/lib/string_decoder.js
+  // ../../node_modules/string_decoder/lib/string_decoder.js
   var require_string_decoder = __commonJS({
-    "node_modules/string_decoder/lib/string_decoder.js"(exports) {
+    "../../node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer3.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -54346,11 +54346,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js
   var require_end_of_stream = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once(callback) {
         var called = false;
@@ -54436,11 +54436,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js
   var require_async_iterator = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -54620,21 +54620,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -55364,11 +55364,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -55466,11 +55466,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -55484,11 +55484,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
+  // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js
   var require_pipeline = __commonJS({
-    "node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
+    "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var eos;
       function once(callback) {
         var called = false;
@@ -55570,10 +55570,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/stream-browserify/index.js
+  // ../../node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
-    "node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/stream-browserify/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -55648,11 +55648,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash-base/index.js
+  // ../../node_modules/hash-base/index.js
   var require_hash_base = __commonJS({
-    "node_modules/hash-base/index.js"(exports, module) {
+    "../../node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -55737,11 +55737,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/md5.js/index.js
+  // ../../node_modules/md5.js/index.js
   var require_md5 = __commonJS({
-    "node_modules/md5.js/index.js"(exports, module) {
+    "../../node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -55867,10 +55867,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/to-buffer/node_modules/isarray/index.js
+  // ../../node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
-    "node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55878,11 +55878,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/typed-array-buffer/index.js
+  // ../../node_modules/typed-array-buffer/index.js
   var require_typed_array_buffer = __commonJS({
-    "node_modules/typed-array-buffer/index.js"(exports, module) {
+    "../../node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -55896,11 +55896,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/to-buffer/index.js
+  // ../../node_modules/to-buffer/index.js
   var require_to_buffer = __commonJS({
-    "node_modules/to-buffer/index.js"(exports, module) {
+    "../../node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -55961,11 +55961,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/node_modules/hash-base/to-buffer.js
+  // ../../node_modules/ripemd160/node_modules/hash-base/to-buffer.js
   var require_to_buffer2 = __commonJS({
-    "node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
+    "../../node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -55980,11 +55980,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/process-nextick-args/index.js
+  // ../../node_modules/process-nextick-args/index.js
   var require_process_nextick_args = __commonJS({
-    "node_modules/process-nextick-args/index.js"(exports, module) {
+    "../../node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -56026,10 +56026,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/isarray/index.js
+  // ../../node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
-    "node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/isarray/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -56037,18 +56037,18 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/stream-browser.js
+  // ../../node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
 
-  // node_modules/readable-stream/node_modules/safe-buffer/index.js
+  // ../../node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
-    "node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer3 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -56103,10 +56103,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/core-util-is/lib/util.js
+  // ../../node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
-    "node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/core-util-is/lib/util.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -56174,11 +56174,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/BufferList.js
+  // ../../node_modules/readable-stream/lib/internal/streams/BufferList.js
   var require_BufferList = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -56253,11 +56253,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/internal/streams/destroy.js
+  // ../../node_modules/readable-stream/lib/internal/streams/destroy.js
   var require_destroy2 = __commonJS({
-    "node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb) {
         var _this = this;
@@ -56323,11 +56323,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_writable.js
+  // ../../node_modules/readable-stream/lib/_stream_writable.js
   var require_stream_writable2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -56764,11 +56764,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_duplex.js
+  // ../../node_modules/readable-stream/lib/_stream_duplex.js
   var require_stream_duplex2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -56842,11 +56842,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_readable.js
+  // ../../node_modules/readable-stream/lib/_stream_readable.js
   var require_stream_readable2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -57529,11 +57529,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_transform.js
+  // ../../node_modules/readable-stream/lib/_stream_transform.js
   var require_stream_transform2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -57630,11 +57630,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/lib/_stream_passthrough.js
+  // ../../node_modules/readable-stream/lib/_stream_passthrough.js
   var require_stream_passthrough2 = __commonJS({
-    "node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
+    "../../node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -57650,10 +57650,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/readable-stream/readable-browser.js
+  // ../../node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
-    "node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/readable-stream/readable-browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -57664,11 +57664,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/node_modules/hash-base/index.js
+  // ../../node_modules/ripemd160/node_modules/hash-base/index.js
   var require_hash_base2 = __commonJS({
-    "node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
+    "../../node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -57756,11 +57756,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/ripemd160/index.js
+  // ../../node_modules/ripemd160/index.js
   var require_ripemd160 = __commonJS({
-    "node_modules/ripemd160/index.js"(exports, module) {
+    "../../node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -58198,11 +58198,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/hash.js
+  // ../../node_modules/sha.js/hash.js
   var require_hash = __commonJS({
-    "node_modules/sha.js/hash.js"(exports, module) {
+    "../../node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -58260,11 +58260,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha.js
+  // ../../node_modules/sha.js/sha.js
   var require_sha = __commonJS({
-    "node_modules/sha.js/sha.js"(exports, module) {
+    "../../node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58345,11 +58345,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha1.js
+  // ../../node_modules/sha.js/sha1.js
   var require_sha1 = __commonJS({
-    "node_modules/sha.js/sha1.js"(exports, module) {
+    "../../node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58433,11 +58433,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha256.js
+  // ../../node_modules/sha.js/sha256.js
   var require_sha256 = __commonJS({
-    "node_modules/sha.js/sha256.js"(exports, module) {
+    "../../node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58596,11 +58596,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha224.js
+  // ../../node_modules/sha.js/sha224.js
   var require_sha224 = __commonJS({
-    "node_modules/sha.js/sha224.js"(exports, module) {
+    "../../node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -58638,11 +58638,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha512.js
+  // ../../node_modules/sha.js/sha512.js
   var require_sha512 = __commonJS({
-    "node_modules/sha.js/sha512.js"(exports, module) {
+    "../../node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -58982,11 +58982,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/sha384.js
+  // ../../node_modules/sha.js/sha384.js
   var require_sha384 = __commonJS({
-    "node_modules/sha.js/sha384.js"(exports, module) {
+    "../../node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -59035,11 +59035,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/sha.js/index.js
+  // ../../node_modules/sha.js/index.js
   var require_sha2 = __commonJS({
-    "node_modules/sha.js/index.js"(exports, module) {
+    "../../node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -59057,11 +59057,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/cipher-base/index.js
+  // ../../node_modules/cipher-base/index.js
   var require_cipher_base = __commonJS({
-    "node_modules/cipher-base/index.js"(exports, module) {
+    "../../node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -59153,11 +59153,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hash/browser.js
+  // ../../node_modules/create-hash/browser.js
   var require_browser4 = __commonJS({
-    "node_modules/create-hash/browser.js"(exports, module) {
+    "../../node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -59183,11 +59183,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hmac/legacy.js
+  // ../../node_modules/create-hmac/legacy.js
   var require_legacy = __commonJS({
-    "node_modules/create-hmac/legacy.js"(exports, module) {
+    "../../node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -59225,10 +59225,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hash/md5.js
+  // ../../node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
-    "node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/create-hash/md5.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -59236,11 +59236,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-hmac/browser.js
+  // ../../node_modules/create-hmac/browser.js
   var require_browser5 = __commonJS({
-    "node_modules/create-hmac/browser.js"(exports, module) {
+    "../../node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -59294,9 +59294,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/algorithms.json
+  // ../../node_modules/browserify-sign/browser/algorithms.json
   var require_algorithms = __commonJS({
-    "node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
+    "../../node_modules/browserify-sign/browser/algorithms.json"(exports, module) {
       module.exports = {
         sha224WithRSAEncryption: {
           sign: "rsa",
@@ -59452,20 +59452,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/algos.js
+  // ../../node_modules/browserify-sign/algos.js
   var require_algos = __commonJS({
-    "node_modules/browserify-sign/algos.js"(exports, module) {
+    "../../node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
 
-  // node_modules/pbkdf2/lib/precondition.js
+  // ../../node_modules/pbkdf2/lib/precondition.js
   var require_precondition = __commonJS({
-    "node_modules/pbkdf2/lib/precondition.js"(exports, module) {
+    "../../node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -59485,11 +59485,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/default-encoding.js
+  // ../../node_modules/pbkdf2/lib/default-encoding.js
   var require_default_encoding = __commonJS({
-    "node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
+    "../../node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -59504,11 +59504,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/to-buffer.js
+  // ../../node_modules/pbkdf2/lib/to-buffer.js
   var require_to_buffer3 = __commonJS({
-    "node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
+    "../../node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -59523,11 +59523,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/sync-browser.js
+  // ../../node_modules/pbkdf2/lib/sync-browser.js
   var require_sync_browser = __commonJS({
-    "node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
+    "../../node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -59638,11 +59638,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/lib/async.js
+  // ../../node_modules/pbkdf2/lib/async.js
   var require_async = __commonJS({
-    "node_modules/pbkdf2/lib/async.js"(exports, module) {
+    "../../node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -59761,21 +59761,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/pbkdf2/browser.js
+  // ../../node_modules/pbkdf2/browser.js
   var require_browser6 = __commonJS({
-    "node_modules/pbkdf2/browser.js"(exports) {
+    "../../node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
   });
 
-  // node_modules/des.js/lib/des/utils.js
+  // ../../node_modules/des.js/lib/des/utils.js
   var require_utils = __commonJS({
-    "node_modules/des.js/lib/des/utils.js"(exports) {
+    "../../node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -60538,10 +60538,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/minimalistic-assert/index.js
+  // ../../node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
-    "node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/minimalistic-assert/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -60554,11 +60554,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/cipher.js
+  // ../../node_modules/des.js/lib/des/cipher.js
   var require_cipher = __commonJS({
-    "node_modules/des.js/lib/des/cipher.js"(exports, module) {
+    "../../node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -60663,11 +60663,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/des.js
+  // ../../node_modules/des.js/lib/des/des.js
   var require_des = __commonJS({
-    "node_modules/des.js/lib/des/des.js"(exports, module) {
+    "../../node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -60791,11 +60791,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/cbc.js
+  // ../../node_modules/des.js/lib/des/cbc.js
   var require_cbc = __commonJS({
-    "node_modules/des.js/lib/des/cbc.js"(exports) {
+    "../../node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -60847,11 +60847,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des/ede.js
+  // ../../node_modules/des.js/lib/des/ede.js
   var require_ede = __commonJS({
-    "node_modules/des.js/lib/des/ede.js"(exports, module) {
+    "../../node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -60896,11 +60896,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/des.js/lib/des.js
+  // ../../node_modules/des.js/lib/des.js
   var require_des2 = __commonJS({
-    "node_modules/des.js/lib/des.js"(exports) {
+    "../../node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -60909,10 +60909,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-des/index.js
+  // ../../node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
-    "node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-des/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -60965,10 +60965,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ecb.js
+  // ../../node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
-    "node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/ecb.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -60978,10 +60978,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/buffer-xor/index.js
+  // ../../node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
-    "node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/buffer-xor/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -60993,10 +60993,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cbc.js
+  // ../../node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
-    "node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/cbc.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -61012,10 +61012,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb.js
+  // ../../node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
-    "node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/cfb.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -61047,10 +61047,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb8.js
+  // ../../node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
-    "node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/cfb8.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -61073,10 +61073,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/cfb1.js
+  // ../../node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
-    "node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/cfb1.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -61115,10 +61115,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ofb.js
+  // ../../node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
-    "node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/ofb.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -61135,10 +61135,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/incr32.js
+  // ../../node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
-    "node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/incr32.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -61157,10 +61157,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/ctr.js
+  // ../../node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
-    "node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/ctr.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer3 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -61192,9 +61192,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/list.json
+  // ../../node_modules/browserify-aes/modes/list.json
   var require_list = __commonJS({
-    "node_modules/browserify-aes/modes/list.json"(exports, module) {
+    "../../node_modules/browserify-aes/modes/list.json"(exports, module) {
       module.exports = {
         "aes-128-ecb": {
           cipher: "AES",
@@ -61389,10 +61389,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/modes/index.js
+  // ../../node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
-    "node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/modes/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -61412,10 +61412,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/aes.js
+  // ../../node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
-    "node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/aes.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer3.isBuffer(buf)) buf = Buffer3.from(buf);
@@ -61587,10 +61587,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/ghash.js
+  // ../../node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
-    "node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/ghash.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var ZEROES = Buffer3.alloc(16, 0);
       function toArray(buf) {
@@ -61665,10 +61665,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/authCipher.js
+  // ../../node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
-    "node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/authCipher.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61768,10 +61768,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/streamCipher.js
+  // ../../node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
-    "node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/streamCipher.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer3 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61796,10 +61796,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/evp_bytestokey/index.js
+  // ../../node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
-    "node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/evp_bytestokey/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -61839,10 +61839,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/encrypter.js
+  // ../../node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
-    "node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/encrypter.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -61936,10 +61936,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/decrypter.js
+  // ../../node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
-    "node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/decrypter.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer3 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -62046,10 +62046,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-aes/browser.js
+  // ../../node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
-    "node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-aes/browser.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -62064,10 +62064,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-des/modes.js
+  // ../../node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
-    "node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-des/modes.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -62095,10 +62095,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-cipher/browser.js
+  // ../../node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
-    "node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/browserify-cipher/browser.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -62157,10 +62157,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
-    "node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -64969,10 +64969,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
-    "node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -67781,10 +67781,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/brorand/index.js
+  // ../../node_modules/brorand/index.js
   var require_brorand = __commonJS({
-    "node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/brorand/index.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -67839,10 +67839,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/miller-rabin/lib/mr.js
+  // ../../node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
-    "node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/miller-rabin/lib/mr.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var bn = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -67931,10 +67931,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/generatePrime.js
+  // ../../node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
-    "node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var randomBytes3 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -68028,9 +68028,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/primes.json
+  // ../../node_modules/diffie-hellman/lib/primes.json
   var require_primes = __commonJS({
-    "node_modules/diffie-hellman/lib/primes.json"(exports, module) {
+    "../../node_modules/diffie-hellman/lib/primes.json"(exports, module) {
       module.exports = {
         modp1: {
           gen: "02",
@@ -68068,10 +68068,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/lib/dh.js
+  // ../../node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
-    "node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/diffie-hellman/lib/dh.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -68215,10 +68215,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/diffie-hellman/browser.js
+  // ../../node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
-    "node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/diffie-hellman/browser.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -68255,10 +68255,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/bn.js/lib/bn.js
+  // ../../node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
-    "node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -71147,11 +71147,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-rsa/index.js
+  // ../../node_modules/browserify-rsa/index.js
   var require_browserify_rsa = __commonJS({
-    "node_modules/browserify-rsa/index.js"(exports, module) {
+    "../../node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes3 = require_browser2();
       var Buffer3 = require_safe_buffer().Buffer;
@@ -71187,9 +71187,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/package.json
+  // ../../node_modules/elliptic/package.json
   var require_package = __commonJS({
-    "node_modules/elliptic/package.json"(exports, module) {
+    "../../node_modules/elliptic/package.json"(exports, module) {
       module.exports = {
         name: "elliptic",
         version: "6.6.1",
@@ -71249,10 +71249,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
-    "node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -74061,11 +74061,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/minimalistic-crypto-utils/lib/utils.js
+  // ../../node_modules/minimalistic-crypto-utils/lib/utils.js
   var require_utils2 = __commonJS({
-    "node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
+    "../../node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -74121,11 +74121,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/utils.js
+  // ../../node_modules/elliptic/lib/elliptic/utils.js
   var require_utils3 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/utils.js"(exports) {
+    "../../node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -74228,11 +74228,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/base.js
+  // ../../node_modules/elliptic/lib/elliptic/curve/base.js
   var require_base = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -74551,11 +74551,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/short.js
+  // ../../node_modules/elliptic/lib/elliptic/curve/short.js
   var require_short = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75250,11 +75250,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/mont.js
+  // ../../node_modules/elliptic/lib/elliptic/curve/mont.js
   var require_mont = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -75379,11 +75379,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/edwards.js
+  // ../../node_modules/elliptic/lib/elliptic/curve/edwards.js
   var require_edwards = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75681,11 +75681,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curve/index.js
+  // ../../node_modules/elliptic/lib/elliptic/curve/index.js
   var require_curve = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
+    "../../node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -75694,11 +75694,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/utils.js
+  // ../../node_modules/hash.js/lib/hash/utils.js
   var require_utils4 = __commonJS({
-    "node_modules/hash.js/lib/hash/utils.js"(exports) {
+    "../../node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -75940,11 +75940,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/common.js
+  // ../../node_modules/hash.js/lib/hash/common.js
   var require_common = __commonJS({
-    "node_modules/hash.js/lib/hash/common.js"(exports) {
+    "../../node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -76020,11 +76020,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/common.js
+  // ../../node_modules/hash.js/lib/hash/sha/common.js
   var require_common2 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/common.js"(exports) {
+    "../../node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -76067,11 +76067,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/1.js
+  // ../../node_modules/hash.js/lib/hash/sha/1.js
   var require__ = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76140,11 +76140,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/256.js
+  // ../../node_modules/hash.js/lib/hash/sha/256.js
   var require__2 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76293,11 +76293,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/224.js
+  // ../../node_modules/hash.js/lib/hash/sha/224.js
   var require__3 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -76330,11 +76330,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/512.js
+  // ../../node_modules/hash.js/lib/hash/sha/512.js
   var require__4 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -76770,11 +76770,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha/384.js
+  // ../../node_modules/hash.js/lib/hash/sha/384.js
   var require__5 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -76815,11 +76815,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/sha.js
+  // ../../node_modules/hash.js/lib/hash/sha.js
   var require_sha3 = __commonJS({
-    "node_modules/hash.js/lib/hash/sha.js"(exports) {
+    "../../node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -76828,11 +76828,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/ripemd.js
+  // ../../node_modules/hash.js/lib/hash/ripemd.js
   var require_ripemd = __commonJS({
-    "node_modules/hash.js/lib/hash/ripemd.js"(exports) {
+    "../../node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -77270,11 +77270,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash/hmac.js
+  // ../../node_modules/hash.js/lib/hash/hmac.js
   var require_hmac = __commonJS({
-    "node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
+    "../../node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -77312,10 +77312,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hash.js/lib/hash.js
+  // ../../node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
-    "node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/hash.js/lib/hash.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -77331,10 +77331,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
+  // ../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -78118,11 +78118,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/curves.js
+  // ../../node_modules/elliptic/lib/elliptic/curves.js
   var require_curves = __commonJS({
-    "node_modules/elliptic/lib/elliptic/curves.js"(exports) {
+    "../../node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -78295,11 +78295,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/hmac-drbg/lib/hmac-drbg.js
+  // ../../node_modules/hmac-drbg/lib/hmac-drbg.js
   var require_hmac_drbg = __commonJS({
-    "node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
+    "../../node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -78390,11 +78390,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/key.js
+  // ../../node_modules/elliptic/lib/elliptic/ec/key.js
   var require_key = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78485,11 +78485,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/signature.js
+  // ../../node_modules/elliptic/lib/elliptic/ec/signature.js
   var require_signature = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78641,11 +78641,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/ec/index.js
+  // ../../node_modules/elliptic/lib/elliptic/ec/index.js
   var require_ec = __commonJS({
-    "node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -78849,11 +78849,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/key.js
+  // ../../node_modules/elliptic/lib/elliptic/eddsa/key.js
   var require_key2 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -78924,11 +78924,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/signature.js
+  // ../../node_modules/elliptic/lib/elliptic/eddsa/signature.js
   var require_signature2 = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78975,11 +78975,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic/eddsa/index.js
+  // ../../node_modules/elliptic/lib/elliptic/eddsa/index.js
   var require_eddsa = __commonJS({
-    "node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
+    "../../node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -79064,11 +79064,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/elliptic/lib/elliptic.js
+  // ../../node_modules/elliptic/lib/elliptic.js
   var require_elliptic = __commonJS({
-    "node_modules/elliptic/lib/elliptic.js"(exports) {
+    "../../node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -79080,10 +79080,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
-    "node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -81892,10 +81892,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/api.js
+  // ../../node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
-    "node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/api.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -81946,10 +81946,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/reporter.js
+  // ../../node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -82047,10 +82047,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/buffer.js
+  // ../../node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer3 = require_buffer().Buffer;
@@ -82150,10 +82150,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/node.js
+  // ../../node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -82684,10 +82684,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/base/index.js
+  // ../../node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -82696,10 +82696,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/constants/der.js
+  // ../../node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
-    "node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -82743,10 +82743,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/constants/index.js
+  // ../../node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
-    "node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -82762,10 +82762,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/der.js
+  // ../../node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -83026,10 +83026,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/pem.js
+  // ../../node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -83072,20 +83072,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/decoders/index.js
+  // ../../node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
-    "node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/der.js
+  // ../../node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer3 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -83314,10 +83314,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/pem.js
+  // ../../node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -83338,20 +83338,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/asn1.js/lib/asn1/encoders/index.js
+  // ../../node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
-    "node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
     }
   });
 
-  // node_modules/asn1.js/lib/asn1.js
+  // ../../node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
-    "node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/asn1.js/lib/asn1.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -83362,11 +83362,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/certificate.js
+  // ../../node_modules/parse-asn1/certificate.js
   var require_certificate = __commonJS({
-    "node_modules/parse-asn1/certificate.js"(exports, module) {
+    "../../node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -83442,11 +83442,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/asn1.js
+  // ../../node_modules/parse-asn1/asn1.js
   var require_asn12 = __commonJS({
-    "node_modules/parse-asn1/asn1.js"(exports) {
+    "../../node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -83556,9 +83556,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/aesid.json
+  // ../../node_modules/parse-asn1/aesid.json
   var require_aesid = __commonJS({
-    "node_modules/parse-asn1/aesid.json"(exports, module) {
+    "../../node_modules/parse-asn1/aesid.json"(exports, module) {
       module.exports = {
         "2.16.840.1.101.3.4.1.1": "aes-128-ecb",
         "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
@@ -83576,11 +83576,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/fixProc.js
+  // ../../node_modules/parse-asn1/fixProc.js
   var require_fixProc = __commonJS({
-    "node_modules/parse-asn1/fixProc.js"(exports, module) {
+    "../../node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -83614,11 +83614,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/parse-asn1/index.js
+  // ../../node_modules/parse-asn1/index.js
   var require_parse_asn1 = __commonJS({
-    "node_modules/parse-asn1/index.js"(exports, module) {
+    "../../node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -83729,9 +83729,9 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/curves.json
+  // ../../node_modules/browserify-sign/browser/curves.json
   var require_curves2 = __commonJS({
-    "node_modules/browserify-sign/browser/curves.json"(exports, module) {
+    "../../node_modules/browserify-sign/browser/curves.json"(exports, module) {
       module.exports = {
         "1.3.132.0.10": "secp256k1",
         "1.3.132.0.33": "p224",
@@ -83743,11 +83743,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/sign.js
+  // ../../node_modules/browserify-sign/browser/sign.js
   var require_sign2 = __commonJS({
-    "node_modules/browserify-sign/browser/sign.js"(exports, module) {
+    "../../node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHmac2 = require_browser5();
       var crt = require_browserify_rsa();
@@ -83898,11 +83898,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/verify.js
+  // ../../node_modules/browserify-sign/browser/verify.js
   var require_verify = __commonJS({
-    "node_modules/browserify-sign/browser/verify.js"(exports, module) {
+    "../../node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -83989,11 +83989,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/browserify-sign/browser/index.js
+  // ../../node_modules/browserify-sign/browser/index.js
   var require_browser10 = __commonJS({
-    "node_modules/browserify-sign/browser/index.js"(exports, module) {
+    "../../node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var Buffer3 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
@@ -84071,10 +84071,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
-    "node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -86883,10 +86883,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/create-ecdh/browser.js
+  // ../../node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
-    "node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/create-ecdh/browser.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -87002,10 +87002,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/mgf.js
+  // ../../node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
-    "node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/mgf.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer3 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
@@ -87026,10 +87026,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/xor.js
+  // ../../node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
-    "node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/xor.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -87041,10 +87041,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
+  // ../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
-    "node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -89853,10 +89853,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/withPublic.js
+  // ../../node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
-    "node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/withPublic.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer3 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -89866,10 +89866,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/publicEncrypt.js
+  // ../../node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
-    "node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes3 = require_browser2();
       var createHash4 = require_browser4();
@@ -89959,10 +89959,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/privateDecrypt.js
+  // ../../node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
-    "node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -90066,10 +90066,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/public-encrypt/browser.js
+  // ../../node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
-    "node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/public-encrypt/browser.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -90081,11 +90081,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/randomfill/browser.js
+  // ../../node_modules/randomfill/browser.js
   var require_browser13 = __commonJS({
-    "node_modules/randomfill/browser.js"(exports) {
+    "../../node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -90184,11 +90184,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/crypto-browserify/index.js
+  // ../../node_modules/crypto-browserify/index.js
   var require_crypto_browserify = __commonJS({
-    "node_modules/crypto-browserify/index.js"(exports) {
+    "../../node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -92099,6 +92099,19 @@ ${toHex(hashedRequest)}`;
             this.emit("update", payload);
             return;
           }
+          if (type === "EVENT_SYNC_PROGRESS") {
+            this.emit("sync:progress", payload);
+            return;
+          }
+          if (type === "EVENT_SYNC_DIAGNOSTIC") {
+            this.emit("sync:diagnostic", payload);
+            return;
+          }
+          if (type === "EVENT_SYNC_RESULT") {
+            this.emit("sync:result", payload);
+            return;
+          }
+          if (type === "SYNC_SUCCESS") return;
           if (type === "EVENT_CONFLICT") {
             this.emit("conflict", {
               ...payload,
@@ -92121,10 +92134,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/tweetnacl/nacl-fast.js
+  // ../../node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
-    "node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/tweetnacl/nacl-fast.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -94543,6 +94556,7 @@ ${toHex(hashedRequest)}`;
                 this.ctx.setRemote(this.ctx.remoteFactory(v2PrivateId));
               }
             } catch (e2) {
+              Logger.warn("Keys", `Failed to initialize remote during key check: ${e2.message}`);
             }
           }
           let remote = this.ctx.getRemote();
@@ -94551,6 +94565,7 @@ ${toHex(hashedRequest)}`;
               const result = await remote.downloadFile(PATHS.SENTINEL);
               if (result && result.data) sentinelData = result.data;
             } catch (e2) {
+              Logger.debug("Keys", `Could not download sentinel from remote: ${e2.message}`);
             }
           }
           let masterKey = null;
@@ -94569,6 +94584,7 @@ ${toHex(hashedRequest)}`;
                   await this.ctx.storage.saveFile(sentinelPath, sentinelData);
                 }
               } catch (e2) {
+                Logger.debug("Keys", `V2 sentinel decryption failed: ${e2.message}`);
               }
             }
             if (!masterKey) {
@@ -94596,6 +94612,7 @@ ${toHex(hashedRequest)}`;
                   }
                 }
               } catch (e2) {
+                Logger.debug("Keys", `Legacy sentinel decryption failed: ${e2.message}`);
               }
             }
           }
@@ -94623,6 +94640,7 @@ ${toHex(hashedRequest)}`;
           try {
             localKeyData = await this.ctx.storage.getDailyDb("_keys", "private");
           } catch (e2) {
+            Logger.debug("Keys", `Could not retrieve local keys: ${e2.message}`);
           }
           if (localKeyData) {
             try {
@@ -94656,6 +94674,7 @@ ${toHex(hashedRequest)}`;
                 }
               }
             } catch (e2) {
+              Logger.debug("Keys", `Could not download remote keys: ${e2.message}`);
             }
           }
           if (!keyInfo) {
@@ -94683,6 +94702,7 @@ ${toHex(hashedRequest)}`;
             try {
               await remote.uploadFile(PATHS.KEYS, v2KeyData);
             } catch (e2) {
+              Logger.warn("Keys", `Failed to upload V2 keys to remote: ${e2.message}`);
             }
           }
           this.ctx.config.encryptionKey = keyInfo.privateKey;
@@ -94720,6 +94740,7 @@ ${toHex(hashedRequest)}`;
               await remote.uploadFile(PATHS.KEYS, Buffer.concat([salt, encrypted]));
             }
           } catch (e2) {
+            Logger.warn("Keys", `ensureKeysAreRemote failed: ${e2.message}`);
           }
         }
         async changePassword(oldPassword, newPassword) {
@@ -94840,42 +94861,101 @@ ${toHex(hashedRequest)}`;
       init_Logger();
       init_SovereignS3nc();
       init_Constants();
+      init_Environment();
       SyncOrchestrator = class {
         constructor(ctx) {
           this.ctx = ctx;
         }
         async sync(forceSync = false) {
+          const startedAt = Date.now();
+          const runId = `${startedAt}-${env.generateId(12)}`;
+          const phases = [];
+          const diagnostics = [];
+          const legacyStages = {
+            own_data: "syncing_own_data",
+            registration: "registering",
+            discovery: "discovering_users",
+            followed_data: "syncing_followed",
+            blobs: "syncing_blobs"
+          };
+          const finish = () => {
+            const failed = phases.filter((p2) => p2.status === "failed").length;
+            const succeeded = phases.filter((p2) => p2.status === "succeeded").length;
+            const status = failed === 0 ? succeeded === 0 ? "skipped" : "succeeded" : succeeded === 0 ? "failed" : "partial";
+            const result = { runId, status, startedAt, completedAt: Date.now(), phases, diagnostics };
+            this.ctx.emitSyncResult(result);
+            return result;
+          };
+          const phase = async (name, operation2, total) => {
+            const phaseStartedAt = Date.now();
+            const stage = legacyStages[name] || name;
+            this.ctx.emitSyncProgress(stage, total === void 0 ? void 0 : 0, total, runId, "running", name);
+            try {
+              await operation2();
+              phases.push({ name, status: "succeeded", startedAt: phaseStartedAt, completedAt: Date.now() });
+              this.ctx.emitSyncProgress(stage, total, total, runId, "succeeded", name);
+              return true;
+            } catch (error) {
+              const diagnostic = {
+                code: "SYNC_PHASE_FAILED",
+                runId,
+                timestamp: Date.now(),
+                severity: "error",
+                phase: name,
+                message: `Sync phase '${name}' failed.`,
+                ...Number.isInteger(error?.failedTasks) ? { failedTasks: error.failedTasks } : {}
+              };
+              diagnostics.push(diagnostic);
+              phases.push({ name, status: "failed", startedAt: phaseStartedAt, completedAt: Date.now(), diagnosticCode: "SYNC_PHASE_FAILED", failedTasks: diagnostic.failedTasks });
+              this.ctx.emitSyncDiagnostic(diagnostic);
+              this.ctx.emitSyncProgress(stage, void 0, void 0, runId, "failed", name);
+              return false;
+            }
+          };
           if (this.ctx.syncWorker) {
             Logger.info("Sovereign", "Delegating sync to background worker...");
             return this.ctx.syncWorker.sync(forceSync);
           }
           if (!this.ctx.getRemote() || !this.ctx.getPublicRemote() || !this.ctx.getGlobalRemote()) {
             Logger.info("Sovereign", "Remote not connected, skipping sync.");
-            return;
+            const diagnostic = { code: "SYNC_REMOTE_UNAVAILABLE", runId, timestamp: Date.now(), severity: "warning", phase: "remote_preflight", message: "Sync was skipped because one or more remote adapters are unavailable." };
+            diagnostics.push(diagnostic);
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            phases.push({ name: "remote_preflight", status: "skipped", startedAt, completedAt: Date.now() });
+            return finish();
           }
           if (this.ctx.isSyncing()) {
             Logger.info("Sovereign", "Sync already in progress, skipping...");
-            return;
+            const diagnostic = { code: "SYNC_ALREADY_RUNNING", runId, timestamp: Date.now(), severity: "warning", phase: "preflight", message: "Sync was skipped because another sync is already running." };
+            diagnostics.push(diagnostic);
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            phases.push({ name: "preflight", status: "skipped", startedAt, completedAt: Date.now() });
+            return finish();
           }
+          this.ctx.emitSyncProgress("start", void 0, void 0, runId, "running");
           this.ctx.setSyncing(true);
           try {
+            if (this.ctx.flushDatabases) {
+              try {
+                await this.ctx.flushDatabases();
+              } catch (err) {
+                Logger.warn("Sync", `Failed to flush pending database writes before sync: ${err.message}`);
+              }
+            }
             if (forceSync) {
               Logger.info("Sync", "FORCE SYNC initiated. Bypassing ETag cache.");
             }
-            this.ctx.emitSyncProgress("start");
             let remoteManifest = null;
             const publicRemote = this.ctx.getPublicRemote();
-            if (publicRemote && !forceSync) {
-              try {
-                const result = await publicRemote.downloadFile(PATHS.MANIFEST);
-                if (result && result.data) {
-                  remoteManifest = JSON.parse(new TextDecoder().decode(result.data));
+            await phase("manifest_fetch", async () => {
+              if (publicRemote && !forceSync) {
+                const result2 = await publicRemote.downloadFile(PATHS.MANIFEST);
+                if (result2 && result2.data) {
+                  remoteManifest = JSON.parse(new TextDecoder().decode(result2.data));
                   Logger.info("Sync", "Remote manifest downloaded for diffing.");
                 }
-              } catch (e2) {
-                Logger.debug("Sync", "No remote manifest found.");
               }
-            }
+            });
             const lastSync = forceSync ? null : await this.ctx.storage.getLastSyncDate();
             const today = SovereignS3nc.getDateStr(/* @__PURE__ */ new Date());
             let currentDate;
@@ -94899,46 +94979,77 @@ ${toHex(hashedRequest)}`;
               () => this.syncDay(dateStr, "private", void 0, this.ctx.getRemote(), remoteManifest),
               () => this.syncDay(dateStr, "public", void 0, this.ctx.getPublicRemote(), remoteManifest)
             ]);
-            this.ctx.emitSyncProgress("syncing_own_data", 0, dateTasks.length);
-            await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE);
-            this.ctx.emitSyncProgress("registering");
-            await this.syncUserFile(remoteManifest);
-            await this.ctx.ensureGlobalRegistration();
-            await this.ctx.updateFollowingPublicKeys();
+            await phase("own_data", async () => {
+              await this.runBatched(dateTasks, DEFAULTS.SYNC_BATCH_SIZE);
+            }, dateTasks.length);
+            await phase("registration", async () => {
+              await this.syncUserFile(remoteManifest);
+              await this.ctx.ensureGlobalRegistration();
+              await this.ctx.updateFollowingPublicKeys();
+            });
             if (this.ctx.config.autoFollowDiscoveredUsers !== false) {
-              this.ctx.emitSyncProgress("discovering_users");
-              const userList = await this.ctx.discoverUsers();
-              if (userList) {
-                await this.ctx.autoFollowUsers(userList);
-              }
+              await phase("discovery", async () => {
+                const userList = await this.ctx.discoverUsers();
+                if (userList) await this.ctx.autoFollowUsers(userList);
+              });
             }
-            this.ctx.emitSyncProgress("syncing_followed");
-            await this.syncFollowedUsers(today);
-            await this.ctx.syncGroups(today);
-            const localManifest = await this.ctx.generateManifest();
-            const allFilePaths = /* @__PURE__ */ new Set([
-              ...localManifest.blobs,
-              ...remoteManifest && remoteManifest.files ? Object.keys(remoteManifest.files) : []
-            ]);
-            const blobTasks = Array.from(allFilePaths).map((filePath) => {
-              if (filePath.includes(PATHS.USER_PROFILE) || filePath.includes(PATHS.MANIFEST) || filePath.includes(PATHS.KEYS) || filePath.includes(PATHS.SENTINEL) || filePath.includes(".probe")) {
-                return null;
-              }
-              const parts = filePath.split("/");
-              if (parts.length === 2 && filePath.endsWith(PATHS.DB_EXT)) {
-                return null;
-              }
-              const type = filePath.startsWith(PATHS.PUBLIC_PREFIX) ? "public" : "private";
-              const relativePath = filePath.substring(type.length + 1);
-              return () => this.syncGenericFile(relativePath, type, remoteManifest);
-            }).filter((t8) => t8 !== null);
-            this.ctx.emitSyncProgress("syncing_blobs", 0, blobTasks.length);
-            await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
-            await this.ctx.processModerationRequests();
-            await this.ctx.syncManifest();
-            await this.applyRetentionPolicy();
-            await this.ctx.storage.setLastSyncDate(today);
-            this.ctx.emitSyncProgress("complete");
+            await phase("followed_data", async () => {
+              await this.syncFollowedUsers(today);
+            });
+            await phase("groups", async () => {
+              await this.ctx.syncGroups(today);
+            });
+            await phase("blobs", async () => {
+              const localManifest = await this.ctx.generateManifest();
+              const allFilePaths = /* @__PURE__ */ new Set([
+                ...localManifest.blobs,
+                ...remoteManifest && remoteManifest.files ? Object.keys(remoteManifest.files) : []
+              ]);
+              const blobTasks = Array.from(allFilePaths).map((filePath) => {
+                if (filePath.includes(PATHS.USER_PROFILE) || filePath.includes(PATHS.MANIFEST) || filePath.includes(PATHS.KEYS) || filePath.includes(PATHS.SENTINEL) || filePath.includes(".probe")) return null;
+                const parts = filePath.split("/");
+                if (parts.length === 2 && filePath.endsWith(PATHS.DB_EXT)) return null;
+                const type = filePath.startsWith(PATHS.PUBLIC_PREFIX) ? "public" : "private";
+                const relativePath = filePath.substring(type.length + 1);
+                return () => this.syncGenericFile(relativePath, type, remoteManifest);
+              }).filter((t8) => t8 !== null);
+              this.ctx.emitSyncProgress("syncing_blobs", 0, blobTasks.length, runId, "running", "blobs");
+              await this.runBatched(blobTasks, DEFAULTS.SYNC_BATCH_SIZE);
+            });
+            await phase("moderation", async () => {
+              await this.ctx.processModerationRequests();
+            });
+            await phase("manifest_publish", async () => {
+              await this.ctx.syncManifest();
+            });
+            await phase("retention", async () => {
+              await this.applyRetentionPolicy();
+            });
+            if (phases.some((p2) => p2.status === "failed")) {
+              phases.push({ name: "checkpoint", status: "skipped", startedAt: Date.now(), completedAt: Date.now() });
+            } else {
+              await phase("checkpoint", async () => {
+                await this.ctx.storage.setLastSyncDate(today);
+              });
+            }
+            const result = finish();
+            this.ctx.emitSyncProgress("complete", void 0, void 0, runId, result.status === "succeeded" ? "succeeded" : "failed");
+            return result;
+          } catch (_error) {
+            const diagnostic = {
+              code: "SYNC_PHASE_FAILED",
+              runId,
+              timestamp: Date.now(),
+              severity: "error",
+              phase: "orchestration",
+              message: "Sync orchestration failed before all phases completed."
+            };
+            diagnostics.push(diagnostic);
+            phases.push({ name: "orchestration", status: "failed", startedAt: Date.now(), completedAt: Date.now(), diagnosticCode: "SYNC_PHASE_FAILED" });
+            this.ctx.emitSyncDiagnostic(diagnostic);
+            const result = finish();
+            this.ctx.emitSyncProgress("complete", void 0, void 0, runId, "failed");
+            return result;
           } finally {
             this.ctx.setSyncing(false);
           }
@@ -95065,8 +95176,8 @@ ${toHex(hashedRequest)}`;
               await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${remotePath}`, localHash);
             }
           } catch (e2) {
-            Logger.warn("Sync", `syncDay failed for ${date2}/${type}: ${e2.message}`);
-            if (e2.message.includes("Sync aborted")) throw e2;
+            Logger.warn("Sync", `syncDay failed for ${date2}/${type} (${e2?.name || "Error"}).`);
+            throw e2;
           }
         }
         async syncFollowedUsers(today) {
@@ -95240,6 +95351,7 @@ ${toHex(hashedRequest)}`;
                     shouldKeepLocal = true;
                   }
                 } catch (e2) {
+                  Logger.warn("Sync", `Failed to compare user.json timestamps: ${e2.message}`);
                 }
               }
               if (!shouldKeepLocal) {
@@ -95341,20 +95453,30 @@ ${toHex(hashedRequest)}`;
               await this.ctx.storage.setGenericRemoteHashCache(`sync_hash:${fullPath}`, localHash);
             }
           } catch (e2) {
-            Logger.warn("Sync", `syncGenericFile failed for ${relativePath}: ${e2.message}`);
-            if (e2.message?.includes("Sync aborted")) throw e2;
+            Logger.warn("Sync", `syncGenericFile failed for ${relativePath} (${e2?.name || "Error"}).`);
+            throw e2;
           }
         }
         async runBatched(tasks, limit) {
           const results = new Array(tasks.length);
+          const errors = [];
           let currentIndex = 0;
           const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
             while (currentIndex < tasks.length) {
               const index = currentIndex++;
-              results[index] = await tasks[index]();
+              try {
+                results[index] = await tasks[index]();
+              } catch (error) {
+                errors.push(error);
+              }
             }
           });
           await Promise.all(workers);
+          if (errors.length > 0) {
+            const error = new Error(`${errors.length} sync task(s) failed`);
+            error.failedTasks = errors.length;
+            throw error;
+          }
           return results;
         }
         /**
@@ -95425,7 +95547,8 @@ ${toHex(hashedRequest)}`;
             await publicRemote.uploadFile(PATHS.MANIFEST, rootData);
             Logger.info("Sync", `Hierarchical manifest uploaded successfully (merkleRoot: ${rootManifest.merkleRoot?.substring(0, 8)}).`);
           } catch (e2) {
-            Logger.warn("Sync", `Failed to sync manifest: ${e2.message}`);
+            Logger.warn("Sync", `Failed to sync manifest (${e2?.name || "Error"}).`);
+            throw e2;
           }
         }
         async generateHierarchicalManifest() {
@@ -95437,6 +95560,7 @@ ${toHex(hashedRequest)}`;
               cachedManifest = JSON.parse(new TextDecoder().decode(cacheData));
             }
           } catch (e2) {
+            Logger.debug("Sync", `Could not read cached manifest: ${e2.message}`);
           }
           const allFiles = await this.ctx.storage.listFiles("");
           Logger.debug("Sync", `generateManifest: Scanning ${allFiles.length} files (Incremental)`);
@@ -95600,6 +95724,7 @@ ${toHex(hashedRequest)}`;
               try {
                 return JSON.parse(new TextDecoder().decode(data));
               } catch (e2) {
+                Logger.warn("Sync", `Failed to parse submanifest cache for ${userId}: ${e2.message}`);
               }
             }
           }
@@ -95655,6 +95780,7 @@ ${toHex(hashedRequest)}`;
                 this.followManifestCache.set(userId, cached);
               }
             } catch (e2) {
+              Logger.debug("Sync", `Could not populate follow manifest cache for ${userId}: ${e2.message}`);
             }
           }
           if (!options?.forceRefresh && cached && Date.now() - cached.timestamp < ttl) {
@@ -95871,6 +95997,7 @@ ${toHex(hashedRequest)}`;
                 const { status } = JSON.parse(new TextDecoder().decode(statusData));
                 member2.status = status;
               } catch (e2) {
+                Logger.warn("GroupManager", `Failed to parse status for member ${member2.userId} in group ${groupId}: ${e2.message}`);
               }
             }
           }
@@ -95954,6 +96081,7 @@ ${toHex(hashedRequest)}`;
                       anyMemberStatusChanged = true;
                     }
                   } catch (e2) {
+                    Logger.warn("GroupManager", `Failed to parse synced status for member ${member2.userId} in group ${group3.id}: ${e2.message}`);
                   }
                 }
                 if (member2.status === "joined") {
@@ -96041,6 +96169,7 @@ ${toHex(hashedRequest)}`;
                   try {
                     await publicRemote.deleteFile(file);
                   } catch (e2) {
+                    Logger.warn("Moderation", `Failed to delete moderation request from remote: ${file}`, e2);
                   }
                 }
                 if (modified) {
@@ -96060,26 +96189,46 @@ ${toHex(hashedRequest)}`;
           const types = ["public", "private"];
           for (const type of types) {
             const dbPath = this.ctx.getModulePath("feed", `${date2}${PATHS.DB_EXT}`, type);
-            const data = await this.ctx.storage.getFile(dbPath);
-            if (!data) continue;
-            try {
-              const initSqlJs = env.getSqlJs();
-              if (!initSqlJs) throw new ModuleError("moderation", "sql.js not found");
-              const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-              const db = new sqliteInstance.Database(data);
-              const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
-              if (tableCheck.length > 0) {
-                db.run("DELETE FROM posts WHERE id = ?", [postId]);
-                if (db.getRowsModified() > 0) {
-                  const binary = db.export();
-                  await this.ctx.storage.saveFile(dbPath, binary);
-                  anyModified = true;
-                  Logger.info("Moderation", `Deleted post ${postId} from ${dbPath}`);
+            if (this.ctx.getDailyDatabase) {
+              const dailyDb = this.ctx.getDailyDatabase("feed");
+              if (await dailyDb.exists(dbPath)) {
+                try {
+                  await dailyDb.withDatabase(dbPath, (db) => {
+                    const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+                    if (tableCheck.length > 0) {
+                      db.run("DELETE FROM posts WHERE id = ?", [postId]);
+                      if (db.getRowsModified() > 0) {
+                        anyModified = true;
+                        Logger.info("Moderation", `Deleted post ${postId} from ${dbPath}`);
+                      }
+                    }
+                  }, { save: true, emitUpdate: true, immediate: true, applySchema: true });
+                } catch (e2) {
+                  Logger.warn("Moderation", `Failed to surgically delete post from ${dbPath}: ${e2.message}`);
                 }
               }
-              db.close();
-            } catch (e2) {
-              Logger.warn("Moderation", `Failed to surgically delete post from ${dbPath}: ${e2.message}`);
+            } else {
+              const data = await this.ctx.storage.getFile(dbPath);
+              if (!data) continue;
+              try {
+                const initSqlJs = env.getSqlJs();
+                if (!initSqlJs) throw new ModuleError("moderation", "sql.js not found");
+                const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+                const db = new sqliteInstance.Database(data);
+                const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'");
+                if (tableCheck.length > 0) {
+                  db.run("DELETE FROM posts WHERE id = ?", [postId]);
+                  if (db.getRowsModified() > 0) {
+                    const binary = db.export();
+                    await this.ctx.storage.saveFile(dbPath, binary);
+                    anyModified = true;
+                    Logger.info("Moderation", `Deleted post ${postId} from ${dbPath}`);
+                  }
+                }
+                db.close();
+              } catch (e2) {
+                Logger.warn("Moderation", `Failed to surgically delete post from ${dbPath}: ${e2.message}`);
+              }
             }
           }
           return anyModified;
@@ -96517,12 +96666,420 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // src/core/DailyDatabase.ts
+  var import_polyfills689, DailyDatabase;
+  var init_DailyDatabase = __esm({
+    "src/core/DailyDatabase.ts"() {
+      "use strict";
+      import_polyfills689 = __toESM(require_polyfills());
+      init_Environment();
+      init_Errors();
+      init_Logger();
+      DailyDatabase = class _DailyDatabase {
+        constructor(sov, defaultModuleName, rootDailyDb, config) {
+          this.sov = sov;
+          this.defaultModuleName = defaultModuleName;
+          if (rootDailyDb) {
+            this.pool = rootDailyDb.pool;
+            this.loadingPromises = rootDailyDb.loadingPromises;
+            this.config = { ...rootDailyDb.config, ...config };
+          } else {
+            this.pool = /* @__PURE__ */ new Map();
+            this.loadingPromises = /* @__PURE__ */ new Map();
+            this.config = {
+              debounceMs: 0,
+              maxWaitMs: 2e3,
+              idleTimeoutMs: 1e4,
+              ...config
+            };
+          }
+        }
+        static {
+          this.cachedSqliteInstance = null;
+        }
+        static {
+          this.sqliteInitPromise = null;
+        }
+        static {
+          this.lastInitSqlJs = null;
+        }
+        /**
+         * Retrieves or initializes the shared sql.js WebAssembly instance.
+         * Caches the instance across calls to avoid redundant re-initialization,
+         * but invalidates cache if env.getSqlJs changes (e.g. in test mocks).
+         */
+        static async getSqliteInstance() {
+          const currentInitSqlJs = env.getSqlJs();
+          if (_DailyDatabase.cachedSqliteInstance && _DailyDatabase.lastInitSqlJs === currentInitSqlJs) {
+            return _DailyDatabase.cachedSqliteInstance;
+          }
+          if (!currentInitSqlJs) {
+            throw new ModuleError("DailyDatabase", "sql.js not loaded in current environment");
+          }
+          _DailyDatabase.lastInitSqlJs = currentInitSqlJs;
+          _DailyDatabase.cachedSqliteInstance = await currentInitSqlJs(env.getSqlConfig() || {});
+          return _DailyDatabase.cachedSqliteInstance;
+        }
+        /**
+         * Resets the cached SQLite instance (primarily for testing environments).
+         */
+        static resetInstanceCache() {
+          _DailyDatabase.cachedSqliteInstance = null;
+          _DailyDatabase.sqliteInitPromise = null;
+          _DailyDatabase.lastInitSqlJs = null;
+        }
+        /**
+         * Opens a managed database session at a given storage path.
+         * Callers must ensure `session.close()` is invoked (or use `withDatabase`).
+         */
+        async openDatabase(storagePath, options) {
+          const entry = await this.acquireEntry(storagePath, options);
+          entry.activeSessionCount++;
+          entry.lastAccessed = Date.now();
+          if (entry.idleEvictionTimer) {
+            clearTimeout(entry.idleEvictionTimer);
+            entry.idleEvictionTimer = null;
+          }
+          if (options?.encryptKey) {
+            entry.encryptKey = options.encryptKey;
+          }
+          const moduleName = options?.moduleName || this.defaultModuleName;
+          if (moduleName) {
+            entry.moduleName = moduleName;
+          }
+          let isClosed = false;
+          const save = async (saveOpts) => {
+            if (isClosed) {
+              throw new ModuleError("DailyDatabase", `Cannot save closed database at ${storagePath}`);
+            }
+            entry.isDirty = true;
+            if (options?.emitUpdate) {
+              entry.emitUpdate = true;
+            }
+            if (options?.encryptKey) {
+              entry.encryptKey = options.encryptKey;
+            }
+            const shouldImmediate = saveOpts?.immediate === true || saveOpts?.debounce === false;
+            let debounceDelay = 0;
+            if (!shouldImmediate) {
+              if (typeof saveOpts?.debounce === "number") {
+                debounceDelay = saveOpts.debounce;
+              } else if (saveOpts?.debounce === true) {
+                debounceDelay = this.config.debounceMs || 500;
+              } else if (saveOpts?.debounce === void 0 && (this.config.debounceMs ?? 0) > 0) {
+                debounceDelay = this.config.debounceMs;
+              }
+            }
+            if (debounceDelay > 0) {
+              this.scheduleDebouncedFlush(entry, debounceDelay);
+            } else {
+              await this.flushEntry(entry);
+            }
+          };
+          const flush2 = async () => {
+            await this.flushEntry(entry);
+          };
+          const close = () => {
+            if (!isClosed) {
+              isClosed = true;
+              entry.activeSessionCount = Math.max(0, entry.activeSessionCount - 1);
+              entry.lastAccessed = Date.now();
+              if (entry.activeSessionCount === 0) {
+                if (!entry.isDirty) {
+                  this.scheduleIdleEviction(entry);
+                }
+              }
+            }
+          };
+          return { db: entry.db, save, flush: flush2, close };
+        }
+        /**
+         * Executes a callback within a managed SQLite database session.
+         * Automatically handles opening, schema migration, debounced/immediate exporting,
+         * and guaranteed session cleanup.
+         */
+        async withDatabase(storagePath, callback, options) {
+          const session = await this.openDatabase(storagePath, options);
+          try {
+            const result = await callback(session.db);
+            const shouldSave = typeof options?.save === "function" ? options.save(result) : options?.save;
+            if (shouldSave) {
+              await session.save({
+                immediate: options?.immediate,
+                debounce: options?.debounce
+              });
+            }
+            return result;
+          } finally {
+            session.close();
+          }
+        }
+        /**
+         * Resolves the full storage path for a module's daily database file and executes the callback.
+         */
+        async withDailyDatabase(dateOrRelative, type, callback, options) {
+          const moduleName = options?.moduleName || this.defaultModuleName;
+          if (!moduleName) {
+            throw new ModuleError("DailyDatabase", "Module name required to resolve daily database path");
+          }
+          let dbPath;
+          const filename = dateOrRelative.endsWith(".db") ? dateOrRelative : `${dateOrRelative}.db`;
+          if (type === "followed") {
+            if (!options?.userId) {
+              dbPath = this.sov.getModulePath(moduleName, filename, "followed");
+            } else {
+              dbPath = this.sov.getModulePath(moduleName, `${options.userId}/${filename}`, "followed");
+            }
+          } else {
+            dbPath = this.sov.getModulePath(moduleName, filename, type);
+          }
+          return this.withDatabase(dbPath, callback, { ...options, moduleName });
+        }
+        async acquireEntry(storagePath, options) {
+          const existing = this.pool.get(storagePath);
+          if (existing) {
+            return existing;
+          }
+          const loading = this.loadingPromises.get(storagePath);
+          if (loading) {
+            return await loading;
+          }
+          const loadPromise = (async () => {
+            try {
+              const storage = this.sov.getStorage();
+              let rawData = await storage.getFile(storagePath);
+              if (rawData && options?.decryptKey) {
+                try {
+                  rawData = await this.sov.decrypt(rawData, options.decryptKey);
+                } catch (e2) {
+                  Logger.warn("DailyDatabase", `Failed to decrypt database at ${storagePath}: ${e2.message}`);
+                  rawData = null;
+                }
+              }
+              const sqliteInstance = await _DailyDatabase.getSqliteInstance();
+              let db;
+              try {
+                db = new sqliteInstance.Database(rawData || void 0);
+              } catch (e2) {
+                if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
+                  Logger.error("DailyDatabase", `Database corruption detected at ${storagePath}. Deleting corrupted file.`);
+                  try {
+                    await storage.deleteFile(storagePath);
+                  } catch (delErr) {
+                    Logger.warn("DailyDatabase", `Failed to delete corrupted file at ${storagePath}: ${delErr.message}`);
+                  }
+                  db = new sqliteInstance.Database();
+                } else {
+                  throw e2;
+                }
+              }
+              const moduleName = options?.moduleName || this.defaultModuleName;
+              const applySchema = options?.applySchema !== false;
+              if (moduleName && applySchema) {
+                try {
+                  this.sov.applyModuleSchema(db, moduleName);
+                } catch (e2) {
+                  if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
+                    Logger.error("DailyDatabase", `Database corruption detected during schema application at ${storagePath}. Deleting corrupted file.`);
+                    try {
+                      await storage.deleteFile(storagePath);
+                    } catch (delErr) {
+                      Logger.warn("DailyDatabase", `Failed to delete corrupted file at ${storagePath}: ${delErr.message}`);
+                    }
+                    db = new sqliteInstance.Database();
+                    this.sov.applyModuleSchema(db, moduleName);
+                  } else {
+                    throw e2;
+                  }
+                }
+              }
+              const entry = {
+                db,
+                storagePath,
+                isDirty: false,
+                moduleName,
+                encryptKey: options?.encryptKey,
+                decryptKey: options?.decryptKey,
+                lastAccessed: Date.now(),
+                activeSessionCount: 0
+              };
+              this.pool.set(storagePath, entry);
+              return entry;
+            } finally {
+              this.loadingPromises.delete(storagePath);
+            }
+          })();
+          this.loadingPromises.set(storagePath, loadPromise);
+          return await loadPromise;
+        }
+        scheduleDebouncedFlush(entry, delayMs) {
+          const now = Date.now();
+          if (entry.firstDirtyAt === void 0) {
+            entry.firstDirtyAt = now;
+          }
+          const maxWaitMs = this.config.maxWaitMs || 2e3;
+          const timeSinceFirstDirty = now - entry.firstDirtyAt;
+          const remainingMaxWait = Math.max(0, maxWaitMs - timeSinceFirstDirty);
+          const effectiveDelay = Math.min(delayMs, remainingMaxWait);
+          if (entry.debounceTimer) {
+            clearTimeout(entry.debounceTimer);
+          }
+          entry.debounceTimer = setTimeout(() => {
+            entry.debounceTimer = null;
+            this.flushEntry(entry).catch((err) => {
+              Logger.error("DailyDatabase", `Debounced flush failed for ${entry.storagePath}: ${err.message}`);
+            });
+          }, effectiveDelay);
+          if (typeof entry.debounceTimer?.unref === "function") {
+            entry.debounceTimer.unref();
+          }
+        }
+        async flushEntry(entry) {
+          if (entry.flushPromise) {
+            return entry.flushPromise;
+          }
+          if (!entry.isDirty) {
+            return;
+          }
+          if (entry.debounceTimer) {
+            clearTimeout(entry.debounceTimer);
+            entry.debounceTimer = null;
+          }
+          entry.flushPromise = (async () => {
+            try {
+              let binary = entry.db.export();
+              if (entry.encryptKey) {
+                binary = await this.sov.encrypt(binary, entry.encryptKey);
+              }
+              await this.sov.getStorage().saveFile(entry.storagePath, binary);
+              entry.isDirty = false;
+              entry.firstDirtyAt = void 0;
+              if (entry.emitUpdate && entry.moduleName) {
+                this.sov.emit(`${entry.moduleName}:update`, { path: entry.storagePath });
+                entry.emitUpdate = false;
+              }
+            } finally {
+              entry.flushPromise = null;
+              if (entry.activeSessionCount === 0 && !entry.isDirty) {
+                this.scheduleIdleEviction(entry);
+              }
+            }
+          })();
+          return entry.flushPromise;
+        }
+        scheduleIdleEviction(entry) {
+          if (entry.idleEvictionTimer) {
+            clearTimeout(entry.idleEvictionTimer);
+          }
+          const idleTimeoutMs = this.config.idleTimeoutMs || 1e4;
+          entry.idleEvictionTimer = setTimeout(() => {
+            entry.idleEvictionTimer = null;
+            if (entry.activeSessionCount === 0 && !entry.isDirty) {
+              try {
+                entry.db.close();
+              } catch (e2) {
+                Logger.warn("DailyDatabase", `Error closing idle database at ${entry.storagePath}: ${e2.message}`);
+              }
+              this.pool.delete(entry.storagePath);
+            }
+          }, idleTimeoutMs);
+          if (typeof entry.idleEvictionTimer?.unref === "function") {
+            entry.idleEvictionTimer.unref();
+          }
+        }
+        /**
+         * Immediately flushes any uncommitted changes for a specific database path to storage.
+         */
+        async flush(storagePath) {
+          const entry = this.pool.get(storagePath);
+          if (entry && (entry.isDirty || entry.flushPromise)) {
+            await this.flushEntry(entry);
+          }
+        }
+        /**
+         * Flushes all open, dirty databases to storage.
+         * Guaranteed to persist all debounced/batched writes before sync or app exit.
+         */
+        async flushAll() {
+          const promises = [];
+          for (const entry of this.pool.values()) {
+            if (entry.isDirty || entry.flushPromise) {
+              promises.push(this.flushEntry(entry));
+            }
+          }
+          await Promise.all(promises);
+        }
+        /**
+         * Checks whether an active database entry is currently loaded in memory.
+         */
+        has(storagePath) {
+          return this.pool.has(storagePath);
+        }
+        /**
+         * Checks whether a database exists either in the active in-memory pool or in storage.
+         */
+        async exists(storagePath) {
+          if (this.pool.has(storagePath)) {
+            return true;
+          }
+          const file = await this.sov.getStorage().getFile(storagePath);
+          return !!file;
+        }
+        /**
+         * Checks whether a specific database or any active database has pending uncommitted writes.
+         */
+        isDirty(storagePath) {
+          if (storagePath) {
+            return this.pool.get(storagePath)?.isDirty ?? false;
+          }
+          for (const entry of this.pool.values()) {
+            if (entry.isDirty) return true;
+          }
+          return false;
+        }
+        /**
+         * Flushes and closes a specific database, freeing its in-memory WASM instance.
+         */
+        async close(storagePath) {
+          const entry = this.pool.get(storagePath);
+          if (!entry) return;
+          if (entry.debounceTimer) {
+            clearTimeout(entry.debounceTimer);
+            entry.debounceTimer = null;
+          }
+          if (entry.idleEvictionTimer) {
+            clearTimeout(entry.idleEvictionTimer);
+            entry.idleEvictionTimer = null;
+          }
+          if (entry.isDirty || entry.flushPromise) {
+            await this.flushEntry(entry);
+          }
+          try {
+            entry.db.close();
+          } catch (e2) {
+            Logger.warn("DailyDatabase", `Error closing database at ${storagePath}: ${e2.message}`);
+          }
+          this.pool.delete(storagePath);
+        }
+        /**
+         * Flushes all dirty databases and closes all open database connections in the pool.
+         */
+        async closeAll() {
+          const paths = Array.from(this.pool.keys());
+          for (const path2 of paths) {
+            await this.close(path2);
+          }
+        }
+      };
+    }
+  });
+
   // src/utils/Inspector.ts
-  var import_polyfills689, Inspector;
+  var import_polyfills690, Inspector;
   var init_Inspector = __esm({
     "src/utils/Inspector.ts"() {
       "use strict";
-      import_polyfills689 = __toESM(require_polyfills());
+      import_polyfills690 = __toESM(require_polyfills());
       init_WebRTCRemoteAdapter();
       Inspector = class _Inspector {
         /**
@@ -96748,11 +97305,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/path-browserify/index.js
+  // ../../node_modules/path-browserify/index.js
   var require_path_browserify = __commonJS({
-    "node_modules/path-browserify/index.js"(exports, module) {
+    "../../node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -97161,11 +97718,11 @@ ${toHex(hashedRequest)}`;
   __export(NodeStorage_exports, {
     NodeStorage: () => NodeStorage
   });
-  var import_polyfills690, fs, path, crypto5, NodeStorage;
+  var import_polyfills691, fs, path, crypto5, NodeStorage;
   var init_NodeStorage = __esm({
     "src/adapters/NodeStorage.ts"() {
       "use strict";
-      import_polyfills690 = __toESM(require_polyfills());
+      import_polyfills691 = __toESM(require_polyfills());
       fs = __toESM(__require("fs-extra"));
       path = __toESM(require_path_browserify());
       crypto5 = __toESM(require_crypto_browserify());
@@ -97372,11 +97929,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/SovereignS3nc.ts
-  var import_polyfills691, import_events3, SovereignS3nc;
+  var import_polyfills692, import_events3, SovereignS3nc;
   var init_SovereignS3nc = __esm({
     "src/SovereignS3nc.ts"() {
       "use strict";
-      import_polyfills691 = __toESM(require_polyfills());
+      import_polyfills692 = __toESM(require_polyfills());
       init_S3RemoteAdapter();
       init_WebRTCRemoteAdapter();
       init_NativeWebRTCTransport();
@@ -97395,6 +97952,7 @@ ${toHex(hashedRequest)}`;
       init_GlobalRegistry();
       init_BlacklistManager();
       init_Repository();
+      init_DailyDatabase();
       init_Inspector();
       SovereignS3nc = class _SovereignS3nc extends import_events3.EventEmitter {
         constructor(config, remote, remoteFactory, keys, storage) {
@@ -97423,6 +97981,7 @@ ${toHex(hashedRequest)}`;
             remoteFactory: this.remoteFactory,
             createRemote: (uid, isPrivate) => this.createRemote(uid, isPrivate)
           });
+          this.dailyDatabase = new DailyDatabase(this);
           if (remote) {
             this.remote = remote;
             this.publicRemote = remote;
@@ -97469,7 +98028,8 @@ ${toHex(hashedRequest)}`;
             deriveSharedSecret: (pk) => this.deriveSharedSecret(pk),
             decrypt: (d2, k2) => this.decrypt(d2, k2),
             syncGenericFile: (rp, t8, rm) => this.syncOrchestrator.syncGenericFile(rp, t8, rm),
-            getModulePath: (mn, sp, t8) => this.getModulePath(mn, sp, t8)
+            getModulePath: (mn, sp, t8) => this.getModulePath(mn, sp, t8),
+            getDailyDatabase: (mn) => this.getDailyDatabase(mn)
           });
           this.globalRegistry = new GlobalRegistry({
             config: this.config,
@@ -97512,10 +98072,13 @@ ${toHex(hashedRequest)}`;
             onModuleUpdate: (mn, p2) => this.onModuleUpdate(mn, p2),
             registeredModules: this.registeredModules,
             getModuleInstances: () => this.moduleInstances,
-            emitSyncProgress: (stage, done, total) => {
-              this.emit("sync:progress", { stage, done, total });
+            flushDatabases: () => this.dailyDatabase.flushAll(),
+            emitSyncProgress: (stage, done, total, runId, state, phase) => {
+              this.emit("sync:progress", { stage, done, total, runId, state, phase });
               Logger.debug("Sync", `Progress: ${stage}${total !== void 0 ? ` (${done ?? 0}/${total})` : ""}`);
-            }
+            },
+            emitSyncDiagnostic: (diagnostic) => this.emit("sync:diagnostic", diagnostic),
+            emitSyncResult: (result) => this.emit("sync:result", result)
           });
         }
         static {
@@ -97729,6 +98292,9 @@ ${toHex(hashedRequest)}`;
                     this.emit(`${data.moduleName}:update`, data);
                   }
                 });
+                this.syncWorker.on("sync:progress", (data) => this.emit("sync:progress", data));
+                this.syncWorker.on("sync:diagnostic", (data) => this.emit("sync:diagnostic", data));
+                this.syncWorker.on("sync:result", (data) => this.emit("sync:result", data));
                 this.syncWorker.on("conflict", (data) => {
                   this.emit("conflict", data);
                 });
@@ -97837,6 +98403,7 @@ ${toHex(hashedRequest)}`;
           try {
             await this.ensureGlobalRegistration();
           } catch (e2) {
+            Logger.warn("Sovereign", `Failed to update global registration after key rotation: ${e2.message}`);
           }
           return result;
         }
@@ -97862,7 +98429,14 @@ ${toHex(hashedRequest)}`;
           return this.keyManager.getHashedUserId(uid, ip);
         }
         async sync(force = false) {
+          await this.dailyDatabase.flushAll();
           return this.syncOrchestrator.sync(force);
+        }
+        async flushDatabases() {
+          return this.dailyDatabase.flushAll();
+        }
+        async closeDatabases() {
+          return this.dailyDatabase.closeAll();
         }
         isSyncing() {
           return this._isSyncing;
@@ -97949,6 +98523,16 @@ ${toHex(hashedRequest)}`;
             type,
             idColumn
           });
+        }
+        /**
+         * Retrieves the DailyDatabase utility for managing SQLite database lifecycles.
+         * Optionally scoped to a specific module name and configuration.
+         */
+        getDailyDatabase(moduleName, config) {
+          if (moduleName || config) {
+            return new DailyDatabase(this, moduleName, this.dailyDatabase, config);
+          }
+          return this.dailyDatabase;
         }
         /**
          * Creates an encrypted, time-limited device pairing package that can be transmitted
@@ -98107,8 +98691,9 @@ ${toHex(hashedRequest)}`;
                 }
                 const expectedHash = path2.split("/").pop();
                 const actualHash = this.calculateHashedContent(data);
-                if (expectedHash !== actualHash) {
-                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}. Expected ${expectedHash}, got ${actualHash}`);
+                const localOnlyDmAttachment = path2.startsWith("private/dm-attachments/");
+                if (!localOnlyDmAttachment && expectedHash !== actualHash) {
+                  Logger.error("Sovereign", `Hash mismatch for own blob ${path2}.`);
                   throw new SyncError(`Blob corruption detected for ${path2}`);
                 }
                 await this.storage.saveFile(path2, data);
@@ -98141,6 +98726,7 @@ ${toHex(hashedRequest)}`;
               const user = registry.find((u2) => u2.userId === userId);
               if (user) publicKey = user.publicKey;
             } catch (e2) {
+              Logger.warn("Sovereign", `Failed to fetch public registry while following ${userId}: ${e2.message}`);
             }
           }
           const startDate = /* @__PURE__ */ new Date();
@@ -98248,11 +98834,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Feed.ts
-  var import_polyfills692, FEED_MODULE_DEFINITION, FeedModule;
+  var import_polyfills693, FEED_MODULE_DEFINITION, FeedModule;
   var init_Feed = __esm({
     "src/modules/Feed.ts"() {
       "use strict";
-      import_polyfills692 = __toESM(require_polyfills());
+      import_polyfills693 = __toESM(require_polyfills());
       init_Logger();
       init_Environment();
       init_Errors();
@@ -98304,37 +98890,27 @@ ${toHex(hashedRequest)}`;
         constructor(db) {
           this.db = db;
           this.MODULE_NAME = "feed";
+          this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
           this.db.registerModule(FEED_MODULE_DEFINITION);
           this.db.registerModuleInstance(this);
         }
         async getDb(date2, type, groupId, sharedKey) {
-          if (type === "group" && groupId && sharedKey) {
-            return this.db.getGroupStore(groupId, this.MODULE_NAME, date2, sharedKey);
-          }
           let dbPath;
-          if (type === "followed") {
+          if (type === "group" && groupId) {
+            dbPath = `public/groups/${groupId}/${date2}.db`;
+            const session2 = await this.dailyDb.openDatabase(dbPath, {
+              applySchema: true,
+              encryptKey: sharedKey,
+              decryptKey: sharedKey
+            });
+            return session2.db;
+          } else if (type === "followed") {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed");
           } else {
             dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
           }
-          let data = await this.db.getStorage().getFile(dbPath);
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          let db;
-          try {
-            db = new sqliteInstance.Database(data || void 0);
-          } catch (e2) {
-            if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
-              Logger.error("Feed", `Database corruption detected at ${dbPath}. Deleting corrupted file.`);
-              await this.db.getStorage().deleteFile(dbPath);
-              db = new sqliteInstance.Database();
-            } else {
-              throw e2;
-            }
-          }
-          this.db.applyModuleSchema(db, this.MODULE_NAME);
-          return db;
+          const session = await this.dailyDb.openDatabase(dbPath, { applySchema: true });
+          return session.db;
         }
         async post(content, isPublic = true, image, parentId, parentUserId, expiresAt) {
           if (content.length > DEFAULTS.MAX_POST_LENGTH) {
@@ -98342,7 +98918,6 @@ ${toHex(hashedRequest)}`;
           }
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
           const id = env.generateId(12);
           const timestamp = Date.now();
           const userId = this.db.getConfig().paths.userId;
@@ -98351,85 +98926,64 @@ ${toHex(hashedRequest)}`;
             imagePath = await this.db.saveBlob(image, isPublic);
           }
           const sql = "INSERT INTO posts (id, content, timestamp, userId, image, parentId, parentUserId, isEdited, isDeleted, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, ?)";
-          db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run(sql, [id, content, timestamp, userId, imagePath, parentId || null, parentUserId || null, expiresAt ?? null]);
+          }, { save: true, emitUpdate: true });
         }
         async editPost(postId, date2, newContent, isPublic = true) {
           const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run("UPDATE posts SET content = ?, isEdited = 1, timestamp = ? WHERE id = ?", [newContent, Date.now(), postId]);
+          }, { save: true, emitUpdate: true });
         }
         async deletePost(postId, date2, isPublic = true) {
           const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
-          db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+          }, { save: true, emitUpdate: true });
           await this.compactDatabase(date2, isPublic, false).catch(() => {
           });
         }
         async like(postId, isPublic = true) {
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const type = isPublic ? "public" : "private";
-          const db = await this.getDb(date2, type);
           const userId = this.db.getConfig().paths.userId;
           const timestamp = Date.now();
-          db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
-          const binary = db.export();
-          const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          await this.db.getStorage().saveFile(dbPath, binary);
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
+          await this.dailyDb.withDailyDatabase(date2, type, (db) => {
+            db.run("INSERT OR REPLACE INTO likes (postId, userId, timestamp) VALUES (?, ?, ?)", [postId, userId, timestamp]);
+          }, { save: true, emitUpdate: true });
         }
         async comment(parentId, parentUserId, content, image) {
           await this.post(content, true, image, parentId, parentUserId);
         }
         async getPosts(date2, type) {
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          let allPosts = [];
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const data = await this.db.getStorage().getFile(dbPath);
-          if (data) {
-            const db = new sqliteInstance.Database(data);
-            try {
-              const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
-              if (res && res.length > 0) {
-                const columns = res[0].columns;
-                const now = Date.now();
-                const posts = res[0].values.map((row) => {
-                  const post = {};
-                  columns.forEach((col, i2) => {
-                    let val = row[i2];
-                    if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
-                      val = !!val;
-                    }
-                    post[col] = val;
-                  });
-                  if (!post.userId && type === "followed") {
-                    post.userId = date2.split("/")[0];
-                  }
-                  return post;
-                }).filter((p2) => !p2.expiresAt || p2.expiresAt > now);
-                allPosts.push(...posts);
-              }
-            } catch (e2) {
-            }
-            db.close();
+          if (!await this.dailyDb.exists(dbPath)) {
+            return [];
           }
+          let allPosts = [];
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const res = db.exec("SELECT * FROM posts ORDER BY timestamp DESC");
+            if (res && res.length > 0) {
+              const columns = res[0].columns;
+              const now = Date.now();
+              const posts = res[0].values.map((row) => {
+                const post = {};
+                columns.forEach((col, i2) => {
+                  let val = row[i2];
+                  if ((col === "isEdited" || col === "isDeleted") && typeof val === "number") {
+                    val = !!val;
+                  }
+                  post[col] = val;
+                });
+                if (!post.userId && type === "followed") {
+                  post.userId = date2.split("/")[0];
+                }
+                return post;
+              }).filter((p2) => !p2.expiresAt || p2.expiresAt > now);
+              allPosts.push(...posts);
+            }
+          }, { applySchema: true });
           return allPosts;
         }
         /**
@@ -98475,15 +99029,10 @@ ${toHex(hashedRequest)}`;
         async cleanupExpired(date2, isPublic = true) {
           const type = isPublic ? "public" : "private";
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          const data = await this.db.getStorage().getFile(dbPath);
-          if (!data) return 0;
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const db = new sqliteInstance.Database(data);
+          if (!await this.dailyDb.exists(dbPath)) return 0;
           const now = Date.now();
-          let deletedCount = 0;
-          try {
+          return await this.dailyDb.withDatabase(dbPath, (db) => {
+            let deletedCount = 0;
             const countRes = db.exec("SELECT COUNT(*) FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
             if (countRes && countRes.length > 0 && countRes[0].values[0]) {
               deletedCount = Number(countRes[0].values[0][0]);
@@ -98491,14 +99040,9 @@ ${toHex(hashedRequest)}`;
             if (deletedCount > 0) {
               db.run("DELETE FROM posts WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
               db.run("VACUUM");
-              const binary = db.export();
-              await this.db.getStorage().saveFile(dbPath, binary);
-              this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
             }
-          } finally {
-            db.close();
-          }
-          return deletedCount;
+            return deletedCount;
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
         }
         /**
          * Compacts feed SQLite databases by permanently purging deleted/tombstoned/expired posts
@@ -98508,20 +99052,16 @@ ${toHex(hashedRequest)}`;
         async compactDatabase(date2, isPublic = true, force = false) {
           const type = isPublic ? "public" : "private";
           const dbPath = this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-          const data = await this.db.getStorage().getFile(dbPath);
-          if (!data) {
+          if (!await this.dailyDb.exists(dbPath)) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
           }
-          const originalSize = data.byteLength;
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const db = new sqliteInstance.Database(data);
+          const data = await this.db.getStorage().getFile(dbPath);
+          const originalSize = data ? data.byteLength : 0;
           const now = Date.now();
           let compacted = false;
           let newSize = originalSize;
           let tombstoneRatio = 0;
-          try {
+          await this.dailyDb.withDatabase(dbPath, (db) => {
             const totalRes = db.exec("SELECT COUNT(*) FROM posts");
             const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
             const tombstoneRes = db.exec("SELECT COUNT(*) FROM posts WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
@@ -98532,13 +99072,9 @@ ${toHex(hashedRequest)}`;
               db.run("VACUUM");
               const compactedBinary = db.export();
               newSize = compactedBinary.byteLength;
-              await this.db.getStorage().saveFile(dbPath, compactedBinary);
-              this.db.emit(`${this.MODULE_NAME}:update`, { path: dbPath });
               compacted = true;
             }
-          } finally {
-            db.close();
-          }
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
           return {
             compacted,
             originalSize,
@@ -98563,15 +99099,10 @@ ${toHex(hashedRequest)}`;
             d2.setUTCDate(d2.getUTCDate() - i2);
             dates.push(d2.toISOString().split("T")[0]);
           }
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           const processDb = async (date2, type) => {
             const dbPath = type === "followed" ? this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, "followed") : this.db.getModulePath(this.MODULE_NAME, `${date2}.db`, type);
-            const data = await this.db.getStorage().getFile(dbPath);
-            if (!data) return;
-            const db = new sqliteInstance.Database(data);
-            try {
+            if (!await this.dailyDb.exists(dbPath)) return;
+            await this.dailyDb.withDatabase(dbPath, (db) => {
               const tableCheck = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='likes'");
               if (tableCheck.length > 0) {
                 const res = db.exec("SELECT postId, userId FROM likes");
@@ -98587,9 +99118,7 @@ ${toHex(hashedRequest)}`;
                   }
                 }
               }
-            } catch (e2) {
-            }
-            db.close();
+            }, { applySchema: true });
           };
           for (const date2 of dates) await processDb(date2, "public");
           for (const user of following) {
@@ -98608,67 +99137,72 @@ ${toHex(hashedRequest)}`;
             }
           }
           const date2 = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const db = await this.getDb(date2, "group", groupId, sharedKey);
           const id = env.generateId(12);
           const timestamp = Date.now();
           let imagePath = null;
           if (image) {
             imagePath = await this.db.saveBlob(image, true);
           }
-          const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
-          db.run(sql, [id, content, timestamp, userId, imagePath, type]);
-          const binary = db.export();
           const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const encrypted = await this.db.encrypt(binary, sharedKey);
-          await this.db.getStorage().saveFile(dbPath, encrypted);
-          db.close();
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = "INSERT INTO posts (id, content, timestamp, userId, image, isEdited, isDeleted, type) VALUES (?, ?, ?, ?, ?, 0, 0, ?)";
+            db.run(sql, [id, content, timestamp, userId, imagePath, type]);
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
           this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async editGroupPost(groupId, sharedKey, postId, date2, newContent) {
-          const db = await this.getDb(date2, "group", groupId, sharedKey);
-          const userId = this.db.getConfig().paths.userId;
-          const sql = `
-            INSERT OR REPLACE INTO posts 
-            (id, content, timestamp, userId, isEdited, isDeleted) 
-            VALUES (?, ?, ?, ?, 1, 0)
-        `;
-          db.run(sql, [postId, newContent, Date.now(), userId]);
-          const binary = db.export();
           const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const encrypted = await this.db.encrypt(binary, sharedKey);
-          await this.db.getStorage().saveFile(dbPath, encrypted);
-          db.close();
+          const userId = this.db.getConfig().paths.userId;
+          await this.dailyDb.withDatabase(dbPath, (db) => {
+            const sql = `
+                INSERT OR REPLACE INTO posts 
+                (id, content, timestamp, userId, isEdited, isDeleted) 
+                VALUES (?, ?, ?, ?, 1, 0)
+            `;
+            db.run(sql, [postId, newContent, Date.now(), userId]);
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
           this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async deleteGroupPost(groupId, sharedKey, postId, date2, authorId) {
           const myId = this.db.getConfig().paths.userId;
-          const db = await this.getDb(date2, "group", groupId, sharedKey);
-          if (authorId === myId) {
-            db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
-          } else {
-            const groups = await this.db.getGroups();
-            const group3 = groups.find((g2) => g2.id === groupId);
-            const member2 = group3?.members.find((m2) => m2.userId === myId);
-            const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
-            if (!canModerate) {
-              db.close();
-              throw new ModuleError("feed", `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
-            }
-            db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
-            db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
-          }
-          const binary = db.export();
           const dbPath = `public/groups/${groupId}/${date2}.db`;
-          const encrypted = await this.db.encrypt(binary, sharedKey);
-          await this.db.getStorage().saveFile(dbPath, encrypted);
-          db.close();
+          await this.dailyDb.withDatabase(dbPath, async (db) => {
+            if (authorId === myId) {
+              db.run('UPDATE posts SET content = "", image = NULL, isDeleted = 1, timestamp = ? WHERE id = ?', [Date.now(), postId]);
+            } else {
+              const groups = await this.db.getGroups();
+              const group3 = groups.find((g2) => g2.id === groupId);
+              const member2 = group3?.members.find((m2) => m2.userId === myId);
+              const canModerate = member2?.role === "owner" || member2?.role === "admin" || member2?.permissions?.canModerate === true;
+              if (!canModerate) {
+                throw new ModuleError("feed", `Permission denied: User ${myId} does not have moderation permission in group ${groupId}`);
+              }
+              db.run("CREATE TABLE IF NOT EXISTS moderation (targetId TEXT PRIMARY KEY, action TEXT, timestamp INTEGER)");
+              db.run("INSERT OR REPLACE INTO moderation (targetId, action, timestamp) VALUES (?, ?, ?)", [postId, "delete", Date.now()]);
+            }
+          }, {
+            save: true,
+            encryptKey: sharedKey,
+            decryptKey: sharedKey,
+            applySchema: true,
+            emitUpdate: true
+          });
           this.db.emit(`group:${groupId}:update`, { path: dbPath });
         }
         async getGroupPosts(groupId, date2) {
           const deletedPostIds = /* @__PURE__ */ new Set();
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("feed", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           const groups = await this.db.getGroups();
           const group3 = groups.find((g2) => g2.id === groupId);
           if (!group3) return [];
@@ -98684,6 +99218,7 @@ ${toHex(hashedRequest)}`;
                 });
               }
             } catch (e2) {
+              Logger.warn("Feed", `Failed to process moderation entries for member ${memberId}: ${e2.message}`);
             }
           };
           const postsMap = /* @__PURE__ */ new Map();
@@ -98710,33 +99245,24 @@ ${toHex(hashedRequest)}`;
                 });
               }
             } catch (e2) {
+              Logger.warn("Feed", `Failed to process group posts: ${e2.message}`);
             }
           };
           const myPath = `public/groups/${groupId}/${date2}.db`;
-          const myData = await this.db.getStorage().getFile(myPath);
-          if (myData) {
-            try {
-              const decrypted = await this.db.decrypt(myData, group3.sharedKey);
-              const db = new sqliteInstance.Database(decrypted);
+          if (await this.dailyDb.exists(myPath)) {
+            await this.dailyDb.withDatabase(myPath, async (db) => {
               processModeration(db, this.db.getConfig().paths.userId);
               await processPosts(db);
-              db.close();
-            } catch (e2) {
-            }
+            }, { decryptKey: group3.sharedKey, applySchema: true });
           }
           for (const member2 of group3.members) {
             if (member2.userId === this.db.getConfig().paths.userId) continue;
             const memberPath = `followed/${member2.userId}/groups/${groupId}/${date2}.db`;
-            const memberData = await this.db.getStorage().getFile(memberPath);
-            if (memberData) {
-              try {
-                const decrypted = await this.db.decrypt(memberData, group3.sharedKey);
-                const db = new sqliteInstance.Database(decrypted);
+            if (await this.dailyDb.exists(memberPath)) {
+              await this.dailyDb.withDatabase(memberPath, async (db) => {
                 processModeration(db, member2.userId);
                 await processPosts(db);
-                db.close();
-              } catch (e2) {
-              }
+              }, { decryptKey: group3.sharedKey, applySchema: true });
             }
           }
           const posts = Array.from(postsMap.values());
@@ -98748,15 +99274,16 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Messaging.ts
-  var import_polyfills693, MessagingModule;
+  var import_polyfills694, MessagingModule;
   var init_Messaging = __esm({
     "src/modules/Messaging.ts"() {
       "use strict";
-      import_polyfills693 = __toESM(require_polyfills());
+      import_polyfills694 = __toESM(require_polyfills());
       init_Logger();
       init_Environment();
       init_Errors();
       init_Constants();
+      init_DailyDatabase();
       MessagingModule = class {
         constructor(db) {
           this.db = db;
@@ -98786,46 +99313,19 @@ ${toHex(hashedRequest)}`;
               {
                 version: 3,
                 sql: ["ALTER TABLE messages ADD COLUMN expiresAt INTEGER DEFAULT NULL;"]
+              },
+              {
+                version: 4,
+                sql: ["ALTER TABLE messages ADD COLUMN localImage TEXT DEFAULT NULL;"]
+              },
+              {
+                version: 5,
+                sql: ["ALTER TABLE messages ADD COLUMN imageEphemeralPk TEXT DEFAULT NULL;"]
               }
             ]
           });
+          this.dailyDb = this.db.getDailyDatabase(this.MODULE_NAME, { debounceMs: 500 });
           this.db.registerModuleInstance(this);
-        }
-        async getMessageDb(date2, type) {
-          const path2 = this.db.getModulePath(this.MODULE_NAME, `dms/${type}/${date2}.db`, "private");
-          const data = await this.db.getStorage().getFile(path2);
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          let db;
-          try {
-            db = new sqliteInstance.Database(data || void 0);
-          } catch (e2) {
-            if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
-              Logger.error("Messaging", `Database corruption detected at ${path2}. Deleting.`);
-              await this.db.getStorage().deleteFile(path2);
-              db = new sqliteInstance.Database();
-            } else {
-              throw e2;
-            }
-          }
-          this.db.applyModuleSchema(db, this.MODULE_NAME);
-          return db;
-        }
-        async getReceiptsDb(userId, date2, type) {
-          const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${userId}/${date2}.db`, type);
-          const data = await this.db.getStorage().getFile(path2);
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          let db;
-          try {
-            db = new sqliteInstance.Database(data || void 0);
-          } catch (e2) {
-            db = new sqliteInstance.Database();
-          }
-          db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
-          return db;
         }
         /**
          * Send a direct encrypted message to a recipient.
@@ -98842,65 +99342,80 @@ ${toHex(hashedRequest)}`;
           const id = env.generateId(12);
           const timestamp = Date.now();
           const senderId = this.db.getConfig().paths.userId;
-          let imagePath = null;
-          if (image) {
-            imagePath = await this.db.saveBlob(image, true);
-          }
-          const message = { id, content, timestamp, senderId, recipientId, image: imagePath || void 0, isEdited: false, isDeleted: false, status: "sent", expiresAt };
-          await this._saveAndSendDM(recipientId, message, date2);
+          const message = { id, content, timestamp, senderId, recipientId, isEdited: false, isDeleted: false, status: "sent", expiresAt };
+          await this._saveAndSendDM(recipientId, message, date2, image);
         }
-        async _saveAndSendDM(recipientId, message, date2) {
-          const outboxDb = await this.getMessageDb(date2, "outbox");
-          outboxDb.run(
-            "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [message.id, message.content, message.timestamp, message.senderId, message.recipientId, message.image || null, message.isEdited ? 1 : 0, message.isDeleted ? 1 : 0, message.status || "sent", message.expiresAt ?? null]
-          );
-          const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-          await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
-          outboxDb.close();
-          const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date2}.db`, "public");
-          const publicDmData = await this.db.getStorage().getFile(publicDmPath);
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          let publicDb;
-          try {
-            publicDb = new sqliteInstance.Database(publicDmData || void 0);
-          } catch (e2) {
-            publicDb = new sqliteInstance.Database();
-          }
-          publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
-          try {
-            publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
-          } catch (e2) {
-          }
+        async _saveAndSendDM(recipientId, message, date2, image) {
           const registry = await this.db.getPublicRegistry();
           let recipient = registry.find((u2) => u2.userId === recipientId);
           if (!recipient) {
             const following = await this.db.getFollowing();
             const f2 = following.find((u2) => u2.userId === recipientId);
-            if (f2 && f2.publicKey) {
-              recipient = { userId: f2.userId, publicKey: f2.publicKey };
-            }
+            if (f2?.publicKey) recipient = { userId: f2.userId, publicKey: f2.publicKey };
           }
-          if (!recipient || !recipient.publicKey) throw new AuthError("Recipient public key not found");
+          if (!recipient?.publicKey) throw new AuthError("Recipient public key not found");
           const { ephemeralPublicKey, sharedSecret } = this.db.deriveEphemeralSharedSecret(recipient.publicKey);
-          const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(message)), sharedSecret);
-          publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)", [message.id, encrypted, ephemeralPublicKey]);
-          await this.db.getStorage().saveFile(publicDmPath, publicDb.export());
-          publicDb.close();
+          let outgoing = { ...message };
+          let localImage;
+          if (image?.byteLength) {
+            const encryptedImage = await this.db.encrypt(image, sharedSecret);
+            outgoing.image = await this.db.saveBlob(encryptedImage, true);
+            outgoing.imageEncryption = { version: 1, ephemeralPublicKey };
+            localImage = `private/dm-attachments/${env.generateId(32)}`;
+            await this.db.getStorage().saveFile(localImage, image);
+          }
+          const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
+          const localMessage = { ...outgoing, localImage: localImage || outgoing.localImage };
+          await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+            outboxDb.run(
+              "INSERT OR REPLACE INTO messages (id, content, timestamp, senderId, recipientId, image, isEdited, isDeleted, status, expiresAt, localImage, imageEphemeralPk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+              [localMessage.id, localMessage.content, localMessage.timestamp, localMessage.senderId, localMessage.recipientId, localMessage.image || null, localMessage.isEdited ? 1 : 0, localMessage.isDeleted ? 1 : 0, localMessage.status || "sent", localMessage.expiresAt ?? null, localMessage.localImage || null, localMessage.imageEncryption?.ephemeralPublicKey || null]
+            );
+          }, { save: true, emitUpdate: true, applySchema: true });
+          const publicDmPath = this.db.getModulePath(this.MODULE_NAME, `dms/${recipientId}/${date2}.db`, "public");
+          await this.dailyDb.withDatabase(publicDmPath, async (publicDb) => {
+            publicDb.exec(`CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, encrypted_data BLOB, ephemeral_pk TEXT);`);
+            try {
+              publicDb.exec(`ALTER TABLE messages ADD COLUMN ephemeral_pk TEXT;`);
+            } catch (e2) {
+              Logger.debug("Messaging", "Column ephemeral_pk already exists or alter table ignored");
+            }
+            const { localImage: _localOnly, ...wireMessage } = outgoing;
+            const encrypted = await this.db.encrypt(new TextEncoder().encode(JSON.stringify(wireMessage)), sharedSecret);
+            publicDb.run("INSERT OR REPLACE INTO messages (id, encrypted_data, ephemeral_pk) VALUES (?, ?, ?)", [message.id, encrypted, ephemeralPublicKey]);
+          }, { save: true, applySchema: false });
           this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
+        }
+        /** Loads a DM attachment and decrypts it on the recipient device. Legacy attachments remain readable. */
+        async getMessageImage(message) {
+          if (message.localImage) return this.db.getBlob(message.localImage);
+          const path2 = message.image;
+          if (!path2) return null;
+          const data = await this.db.getBlob(path2, message.senderId);
+          if (!data || !message.imageEncryption) return data;
+          if (message.imageEncryption.version !== 1 || !message.imageEncryption.ephemeralPublicKey) {
+            throw new AuthError("Unsupported encrypted DM attachment format");
+          }
+          const key = this.db.deriveRecipientSharedSecret(message.imageEncryption.ephemeralPublicKey);
+          return this.db.decrypt(data, key);
         }
         async editMessage(recipientId, messageId, date2, newContent) {
           const timestamp = Date.now();
           const senderId = this.db.getConfig().paths.userId;
-          const outboxDb = await this.getMessageDb(date2, "outbox");
-          const res = outboxDb.exec("SELECT image FROM messages WHERE id = ?", [messageId]);
+          const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
           let imagePath = null;
-          if (res && res.length > 0 && res[0].values.length > 0) {
-            imagePath = res[0].values[0][0];
+          let localImagePath = null;
+          let imageEphemeralPk = null;
+          if (await this.dailyDb.exists(outboxPath)) {
+            await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+              const res = outboxDb.exec("SELECT image, localImage, imageEphemeralPk FROM messages WHERE id = ?", [messageId]);
+              if (res && res.length > 0 && res[0].values.length > 0) {
+                imagePath = res[0].values[0][0];
+                localImagePath = res[0].values[0][1];
+                imageEphemeralPk = res[0].values[0][2];
+              }
+            }, { applySchema: true });
           }
-          outboxDb.close();
           const message = {
             id: messageId,
             content: newContent,
@@ -98908,6 +99423,8 @@ ${toHex(hashedRequest)}`;
             senderId,
             recipientId,
             image: imagePath || void 0,
+            localImage: localImagePath || void 0,
+            imageEncryption: imageEphemeralPk ? { version: 1, ephemeralPublicKey: imageEphemeralPk } : void 0,
             isEdited: true,
             isDeleted: false,
             status: "sent"
@@ -98933,59 +99450,54 @@ ${toHex(hashedRequest)}`;
           });
         }
         async markAsRead(senderId, messageId, date2) {
-          const db = await this.getReceiptsDb(senderId, date2, "public");
-          db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "read", Date.now()]);
           const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-          await this.db.getStorage().saveFile(path2, db.export());
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
+          await this.dailyDb.withDatabase(path2, (db) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "read", Date.now()]);
+          }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
         }
         async markBatchAsRead(senderId, messages) {
           const dates = [...new Set(messages.map((m2) => m2.date))];
           for (const date2 of dates) {
-            const db = await this.getReceiptsDb(senderId, date2, "public");
-            const msgsForDate = messages.filter((m2) => m2.date === date2);
-            for (const m2 of msgsForDate) {
-              db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "read", Date.now()]);
-            }
             const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-            await this.db.getStorage().saveFile(path2, db.export());
-            db.close();
-            this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
+            const msgsForDate = messages.filter((m2) => m2.date === date2);
+            await this.dailyDb.withDatabase(path2, (db) => {
+              db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+              for (const m2 of msgsForDate) {
+                db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "read", Date.now()]);
+              }
+            }, { save: true, emitUpdate: true, applySchema: false, immediate: true });
           }
         }
         async markAsDelivered(senderId, messageId, date2) {
-          const db = await this.getReceiptsDb(senderId, date2, "public");
-          const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [messageId]);
-          if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read") {
-            db.close();
-            return;
-          }
-          db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "delivered", Date.now()]);
           const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-          await this.db.getStorage().saveFile(path2, db.export());
-          db.close();
-          this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
+          await this.dailyDb.withDatabase(path2, (db) => {
+            db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+            const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [messageId]);
+            if (existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read") {
+              return false;
+            }
+            db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [messageId, "delivered", Date.now()]);
+            return true;
+          }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
         }
         async markBatchAsDelivered(senderId, messages) {
           const dates = [...new Set(messages.map((m2) => m2.date))];
           for (const date2 of dates) {
-            const db = await this.getReceiptsDb(senderId, date2, "public");
+            const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
             const msgsForDate = messages.filter((m2) => m2.date === date2);
-            let changed = false;
-            for (const m2 of msgsForDate) {
-              const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [m2.id]);
-              if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read")) {
-                db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "delivered", Date.now()]);
-                changed = true;
+            await this.dailyDb.withDatabase(path2, (db) => {
+              db.exec(`CREATE TABLE IF NOT EXISTS receipts (messageId TEXT PRIMARY KEY, status TEXT, timestamp INTEGER);`);
+              let changed = false;
+              for (const m2 of msgsForDate) {
+                const existing = db.exec("SELECT status FROM receipts WHERE messageId = ?", [m2.id]);
+                if (!(existing && existing.length > 0 && existing[0].values.length > 0 && existing[0].values[0][0] === "read")) {
+                  db.run("INSERT OR REPLACE INTO receipts (messageId, status, timestamp) VALUES (?, ?, ?)", [m2.id, "delivered", Date.now()]);
+                  changed = true;
+                }
               }
-            }
-            if (changed) {
-              const path2 = this.db.getModulePath(this.MODULE_NAME, `receipts/${senderId}/${date2}.db`, "public");
-              await this.db.getStorage().saveFile(path2, db.export());
-              this.db.emit(`${this.MODULE_NAME}:update`, { path: path2 });
-            }
-            db.close();
+              return changed;
+            }, { save: (changed) => !!changed, emitUpdate: true, applySchema: false, immediate: true });
           }
         }
         /**
@@ -98993,29 +99505,20 @@ ${toHex(hashedRequest)}`;
          */
         async getMessageReceipt(messageId, date2) {
           const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-          const data = await this.db.getStorage().getFile(outboxPath);
-          if (!data) return null;
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const db = new sqliteInstance.Database(data);
-          try {
+          if (!await this.dailyDb.exists(outboxPath)) return null;
+          return await this.dailyDb.withDatabase(outboxPath, (db) => {
             const res = db.exec("SELECT status FROM messages WHERE id = ?", [messageId]);
             if (res && res.length > 0 && res[0].values.length > 0) {
               return res[0].values[0][0] || "sent";
             }
             return null;
-          } finally {
-            db.close();
-          }
+          }, { applySchema: true });
         }
         async getInboxMessages(days = 5) {
           const messages = [];
           const following = await this.db.getFollowing();
           const myId = this.db.getConfig().paths.userId;
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
+          const sqliteInstance = await DailyDatabase.getSqliteInstance();
           const dates = [];
           for (let i2 = -1; i2 < days; i2++) {
             const d2 = /* @__PURE__ */ new Date();
@@ -99031,22 +99534,22 @@ ${toHex(hashedRequest)}`;
                 try {
                   const res = rdb.exec("SELECT messageId, status FROM receipts");
                   if (res && res.length > 0) {
-                    const outboxDb = await this.getMessageDb(date2, "outbox");
-                    for (const row of res[0].values) {
-                      const [mid, status] = row;
-                      outboxDb.run(`
-                                    UPDATE messages SET status = ? 
-                                    WHERE id = ? AND (
-                                        (status = 'sent' AND ? IN ('delivered', 'read')) OR
-                                        (status = 'delivered' AND ? = 'read')
-                                    )
-                                `, [status, mid, status, status]);
-                    }
                     const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-                    await this.db.getStorage().saveFile(outboxPath, outboxDb.export());
-                    outboxDb.close();
+                    await this.dailyDb.withDatabase(outboxPath, (outboxDb) => {
+                      for (const row of res[0].values) {
+                        const [mid, status] = row;
+                        outboxDb.run(`
+                                        UPDATE messages SET status = ? 
+                                        WHERE id = ? AND (
+                                            (status = 'sent' AND ? IN ('delivered', 'read')) OR
+                                            (status = 'delivered' AND ? = 'read')
+                                        )
+                                    `, [status, mid, status, status]);
+                      }
+                    }, { save: true, emitUpdate: true, applySchema: true });
                   }
                 } catch (e2) {
+                  Logger.warn("Messaging", `Failed to apply receipt update from ${user.userId}: ${e2.message}`);
                 }
                 rdb.close();
               }
@@ -99068,6 +99571,7 @@ ${toHex(hashedRequest)}`;
                       hasEphemeralCol = tableInfo[0].values.some((col) => col[1] === "ephemeral_pk");
                     }
                   } catch (e2) {
+                    Logger.debug("Messaging", `PRAGMA table_info check failed: ${e2.message}`);
                   }
                   const query = hasEphemeralCol ? "SELECT encrypted_data, ephemeral_pk FROM messages" : "SELECT encrypted_data FROM messages";
                   const res = db.exec(query);
@@ -99083,18 +99587,21 @@ ${toHex(hashedRequest)}`;
                             const sharedSecretV3 = this.db.deriveRecipientSharedSecret(ephemeralPk);
                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV3);
                           } catch (e2) {
+                            Logger.debug("Messaging", `V3 ephemeral decrypt failed: ${e2.message}`);
                           }
                         }
                         if (!decrypted) {
                           try {
                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV2);
                           } catch (e2) {
+                            Logger.debug("Messaging", `V2 static HKDF decrypt failed: ${e2.message}`);
                           }
                         }
                         if (!decrypted) {
                           try {
                             decrypted = await this.db.decrypt(encryptedData, sharedSecretV1);
                           } catch (e2) {
+                            Logger.debug("Messaging", `V1 raw legacy decrypt failed: ${e2.message}`);
                           }
                         }
                         if (decrypted) {
@@ -99105,6 +99612,7 @@ ${toHex(hashedRequest)}`;
                           newMsgsForUser.push(parsed);
                         }
                       } catch (e2) {
+                        Logger.warn("Messaging", `Failed to decrypt/parse message: ${e2.message}`);
                       }
                     }
                     if (newMsgsForUser.length > 0) {
@@ -99115,6 +99623,7 @@ ${toHex(hashedRequest)}`;
                     }
                   }
                 } catch (e2) {
+                  Logger.warn("Messaging", `Failed to process incoming DM SQLite db from ${user.userId}: ${e2.message}`);
                 }
                 db.close();
               }
@@ -99122,12 +99631,10 @@ ${toHex(hashedRequest)}`;
           }
           for (const date2 of dates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-            const data = await this.db.getStorage().getFile(outboxPath);
-            if (data) {
-              const db = new sqliteInstance.Database(data);
-              try {
+            if (await this.dailyDb.exists(outboxPath)) {
+              await this.dailyDb.withDatabase(outboxPath, (db) => {
                 const res = db.exec("SELECT * FROM messages");
-                if (res && res.length > 0) {
+                if (res && res.length > 0 && res[0].values && res[0].columns) {
                   const columns = res[0].columns;
                   const myMsgs = res[0].values.map((row) => {
                     const msg = {};
@@ -99138,13 +99645,15 @@ ${toHex(hashedRequest)}`;
                       }
                       msg[col] = val;
                     });
+                    if (msg.imageEphemeralPk) {
+                      msg.imageEncryption = { version: 1, ephemeralPublicKey: msg.imageEphemeralPk };
+                      delete msg.imageEphemeralPk;
+                    }
                     return msg;
                   });
                   messages.push(...myMsgs);
                 }
-              } catch (e2) {
-              }
-              db.close();
+              }, { applySchema: true });
             }
           }
           const now = Date.now();
@@ -99169,28 +99678,22 @@ ${toHex(hashedRequest)}`;
           const targetDates = dates && dates.length > 0 ? dates : [(/* @__PURE__ */ new Date()).toISOString().split("T")[0]];
           let deleted = 0;
           const now = Date.now();
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
           for (const date2 of targetDates) {
             const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${date2}.db`, "private");
-            const data = await this.db.getStorage().getFile(outboxPath);
-            if (data) {
-              const db = new sqliteInstance.Database(data);
-              try {
+            if (await this.dailyDb.exists(outboxPath)) {
+              const count = await this.dailyDb.withDatabase(outboxPath, (db) => {
                 const countRes = db.exec("SELECT COUNT(*) FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
+                let c2 = 0;
                 if (countRes && countRes.length > 0 && countRes[0].values[0]) {
-                  const count = Number(countRes[0].values[0][0]);
-                  if (count > 0) {
+                  c2 = Number(countRes[0].values[0][0]);
+                  if (c2 > 0) {
                     db.run("DELETE FROM messages WHERE expiresAt IS NOT NULL AND expiresAt <= ?", [now]);
                     db.run("VACUUM");
-                    await this.db.getStorage().saveFile(outboxPath, db.export());
-                    deleted += count;
                   }
                 }
-              } finally {
-                db.close();
-              }
+                return c2;
+              }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
+              deleted += count;
             }
           }
           return deleted;
@@ -99203,20 +99706,16 @@ ${toHex(hashedRequest)}`;
         async compactDatabase(date2, force = false) {
           const targetDate = date2 || (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
           const outboxPath = this.db.getModulePath(this.MODULE_NAME, `dms/outbox/${targetDate}.db`, "private");
-          const data = await this.db.getStorage().getFile(outboxPath);
-          if (!data) {
+          if (!await this.dailyDb.exists(outboxPath)) {
             return { compacted: false, originalSize: 0, newSize: 0, freedBytes: 0, tombstoneRatio: 0 };
           }
-          const originalSize = data.byteLength;
-          const initSqlJs = env.getSqlJs();
-          if (!initSqlJs) throw new ModuleError("messaging", "sql.js not loaded");
-          const sqliteInstance = await initSqlJs(env.getSqlConfig() || {});
-          const db = new sqliteInstance.Database(data);
+          const data = await this.db.getStorage().getFile(outboxPath);
+          const originalSize = data ? data.byteLength : 0;
           const now = Date.now();
           let compacted = false;
           let newSize = originalSize;
           let tombstoneRatio = 0;
-          try {
+          await this.dailyDb.withDatabase(outboxPath, (db) => {
             const totalRes = db.exec("SELECT COUNT(*) FROM messages");
             const total = totalRes && totalRes.length > 0 && totalRes[0].values[0] ? Number(totalRes[0].values[0][0]) : 0;
             const tombstoneRes = db.exec("SELECT COUNT(*) FROM messages WHERE isDeleted = 1 OR (expiresAt IS NOT NULL AND expiresAt <= ?)", [now]);
@@ -99227,13 +99726,9 @@ ${toHex(hashedRequest)}`;
               db.run("VACUUM");
               const compactedBinary = db.export();
               newSize = compactedBinary.byteLength;
-              await this.db.getStorage().saveFile(outboxPath, compactedBinary);
-              this.db.emit(`${this.MODULE_NAME}:update`, { path: outboxPath });
               compacted = true;
             }
-          } finally {
-            db.close();
-          }
+          }, { save: true, emitUpdate: true, applySchema: true, immediate: true });
           return {
             compacted,
             originalSize,
@@ -99246,21 +99741,21 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/jimp/dist/browser/index.js
+  // ../../node_modules/jimp/dist/browser/index.js
   var browser_exports = {};
-  var import_polyfills694;
+  var import_polyfills695;
   var init_browser = __esm({
-    "node_modules/jimp/dist/browser/index.js"() {
-      import_polyfills694 = __toESM(require_polyfills(), 1);
+    "../../node_modules/jimp/dist/browser/index.js"() {
+      import_polyfills695 = __toESM(require_polyfills(), 1);
     }
   });
 
   // src/utils/MediaUtils.ts
-  var import_polyfills695, MediaUtils;
+  var import_polyfills696, MediaUtils;
   var init_MediaUtils = __esm({
     "src/utils/MediaUtils.ts"() {
       "use strict";
-      import_polyfills695 = __toESM(require_polyfills());
+      import_polyfills696 = __toESM(require_polyfills());
       init_Logger();
       init_Errors();
       MediaUtils = class {
@@ -99363,11 +99858,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/modules/Profile.ts
-  var import_polyfills696, ProfileModule;
+  var import_polyfills697, ProfileModule;
   var init_Profile = __esm({
     "src/modules/Profile.ts"() {
       "use strict";
-      import_polyfills696 = __toESM(require_polyfills());
+      import_polyfills697 = __toESM(require_polyfills());
       init_Logger();
       init_MediaUtils();
       init_Constants();
@@ -99480,20 +99975,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/can-promise.js
+  // ../../node_modules/qrcode/lib/can-promise.js
   var require_can_promise = __commonJS({
-    "node_modules/qrcode/lib/can-promise.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/can-promise.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       module.exports = function() {
         return typeof Promise === "function" && Promise.prototype && Promise.prototype.then;
       };
     }
   });
 
-  // node_modules/qrcode/lib/core/utils.js
+  // ../../node_modules/qrcode/lib/core/utils.js
   var require_utils5 = __commonJS({
-    "node_modules/qrcode/lib/core/utils.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/utils.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var toSJISFunction;
       var CODEWORDS_COUNT = [
         0,
@@ -99570,10 +100065,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/error-correction-level.js
+  // ../../node_modules/qrcode/lib/core/error-correction-level.js
   var require_error_correction_level = __commonJS({
-    "node_modules/qrcode/lib/core/error-correction-level.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/error-correction-level.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.L = { bit: 1 };
       exports.M = { bit: 0 };
       exports.Q = { bit: 3 };
@@ -99616,10 +100111,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/bit-buffer.js
+  // ../../node_modules/qrcode/lib/core/bit-buffer.js
   var require_bit_buffer = __commonJS({
-    "node_modules/qrcode/lib/core/bit-buffer.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/bit-buffer.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       function BitBuffer() {
         this.buffer = [];
         this.length = 0;
@@ -99652,10 +100147,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/bit-matrix.js
+  // ../../node_modules/qrcode/lib/core/bit-matrix.js
   var require_bit_matrix = __commonJS({
-    "node_modules/qrcode/lib/core/bit-matrix.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/bit-matrix.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       function BitMatrix(size) {
         if (!size || size < 1) {
           throw new Error("BitMatrix size must be defined and greater than 0");
@@ -99682,10 +100177,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/alignment-pattern.js
+  // ../../node_modules/qrcode/lib/core/alignment-pattern.js
   var require_alignment_pattern = __commonJS({
-    "node_modules/qrcode/lib/core/alignment-pattern.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/alignment-pattern.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var getSymbolSize = require_utils5().getSymbolSize;
       exports.getRowColCoords = function getRowColCoords(version) {
         if (version === 1) return [];
@@ -99718,10 +100213,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/finder-pattern.js
+  // ../../node_modules/qrcode/lib/core/finder-pattern.js
   var require_finder_pattern = __commonJS({
-    "node_modules/qrcode/lib/core/finder-pattern.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/finder-pattern.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var getSymbolSize = require_utils5().getSymbolSize;
       var FINDER_PATTERN_SIZE = 7;
       exports.getPositions = function getPositions(version) {
@@ -99738,10 +100233,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/mask-pattern.js
+  // ../../node_modules/qrcode/lib/core/mask-pattern.js
   var require_mask_pattern = __commonJS({
-    "node_modules/qrcode/lib/core/mask-pattern.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/mask-pattern.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.Patterns = {
         PATTERN000: 0,
         PATTERN001: 1,
@@ -99881,10 +100376,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/error-correction-code.js
+  // ../../node_modules/qrcode/lib/core/error-correction-code.js
   var require_error_correction_code = __commonJS({
-    "node_modules/qrcode/lib/core/error-correction-code.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/error-correction-code.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var ECLevel = require_error_correction_level();
       var EC_BLOCKS_TABLE = [
         // L  M  Q  H
@@ -100243,10 +100738,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/galois-field.js
+  // ../../node_modules/qrcode/lib/core/galois-field.js
   var require_galois_field = __commonJS({
-    "node_modules/qrcode/lib/core/galois-field.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/galois-field.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var EXP_TABLE = new Uint8Array(512);
       var LOG_TABLE = new Uint8Array(256);
       (function initTables() {
@@ -100277,10 +100772,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/polynomial.js
+  // ../../node_modules/qrcode/lib/core/polynomial.js
   var require_polynomial = __commonJS({
-    "node_modules/qrcode/lib/core/polynomial.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/polynomial.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var GF = require_galois_field();
       exports.mul = function mul(p1, p2) {
         const coeff = new Uint8Array(p1.length + p2.length - 1);
@@ -100314,10 +100809,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/reed-solomon-encoder.js
+  // ../../node_modules/qrcode/lib/core/reed-solomon-encoder.js
   var require_reed_solomon_encoder = __commonJS({
-    "node_modules/qrcode/lib/core/reed-solomon-encoder.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/reed-solomon-encoder.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Polynomial = require_polynomial();
       function ReedSolomonEncoder(degree) {
         this.genPoly = void 0;
@@ -100347,20 +100842,20 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/version-check.js
+  // ../../node_modules/qrcode/lib/core/version-check.js
   var require_version_check = __commonJS({
-    "node_modules/qrcode/lib/core/version-check.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/version-check.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       exports.isValid = function isValid(version) {
         return !isNaN(version) && version >= 1 && version <= 40;
       };
     }
   });
 
-  // node_modules/qrcode/lib/core/regex.js
+  // ../../node_modules/qrcode/lib/core/regex.js
   var require_regex = __commonJS({
-    "node_modules/qrcode/lib/core/regex.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/regex.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var numeric = "[0-9]+";
       var alphanumeric = "[A-Z $%*+\\-./:]+";
       var kanji = "(?:[u3000-u303F]|[u3040-u309F]|[u30A0-u30FF]|[uFF00-uFFEF]|[u4E00-u9FAF]|[u2605-u2606]|[u2190-u2195]|u203B|[u2010u2015u2018u2019u2025u2026u201Cu201Du2225u2260]|[u0391-u0451]|[u00A7u00A8u00B1u00B4u00D7u00F7])+";
@@ -100386,10 +100881,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/mode.js
+  // ../../node_modules/qrcode/lib/core/mode.js
   var require_mode = __commonJS({
-    "node_modules/qrcode/lib/core/mode.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/mode.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var VersionCheck = require_version_check();
       var Regex = require_regex();
       exports.NUMERIC = {
@@ -100468,10 +100963,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/version.js
+  // ../../node_modules/qrcode/lib/core/version.js
   var require_version = __commonJS({
-    "node_modules/qrcode/lib/core/version.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/version.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var ECCode = require_error_correction_code();
       var ECLevel = require_error_correction_level();
@@ -100564,10 +101059,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/format-info.js
+  // ../../node_modules/qrcode/lib/core/format-info.js
   var require_format_info = __commonJS({
-    "node_modules/qrcode/lib/core/format-info.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/format-info.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var G15 = 1 << 10 | 1 << 8 | 1 << 5 | 1 << 4 | 1 << 2 | 1 << 1 | 1 << 0;
       var G15_MASK = 1 << 14 | 1 << 12 | 1 << 10 | 1 << 4 | 1 << 1;
@@ -100583,10 +101078,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/numeric-data.js
+  // ../../node_modules/qrcode/lib/core/numeric-data.js
   var require_numeric_data = __commonJS({
-    "node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Mode = require_mode();
       function NumericData(data) {
         this.mode = Mode.NUMERIC;
@@ -100619,10 +101114,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/alphanumeric-data.js
+  // ../../node_modules/qrcode/lib/core/alphanumeric-data.js
   var require_alphanumeric_data = __commonJS({
-    "node_modules/qrcode/lib/core/alphanumeric-data.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/alphanumeric-data.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Mode = require_mode();
       var ALPHA_NUM_CHARS = [
         "0",
@@ -100699,10 +101194,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/byte-data.js
+  // ../../node_modules/qrcode/lib/core/byte-data.js
   var require_byte_data = __commonJS({
-    "node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Mode = require_mode();
       function ByteData(data) {
         this.mode = Mode.BYTE;
@@ -100730,10 +101225,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/kanji-data.js
+  // ../../node_modules/qrcode/lib/core/kanji-data.js
   var require_kanji_data = __commonJS({
-    "node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Mode = require_mode();
       var Utils = require_utils5();
       function KanjiData(data) {
@@ -100770,11 +101265,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/dijkstrajs/dijkstra.js
+  // ../../node_modules/dijkstrajs/dijkstra.js
   var require_dijkstra = __commonJS({
-    "node_modules/dijkstrajs/dijkstra.js"(exports, module) {
+    "../../node_modules/dijkstrajs/dijkstra.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var dijkstra = {
         single_source_shortest_paths: function(graph, s2, d2) {
           var predecessors = {};
@@ -100872,10 +101367,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/segments.js
+  // ../../node_modules/qrcode/lib/core/segments.js
   var require_segments = __commonJS({
-    "node_modules/qrcode/lib/core/segments.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/segments.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Mode = require_mode();
       var NumericData = require_numeric_data();
       var AlphanumericData = require_alphanumeric_data();
@@ -101059,10 +101554,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/core/qrcode.js
+  // ../../node_modules/qrcode/lib/core/qrcode.js
   var require_qrcode = __commonJS({
-    "node_modules/qrcode/lib/core/qrcode.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/core/qrcode.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var ECLevel = require_error_correction_level();
       var BitBuffer = require_bit_buffer();
@@ -101321,10 +101816,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/renderer/utils.js
+  // ../../node_modules/qrcode/lib/renderer/utils.js
   var require_utils6 = __commonJS({
-    "node_modules/qrcode/lib/renderer/utils.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/renderer/utils.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       function hex2rgba(hex) {
         if (typeof hex === "number") {
           hex = hex.toString();
@@ -101402,10 +101897,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/renderer/canvas.js
+  // ../../node_modules/qrcode/lib/renderer/canvas.js
   var require_canvas = __commonJS({
-    "node_modules/qrcode/lib/renderer/canvas.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/renderer/canvas.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Utils = require_utils6();
       function clearCanvas(ctx, canvas, size) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -101456,10 +101951,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/renderer/svg-tag.js
+  // ../../node_modules/qrcode/lib/renderer/svg-tag.js
   var require_svg_tag = __commonJS({
-    "node_modules/qrcode/lib/renderer/svg-tag.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/renderer/svg-tag.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var Utils = require_utils6();
       function getColorAttrib(color, attrib) {
         const alpha = color.a / 255;
@@ -101515,10 +102010,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/qrcode/lib/browser.js
+  // ../../node_modules/qrcode/lib/browser.js
   var require_browser14 = __commonJS({
-    "node_modules/qrcode/lib/browser.js"(exports) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/qrcode/lib/browser.js"(exports) {
+      var import_polyfills723 = __toESM(require_polyfills());
       var canPromise = require_can_promise();
       var QRCode2 = require_qrcode();
       var CanvasRenderer = require_canvas();
@@ -101586,7 +102081,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/core.js
+  // ../../node_modules/html5-qrcode/esm/core.js
   function isValidHtml5QrcodeSupportedFormats(format2) {
     return Object.values(Html5QrcodeSupportedFormats).includes(format2);
   }
@@ -101602,10 +102097,10 @@ ${toHex(hashedRequest)}`;
     }
     return value;
   }
-  var import_polyfills697, Html5QrcodeSupportedFormats, html5QrcodeSupportedFormatsTextMap, DecodedTextType, Html5QrcodeScanType, Html5QrcodeConstants, QrcodeResultFormat, Html5QrcodeResultFactory, Html5QrcodeErrorTypes, Html5QrcodeErrorFactory, BaseLoggger;
+  var import_polyfills698, Html5QrcodeSupportedFormats, html5QrcodeSupportedFormatsTextMap, DecodedTextType, Html5QrcodeScanType, Html5QrcodeConstants, QrcodeResultFormat, Html5QrcodeResultFactory, Html5QrcodeErrorTypes, Html5QrcodeErrorFactory, BaseLoggger;
   var init_core = __esm({
-    "node_modules/html5-qrcode/esm/core.js"() {
-      import_polyfills697 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/core.js"() {
+      import_polyfills698 = __toESM(require_polyfills());
       (function(Html5QrcodeSupportedFormats2) {
         Html5QrcodeSupportedFormats2[Html5QrcodeSupportedFormats2["QR_CODE"] = 0] = "QR_CODE";
         Html5QrcodeSupportedFormats2[Html5QrcodeSupportedFormats2["AZTEC"] = 1] = "AZTEC";
@@ -101749,11 +102244,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/strings.js
-  var import_polyfills698, Html5QrcodeStrings, Html5QrcodeScannerStrings, LibraryInfoStrings;
+  // ../../node_modules/html5-qrcode/esm/strings.js
+  var import_polyfills699, Html5QrcodeStrings, Html5QrcodeScannerStrings, LibraryInfoStrings;
   var init_strings = __esm({
-    "node_modules/html5-qrcode/esm/strings.js"() {
-      import_polyfills698 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/strings.js"() {
+      import_polyfills699 = __toESM(require_polyfills());
       Html5QrcodeStrings = (function() {
         function Html5QrcodeStrings2() {
         }
@@ -101889,11 +102384,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/utils.js
-  var import_polyfills699, VideoConstraintsUtil;
+  // ../../node_modules/html5-qrcode/esm/utils.js
+  var import_polyfills700, VideoConstraintsUtil;
   var init_utils4 = __esm({
-    "node_modules/html5-qrcode/esm/utils.js"() {
-      import_polyfills699 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/utils.js"() {
+      import_polyfills700 = __toESM(require_polyfills());
       VideoConstraintsUtil = (function() {
         function VideoConstraintsUtil2() {
         }
@@ -101929,10 +102424,10 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/third_party/zxing-js.umd.js
+  // ../../node_modules/html5-qrcode/third_party/zxing-js.umd.js
   var require_zxing_js_umd = __commonJS({
-    "node_modules/html5-qrcode/third_party/zxing-js.umd.js"(exports, module) {
-      var import_polyfills722 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/third_party/zxing-js.umd.js"(exports, module) {
+      var import_polyfills723 = __toESM(require_polyfills());
       (function(global2, factory) {
         typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.ZXing = {}));
       })(exports, (function(exports2) {
@@ -127373,11 +127868,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js
-  var import_polyfills700, ZXing, ZXingHtml5QrcodeDecoder;
+  // ../../node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js
+  var import_polyfills701, ZXing, ZXingHtml5QrcodeDecoder;
   var init_zxing_html5_qrcode_decoder = __esm({
-    "node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js"() {
-      import_polyfills700 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/zxing-html5-qrcode-decoder.js"() {
+      import_polyfills701 = __toESM(require_polyfills());
       ZXing = __toESM(require_zxing_js_umd());
       init_core();
       ZXingHtml5QrcodeDecoder = (function() {
@@ -127482,11 +127977,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/native-bar-code-detector.js
-  var import_polyfills701, __awaiter2, __generator2, BarcodeDetectorDelegate;
+  // ../../node_modules/html5-qrcode/esm/native-bar-code-detector.js
+  var import_polyfills702, __awaiter2, __generator2, BarcodeDetectorDelegate;
   var init_native_bar_code_detector = __esm({
-    "node_modules/html5-qrcode/esm/native-bar-code-detector.js"() {
-      import_polyfills701 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/native-bar-code-detector.js"() {
+      import_polyfills702 = __toESM(require_polyfills());
       init_core();
       __awaiter2 = function(thisArg, _arguments, P2, generator) {
         function adopt(value) {
@@ -127691,11 +128186,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/code-decoder.js
-  var import_polyfills702, __awaiter3, __generator3, Html5QrcodeShim;
+  // ../../node_modules/html5-qrcode/esm/code-decoder.js
+  var import_polyfills703, __awaiter3, __generator3, Html5QrcodeShim;
   var init_code_decoder = __esm({
-    "node_modules/html5-qrcode/esm/code-decoder.js"() {
-      import_polyfills702 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/code-decoder.js"() {
+      import_polyfills703 = __toESM(require_polyfills());
       init_zxing_html5_qrcode_decoder();
       init_native_bar_code_detector();
       __awaiter3 = function(thisArg, _arguments, P2, generator) {
@@ -127897,11 +128392,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/camera/core-impl.js
-  var import_polyfills703, __extends, __awaiter4, __generator4, AbstractCameraCapability, AbstractRangeCameraCapability, ZoomFeatureImpl, TorchFeatureImpl, CameraCapabilitiesImpl, RenderedCameraImpl, CameraImpl;
+  // ../../node_modules/html5-qrcode/esm/camera/core-impl.js
+  var import_polyfills704, __extends, __awaiter4, __generator4, AbstractCameraCapability, AbstractRangeCameraCapability, ZoomFeatureImpl, TorchFeatureImpl, CameraCapabilitiesImpl, RenderedCameraImpl, CameraImpl;
   var init_core_impl = __esm({
-    "node_modules/html5-qrcode/esm/camera/core-impl.js"() {
-      import_polyfills703 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/camera/core-impl.js"() {
+      import_polyfills704 = __toESM(require_polyfills());
       __extends = /* @__PURE__ */ (function() {
         var extendStatics = function(d2, b2) {
           extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
@@ -128278,11 +128773,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/camera/factories.js
-  var import_polyfills704, __awaiter5, __generator5, CameraFactory;
+  // ../../node_modules/html5-qrcode/esm/camera/factories.js
+  var import_polyfills705, __awaiter5, __generator5, CameraFactory;
   var init_factories = __esm({
-    "node_modules/html5-qrcode/esm/camera/factories.js"() {
-      import_polyfills704 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/camera/factories.js"() {
+      import_polyfills705 = __toESM(require_polyfills());
       init_core_impl();
       __awaiter5 = function(thisArg, _arguments, P2, generator) {
         function adopt(value) {
@@ -128405,11 +128900,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/camera/retriever.js
-  var import_polyfills705, __awaiter6, __generator6, CameraRetriever;
+  // ../../node_modules/html5-qrcode/esm/camera/retriever.js
+  var import_polyfills706, __awaiter6, __generator6, CameraRetriever;
   var init_retriever = __esm({
-    "node_modules/html5-qrcode/esm/camera/retriever.js"() {
-      import_polyfills705 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/camera/retriever.js"() {
+      import_polyfills706 = __toESM(require_polyfills());
       init_strings();
       __awaiter6 = function(thisArg, _arguments, P2, generator) {
         function adopt(value) {
@@ -128595,11 +129090,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/state-manager.js
-  var import_polyfills706, Html5QrcodeScannerState, StateManagerImpl, StateManagerProxy, StateManagerFactory;
+  // ../../node_modules/html5-qrcode/esm/state-manager.js
+  var import_polyfills707, Html5QrcodeScannerState, StateManagerImpl, StateManagerProxy, StateManagerFactory;
   var init_state_manager = __esm({
-    "node_modules/html5-qrcode/esm/state-manager.js"() {
-      import_polyfills706 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/state-manager.js"() {
+      import_polyfills707 = __toESM(require_polyfills());
       (function(Html5QrcodeScannerState2) {
         Html5QrcodeScannerState2[Html5QrcodeScannerState2["UNKNOWN"] = 0] = "UNKNOWN";
         Html5QrcodeScannerState2[Html5QrcodeScannerState2["NOT_STARTED"] = 1] = "NOT_STARTED";
@@ -128705,11 +129200,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/html5-qrcode.js
-  var import_polyfills707, __extends2, Constants, InternalHtml5QrcodeConfig, Html5Qrcode;
+  // ../../node_modules/html5-qrcode/esm/html5-qrcode.js
+  var import_polyfills708, __extends2, Constants, InternalHtml5QrcodeConfig, Html5Qrcode;
   var init_html5_qrcode = __esm({
-    "node_modules/html5-qrcode/esm/html5-qrcode.js"() {
-      import_polyfills707 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/html5-qrcode.js"() {
+      import_polyfills708 = __toESM(require_polyfills());
       init_core();
       init_strings();
       init_utils4();
@@ -129487,11 +129982,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/image-assets.js
-  var import_polyfills708, SVG_XML_PREFIX, ASSET_CAMERA_SCAN, ASSET_FILE_SCAN, ASSET_INFO_ICON_16PX, ASSET_CLOSE_ICON_16PX;
+  // ../../node_modules/html5-qrcode/esm/image-assets.js
+  var import_polyfills709, SVG_XML_PREFIX, ASSET_CAMERA_SCAN, ASSET_FILE_SCAN, ASSET_INFO_ICON_16PX, ASSET_CLOSE_ICON_16PX;
   var init_image_assets = __esm({
-    "node_modules/html5-qrcode/esm/image-assets.js"() {
-      import_polyfills708 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/image-assets.js"() {
+      import_polyfills709 = __toESM(require_polyfills());
       SVG_XML_PREFIX = "data:image/svg+xml;base64,";
       ASSET_CAMERA_SCAN = SVG_XML_PREFIX + "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNzEuNjQzIDM3MS42NDMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM3MS42NDMgMzcxLjY0MyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTEwNS4wODQgMzguMjcxaDE2My43Njh2MjBIMTA1LjA4NHoiLz48cGF0aCBkPSJNMzExLjU5NiAxOTAuMTg5Yy03LjQ0MS05LjM0Ny0xOC40MDMtMTYuMjA2LTMyLjc0My0yMC41MjJWMzBjMC0xNi41NDItMTMuNDU4LTMwLTMwLTMwSDEyNS4wODRjLTE2LjU0MiAwLTMwIDEzLjQ1OC0zMCAzMHYxMjAuMTQzaC04LjI5NmMtMTYuNTQyIDAtMzAgMTMuNDU4LTMwIDMwdjEuMzMzYTI5LjgwNCAyOS44MDQgMCAwIDAgNC42MDMgMTUuOTM5Yy03LjM0IDUuNDc0LTEyLjEwMyAxNC4yMjEtMTIuMTAzIDI0LjA2MXYxLjMzM2MwIDkuODQgNC43NjMgMTguNTg3IDEyLjEwMyAyNC4wNjJhMjkuODEgMjkuODEgMCAwIDAtNC42MDMgMTUuOTM4djEuMzMzYzAgMTYuNTQyIDEzLjQ1OCAzMCAzMCAzMGg4LjMyNGMuNDI3IDExLjYzMSA3LjUwMyAyMS41ODcgMTcuNTM0IDI2LjE3Ny45MzEgMTAuNTAzIDQuMDg0IDMwLjE4NyAxNC43NjggNDUuNTM3YTkuOTg4IDkuOTg4IDAgMCAwIDguMjE2IDQuMjg4IDkuOTU4IDkuOTU4IDAgMCAwIDUuNzA0LTEuNzkzYzQuNTMzLTMuMTU1IDUuNjUtOS4zODggMi40OTUtMTMuOTIxLTYuNzk4LTkuNzY3LTkuNjAyLTIyLjYwOC0xMC43Ni0zMS40aDgyLjY4NWMuMjcyLjQxNC41NDUuODE4LjgxNSAxLjIxIDMuMTQyIDQuNTQxIDkuMzcyIDUuNjc5IDEzLjkxMyAyLjUzNCA0LjU0Mi0zLjE0MiA1LjY3Ny05LjM3MSAyLjUzNS0xMy45MTMtMTEuOTE5LTE3LjIyOS04Ljc4Ny0zNS44ODQgOS41ODEtNTcuMDEyIDMuMDY3LTIuNjUyIDEyLjMwNy0xMS43MzIgMTEuMjE3LTI0LjAzMy0uODI4LTkuMzQzLTcuMTA5LTE3LjE5NC0xOC42NjktMjMuMzM3YTkuODU3IDkuODU3IDAgMCAwLTEuMDYxLS40ODZjLS40NjYtLjE4Mi0xMS40MDMtNC41NzktOS43NDEtMTUuNzA2IDEuMDA3LTYuNzM3IDE0Ljc2OC04LjI3MyAyMy43NjYtNy42NjYgMjMuMTU2IDEuNTY5IDM5LjY5OCA3LjgwMyA0Ny44MzYgMTguMDI2IDUuNzUyIDcuMjI1IDcuNjA3IDE2LjYyMyA1LjY3MyAyOC43MzMtLjQxMyAyLjU4NS0uODI0IDUuMjQxLTEuMjQ1IDcuOTU5LTUuNzU2IDM3LjE5NC0xMi45MTkgODMuNDgzLTQ5Ljg3IDExNC42NjEtNC4yMjEgMy41NjEtNC43NTYgOS44Ny0xLjE5NCAxNC4wOTJhOS45OCA5Ljk4IDAgMCAwIDcuNjQ4IDMuNTUxIDkuOTU1IDkuOTU1IDAgMCAwIDYuNDQ0LTIuMzU4YzQyLjY3Mi0zNi4wMDUgNTAuODAyLTg4LjUzMyA1Ni43MzctMTI2Ljg4OC40MTUtMi42ODQuODIxLTUuMzA5IDEuMjI5LTcuODYzIDIuODM0LTE3LjcyMS0uNDU1LTMyLjY0MS05Ljc3Mi00NC4zNDV6bS0yMzIuMzA4IDQyLjYyYy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi0xLjMzM2MwLTUuNTE0IDQuNDg2LTEwIDEwLTEwaDE1djIxLjMzM2gtMTV6bS0yLjUtNTIuNjY2YzAtNS41MTQgNC40ODYtMTAgMTAtMTBoNy41djIxLjMzM2gtNy41Yy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi0xLjMzM3ptMTcuNSA5My45OTloLTcuNWMtNS41MTQgMC0xMC00LjQ4Ni0xMC0xMHYtMS4zMzNjMC01LjUxNCA0LjQ4Ni0xMCAxMC0xMGg3LjV2MjEuMzMzem0zMC43OTYgMjguODg3Yy01LjUxNCAwLTEwLTQuNDg2LTEwLTEwdi04LjI3MWg5MS40NTdjLS44NTEgNi42NjgtLjQzNyAxMi43ODcuNzMxIDE4LjI3MWgtODIuMTg4em03OS40ODItMTEzLjY5OGMtMy4xMjQgMjAuOTA2IDEyLjQyNyAzMy4xODQgMjEuNjI1IDM3LjA0IDUuNDQxIDIuOTY4IDcuNTUxIDUuNjQ3IDcuNzAxIDcuMTg4LjIxIDIuMTUtMi41NTMgNS42ODQtNC40NzcgNy4yNTEtLjQ4Mi4zNzgtLjkyOS44LTEuMzM1IDEuMjYxLTYuOTg3IDcuOTM2LTExLjk4MiAxNS41Mi0xNS40MzIgMjIuNjg4aC05Ny41NjRWMzBjMC01LjUxNCA0LjQ4Ni0xMCAxMC0xMGgxMjMuNzY5YzUuNTE0IDAgMTAgNC40ODYgMTAgMTB2MTM1LjU3OWMtMy4wMzItLjM4MS02LjE1LS42OTQtOS4zODktLjkxNC0yNS4xNTktMS42OTQtNDIuMzcgNy43NDgtNDQuODk4IDI0LjY2NnoiLz48cGF0aCBkPSJNMTc5LjEyOSA4My4xNjdoLTI0LjA2YTUgNSAwIDAgMC01IDV2MjQuMDYxYTUgNSAwIDAgMCA1IDVoMjQuMDZhNSA1IDAgMCAwIDUtNVY4OC4xNjdhNSA1IDAgMCAwLTUtNXpNMTcyLjYyOSAxNDIuODZoLTEyLjU2VjEzMC44YTUgNSAwIDEgMC0xMCAwdjE3LjA2MWE1IDUgMCAwIDAgNSA1aDE3LjU2YTUgNSAwIDEgMCAwLTEwLjAwMXpNMjE2LjU2OCA4My4xNjdoLTI0LjA2YTUgNSAwIDAgMC01IDV2MjQuMDYxYTUgNSAwIDAgMCA1IDVoMjQuMDZhNSA1IDAgMCAwIDUtNVY4OC4xNjdhNSA1IDAgMCAwLTUtNXptLTUgMjQuMDYxaC0xNC4wNlY5My4xNjdoMTQuMDZ2MTQuMDYxek0yMTEuNjY5IDEyNS45MzZIMTk3LjQxYTUgNSAwIDAgMC01IDV2MTQuMjU3YTUgNSAwIDAgMCA1IDVoMTQuMjU5YTUgNSAwIDAgMCA1LTV2LTE0LjI1N2E1IDUgMCAwIDAtNS01eiIvPjwvc3ZnPg==";
       ASSET_FILE_SCAN = SVG_XML_PREFIX + "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1OS4wMTggNTkuMDE4IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1OS4wMTggNTkuMDE4IiB4bWw6c3BhY2U9InByZXNlcnZlIj48cGF0aCBkPSJtNTguNzQxIDU0LjgwOS01Ljk2OS02LjI0NGExMC43NCAxMC43NCAwIDAgMCAyLjgyLTcuMjVjMC01Ljk1My00Ljg0My0xMC43OTYtMTAuNzk2LTEwLjc5NlMzNCAzNS4zNjEgMzQgNDEuMzE0IDM4Ljg0MyA1Mi4xMSA0NC43OTYgNTIuMTFjMi40NDEgMCA0LjY4OC0uODI0IDYuNDk5LTIuMTk2bDYuMDAxIDYuMjc3YS45OTguOTk4IDAgMCAwIDEuNDE0LjAzMiAxIDEgMCAwIDAgLjAzMS0xLjQxNHpNMzYgNDEuMzE0YzAtNC44NSAzLjk0Ni04Ljc5NiA4Ljc5Ni04Ljc5NnM4Ljc5NiAzLjk0NiA4Ljc5NiA4Ljc5Ni0zLjk0NiA4Ljc5Ni04Ljc5NiA4Ljc5NlMzNiA0Ni4xNjQgMzYgNDEuMzE0ek0xMC40MzEgMTYuMDg4YzAgMy4wNyAyLjQ5OCA1LjU2OCA1LjU2OSA1LjU2OHM1LjU2OS0yLjQ5OCA1LjU2OS01LjU2OGMwLTMuMDcxLTIuNDk4LTUuNTY5LTUuNTY5LTUuNTY5cy01LjU2OSAyLjQ5OC01LjU2OSA1LjU2OXptOS4xMzggMGMwIDEuOTY4LTEuNjAyIDMuNTY4LTMuNTY5IDMuNTY4cy0zLjU2OS0xLjYwMS0zLjU2OS0zLjU2OCAxLjYwMi0zLjU2OSAzLjU2OS0zLjU2OSAzLjU2OSAxLjYwMSAzLjU2OSAzLjU2OXoiLz48cGF0aCBkPSJtMzAuODgyIDI4Ljk4NyA5LjE4LTEwLjA1NCAxMS4yNjIgMTAuMzIzYTEgMSAwIDAgMCAxLjM1MS0xLjQ3NWwtMTItMTFhMSAxIDAgMCAwLTEuNDE0LjA2M2wtOS43OTQgMTAuNzI3LTQuNzQzLTQuNzQzYTEuMDAzIDEuMDAzIDAgMCAwLTEuMzY4LS4wNDRMNi4zMzkgMzcuNzY4YTEgMSAwIDEgMCAxLjMyMiAxLjUwMWwxNi4zMTMtMTQuMzYyIDcuMzE5IDcuMzE4YS45OTkuOTk5IDAgMSAwIDEuNDE0LTEuNDE0bC0xLjgyNS0xLjgyNHoiLz48cGF0aCBkPSJNMzAgNDYuNTE4SDJ2LTQyaDU0djI4YTEgMSAwIDEgMCAyIDB2LTI5YTEgMSAwIDAgMC0xLTFIMWExIDEgMCAwIDAtMSAxdjQ0YTEgMSAwIDAgMCAxIDFoMjlhMSAxIDAgMSAwIDAtMnoiLz48L3N2Zz4=";
@@ -129500,11 +129995,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/storage.js
-  var import_polyfills709, PersistedDataFactory, PersistedDataManager;
+  // ../../node_modules/html5-qrcode/esm/storage.js
+  var import_polyfills710, PersistedDataFactory, PersistedDataManager;
   var init_storage = __esm({
-    "node_modules/html5-qrcode/esm/storage.js"() {
-      import_polyfills709 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/storage.js"() {
+      import_polyfills710 = __toESM(require_polyfills());
       PersistedDataFactory = (function() {
         function PersistedDataFactory2() {
         }
@@ -129557,11 +130052,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui.js
-  var import_polyfills710, LibraryInfoDiv, LibraryInfoIcon, LibraryInfoContainer;
+  // ../../node_modules/html5-qrcode/esm/ui.js
+  var import_polyfills711, LibraryInfoDiv, LibraryInfoIcon, LibraryInfoContainer;
   var init_ui = __esm({
-    "node_modules/html5-qrcode/esm/ui.js"() {
-      import_polyfills710 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui.js"() {
+      import_polyfills711 = __toESM(require_polyfills());
       init_image_assets();
       init_strings();
       LibraryInfoDiv = (function() {
@@ -129683,11 +130178,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/camera/permissions.js
-  var import_polyfills711, __awaiter7, __generator7, CameraPermissions;
+  // ../../node_modules/html5-qrcode/esm/camera/permissions.js
+  var import_polyfills712, __awaiter7, __generator7, CameraPermissions;
   var init_permissions = __esm({
-    "node_modules/html5-qrcode/esm/camera/permissions.js"() {
-      import_polyfills711 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/camera/permissions.js"() {
+      import_polyfills712 = __toESM(require_polyfills());
       __awaiter7 = function(thisArg, _arguments, P2, generator) {
         function adopt(value) {
           return value instanceof P2 ? value : new P2(function(resolve) {
@@ -129812,11 +130307,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js
-  var import_polyfills712, ScanTypeSelector;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js
+  var import_polyfills713, ScanTypeSelector;
   var init_scan_type_selector = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js"() {
-      import_polyfills712 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/scan-type-selector.js"() {
+      import_polyfills713 = __toESM(require_polyfills());
       init_core();
       ScanTypeSelector = (function() {
         function ScanTypeSelector2(supportedScanTypes) {
@@ -129864,11 +130359,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/base.js
-  var import_polyfills713, PublicUiElementIdAndClasses, BaseUiElementFactory;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/base.js
+  var import_polyfills714, PublicUiElementIdAndClasses, BaseUiElementFactory;
   var init_base = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/base.js"() {
-      import_polyfills713 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/base.js"() {
+      import_polyfills714 = __toESM(require_polyfills());
       PublicUiElementIdAndClasses = (function() {
         function PublicUiElementIdAndClasses2() {
         }
@@ -129902,11 +130397,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/torch-button.js
-  var import_polyfills714, __awaiter8, __generator8, TorchController, TorchButton;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/torch-button.js
+  var import_polyfills715, __awaiter8, __generator8, TorchController, TorchButton;
   var init_torch_button = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/torch-button.js"() {
-      import_polyfills714 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/torch-button.js"() {
+      import_polyfills715 = __toESM(require_polyfills());
       init_strings();
       init_base();
       __awaiter8 = function(thisArg, _arguments, P2, generator) {
@@ -130132,11 +130627,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js
-  var import_polyfills715, FileSelectionUi;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js
+  var import_polyfills716, FileSelectionUi;
   var init_file_selection_ui = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js"() {
-      import_polyfills715 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/file-selection-ui.js"() {
+      import_polyfills716 = __toESM(require_polyfills());
       init_strings();
       init_base();
       FileSelectionUi = (function() {
@@ -130289,11 +130784,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js
-  var import_polyfills716, CameraSelectionUi;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js
+  var import_polyfills717, CameraSelectionUi;
   var init_camera_selection_ui = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js"() {
-      import_polyfills716 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/camera-selection-ui.js"() {
+      import_polyfills717 = __toESM(require_polyfills());
       init_base();
       init_strings();
       CameraSelectionUi = (function() {
@@ -130378,11 +130873,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js
-  var import_polyfills717, CameraZoomUi;
+  // ../../node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js
+  var import_polyfills718, CameraZoomUi;
   var init_camera_zoom_ui = __esm({
-    "node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js"() {
-      import_polyfills717 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/ui/scanner/camera-zoom-ui.js"() {
+      import_polyfills718 = __toESM(require_polyfills());
       init_base();
       init_strings();
       CameraZoomUi = (function() {
@@ -130457,7 +130952,7 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/html5-qrcode-scanner.js
+  // ../../node_modules/html5-qrcode/esm/html5-qrcode-scanner.js
   function toHtml5QrcodeCameraScanConfig(config) {
     return {
       fps: config.fps,
@@ -130475,10 +130970,10 @@ ${toHex(hashedRequest)}`;
       verbose
     };
   }
-  var import_polyfills718, Html5QrcodeScannerStatus, Html5QrcodeScanner;
+  var import_polyfills719, Html5QrcodeScannerStatus, Html5QrcodeScanner;
   var init_html5_qrcode_scanner = __esm({
-    "node_modules/html5-qrcode/esm/html5-qrcode-scanner.js"() {
-      import_polyfills718 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/html5-qrcode-scanner.js"() {
+      import_polyfills719 = __toESM(require_polyfills());
       init_core();
       init_html5_qrcode();
       init_strings();
@@ -131088,11 +131583,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/html5-qrcode/esm/index.js
-  var import_polyfills719;
+  // ../../node_modules/html5-qrcode/esm/index.js
+  var import_polyfills720;
   var init_esm = __esm({
-    "node_modules/html5-qrcode/esm/index.js"() {
-      import_polyfills719 = __toESM(require_polyfills());
+    "../../node_modules/html5-qrcode/esm/index.js"() {
+      import_polyfills720 = __toESM(require_polyfills());
       init_html5_qrcode();
       init_html5_qrcode_scanner();
       init_core();
@@ -131102,11 +131597,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // src/utils/BLESignaling.ts
-  var import_polyfills720, SOVEREIGN_SERVICE_UUID, SIGNAL_CHARACTERISTIC_UUID, BLESignaling;
+  var import_polyfills721, SOVEREIGN_SERVICE_UUID, SIGNAL_CHARACTERISTIC_UUID, BLESignaling;
   var init_BLESignaling = __esm({
     "src/utils/BLESignaling.ts"() {
       "use strict";
-      import_polyfills720 = __toESM(require_polyfills());
+      import_polyfills721 = __toESM(require_polyfills());
       init_Logger();
       SOVEREIGN_SERVICE_UUID = "00005056-0000-1000-8000-00805f9b34fb";
       SIGNAL_CHARACTERISTIC_UUID = "00005057-0000-1000-8000-00805f9b34fb";
@@ -131144,11 +131639,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/react/cjs/react-jsx-runtime.development.js
+  // ../../node_modules/react/cjs/react-jsx-runtime.development.js
   var require_react_jsx_runtime_development = __commonJS({
-    "node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
+    "../../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       (function() {
         function getComponentNameFromType(type) {
           if (null == type) return null;
@@ -131402,11 +131897,11 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // node_modules/react/jsx-runtime.js
+  // ../../node_modules/react/jsx-runtime.js
   var require_jsx_runtime = __commonJS({
-    "node_modules/react/jsx-runtime.js"(exports, module) {
+    "../../node_modules/react/jsx-runtime.js"(exports, module) {
       "use strict";
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -131416,11 +131911,11 @@ ${toHex(hashedRequest)}`;
   });
 
   // demo/social-local/src/PairingModal.tsx
-  var import_polyfills721, import_react, import_qrcode, import_jsx_runtime, PairingModal;
+  var import_polyfills722, import_react, import_qrcode, import_jsx_runtime, PairingModal;
   var init_PairingModal = __esm({
     "demo/social-local/src/PairingModal.tsx"() {
       "use strict";
-      import_polyfills721 = __toESM(require_polyfills());
+      import_polyfills722 = __toESM(require_polyfills());
       import_react = __toESM(require_react());
       import_qrcode = __toESM(require_browser14());
       init_esm();
@@ -131610,7 +132105,7 @@ ${toHex(hashedRequest)}`;
   // demo/social-local/src/AppLocal.tsx
   var require_AppLocal = __commonJS({
     "demo/social-local/src/AppLocal.tsx"() {
-      var import_polyfills722 = __toESM(require_polyfills());
+      var import_polyfills723 = __toESM(require_polyfills());
       var import_react2 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
@@ -131677,13 +132172,13 @@ ${toHex(hashedRequest)}`;
           imageUrl && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: imageUrl, className: "img-fluid rounded", style: { maxHeight: "400px" } })
         ] });
       };
-      var MessageItem = ({ m: m2, myId, resolveImage }) => {
+      var MessageItem = ({ m: m2, myId, resolveImage, resolveMessageImage }) => {
         const [imageUrl, setImageUrl] = (0, import_react2.useState)(null);
         (0, import_react2.useEffect)(() => {
           if (m2.image) {
-            resolveImage(m2.image, m2.senderId).then(setImageUrl);
+            (resolveMessageImage ? resolveMessageImage(m2) : resolveImage(m2.image, m2.senderId)).then(setImageUrl);
           }
-        }, [m2.image]);
+        }, [m2.image, m2.localImage, m2.imageEncryption]);
         return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: `d-flex mb-3 ${m2.senderId === myId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: `p-2 rounded px-3 shadow-sm ${m2.senderId === myId ? "bg-primary text-white" : "bg-white"}`, style: { maxWidth: "80%" }, children: [
           m2.content && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { children: m2.content }),
           imageUrl && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: imageUrl, className: "img-fluid rounded mt-1", style: { maxHeight: "300px" } }),
@@ -131750,6 +132245,12 @@ ${toHex(hashedRequest)}`;
             console.error("[App] Failed to resolve image:", path2, e2);
           }
           return null;
+        };
+        const resolveMessageImage = async (message) => {
+          if (!messaging) return null;
+          const data = await messaging.getMessageImage(message);
+          if (!data) return null;
+          return URL.createObjectURL(new Blob([data]));
         };
         const handleFileChange = async (e2, type) => {
           const file = e2.target.files?.[0];
@@ -132023,7 +132524,7 @@ ${toHex(hashedRequest)}`;
               currentTab === "messages" && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "row g-0 h-100", style: { height: "60vh" }, children: [
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-4 border-end overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "list-group list-group-flush", children: following.map((user) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { className: `list-group-item list-group-item-action ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId), children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(UserAvatar, { userId: user.userId, profileCache, resolveImage, size: 32 }) }, user.userId)) }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "col-8 d-flex flex-column h-100", children: selectedUser ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-light", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp).map((m2) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(MessageItem, { m: m2, myId: config.userId, resolveImage }, m2.id)) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-light", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp).map((m2) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(MessageItem, { m: m2, myId: config.userId, resolveImage, resolveMessageImage }, m2.id)) }),
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "p-3 border-top", children: [
                     newMsgImagePreview && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: newMsgImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "100px" } }),
                     /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "input-group", children: [
