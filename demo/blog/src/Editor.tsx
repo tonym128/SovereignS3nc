@@ -55,7 +55,7 @@ const Editor = () => {
         try {
             const isLocalHost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
             const endpointIsLocal = config.endpoint && (config.endpoint.includes('127.0.0.1') || config.endpoint.includes('localhost'));
-            const hasS3 = config.endpoint && (!endpointIsLocal || isLocalHost);
+            const hasS3 = config.endpoint && (!endpointIsLocal || isLocalHost) && Boolean(config.accessKeyId);
 
             const instance = await SovereignS3nc.create({
                 s3: hasS3 ? {
@@ -87,6 +87,31 @@ const Editor = () => {
             await loadMedia(instance);
         } catch (err) {
             alert('Login failed: ' + (err as Error).message);
+        } finally {
+            setSyncing(false);
+        }
+    };
+
+    const startOffline = async (userId: string = 'author-1') => {
+        setSyncing(true);
+        try {
+            const password = 'password123';
+            setConfig(prev => ({ ...prev, userId, password }));
+            const instance = await SovereignS3nc.create({
+                offline: true,
+                paths: { appId: config.appId, userId, storeId: 'main' },
+                password,
+                useWorker: true,
+                workerUrl: 'sync-worker.js'
+            });
+            setSov(instance);
+            setFeed(new FeedModule(instance));
+            setIsLoggedIn(true);
+
+            await loadPosts(new FeedModule(instance));
+            await loadMedia(instance);
+        } catch (err) {
+            alert('Offline launch failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -321,39 +346,80 @@ const Editor = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="container mt-5">
-                <div className="row justify-content-center">
-                    <div className="col-md-6 card p-4 shadow-sm">
-                        <h3 className="mb-4">Author Login</h3>
-                        <label className="form-label small">S3 Endpoint</label>
-                        <input className="form-control mb-3" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
-                        
-                        <div className="row">
-                            <div className="col">
-                                <label className="form-label small">Access Key ID</label>
-                                <input className="form-control mb-3" placeholder="Access Key ID" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
-                            </div>
-                            <div className="col">
-                                <label className="form-label small">Secret Access Key</label>
-                                <input className="form-control mb-3" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <label className="form-label small">User ID</label>
-                                <input className="form-control mb-3" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
-                            </div>
-                            <div className="col">
-                                <label className="form-label small">Passphrase</label>
-                                <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
-                            </div>
-                        </div>
-
-                        <button className="btn btn-primary w-100 mt-2" onClick={login} disabled={syncing}>
-                            {syncing ? 'Logging in...' : 'Enter Editor'}
+            <div className="container mt-5" style={{ maxWidth: '640px' }}>
+                <div className="card p-4 shadow-sm mb-4 border-primary" style={{ backgroundColor: '#f0f7ff' }}>
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <h4 className="mb-0 text-primary fw-bold">⚡ Quick Start (Offline Mode)</h4>
+                        <span className="badge bg-primary">Instant Preview</span>
+                    </div>
+                    <p className="text-muted small mb-3">
+                        Draft and preview blog posts immediately using offline-first local storage. Zero configuration or AWS/S3 setup needed.
+                    </p>
+                    <div className="d-flex gap-2">
+                        <button
+                            className="btn btn-primary w-100"
+                            onClick={() => startOffline('author-1')}
+                            disabled={syncing}
+                        >
+                            Launch Offline as Author 1
+                        </button>
+                        <button
+                            className="btn btn-outline-primary w-100"
+                            onClick={() => startOffline('author-2')}
+                            disabled={syncing}
+                        >
+                            Launch Offline as Author 2
                         </button>
                     </div>
+                </div>
+
+                <div className="card p-4 shadow-sm">
+                    <h4 className="mb-3">Author Account & Sync</h4>
+                    <p className="text-muted small mb-3">
+                        Optionally provide S3 storage credentials to sync published posts and media to a public bucket.
+                    </p>
+
+                    <div className="row">
+                        <div className="col">
+                            <label className="form-label small">User ID</label>
+                            <input className="form-control mb-3" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
+                        </div>
+                        <div className="col">
+                            <label className="form-label small">Passphrase</label>
+                            <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
+                        </div>
+                    </div>
+
+                    <details className="mb-3 border rounded p-2 bg-light">
+                        <summary className="small fw-semibold text-secondary" style={{ cursor: 'pointer' }}>
+                            ☁️ S3 Cloud Sync Settings (Optional)
+                        </summary>
+                        <div className="mt-3">
+                            <label className="form-label small">S3 Endpoint</label>
+                            <input className="form-control mb-3" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                            
+                            <div className="row">
+                                <div className="col">
+                                    <label className="form-label small">Access Key ID</label>
+                                    <input className="form-control mb-3" placeholder="Access Key ID" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
+                                </div>
+                                <div className="col">
+                                    <label className="form-label small">Secret Access Key</label>
+                                    <input className="form-control mb-3" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <label className="form-label small">Bucket Name</label>
+                                    <input className="form-control mb-2" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <button className="btn btn-secondary w-100 mt-2" onClick={login} disabled={syncing}>
+                        {syncing ? 'Logging in...' : 'Enter Editor'}
+                    </button>
                 </div>
             </div>
         );

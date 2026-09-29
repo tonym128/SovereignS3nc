@@ -1478,8 +1478,43 @@ const App = () => {
                         </div>
                     )}
 
-                    <label className="form-label small fw-bold text-muted text-uppercase">Sync Mode</label>
-                    <div className="btn-group w-100 mb-4 flex-wrap">
+                    {/* Quick Start Card */}
+                    <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
+                        <div className="d-flex align-items-center justify-content-center mb-1">
+                            <span className="fs-5 me-2">🚀</span>
+                            <span className="fw-bold text-primary">Instant Quick Start</span>
+                        </div>
+                        <p className="text-muted small mb-3">
+                            Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!
+                        </p>
+                        <button
+                            type="button"
+                            className="btn btn-primary w-100 py-2 fw-bold shadow-sm"
+                            onClick={() => {
+                                const guestConfig = {
+                                    ...config,
+                                    syncMode: 'offline',
+                                    userId: config.userId || ('guest-' + Math.random().toString(36).substring(7)),
+                                    password: config.password || 'password123'
+                                };
+                                performLogin(guestConfig);
+                            }}
+                        >
+                            ⚡ Start Instantly (Offline Mode)
+                        </button>
+                    </div>
+
+                    <div className="d-flex align-items-center my-3">
+                        <hr className="flex-grow-1 my-0 text-muted" />
+                        <span className="px-2 text-muted x-small text-uppercase fw-bold">Or Configure Workspace</span>
+                        <hr className="flex-grow-1 my-0 text-muted" />
+                    </div>
+
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                        <label className="form-label small fw-bold text-muted text-uppercase mb-0">Sync Mode</label>
+                        <span className="badge bg-light text-muted border small">Select Architecture</span>
+                    </div>
+                    <div className="btn-group w-100 mb-3 flex-wrap">
                         <input type="radio" className="btn-check" name="syncMode" id="modeOffline" autoComplete="off" checked={config.syncMode === 'offline'} onChange={() => setConfig({...config, syncMode: 'offline'})} />
                         <label className="btn btn-outline-primary" htmlFor="modeOffline">Offline-First</label>
 
@@ -1490,14 +1525,29 @@ const App = () => {
                         <label className="btn btn-outline-primary" htmlFor="modeWebrtc">WebRTC Mesh</label>
                     </div>
 
+                    {config.syncMode === 'offline' && (
+                        <div className="alert alert-info py-2 small mb-3">
+                            <strong>Offline-First Mode:</strong> All data is stored securely in your browser's IndexedDB. You can connect to S3 cloud storage or P2P WebRTC at any time from the settings panel.
+                        </div>
+                    )}
+
+                    {config.syncMode === 'webrtc' && (
+                        <div className="alert alert-success py-2 small mb-3">
+                            <strong>WebRTC P2P Mesh:</strong> Synchronizes directly between browser tabs and devices without storing data on any centralized server.
+                        </div>
+                    )}
+
                     {config.syncMode === 's3' && (
-                        <>
-                            <label className="form-label small fw-bold text-muted text-uppercase">Connection Settings</label>
+                        <div className="border rounded p-3 mb-3 bg-light">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <label className="form-label small fw-bold text-muted text-uppercase mb-0">S3 Cloud Credentials</label>
+                                <span className="badge bg-secondary small">Advanced</span>
+                            </div>
                             <input className="form-control mb-2" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
                             <input className="form-control mb-2" placeholder="Access Key" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
                             <input className="form-control mb-2" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
-                            <input className="form-control mb-4" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
-                        </>
+                            <input className="form-control mb-0" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
+                        </div>
                     )}
                     
                     <label className="form-label small fw-bold text-muted text-uppercase">Account Credentials</label>
