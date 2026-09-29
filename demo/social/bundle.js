@@ -52,7 +52,7 @@
   var require_base64_js = __commonJS({
     "../../node_modules/base64-js/index.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.byteLength = byteLength;
       exports.toByteArray = toByteArray;
       exports.fromByteArray = fromByteArray;
@@ -153,7 +153,7 @@
   // ../../node_modules/ieee754/index.js
   var require_ieee754 = __commonJS({
     "../../node_modules/ieee754/index.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.read = function(buffer, offset, isLE, mLen, nBytes) {
         var e2, m2;
         var eLen = nBytes * 8 - mLen - 1;
@@ -238,7 +238,7 @@
   var require_buffer = __commonJS({
     "../../node_modules/buffer/index.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var base64 = require_base64_js();
       var ieee754 = require_ieee754();
       var customInspectSymbol = typeof Symbol === "function" && typeof Symbol["for"] === "function" ? Symbol["for"]("nodejs.util.inspect.custom") : null;
@@ -1830,7 +1830,7 @@
   // ../../node_modules/process/browser.js
   var require_browser = __commonJS({
     "../../node_modules/process/browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var process2 = module.exports = {};
       var cachedSetTimeout;
       var cachedClearTimeout;
@@ -2064,7 +2064,7 @@
   var require_react_development = __commonJS({
     "../../node_modules/react/cjs/react.development.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function() {
         function defineDeprecationWarning(methodName, info) {
           Object.defineProperty(Component2.prototype, methodName, {
@@ -3037,7 +3037,7 @@
   var require_react = __commonJS({
     "../../node_modules/react/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3050,7 +3050,7 @@
   var require_scheduler_development = __commonJS({
     "../../node_modules/scheduler/cjs/scheduler.development.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function() {
         function performWorkUntilDeadline() {
           needsPaint = false;
@@ -3310,7 +3310,7 @@
   var require_scheduler = __commonJS({
     "../../node_modules/scheduler/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -3323,7 +3323,7 @@
   var require_react_dom_development = __commonJS({
     "../../node_modules/react-dom/cjs/react-dom.development.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function() {
         function noop() {
         }
@@ -3369,7 +3369,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React4 = require_react(), Internals = {
+        var React8 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3387,7 +3387,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -3568,7 +3568,7 @@
   var require_react_dom = __commonJS({
     "../../node_modules/react-dom/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -3582,7 +3582,7 @@
   var require_react_dom_client_development = __commonJS({
     "../../node_modules/react-dom/cjs/react-dom-client.development.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function() {
         function findHook(fiber, id) {
           for (fiber = fiber.memoizedState; null !== fiber && 0 < id; )
@@ -4924,7 +4924,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React8.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20556,14 +20556,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React8 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23351,7 +23351,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React4.version;
+          var isomorphicReactPackageVersion = React8.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -23482,7 +23482,7 @@
   var require_client = __commonJS({
     "../../node_modules/react-dom/client.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (false) {
         checkDCE();
         module.exports = null;
@@ -50110,7 +50110,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/safe-buffer/index.js
   var require_safe_buffer = __commonJS({
     "../../node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -50170,7 +50170,7 @@ ${toHex(hashedRequest)}`;
   var require_browser2 = __commonJS({
     "../../node_modules/randombytes/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var MAX_BYTES = 65536;
       var MAX_UINT32 = 4294967295;
       function oldBrowser() {
@@ -50208,7 +50208,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/inherits/inherits_browser.js
   var require_inherits_browser = __commonJS({
     "../../node_modules/inherits/inherits_browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (typeof Object.create === "function") {
         module.exports = function inherits(ctor, superCtor) {
           if (superCtor) {
@@ -50242,7 +50242,7 @@ ${toHex(hashedRequest)}`;
   var require_events = __commonJS({
     "../../node_modules/events/events.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var R2 = typeof Reflect === "object" ? Reflect : null;
       var ReflectApply = R2 && typeof R2.apply === "function" ? R2.apply : function ReflectApply2(target, receiver, args) {
         return Function.prototype.apply.call(target, receiver, args);
@@ -50611,7 +50611,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -50620,7 +50620,7 @@ ${toHex(hashedRequest)}`;
   var require_shams = __commonJS({
     "../../node_modules/has-symbols/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function hasSymbols() {
         if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
           return false;
@@ -50676,7 +50676,7 @@ ${toHex(hashedRequest)}`;
   var require_shams2 = __commonJS({
     "../../node_modules/has-tostringtag/shams.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var hasSymbols = require_shams();
       module.exports = function hasToStringTagShams() {
         return hasSymbols() && !!Symbol.toStringTag;
@@ -50688,7 +50688,7 @@ ${toHex(hashedRequest)}`;
   var require_es_object_atoms = __commonJS({
     "../../node_modules/es-object-atoms/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Object;
     }
   });
@@ -50697,7 +50697,7 @@ ${toHex(hashedRequest)}`;
   var require_es_errors = __commonJS({
     "../../node_modules/es-errors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Error;
     }
   });
@@ -50706,7 +50706,7 @@ ${toHex(hashedRequest)}`;
   var require_eval = __commonJS({
     "../../node_modules/es-errors/eval.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = EvalError;
     }
   });
@@ -50715,7 +50715,7 @@ ${toHex(hashedRequest)}`;
   var require_range = __commonJS({
     "../../node_modules/es-errors/range.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = RangeError;
     }
   });
@@ -50724,7 +50724,7 @@ ${toHex(hashedRequest)}`;
   var require_ref = __commonJS({
     "../../node_modules/es-errors/ref.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = ReferenceError;
     }
   });
@@ -50733,7 +50733,7 @@ ${toHex(hashedRequest)}`;
   var require_syntax = __commonJS({
     "../../node_modules/es-errors/syntax.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = SyntaxError;
     }
   });
@@ -50742,7 +50742,7 @@ ${toHex(hashedRequest)}`;
   var require_type = __commonJS({
     "../../node_modules/es-errors/type.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = TypeError;
     }
   });
@@ -50751,7 +50751,7 @@ ${toHex(hashedRequest)}`;
   var require_uri = __commonJS({
     "../../node_modules/es-errors/uri.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = URIError;
     }
   });
@@ -50760,7 +50760,7 @@ ${toHex(hashedRequest)}`;
   var require_abs = __commonJS({
     "../../node_modules/math-intrinsics/abs.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.abs;
     }
   });
@@ -50769,7 +50769,7 @@ ${toHex(hashedRequest)}`;
   var require_floor = __commonJS({
     "../../node_modules/math-intrinsics/floor.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.floor;
     }
   });
@@ -50778,7 +50778,7 @@ ${toHex(hashedRequest)}`;
   var require_max = __commonJS({
     "../../node_modules/math-intrinsics/max.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.max;
     }
   });
@@ -50787,7 +50787,7 @@ ${toHex(hashedRequest)}`;
   var require_min = __commonJS({
     "../../node_modules/math-intrinsics/min.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.min;
     }
   });
@@ -50796,7 +50796,7 @@ ${toHex(hashedRequest)}`;
   var require_pow = __commonJS({
     "../../node_modules/math-intrinsics/pow.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.pow;
     }
   });
@@ -50805,7 +50805,7 @@ ${toHex(hashedRequest)}`;
   var require_round = __commonJS({
     "../../node_modules/math-intrinsics/round.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Math.round;
     }
   });
@@ -50814,7 +50814,7 @@ ${toHex(hashedRequest)}`;
   var require_isNaN = __commonJS({
     "../../node_modules/math-intrinsics/isNaN.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Number.isNaN || function isNaN2(a2) {
         return a2 !== a2;
       };
@@ -50825,7 +50825,7 @@ ${toHex(hashedRequest)}`;
   var require_sign = __commonJS({
     "../../node_modules/math-intrinsics/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $isNaN = require_isNaN();
       module.exports = function sign2(number) {
         if ($isNaN(number) || number === 0) {
@@ -50840,7 +50840,7 @@ ${toHex(hashedRequest)}`;
   var require_gOPD = __commonJS({
     "../../node_modules/gopd/gOPD.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Object.getOwnPropertyDescriptor;
     }
   });
@@ -50849,7 +50849,7 @@ ${toHex(hashedRequest)}`;
   var require_gopd = __commonJS({
     "../../node_modules/gopd/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $gOPD = require_gOPD();
       if ($gOPD) {
         try {
@@ -50866,7 +50866,7 @@ ${toHex(hashedRequest)}`;
   var require_es_define_property = __commonJS({
     "../../node_modules/es-define-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $defineProperty = Object.defineProperty || false;
       if ($defineProperty) {
         try {
@@ -50883,7 +50883,7 @@ ${toHex(hashedRequest)}`;
   var require_has_symbols = __commonJS({
     "../../node_modules/has-symbols/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var origSymbol = typeof Symbol !== "undefined" && Symbol;
       var hasSymbolSham = require_shams();
       module.exports = function hasNativeSymbols() {
@@ -50908,7 +50908,7 @@ ${toHex(hashedRequest)}`;
   var require_Reflect_getPrototypeOf = __commonJS({
     "../../node_modules/get-proto/Reflect.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
     }
   });
@@ -50917,7 +50917,7 @@ ${toHex(hashedRequest)}`;
   var require_Object_getPrototypeOf = __commonJS({
     "../../node_modules/get-proto/Object.getPrototypeOf.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $Object = require_es_object_atoms();
       module.exports = $Object.getPrototypeOf || null;
     }
@@ -50927,7 +50927,7 @@ ${toHex(hashedRequest)}`;
   var require_implementation = __commonJS({
     "../../node_modules/function-bind/implementation.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
       var toStr = Object.prototype.toString;
       var max = Math.max;
@@ -51004,7 +51004,7 @@ ${toHex(hashedRequest)}`;
   var require_function_bind = __commonJS({
     "../../node_modules/function-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var implementation = require_implementation();
       module.exports = Function.prototype.bind || implementation;
     }
@@ -51014,7 +51014,7 @@ ${toHex(hashedRequest)}`;
   var require_functionCall = __commonJS({
     "../../node_modules/call-bind-apply-helpers/functionCall.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Function.prototype.call;
     }
   });
@@ -51023,7 +51023,7 @@ ${toHex(hashedRequest)}`;
   var require_functionApply = __commonJS({
     "../../node_modules/call-bind-apply-helpers/functionApply.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Function.prototype.apply;
     }
   });
@@ -51032,7 +51032,7 @@ ${toHex(hashedRequest)}`;
   var require_reflectApply = __commonJS({
     "../../node_modules/call-bind-apply-helpers/reflectApply.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
     }
   });
@@ -51041,7 +51041,7 @@ ${toHex(hashedRequest)}`;
   var require_actualApply = __commonJS({
     "../../node_modules/call-bind-apply-helpers/actualApply.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var $call = require_functionCall();
@@ -51054,7 +51054,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind_apply_helpers = __commonJS({
     "../../node_modules/call-bind-apply-helpers/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $TypeError = require_type();
       var $call = require_functionCall();
@@ -51072,7 +51072,7 @@ ${toHex(hashedRequest)}`;
   var require_get = __commonJS({
     "../../node_modules/dunder-proto/get.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var callBind = require_call_bind_apply_helpers();
       var gOPD = require_gopd();
       var hasProtoAccessor;
@@ -51104,7 +51104,7 @@ ${toHex(hashedRequest)}`;
   var require_get_proto = __commonJS({
     "../../node_modules/get-proto/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var reflectGetProto = require_Reflect_getPrototypeOf();
       var originalGetProto = require_Object_getPrototypeOf();
       var getDunderProto = require_get();
@@ -51125,7 +51125,7 @@ ${toHex(hashedRequest)}`;
   var require_hasown = __commonJS({
     "../../node_modules/hasown/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var call = Function.prototype.call;
       var $hasOwn = Object.prototype.hasOwnProperty;
       var bind = require_function_bind();
@@ -51137,7 +51137,7 @@ ${toHex(hashedRequest)}`;
   var require_get_intrinsic = __commonJS({
     "../../node_modules/get-intrinsic/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var undefined2;
       var $Object = require_es_object_atoms();
       var $Error = require_es_errors();
@@ -51469,7 +51469,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bound = __commonJS({
     "../../node_modules/call-bound/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var callBindBasic = require_call_bind_apply_helpers();
       var $indexOf = callBindBasic([GetIntrinsic("%String.prototype.indexOf%")]);
@@ -51493,7 +51493,7 @@ ${toHex(hashedRequest)}`;
   var require_is_arguments = __commonJS({
     "../../node_modules/is-arguments/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var hasToStringTag = require_shams2()();
       var callBound = require_call_bound();
       var $toString = callBound("Object.prototype.toString");
@@ -51521,7 +51521,7 @@ ${toHex(hashedRequest)}`;
   var require_is_regex = __commonJS({
     "../../node_modules/is-regex/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var hasToStringTag = require_shams2()();
       var hasOwn = require_hasown();
@@ -51591,7 +51591,7 @@ ${toHex(hashedRequest)}`;
   var require_safe_regex_test = __commonJS({
     "../../node_modules/safe-regex-test/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var isRegex = require_is_regex();
       var $exec = callBound("RegExp.prototype.exec");
@@ -51611,7 +51611,7 @@ ${toHex(hashedRequest)}`;
   var require_generator_function = __commonJS({
     "../../node_modules/generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var cached = (
         /** @type {GeneratorFunctionConstructor} */
         function* () {
@@ -51625,7 +51625,7 @@ ${toHex(hashedRequest)}`;
   var require_is_generator_function = __commonJS({
     "../../node_modules/is-generator-function/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var callBound = require_call_bound();
       var safeRegexTest = require_safe_regex_test();
       var isFnRegex = safeRegexTest(/^\s*(?:function)?\*/);
@@ -51658,7 +51658,7 @@ ${toHex(hashedRequest)}`;
   var require_is_callable = __commonJS({
     "../../node_modules/is-callable/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var fnToStr = Function.prototype.toString;
       var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
       var badArrayLike;
@@ -51777,7 +51777,7 @@ ${toHex(hashedRequest)}`;
   var require_for_each = __commonJS({
     "../../node_modules/for-each/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var isCallable = require_is_callable();
       var toStr = Object.prototype.toString;
       var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -51838,7 +51838,7 @@ ${toHex(hashedRequest)}`;
   var require_possible_typed_array_names = __commonJS({
     "../../node_modules/possible-typed-array-names/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = [
         "Float16Array",
         "Float32Array",
@@ -51860,7 +51860,7 @@ ${toHex(hashedRequest)}`;
   var require_available_typed_arrays = __commonJS({
     "../../node_modules/available-typed-arrays/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var possibleNames = require_possible_typed_array_names();
       var g2 = typeof globalThis === "undefined" ? window : globalThis;
       module.exports = function availableTypedArrays() {
@@ -51879,7 +51879,7 @@ ${toHex(hashedRequest)}`;
   var require_define_data_property = __commonJS({
     "../../node_modules/define-data-property/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var $SyntaxError = require_syntax();
       var $TypeError = require_type();
@@ -51928,7 +51928,7 @@ ${toHex(hashedRequest)}`;
   var require_has_property_descriptors = __commonJS({
     "../../node_modules/has-property-descriptors/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $defineProperty = require_es_define_property();
       var hasPropertyDescriptors = function hasPropertyDescriptors2() {
         return !!$defineProperty;
@@ -51951,7 +51951,7 @@ ${toHex(hashedRequest)}`;
   var require_set_function_length = __commonJS({
     "../../node_modules/set-function-length/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var GetIntrinsic = require_get_intrinsic();
       var define2 = require_define_data_property();
       var hasDescriptors = require_has_property_descriptors()();
@@ -52005,7 +52005,7 @@ ${toHex(hashedRequest)}`;
   var require_applyBind = __commonJS({
     "../../node_modules/call-bind-apply-helpers/applyBind.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var bind = require_function_bind();
       var $apply = require_functionApply();
       var actualApply = require_actualApply();
@@ -52019,7 +52019,7 @@ ${toHex(hashedRequest)}`;
   var require_call_bind = __commonJS({
     "../../node_modules/call-bind/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var setFunctionLength = require_set_function_length();
       var $defineProperty = require_es_define_property();
       var callBindBasic = require_call_bind_apply_helpers();
@@ -52045,7 +52045,7 @@ ${toHex(hashedRequest)}`;
   var require_which_typed_array = __commonJS({
     "../../node_modules/which-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var forEach = require_for_each();
       var availableTypedArrays = require_available_typed_arrays();
       var callBind = require_call_bind();
@@ -52167,7 +52167,7 @@ ${toHex(hashedRequest)}`;
   var require_is_typed_array = __commonJS({
     "../../node_modules/is-typed-array/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var whichTypedArray = require_which_typed_array();
       module.exports = function isTypedArray(value) {
         return !!whichTypedArray(value);
@@ -52179,7 +52179,7 @@ ${toHex(hashedRequest)}`;
   var require_types = __commonJS({
     "../../node_modules/util/support/types.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var isArgumentsObject = require_is_arguments();
       var isGeneratorFunction = require_is_generator_function();
       var whichTypedArray = require_which_typed_array();
@@ -52409,7 +52409,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/util/support/isBufferBrowser.js
   var require_isBufferBrowser = __commonJS({
     "../../node_modules/util/support/isBufferBrowser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function isBuffer(arg) {
         return arg && typeof arg === "object" && typeof arg.copy === "function" && typeof arg.fill === "function" && typeof arg.readUInt8 === "function";
       };
@@ -52419,7 +52419,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/util/util.js
   var require_util = __commonJS({
     "../../node_modules/util/util.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || function getOwnPropertyDescriptors2(obj) {
         var keys = Object.keys(obj);
         var descriptors = {};
@@ -52980,7 +52980,7 @@ ${toHex(hashedRequest)}`;
   var require_buffer_list = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/buffer_list.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function ownKeys(object, enumerableOnly) {
         var keys = Object.keys(object);
         if (Object.getOwnPropertySymbols) {
@@ -53223,7 +53223,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function destroy(err, cb) {
         var _this = this;
         var readableDestroyed = this._readableState && this._readableState.destroyed;
@@ -53313,7 +53313,7 @@ ${toHex(hashedRequest)}`;
   var require_errors_browser = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/errors-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function _inheritsLoose(subClass, superClass) {
         subClass.prototype = Object.create(superClass.prototype);
         subClass.prototype.constructor = subClass;
@@ -53423,7 +53423,7 @@ ${toHex(hashedRequest)}`;
   var require_state = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/state.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var ERR_INVALID_OPT_VALUE = require_errors_browser().codes.ERR_INVALID_OPT_VALUE;
       function highWaterMarkFrom(options, isDuplex, duplexKey) {
         return options.highWaterMark != null ? options.highWaterMark : isDuplex ? options[duplexKey] : null;
@@ -53448,7 +53448,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/util-deprecate/browser.js
   var require_browser3 = __commonJS({
     "../../node_modules/util-deprecate/browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = deprecate;
       function deprecate(fn, msg) {
         if (config("noDeprecation")) {
@@ -53487,7 +53487,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Writable;
       function CorkedRequest(state) {
         var _this = this;
@@ -53959,7 +53959,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
         for (var key in obj) keys2.push(key);
@@ -54052,7 +54052,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/string_decoder/node_modules/safe-buffer/index.js
   var require_safe_buffer2 = __commonJS({
     "../../node_modules/string_decoder/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -54111,7 +54111,7 @@ ${toHex(hashedRequest)}`;
   var require_string_decoder = __commonJS({
     "../../node_modules/string_decoder/lib/string_decoder.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer2().Buffer;
       var isEncoding = Buffer4.isEncoding || function(encoding) {
         encoding = "" + encoding;
@@ -54350,7 +54350,7 @@ ${toHex(hashedRequest)}`;
   var require_end_of_stream = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/end-of-stream.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var ERR_STREAM_PREMATURE_CLOSE = require_errors_browser().codes.ERR_STREAM_PREMATURE_CLOSE;
       function once2(callback) {
         var called = false;
@@ -54440,7 +54440,7 @@ ${toHex(hashedRequest)}`;
   var require_async_iterator = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/async_iterator.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var _Object$setPrototypeO;
       function _defineProperty(obj, key, value) {
         key = _toPropertyKey(key);
@@ -54623,7 +54623,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js
   var require_from_browser = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/from-browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function() {
         throw new Error("Readable.from is not available in the browser");
       };
@@ -54634,7 +54634,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Readable;
       var Duplex;
       Readable.ReadableState = ReadableState;
@@ -55368,7 +55368,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Transform;
       var _require$codes = require_errors_browser().codes;
       var ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED;
@@ -55470,7 +55470,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform();
       require_inherits_browser()(PassThrough, Transform);
@@ -55488,7 +55488,7 @@ ${toHex(hashedRequest)}`;
   var require_pipeline = __commonJS({
     "../../node_modules/stream-browserify/node_modules/readable-stream/lib/internal/streams/pipeline.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var eos;
       function once2(callback) {
         var called = false;
@@ -55573,7 +55573,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/stream-browserify/index.js
   var require_stream_browserify = __commonJS({
     "../../node_modules/stream-browserify/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Stream;
       var EE = require_events().EventEmitter;
       var inherits = require_inherits_browser();
@@ -55652,7 +55652,7 @@ ${toHex(hashedRequest)}`;
   var require_hash_base = __commonJS({
     "../../node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var inherits = require_inherits_browser();
@@ -55741,7 +55741,7 @@ ${toHex(hashedRequest)}`;
   var require_md5 = __commonJS({
     "../../node_modules/md5.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -55870,7 +55870,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/to-buffer/node_modules/isarray/index.js
   var require_isarray = __commonJS({
     "../../node_modules/to-buffer/node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -55882,7 +55882,7 @@ ${toHex(hashedRequest)}`;
   var require_typed_array_buffer = __commonJS({
     "../../node_modules/typed-array-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $TypeError = require_type();
       var callBound = require_call_bound();
       var $typedArrayBuffer = callBound("TypedArray.prototype.buffer", true);
@@ -55900,7 +55900,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer = __commonJS({
     "../../node_modules/to-buffer/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var isArray = require_isarray();
       var typedArrayBuffer = require_typed_array_buffer();
@@ -55965,7 +55965,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer2 = __commonJS({
     "../../node_modules/ripemd160/node_modules/hash-base/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -55984,7 +55984,7 @@ ${toHex(hashedRequest)}`;
   var require_process_nextick_args = __commonJS({
     "../../node_modules/process-nextick-args/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (typeof process === "undefined" || false || "v18.0.0".indexOf("v0.") === 0 || "v18.0.0".indexOf("v1.") === 0 && "v18.0.0".indexOf("v1.8.") !== 0) {
         module.exports = { nextTick };
       } else {
@@ -56029,7 +56029,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/isarray/index.js
   var require_isarray2 = __commonJS({
     "../../node_modules/isarray/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var toString = {}.toString;
       module.exports = Array.isArray || function(arr) {
         return toString.call(arr) == "[object Array]";
@@ -56040,7 +56040,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/readable-stream/lib/internal/streams/stream-browser.js
   var require_stream_browser2 = __commonJS({
     "../../node_modules/readable-stream/lib/internal/streams/stream-browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = require_events().EventEmitter;
     }
   });
@@ -56048,7 +56048,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/readable-stream/node_modules/safe-buffer/index.js
   var require_safe_buffer3 = __commonJS({
     "../../node_modules/readable-stream/node_modules/safe-buffer/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var buffer = require_buffer();
       var Buffer4 = buffer.Buffer;
       function copyProps(src, dst) {
@@ -56106,7 +56106,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/core-util-is/lib/util.js
   var require_util2 = __commonJS({
     "../../node_modules/core-util-is/lib/util.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function isArray(arg) {
         if (Array.isArray) {
           return Array.isArray(arg);
@@ -56178,7 +56178,7 @@ ${toHex(hashedRequest)}`;
   var require_BufferList = __commonJS({
     "../../node_modules/readable-stream/lib/internal/streams/BufferList.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
           throw new TypeError("Cannot call a class as a function");
@@ -56257,7 +56257,7 @@ ${toHex(hashedRequest)}`;
   var require_destroy2 = __commonJS({
     "../../node_modules/readable-stream/lib/internal/streams/destroy.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       function destroy(err, cb) {
         var _this = this;
@@ -56327,7 +56327,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_writable2 = __commonJS({
     "../../node_modules/readable-stream/lib/_stream_writable.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Writable;
       function CorkedRequest(state) {
@@ -56768,7 +56768,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_duplex2 = __commonJS({
     "../../node_modules/readable-stream/lib/_stream_duplex.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       var objectKeys = Object.keys || function(obj) {
         var keys2 = [];
@@ -56846,7 +56846,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_readable2 = __commonJS({
     "../../node_modules/readable-stream/lib/_stream_readable.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var pna = require_process_nextick_args();
       module.exports = Readable;
       var isArray = require_isarray2();
@@ -57533,7 +57533,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_transform2 = __commonJS({
     "../../node_modules/readable-stream/lib/_stream_transform.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = Transform;
       var Duplex = require_stream_duplex2();
       var util = Object.create(require_util2());
@@ -57634,7 +57634,7 @@ ${toHex(hashedRequest)}`;
   var require_stream_passthrough2 = __commonJS({
     "../../node_modules/readable-stream/lib/_stream_passthrough.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = PassThrough;
       var Transform = require_stream_transform2();
       var util = Object.create(require_util2());
@@ -57653,7 +57653,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/readable-stream/readable-browser.js
   var require_readable_browser = __commonJS({
     "../../node_modules/readable-stream/readable-browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports = module.exports = require_stream_readable2();
       exports.Stream = exports;
       exports.Readable = exports;
@@ -57668,7 +57668,7 @@ ${toHex(hashedRequest)}`;
   var require_hash_base2 = __commonJS({
     "../../node_modules/ripemd160/node_modules/hash-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer2();
       var Transform = require_readable_browser().Transform;
@@ -57760,7 +57760,7 @@ ${toHex(hashedRequest)}`;
   var require_ripemd160 = __commonJS({
     "../../node_modules/ripemd160/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_buffer().Buffer;
       var inherits = require_inherits_browser();
       var HashBase = require_hash_base2();
@@ -58202,7 +58202,7 @@ ${toHex(hashedRequest)}`;
   var require_hash = __commonJS({
     "../../node_modules/sha.js/hash.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       function Hash(blockSize, finalSize) {
@@ -58264,7 +58264,7 @@ ${toHex(hashedRequest)}`;
   var require_sha = __commonJS({
     "../../node_modules/sha.js/sha.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -58349,7 +58349,7 @@ ${toHex(hashedRequest)}`;
   var require_sha1 = __commonJS({
     "../../node_modules/sha.js/sha1.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -58437,7 +58437,7 @@ ${toHex(hashedRequest)}`;
   var require_sha256 = __commonJS({
     "../../node_modules/sha.js/sha256.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -58600,7 +58600,7 @@ ${toHex(hashedRequest)}`;
   var require_sha224 = __commonJS({
     "../../node_modules/sha.js/sha224.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Sha2564 = require_sha256();
       var Hash = require_hash();
@@ -58642,7 +58642,7 @@ ${toHex(hashedRequest)}`;
   var require_sha512 = __commonJS({
     "../../node_modules/sha.js/sha512.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Hash = require_hash();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -58986,7 +58986,7 @@ ${toHex(hashedRequest)}`;
   var require_sha384 = __commonJS({
     "../../node_modules/sha.js/sha384.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var SHA512 = require_sha512();
       var Hash = require_hash();
@@ -59039,7 +59039,7 @@ ${toHex(hashedRequest)}`;
   var require_sha2 = __commonJS({
     "../../node_modules/sha.js/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function SHA(algorithm) {
         var alg = algorithm.toLowerCase();
         var Algorithm = module.exports[alg];
@@ -59061,7 +59061,7 @@ ${toHex(hashedRequest)}`;
   var require_cipher_base = __commonJS({
     "../../node_modules/cipher-base/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_stream_browserify().Transform;
       var StringDecoder = require_string_decoder().StringDecoder;
@@ -59157,7 +59157,7 @@ ${toHex(hashedRequest)}`;
   var require_browser4 = __commonJS({
     "../../node_modules/create-hash/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var MD5 = require_md5();
       var RIPEMD160 = require_ripemd160();
@@ -59187,7 +59187,7 @@ ${toHex(hashedRequest)}`;
   var require_legacy = __commonJS({
     "../../node_modules/create-hmac/legacy.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_safe_buffer().Buffer;
       var Base = require_cipher_base();
@@ -59228,7 +59228,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/create-hash/md5.js
   var require_md52 = __commonJS({
     "../../node_modules/create-hash/md5.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var MD5 = require_md5();
       module.exports = function(buffer) {
         return new MD5().update(buffer).digest();
@@ -59240,7 +59240,7 @@ ${toHex(hashedRequest)}`;
   var require_browser5 = __commonJS({
     "../../node_modules/create-hmac/browser.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Legacy = require_legacy();
       var Base = require_cipher_base();
@@ -59456,7 +59456,7 @@ ${toHex(hashedRequest)}`;
   var require_algos = __commonJS({
     "../../node_modules/browserify-sign/algos.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = require_algorithms();
     }
   });
@@ -59465,7 +59465,7 @@ ${toHex(hashedRequest)}`;
   var require_precondition = __commonJS({
     "../../node_modules/pbkdf2/lib/precondition.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var $isFinite = isFinite;
       var MAX_ALLOC = Math.pow(2, 30) - 1;
       module.exports = function(iterations, keylen) {
@@ -59489,7 +59489,7 @@ ${toHex(hashedRequest)}`;
   var require_default_encoding = __commonJS({
     "../../node_modules/pbkdf2/lib/default-encoding.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var defaultEncoding;
       if (window.process && window.process.browser) {
         defaultEncoding = "utf-8";
@@ -59508,7 +59508,7 @@ ${toHex(hashedRequest)}`;
   var require_to_buffer3 = __commonJS({
     "../../node_modules/pbkdf2/lib/to-buffer.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var toBuffer = require_to_buffer();
       var useUint8Array = typeof Uint8Array !== "undefined";
@@ -59527,7 +59527,7 @@ ${toHex(hashedRequest)}`;
   var require_sync_browser = __commonJS({
     "../../node_modules/pbkdf2/lib/sync-browser.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var md5 = require_md52();
       var RIPEMD160 = require_ripemd160();
       var sha = require_sha2();
@@ -59642,7 +59642,7 @@ ${toHex(hashedRequest)}`;
   var require_async = __commonJS({
     "../../node_modules/pbkdf2/lib/async.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var checkParameters = require_precondition();
       var defaultEncoding = require_default_encoding();
@@ -59765,7 +59765,7 @@ ${toHex(hashedRequest)}`;
   var require_browser6 = __commonJS({
     "../../node_modules/pbkdf2/browser.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.pbkdf2 = require_async();
       exports.pbkdf2Sync = require_sync_browser();
     }
@@ -59775,7 +59775,7 @@ ${toHex(hashedRequest)}`;
   var require_utils = __commonJS({
     "../../node_modules/des.js/lib/des/utils.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.readUInt32BE = function readUInt32BE(bytes, off) {
         var res = bytes[0 + off] << 24 | bytes[1 + off] << 16 | bytes[2 + off] << 8 | bytes[3 + off];
         return res >>> 0;
@@ -60541,7 +60541,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/minimalistic-assert/index.js
   var require_minimalistic_assert = __commonJS({
     "../../node_modules/minimalistic-assert/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = assert;
       function assert(val, msg) {
         if (!val)
@@ -60558,7 +60558,7 @@ ${toHex(hashedRequest)}`;
   var require_cipher = __commonJS({
     "../../node_modules/des.js/lib/des/cipher.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       function Cipher(options) {
         this.options = options;
@@ -60667,7 +60667,7 @@ ${toHex(hashedRequest)}`;
   var require_des = __commonJS({
     "../../node_modules/des.js/lib/des/des.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var utils = require_utils();
@@ -60795,7 +60795,7 @@ ${toHex(hashedRequest)}`;
   var require_cbc = __commonJS({
     "../../node_modules/des.js/lib/des/cbc.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var proto = {};
@@ -60851,7 +60851,7 @@ ${toHex(hashedRequest)}`;
   var require_ede = __commonJS({
     "../../node_modules/des.js/lib/des/ede.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       var Cipher = require_cipher();
@@ -60900,7 +60900,7 @@ ${toHex(hashedRequest)}`;
   var require_des2 = __commonJS({
     "../../node_modules/des.js/lib/des.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.utils = require_utils();
       exports.Cipher = require_cipher();
       exports.DES = require_des();
@@ -60912,7 +60912,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-des/index.js
   var require_browserify_des = __commonJS({
     "../../node_modules/browserify-des/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var CipherBase = require_cipher_base();
       var des = require_des2();
       var inherits = require_inherits_browser();
@@ -60968,7 +60968,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/ecb.js
   var require_ecb = __commonJS({
     "../../node_modules/browserify-aes/modes/ecb.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.encrypt = function(self2, block) {
         return self2._cipher.encryptBlock(block);
       };
@@ -60981,7 +60981,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/buffer-xor/index.js
   var require_buffer_xor = __commonJS({
     "../../node_modules/buffer-xor/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var length = Math.min(a2.length, b2.length);
         var buffer = new Buffer(length);
@@ -60996,7 +60996,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/cbc.js
   var require_cbc2 = __commonJS({
     "../../node_modules/browserify-aes/modes/cbc.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       exports.encrypt = function(self2, block) {
         var data = xor(block, self2._prev);
@@ -61015,7 +61015,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/cfb.js
   var require_cfb = __commonJS({
     "../../node_modules/browserify-aes/modes/cfb.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var xor = require_buffer_xor();
       function encryptStart(self2, data, decrypt) {
@@ -61050,7 +61050,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/cfb8.js
   var require_cfb8 = __commonJS({
     "../../node_modules/browserify-aes/modes/cfb8.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad = self2._cipher.encryptBlock(self2._prev);
@@ -61076,7 +61076,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/cfb1.js
   var require_cfb1 = __commonJS({
     "../../node_modules/browserify-aes/modes/cfb1.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function encryptByte(self2, byteParam, decrypt) {
         var pad;
@@ -61118,7 +61118,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/ofb.js
   var require_ofb = __commonJS({
     "../../node_modules/browserify-aes/modes/ofb.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       function getBlock(self2) {
         self2._prev = self2._cipher.encryptBlock(self2._prev);
@@ -61138,7 +61138,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/incr32.js
   var require_incr32 = __commonJS({
     "../../node_modules/browserify-aes/incr32.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function incr32(iv) {
         var len = iv.length;
         var item;
@@ -61160,7 +61160,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/ctr.js
   var require_ctr = __commonJS({
     "../../node_modules/browserify-aes/modes/ctr.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var xor = require_buffer_xor();
       var Buffer4 = require_safe_buffer().Buffer;
       var incr32 = require_incr32();
@@ -61392,7 +61392,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/modes/index.js
   var require_modes = __commonJS({
     "../../node_modules/browserify-aes/modes/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var modeModules = {
         ECB: require_ecb(),
         CBC: require_cbc2(),
@@ -61415,7 +61415,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/aes.js
   var require_aes = __commonJS({
     "../../node_modules/browserify-aes/aes.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       function asUInt32Array(buf) {
         if (!Buffer4.isBuffer(buf)) buf = Buffer4.from(buf);
@@ -61590,7 +61590,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/ghash.js
   var require_ghash = __commonJS({
     "../../node_modules/browserify-aes/ghash.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var ZEROES = Buffer4.alloc(16, 0);
       function toArray(buf) {
@@ -61668,7 +61668,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/authCipher.js
   var require_authCipher = __commonJS({
     "../../node_modules/browserify-aes/authCipher.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61771,7 +61771,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/streamCipher.js
   var require_streamCipher = __commonJS({
     "../../node_modules/browserify-aes/streamCipher.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var aes = require_aes();
       var Buffer4 = require_safe_buffer().Buffer;
       var Transform = require_cipher_base();
@@ -61799,7 +61799,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/evp_bytestokey/index.js
   var require_evp_bytestokey = __commonJS({
     "../../node_modules/evp_bytestokey/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var MD5 = require_md5();
       function EVP_BytesToKey(password, salt, keyBits, ivLen) {
@@ -61842,7 +61842,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/encrypter.js
   var require_encrypter = __commonJS({
     "../../node_modules/browserify-aes/encrypter.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var MODES = require_modes();
       var AuthCipher = require_authCipher();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -61939,7 +61939,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/decrypter.js
   var require_decrypter = __commonJS({
     "../../node_modules/browserify-aes/decrypter.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var AuthCipher = require_authCipher();
       var Buffer4 = require_safe_buffer().Buffer;
       var MODES = require_modes();
@@ -62049,7 +62049,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-aes/browser.js
   var require_browser7 = __commonJS({
     "../../node_modules/browserify-aes/browser.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var ciphers = require_encrypter();
       var deciphers = require_decrypter();
       var modes = require_list();
@@ -62067,7 +62067,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-des/modes.js
   var require_modes2 = __commonJS({
     "../../node_modules/browserify-des/modes.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports["des-ecb"] = {
         key: 8,
         iv: 0
@@ -62098,7 +62098,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/browserify-cipher/browser.js
   var require_browser8 = __commonJS({
     "../../node_modules/browserify-cipher/browser.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var DES = require_browserify_des();
       var aes = require_browser7();
       var aesModes = require_modes();
@@ -62160,7 +62160,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js
   var require_bn = __commonJS({
     "../../node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -64972,7 +64972,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js
   var require_bn2 = __commonJS({
     "../../node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -67784,7 +67784,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/brorand/index.js
   var require_brorand = __commonJS({
     "../../node_modules/brorand/index.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var r2;
       module.exports = function rand(len) {
         if (!r2)
@@ -67842,7 +67842,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/miller-rabin/lib/mr.js
   var require_mr = __commonJS({
     "../../node_modules/miller-rabin/lib/mr.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var bn = require_bn2();
       var brorand = require_brorand();
       function MillerRabin(rand) {
@@ -67934,7 +67934,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/diffie-hellman/lib/generatePrime.js
   var require_generatePrime = __commonJS({
     "../../node_modules/diffie-hellman/lib/generatePrime.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var randomBytes3 = require_browser2();
       module.exports = findPrime;
       findPrime.simpleSieve = simpleSieve;
@@ -68071,7 +68071,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/diffie-hellman/lib/dh.js
   var require_dh = __commonJS({
     "../../node_modules/diffie-hellman/lib/dh.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn();
       var MillerRabin = require_mr();
       var millerRabin = new MillerRabin();
@@ -68218,7 +68218,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/diffie-hellman/browser.js
   var require_browser9 = __commonJS({
     "../../node_modules/diffie-hellman/browser.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var generatePrime = require_generatePrime();
       var primes = require_primes();
       var DH = require_dh();
@@ -68258,7 +68258,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/bn.js/lib/bn.js
   var require_bn3 = __commonJS({
     "../../node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -71151,7 +71151,7 @@ ${toHex(hashedRequest)}`;
   var require_browserify_rsa = __commonJS({
     "../../node_modules/browserify-rsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn3();
       var randomBytes3 = require_browser2();
       var Buffer4 = require_safe_buffer().Buffer;
@@ -71252,7 +71252,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/elliptic/node_modules/bn.js/lib/bn.js
   var require_bn4 = __commonJS({
     "../../node_modules/elliptic/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -74065,7 +74065,7 @@ ${toHex(hashedRequest)}`;
   var require_utils2 = __commonJS({
     "../../node_modules/minimalistic-crypto-utils/lib/utils.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = exports;
       function toArray(msg, enc) {
         if (Array.isArray(msg))
@@ -74125,7 +74125,7 @@ ${toHex(hashedRequest)}`;
   var require_utils3 = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/utils.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = exports;
       var BN = require_bn4();
       var minAssert = require_minimalistic_assert();
@@ -74232,7 +74232,7 @@ ${toHex(hashedRequest)}`;
   var require_base = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curve/base.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var getNAF = utils.getNAF;
@@ -74555,7 +74555,7 @@ ${toHex(hashedRequest)}`;
   var require_short = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curve/short.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75254,7 +75254,7 @@ ${toHex(hashedRequest)}`;
   var require_mont = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curve/mont.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var inherits = require_inherits_browser();
       var Base = require_base();
@@ -75383,7 +75383,7 @@ ${toHex(hashedRequest)}`;
   var require_edwards = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curve/edwards.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils3();
       var BN = require_bn4();
       var inherits = require_inherits_browser();
@@ -75685,7 +75685,7 @@ ${toHex(hashedRequest)}`;
   var require_curve = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curve/index.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var curve = exports;
       curve.base = require_base();
       curve.short = require_short();
@@ -75698,7 +75698,7 @@ ${toHex(hashedRequest)}`;
   var require_utils4 = __commonJS({
     "../../node_modules/hash.js/lib/hash/utils.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var assert = require_minimalistic_assert();
       var inherits = require_inherits_browser();
       exports.inherits = inherits;
@@ -75944,7 +75944,7 @@ ${toHex(hashedRequest)}`;
   var require_common = __commonJS({
     "../../node_modules/hash.js/lib/hash/common.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function BlockHash() {
@@ -76024,7 +76024,7 @@ ${toHex(hashedRequest)}`;
   var require_common2 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/common.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var rotr32 = utils.rotr32;
       function ft_1(s2, x2, y2, z2) {
@@ -76071,7 +76071,7 @@ ${toHex(hashedRequest)}`;
   var require__ = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/1.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76144,7 +76144,7 @@ ${toHex(hashedRequest)}`;
   var require__2 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/256.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var shaCommon = require_common2();
@@ -76297,7 +76297,7 @@ ${toHex(hashedRequest)}`;
   var require__3 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/224.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA256 = require__2();
       function SHA224() {
@@ -76334,7 +76334,7 @@ ${toHex(hashedRequest)}`;
   var require__4 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/512.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var assert = require_minimalistic_assert();
@@ -76774,7 +76774,7 @@ ${toHex(hashedRequest)}`;
   var require__5 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha/384.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var SHA512 = require__4();
       function SHA384() {
@@ -76819,7 +76819,7 @@ ${toHex(hashedRequest)}`;
   var require_sha3 = __commonJS({
     "../../node_modules/hash.js/lib/hash/sha.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.sha1 = require__();
       exports.sha224 = require__3();
       exports.sha256 = require__2();
@@ -76832,7 +76832,7 @@ ${toHex(hashedRequest)}`;
   var require_ripemd = __commonJS({
     "../../node_modules/hash.js/lib/hash/ripemd.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var common = require_common();
       var rotl32 = utils.rotl32;
@@ -77274,7 +77274,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac = __commonJS({
     "../../node_modules/hash.js/lib/hash/hmac.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils4();
       var assert = require_minimalistic_assert();
       function Hmac(hash, key, enc) {
@@ -77315,7 +77315,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/hash.js/lib/hash.js
   var require_hash2 = __commonJS({
     "../../node_modules/hash.js/lib/hash.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var hash = exports;
       hash.utils = require_utils4();
       hash.common = require_common();
@@ -77334,7 +77334,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js
   var require_secp256k1 = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = {
         doubles: {
           step: 4,
@@ -78122,7 +78122,7 @@ ${toHex(hashedRequest)}`;
   var require_curves = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/curves.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var curves = exports;
       var hash = require_hash2();
       var curve = require_curve();
@@ -78299,7 +78299,7 @@ ${toHex(hashedRequest)}`;
   var require_hmac_drbg = __commonJS({
     "../../node_modules/hmac-drbg/lib/hmac-drbg.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var hash = require_hash2();
       var utils = require_utils2();
       var assert = require_minimalistic_assert();
@@ -78394,7 +78394,7 @@ ${toHex(hashedRequest)}`;
   var require_key = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/ec/key.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78489,7 +78489,7 @@ ${toHex(hashedRequest)}`;
   var require_signature = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/ec/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78645,7 +78645,7 @@ ${toHex(hashedRequest)}`;
   var require_ec = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/ec/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var HmacDRBG = require_hmac_drbg();
       var utils = require_utils3();
@@ -78853,7 +78853,7 @@ ${toHex(hashedRequest)}`;
   var require_key2 = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/eddsa/key.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var utils = require_utils3();
       var assert = utils.assert;
       var parseBytes = utils.parseBytes;
@@ -78928,7 +78928,7 @@ ${toHex(hashedRequest)}`;
   var require_signature2 = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/eddsa/signature.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn4();
       var utils = require_utils3();
       var assert = utils.assert;
@@ -78979,7 +78979,7 @@ ${toHex(hashedRequest)}`;
   var require_eddsa = __commonJS({
     "../../node_modules/elliptic/lib/elliptic/eddsa/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var hash = require_hash2();
       var curves = require_curves();
       var utils = require_utils3();
@@ -79068,7 +79068,7 @@ ${toHex(hashedRequest)}`;
   var require_elliptic = __commonJS({
     "../../node_modules/elliptic/lib/elliptic.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var elliptic = exports;
       elliptic.version = require_package().version;
       elliptic.utils = require_utils3();
@@ -79083,7 +79083,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js
   var require_bn5 = __commonJS({
     "../../node_modules/asn1.js/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -81895,7 +81895,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/api.js
   var require_api = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/api.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       var inherits = require_inherits_browser();
       var api = exports;
@@ -81949,7 +81949,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/base/reporter.js
   var require_reporter = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/base/reporter.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       function Reporter(options) {
         this._reporterState = {
@@ -82050,7 +82050,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/base/buffer.js
   var require_buffer2 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/base/buffer.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Reporter = require_base2().Reporter;
       var Buffer4 = require_buffer().Buffer;
@@ -82153,7 +82153,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/base/node.js
   var require_node = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/base/node.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Reporter = require_base2().Reporter;
       var EncoderBuffer = require_base2().EncoderBuffer;
       var DecoderBuffer = require_base2().DecoderBuffer;
@@ -82687,7 +82687,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/base/index.js
   var require_base2 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/base/index.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var base = exports;
       base.Reporter = require_reporter().Reporter;
       base.DecoderBuffer = require_buffer2().DecoderBuffer;
@@ -82699,7 +82699,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/constants/der.js
   var require_der = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/constants/der.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var constants = require_constants();
       exports.tagClass = {
         0: "universal",
@@ -82746,7 +82746,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/constants/index.js
   var require_constants = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/constants/index.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var constants = exports;
       constants._reverse = function reverse(map) {
         var res = {};
@@ -82765,7 +82765,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/decoders/der.js
   var require_der2 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/decoders/der.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var asn1 = require_asn1();
       var base = asn1.base;
@@ -83029,7 +83029,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/decoders/pem.js
   var require_pem = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/decoders/pem.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_buffer().Buffer;
       var DERDecoder = require_der2();
@@ -83075,7 +83075,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/decoders/index.js
   var require_decoders = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/decoders/index.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var decoders = exports;
       decoders.der = require_der2();
       decoders.pem = require_pem();
@@ -83085,7 +83085,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/encoders/der.js
   var require_der3 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/encoders/der.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var Buffer4 = require_buffer().Buffer;
       var asn1 = require_asn1();
@@ -83317,7 +83317,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/encoders/pem.js
   var require_pem2 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/encoders/pem.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var inherits = require_inherits_browser();
       var DEREncoder = require_der3();
       function PEMEncoder(entity) {
@@ -83341,7 +83341,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1/encoders/index.js
   var require_encoders = __commonJS({
     "../../node_modules/asn1.js/lib/asn1/encoders/index.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var encoders = exports;
       encoders.der = require_der3();
       encoders.pem = require_pem2();
@@ -83351,7 +83351,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/asn1.js/lib/asn1.js
   var require_asn1 = __commonJS({
     "../../node_modules/asn1.js/lib/asn1.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var asn1 = exports;
       asn1.bignum = require_bn5();
       asn1.define = require_api().define;
@@ -83366,7 +83366,7 @@ ${toHex(hashedRequest)}`;
   var require_certificate = __commonJS({
     "../../node_modules/parse-asn1/certificate.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var asn = require_asn1();
       var Time = asn.define("Time", function() {
         this.choice({
@@ -83446,7 +83446,7 @@ ${toHex(hashedRequest)}`;
   var require_asn12 = __commonJS({
     "../../node_modules/parse-asn1/asn1.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var asn1 = require_asn1();
       exports.certificate = require_certificate();
       var RSAPrivateKey = asn1.define("RSAPrivateKey", function() {
@@ -83580,7 +83580,7 @@ ${toHex(hashedRequest)}`;
   var require_fixProc = __commonJS({
     "../../node_modules/parse-asn1/fixProc.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var findProc = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m;
       var startRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m;
       var fullRegex = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m;
@@ -83618,7 +83618,7 @@ ${toHex(hashedRequest)}`;
   var require_parse_asn1 = __commonJS({
     "../../node_modules/parse-asn1/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var asn1 = require_asn12();
       var aesid = require_aesid();
       var fixProc = require_fixProc();
@@ -83747,7 +83747,7 @@ ${toHex(hashedRequest)}`;
   var require_sign2 = __commonJS({
     "../../node_modules/browserify-sign/browser/sign.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var createHmac2 = require_browser5();
       var crt = require_browserify_rsa();
@@ -83902,7 +83902,7 @@ ${toHex(hashedRequest)}`;
   var require_verify = __commonJS({
     "../../node_modules/browserify-sign/browser/verify.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var BN = require_bn3();
       var EC = require_elliptic().ec;
@@ -83993,7 +83993,7 @@ ${toHex(hashedRequest)}`;
   var require_browser10 = __commonJS({
     "../../node_modules/browserify-sign/browser/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Buffer4 = require_safe_buffer().Buffer;
       var createHash4 = require_browser4();
       var stream = require_readable_browser();
@@ -84074,7 +84074,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js
   var require_bn6 = __commonJS({
     "../../node_modules/create-ecdh/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -86886,7 +86886,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/create-ecdh/browser.js
   var require_browser11 = __commonJS({
     "../../node_modules/create-ecdh/browser.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var elliptic = require_elliptic();
       var BN = require_bn6();
       module.exports = function createECDH(curve) {
@@ -87005,7 +87005,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/mgf.js
   var require_mgf = __commonJS({
     "../../node_modules/public-encrypt/mgf.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var createHash4 = require_browser4();
       var Buffer4 = require_safe_buffer().Buffer;
       module.exports = function(seed, len) {
@@ -87029,7 +87029,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/xor.js
   var require_xor = __commonJS({
     "../../node_modules/public-encrypt/xor.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function xor(a2, b2) {
         var len = a2.length;
         var i2 = -1;
@@ -87044,7 +87044,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js
   var require_bn7 = __commonJS({
     "../../node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(module2, exports2) {
         "use strict";
         function assert(val, msg) {
@@ -89856,7 +89856,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/withPublic.js
   var require_withPublic = __commonJS({
     "../../node_modules/public-encrypt/withPublic.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var BN = require_bn7();
       var Buffer4 = require_safe_buffer().Buffer;
       function withPublic(paddedMsg, key) {
@@ -89869,7 +89869,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/publicEncrypt.js
   var require_publicEncrypt = __commonJS({
     "../../node_modules/public-encrypt/publicEncrypt.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var randomBytes3 = require_browser2();
       var createHash4 = require_browser4();
@@ -89962,7 +89962,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/privateDecrypt.js
   var require_privateDecrypt = __commonJS({
     "../../node_modules/public-encrypt/privateDecrypt.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var parseKeys = require_parse_asn1();
       var mgf = require_mgf();
       var xor = require_xor();
@@ -90069,7 +90069,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/public-encrypt/browser.js
   var require_browser12 = __commonJS({
     "../../node_modules/public-encrypt/browser.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.publicEncrypt = require_publicEncrypt();
       exports.privateDecrypt = require_privateDecrypt();
       exports.privateEncrypt = function privateEncrypt(key, buf) {
@@ -90085,7 +90085,7 @@ ${toHex(hashedRequest)}`;
   var require_browser13 = __commonJS({
     "../../node_modules/randomfill/browser.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function oldBrowser() {
         throw new Error("secure random number generation not supported by this browser\nuse chrome, FireFox or Internet Explorer 11");
       }
@@ -90188,7 +90188,7 @@ ${toHex(hashedRequest)}`;
   var require_crypto_browserify = __commonJS({
     "../../node_modules/crypto-browserify/index.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.randomBytes = exports.rng = exports.pseudoRandomBytes = exports.prng = require_browser2();
       exports.createHash = exports.Hash = require_browser4();
       exports.createHmac = exports.Hmac = require_browser5();
@@ -92137,7 +92137,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/tweetnacl/nacl-fast.js
   var require_nacl_fast = __commonJS({
     "../../node_modules/tweetnacl/nacl-fast.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(nacl2) {
         "use strict";
         var gf = function(init) {
@@ -97556,7 +97556,7 @@ ${toHex(hashedRequest)}`;
   var require_path_browserify = __commonJS({
     "../../node_modules/path-browserify/index.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function assertPath(path2) {
         if (typeof path2 !== "string") {
           throw new TypeError("Path must be a string. Received " + JSON.stringify(path2));
@@ -102702,7 +102702,7 @@ ${toHex(hashedRequest)}`;
   var require_sdp = __commonJS({
     "../../node_modules/sdp/sdp.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var SDPUtils2 = {};
       SDPUtils2.generateIdentifier = function() {
         return Math.random().toString(36).substring(2, 12);
@@ -105362,7 +105362,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/can-promise.js
   var require_can_promise = __commonJS({
     "../../node_modules/qrcode/lib/can-promise.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       module.exports = function() {
         return typeof Promise === "function" && Promise.prototype && Promise.prototype.then;
       };
@@ -105372,7 +105372,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/utils.js
   var require_utils5 = __commonJS({
     "../../node_modules/qrcode/lib/core/utils.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var toSJISFunction;
       var CODEWORDS_COUNT = [
         0,
@@ -105452,7 +105452,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/error-correction-level.js
   var require_error_correction_level = __commonJS({
     "../../node_modules/qrcode/lib/core/error-correction-level.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.L = { bit: 1 };
       exports.M = { bit: 0 };
       exports.Q = { bit: 3 };
@@ -105498,7 +105498,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/bit-buffer.js
   var require_bit_buffer = __commonJS({
     "../../node_modules/qrcode/lib/core/bit-buffer.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function BitBuffer() {
         this.buffer = [];
         this.length = 0;
@@ -105534,7 +105534,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/bit-matrix.js
   var require_bit_matrix = __commonJS({
     "../../node_modules/qrcode/lib/core/bit-matrix.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function BitMatrix(size) {
         if (!size || size < 1) {
           throw new Error("BitMatrix size must be defined and greater than 0");
@@ -105564,7 +105564,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/alignment-pattern.js
   var require_alignment_pattern = __commonJS({
     "../../node_modules/qrcode/lib/core/alignment-pattern.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var getSymbolSize = require_utils5().getSymbolSize;
       exports.getRowColCoords = function getRowColCoords(version) {
         if (version === 1) return [];
@@ -105600,7 +105600,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/finder-pattern.js
   var require_finder_pattern = __commonJS({
     "../../node_modules/qrcode/lib/core/finder-pattern.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var getSymbolSize = require_utils5().getSymbolSize;
       var FINDER_PATTERN_SIZE = 7;
       exports.getPositions = function getPositions(version) {
@@ -105620,7 +105620,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/mask-pattern.js
   var require_mask_pattern = __commonJS({
     "../../node_modules/qrcode/lib/core/mask-pattern.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.Patterns = {
         PATTERN000: 0,
         PATTERN001: 1,
@@ -105763,7 +105763,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/error-correction-code.js
   var require_error_correction_code = __commonJS({
     "../../node_modules/qrcode/lib/core/error-correction-code.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var ECLevel = require_error_correction_level();
       var EC_BLOCKS_TABLE = [
         // L  M  Q  H
@@ -106125,7 +106125,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/galois-field.js
   var require_galois_field = __commonJS({
     "../../node_modules/qrcode/lib/core/galois-field.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var EXP_TABLE = new Uint8Array(512);
       var LOG_TABLE = new Uint8Array(256);
       (function initTables() {
@@ -106159,7 +106159,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/polynomial.js
   var require_polynomial = __commonJS({
     "../../node_modules/qrcode/lib/core/polynomial.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var GF = require_galois_field();
       exports.mul = function mul(p1, p2) {
         const coeff = new Uint8Array(p1.length + p2.length - 1);
@@ -106196,7 +106196,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/reed-solomon-encoder.js
   var require_reed_solomon_encoder = __commonJS({
     "../../node_modules/qrcode/lib/core/reed-solomon-encoder.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Polynomial = require_polynomial();
       function ReedSolomonEncoder(degree) {
         this.genPoly = void 0;
@@ -106229,7 +106229,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/version-check.js
   var require_version_check = __commonJS({
     "../../node_modules/qrcode/lib/core/version-check.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       exports.isValid = function isValid(version) {
         return !isNaN(version) && version >= 1 && version <= 40;
       };
@@ -106239,7 +106239,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/regex.js
   var require_regex = __commonJS({
     "../../node_modules/qrcode/lib/core/regex.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var numeric = "[0-9]+";
       var alphanumeric = "[A-Z $%*+\\-./:]+";
       var kanji = "(?:[u3000-u303F]|[u3040-u309F]|[u30A0-u30FF]|[uFF00-uFFEF]|[u4E00-u9FAF]|[u2605-u2606]|[u2190-u2195]|u203B|[u2010u2015u2018u2019u2025u2026u201Cu201Du2225u2260]|[u0391-u0451]|[u00A7u00A8u00B1u00B4u00D7u00F7])+";
@@ -106268,7 +106268,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/mode.js
   var require_mode = __commonJS({
     "../../node_modules/qrcode/lib/core/mode.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var VersionCheck = require_version_check();
       var Regex = require_regex();
       exports.NUMERIC = {
@@ -106350,7 +106350,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/version.js
   var require_version = __commonJS({
     "../../node_modules/qrcode/lib/core/version.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var ECCode = require_error_correction_code();
       var ECLevel = require_error_correction_level();
@@ -106446,7 +106446,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/format-info.js
   var require_format_info = __commonJS({
     "../../node_modules/qrcode/lib/core/format-info.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var G15 = 1 << 10 | 1 << 8 | 1 << 5 | 1 << 4 | 1 << 2 | 1 << 1 | 1 << 0;
       var G15_MASK = 1 << 14 | 1 << 12 | 1 << 10 | 1 << 4 | 1 << 1;
@@ -106465,7 +106465,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/numeric-data.js
   var require_numeric_data = __commonJS({
     "../../node_modules/qrcode/lib/core/numeric-data.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Mode = require_mode();
       function NumericData(data) {
         this.mode = Mode.NUMERIC;
@@ -106501,7 +106501,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/alphanumeric-data.js
   var require_alphanumeric_data = __commonJS({
     "../../node_modules/qrcode/lib/core/alphanumeric-data.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Mode = require_mode();
       var ALPHA_NUM_CHARS = [
         "0",
@@ -106581,7 +106581,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/byte-data.js
   var require_byte_data = __commonJS({
     "../../node_modules/qrcode/lib/core/byte-data.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Mode = require_mode();
       function ByteData(data) {
         this.mode = Mode.BYTE;
@@ -106612,7 +106612,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/kanji-data.js
   var require_kanji_data = __commonJS({
     "../../node_modules/qrcode/lib/core/kanji-data.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Mode = require_mode();
       var Utils = require_utils5();
       function KanjiData(data) {
@@ -106653,7 +106653,7 @@ ${toHex(hashedRequest)}`;
   var require_dijkstra = __commonJS({
     "../../node_modules/dijkstrajs/dijkstra.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var dijkstra = {
         single_source_shortest_paths: function(graph, s2, d2) {
           var predecessors = {};
@@ -106754,7 +106754,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/segments.js
   var require_segments = __commonJS({
     "../../node_modules/qrcode/lib/core/segments.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Mode = require_mode();
       var NumericData = require_numeric_data();
       var AlphanumericData = require_alphanumeric_data();
@@ -106941,7 +106941,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/core/qrcode.js
   var require_qrcode = __commonJS({
     "../../node_modules/qrcode/lib/core/qrcode.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Utils = require_utils5();
       var ECLevel = require_error_correction_level();
       var BitBuffer = require_bit_buffer();
@@ -107203,7 +107203,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/renderer/utils.js
   var require_utils6 = __commonJS({
     "../../node_modules/qrcode/lib/renderer/utils.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       function hex2rgba(hex) {
         if (typeof hex === "number") {
           hex = hex.toString();
@@ -107284,7 +107284,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/renderer/canvas.js
   var require_canvas = __commonJS({
     "../../node_modules/qrcode/lib/renderer/canvas.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Utils = require_utils6();
       function clearCanvas(ctx, canvas, size) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -107338,7 +107338,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/renderer/svg-tag.js
   var require_svg_tag = __commonJS({
     "../../node_modules/qrcode/lib/renderer/svg-tag.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var Utils = require_utils6();
       function getColorAttrib(color, attrib) {
         const alpha = color.a / 255;
@@ -107397,7 +107397,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/qrcode/lib/browser.js
   var require_browser14 = __commonJS({
     "../../node_modules/qrcode/lib/browser.js"(exports) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       var canPromise = require_can_promise();
       var QRCode2 = require_qrcode();
       var CanvasRenderer = require_canvas();
@@ -107811,7 +107811,7 @@ ${toHex(hashedRequest)}`;
   // ../../node_modules/html5-qrcode/third_party/zxing-js.umd.js
   var require_zxing_js_umd = __commonJS({
     "../../node_modules/html5-qrcode/third_party/zxing-js.umd.js"(exports, module) {
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function(global2, factory) {
         typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.ZXing = {}));
       })(exports, (function(exports2) {
@@ -137027,7 +137027,7 @@ ${toHex(hashedRequest)}`;
   var require_react_jsx_runtime_development = __commonJS({
     "../../node_modules/react/cjs/react-jsx-runtime.development.js"(exports) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       (function() {
         function getComponentNameFromType(type) {
           if (null == type) return null;
@@ -137238,18 +137238,18 @@ ${toHex(hashedRequest)}`;
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React8 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React8.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React4 = {
+        React8 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
-          React4,
+        var unknownOwnerDebugStack = React8.react_stack_bottom_frame.bind(
+          React8,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -137285,7 +137285,7 @@ ${toHex(hashedRequest)}`;
   var require_jsx_runtime = __commonJS({
     "../../node_modules/react/jsx-runtime.js"(exports, module) {
       "use strict";
-      var import_polyfills739 = __toESM(require_polyfills());
+      var import_polyfills754 = __toESM(require_polyfills());
       if (false) {
         module.exports = null;
       } else {
@@ -137862,11 +137862,1760 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // demo/social/src/components/Dialog.tsx
+  var import_polyfills739, import_react4, import_jsx_runtime4, Dialog;
+  var init_Dialog = __esm({
+    "demo/social/src/components/Dialog.tsx"() {
+      "use strict";
+      import_polyfills739 = __toESM(require_polyfills());
+      import_react4 = __toESM(require_react());
+      import_jsx_runtime4 = __toESM(require_jsx_runtime());
+      Dialog = ({ dialog, setDialog, profileCache }) => {
+        const [inputValue, setInputValue] = (0, import_react4.useState)(dialog?.defaultValue || "");
+        const [selectedValues, setSelectedValues] = (0, import_react4.useState)([]);
+        const [searchQuery, setSearchSearchQuery] = (0, import_react4.useState)("");
+        const [configData, setConfigData] = (0, import_react4.useState)({
+          syncMode: "s3",
+          region: "us-east-1",
+          endpoint: "",
+          accessKeyId: "",
+          secretAccessKey: "",
+          bucketName: ""
+        });
+        (0, import_react4.useEffect)(() => {
+          const handleEsc = (e2) => {
+            if (e2.key === "Escape") setDialog(null);
+          };
+          window.addEventListener("keydown", handleEsc);
+          return () => window.removeEventListener("keydown", handleEsc);
+        }, [setDialog]);
+        (0, import_react4.useEffect)(() => {
+          setInputValue(dialog?.defaultValue || "");
+          setSelectedValues([]);
+          setSearchSearchQuery("");
+        }, [dialog]);
+        if (!dialog) return null;
+        const toggleOption = (val) => {
+          setSelectedValues(
+            (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
+          );
+        };
+        const filteredOptions = dialog.options?.filter(
+          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
+        ) || [];
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "modal-title fw-bold text-primary", children: dialog.title }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: dialog.onCancel })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
+            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "input",
+              {
+                autoFocus: true,
+                className: "form-control rounded-pill px-3 shadow-sm",
+                value: inputValue,
+                onChange: (e2) => setInputValue(e2.target.value),
+                onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
+              }
+            ),
+            dialog.type === "config" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "config-form", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold", children: "Sync Mode" }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("select", { className: "form-select mb-3 rounded-pill", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "s3", children: "S3 Cloud" }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "webrtc", children: "WebRTC Mesh" })
+              ] }),
+              configData.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) })
+              ] })
+            ] }),
+            dialog.type === "multiselect" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                "input",
+                {
+                  type: "text",
+                  className: "form-control form-control-sm rounded-pill px-3",
+                  placeholder: "Search members...",
+                  value: searchQuery,
+                  onChange: (e2) => setSearchSearchQuery(e2.target.value)
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" }, children: filteredOptions.length > 0 ? filteredOptions.map((opt) => {
+                const userProfile = profileCache[opt.value];
+                return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                    "input",
+                    {
+                      type: "checkbox",
+                      className: "form-check-input me-3",
+                      checked: selectedValues.includes(opt.value),
+                      onChange: () => toggleOption(opt.value)
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center flex-grow-1", children: [
+                    userProfile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" }, children: opt.value[0]?.toUpperCase() || "?" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold small", children: userProfile?.name || opt.label }),
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: opt.value })
+                    ] })
+                  ] })
+                ] }, opt.value);
+              }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center py-3 text-muted small", children: "No members found" }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
+            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel, children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+              "button",
+              {
+                type: "button",
+                className: "btn btn-primary rounded-pill px-4 shadow-sm",
+                onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : dialog.type === "config" ? configData : inputValue),
+                children: dialog.type === "alert" ? "OK" : "Confirm"
+              }
+            )
+          ] })
+        ] }) }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/LoginView.tsx
+  var import_polyfills740, import_jsx_runtime5, LoginView;
+  var init_LoginView = __esm({
+    "demo/social/src/components/LoginView.tsx"() {
+      "use strict";
+      import_polyfills740 = __toESM(require_polyfills());
+      init_Dialog();
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      LoginView = ({
+        config,
+        setConfig,
+        rememberedUsers,
+        performLogin,
+        login,
+        resetLocalData,
+        autoLogin,
+        setAutoLogin,
+        autoSync,
+        setAutoSync,
+        useWebWorkers,
+        setUseWebWorkers,
+        dialog,
+        setDialog,
+        profileCache,
+        DialogComponent = Dialog
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h2", { className: "text-primary text-center fw-bold mb-4", children: "Sovereign Social" }),
+            rememberedUsers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Switch Account" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "list-group", children: rememberedUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+                "button",
+                {
+                  className: "list-group-item list-group-item-action d-flex align-items-center py-2",
+                  onClick: () => performLogin(u2.config),
+                  children: [
+                    u2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" }, children: u2.userId[0]?.toUpperCase() || "?" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "flex-grow-1 overflow-hidden", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "fw-bold text-truncate", children: [
+                        u2.name,
+                        u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)", children: "P2P Local" }) : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)", children: "P2P Global" }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud", children: "S3" })
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "x-small text-muted text-truncate", children: u2.userId })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "text-primary small", children: "Login \u2192" })
+                  ]
+                },
+                u2.userId
+              )) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center justify-content-center mb-1", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "fs-5 me-2", children: "\u{1F680}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "fw-bold text-primary", children: "Instant Quick Start" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small mb-3", children: "Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn-primary w-100 py-2 fw-bold shadow-sm",
+                  onClick: () => {
+                    const guestConfig = {
+                      ...config,
+                      syncMode: "offline",
+                      userId: config.userId || "guest-" + Math.random().toString(36).substring(7),
+                      password: config.password || "password123"
+                    };
+                    performLogin(guestConfig);
+                  },
+                  children: "\u26A1 Start Instantly (Offline Mode)"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Configure Workspace" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "Sync Mode" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-light text-muted border small", children: "Select Architecture" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "btn-group w-100 mb-3 flex-wrap", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline", children: "Offline-First" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeS3", children: "S3 Cloud" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc", children: "WebRTC Mesh" })
+            ] }),
+            config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "alert alert-info py-2 small mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "Offline-First Mode:" }),
+              " All data is stored securely in your browser's IndexedDB. You can connect to S3 cloud storage or P2P WebRTC at any time from the settings panel."
+            ] }),
+            config.syncMode === "webrtc" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "alert alert-success py-2 small mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "WebRTC P2P Mesh:" }),
+              " Synchronizes directly between browser tabs and devices without storing data on any centralized server."
+            ] }),
+            config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "border rounded p-3 mb-3 bg-light", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "S3 Cloud Credentials" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-secondary small", children: "Advanced" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-0", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Account Credentials" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "form-check mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
+                setAutoLogin(e2.target.checked);
+                localStorage.setItem("sov_auto_login", e2.target.checked.toString());
+              } }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-check-label small", htmlFor: "autoLogin", children: "Auto-login next time" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "form-check mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-check-input", type: "checkbox", id: "autoSyncCheck", checked: autoSync, onChange: (e2) => {
+                setAutoSync(e2.target.checked);
+                localStorage.setItem("sov_auto_sync", e2.target.checked.toString());
+              } }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-check-label small", htmlFor: "autoSyncCheck", children: "Enable Background Sync (60s)" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "form-check mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-check-input", type: "checkbox", id: "useWebWorkers", checked: useWebWorkers, onChange: (e2) => {
+                setUseWebWorkers(e2.target.checked);
+                localStorage.setItem("sov_use_workers", e2.target.checked.toString());
+              } }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-check-label small", htmlFor: "useWebWorkers", children: "Use Web Workers (Performance)" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login, children: "Log In" }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "text-center mt-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData, children: "Reset Local Data" }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(DialogComponent, { dialog, setDialog, profileCache })
+        ] });
+      };
+    }
+  });
+
+  // demo/social/src/context/SocialContext.tsx
+  var import_polyfills741, import_react5, SocialContext, useSocial;
+  var init_SocialContext = __esm({
+    "demo/social/src/context/SocialContext.tsx"() {
+      "use strict";
+      import_polyfills741 = __toESM(require_polyfills());
+      import_react5 = __toESM(require_react());
+      SocialContext = (0, import_react5.createContext)({
+        sov: null,
+        feed: null,
+        messaging: null,
+        profileModule: null,
+        moderation: null,
+        profileCache: {},
+        setProfileCache: () => {
+        },
+        blobCache: {},
+        setBlobCache: () => {
+        },
+        lastSyncTime: null,
+        config: {}
+      });
+      useSocial = () => (0, import_react5.useContext)(SocialContext);
+    }
+  });
+
+  // demo/social/src/components/MediaAndUser.tsx
+  var import_polyfills742, import_react6, import_jsx_runtime6, BlobImage, UserAvatar, UserName;
+  var init_MediaAndUser = __esm({
+    "demo/social/src/components/MediaAndUser.tsx"() {
+      "use strict";
+      import_polyfills742 = __toESM(require_polyfills());
+      import_react6 = __toESM(require_react());
+      init_SocialContext();
+      import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      BlobImage = ({
+        path: path2,
+        userId,
+        message,
+        sov: propSov,
+        messaging: propMessaging,
+        blobCache: propBlobCache,
+        setBlobCache: propSetBlobCache
+      }) => {
+        const social = useSocial();
+        const sov = propSov !== void 0 ? propSov : social.sov;
+        const messaging = propMessaging !== void 0 ? propMessaging : social.messaging;
+        const blobCache = propBlobCache !== void 0 ? propBlobCache : social.blobCache;
+        const setBlobCache = propSetBlobCache !== void 0 ? propSetBlobCache : social.setBlobCache;
+        const [src, setSrc] = (0, import_react6.useState)(blobCache[path2] || null);
+        (0, import_react6.useEffect)(() => {
+          if (!src && sov) {
+            const imagePromise = message && messaging ? messaging.getMessageImage(message) : sov.getBlob(path2, userId);
+            imagePromise.then((data) => {
+              if (data) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  const base64data = reader.result;
+                  setSrc(base64data);
+                  if (setBlobCache) {
+                    setBlobCache((prev) => ({ ...prev, [path2]: base64data }));
+                  }
+                };
+                reader.readAsDataURL(new Blob([data]));
+              }
+            });
+          }
+        }, [path2, userId, sov, message?.localImage, message?.imageEncryption, messaging]);
+        if (!src) return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-light p-5 text-center text-muted", children: "Loading image..." });
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
+      };
+      UserAvatar = ({
+        userId,
+        size = 40,
+        profileModule: propProfileModule,
+        lastSyncTime: propLastSyncTime,
+        profileCache: propProfileCache,
+        setProfileCache: propSetProfileCache
+      }) => {
+        const social = useSocial();
+        const profileModule = propProfileModule !== void 0 ? propProfileModule : social.profileModule;
+        const lastSyncTime = propLastSyncTime !== void 0 ? propLastSyncTime : social.lastSyncTime;
+        const profileCache = propProfileCache !== void 0 ? propProfileCache : social.profileCache;
+        const setProfileCache = propSetProfileCache !== void 0 ? propSetProfileCache : social.setProfileCache;
+        const [userData, setUserData] = (0, import_react6.useState)(profileCache[userId]);
+        (0, import_react6.useEffect)(() => {
+          if (profileModule) {
+            profileModule.getProfile(userId).then((p3) => {
+              if (p3 && (!userData || p3.updatedAt > (userData.updatedAt || 0) || p3.name !== userData.name || p3.avatar !== userData.avatar)) {
+                setUserData(p3);
+                if (setProfileCache) {
+                  setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
+                }
+              }
+            });
+          }
+        }, [userId, profileModule, lastSyncTime]);
+        const p2 = userData || { name: userId };
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
+          p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" }, children: userId[0]?.toUpperCase() || "?" }),
+          size > 30 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex flex-column", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "fw-bold", children: p2.name || userId }),
+            p2.name && p2.name !== userId && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("small", { className: "text-muted", style: { fontSize: "0.75rem" }, children: [
+              "@",
+              userId
+            ] })
+          ] })
+        ] });
+      };
+      UserName = ({
+        userId,
+        className,
+        profileModule: propProfileModule,
+        lastSyncTime: propLastSyncTime,
+        profileCache: propProfileCache,
+        setProfileCache: propSetProfileCache
+      }) => {
+        const social = useSocial();
+        const profileModule = propProfileModule !== void 0 ? propProfileModule : social.profileModule;
+        const lastSyncTime = propLastSyncTime !== void 0 ? propLastSyncTime : social.lastSyncTime;
+        const profileCache = propProfileCache !== void 0 ? propProfileCache : social.profileCache;
+        const setProfileCache = propSetProfileCache !== void 0 ? propSetProfileCache : social.setProfileCache;
+        const [userData, setUserData] = (0, import_react6.useState)(profileCache[userId]);
+        (0, import_react6.useEffect)(() => {
+          if (profileModule) {
+            profileModule.getProfile(userId).then((p2) => {
+              if (p2 && (!userData || p2.updatedAt > (userData.updatedAt || 0) || p2.name !== userData.name)) {
+                setUserData(p2);
+                if (setProfileCache) {
+                  setProfileCache((prev) => ({ ...prev, [userId]: p2 }));
+                }
+              }
+            });
+          }
+        }, [userId, profileModule, lastSyncTime]);
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: className || "fw-bold", children: userData?.name || userId });
+      };
+    }
+  });
+
+  // demo/social/src/components/Navigation.tsx
+  var import_polyfills743, import_jsx_runtime7, Navigation;
+  var init_Navigation = __esm({
+    "demo/social/src/components/Navigation.tsx"() {
+      "use strict";
+      import_polyfills743 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      import_jsx_runtime7 = __toESM(require_jsx_runtime());
+      Navigation = ({
+        config,
+        currentTab,
+        setCurrentTab,
+        unreadCounts,
+        isAdmin,
+        isConnected,
+        toggleConnection,
+        meshStats,
+        setShowPairing,
+        sync,
+        syncing,
+        logout,
+        handleConnectRemote,
+        profileModule,
+        lastSyncTime,
+        profileCache,
+        setProfileCache
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#", children: [
+              "sov",
+              config.syncMode === "webrtc" ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)", children: "P2P Local" }) : config.syncMode === "peerjs" ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)", children: "P2P Global" }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud", children: "S3" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mx-auto d-flex align-items-center mobile-hide", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed"), children: [
+                "Home",
+                unreadCounts.feed > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.feed })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends"), children: [
+                "Friends",
+                unreadCounts.friends > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.friends })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages"), children: [
+                "Messages",
+                unreadCounts.messages > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.messages })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms"), children: [
+                "Rooms",
+                unreadCounts.rooms > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.rooms })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile"), children: "Profile" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { "data-testid": "nav-mesh", className: `btn mx-2 ${currentTab === "mesh" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("mesh"), children: "Mesh" }),
+              isAdmin && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin"), children: "Admin" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+              !isConnected && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-secondary rounded-pill me-2", children: "Offline Mode" }),
+              config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "btn btn-sm btn-primary rounded-pill me-2 mobile-hide", onClick: handleConnectRemote, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-cloud-upload me-1" }),
+                " Connect Remote"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+                "button",
+                {
+                  className: `btn btn-link px-2 me-1 d-flex align-items-center gap-1 text-decoration-none ${isConnected ? "text-success" : "text-danger"}`,
+                  onClick: toggleConnection,
+                  title: isConnected ? "Connected" : "Disconnected",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } }),
+                    isConnected && (config.syncMode === "webrtc" || config.syncMode === "peerjs") && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "small fw-bold mobile-hide", children: [
+                      meshStats.connectedPeers,
+                      " peers"
+                    ] })
+                  ]
+                }
+              ),
+              config.enableP2PPairing && (config.syncMode === "webrtc" || config.syncMode === "peerjs") && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+                "button",
+                {
+                  className: "btn btn-sm btn-outline-primary rounded-pill me-2",
+                  onClick: () => setShowPairing(true),
+                  title: "Direct QR Pair",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-qr-code-scan" }),
+                    " ",
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "mobile-hide", children: "Pair" })
+                  ]
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "d-flex align-items-center", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                UserAvatar,
+                {
+                  userId: config.userId,
+                  size: 32,
+                  profileModule,
+                  lastSyncTime,
+                  profileCache,
+                  setProfileCache
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none", onClick: () => sync(true), disabled: syncing || config.syncMode === "offline", title: "Sync Now", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: `bi bi-arrow-repeat ${syncing ? "spin" : ""}` }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-secondary ms-2 mobile-hide", onClick: () => sync(true), disabled: syncing || config.syncMode === "offline", children: syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-danger ms-2 mobile-hide", onClick: logout, children: "Logout" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "bottom-nav d-md-none", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("feed");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-house" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Home" }),
+              unreadCounts.feed > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.feed })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "friends" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("friends");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-people" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Friends" }),
+              unreadCounts.friends > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.friends })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "messages" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("messages");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-chat-dots" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Chat" }),
+              unreadCounts.messages > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.messages })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "rooms" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("rooms");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-grid" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Rooms" }),
+              unreadCounts.rooms > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.rooms })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "profile" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("profile");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-person" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Profile" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "mesh" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("mesh");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-node-plus" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Mesh" })
+            ] }),
+            isAdmin && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "admin" ? "active" : ""}`, onClick: (e2) => {
+              e2.preventDefault();
+              setCurrentTab("admin");
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-shield-lock" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Admin" })
+            ] })
+          ] })
+        ] });
+      };
+    }
+  });
+
+  // demo/social/src/components/PostItem.tsx
+  var import_polyfills744, import_jsx_runtime8, PostItem;
+  var init_PostItem = __esm({
+    "demo/social/src/components/PostItem.tsx"() {
+      "use strict";
+      import_polyfills744 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      import_jsx_runtime8 = __toESM(require_jsx_runtime());
+      PostItem = ({
+        post,
+        allPosts,
+        depth = 0,
+        currentUserId = "",
+        highlightsFeed = 0,
+        isUserAnAdmin = () => false,
+        onEdit = () => {
+        },
+        onDelete = () => {
+        },
+        onReport = () => {
+        },
+        onLike = () => {
+        },
+        onComment = () => {
+        },
+        onShare = () => {
+        }
+      }) => {
+        const replies = allPosts.filter((p2) => p2.parentId === post.id);
+        const isNew = highlightsFeed > 0 && post.timestamp > highlightsFeed && post.userId !== currentUserId;
+        const isAdminPost = post.userId !== currentUserId && isUserAnAdmin(post.userId);
+        return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}`, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: `card post-card p-3 ${isAdminPost ? "border-danger shadow-sm" : isNew ? "border-primary shadow-sm" : ""}`, style: isAdminPost ? { borderWidth: "2px" } : isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {}, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "d-flex align-items-center mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(UserAvatar, { userId: post.userId }),
+              isAdminPost && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "ms-2 badge bg-danger", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("i", { className: "bi bi-shield-check me-1" }),
+                "Admin Action"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "ms-2 flex-grow-1", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "text-muted x-small", children: [
+                new Date(post.timestamp).toLocaleString(),
+                post.isEdited && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "ms-1 badge bg-light text-muted fw-normal", children: "Edited" }),
+                post.parentUserId && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "ms-1", children: [
+                  "replied to ",
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })
+                ] })
+              ] }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "dropdown", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown", children: "\u22EE" }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end", children: [
+                  post.userId === currentUserId && !post.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "dropdown-item", onClick: () => onEdit(post), children: "Edit" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "dropdown-item text-danger", onClick: () => onDelete(post), children: "Delete" }) })
+                  ] }),
+                  post.userId !== currentUserId && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "dropdown-item text-warning", onClick: () => onReport(post), children: "Report Abuse" }) })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mb-3", children: post.isDeleted ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("i", { className: "text-muted small", children: "This post was deleted" }) : post.content }),
+            post.image && !post.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(BlobImage, { path: post.image, userId: post.userId }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+                "button",
+                {
+                  className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
+                  onClick: () => onLike(post.id),
+                  disabled: post.isDeleted,
+                  children: [
+                    "Like ",
+                    post.likesCount ? `(${post.likesCount})` : ""
+                  ]
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => onComment(post), disabled: post.isDeleted, children: "Comment" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => onShare(post), disabled: post.isDeleted, children: "Share" })
+            ] })
+          ] }, post.id),
+          replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+            PostItem,
+            {
+              post: reply,
+              allPosts,
+              depth: depth + 1,
+              currentUserId,
+              highlightsFeed,
+              isUserAnAdmin,
+              onEdit,
+              onDelete,
+              onReport,
+              onLike,
+              onComment,
+              onShare
+            },
+            reply.id
+          ))
+        ] });
+      };
+    }
+  });
+
+  // demo/social/src/components/FeedTab.tsx
+  var import_polyfills745, import_jsx_runtime9, FeedTab;
+  var init_FeedTab = __esm({
+    "demo/social/src/components/FeedTab.tsx"() {
+      "use strict";
+      import_polyfills745 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      init_PostItem();
+      import_jsx_runtime9 = __toESM(require_jsx_runtime());
+      FeedTab = ({
+        config,
+        newPost,
+        setNewPost,
+        handlePostKeyDown,
+        newImagePreview,
+        postFileRef,
+        handleImageChange,
+        handlePost,
+        posts,
+        setCurrentTab,
+        handleLoadMore,
+        highlights,
+        isUserAnAdmin,
+        handleEditPost,
+        handleDeletePost,
+        handleReportPost,
+        handleLike,
+        handleComment,
+        handleShare
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "feed-container mobile-full-width", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "card post-card p-3 mb-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "d-flex mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(UserAvatar, { userId: config.userId }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "ms-2 flex-grow-1", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+                "textarea",
+                {
+                  className: "post-input w-100",
+                  rows: 1,
+                  placeholder: "What's on your mind?",
+                  value: newPost,
+                  onChange: (e2) => setNewPost(e2.target.value),
+                  onKeyDown: handlePostKeyDown
+                }
+              ) })
+            ] }),
+            newImagePreview && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "d-flex justify-content-between border-top pt-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }),
+              /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { className: "btn btn-sov px-4", onClick: handlePost, children: "Post" })
+            ] })
+          ] }),
+          posts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "text-center py-5 card border-0 shadow-sm rounded-4 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "card-body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "display-1 text-muted mb-4 opacity-25", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("i", { className: "bi bi-chat-square-text" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h4", { className: "fw-bold text-secondary", children: "No posts yet" }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "text-muted mb-4", children: "Follow some friends or create your first post to get started!" }),
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => setCurrentTab("friends"), children: "Find People to Follow" })
+          ] }) }) : posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+            PostItem,
+            {
+              post,
+              allPosts: posts,
+              currentUserId: config.userId,
+              highlightsFeed: highlights.feed,
+              isUserAnAdmin,
+              onEdit: handleEditPost,
+              onDelete: handleDeletePost,
+              onReport: handleReportPost,
+              onLike: handleLike,
+              onComment: handleComment,
+              onShare: handleShare
+            },
+            post.id
+          )),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "text-center mt-4 mb-5", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore, children: "Load more history" }) })
+        ] });
+      };
+    }
+  });
+
+  // demo/social/src/components/FriendsTab.tsx
+  var import_polyfills746, import_jsx_runtime10, FriendsTab;
+  var init_FriendsTab = __esm({
+    "demo/social/src/components/FriendsTab.tsx"() {
+      "use strict";
+      import_polyfills746 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      import_jsx_runtime10 = __toESM(require_jsx_runtime());
+      FriendsTab = ({
+        allUsers,
+        config,
+        discoveryMap,
+        highlights,
+        following,
+        sov,
+        loadData,
+        showPrompt,
+        setDiscoveryMap,
+        feed,
+        messaging,
+        profileModule
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "col-md-8 mobile-full-width", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "card p-3 mb-4 shadow-sm border-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h5", { className: "fw-bold mb-0", children: "Discover People" }),
+            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
+              showPrompt("Enter exact User ID to discover:", (uid) => {
+                if (uid) {
+                  setDiscoveryMap((prev) => {
+                    const next = { ...prev, [uid]: Date.now() };
+                    setTimeout(() => loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0), 500);
+                    return next;
+                  });
+                }
+              });
+            }, children: "+ Add by ID" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "list-group list-group-flush", children: allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
+            const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
+            return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { "data-testid": `user-item-${u2.userId}`, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {}, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(UserAvatar, { userId: u2.userId }),
+              following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: async () => {
+                await sov?.unfollow(u2.userId);
+                await loadData();
+              }, children: "Following" }) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: async () => {
+                await sov?.follow(u2.userId, u2.publicKey);
+                await loadData();
+              }, children: "Follow" })
+            ] }, u2.userId);
+          }) })
+        ] }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/MessagesTab.tsx
+  var import_polyfills747, import_jsx_runtime11, MessagesTab;
+  var init_MessagesTab = __esm({
+    "demo/social/src/components/MessagesTab.tsx"() {
+      "use strict";
+      import_polyfills747 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      import_jsx_runtime11 = __toESM(require_jsx_runtime());
+      MessagesTab = ({
+        following,
+        messages,
+        config,
+        selectedUser,
+        setSelectedUser,
+        isUserAnAdmin,
+        userUnreadCounts,
+        handleNewChat,
+        groups,
+        handleAcceptGroup,
+        handleDeclineGroup,
+        handleEditMessage,
+        handleDeleteMessage,
+        msgImage,
+        msgImagePreview,
+        msgFileRef,
+        msgInput,
+        setMsgInput,
+        handleImageChange,
+        handleSendMessage
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "col-md-10", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" }, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "row g-0 h-100", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedUser ? "mobile-hide" : ""}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h5", { className: "mb-0", children: "Chats" }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" }, children: "+" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "list-group list-group-flush", children: (() => {
+              const chatUsers = [...following];
+              messages.forEach((m2) => {
+                const otherId = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
+                if (!chatUsers.find((u2) => u2.userId === otherId)) {
+                  chatUsers.push({ userId: otherId });
+                }
+              });
+              if (chatUsers.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "p-4 text-center text-muted small", children: "No conversations yet. Follow someone to start chatting!" });
+              return chatUsers.map((user) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("button", { "data-testid": `chat-item-${user.userId}`, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "d-flex align-items-center flex-grow-1 overflow-hidden", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(UserAvatar, { userId: user.userId }),
+                  isUserAnAdmin(user.userId) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "ms-1 badge bg-danger", style: { fontSize: "0.6rem" }, children: "Admin" })
+                ] }),
+                (userUnreadCounts[user.userId] || 0) > 0 && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "badge rounded-pill bg-primary", children: userUnreadCounts[user.userId] })
+              ] }, user.userId));
+            })() })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedUser ? "mobile-hide" : ""}`, children: selectedUser ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedUser(null), children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "bi bi-arrow-left" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(UserAvatar, { userId: selectedUser }),
+              isUserAnAdmin(selectedUser) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "ms-2 badge bg-danger mobile-hide", children: "Official Administrator" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => {
+              const isAdminMsg = m2.senderId !== config.userId && isUserAnAdmin(m2.senderId);
+              return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { "data-testid": "message-bubble", className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : isAdminMsg ? "border border-danger bg-light text-dark shadow-sm" : "bg-light text-dark"}`, style: { maxWidth: "85%", ...isAdminMsg ? { borderWidth: "2px" } : {} }, children: [
+                isAdminMsg && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "badge bg-danger mb-1", style: { fontSize: "0.65rem" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "bi bi-shield-check me-1" }),
+                  "Admin Action"
+                ] }),
+                m2.isDeleted ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "small opacity-75", children: "Message deleted" }) : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "p-2 border rounded bg-white text-dark", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "fw-bold text-primary mb-1", children: "Group Invitation" }),
+                  (() => {
+                    try {
+                      const info = JSON.parse(m2.content.substring(13));
+                      const localGroup = groups.find((g2) => g2.id === info.id);
+                      const localStatus = localGroup?.members?.find((mb) => mb.userId === config.userId)?.status;
+                      return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "small mb-2", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("b", { children: m2.senderId }),
+                          " invited you to join ",
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("b", { children: info.name }),
+                          "."
+                        ] }),
+                        localStatus === "joined" ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "badge bg-success w-100", children: "Joined" }) : localStatus === "declined" ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "badge bg-secondary w-100", children: "Declined" }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "d-flex gap-2", children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info), children: "Accept" }),
+                          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info), children: "Decline" })
+                        ] })
+                      ] });
+                    } catch (e2) {
+                      return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children: "Invalid Invite" });
+                    }
+                  })()
+                ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+                  m2.image && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(BlobImage, { path: m2.image, userId: m2.senderId, message: m2 }),
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { children: m2.content })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { fontSize: "0.6rem" }, className: `mt-1 ${m2.senderId === config.userId ? "opacity-75" : "text-muted"} d-flex justify-content-between align-items-center`, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
+                    new Date(m2.timestamp).toLocaleTimeString(),
+                    " ",
+                    m2.isEdited && "(Edited)"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "d-flex align-items-center", children: [
+                    m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "me-2 d-flex", children: m2.status === "read" ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "bi bi-check-all text-info", style: { fontSize: "0.9rem" }, title: "Read" }) : m2.status === "delivered" ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "bi bi-check-all", style: { fontSize: "0.9rem" }, title: "Delivered" }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("i", { className: "bi bi-check", style: { fontSize: "0.9rem" }, title: "Sent" }) }),
+                    m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { className: "d-flex gap-2", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "cursor-pointer", onClick: () => handleEditMessage(m2), title: "Edit", children: "\u270E" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2), title: "Delete", children: "\u{1F5D1}" })
+                    ] })
+                  ] })
+                ] })
+              ] }) }, m2.id);
+            }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "p-3 border-top bg-light", children: [
+              msgImagePreview && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "mb-2", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "input-group", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2", children: "\u{1F4F7}" }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { "data-testid": "message-input", className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }),
+                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { "data-testid": "message-send-btn", className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage, children: "Send" })
+              ] })
+            ] })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a friend to start chatting" }) })
+        ] }) }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/RoomsTab.tsx
+  var import_polyfills748, import_jsx_runtime12, RoomsTab;
+  var init_RoomsTab = __esm({
+    "demo/social/src/components/RoomsTab.tsx"() {
+      "use strict";
+      import_polyfills748 = __toESM(require_polyfills());
+      init_MediaAndUser();
+      import_jsx_runtime12 = __toESM(require_jsx_runtime());
+      RoomsTab = ({
+        groups,
+        selectedGroup,
+        setSelectedGroup,
+        config,
+        lastViewed,
+        handleCreateGroup,
+        handleManageMembers,
+        handleAcceptGroup,
+        handleDeclineGroup,
+        groupPosts,
+        isUserAnAdmin,
+        handleEditGroupPost,
+        handleDeleteGroupPost,
+        groupImage,
+        groupImagePreview,
+        setGroupImage,
+        setGroupImagePreview,
+        groupFileRef,
+        groupInput,
+        setGroupInput,
+        handleGroupImageChange,
+        handlePostToGroup
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "col-md-10", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "row g-0 h-100", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedGroup ? "mobile-hide" : ""}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h5", { className: "mb-0", children: "Rooms" }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup, children: "+" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "list-group list-group-flush", children: groups.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "p-4 text-center text-muted small", children: "No rooms yet. Create one to start collaborating!" }) : groups.map((group3) => {
+              const me = group3.members?.find((mb) => mb.userId === config.userId);
+              const isPending = me?.status === "pending";
+              return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("button", { className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedGroup?.id === group3.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group3), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "fw-bold text-truncate", children: group3.name }),
+                isPending && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge rounded-pill bg-warning text-dark", children: "Invite" }),
+                !isPending && group3.createdAt > (lastViewed.roomChat?.[group3.id] || 0) && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "badge rounded-pill bg-primary", children: "New" })
+              ] }, group3.id);
+            }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedGroup ? "mobile-hide" : ""}`, children: selectedGroup ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-3 border-bottom bg-light", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex align-items-center", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedGroup(null), children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("i", { className: "bi bi-arrow-left" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h6", { className: "mb-0 fw-bold", children: selectedGroup.name })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex align-items-center gap-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "small text-muted mobile-hide", children: new Date(selectedGroup.createdAt).toLocaleDateString() }),
+                  (selectedGroup.members?.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members?.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers, children: "Manage" })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "d-flex flex-wrap gap-1", children: selectedGroup.members?.map((m2) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" }, children: [
+                m2.userId,
+                " (",
+                m2.status || "pending",
+                ")"
+              ] }, m2.userId)) }),
+              selectedGroup.members?.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "small fw-bold", children: "You have a pending invite to this room." }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex gap-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup), children: "Accept" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup), children: "Decline" })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "d-flex flex-column", children: groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => {
+              const isAdminGroupPost = p2.userId !== config.userId && isUserAnAdmin(p2.userId);
+              return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: `mb-3 ${p2.type === "system" ? "text-center" : ""}`, children: p2.type === "system" ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(UserAvatar, { userId: p2.userId, size: 16 }),
+                " ",
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ms-1", children: p2.content })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex align-items-center justify-content-between mb-1", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "d-flex align-items-center", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(UserAvatar, { userId: p2.userId, size: 24 }),
+                    isAdminGroupPost && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "badge bg-danger ms-2", style: { fontSize: "0.65rem" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("i", { className: "bi bi-shield-check me-1" }),
+                      "Admin Action"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ms-2 x-small text-muted", children: new Date(p2.timestamp).toLocaleString() }),
+                    p2.isEdited && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ms-2 x-small text-muted italic", children: "(edited)" })
+                  ] }),
+                  (() => {
+                    const isAuthor = p2.userId === config.userId;
+                    const myRole = selectedGroup.members?.find((m2) => m2.userId === config.userId)?.role;
+                    const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
+                    if (!isAuthor && !canDelete) return null;
+                    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "dropdown", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small", children: [
+                        isAuthor && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2), children: "Edit" }) }),
+                        canDelete && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2), children: "Delete" }) })
+                      ] })
+                    ] });
+                  })()
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? "border border-danger" : ""}`, style: { display: "inline-block", maxWidth: "95%", ...isAdminGroupPost ? { borderWidth: "2px" } : {} }, children: [
+                  p2.image && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(BlobImage, { path: p2.image, userId: p2.userId }),
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { children: p2.content })
+                ] })
+              ] }) }, p2.id);
+            }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-3 border-top bg-light", children: [
+              groupImagePreview && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "mb-2 position-relative d-inline-block", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
+                  setGroupImage(null);
+                  setGroupImagePreview(null);
+                  if (groupFileRef.current) groupFileRef.current.value = "";
+                }, children: "\xD7" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "input-group", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("i", { className: "bi bi-image" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }),
+                /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup, children: "Post" })
+              ] })
+            ] })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a room to start collaborating" }) })
+        ] }) }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/ProfileTab.tsx
+  var import_polyfills749, import_jsx_runtime13, ProfileTab;
+  var init_ProfileTab = __esm({
+    "demo/social/src/components/ProfileTab.tsx"() {
+      "use strict";
+      import_polyfills749 = __toESM(require_polyfills());
+      import_jsx_runtime13 = __toESM(require_jsx_runtime());
+      ProfileTab = ({
+        profile,
+        setProfile,
+        config,
+        profileModule,
+        sync,
+        showAlert,
+        posts,
+        sov,
+        allUsers,
+        exportAllPosts,
+        setExportAllPosts,
+        oldPassword,
+        setOldPassword,
+        newPassword,
+        setNewPassword,
+        handleChangePassword,
+        handleConnectRemote,
+        logout
+      }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "col-md-6 mobile-full-width", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h4", { className: "mb-4 fw-bold", children: "Edit Profile" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "text-center mb-4", children: [
+              profile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" }, children: config.userId[0]?.toUpperCase() || "?" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("label", { className: "btn btn-sm btn-outline-primary rounded-pill", children: [
+                "Change Avatar",
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
+                  const file = e2.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                      setProfile({ ...profile, avatar: ev.target?.result });
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                } })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Display Name" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "User ID (Share this for P2P)" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "input-group", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }),
+                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "btn btn-outline-secondary", onClick: () => {
+                  navigator.clipboard.writeText(config.userId);
+                  showAlert("User ID copied!", "Clipboard");
+                }, children: "Copy" })
+              ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Bio" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
+              await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
+              await sync();
+              showAlert("Profile updated!", "Success");
+            }, children: "Save Changes" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("hr", { className: "my-4" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h5", { className: "fw-bold mb-3", children: "Portable Archive" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "small text-muted mb-3", children: "Export your profile and social feed as a single, standalone HTML file. All images will be embedded directly in the file so it can be viewed offline." }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "form-check mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { className: "form-check-input", type: "checkbox", id: "exportAllPosts", checked: exportAllPosts, onChange: (e2) => setExportAllPosts(e2.target.checked) }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-check-label small", htmlFor: "exportAllPosts", children: "Include posts from everyone I follow (otherwise only my posts)" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { className: "btn btn-outline-success w-100 py-2 fw-bold", onClick: async () => {
+              try {
+                showAlert("Generating static export... this may take a moment.", "Exporting");
+                const exportProfile = profile;
+                const exportPosts = [...posts].filter((p2) => exportAllPosts || p2.userId === config.userId).sort((a3, b2) => b2.timestamp - a3.timestamp);
+                const embedImages = async (postList) => {
+                  for (const post of postList) {
+                    if (post.image && post.image.startsWith("public/blobs/")) {
+                      const blob2 = await sov?.getBlob(post.image, post.userId);
+                      if (blob2) {
+                        const reader = new FileReader();
+                        const dataUrl = await new Promise((resolve) => {
+                          reader.onload = (e2) => resolve(e2.target?.result);
+                          reader.readAsDataURL(new Blob([blob2]));
+                        });
+                        post.image = dataUrl;
+                      }
+                    }
+                  }
+                };
+                await embedImages(exportPosts);
+                const sanitize = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Archive - ${exportProfile?.name || config.userId}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .archive-header { background: white; padding: 2rem 0; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
+        .avatar-large { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .post-card { background: white; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        .post-img { max-height: 500px; width: 100%; object-fit: contain; background: #000; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="archive-header">
+        <div class="container text-center">
+            ${exportProfile?.avatar ? `<img src="${exportProfile.avatar}" class="avatar-large mb-3">` : `<div class="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 3rem;">${config.userId[0]?.toUpperCase() || "?"}</div>`}
+            <h1 class="fw-bold">${sanitize(exportProfile?.name || config.userId)}</h1>
+            <p class="text-muted">${sanitize(exportProfile?.bio || "No bio provided.")}</p>
+            <div class="badge bg-light text-dark border">${config.userId}</div>
+        </div>
+    </div>
+    
+    <div class="container pb-5" style="max-width: 700px;">
+        <h4 class="fw-bold mb-4">Feed Archive (${exportPosts.length} posts)</h4>
+        ${exportPosts.map((post) => {
+                  const postUser = allUsers.find((u2) => u2.userId === post.userId);
+                  const userName = postUser?.userId || post.userId;
+                  const initials = userName[0]?.toUpperCase() || "?";
+                  return `
+            <div class="card post-card">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">${initials}</div>
+                        <div>
+                            <div class="fw-bold">${sanitize(userName)}</div>
+                            <div class="text-muted small">${new Date(post.timestamp).toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <p style="white-space: pre-wrap;">${sanitize(post.content)}</p>
+                    ${post.image ? `<img src="${post.image}" class="post-img mt-2">` : ""}
+                </div>
+            </div>
+        `;
+                }).join("")}
+        
+        <div class="text-center text-muted mt-5 small">
+            Exported from SovereignS3nc on ${(/* @__PURE__ */ new Date()).toLocaleString()}
+        </div>
+    </div>
+</body>
+</html>`;
+                const blob = new Blob([htmlContent], { type: "text/html" });
+                const url = URL.createObjectURL(blob);
+                const a2 = document.createElement("a");
+                a2.href = url;
+                a2.download = `sovereign_archive_${config.userId}_${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}.html`;
+                a2.click();
+                URL.revokeObjectURL(url);
+                showAlert("Portable archive exported successfully!", "Success");
+              } catch (e2) {
+                showAlert("Export failed: " + e2.message, "Error");
+              }
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("i", { className: "bi bi-file-earmark-arrow-down me-2" }),
+              " Export Static Website"
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "card p-4 shadow-sm border-0 mt-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h4", { className: "mb-4 fw-bold", children: "Security" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Old Password" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "New Password" }),
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword, children: "Change Password" }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "mt-3 small text-muted", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("b", { children: "Note:" }),
+              " Changing your password will migrate your private data on the remote storage to a new path derived from your new password."
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h4", { className: "mb-4 fw-bold", children: "Account Actions" }),
+            config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("i", { className: "bi bi-cloud-upload me-2" }),
+              " Connect Remote"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("i", { className: "bi bi-box-arrow-right me-2" }),
+              " Logout"
+            ] })
+          ] })
+        ] });
+      };
+    }
+  });
+
+  // demo/social/src/components/MeshTab.tsx
+  var import_polyfills750, import_jsx_runtime14, MeshTab;
+  var init_MeshTab = __esm({
+    "demo/social/src/components/MeshTab.tsx"() {
+      "use strict";
+      import_polyfills750 = __toESM(require_polyfills());
+      import_jsx_runtime14 = __toESM(require_jsx_runtime());
+      MeshTab = ({ meshStats, config, meshLog }) => {
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "col-md-8", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("h4", { className: "fw-bold mb-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("i", { className: "bi bi-node-plus me-2 text-primary" }),
+            "P2P Mesh Network"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "row text-center mb-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "col-6", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "p-3 bg-light rounded shadow-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "display-4 fw-bold text-primary", children: meshStats.connectedPeers }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "text-muted small text-uppercase", children: "Connected Peers" })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "col-6", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "p-3 bg-light rounded shadow-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "display-4 fw-bold text-success", children: config.syncMode === "webrtc" || config.syncMode === "peerjs" ? "ON" : "OFF" }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "text-muted small text-uppercase", children: "Mesh Status" })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h6", { className: "fw-bold mb-3", children: "Gossip Activity Log" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "bg-dark text-light p-3 rounded mb-4", style: { height: "300px", overflowY: "auto", fontFamily: "monospace", fontSize: "0.85rem" }, children: [
+            meshLog.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "text-muted italic", children: "Waiting for mesh activity..." }),
+            meshLog.map((log2, i2) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "mb-1 border-bottom border-secondary pb-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { className: "text-info", children: [
+                "[",
+                new Date(log2.time).toLocaleTimeString(),
+                "]"
+              ] }),
+              " ",
+              log2.msg
+            ] }, i2))
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h6", { className: "fw-bold mb-2", children: "Connected Peer IDs" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "d-flex flex-wrap gap-2", children: [
+            meshStats.peerIds.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "text-muted small", children: "No active peer IDs discovered." }),
+            meshStats.peerIds.map((id) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "badge bg-light text-dark border small", children: id }, id))
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "mt-4 pt-4 border-top", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h6", { children: "Persistence Engine" }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "small text-muted", children: "Your browser is acting as a persistent node in the mesh. Any data Alice or Bob requests that you have in local storage (IndexedDB) will be served automatically, even if the original author is offline." })
+          ] })
+        ] }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/AdminTab.tsx
+  var import_polyfills751, import_jsx_runtime15, AdminTab;
+  var init_AdminTab = __esm({
+    "demo/social/src/components/AdminTab.tsx"() {
+      "use strict";
+      import_polyfills751 = __toESM(require_polyfills());
+      init_SovereignS3nc();
+      init_MediaAndUser();
+      import_jsx_runtime15 = __toESM(require_jsx_runtime());
+      AdminTab = ({
+        isAdmin,
+        adminKeyPublished,
+        setAdminKeyPublished,
+        moderation,
+        sov,
+        sync,
+        loadData,
+        reports,
+        setReports,
+        setPreviewPost,
+        config,
+        showAlert,
+        showPrompt,
+        showConfirm
+      }) => {
+        if (!isAdmin) return null;
+        return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "col-md-10 mobile-full-width", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h4", { className: "mb-4 fw-bold text-danger", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-shield-lock me-2" }),
+            "Admin Dashboard"
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "alert alert-secondary py-3 mb-4 border-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h6", { className: "fw-bold mb-1", children: "Admin Status" }),
+            adminKeyPublished ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "text-success small", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-check-circle-fill me-1" }),
+              " Reporting is ACTIVE. Your public key is published."
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "text-warning small", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-1" }),
+              " Reporting is INACTIVE. You must publish your admin key for users to send reports."
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "col-md-6 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card h-100 border-0 bg-light", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h5", { className: "fw-bold mb-3", children: "Governance" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
+                const uid = await new Promise((resolve) => showPrompt("Enter User ID to blacklist:", resolve));
+                if (uid && moderation) {
+                  try {
+                    await moderation.blacklistUser(uid);
+                    await sync();
+                    showAlert(`User ${uid} has been blacklisted globally.`);
+                  } catch (e2) {
+                    showAlert("Failed to blacklist: " + e2.message, "Error");
+                  }
+                }
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-person-x me-2" }),
+                " Blacklist User"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-outline-secondary w-100 mb-2", onClick: async () => {
+                if (sov) {
+                  await sov.syncBlacklist();
+                  showAlert("Blacklist synchronized with cloud.");
+                }
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-arrow-repeat me-2" }),
+                " Sync Blacklist"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-outline-primary w-100", onClick: async () => {
+                if (moderation) {
+                  try {
+                    await moderation.publishAdminKey();
+                    setAdminKeyPublished(true);
+                    showAlert("Admin public key published successfully for E2EE reporting.");
+                  } catch (e2) {
+                    showAlert("Failed to publish admin key: " + e2.message, "Error");
+                  }
+                }
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-key me-2" }),
+                " Publish Admin Key"
+              ] })
+            ] }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "col-md-6 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card h-100 border-0 bg-light", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h5", { className: "fw-bold mb-3", children: "Provision User S3 Keys" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "small text-muted mb-3", children: "Generate dedicated S3 credentials for a new user to ensure infrastructure isolation." }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-primary w-100 mb-2", onClick: async () => {
+                showPrompt("Enter new User ID to provision:", (uid) => {
+                  if (uid) {
+                    showAlert(`To provision ${uid} in your S3 backend, ensure they have a key with read/write access to their prefixed paths and the global registry.`, "Provisioning Instructions");
+                  }
+                });
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-person-plus-fill me-2" }),
+                " Create User Keys"
+              ] })
+            ] }) }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "row mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "col-12", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "card border-0 bg-light border-danger border-start border-4", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "card-body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h5", { className: "fw-bold text-danger mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
+              "Data Management (Root Access)"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "d-flex gap-3 flex-wrap", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-outline-primary", onClick: async () => {
+                if (moderation) {
+                  try {
+                    const data = await moderation.exportAllData();
+                    const blob = new Blob([data], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+                    const a2 = document.createElement("a");
+                    a2.href = url;
+                    a2.download = `sovereign_export_${config.appId}_${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}.json`;
+                    a2.click();
+                    URL.revokeObjectURL(url);
+                    showAlert("Data exported successfully.");
+                  } catch (e2) {
+                    showAlert("Export failed: " + e2.message, "Error");
+                  }
+                }
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-download me-2" }),
+                " Export All Data"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("label", { className: "btn btn-outline-secondary mb-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-upload me-2" }),
+                " Import Data",
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: async (e2) => {
+                  const file = e2.target.files?.[0];
+                  if (file && moderation) {
+                    const reader = new FileReader();
+                    reader.onload = async (ev) => {
+                      try {
+                        const content = ev.target?.result;
+                        await moderation.importAllData(content);
+                        showAlert("Data imported successfully.");
+                        e2.target.value = "";
+                      } catch (err) {
+                        showAlert("Import failed: " + err.message, "Error");
+                      }
+                    };
+                    reader.readAsText(file);
+                  }
+                } })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-danger ms-auto", onClick: () => {
+                showConfirm("WARNING: This will permanently delete ALL user data, posts, and DMs for this App ID across the entire S3 bucket. This action CANNOT be undone. Are you absolutely sure?", async () => {
+                  if (moderation) {
+                    try {
+                      await moderation.burnItToTheGround();
+                      showAlert("All data has been burned to the ground.", "System Purged");
+                    } catch (e2) {
+                      showAlert("Purge failed: " + e2.message, "Error");
+                    }
+                  }
+                }, "BURN IT TO THE GROUND");
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-fire me-2" }),
+                " BURN IT TO THE GROUND"
+              ] })
+            ] })
+          ] }) }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "d-flex align-items-center mt-2 mb-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h5", { className: "fw-bold mb-0 flex-grow-1", children: "Abuse Reports" }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { className: "btn btn-sm btn-outline-secondary", onClick: async () => {
+              if (moderation) {
+                const r2 = await moderation.getReports();
+                setReports(r2);
+                showAlert(`Fetched ${r2.length} reports.`);
+              }
+            }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-arrow-repeat me-1" }),
+              " Refresh"
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "table-responsive", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "table table-hover align-middle", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { className: "table-light", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Reporter" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Target" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Type" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Reason" }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Actions" })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: reports.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { colSpan: 5, className: "text-center py-4 text-muted", children: "No pending reports found in this session." }) }) : reports.map((report) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(UserName, { userId: report.reporterId }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(UserName, { userId: report.targetUserId }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "badge bg-info", children: report.contentType }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { className: "small", children: report.reason }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "d-flex gap-2", children: [
+                report.evidence && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { title: "View Content", className: "btn btn-sm btn-outline-primary", onClick: () => setPreviewPost(report.evidence), children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-eye" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { title: "Delete Post Only", className: "btn btn-sm btn-outline-danger", onClick: async () => {
+                  if (moderation && report.evidence && sov) {
+                    try {
+                      const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
+                      const path2 = `${report.targetUserId}/social/public/modules/feed/${today}.db`;
+                      await moderation.deleteUserFile(path2);
+                      await moderation.deleteReport(report.id);
+                      await sov.sync(true);
+                      await loadData(sov);
+                      showAlert("Post deleted and report closed.");
+                    } catch (e2) {
+                      showAlert(e2.message);
+                    }
+                  }
+                }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-trash" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { title: "Ban User", className: "btn btn-sm btn-danger", onClick: async () => {
+                  if (moderation && sov) {
+                    try {
+                      await moderation.banUser(report.targetUserId);
+                      await moderation.deleteReport(report.id);
+                      await sov.sync(true);
+                      await loadData(sov);
+                      showAlert("User banned and all data purged.");
+                    } catch (e2) {
+                      showAlert(e2.message);
+                    }
+                  }
+                }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-person-x" }),
+                  " Ban"
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("button", { title: "Ignore Report", className: "btn btn-sm btn-light", onClick: async () => {
+                  if (moderation) {
+                    await moderation.deleteReport(report.id);
+                    const r2 = await moderation.getReports();
+                    setReports(r2);
+                  }
+                }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-x-lg" }) })
+              ] }) })
+            ] }, report.id)) })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "alert alert-info py-2 small mb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("i", { className: "bi bi-info-circle me-2" }),
+            "Reports are encrypted with the Admin Public Key and stored in ",
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("code", { children: [
+              config.appId,
+              "/admin/reports/"
+            ] }),
+            ". A background worker or Lambda is typically used to decrypt and aggregate these."
+          ] })
+        ] }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/ConflictResolutionModal.tsx
+  var import_polyfills752, import_react7, import_jsx_runtime16, ConflictResolutionModal;
+  var init_ConflictResolutionModal = __esm({
+    "demo/social/src/components/ConflictResolutionModal.tsx"() {
+      "use strict";
+      import_polyfills752 = __toESM(require_polyfills());
+      import_react7 = __toESM(require_react());
+      import_jsx_runtime16 = __toESM(require_jsx_runtime());
+      ConflictResolutionModal = ({ conflict, onResolve }) => {
+        if (!conflict) return null;
+        (0, import_react7.useEffect)(() => {
+          const handleEsc = (e2) => {
+            if (e2.key === "Escape") onResolve("abort");
+          };
+          window.addEventListener("keydown", handleEsc);
+          return () => window.removeEventListener("keydown", handleEsc);
+        }, [onResolve]);
+        const formatSize = (bytes) => {
+          if (bytes === 0) return "0 B";
+          const k2 = 1024;
+          const sizes = ["B", "KB", "MB"];
+          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
+          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
+        };
+        const tryParse = (data) => {
+          try {
+            return JSON.parse(new TextDecoder().decode(data));
+          } catch (e2) {
+            return null;
+          }
+        };
+        const localJson = tryParse(conflict.localData);
+        const remoteJson = tryParse(conflict.remoteData);
+        const handleMerge = () => {
+          if (localJson && remoteJson) {
+            const merged = { ...remoteJson, ...localJson };
+            const mergedData = new TextEncoder().encode(JSON.stringify(merged));
+            onResolve({ mergedData });
+          }
+        };
+        const getPreview = (data) => {
+          try {
+            const str = new TextDecoder().decode(data);
+            return str.length > 500 ? str.substring(0, 500) + "..." : str;
+          } catch (e2) {
+            return "Binary Data";
+          }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("h5", { className: "modal-title fw-bold text-danger", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
+              "Sync Conflict"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: () => onResolve("abort") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-secondary", children: "A conflict was detected during sync for the following file:" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "alert alert-light border small mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { children: conflict.path }) }),
+            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card border-info-subtle bg-info-subtle bg-opacity-10 mb-4 rounded-3", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("h6", { className: "fw-bold mb-2 text-info", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("i", { className: "bi bi-info-circle-fill me-2" }),
+                "Semantic Comparison"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { maxHeight: "150px", overflowY: "auto" }, children: Object.keys({ ...localJson, ...remoteJson }).map((key) => {
+                if (JSON.stringify(localJson[key]) !== JSON.stringify(remoteJson[key])) {
+                  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mb-2 x-small", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "fw-bold text-dark", children: [
+                      key,
+                      ":"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "ps-2 border-start border-danger text-danger text-decoration-line-through", children: JSON.stringify(remoteJson[key]) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "ps-2 border-start border-success text-success", children: JSON.stringify(localJson[key]) })
+                  ] }, key);
+                }
+                return null;
+              }) })
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "row g-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h6", { className: "fw-bold text-primary mb-3", children: "Local Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "small mb-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Size:" }),
+                  " ",
+                  formatSize(conflict.localData.length)
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" }, children: getPreview(conflict.localData) }) })
+              ] }) }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h6", { className: "fw-bold text-success mb-3", children: "Remote Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "small mb-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Size:" }),
+                  " ",
+                  formatSize(conflict.remoteData.length)
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" }, children: getPreview(conflict.remoteData) }) })
+              ] }) }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2", children: [
+            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4 shadow-sm", onClick: handleMerge, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("i", { className: "bi bi-intersect me-2" }),
+              "Smart Merge"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => onResolve("local"), children: "Keep Local" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-success rounded-pill px-4 shadow-sm", onClick: () => onResolve("remote"), children: "Take Remote" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort"), children: "Skip for Now" })
+          ] })
+        ] }) }) });
+      };
+    }
+  });
+
+  // demo/social/src/components/MemberManagementModal.tsx
+  var import_polyfills753, import_jsx_runtime17, MemberManagementModal;
+  var init_MemberManagementModal = __esm({
+    "demo/social/src/components/MemberManagementModal.tsx"() {
+      "use strict";
+      import_polyfills753 = __toESM(require_polyfills());
+      import_jsx_runtime17 = __toESM(require_jsx_runtime());
+      MemberManagementModal = ({
+        show,
+        onClose,
+        group: group3,
+        profileCache,
+        onUpdateRole,
+        onRemove,
+        onAdd,
+        onLeave,
+        currentUserId
+      }) => {
+        if (!show || !group3) return null;
+        const myRole = group3.members?.find((m2) => m2.userId === currentUserId)?.role;
+        return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("h5", { className: "modal-title fw-bold text-primary", children: [
+              "Manage Members: ",
+              group3.name
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", className: "btn-close", onClick: onClose })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("h6", { className: "mb-0 fw-bold", children: [
+                "Group Members (",
+                group3.members?.length || 0,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd, children: "+ Add Members" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "list-group", children: group3.members?.map((member2) => {
+              const profile = profileCache[member2.userId];
+              const isMe = member2.userId === currentUserId;
+              const canManage = !isMe && (myRole === "owner" || myRole === "admin" && member2.role === "member");
+              return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "d-flex align-items-center", children: [
+                  profile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" }, children: member2.userId[0]?.toUpperCase() || "?" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "fw-bold", children: [
+                      profile?.name || member2.userId,
+                      " ",
+                      isMe && "(You)"
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "small text-muted", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2`, children: member2.role }),
+                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "text-capitalize", children: member2.status || "pending" })
+                    ] })
+                  ] })
+                ] }),
+                canManage && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "d-flex gap-2", children: [
+                  member2.role === "member" && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin"), children: "Make Admin" }),
+                  member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member"), children: "Remove Admin" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
+                    if (confirm(`Are you sure you want to remove ${member2.userId}?`)) onRemove(member2.userId);
+                  }, children: "Remove" })
+                ] })
+              ] }, member2.userId);
+            }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between", children: [
+            myRole !== "owner" ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave, children: "Leave Room" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", {}),
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose, children: "Close" })
+          ] })
+        ] }) }) });
+      };
+    }
+  });
+
   // demo/social/src/App.tsx
   var require_App = __commonJS({
     "demo/social/src/App.tsx"() {
-      var import_polyfills739 = __toESM(require_polyfills());
-      var import_react4 = __toESM(require_react());
+      var import_polyfills754 = __toESM(require_polyfills());
+      var import_react8 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
@@ -137879,7 +139628,21 @@ ${toHex(hashedRequest)}`;
       init_PairingModal();
       init_ErrorBoundary();
       init_InspectorModal();
-      var import_jsx_runtime4 = __toESM(require_jsx_runtime());
+      init_LoginView();
+      init_Navigation();
+      init_FeedTab();
+      init_FriendsTab();
+      init_MessagesTab();
+      init_RoomsTab();
+      init_ProfileTab();
+      init_MeshTab();
+      init_AdminTab();
+      init_ConflictResolutionModal();
+      init_MemberManagementModal();
+      init_Dialog();
+      init_PostItem();
+      init_SocialContext();
+      var import_jsx_runtime18 = __toESM(require_jsx_runtime());
       var DEBUG = true;
       var PrefixProxyAdapter = class {
         constructor(baseAdapter, prefix) {
@@ -137903,7 +139666,7 @@ ${toHex(hashedRequest)}`;
         }
       };
       var App = () => {
-        const [config, setConfig] = (0, import_react4.useState)({
+        const [config, setConfig] = (0, import_react8.useState)({
           syncMode: "s3",
           // Default to s3 for existing tests
           region: "ap-southeast-1",
@@ -137921,84 +139684,84 @@ ${toHex(hashedRequest)}`;
           enableP2PPairing: new URLSearchParams(window.location.search).has("pairing")
           // Enable QR code and Bluetooth pairing functionality
         });
-        const [isAdmin, setIsAdmin] = (0, import_react4.useState)(false);
-        const [adminKeyPublished, setAdminKeyPublished] = (0, import_react4.useState)(false);
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react4.useState)(false);
+        const [isAdmin, setIsAdmin] = (0, import_react8.useState)(false);
+        const [adminKeyPublished, setAdminKeyPublished] = (0, import_react8.useState)(false);
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react8.useState)(false);
         const getStorageKey = (key) => `sov_${config.userId}_${key}`;
-        const [autoLogin, setAutoLogin] = (0, import_react4.useState)(localStorage.getItem("sov_auto_login") === "true");
-        const [autoSync, setAutoSync] = (0, import_react4.useState)(localStorage.getItem("sov_auto_sync") !== "false");
-        const [showPairing, setShowPairing] = (0, import_react4.useState)(false);
-        const [showInspector, setShowInspector] = (0, import_react4.useState)(() => new URLSearchParams(window.location.search).get("debug") === "inspect");
-        const [useWebWorkers, setUseWebWorkers] = (0, import_react4.useState)(localStorage.getItem("sov_use_workers") !== "false");
-        const [rememberedUsers, setRememberedUsers] = (0, import_react4.useState)(() => {
+        const [autoLogin, setAutoLogin] = (0, import_react8.useState)(localStorage.getItem("sov_auto_login") === "true");
+        const [autoSync, setAutoSync] = (0, import_react8.useState)(localStorage.getItem("sov_auto_sync") !== "false");
+        const [showPairing, setShowPairing] = (0, import_react8.useState)(false);
+        const [showInspector, setShowInspector] = (0, import_react8.useState)(() => new URLSearchParams(window.location.search).get("debug") === "inspect");
+        const [useWebWorkers, setUseWebWorkers] = (0, import_react8.useState)(localStorage.getItem("sov_use_workers") !== "false");
+        const [rememberedUsers, setRememberedUsers] = (0, import_react8.useState)(() => {
           const saved = localStorage.getItem("sov_remembered_users");
           return saved ? JSON.parse(saved) : [];
         });
-        const [profileCache, setProfileCache] = (0, import_react4.useState)({});
-        const [blobCache, setBlobCache] = (0, import_react4.useState)({});
-        const [lastViewed, setLastViewed] = (0, import_react4.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
-        const [highlights, setHighlights] = (0, import_react4.useState)({ feed: 0, friends: 0 });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react4.useState)({});
-        const [sov, setSov] = (0, import_react4.useState)(null);
-        const [feed, setFeed] = (0, import_react4.useState)(null);
-        const [messaging, setMessaging] = (0, import_react4.useState)(null);
-        const [profileModule, setProfileModule] = (0, import_react4.useState)(null);
-        const [moderation, setModeration] = (0, import_react4.useState)(null);
-        const [reports, setReports] = (0, import_react4.useState)([]);
-        const [previewPost, setPreviewPost] = (0, import_react4.useState)(null);
-        const [posts, setPosts] = (0, import_react4.useState)([]);
-        const [following, setFollowing] = (0, import_react4.useState)([]);
-        const [allUsers, setAllUsers] = (0, import_react4.useState)([]);
-        const [lastSyncTime, setLastSyncTime] = (0, import_react4.useState)(null);
-        const [newPost, setNewPost] = (0, import_react4.useState)("");
-        const [newImage, setNewPostImage] = (0, import_react4.useState)(null);
-        const [newImagePreview, setNewImagePreview] = (0, import_react4.useState)(null);
-        const [msgImage, setMsgImage] = (0, import_react4.useState)(null);
-        const [msgImagePreview, setMsgImagePreview] = (0, import_react4.useState)(null);
-        const postFileRef = (0, import_react4.useRef)(null);
-        const msgFileRef = (0, import_react4.useRef)(null);
-        const [profile, setProfile] = (0, import_react4.useState)(null);
-        const [syncing, setSyncing] = (0, import_react4.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react4.useState)("feed");
-        const [messages, setMessages] = (0, import_react4.useState)([]);
-        const [groups, setGroups] = (0, import_react4.useState)([]);
-        const [selectedGroup, setSelectedGroup] = (0, import_react4.useState)(null);
-        const [groupPosts, setGroupPosts] = (0, import_react4.useState)([]);
-        const [groupInput, setGroupInput] = (0, import_react4.useState)("");
-        const [groupImage, setGroupImage] = (0, import_react4.useState)(null);
-        const [groupImagePreview, setGroupImagePreview] = (0, import_react4.useState)(null);
-        const groupFileRef = (0, import_react4.useRef)(null);
-        const [msgInput, setMsgInput] = (0, import_react4.useState)("");
-        const [selectedUser, setSelectedUser] = (0, import_react4.useState)(null);
-        const [oldPassword, setOldPassword] = (0, import_react4.useState)("");
-        const [newPassword, setNewPassword] = (0, import_react4.useState)("");
-        const [lookbackDays, setLookbackDays] = (0, import_react4.useState)(5);
-        const [isConnected, setIsConnected] = (0, import_react4.useState)(true);
-        const [manualDisconnect, setManualDisconnect] = (0, import_react4.useState)(false);
-        const [reconnectDelay, setReconnectDelay] = (0, import_react4.useState)(1e3);
-        const [unreadCounts, setUnreadCounts] = (0, import_react4.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
-        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react4.useState)({});
-        const [exportAllPosts, setExportAllPosts] = (0, import_react4.useState)(false);
-        const [meshStats, setMeshStats] = (0, import_react4.useState)({ connectedPeers: 0, peerIds: [] });
-        const [meshLog, setMeshLog] = (0, import_react4.useState)([]);
-        const [conflict, setConflict] = (0, import_react4.useState)(null);
-        const lastViewedRef = (0, import_react4.useRef)(lastViewed);
-        const discoveryMapRef = (0, import_react4.useRef)(discoveryMap);
-        const currentTabRef = (0, import_react4.useRef)(currentTab);
-        const selectedUserRef = (0, import_react4.useRef)(selectedUser);
-        (0, import_react4.useEffect)(() => {
+        const [profileCache, setProfileCache] = (0, import_react8.useState)({});
+        const [blobCache, setBlobCache] = (0, import_react8.useState)({});
+        const [lastViewed, setLastViewed] = (0, import_react8.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {}, roomChat: {} });
+        const [highlights, setHighlights] = (0, import_react8.useState)({ feed: 0, friends: 0 });
+        const [discoveryMap, setDiscoveryMap] = (0, import_react8.useState)({});
+        const [sov, setSov] = (0, import_react8.useState)(null);
+        const [feed, setFeed] = (0, import_react8.useState)(null);
+        const [messaging, setMessaging] = (0, import_react8.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react8.useState)(null);
+        const [moderation, setModeration] = (0, import_react8.useState)(null);
+        const [reports, setReports] = (0, import_react8.useState)([]);
+        const [previewPost, setPreviewPost] = (0, import_react8.useState)(null);
+        const [posts, setPosts] = (0, import_react8.useState)([]);
+        const [following, setFollowing] = (0, import_react8.useState)([]);
+        const [allUsers, setAllUsers] = (0, import_react8.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react8.useState)(null);
+        const [newPost, setNewPost] = (0, import_react8.useState)("");
+        const [newImage, setNewPostImage] = (0, import_react8.useState)(null);
+        const [newImagePreview, setNewImagePreview] = (0, import_react8.useState)(null);
+        const [msgImage, setMsgImage] = (0, import_react8.useState)(null);
+        const [msgImagePreview, setMsgImagePreview] = (0, import_react8.useState)(null);
+        const postFileRef = (0, import_react8.useRef)(null);
+        const msgFileRef = (0, import_react8.useRef)(null);
+        const [profile, setProfile] = (0, import_react8.useState)(null);
+        const [syncing, setSyncing] = (0, import_react8.useState)(false);
+        const [currentTab, setCurrentTab] = (0, import_react8.useState)("feed");
+        const [messages, setMessages] = (0, import_react8.useState)([]);
+        const [groups, setGroups] = (0, import_react8.useState)([]);
+        const [selectedGroup, setSelectedGroup] = (0, import_react8.useState)(null);
+        const [groupPosts, setGroupPosts] = (0, import_react8.useState)([]);
+        const [groupInput, setGroupInput] = (0, import_react8.useState)("");
+        const [groupImage, setGroupImage] = (0, import_react8.useState)(null);
+        const [groupImagePreview, setGroupImagePreview] = (0, import_react8.useState)(null);
+        const groupFileRef = (0, import_react8.useRef)(null);
+        const [msgInput, setMsgInput] = (0, import_react8.useState)("");
+        const [selectedUser, setSelectedUser] = (0, import_react8.useState)(null);
+        const [oldPassword, setOldPassword] = (0, import_react8.useState)("");
+        const [newPassword, setNewPassword] = (0, import_react8.useState)("");
+        const [lookbackDays, setLookbackDays] = (0, import_react8.useState)(5);
+        const [isConnected, setIsConnected] = (0, import_react8.useState)(true);
+        const [manualDisconnect, setManualDisconnect] = (0, import_react8.useState)(false);
+        const [reconnectDelay, setReconnectDelay] = (0, import_react8.useState)(1e3);
+        const [unreadCounts, setUnreadCounts] = (0, import_react8.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
+        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react8.useState)({});
+        const [exportAllPosts, setExportAllPosts] = (0, import_react8.useState)(false);
+        const [meshStats, setMeshStats] = (0, import_react8.useState)({ connectedPeers: 0, peerIds: [] });
+        const [meshLog, setMeshLog] = (0, import_react8.useState)([]);
+        const [conflict, setConflict] = (0, import_react8.useState)(null);
+        const lastViewedRef = (0, import_react8.useRef)(lastViewed);
+        const discoveryMapRef = (0, import_react8.useRef)(discoveryMap);
+        const currentTabRef = (0, import_react8.useRef)(currentTab);
+        const selectedUserRef = (0, import_react8.useRef)(selectedUser);
+        (0, import_react8.useEffect)(() => {
           lastViewedRef.current = lastViewed;
         }, [lastViewed]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           discoveryMapRef.current = discoveryMap;
         }, [discoveryMap]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           currentTabRef.current = currentTab;
         }, [currentTab]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           selectedUserRef.current = selectedUser;
         }, [selectedUser]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!sov) return;
           const interval = setInterval(() => {
             setMeshStats(sov.getMeshStats());
@@ -138012,7 +139775,7 @@ ${toHex(hashedRequest)}`;
             sov.off("update", handleUpdate);
           };
         }, [sov]);
-        const [dialog, setDialog] = (0, import_react4.useState)(null);
+        const [dialog, setDialog] = (0, import_react8.useState)(null);
         const showAlert = (message, title = "Notice") => {
           setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
         };
@@ -138057,27 +139820,27 @@ ${toHex(hashedRequest)}`;
         const toggleConnection = () => {
           setIsConnected((prev) => !prev);
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("profile_cache"), JSON.stringify(profileCache));
         }, [profileCache, isLoggedIn]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("blob_cache"), JSON.stringify(blobCache));
         }, [blobCache, isLoggedIn]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("discovery_map"), JSON.stringify(discoveryMap));
         }, [discoveryMap, isLoggedIn]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("last_viewed_v2"), JSON.stringify(lastViewed));
         }, [lastViewed, isLoggedIn]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn) return;
           localStorage.setItem(getStorageKey("highlights"), JSON.stringify(highlights));
         }, [highlights, isLoggedIn]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           const savedConfig = localStorage.getItem("sov_social_config");
           if (savedConfig && autoLogin) {
             try {
@@ -138487,12 +140250,12 @@ ${toHex(hashedRequest)}`;
             showAlert(text, "Post Content");
           }
         };
-        const [toast, setToast] = (0, import_react4.useState)(null);
+        const [toast, setToast] = (0, import_react8.useState)(null);
         const showToast = (message, type = "success") => {
           setToast({ message, type });
           setTimeout(() => setToast(null), 3e3);
         };
-        const syncQueuedRef = (0, import_react4.useRef)(false);
+        const syncQueuedRef = (0, import_react8.useRef)(false);
         const sync = async (force = false) => {
           const isForce = typeof force === "boolean" ? force : false;
           if (!sov || !feed || !isConnected) {
@@ -138526,7 +140289,7 @@ ${toHex(hashedRequest)}`;
             }
           }
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (isLoggedIn) {
             sync();
             if (currentTab === "feed" || currentTab === "friends") {
@@ -138535,7 +140298,7 @@ ${toHex(hashedRequest)}`;
             }
           }
         }, [currentTab]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (currentTab === "messages" && selectedUser && messaging) {
             setLastViewed((prev) => ({
               ...prev,
@@ -138555,15 +140318,15 @@ ${toHex(hashedRequest)}`;
             }
           }
         }, [selectedUser, currentTab, messaging]);
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (!isLoggedIn || !sov || !feed || !autoSync) return;
           const interval = setInterval(() => {
             sync();
           }, 6e4);
           return () => clearInterval(interval);
         }, [isLoggedIn, sov, feed, autoSync]);
-        const lookbackDaysRef = (0, import_react4.useRef)(lookbackDays);
-        (0, import_react4.useEffect)(() => {
+        const lookbackDaysRef = (0, import_react8.useRef)(lookbackDays);
+        (0, import_react8.useEffect)(() => {
           lookbackDaysRef.current = lookbackDays;
         }, [lookbackDays]);
         const loadData = async (v2, fm, mm, pm) => {
@@ -138720,7 +140483,7 @@ ${toHex(hashedRequest)}`;
         const handleLoadMore = () => {
           setLookbackDays((prev) => prev + 5);
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (isLoggedIn) loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0);
         }, [lookbackDays]);
         const handleEditMessage = async (m2) => {
@@ -138858,7 +140621,7 @@ ${toHex(hashedRequest)}`;
           const members = [...selectedGroup.members];
           setShowMemberManagement(true);
         };
-        const [showMemberManagement, setShowMemberManagement] = (0, import_react4.useState)(false);
+        const [showMemberManagement, setShowMemberManagement] = (0, import_react8.useState)(false);
         const updateMemberRole = async (userId, newRole) => {
           if (!sov || !selectedGroup) return;
           const updatedMembers = selectedGroup.members.map(
@@ -138950,70 +140713,11 @@ ${toHex(hashedRequest)}`;
             await sync();
           });
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react8.useEffect)(() => {
           if (isLoggedIn && selectedGroup) {
             loadGroupPosts();
           }
         }, [selectedGroup, lastSyncTime, isLoggedIn]);
-        const BlobImage = ({ path: path2, userId, message }) => {
-          const [src, setSrc] = (0, import_react4.useState)(blobCache[path2]);
-          (0, import_react4.useEffect)(() => {
-            if (!src && sov) {
-              const imagePromise = message && messaging ? messaging.getMessageImage(message) : sov.getBlob(path2, userId);
-              imagePromise.then((data) => {
-                if (data) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    const base64data = reader.result;
-                    setSrc(base64data);
-                    setBlobCache((prev) => ({ ...prev, [path2]: base64data }));
-                  };
-                  reader.readAsDataURL(new Blob([data]));
-                }
-              });
-            }
-          }, [path2, userId, sov, message?.localImage, message?.imageEncryption, messaging]);
-          if (!src) return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-light p-5 text-center text-muted", children: "Loading image..." });
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src, className: "img-fluid rounded", style: { maxHeight: "500px" } });
-        };
-        const UserAvatar = ({ userId, size = 40 }) => {
-          const [userData, setUserData] = (0, import_react4.useState)(profileCache[userId]);
-          (0, import_react4.useEffect)(() => {
-            if (profileModule) {
-              profileModule.getProfile(userId).then((p3) => {
-                if (p3 && (!userData || p3.updatedAt > (userData.updatedAt || 0) || p3.name !== userData.name || p3.avatar !== userData.avatar)) {
-                  setUserData(p3);
-                  setProfileCache((prev) => ({ ...prev, [userId]: p3 }));
-                }
-              });
-            }
-          }, [userId, profileModule, lastSyncTime]);
-          const p2 = userData || { name: userId };
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-            p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: p2.avatar, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" }, children: userId[0].toUpperCase() }),
-            size > 30 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex flex-column", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "fw-bold", children: p2.name || userId }),
-              p2.name && p2.name !== userId && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("small", { className: "text-muted", style: { fontSize: "0.75rem" }, children: [
-                "@",
-                userId
-              ] })
-            ] })
-          ] });
-        };
-        const UserName = ({ userId, className }) => {
-          const [userData, setUserData] = (0, import_react4.useState)(profileCache[userId]);
-          (0, import_react4.useEffect)(() => {
-            if (profileModule) {
-              profileModule.getProfile(userId).then((p2) => {
-                if (p2 && (!userData || p2.updatedAt > (userData.updatedAt || 0) || p2.name !== userData.name)) {
-                  setUserData(p2);
-                  setProfileCache((prev) => ({ ...prev, [userId]: p2 }));
-                }
-              });
-            }
-          }, [userId, profileModule, lastSyncTime]);
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: className || "fw-bold", children: userData?.name || userId });
-        };
         const isUserAnAdmin = (userId) => {
           if (userId === "admin") return true;
           if (!config.adminPublicKey) return false;
@@ -139032,969 +140736,218 @@ ${toHex(hashedRequest)}`;
             }
           });
         };
-        const PostItem = ({ post, allPosts, depth = 0 }) => {
-          const replies = allPosts.filter((p2) => p2.parentId === post.id);
-          const isNew = post.timestamp > highlights.feed && post.userId !== config.userId;
-          const isAdminPost = post.userId !== config.userId && isUserAnAdmin(post.userId);
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `mb-3 ${depth > 0 ? "ms-4 border-start ps-3 mt-2" : ""}`, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `card post-card p-3 ${isAdminPost ? "border-danger shadow-sm" : isNew ? "border-primary shadow-sm" : ""}`, style: isAdminPost ? { borderWidth: "2px" } : isNew ? { borderWidth: "2px", backgroundColor: "#f0f7ff" } : {}, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: post.userId }),
-                isAdminPost && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "ms-2 badge bg-danger", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-shield-check me-1" }),
-                  "Admin Action"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ms-2 flex-grow-1", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-muted x-small", children: [
-                  new Date(post.timestamp).toLocaleString(),
-                  post.isEdited && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-1 badge bg-light text-muted fw-normal", children: "Edited" }),
-                  post.parentUserId && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "ms-1", children: [
-                    "replied to ",
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserName, { userId: post.parentUserId, className: "fw-normal text-primary" })
-                  ] })
-                ] }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "dropdown", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-light rounded-circle", "data-bs-toggle": "dropdown", children: "\u22EE" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end", children: [
-                    post.userId === config.userId && !post.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "dropdown-item", onClick: () => handleEditPost(post), children: "Edit" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "dropdown-item text-danger", onClick: () => handleDeletePost(post), children: "Delete" }) })
-                    ] }),
-                    post.userId !== config.userId && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "dropdown-item text-warning", onClick: () => handleReportPost(post), children: "Report Abuse" }) })
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-3", children: post.isDeleted ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "text-muted small", children: "This post was deleted" }) : post.content }),
-              post.image && !post.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlobImage, { path: post.image, userId: post.userId }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "border-top mt-3 pt-2 d-flex justify-content-around", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-                  "button",
-                  {
-                    className: `btn btn-link text-decoration-none ${post.likedByMe ? "text-primary fw-bold" : "text-muted"}`,
-                    onClick: () => handleLike(post.id),
-                    disabled: post.isDeleted,
-                    children: [
-                      "Like ",
-                      post.likesCount ? `(${post.likesCount})` : ""
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleComment(post), disabled: post.isDeleted, children: "Comment" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-link text-muted text-decoration-none", onClick: () => handleShare(post), disabled: post.isDeleted, children: "Share" })
-              ] })
-            ] }, post.id),
-            replies.sort((a2, b2) => a2.timestamp - b2.timestamp).map((reply) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(PostItem, { post: reply, allPosts, depth: depth + 1 }, reply.id))
-          ] });
+        const socialContextValue = {
+          sov,
+          feed,
+          messaging,
+          profileModule,
+          moderation,
+          profileCache,
+          setProfileCache,
+          blobCache,
+          setBlobCache,
+          lastSyncTime,
+          config
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { className: "text-primary text-center fw-bold mb-4", children: "Sovereign Social" }),
-              rememberedUsers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Switch Account" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group", children: rememberedUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-                  "button",
-                  {
-                    className: "list-group-item list-group-item-action d-flex align-items-center py-2",
-                    onClick: () => performLogin(u2.config),
-                    children: [
-                      u2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: u2.avatar, style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px" }, children: u2.userId[0].toUpperCase() }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "flex-grow-1 overflow-hidden", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "fw-bold text-truncate", children: [
-                          u2.name,
-                          u2.config?.syncMode === "webrtc" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-info ms-2 fw-normal", title: "WebRTC Mesh (Local)", children: "P2P Local" }) : u2.config?.syncMode === "peerjs" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-success ms-2 fw-normal", title: "PeerJS (Global)", children: "P2P Global" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary ms-2 fw-normal", title: "S3 Cloud", children: "S3" })
-                        ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "x-small text-muted text-truncate", children: u2.userId })
-                      ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-primary small", children: "Login \u2192" })
-                    ]
-                  },
-                  u2.userId
-                )) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center justify-content-center mb-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "fs-5 me-2", children: "\u{1F680}" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "fw-bold text-primary", children: "Instant Quick Start" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-muted small mb-3", children: "Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                  "button",
-                  {
-                    type: "button",
-                    className: "btn btn-primary w-100 py-2 fw-bold shadow-sm",
-                    onClick: () => {
-                      const guestConfig = {
-                        ...config,
-                        syncMode: "offline",
-                        userId: config.userId || "guest-" + Math.random().toString(36).substring(7),
-                        password: config.password || "password123"
-                      };
-                      performLogin(guestConfig);
-                    },
-                    children: "\u26A1 Start Instantly (Offline Mode)"
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Configure Workspace" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-1", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "Sync Mode" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-light text-muted border small", children: "Select Architecture" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "btn-group w-100 mb-3 flex-wrap", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeOffline", autoComplete: "off", checked: config.syncMode === "offline", onChange: () => setConfig({ ...config, syncMode: "offline" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeOffline", children: "Offline-First" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeS3", autoComplete: "off", checked: config.syncMode === "s3", onChange: () => setConfig({ ...config, syncMode: "s3" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeS3", children: "S3 Cloud" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "radio", className: "btn-check", name: "syncMode", id: "modeWebrtc", autoComplete: "off", checked: config.syncMode === "webrtc", onChange: () => setConfig({ ...config, syncMode: "webrtc" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "btn btn-outline-primary", htmlFor: "modeWebrtc", children: "WebRTC Mesh" })
-              ] }),
-              config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-info py-2 small mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Offline-First Mode:" }),
-                " All data is stored securely in your browser's IndexedDB. You can connect to S3 cloud storage or P2P WebRTC at any time from the settings panel."
-              ] }),
-              config.syncMode === "webrtc" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-success py-2 small mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "WebRTC P2P Mesh:" }),
-                " Synchronizes directly between browser tabs and devices without storing data on any centralized server."
-              ] }),
-              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "border rounded p-3 mb-3 bg-light", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase mb-0", children: "S3 Cloud Credentials" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary small", children: "Advanced" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-0", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Account Credentials" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-check mb-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-check-input", type: "checkbox", id: "autoLogin", checked: autoLogin, onChange: (e2) => {
-                  setAutoLogin(e2.target.checked);
-                  localStorage.setItem("sov_auto_login", e2.target.checked.toString());
-                } }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-check-label small", htmlFor: "autoLogin", children: "Auto-login next time" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-check mb-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-check-input", type: "checkbox", id: "autoSyncCheck", checked: autoSync, onChange: (e2) => {
-                  setAutoSync(e2.target.checked);
-                  localStorage.setItem("sov_auto_sync", e2.target.checked.toString());
-                } }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-check-label small", htmlFor: "autoSyncCheck", children: "Enable Background Sync (60s)" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-check mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-check-input", type: "checkbox", id: "useWebWorkers", checked: useWebWorkers, onChange: (e2) => {
-                  setUseWebWorkers(e2.target.checked);
-                  localStorage.setItem("sov_use_workers", e2.target.checked.toString());
-                } }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-check-label small", htmlFor: "useWebWorkers", children: "Use Web Workers (Performance)" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sov w-100 py-2 fs-5 mb-3", onClick: login, children: "Log In" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center mt-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: resetLocalData, children: "Reset Local Data" }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Dialog, { dialog, setDialog, profileCache })
-          ] });
+          return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(SocialContext.Provider, { value: socialContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            LoginView,
+            {
+              config,
+              setConfig,
+              rememberedUsers,
+              performLogin,
+              login,
+              resetLocalData,
+              autoLogin,
+              setAutoLogin,
+              autoSync,
+              setAutoSync,
+              useWebWorkers,
+              setUseWebWorkers,
+              dialog,
+              setDialog,
+              profileCache
+            }
+          ) });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "container-fluid p-0", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("nav", { className: "navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { className: "navbar-brand text-primary fw-bold fs-3", href: "#", children: [
-              "sov",
-              config.syncMode === "webrtc" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-info ms-2 fs-6 align-middle fw-normal", title: "WebRTC Mesh (Local)", children: "P2P Local" }) : config.syncMode === "peerjs" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-success ms-2 fs-6 align-middle fw-normal", title: "PeerJS (Global)", children: "P2P Global" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary ms-2 fs-6 align-middle fw-normal", title: "S3 Cloud", children: "S3" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mx-auto d-flex align-items-center mobile-hide", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { "data-testid": "nav-home", className: `btn mx-2 position-relative ${currentTab === "feed" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("feed"), children: [
-                "Home",
-                unreadCounts.feed > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.feed })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { "data-testid": "nav-friends", className: `btn mx-2 position-relative ${currentTab === "friends" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("friends"), children: [
-                "Friends",
-                unreadCounts.friends > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.friends })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { "data-testid": "nav-messages", className: `btn mx-2 position-relative ${currentTab === "messages" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("messages"), children: [
-                "Messages",
-                unreadCounts.messages > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { "data-testid": "unread-badge", className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.messages })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { "data-testid": "nav-rooms", className: `btn mx-2 position-relative ${currentTab === "rooms" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("rooms"), children: [
-                "Rooms",
-                unreadCounts.rooms > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger", children: unreadCounts.rooms })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { "data-testid": "nav-profile", className: `btn mx-2 ${currentTab === "profile" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("profile"), children: "Profile" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { "data-testid": "nav-mesh", className: `btn mx-2 ${currentTab === "mesh" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("mesh"), children: "Mesh" }),
-              isAdmin && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { "data-testid": "nav-admin", className: `btn mx-2 ${currentTab === "admin" ? "btn-light text-primary" : ""}`, onClick: () => setCurrentTab("admin"), children: "Admin" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-              !isConnected && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary rounded-pill me-2", children: "Offline Mode" }),
-              config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-sm btn-primary rounded-pill me-2 mobile-hide", onClick: handleConnectRemote, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-cloud-upload me-1" }),
-                " Connect Remote"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-                "button",
-                {
-                  className: `btn btn-link px-2 me-1 d-flex align-items-center gap-1 text-decoration-none ${isConnected ? "text-success" : "text-danger"}`,
-                  onClick: toggleConnection,
-                  title: isConnected ? "Connected" : "Disconnected",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: `bi ${isConnected ? "bi-cloud-check-fill" : "bi-cloud-slash-fill"}`, style: { fontSize: "1.2rem" } }),
-                    isConnected && (config.syncMode === "webrtc" || config.syncMode === "peerjs") && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "small fw-bold mobile-hide", children: [
-                      meshStats.connectedPeers,
-                      " peers"
-                    ] })
-                  ]
-                }
-              ),
-              config.enableP2PPairing && (config.syncMode === "webrtc" || config.syncMode === "peerjs") && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-                "button",
-                {
-                  className: "btn btn-sm btn-outline-primary rounded-pill me-2",
-                  onClick: () => setShowPairing(true),
-                  title: "Direct QR Pair",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-qr-code-scan" }),
-                    " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "mobile-hide", children: "Pair" })
-                  ]
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "d-flex align-items-center", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: config.userId, size: 32 }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none", onClick: () => sync(true), disabled: syncing || config.syncMode === "offline", title: "Sync Now", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: `bi bi-arrow-repeat ${syncing ? "spin" : ""}` }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-secondary ms-2 mobile-hide", onClick: () => sync(true), disabled: syncing || config.syncMode === "offline", children: syncing ? "..." : config.syncMode === "offline" ? "Offline" : "Sync" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-danger ms-2 mobile-hide", onClick: logout, children: "Logout" })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "bottom-nav d-md-none", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "feed" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("feed");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-house" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Home" }),
-              unreadCounts.feed > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.feed })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "friends" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("friends");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-people" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Friends" }),
-              unreadCounts.friends > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.friends })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "messages" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("messages");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-chat-dots" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Chat" }),
-              unreadCounts.messages > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.messages })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "rooms" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("rooms");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-grid" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Rooms" }),
-              unreadCounts.rooms > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-danger", children: unreadCounts.rooms })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "profile" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("profile");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-person" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Profile" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "mesh" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("mesh");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-node-plus" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Mesh" })
-            ] }),
-            isAdmin && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("a", { href: "#", className: `bottom-nav-item ${currentTab === "admin" ? "active" : ""}`, onClick: (e2) => {
-              e2.preventDefault();
-              setCurrentTab("admin");
-            }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-shield-lock" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Admin" })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "container mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row justify-content-center", children: [
-            currentTab === "feed" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "feed-container mobile-full-width", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card post-card p-3 mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: config.userId }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ms-2 flex-grow-1", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("textarea", { className: "post-input w-100", rows: 1, placeholder: `What's on your mind?`, value: newPost, onChange: (e2) => setNewPost(e2.target.value), onKeyDown: handlePostKeyDown }) })
-                ] }),
-                newImagePreview && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: newImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "300px" } }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between border-top pt-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "file", ref: postFileRef, className: "form-control form-control-sm border-0 w-auto", onChange: (e2) => handleImageChange(e2, false) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sov px-4", onClick: handlePost, children: "Post" })
-                ] })
-              ] }),
-              posts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center py-5 card border-0 shadow-sm rounded-4 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "display-1 text-muted mb-4 opacity-25", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-chat-square-text" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h4", { className: "fw-bold text-secondary", children: "No posts yet" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-muted mb-4", children: "Follow some friends or create your first post to get started!" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => setCurrentTab("friends"), children: "Find People to Follow" })
-              ] }) }) : posts.filter((post) => !post.parentId || !posts.some((p2) => p2.id === post.parentId)).map((post) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(PostItem, { post, allPosts: posts }, post.id)),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center mt-4 mb-5", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-outline-secondary", onClick: handleLoadMore, children: "Load more history" }) })
-            ] }),
-            currentTab === "friends" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-8 mobile-full-width", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-3 mb-4 shadow-sm border-0", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "fw-bold mb-0", children: "Discover People" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: () => {
-                  showPrompt("Enter exact User ID to discover:", (uid) => {
-                    if (uid) {
-                      setDiscoveryMap((prev) => {
-                        const next = { ...prev, [uid]: Date.now() };
-                        setTimeout(() => loadData(sov || void 0, feed || void 0, messaging || void 0, profileModule || void 0), 500);
-                        return next;
-                      });
-                    }
-                  });
-                }, children: "+ Add by ID" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group list-group-flush", children: allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => {
-                const isNew = (discoveryMap[u2.userId] || 0) > highlights.friends;
-                return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { "data-testid": `user-item-${u2.userId}`, className: `list-group-item d-flex justify-content-between align-items-center border-0 py-3 rounded-3 mb-1 ${isNew ? "border-start border-primary" : ""}`, style: isNew ? { backgroundColor: "#f0f7ff", borderLeftWidth: "4px" } : {}, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: u2.userId }),
-                  following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-light btn-sm rounded-pill px-3", onClick: async () => {
-                    await sov?.unfollow(u2.userId);
-                    await loadData();
-                  }, children: "Following" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-primary btn-sm rounded-pill px-3", onClick: async () => {
-                    await sov?.follow(u2.userId, u2.publicKey);
-                    await loadData();
-                  }, children: "Follow" })
-                ] }, u2.userId);
-              }) })
-            ] }) }),
-            currentTab === "messages" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row g-0 h-100", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedUser ? "mobile-hide" : ""}`, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "mb-0", children: "Chats" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-circle", onClick: handleNewChat, style: { display: "none" }, children: "+" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group list-group-flush", children: (() => {
-                  const chatUsers = [...following];
-                  messages.forEach((m2) => {
-                    const otherId = m2.senderId === config.userId ? m2.recipientId : m2.senderId;
-                    if (!chatUsers.find((u2) => u2.userId === otherId)) {
-                      chatUsers.push({ userId: otherId });
-                    }
-                  });
-                  if (chatUsers.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "p-4 text-center text-muted small", children: "No conversations yet. Follow someone to start chatting!" });
-                  return chatUsers.map((user) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { "data-testid": `chat-item-${user.userId}`, className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId), children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center flex-grow-1 overflow-hidden", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: user.userId }),
-                      isUserAnAdmin(user.userId) && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-1 badge bg-danger", style: { fontSize: "0.6rem" }, children: "Admin" })
-                    ] }),
-                    userUnreadCounts[user.userId] > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-primary", children: userUnreadCounts[user.userId] })
-                  ] }, user.userId));
-                })() })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedUser ? "mobile-hide" : ""}`, children: selectedUser ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex align-items-center", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedUser(null), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-arrow-left" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: selectedUser }),
-                  isUserAnAdmin(selectedUser) && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-2 badge bg-danger mobile-hide", children: "Official Administrator" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => b2.timestamp - a2.timestamp).map((m2) => {
-                  const isAdminMsg = m2.senderId !== config.userId && isUserAnAdmin(m2.senderId);
-                  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { "data-testid": "message-bubble", className: `d-flex mb-2 ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `p-2 rounded-4 px-3 ${m2.senderId === config.userId ? "bg-primary text-white" : isAdminMsg ? "border border-danger bg-light text-dark shadow-sm" : "bg-light text-dark"}`, style: { maxWidth: "85%", ...isAdminMsg ? { borderWidth: "2px" } : {} }, children: [
-                    isAdminMsg && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "badge bg-danger mb-1", style: { fontSize: "0.65rem" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-shield-check me-1" }),
-                      "Admin Action"
-                    ] }),
-                    m2.isDeleted ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "small opacity-75", children: "Message deleted" }) : m2.content.startsWith("INVITE_GROUP:") ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-2 border rounded bg-white text-dark", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold text-primary mb-1", children: "Group Invitation" }),
-                      (() => {
-                        try {
-                          const info = JSON.parse(m2.content.substring(13));
-                          const localGroup = groups.find((g2) => g2.id === info.id);
-                          const localStatus = localGroup?.members.find((mb) => mb.userId === config.userId)?.status;
-                          return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "small mb-2", children: [
-                              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("b", { children: m2.senderId }),
-                              " invited you to join ",
-                              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("b", { children: info.name }),
-                              "."
-                            ] }),
-                            localStatus === "joined" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-success w-100", children: "Joined" }) : localStatus === "declined" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-secondary w-100", children: "Declined" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex gap-2", children: [
-                              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-success flex-grow-1", onClick: () => handleAcceptGroup(info), children: "Accept" }),
-                              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-danger flex-grow-1", onClick: () => handleDeclineGroup(info), children: "Decline" })
-                            ] })
-                          ] });
-                        } catch (e2) {
-                          return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Invalid Invite" });
-                        }
-                      })()
-                    ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                      m2.image && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlobImage, { path: m2.image, userId: m2.senderId, message: m2 }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: m2.content })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { fontSize: "0.6rem" }, className: `mt-1 ${m2.senderId === config.userId ? "opacity-75" : "text-muted"} d-flex justify-content-between align-items-center`, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { children: [
-                        new Date(m2.timestamp).toLocaleTimeString(),
-                        " ",
-                        m2.isEdited && "(Edited)"
-                      ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-                        m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "me-2 d-flex", children: m2.status === "read" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-check-all text-info", style: { fontSize: "0.9rem" }, title: "Read" }) : m2.status === "delivered" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-check-all", style: { fontSize: "0.9rem" }, title: "Delivered" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-check", style: { fontSize: "0.9rem" }, title: "Sent" }) }),
-                        m2.senderId === config.userId && !m2.isDeleted && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "d-flex gap-2", children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "cursor-pointer", onClick: () => handleEditMessage(m2), title: "Edit", children: "\u270E" }),
-                          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "cursor-pointer", onClick: () => handleDeleteMessage(m2), title: "Delete", children: "\u{1F5D1}" })
-                        ] })
-                      ] })
-                    ] })
-                  ] }) }, m2.id);
-                }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-top bg-light", children: [
-                  msgImagePreview && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-2", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: msgImagePreview, style: { maxHeight: "100px" }, className: "rounded" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "input-group", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "file", ref: msgFileRef, className: "d-none", id: "msgFile", onChange: (e2) => handleImageChange(e2, true) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { htmlFor: "msgFile", className: "btn btn-outline-secondary rounded-pill me-2", children: "\u{1F4F7}" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { "data-testid": "message-input", className: "form-control rounded-pill", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { "data-testid": "message-send-btn", className: "btn btn-primary rounded-pill ms-2", onClick: handleSendMessage, children: "Send" })
-                  ] })
-                ] })
-              ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a friend to start chatting" }) })
-            ] }) }) }),
-            currentTab === "rooms" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card shadow-sm border-0 mobile-full-width", style: { height: "75vh" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row g-0 h-100", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `col-md-4 border-end overflow-y-auto h-100 ${selectedGroup ? "mobile-hide" : ""}`, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-bottom bg-light d-flex justify-content-between align-items-center", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "mb-0", children: "Rooms" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateGroup, children: "+" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group list-group-flush", children: groups.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "p-4 text-center text-muted small", children: "No rooms yet. Create one to start collaborating!" }) : groups.map((group3) => {
-                  const me = group3.members.find((mb) => mb.userId === config.userId);
-                  const isPending = me?.status === "pending";
-                  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: `list-group-item list-group-item-action border-0 d-flex justify-content-between align-items-center py-3 ${selectedGroup?.id === group3.id ? "bg-light" : ""}`, onClick: () => setSelectedGroup(group3), children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold text-truncate", children: group3.name }),
-                    isPending && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-warning text-dark", children: "Invite" }),
-                    !isPending && group3.createdAt > (lastViewed.roomChat?.[group3.id] || 0) && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge rounded-pill bg-primary", children: "New" })
-                  ] }, group3.id);
-                }) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `col-md-8 d-flex flex-column h-100 overflow-hidden ${!selectedGroup ? "mobile-hide" : ""}`, children: selectedGroup ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-bottom bg-light", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-light rounded-circle me-3 d-md-none", onClick: () => setSelectedGroup(null), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-arrow-left" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "mb-0 fw-bold", children: selectedGroup.name })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center gap-2", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "small text-muted mobile-hide", children: new Date(selectedGroup.createdAt).toLocaleDateString() }),
-                      (selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "owner" || selectedGroup.members.find((m2) => m2.userId === config.userId)?.role === "admin") && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill py-0 px-2", style: { fontSize: "0.7rem" }, onClick: handleManageMembers, children: "Manage" })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "d-flex flex-wrap gap-1", children: selectedGroup.members.map((m2) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: `badge rounded-pill border ${m2.status === "joined" ? "bg-success text-white border-success" : m2.status === "declined" ? "bg-light text-muted border-secondary" : "bg-white text-dark border-warning"}`, style: { fontSize: "0.65rem" }, children: [
-                    m2.userId,
-                    " (",
-                    m2.status || "pending",
-                    ")"
-                  ] }, m2.userId)) }),
-                  selectedGroup.members.find((m2) => m2.userId === config.userId)?.status === "pending" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mt-3 p-2 bg-warning bg-opacity-10 border border-warning rounded d-flex justify-content-between align-items-center", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "small fw-bold", children: "You have a pending invite to this room." }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex gap-2", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-success", onClick: () => handleAcceptGroup(selectedGroup), children: "Accept" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-danger", onClick: () => handleDeclineGroup(selectedGroup), children: "Decline" })
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-white d-flex flex-column-reverse", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "d-flex flex-column", children: groupPosts.sort((a2, b2) => a2.timestamp - b2.timestamp).map((p2) => {
-                  const isAdminGroupPost = p2.userId !== config.userId && isUserAnAdmin(p2.userId);
-                  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `mb-3 ${p2.type === "system" ? "text-center" : ""}`, children: p2.type === "system" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "x-small text-muted py-1 bg-light rounded-pill px-3 d-inline-block", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: p2.userId, size: 16 }),
-                    " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-1", children: p2.content })
-                  ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center justify-content-between mb-1", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserAvatar, { userId: p2.userId, size: 24 }),
-                        isAdminGroupPost && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "badge bg-danger ms-2", style: { fontSize: "0.65rem" }, children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-shield-check me-1" }),
-                          "Admin Action"
-                        ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-2 x-small text-muted", children: new Date(p2.timestamp).toLocaleString() }),
-                        p2.isEdited && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "ms-2 x-small text-muted italic", children: "(edited)" })
-                      ] }),
-                      (() => {
-                        const isAuthor = p2.userId === config.userId;
-                        const myRole = selectedGroup.members.find((m2) => m2.userId === config.userId)?.role;
-                        const canDelete = isAuthor || myRole === "owner" || myRole === "admin";
-                        if (!isAuthor && !canDelete) return null;
-                        return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "dropdown", children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-link btn-sm text-muted p-0", type: "button", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
-                          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm border-0 small", children: [
-                            isAuthor && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "dropdown-item py-1", onClick: () => handleEditGroupPost(p2), children: "Edit" }) }),
-                            canDelete && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "dropdown-item py-1 text-danger", onClick: () => handleDeleteGroupPost(p2), children: "Delete" }) })
-                          ] })
-                        ] });
-                      })()
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `ms-4 p-2 rounded bg-light shadow-sm ${isAdminGroupPost ? "border border-danger" : ""}`, style: { display: "inline-block", maxWidth: "95%", ...isAdminGroupPost ? { borderWidth: "2px" } : {} }, children: [
-                      p2.image && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlobImage, { path: p2.image, userId: p2.userId }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: p2.content })
-                    ] })
-                  ] }) }, p2.id);
-                }) }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 border-top bg-light", children: [
-                  groupImagePreview && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-2 position-relative d-inline-block", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: groupImagePreview, className: "img-thumbnail", style: { maxHeight: "100px" } }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-danger rounded-circle position-absolute top-0 start-100 translate-middle", onClick: () => {
-                      setGroupImage(null);
-                      setGroupImagePreview(null);
-                      if (groupFileRef.current) groupFileRef.current.value = "";
-                    }, children: "\xD7" })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "input-group", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "btn btn-outline-secondary rounded-pill-start mb-0 d-flex align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-image" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "file", ref: groupFileRef, className: "d-none", accept: "image/*", onChange: handleGroupImageChange })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control", placeholder: `Post to ${selectedGroup.name}...`, value: groupInput, onChange: (e2) => setGroupInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && (e2.ctrlKey || !groupImage) && handlePostToGroup() }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-primary rounded-pill-end px-4", onClick: handlePostToGroup, children: "Post" })
-                  ] })
-                ] })
-              ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a room to start collaborating" }) })
-            ] }) }) }),
-            currentTab === "profile" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "col-md-6 mobile-full-width", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h4", { className: "mb-4 fw-bold", children: "Edit Profile" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-center mb-4", children: [
-                  profile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: profile.avatar, style: { width: "120px", height: "120px", borderRadius: "50%", objectFit: "cover" }, className: "mb-2 shadow-sm" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2 shadow-sm", style: { width: "120px", height: "120px", fontSize: "3rem" }, children: config.userId[0].toUpperCase() }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "btn btn-sm btn-outline-primary rounded-pill", children: [
-                    "Change Avatar",
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "file", className: "d-none", accept: "image/*", onChange: async (e2) => {
-                      const file = e2.target.files?.[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (ev) => {
-                          setProfile({ ...profile, avatar: ev.target?.result });
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    } })
-                  ] }) })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Display Name" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }), placeholder: "Your Name" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "User ID (Share this for P2P)" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "input-group", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "text", className: "form-control bg-light", value: config.userId, readOnly: true }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-outline-secondary", onClick: () => {
-                      navigator.clipboard.writeText(config.userId);
-                      showAlert("User ID copied!", "Clipboard");
-                    }, children: "Copy" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-4", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Bio" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("textarea", { className: "form-control", rows: 3, value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }), placeholder: "Tell us about yourself..." })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-primary w-100 py-2 fw-bold", onClick: async () => {
-                  await profileModule?.updateProfile(profile?.name || config.userId, profile?.bio || "", profile?.avatar);
-                  await sync();
-                  showAlert("Profile updated!", "Success");
-                }, children: "Save Changes" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("hr", { className: "my-4" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "fw-bold mb-3", children: "Portable Archive" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "small text-muted mb-3", children: "Export your profile and social feed as a single, standalone HTML file. All images will be embedded directly in the file so it can be viewed offline." }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "form-check mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-check-input", type: "checkbox", id: "exportAllPosts", checked: exportAllPosts, onChange: (e2) => setExportAllPosts(e2.target.checked) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-check-label small", htmlFor: "exportAllPosts", children: "Include posts from everyone I follow (otherwise only my posts)" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-success w-100 py-2 fw-bold", onClick: async () => {
-                  try {
-                    showAlert("Generating static export... this may take a moment.", "Exporting");
-                    const exportProfile = profile;
-                    const exportPosts = [...posts].filter((p2) => exportAllPosts || p2.userId === config.userId).sort((a3, b2) => b2.timestamp - a3.timestamp);
-                    const embedImages = async (postList) => {
-                      for (const post of postList) {
-                        if (post.image && post.image.startsWith("public/blobs/")) {
-                          const blob2 = await sov?.getBlob(post.image, post.userId);
-                          if (blob2) {
-                            const reader = new FileReader();
-                            const dataUrl = await new Promise((resolve) => {
-                              reader.onload = (e2) => resolve(e2.target?.result);
-                              reader.readAsDataURL(new Blob([blob2]));
-                            });
-                            post.image = dataUrl;
-                          }
-                        }
-                      }
-                    };
-                    await embedImages(exportPosts);
-                    const sanitize = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-                    const htmlContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Archive - ${exportProfile?.name || config.userId}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f0f2f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .archive-header { background: white; padding: 2rem 0; border-bottom: 1px solid #ddd; margin-bottom: 2rem; }
-        .avatar-large { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .post-card { background: white; border-radius: 8px; border: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
-        .post-img { max-height: 500px; width: 100%; object-fit: contain; background: #000; border-radius: 4px; }
-    </style>
-</head>
-<body>
-    <div class="archive-header">
-        <div class="container text-center">
-            ${exportProfile?.avatar ? `<img src="${exportProfile.avatar}" class="avatar-large mb-3">` : `<div class="bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px; font-size: 3rem;">${config.userId[0].toUpperCase()}</div>`}
-            <h1 class="fw-bold">${sanitize(exportProfile?.name || config.userId)}</h1>
-            <p class="text-muted">${sanitize(exportProfile?.bio || "No bio provided.")}</p>
-            <div class="badge bg-light text-dark border">${config.userId}</div>
-        </div>
-    </div>
-    
-    <div class="container pb-5" style="max-width: 700px;">
-        <h4 class="fw-bold mb-4">Feed Archive (${exportPosts.length} posts)</h4>
-        ${exportPosts.map((post) => {
-                      const postUser = allUsers.find((u2) => u2.userId === post.userId);
-                      const userName = postUser?.userId || post.userId;
-                      const initials = userName[0].toUpperCase();
-                      return `
-            <div class="card post-card">
-                <div class="card-body">
-                    <div class="d-flex mb-3">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px;">${initials}</div>
-                        <div>
-                            <div class="fw-bold">${sanitize(userName)}</div>
-                            <div class="text-muted small">${new Date(post.timestamp).toLocaleString()}</div>
-                        </div>
-                    </div>
-                    <p style="white-space: pre-wrap;">${sanitize(post.content)}</p>
-                    ${post.image ? `<img src="${post.image}" class="post-img mt-2">` : ""}
-                </div>
-            </div>
-        `;
-                    }).join("")}
-        
-        <div class="text-center text-muted mt-5 small">
-            Exported from SovereignS3nc on ${(/* @__PURE__ */ new Date()).toLocaleString()}
-        </div>
-    </div>
-</body>
-</html>`;
-                    const blob = new Blob([htmlContent], { type: "text/html" });
-                    const url = URL.createObjectURL(blob);
-                    const a2 = document.createElement("a");
-                    a2.href = url;
-                    a2.download = `sovereign_archive_\${config.userId}_\${new Date().toISOString().split('T')[0]}.html`;
-                    a2.click();
-                    URL.revokeObjectURL(url);
-                    showAlert("Portable archive exported successfully!", "Success");
-                  } catch (e2) {
-                    showAlert("Export failed: " + e2.message, "Error");
-                  }
-                }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-file-earmark-arrow-down me-2" }),
-                  " Export Static Website"
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0 mt-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h4", { className: "mb-4 fw-bold", children: "Security" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Old Password" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control", type: "password", value: oldPassword, onChange: (e2) => setOldPassword(e2.target.value), placeholder: "Enter old password" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-4", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "New Password" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control", type: "password", value: newPassword, onChange: (e2) => setNewPassword(e2.target.value), placeholder: "Enter new password" })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-danger w-100 py-2 fw-bold", onClick: handleChangePassword, children: "Change Password" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mt-3 small text-muted", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("b", { children: "Note:" }),
-                  " Changing your password will migrate your private data on the remote storage to a new path derived from your new password."
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0 mt-4 d-md-none", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h4", { className: "mb-4 fw-bold", children: "Account Actions" }),
-                config.syncMode === "offline" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-primary w-100 py-2 fw-bold mb-3", onClick: handleConnectRemote, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-cloud-upload me-2" }),
-                  " Connect Remote"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-danger w-100 py-2 fw-bold", onClick: logout, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-box-arrow-right me-2" }),
-                  " Logout"
-                ] })
-              ] })
-            ] }),
-            currentTab === "mesh" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-8", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h4", { className: "fw-bold mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-node-plus me-2 text-primary" }),
-                "P2P Mesh Network"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row text-center mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-6", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 bg-light rounded shadow-sm", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "display-4 fw-bold text-primary", children: meshStats.connectedPeers }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted small text-uppercase", children: "Connected Peers" })
-                ] }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-6", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "p-3 bg-light rounded shadow-sm", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "display-4 fw-bold text-success", children: config.syncMode === "webrtc" || config.syncMode === "peerjs" ? "ON" : "OFF" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted small text-uppercase", children: "Mesh Status" })
-                ] }) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "fw-bold mb-3", children: "Gossip Activity Log" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "bg-dark text-light p-3 rounded mb-4", style: { height: "300px", overflowY: "auto", fontFamily: "monospace", fontSize: "0.85rem" }, children: [
-                meshLog.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted italic", children: "Waiting for mesh activity..." }),
-                meshLog.map((log2, i2) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-1 border-bottom border-secondary pb-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { className: "text-info", children: [
-                    "[",
-                    new Date(log2.time).toLocaleTimeString(),
-                    "]"
-                  ] }),
-                  " ",
-                  log2.msg
-                ] }, i2))
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "fw-bold mb-2", children: "Connected Peer IDs" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex flex-wrap gap-2", children: [
-                meshStats.peerIds.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted small", children: "No active peer IDs discovered." }),
-                meshStats.peerIds.map((id) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-light text-dark border small", children: id }, id))
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mt-4 pt-4 border-top", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { children: "Persistence Engine" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "small text-muted", children: "Your browser is acting as a persistent node in the mesh. Any data Alice or Bob requests that you have in local storage (IndexedDB) will be served automatically, even if the original author is offline." })
-              ] })
-            ] }) }),
-            currentTab === "admin" && isAdmin && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-10 mobile-full-width", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h4", { className: "mb-4 fw-bold text-danger", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-shield-lock me-2" }),
-                "Admin Dashboard"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-secondary py-3 mb-4 border-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "fw-bold mb-1", children: "Admin Status" }),
-                adminKeyPublished ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-success small", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-check-circle-fill me-1" }),
-                  " Reporting is ACTIVE. Your public key is published."
-                ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "text-warning small", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-1" }),
-                  " Reporting is INACTIVE. You must publish your admin key for users to send reports."
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-6 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card h-100 border-0 bg-light", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "fw-bold mb-3", children: "Governance" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-danger w-100 mb-2", onClick: async () => {
-                    const uid = await new Promise((resolve) => showPrompt("Enter User ID to blacklist:", resolve));
-                    if (uid && moderation) {
-                      try {
-                        await moderation.blacklistUser(uid);
-                        await sync();
-                        showAlert(`User ${uid} has been blacklisted globally.`);
-                      } catch (e2) {
-                        showAlert("Failed to blacklist: " + e2.message, "Error");
-                      }
-                    }
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-person-x me-2" }),
-                    " Blacklist User"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-secondary w-100 mb-2", onClick: async () => {
-                    if (sov) {
-                      await sov.syncBlacklist();
-                      showAlert("Blacklist synchronized with cloud.");
-                    }
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-arrow-repeat me-2" }),
-                    " Sync Blacklist"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-primary w-100", onClick: async () => {
-                    if (moderation) {
-                      try {
-                        await moderation.publishAdminKey();
-                        setAdminKeyPublished(true);
-                        showAlert("Admin public key published successfully for E2EE reporting.");
-                      } catch (e2) {
-                        showAlert("Failed to publish admin key: " + e2.message, "Error");
-                      }
-                    }
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-key me-2" }),
-                    " Publish Admin Key"
-                  ] })
-                ] }) }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-6 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card h-100 border-0 bg-light", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "fw-bold mb-3", children: "Provision User S3 Keys" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "small text-muted mb-3", children: "Generate dedicated S3 credentials for a new user to ensure infrastructure isolation." }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-primary w-100 mb-2", onClick: async () => {
-                    showPrompt("Enter new User ID to provision:", (uid) => {
-                      if (uid) {
-                        showAlert(`To provision ${uid} in your S3 backend, ensure they have a key with read/write access to their prefixed paths and the global registry.`, "Provisioning Instructions");
-                      }
-                    });
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-person-plus-fill me-2" }),
-                    " Create User Keys"
-                  ] })
-                ] }) }) })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "row mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-12", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card border-0 bg-light border-danger border-start border-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h5", { className: "fw-bold text-danger mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
-                  "Data Management (Root Access)"
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex gap-3 flex-wrap", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-outline-primary", onClick: async () => {
-                    if (moderation) {
-                      try {
-                        const data = await moderation.exportAllData();
-                        const blob = new Blob([data], { type: "application/json" });
-                        const url = URL.createObjectURL(blob);
-                        const a2 = document.createElement("a");
-                        a2.href = url;
-                        a2.download = `sovereign_export_${config.appId}_${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}.json`;
-                        a2.click();
-                        URL.revokeObjectURL(url);
-                        showAlert("Data exported successfully.");
-                      } catch (e2) {
-                        showAlert("Export failed: " + e2.message, "Error");
-                      }
-                    }
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-download me-2" }),
-                    " Export All Data"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "btn btn-outline-secondary mb-0", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-upload me-2" }),
-                    " Import Data",
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: async (e2) => {
-                      const file = e2.target.files?.[0];
-                      if (file && moderation) {
-                        const reader = new FileReader();
-                        reader.onload = async (ev) => {
-                          try {
-                            const content = ev.target?.result;
-                            await moderation.importAllData(content);
-                            showAlert("Data imported successfully.");
-                            e2.target.value = "";
-                          } catch (err) {
-                            showAlert("Import failed: " + err.message, "Error");
-                          }
-                        };
-                        reader.readAsText(file);
-                      }
-                    } })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-danger ms-auto", onClick: () => {
-                    showConfirm("WARNING: This will permanently delete ALL user data, posts, and DMs for this App ID across the entire S3 bucket. This action CANNOT be undone. Are you absolutely sure?", async () => {
-                      if (moderation) {
-                        try {
-                          await moderation.burnItToTheGround();
-                          showAlert("All data has been burned to the ground.", "System Purged");
-                        } catch (e2) {
-                          showAlert("Purge failed: " + e2.message, "Error");
-                        }
-                      }
-                    }, "BURN IT TO THE GROUND");
-                  }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-fire me-2" }),
-                    " BURN IT TO THE GROUND"
-                  ] })
-                ] })
-              ] }) }) }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center mt-2 mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "fw-bold mb-0 flex-grow-1", children: "Abuse Reports" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { className: "btn btn-sm btn-outline-secondary", onClick: async () => {
-                  if (moderation) {
-                    const r2 = await moderation.getReports();
-                    setReports(r2);
-                    showAlert(`Fetched ${r2.length} reports.`);
-                  }
-                }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-arrow-repeat me-1" }),
-                  " Refresh"
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "table-responsive", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("table", { className: "table table-hover align-middle", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("thead", { className: "table-light", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("tr", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { children: "Reporter" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { children: "Target" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { children: "Type" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { children: "Reason" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { children: "Actions" })
-                ] }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("tbody", { children: reports.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { colSpan: 5, className: "text-center py-4 text-muted", children: "No pending reports found in this session." }) }) : reports.map((report) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("tr", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserName, { userId: report.reporterId }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(UserName, { userId: report.targetUserId }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "badge bg-info", children: report.contentType }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { className: "small", children: report.reason }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex gap-2", children: [
-                    report.evidence && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { title: "View Content", className: "btn btn-sm btn-outline-primary", onClick: () => setPreviewPost(report.evidence), children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-eye" }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { title: "Delete Post Only", className: "btn btn-sm btn-outline-danger", onClick: async () => {
-                      if (moderation && report.evidence && sov) {
-                        try {
-                          const today = SovereignS3nc.getDateStr(new Date(report.evidence.timestamp));
-                          const path2 = `${report.targetUserId}/social/public/modules/feed/${today}.db`;
-                          await moderation.deleteUserFile(path2);
-                          await moderation.deleteReport(report.id);
-                          await sov.sync(true);
-                          await loadData(sov);
-                          showAlert("Post deleted and report closed.");
-                        } catch (e2) {
-                          showAlert(e2.message);
-                        }
-                      }
-                    }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-trash" }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { title: "Ban User", className: "btn btn-sm btn-danger", onClick: async () => {
-                      if (moderation && sov) {
-                        try {
-                          await moderation.banUser(report.targetUserId);
-                          await moderation.deleteReport(report.id);
-                          await sov.sync(true);
-                          await loadData(sov);
-                          showAlert("User banned and all data purged.");
-                        } catch (e2) {
-                          showAlert(e2.message);
-                        }
-                      }
-                    }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-person-x" }),
-                      " Ban"
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { title: "Ignore Report", className: "btn btn-sm btn-light", onClick: async () => {
-                      if (moderation) {
-                        await moderation.deleteReport(report.id);
-                        const r2 = await moderation.getReports();
-                        setReports(r2);
-                      }
-                    }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-x-lg" }) })
-                  ] }) })
-                ] }, report.id)) })
-              ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "alert alert-info py-2 small mb-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-info-circle me-2" }),
-                "Reports are encrypted with the Admin Public Key and stored in ",
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("code", { children: [
-                  config.appId,
-                  "/admin/reports/"
-                ] }),
-                ". A background worker or Lambda is typically used to decrypt and aggregate these."
-              ] })
-            ] }) })
+        return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(SocialContext.Provider, { value: socialContextValue, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "container-fluid p-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+            Navigation,
+            {
+              config,
+              currentTab,
+              setCurrentTab,
+              unreadCounts,
+              isAdmin,
+              isConnected,
+              toggleConnection,
+              meshStats,
+              setShowPairing,
+              sync,
+              syncing,
+              logout,
+              handleConnectRemote,
+              profileModule,
+              lastSyncTime,
+              profileCache,
+              setProfileCache
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "container mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "row justify-content-center", children: [
+            currentTab === "feed" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              FeedTab,
+              {
+                config,
+                newPost,
+                setNewPost,
+                handlePostKeyDown,
+                newImagePreview,
+                postFileRef,
+                handleImageChange,
+                handlePost,
+                posts,
+                setCurrentTab,
+                handleLoadMore,
+                highlights,
+                isUserAnAdmin,
+                handleEditPost,
+                handleDeletePost,
+                handleReportPost,
+                handleLike,
+                handleComment,
+                handleShare
+              }
+            ),
+            currentTab === "friends" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              FriendsTab,
+              {
+                allUsers,
+                config,
+                discoveryMap,
+                highlights,
+                following,
+                sov,
+                loadData,
+                showPrompt,
+                setDiscoveryMap,
+                feed,
+                messaging,
+                profileModule
+              }
+            ),
+            currentTab === "messages" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              MessagesTab,
+              {
+                following,
+                messages,
+                config,
+                selectedUser,
+                setSelectedUser,
+                isUserAnAdmin,
+                userUnreadCounts,
+                handleNewChat,
+                groups,
+                handleAcceptGroup,
+                handleDeclineGroup,
+                handleEditMessage,
+                handleDeleteMessage,
+                msgImage,
+                msgImagePreview,
+                msgFileRef,
+                msgInput,
+                setMsgInput,
+                handleImageChange,
+                handleSendMessage
+              }
+            ),
+            currentTab === "rooms" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              RoomsTab,
+              {
+                groups,
+                selectedGroup,
+                setSelectedGroup,
+                config,
+                lastViewed,
+                handleCreateGroup,
+                handleManageMembers,
+                handleAcceptGroup,
+                handleDeclineGroup,
+                groupPosts,
+                isUserAnAdmin,
+                handleEditGroupPost,
+                handleDeleteGroupPost,
+                groupImage,
+                groupImagePreview,
+                setGroupImage,
+                setGroupImagePreview,
+                groupFileRef,
+                groupInput,
+                setGroupInput,
+                handleGroupImageChange,
+                handlePostToGroup
+              }
+            ),
+            currentTab === "profile" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              ProfileTab,
+              {
+                profile,
+                setProfile,
+                config,
+                profileModule,
+                sync,
+                showAlert,
+                posts,
+                sov,
+                allUsers,
+                exportAllPosts,
+                setExportAllPosts,
+                oldPassword,
+                setOldPassword,
+                newPassword,
+                setNewPassword,
+                handleChangePassword,
+                handleConnectRemote,
+                logout
+              }
+            ),
+            currentTab === "mesh" && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              MeshTab,
+              {
+                meshStats,
+                config,
+                meshLog
+              }
+            ),
+            currentTab === "admin" && isAdmin && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+              AdminTab,
+              {
+                isAdmin,
+                adminKeyPublished,
+                setAdminKeyPublished,
+                moderation,
+                sov,
+                sync,
+                loadData,
+                reports,
+                setReports,
+                setPreviewPost,
+                config,
+                showAlert,
+                showPrompt,
+                showConfirm
+              }
+            )
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Dialog, { dialog, setDialog, profileCache }),
-          syncing && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "position-fixed bottom-0 end-0 m-4 shadow-lg p-3 bg-white rounded-4 d-flex align-items-center border", style: { zIndex: 9999, minWidth: "200px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "spinner-border spinner-border-sm text-primary me-3", role: "status" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold small", children: "Syncing..." }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "x-small text-muted", children: "Updating with S3" })
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Dialog, { dialog, setDialog, profileCache }),
+          syncing && /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "position-fixed bottom-0 end-0 m-4 shadow-lg p-3 bg-white rounded-4 d-flex align-items-center border", style: { zIndex: 9999, minWidth: "200px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "spinner-border spinner-border-sm text-primary me-3", role: "status" }),
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "fw-bold small", children: "Syncing..." }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "x-small text-muted", children: "Updating with S3" })
             ] })
           ] }),
-          showPairing && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          showPairing && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             PairingModal,
             {
               userId: config.userId,
@@ -140006,14 +140959,14 @@ ${toHex(hashedRequest)}`;
               }
             }
           ),
-          showInspector && sov && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          showInspector && sov && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             InspectorModal,
             {
               sov,
               onClose: () => setShowInspector(false)
             }
           ),
-          new URLSearchParams(window.location.search).get("debug") === "inspect" && sov && !showInspector && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { position: "fixed", bottom: "20px", right: "20px", zIndex: 9999 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+          new URLSearchParams(window.location.search).get("debug") === "inspect" && sov && !showInspector && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { style: { position: "fixed", bottom: "20px", right: "20px", zIndex: 9999 }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
             "button",
             {
               onClick: () => setShowInspector(true),
@@ -140032,12 +140985,12 @@ ${toHex(hashedRequest)}`;
                 fontWeight: 600
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "\u{1F6E0}\uFE0F" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Storage Inspector" })
+                /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children: "\u{1F6E0}\uFE0F" }),
+                /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children: "Storage Inspector" })
               ]
             }
           ) }),
-          conflict && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          conflict && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             ConflictResolutionModal,
             {
               conflict,
@@ -140049,7 +141002,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             MemberManagementModal,
             {
               show: showMemberManagement,
@@ -140063,289 +141016,20 @@ ${toHex(hashedRequest)}`;
               currentUserId: config.userId
             }
           ),
-          previewPost && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "modal-title fw-bold text-primary", children: "Reported Content Preview" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", onClick: () => setPreviewPost(null) })
+          previewPost && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h5", { className: "modal-title fw-bold text-primary", children: "Reported Content Preview" }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn-close", onClick: () => setPreviewPost(null) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-body py-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(PostItem, { post: previewPost, allPosts: [] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-footer border-0 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-secondary rounded-pill px-4", onClick: () => setPreviewPost(null), children: "Close" }) })
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-body py-4", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(PostItem, { post: previewPost, allPosts: [] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "modal-footer border-0 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("button", { type: "button", className: "btn btn-secondary rounded-pill px-4", onClick: () => setPreviewPost(null), children: "Close" }) })
           ] }) }) })
-        ] });
-      };
-      var ConflictResolutionModal = ({ conflict, onResolve }) => {
-        if (!conflict) return null;
-        (0, import_react4.useEffect)(() => {
-          const handleEsc = (e2) => {
-            if (e2.key === "Escape") onResolve("abort");
-          };
-          window.addEventListener("keydown", handleEsc);
-          return () => window.removeEventListener("keydown", handleEsc);
-        }, [onResolve]);
-        const formatSize = (bytes) => {
-          if (bytes === 0) return "0 B";
-          const k2 = 1024;
-          const sizes = ["B", "KB", "MB"];
-          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
-          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
-        };
-        const tryParse = (data) => {
-          try {
-            return JSON.parse(new TextDecoder().decode(data));
-          } catch (e2) {
-            return null;
-          }
-        };
-        const localJson = tryParse(conflict.localData);
-        const remoteJson = tryParse(conflict.remoteData);
-        const handleMerge = () => {
-          if (localJson && remoteJson) {
-            const merged = { ...remoteJson, ...localJson };
-            const mergedData = new TextEncoder().encode(JSON.stringify(merged));
-            onResolve({ mergedData });
-          }
-        };
-        const getPreview = (data) => {
-          try {
-            const str = new TextDecoder().decode(data);
-            return str.length > 500 ? str.substring(0, 500) + "..." : str;
-          } catch (e2) {
-            return "Binary Data";
-          }
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h5", { className: "modal-title fw-bold text-danger", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
-              "Sync Conflict"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: () => onResolve("abort") })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "text-secondary", children: "A conflict was detected during sync for the following file:" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "alert alert-light border small mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("code", { children: conflict.path }) }),
-            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card border-info-subtle bg-info-subtle bg-opacity-10 mb-4 rounded-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h6", { className: "fw-bold mb-2 text-info", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-info-circle-fill me-2" }),
-                "Semantic Comparison"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { maxHeight: "150px", overflowY: "auto" }, children: Object.keys({ ...localJson, ...remoteJson }).map((key) => {
-                if (JSON.stringify(localJson[key]) !== JSON.stringify(remoteJson[key])) {
-                  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "mb-2 x-small", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "fw-bold text-dark", children: [
-                      key,
-                      ":"
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ps-2 border-start border-danger text-danger text-decoration-line-through", children: JSON.stringify(remoteJson[key]) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "ps-2 border-start border-success text-success", children: JSON.stringify(localJson[key]) })
-                  ] }, key);
-                }
-                return null;
-              }) })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "row g-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "fw-bold text-primary mb-3", children: "Local Version" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "small mb-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Size:" }),
-                  " ",
-                  formatSize(conflict.localData.length)
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" }, children: getPreview(conflict.localData) }) })
-              ] }) }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h6", { className: "fw-bold text-success mb-3", children: "Remote Version" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "small mb-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("strong", { children: "Size:" }),
-                  " ",
-                  formatSize(conflict.remoteData.length)
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "bg-white p-2 border rounded small", style: { height: "120px", overflowY: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("pre", { className: "mb-0 text-dark", style: { whiteSpace: "pre-wrap", wordBreak: "break-all" }, children: getPreview(conflict.remoteData) }) })
-              ] }) }) })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2", children: [
-            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4 shadow-sm", onClick: handleMerge, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("i", { className: "bi bi-intersect me-2" }),
-              "Smart Merge"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => onResolve("local"), children: "Keep Local" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-success rounded-pill px-4 shadow-sm", onClick: () => onResolve("remote"), children: "Take Remote" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort"), children: "Skip for Now" })
-          ] })
-        ] }) }) });
-      };
-      var MemberManagementModal = ({ show, onClose, group: group3, profileCache, onUpdateRole, onRemove, onAdd, onLeave, currentUserId }) => {
-        if (!show || !group3) return null;
-        const myRole = group3.members.find((m2) => m2.userId === currentUserId)?.role;
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h5", { className: "modal-title fw-bold text-primary", children: [
-              "Manage Members: ",
-              group3.name
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", onClick: onClose })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("h6", { className: "mb-0 fw-bold", children: [
-                "Group Members (",
-                group3.members.length,
-                ")"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill px-3", onClick: onAdd, children: "+ Add Members" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group", children: group3.members.map((member2) => {
-              const profile = profileCache[member2.userId];
-              const isMe = member2.userId === currentUserId;
-              const canManage = !isMe && (myRole === "owner" || myRole === "admin" && member2.role === "member");
-              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center", children: [
-                  profile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: profile.avatar, className: "rounded-circle me-3", style: { width: "40px", height: "40px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center", style: { width: "40px", height: "40px" }, children: member2.userId[0].toUpperCase() }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "fw-bold", children: [
-                      profile?.name || member2.userId,
-                      " ",
-                      isMe && "(You)"
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "small text-muted", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: `badge rounded-pill ${member2.role === "owner" ? "bg-danger" : member2.role === "admin" ? "bg-primary" : "bg-secondary"} me-2`, children: member2.role }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "text-capitalize", children: member2.status || "pending" })
-                    ] })
-                  ] })
-                ] }),
-                canManage && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex gap-2", children: [
-                  member2.role === "member" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "admin"), children: "Make Admin" }),
-                  member2.role === "admin" && myRole === "owner" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-secondary rounded-pill px-3", onClick: () => onUpdateRole(member2.userId, "member"), children: "Remove Admin" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { className: "btn btn-sm btn-outline-danger rounded-pill px-3", onClick: () => {
-                    if (confirm(`Are you sure you want to remove ${member2.userId}?`)) onRemove(member2.userId);
-                  }, children: "Remove" })
-                ] })
-              ] }, member2.userId);
-            }) })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex justify-content-between", children: [
-            myRole !== "owner" ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-outline-danger rounded-pill px-4", onClick: onLeave, children: "Leave Room" }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: onClose, children: "Close" })
-          ] })
-        ] }) }) });
+        ] }) });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
       root2.render(
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(App, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(App, {}) })
       );
-      var Dialog = ({ dialog, setDialog, profileCache }) => {
-        const [inputValue, setInputValue] = (0, import_react4.useState)(dialog?.defaultValue || "");
-        const [selectedValues, setSelectedValues] = (0, import_react4.useState)([]);
-        const [searchQuery, setSearchSearchQuery] = (0, import_react4.useState)("");
-        const [configData, setConfigData] = (0, import_react4.useState)({
-          syncMode: "s3",
-          region: "us-east-1",
-          endpoint: "",
-          accessKeyId: "",
-          secretAccessKey: "",
-          bucketName: ""
-        });
-        (0, import_react4.useEffect)(() => {
-          const handleEsc = (e2) => {
-            if (e2.key === "Escape") setDialog(null);
-          };
-          window.addEventListener("keydown", handleEsc);
-          return () => window.removeEventListener("keydown", handleEsc);
-        }, [setDialog]);
-        (0, import_react4.useEffect)(() => {
-          setInputValue(dialog?.defaultValue || "");
-          setSelectedValues([]);
-          setSearchSearchQuery("");
-        }, [dialog]);
-        if (!dialog) return null;
-        const toggleOption = (val) => {
-          setSelectedValues(
-            (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
-          );
-        };
-        const filteredOptions = dialog.options?.filter(
-          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
-        ) || [];
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { className: "modal-title fw-bold text-primary", children: dialog.title }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: dialog.onCancel })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
-            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-              "input",
-              {
-                autoFocus: true,
-                className: "form-control rounded-pill px-3 shadow-sm",
-                value: inputValue,
-                onChange: (e2) => setInputValue(e2.target.value),
-                onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
-              }
-            ),
-            dialog.type === "config" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "config-form", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold", children: "Sync Mode" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("select", { className: "form-select mb-3 rounded-pill", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "s3", children: "S3 Cloud" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "webrtc", children: "WebRTC Mesh" })
-              ] }),
-              configData.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) })
-              ] })
-            ] }),
-            dialog.type === "multiselect" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                "input",
-                {
-                  type: "text",
-                  className: "form-control form-control-sm rounded-pill px-3",
-                  placeholder: "Search members...",
-                  value: searchQuery,
-                  onChange: (e2) => setSearchSearchQuery(e2.target.value)
-                }
-              ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" }, children: filteredOptions.length > 0 ? filteredOptions.map((opt) => {
-                const userProfile = profileCache[opt.value];
-                return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                    "input",
-                    {
-                      type: "checkbox",
-                      className: "form-check-input me-3",
-                      checked: selectedValues.includes(opt.value),
-                      onChange: () => toggleOption(opt.value)
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center flex-grow-1", children: [
-                    userProfile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: userProfile.avatar, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" }, children: opt.value[0].toUpperCase() }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold small", children: userProfile?.name || opt.label }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: opt.value })
-                    ] })
-                  ] })
-                ] }, opt.value);
-              }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center py-3 text-muted small", children: "No members found" }) })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
-            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel, children: "Cancel" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-              "button",
-              {
-                type: "button",
-                className: "btn btn-primary rounded-pill px-4 shadow-sm",
-                onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : dialog.type === "config" ? configData : inputValue),
-                children: dialog.type === "alert" ? "OK" : "Confirm"
-              }
-            )
-          ] })
-        ] }) }) });
-      };
     }
   });
   require_App();
