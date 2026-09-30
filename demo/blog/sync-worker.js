@@ -73641,31 +73641,38 @@ ${toHex(hashedRequest)}`;
             const result = await publicRemote.downloadFile(remotePath, cachedEtag || void 0);
             if (result && !result.notModified && result.data) {
               let remoteDecrypted = result.data;
+              let remoteParsed = null;
               try {
-                JSON.parse(new TextDecoder().decode(result.data));
+                remoteParsed = JSON.parse(new TextDecoder().decode(result.data));
               } catch (e2) {
                 try {
-                  if (key) remoteDecrypted = await this.ctx.decrypt(result.data, key);
-                } catch (de) {
-                  Logger.warn("Sync", "Failed to decrypt remote user.json. Overwriting with local if possible.");
-                }
-              }
-              let shouldKeepLocal = false;
-              if (localData) {
-                try {
-                  const localObj = JSON.parse(new TextDecoder().decode(localData));
-                  const remoteObj = JSON.parse(new TextDecoder().decode(remoteDecrypted));
-                  if (localObj.updatedAt && remoteObj.updatedAt && localObj.updatedAt > remoteObj.updatedAt) {
-                    shouldKeepLocal = true;
+                  if (key) {
+                    remoteDecrypted = await this.ctx.decrypt(result.data, key);
+                    remoteParsed = JSON.parse(new TextDecoder().decode(remoteDecrypted));
                   }
-                } catch (e2) {
-                  Logger.warn("Sync", `Failed to compare user.json timestamps: ${e2.message}`);
+                } catch (de) {
+                  Logger.warn("Sync", "Failed to decrypt/parse remote user.json. Overwriting with local if possible.");
                 }
               }
-              if (!shouldKeepLocal) {
-                localData = remoteDecrypted;
-                await this.ctx.storage.savePublicUserFile(localData);
-                if (result.etag) await this.ctx.storage.setGenericRemoteHashCache(remotePath, result.etag);
+              if (remoteParsed) {
+                let shouldKeepLocal = false;
+                if (localData) {
+                  try {
+                    const localObj = JSON.parse(new TextDecoder().decode(localData));
+                    if (localObj.updatedAt && remoteParsed.updatedAt && localObj.updatedAt > remoteParsed.updatedAt) {
+                      shouldKeepLocal = true;
+                    }
+                  } catch (e2) {
+                    Logger.warn("Sync", `Failed to compare user.json timestamps: ${e2.message}`);
+                  }
+                }
+                if (!shouldKeepLocal) {
+                  localData = remoteDecrypted;
+                  await this.ctx.storage.savePublicUserFile(localData);
+                  if (result.etag) await this.ctx.storage.setGenericRemoteHashCache(remotePath, result.etag);
+                }
+              } else if (localData) {
+                Logger.warn("Sync", "Remote user.json is invalid or unparseable. Preserving local user.json.");
               }
             }
             if (localData) {
@@ -74063,6 +74070,7 @@ ${toHex(hashedRequest)}`;
             blobs: [...rootManifest.blobs || []]
           };
           for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
+            if (!ref || !ref.path) continue;
             const sub = await this.resolveSubManifest(userId, key, ref);
             if (sub && sub.files) {
               Object.assign(merged.files, sub.files);
@@ -74580,6 +74588,9 @@ ${toHex(hashedRequest)}`;
           return new TextEncoder().encode(payload);
         }
         verifyEntry(entry) {
+          if (!entry || typeof entry.userId !== "string" || typeof entry.publicKey !== "string") {
+            return false;
+          }
           const now = Date.now();
           if (entry.timestamp) {
             const age = now - entry.timestamp;
@@ -74700,12 +74711,14 @@ ${toHex(hashedRequest)}`;
             const result = await globalRemote.downloadFile(LEGACY_REGISTRY_PATH, void 0, DEFAULTS.NETWORK_TIMEOUT);
             if (result?.data) {
               const legacyList = JSON.parse(new TextDecoder().decode(result.data));
-              for (const entry of legacyList) {
-                if (!verifiedMap.has(entry.userId)) {
-                  verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+              if (Array.isArray(legacyList)) {
+                for (const entry of legacyList) {
+                  if (entry && typeof entry.userId === "string" && typeof entry.publicKey === "string" && !verifiedMap.has(entry.userId)) {
+                    verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+                  }
                 }
+                Logger.debug("Discovery", `Merged ${legacyList.length} legacy users into registry.`);
               }
-              Logger.debug("Discovery", `Merged ${legacyList.length} legacy users into registry.`);
             }
           } catch (e2) {
           }
@@ -75297,8 +75310,11 @@ ${toHex(hashedRequest)}`;
               let db;
               try {
                 db = new sqliteInstance.Database(rawData || void 0);
+                if (rawData && rawData.length > 0) {
+                  db.exec("PRAGMA user_version;");
+                }
               } catch (e2) {
-                if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
+                if (e2.message?.includes("malformed") || e2.message?.includes("not a database") || e2.message?.includes("file is not a database")) {
                   Logger.error("DailyDatabase", `Database corruption detected at ${storagePath}. Deleting corrupted file.`);
                   try {
                     await storage.deleteFile(storagePath);
@@ -75316,7 +75332,7 @@ ${toHex(hashedRequest)}`;
                 try {
                   this.sov.applyModuleSchema(db, moduleName);
                 } catch (e2) {
-                  if (e2.message?.includes("malformed") || e2.message?.includes("not a database")) {
+                  if (e2.message?.includes("malformed") || e2.message?.includes("not a database") || e2.message?.includes("file is not a database")) {
                     Logger.error("DailyDatabase", `Database corruption detected during schema application at ${storagePath}. Deleting corrupted file.`);
                     try {
                       await storage.deleteFile(storagePath);

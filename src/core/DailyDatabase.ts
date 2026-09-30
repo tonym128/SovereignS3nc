@@ -292,8 +292,12 @@ export class DailyDatabase {
                 let db: any;
                 try {
                     db = new sqliteInstance.Database(rawData || undefined);
+                    if (rawData && rawData.length > 0) {
+                        // Validate that loaded binary is a valid SQLite database
+                        db.exec('PRAGMA user_version;');
+                    }
                 } catch (e: any) {
-                    if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                    if (e.message?.includes('malformed') || e.message?.includes('not a database') || e.message?.includes('file is not a database')) {
                         Logger.error('DailyDatabase', `Database corruption detected at ${storagePath}. Deleting corrupted file.`);
                         try {
                             await storage.deleteFile(storagePath);
@@ -312,7 +316,7 @@ export class DailyDatabase {
                     try {
                         this.sov.applyModuleSchema(db, moduleName);
                     } catch (e: any) {
-                        if (e.message?.includes('malformed') || e.message?.includes('not a database')) {
+                        if (e.message?.includes('malformed') || e.message?.includes('not a database') || e.message?.includes('file is not a database')) {
                             Logger.error('DailyDatabase', `Database corruption detected during schema application at ${storagePath}. Deleting corrupted file.`);
                             try {
                                 await storage.deleteFile(storagePath);

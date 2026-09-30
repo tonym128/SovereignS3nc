@@ -65,6 +65,10 @@ export class GlobalRegistry {
     }
 
     private verifyEntry(entry: SignedRegistryEntry): boolean {
+        if (!entry || typeof entry.userId !== 'string' || typeof entry.publicKey !== 'string') {
+            return false;
+        }
+
         // Age check: reject entries with timestamps too far in the past or future
         const now = Date.now();
         if (entry.timestamp) {
@@ -208,14 +212,16 @@ export class GlobalRegistry {
         try {
             const result = await globalRemote.downloadFile(LEGACY_REGISTRY_PATH, undefined, DEFAULTS.NETWORK_TIMEOUT);
             if (result?.data) {
-                const legacyList: { userId: string, publicKey: string }[] = JSON.parse(new TextDecoder().decode(result.data));
-                for (const entry of legacyList) {
-                    // Only add if not already present in V2 (V2 takes precedence)
-                    if (!verifiedMap.has(entry.userId)) {
-                        verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+                const legacyList = JSON.parse(new TextDecoder().decode(result.data));
+                if (Array.isArray(legacyList)) {
+                    for (const entry of legacyList) {
+                        // Only add if not already present in V2 (V2 takes precedence)
+                        if (entry && typeof entry.userId === 'string' && typeof entry.publicKey === 'string' && !verifiedMap.has(entry.userId)) {
+                            verifiedMap.set(entry.userId, { userId: entry.userId, publicKey: entry.publicKey });
+                        }
                     }
+                    Logger.debug('Discovery', `Merged ${legacyList.length} legacy users into registry.`);
                 }
-                Logger.debug('Discovery', `Merged ${legacyList.length} legacy users into registry.`);
             }
         } catch (e) {
             // Legacy registry absent — that's fine

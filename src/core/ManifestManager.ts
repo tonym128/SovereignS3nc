@@ -308,6 +308,7 @@ export class ManifestManager {
         };
 
         for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
+            if (!ref || !ref.path) continue;
             const sub = await this.resolveSubManifest(userId, key, ref);
             if (sub && sub.files) {
                 Object.assign(merged.files!, sub.files);

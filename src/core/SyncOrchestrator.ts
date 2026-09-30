@@ -565,34 +565,41 @@ export class SyncOrchestrator {
             
             if (result && !result.notModified && result.data) {
                 let remoteDecrypted = result.data;
+                let remoteParsed: any = null;
                 
                 try {
-                    JSON.parse(new TextDecoder().decode(result.data));
+                    remoteParsed = JSON.parse(new TextDecoder().decode(result.data));
                 } catch (e) {
                     try {
-                        if (key) remoteDecrypted = await this.ctx.decrypt(result.data, key);
-                    } catch (de) {
-                        Logger.warn('Sync', 'Failed to decrypt remote user.json. Overwriting with local if possible.');
-                    }
-                }
-
-                let shouldKeepLocal = false;
-                if (localData) {
-                    try {
-                        const localObj = JSON.parse(new TextDecoder().decode(localData));
-                        const remoteObj = JSON.parse(new TextDecoder().decode(remoteDecrypted));
-                        if (localObj.updatedAt && remoteObj.updatedAt && localObj.updatedAt > remoteObj.updatedAt) {
-                            shouldKeepLocal = true;
+                        if (key) {
+                            remoteDecrypted = await this.ctx.decrypt(result.data, key);
+                            remoteParsed = JSON.parse(new TextDecoder().decode(remoteDecrypted));
                         }
-                    } catch (e: any) {
-                        Logger.warn('Sync', `Failed to compare user.json timestamps: ${e.message}`);
+                    } catch (de) {
+                        Logger.warn('Sync', 'Failed to decrypt/parse remote user.json. Overwriting with local if possible.');
                     }
                 }
 
-                if (!shouldKeepLocal) {
-                    localData = remoteDecrypted;
-                    await this.ctx.storage.savePublicUserFile(localData);
-                    if (result.etag) await this.ctx.storage.setGenericRemoteHashCache(remotePath, result.etag);
+                if (remoteParsed) {
+                    let shouldKeepLocal = false;
+                    if (localData) {
+                        try {
+                            const localObj = JSON.parse(new TextDecoder().decode(localData));
+                            if (localObj.updatedAt && remoteParsed.updatedAt && localObj.updatedAt > remoteParsed.updatedAt) {
+                                shouldKeepLocal = true;
+                            }
+                        } catch (e: any) {
+                            Logger.warn('Sync', `Failed to compare user.json timestamps: ${e.message}`);
+                        }
+                    }
+
+                    if (!shouldKeepLocal) {
+                        localData = remoteDecrypted;
+                        await this.ctx.storage.savePublicUserFile(localData);
+                        if (result.etag) await this.ctx.storage.setGenericRemoteHashCache(remotePath, result.etag);
+                    }
+                } else if (localData) {
+                    Logger.warn('Sync', 'Remote user.json is invalid or unparseable. Preserving local user.json.');
                 }
             }
 
