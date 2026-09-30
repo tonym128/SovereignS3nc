@@ -16,9 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "sovereigns3nc": ["./src/index.ts"],
-      "@sovereigns3nc/react": ["./packages/react/src/index.ts"]
+      "@sovereigns3nc/react": ["./packages/react/src/index.ts"],
+      "@sovereigns3nc/demo-shared": ["./demo/shared/src/index.ts"],
+      "@sovereign-s3nc/demo-shared": ["./demo/shared/src/index.ts"]
     }
   },
-  "include": ["src/**/*", "packages/**/*", "tests/**/*"],
+  "include": ["src/**/*", "packages/**/*", "tests/**/*", "demo/shared/**/*"],
   "exclude": ["node_modules", "dist", "packages/*/dist"]
 }

@@ -6,6 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import { SyncStatusIndicator } from '@sovereigns3nc/demo-shared';
 
 const Editor = () => {
     const [config, setConfig] = useState({
@@ -27,6 +28,7 @@ const Editor = () => {
     const [content, setContent] = useState('');
     const [processedContent, setProcessedContent] = useState('');
     const [syncing, setSyncing] = useState(false);
+    const [lastSync, setLastSync] = useState<Date | null>(null);
     const [myPosts, setMyPosts] = useState<Post[]>([]);
     const [view, setView] = useState<'edit' | 'list' | 'media'>('edit');
     const [editingPost, setEditingPost] = useState<Post | null>(null);
@@ -430,7 +432,13 @@ const Editor = () => {
         <div>
             <nav className="navbar px-4">
                 <span className="navbar-brand">BLOG EDITOR</span>
-                <div className="ms-auto d-flex gap-2">
+                <div className="ms-auto d-flex align-items-center gap-2">
+                    <SyncStatusIndicator
+                        syncing={syncing}
+                        lastSync={lastSync}
+                        syncMode={config.accessKeyId ? 's3' : 'offline'}
+                        onSync={() => sov?.sync().then(() => { setLastSync(new Date()); loadPosts(feed); })}
+                    />
                     <button className={`btn btn-sm ${view === 'edit' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setView('edit')}>Write</button>
                     <button className={`btn btn-sm ${view === 'list' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setView('list')}>Posts</button>
                     <button className={`btn btn-sm ${view === 'media' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => setView('media')}>Media</button>

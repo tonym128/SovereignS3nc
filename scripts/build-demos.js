@@ -111,9 +111,16 @@ async function buildAllDemos() {
         copyDirRecursive(quickstartSrc, quickstartDst);
     }
 
-    // 7. Copy root demo portal landing page and icons
+    // 7. Copy root demo portal landing page, shared tokens, and icons
     fs.copyFileSync(path.join(rootDir, 'demo/index.html'), path.join(outDir, 'index.html'));
     fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+
+    const sharedTokensSrc = path.join(rootDir, 'demo/shared/src/tokens.css');
+    if (fs.existsSync(sharedTokensSrc)) {
+        fs.mkdirSync(path.join(outDir, 'shared'), { recursive: true });
+        fs.copyFileSync(sharedTokensSrc, path.join(outDir, 'shared/tokens.css'));
+        fs.copyFileSync(sharedTokensSrc, path.join(outDir, 'tokens.css'));
+    }
 
     // Copy icons to root if available
     const iconFiles = ['favicon.ico', 'favicon.png', 'icon-192.png', 'icon-512.png'];

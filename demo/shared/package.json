@@ -1,0 +1,13 @@
+{
+  "name": "@sovereigns3nc/demo-shared",
+  "version": "1.0.0",
+  "description": "Shared UI components and design tokens for SovereignS3nc demo applications",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "license": "ISC"
+}

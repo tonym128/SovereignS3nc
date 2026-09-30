@@ -5,10 +5,12 @@ module.exports = {
   moduleNameMapper: {
     '^sovereigns3nc$': '<rootDir>/src/index.ts',
     '^@sovereigns3nc/react$': '<rootDir>/packages/react/src/index.ts',
+    '^@sovereigns3nc/demo-shared$': '<rootDir>/demo/shared/src/index.ts',
+    '^@sovereign-s3nc/demo-shared$': '<rootDir>/demo/shared/src/index.ts',
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testMatch: ["<rootDir>/tests/**/*.test.ts"],
-  testPathIgnorePatterns: ["/node_modules/", "\\.spec\\.ts$", "\\.integration\\.ts$", "/\\.worktrees/"],
+  testPathIgnorePatterns: ["/node_modules/", "\\.spec\\.ts$", "\\.integration\\.ts$", "<rootDir>/\\.worktrees/"],
   modulePathIgnorePatterns: ["<rootDir>/demo-dist/", "<rootDir>/.worktrees/"],
   rootDir: '..',
 };

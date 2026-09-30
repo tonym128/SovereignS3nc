@@ -10,6 +10,7 @@ import { IndexedDBStorage } from '../../../src/adapters/IndexedDBStorage';
 import { Chart, registerables } from 'chart.js';
 import { ErrorBoundary } from './ErrorBoundary';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
+import { QuickStartCard, SyncStatusIndicator } from '@sovereigns3nc/demo-shared';
 
 Chart.register(...registerables);
 
@@ -584,7 +585,25 @@ const App = () => {
         return (
             <div className="container mt-5">
                 <div className="row justify-content-center">
-                    <div className="col-md-4">
+                    <div className="col-md-5">
+                        <QuickStartCard
+                            title="⚡ Quick Start Banky"
+                            subtitle="Zero-credentials offline ledger"
+                            description="Try personal budgeting and account ledgering locally in your browser with encrypted IndexedDB storage."
+                            buttonText="⚡ Launch Instant Ledger"
+                            className="mb-4"
+                            onLaunch={() => {
+                                setConfig((prev: any) => ({
+                                    ...prev,
+                                    paths: { ...prev.paths, userId: prev.paths.userId || ('guest-' + Math.random().toString(36).substring(7)) },
+                                    password: prev.password || 'password123',
+                                    s3: undefined
+                                }));
+                                setTimeout(() => {
+                                    handleLogin({ preventDefault: () => {} } as any);
+                                }, 50);
+                            }}
+                        />
                         <div className="card p-4 shadow-sm border-0">
                             <h2 className="text-center mb-4 fw-bold text-primary">Banky-Sov</h2>
                             <form onSubmit={handleLogin}>
@@ -622,9 +641,13 @@ const App = () => {
                                 <i className="bi bi-cloud-upload"></i> Connect Cloud
                             </button>
                         )}
-                        <button className="btn btn-outline-secondary ms-2 rounded-pill" onClick={sync} disabled={syncing || !config.s3}>
-                            {syncing ? 'Syncing...' : !config.s3 ? 'Offline' : <><i className="bi bi-arrow-repeat me-1"></i> Sync</>}
-                        </button>
+                        <SyncStatusIndicator
+                            syncing={syncing}
+                            lastSync={lastSyncTime}
+                            syncMode={config.s3 ? 's3' : 'offline'}
+                            onSync={config.s3 ? sync : undefined}
+                            className="ms-2"
+                        />
                         <div className="dropdown ms-2">
                             <button className="btn btn-light rounded-circle shadow-sm" data-bs-toggle="dropdown"><i className="bi bi-list"></i></button>
                             <ul className="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2" style={{minWidth: '250px'}}>

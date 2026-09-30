@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dialog as DefaultDialog } from './Dialog';
+import { QuickStartCard } from '@sovereigns3nc/demo-shared';
 
 export interface LoginViewProps {
     config: any;
@@ -81,30 +82,23 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 )}
 
                 {/* Quick Start Card */}
-                <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
-                    <div className="d-flex align-items-center justify-content-center mb-1">
-                        <span className="fs-5 me-2" aria-hidden="true">🚀</span>
-                        <span className="fw-bold" style={{ color: '#0952ba' }}>Instant Quick Start</span>
-                    </div>
-                    <p className="text-muted small mb-3">
-                        Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!
-                    </p>
-                    <button
-                        type="button"
-                        className="btn btn-primary w-100 py-2 fw-bold shadow-sm"
-                        onClick={() => {
-                            const guestConfig = {
-                                ...config,
-                                syncMode: 'offline',
-                                userId: config.userId || ('guest-' + Math.random().toString(36).substring(7)),
-                                password: config.password || 'password123'
-                            };
-                            performLogin(guestConfig);
-                        }}
-                    >
-                        ⚡ Start Instantly (Offline Mode)
-                    </button>
-                </div>
+                <QuickStartCard
+                    title="🚀 Instant Quick Start"
+                    subtitle="1-Click Offline Sandbox"
+                    description="Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!"
+                    buttonText="⚡ Start Instantly (Offline Mode)"
+                    badgeText="Offline First"
+                    className="mb-4"
+                    onLaunch={() => {
+                        const guestConfig = {
+                            ...config,
+                            syncMode: 'offline',
+                            userId: config.userId || ('guest-' + Math.random().toString(36).substring(7)),
+                            password: config.password || 'password123'
+                        };
+                        performLogin(guestConfig);
+                    }}
+                />
 
                 <div className="d-flex align-items-center my-3">
                     <hr className="flex-grow-1 my-0 text-muted" />

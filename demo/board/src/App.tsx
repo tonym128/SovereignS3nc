@@ -6,6 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter } from '../../../src/interfaces/IRemoteAdapter';
 import { Buffer } from 'buffer';
+import { SyncStatusIndicator, QuickStartCard } from '@sovereigns3nc/demo-shared';
 
 const App = () => {
     // --- State ---
@@ -241,25 +242,17 @@ const App = () => {
                                 <h3 className="card-title mb-3">Sovereign Board Login</h3>
 
                                 {/* Quick Start Card */}
-                                <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
-                                    <div className="d-flex align-items-center justify-content-center mb-1">
-                                        <span className="fs-5 me-2" aria-hidden="true">🚀</span>
-                                        <span className="fw-bold" style={{ color: '#0952ba' }}>Quick Start (Offline Board)</span>
-                                    </div>
-                                    <p className="text-muted small mb-2">
-                                        Try Kanban boards locally with IndexedDB storage. No credentials needed.
-                                    </p>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary w-100 py-2 fw-bold shadow-sm"
-                                        onClick={() => {
-                                            setConfig(prev => ({ ...prev, syncMode: 'offline' }));
-                                            setTimeout(login, 50);
-                                        }}
-                                    >
-                                        ⚡ Launch Instant Board
-                                    </button>
-                                </div>
+                                <QuickStartCard
+                                    title="⚡ Quick Start (Offline Board)"
+                                    subtitle="Instant Kanban Sandbox"
+                                    description="Try Kanban boards locally with IndexedDB storage. No credentials needed."
+                                    buttonText="⚡ Launch Instant Board"
+                                    className="mb-4"
+                                    onLaunch={() => {
+                                        setConfig(prev => ({ ...prev, syncMode: 'offline' }));
+                                        setTimeout(login, 50);
+                                    }}
+                                />
 
                                 <div className="d-flex align-items-center my-3">
                                     <hr className="flex-grow-1 my-0 text-muted" />
@@ -338,11 +331,12 @@ const App = () => {
                         </button>
                     )}
 
-                    <div className="sync-indicator text-secondary d-none d-md-block">
-                        {syncing ? <span className="spinner-border spinner-border-sm me-1"></span> : <i className="bi bi-cloud-check me-1"></i>}
-                        {lastSync ? `Synced ${lastSync.toLocaleTimeString()}` : 'Never synced'}
-                    </div>
-                    <button className="btn btn-outline-light btn-sm" onClick={() => sov?.sync().then(loadTasks)}>Sync Now</button>
+                    <SyncStatusIndicator
+                        syncing={syncing}
+                        lastSync={lastSync}
+                        syncMode={config.syncMode}
+                        onSync={() => sov?.sync().then(() => { setLastSync(new Date()); loadTasks(); })}
+                    />
                 </div>
             </nav>
 
