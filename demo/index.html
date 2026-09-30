@@ -115,6 +115,47 @@
             50% { opacity: 0.4; transform: scale(1.2); }
             100% { opacity: 1; transform: scale(1); }
         }
+        /* High contrast overrides for WCAG AA compliance */
+        .text-secondary {
+            color: #a1aab5 !important;
+        }
+        .text-muted {
+            color: #8b949e !important;
+        }
+        .text-success {
+            color: #3fb950 !important;
+        }
+        .bg-success-subtle {
+            background-color: rgba(63, 185, 80, 0.15) !important;
+            border-color: rgba(63, 185, 80, 0.3) !important;
+        }
+        code {
+            color: #ffa657 !important;
+        }
+        .btn-outline-primary {
+            color: #58a6ff !important;
+            border-color: #58a6ff !important;
+        }
+        .btn-outline-primary:hover {
+            color: #ffffff !important;
+            background-color: #1f6feb !important;
+            border-color: #1f6feb !important;
+        }
+        .btn-outline-secondary {
+            color: #c9d1d9 !important;
+            border-color: #484f58 !important;
+        }
+        .btn-outline-secondary:hover {
+            color: #ffffff !important;
+            background-color: #30363d !important;
+        }
+        .btn-outline-danger {
+            color: #ff7b72 !important;
+            border-color: #ff7b72 !important;
+        }
+        .text-danger {
+            color: #ff7b72 !important;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +166,7 @@
             <a class="navbar-brand fw-bold text-white d-flex align-items-center gap-2" href="#">
                 <i class="bi bi-shield-lock-fill text-primary"></i> SovereignS3nc
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
@@ -387,7 +428,7 @@
                             </button>
                         </div>
                         <div class="card-body p-0">
-                            <textarea id="homeCode" class="form-control bg-dark text-info font-monospace border-0 p-3" rows="12" style="font-size: 0.85rem; line-height: 1.5; resize: none;" spellcheck="false">// 1. Initialize offline Sovereign client
+                            <textarea id="homeCode" aria-label="Executable code snippet" class="form-control bg-dark text-info font-monospace border-0 p-3" rows="12" style="font-size: 0.85rem; line-height: 1.5; resize: none;" spellcheck="false">// 1. Initialize offline Sovereign client
 const client = new Sovereign.SovereignS3nc({
     userId: 'guest-' + Math.floor(Math.random() * 1000),
     password: 'browser-sandbox-key',

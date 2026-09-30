@@ -138,7 +138,8 @@
             border-bottom-color: rgba(48, 54, 61, 0.5);
         }
         .btn-shortcut {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
             border-radius: 4px;
             padding: 0.1rem 0.35rem;
             font-size: 0.75rem;
@@ -148,6 +149,53 @@
         .json-string { color: #a5d6ff; }
         .json-number { color: #79c0ff; }
         .json-boolean { color: #ff7b72; }
+        /* High contrast overrides for WCAG AA */
+        .text-secondary {
+            color: #a1aab5 !important;
+        }
+        .text-primary {
+            color: #58a6ff !important;
+        }
+        .badge.bg-primary {
+            background-color: rgba(88, 166, 255, 0.2) !important;
+            color: #79c0ff !important;
+            border-color: rgba(88, 166, 255, 0.4) !important;
+        }
+        .badge.bg-secondary {
+            background-color: rgba(161, 170, 181, 0.2) !important;
+            color: #c9d1d9 !important;
+            border-color: rgba(161, 170, 181, 0.3) !important;
+        }
+        .btn-outline-primary {
+            color: #58a6ff !important;
+            border-color: #58a6ff !important;
+        }
+        .btn-outline-primary:hover {
+            color: #ffffff !important;
+            background-color: #1f6feb !important;
+        }
+        .btn-outline-info {
+            color: #56d4dd !important;
+            border-color: #56d4dd !important;
+        }
+        .btn-outline-secondary {
+            color: #c9d1d9 !important;
+            border-color: #484f58 !important;
+        }
+        .btn-success {
+            background-color: #238636 !important;
+            border-color: #2ea043 !important;
+            color: #ffffff !important;
+        }
+        #runBtn .btn-shortcut {
+            background: rgba(0, 0, 0, 0.35) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        #statusBadge {
+            background-color: #30363d !important;
+            color: #f0f6fc !important;
+        }
     </style>
 </head>
 <body>
@@ -178,32 +226,32 @@
                     <span class="btn-shortcut d-none d-lg-inline">Ctrl+↵</span>
                 </button>
 
-                <button id="resetBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Reset code to recipe default">
+                <button id="resetBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Reset code to recipe default" aria-label="Reset code to recipe default">
                     <i class="bi bi-arrow-counterclockwise"></i>
                 </button>
 
-                <button id="copyBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Copy code to clipboard">
+                <button id="copyBtn" class="btn btn-sm btn-outline-secondary text-secondary" title="Copy code to clipboard" aria-label="Copy code to clipboard">
                     <i class="bi bi-clipboard"></i>
                 </button>
 
                 <div class="vr bg-secondary mx-1 my-1"></div>
 
                 <!-- Launch in Cloud Sandboxes -->
-                <button id="stackblitzBtn" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" title="Launch editable project in StackBlitz">
+                <button id="stackblitzBtn" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" title="Launch editable project in StackBlitz" aria-label="Launch editable project in StackBlitz">
                     <i class="bi bi-lightning-charge-fill"></i> StackBlitz
                 </button>
 
-                <a href="https://codesandbox.io/p/sandbox/github/tonym128/SovereignS3nc/tree/master/examples/quickstart" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info d-flex align-items-center gap-1" title="Open template in CodeSandbox">
+                <a href="https://codesandbox.io/p/sandbox/github/tonym128/SovereignS3nc/tree/master/examples/quickstart" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info d-flex align-items-center gap-1" title="Open template in CodeSandbox" aria-label="Open template in CodeSandbox">
                     <i class="bi bi-box"></i> CodeSandbox
                 </a>
 
                 <div class="vr bg-secondary mx-1 my-1"></div>
 
-                <a href="../index.html" class="btn btn-sm btn-outline-light" title="Return to Demo Portal">
+                <a href="../index.html" class="btn btn-sm btn-outline-light" title="Return to Demo Portal" aria-label="Return to Demo Portal">
                     <i class="bi bi-grid-fill me-1"></i> Demos
                 </a>
 
-                <a href="https://github.com/tonym128/SovereignS3nc" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary text-white">
+                <a href="https://github.com/tonym128/SovereignS3nc" target="_blank" rel="noopener" class="btn btn-sm btn-outline-secondary text-white" aria-label="GitHub Repository">
                     <i class="bi bi-github"></i>
                 </a>
             </div>
@@ -227,7 +275,7 @@
                         </div>
                     </div>
                     <div class="flex-grow-1 position-relative">
-                        <textarea id="codeEditor" class="code-textarea" spellcheck="false" autocomplete="off"></textarea>
+                        <textarea id="codeEditor" class="code-textarea" spellcheck="false" autocomplete="off" aria-label="Code Editor"></textarea>
                     </div>
                 </div>
             </div>

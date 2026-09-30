@@ -56,6 +56,7 @@
     "test:docker": "NODE_OPTIONS=--experimental-vm-modules jest -c tests/jest.integration.config.js",
     "setup:test-env": "bash dev.sh start",
     "test:browser": "NODE_OPTIONS=--experimental-vm-modules npx playwright test -c tests/playwright.config.ts",
+    "test:a11y": "NODE_OPTIONS=--experimental-vm-modules npx playwright test -c tests/playwright.a11y.config.ts",
     "build:esm": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.esm.js --sourcemap --format=esm --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:global": "esbuild src/index.ts --bundle --minify --platform=browser --outfile=dist/sovereigns3nc.global.js --sourcemap --format=iife --global-name=Sovereign --banner:js=\"/* SovereignS3nc v3.1.0 | ISC License */\" --alias:crypto=crypto-browserify --alias:path=path-browserify --alias:stream=stream-browserify --alias:buffer=buffer --alias:util=util --alias:events=events --alias:assert=assert --alias:process=process/browser --external:fs-extra --external:path --external:fs",
     "build:react": "tsc -p packages/react/tsconfig.json && node -e \"require('fs-extra').copySync('packages/react/dist', 'dist/react')\"",
@@ -128,6 +129,7 @@
     }
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.59.1",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",

@@ -365,6 +365,7 @@ const Editor = () => {
                         </button>
                         <button
                             className="btn btn-outline-primary w-100"
+                            style={{ color: '#0952ba', borderColor: '#0952ba' }}
                             onClick={() => startOffline('author-2')}
                             disabled={syncing}
                         >
@@ -381,37 +382,37 @@ const Editor = () => {
 
                     <div className="row">
                         <div className="col">
-                            <label className="form-label small">User ID</label>
-                            <input className="form-control mb-3" placeholder="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
+                            <label htmlFor="blogUserId" className="form-label small">User ID</label>
+                            <input id="blogUserId" className="form-control mb-3" placeholder="User ID" aria-label="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
                         </div>
                         <div className="col">
-                            <label className="form-label small">Passphrase</label>
-                            <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
+                            <label htmlFor="blogPassphrase" className="form-label small">Passphrase</label>
+                            <input id="blogPassphrase" className="form-control mb-3" type="password" placeholder="Password" aria-label="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
                         </div>
                     </div>
 
                     <details className="mb-3 border rounded p-2 bg-light">
-                        <summary className="small fw-semibold text-secondary" style={{ cursor: 'pointer' }}>
+                        <summary className="small fw-semibold" style={{ cursor: 'pointer', color: '#343a40' }}>
                             ☁️ S3 Cloud Sync Settings (Optional)
                         </summary>
                         <div className="mt-3">
-                            <label className="form-label small">S3 Endpoint</label>
-                            <input className="form-control mb-3" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                            <label htmlFor="blogEndpoint" className="form-label small">S3 Endpoint</label>
+                            <input id="blogEndpoint" className="form-control mb-3" placeholder="S3 Endpoint" aria-label="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
                             
                             <div className="row">
                                 <div className="col">
-                                    <label className="form-label small">Access Key ID</label>
-                                    <input className="form-control mb-3" placeholder="Access Key ID" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
+                                    <label htmlFor="blogAccessKey" className="form-label small">Access Key ID</label>
+                                    <input id="blogAccessKey" className="form-control mb-3" placeholder="Access Key ID" aria-label="Access Key ID" value={config.accessKeyId} onChange={e => setConfig({...config, accessKeyId: e.target.value})} />
                                 </div>
                                 <div className="col">
-                                    <label className="form-label small">Secret Access Key</label>
-                                    <input className="form-control mb-3" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
+                                    <label htmlFor="blogSecretKey" className="form-label small">Secret Access Key</label>
+                                    <input id="blogSecretKey" className="form-control mb-3" type="password" placeholder="Secret Key" aria-label="Secret Access Key" value={config.secretAccessKey} onChange={e => setConfig({...config, secretAccessKey: e.target.value})} />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col">
-                                    <label className="form-label small">Bucket Name</label>
-                                    <input className="form-control mb-2" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
+                                    <label htmlFor="blogBucketName" className="form-label small">Bucket Name</label>
+                                    <input id="blogBucketName" className="form-control mb-2" placeholder="Bucket Name" aria-label="Bucket Name" value={config.bucketName} onChange={e => setConfig({...config, bucketName: e.target.value})} />
                                 </div>
                             </div>
                         </div>
@@ -443,12 +444,12 @@ const Editor = () => {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="editor-card">
-                                <input className="post-input-title" placeholder="Post Title" value={title} onChange={e => setTitle(e.target.value)} />
-                                <textarea className="post-input-content" placeholder="Markdown supported..." value={content} onChange={e => setContent(e.target.value)} />
+                                <input className="post-input-title" placeholder="Post Title" aria-label="Post Title" value={title} onChange={e => setTitle(e.target.value)} />
+                                <textarea className="post-input-content" placeholder="Markdown supported..." aria-label="Post Markdown Content" value={content} onChange={e => setContent(e.target.value)} />
                                 <div className="mt-3 d-flex align-items-center gap-3">
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" checked={isDraft} onChange={e => setIsDraft(e.target.checked)} />
-                                        <label className="form-check-label">{isDraft ? 'Draft' : 'Public'}</label>
+                                        <input className="form-check-input" type="checkbox" id="draftSwitch" checked={isDraft} onChange={e => setIsDraft(e.target.checked)} />
+                                        <label className="form-check-label" htmlFor="draftSwitch">{isDraft ? 'Draft' : 'Public'}</label>
                                     </div>
                                     <button className="btn btn-primary" onClick={publish} disabled={syncing}>
                                         {syncing ? 'Saving...' : (editingPost ? 'Update' : 'Publish')}

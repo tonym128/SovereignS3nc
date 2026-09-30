@@ -104,18 +104,23 @@ export const InspectorModal: React.FC<InspectorModalProps> = ({ sov, onClose }) 
             zIndex: 10000,
             padding: '20px'
         }}>
-            <div style={{
-                background: '#1e1e24',
-                color: '#fff',
-                width: '900px',
-                maxWidth: '95vw',
-                height: '85vh',
-                borderRadius: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-                border: '1px solid #333'
-            }}>
+            <div 
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="inspectorModalTitle"
+                style={{
+                    background: '#1e1e24',
+                    color: '#fff',
+                    width: '900px',
+                    maxWidth: '95vw',
+                    height: '85vh',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                    border: '1px solid #333'
+                }}
+            >
                 {/* Header */}
                 <div style={{
                     padding: '16px 20px',
@@ -127,7 +132,7 @@ export const InspectorModal: React.FC<InspectorModalProps> = ({ sov, onClose }) 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <span style={{ fontSize: '20px' }}>🛠️</span>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Sovereign Storage Inspector</h3>
+                            <h3 id="inspectorModalTitle" style={{ margin: 0, fontSize: '16px', fontWeight: 600 }}>Sovereign Storage Inspector</h3>
                             <span style={{ fontSize: '12px', color: '#888' }}>
                                 App: {snapshot?.appId || '...'} | User: {snapshot?.userId || '...'}
                             </span>
@@ -144,12 +149,14 @@ export const InspectorModal: React.FC<InspectorModalProps> = ({ sov, onClose }) 
                         </label>
                         <button 
                             onClick={loadSnapshot} 
+                            aria-label="Refresh inspector data"
                             style={{ padding: '6px 12px', background: '#333', border: 'none', color: '#fff', borderRadius: '6px', cursor: 'pointer' }}
                         >
                             🔄 Refresh
                         </button>
                         <button 
                             onClick={onClose} 
+                            aria-label="Close Inspector"
                             style={{ padding: '6px 12px', background: '#d32f2f', border: 'none', color: '#fff', borderRadius: '6px', cursor: 'pointer' }}
                         >
                             ✕

@@ -142,15 +142,15 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
     };
 
     return (
-        <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 10000 }}>
-            <div className="modal-dialog modal-dialog-centered">
+        <div className="modal show d-block" tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="pairingModalTitle" style={{ backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 10000 }}>
+            <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content border-0 rounded-4 overflow-hidden">
                     <div className="modal-header bg-primary text-white border-0">
-                        <h5 className="modal-title fw-bold">
+                        <h5 id="pairingModalTitle" className="modal-title fw-bold">
                             <i className="bi bi-qr-code-scan me-2"></i>
                             Direct Pairing
                         </h5>
-                        <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
+                        <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={onClose}></button>
                     </div>
                     <div className="modal-body p-4 text-center">
                         {error && <div className="alert alert-danger small py-2">{error}</div>}

@@ -54,7 +54,7 @@ export const BlobImage: React.FC<BlobImageProps> = ({
     }, [path, userId, sov, message?.localImage, message?.imageEncryption, messaging]);
 
     if (!src) return <div className="bg-light p-5 text-center text-muted">Loading image...</div>;
-    return <img src={src} className="img-fluid rounded" style={{ maxHeight: '500px' }} />;
+    return <img src={src} alt="Attachment content" className="img-fluid rounded" style={{ maxHeight: '500px' }} />;
 };
 
 export interface UserAvatarProps {
@@ -99,7 +99,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     return (
         <div className="d-flex align-items-center">
             {p.avatar ? (
-                <img src={p.avatar} style={{ width: size + 'px', height: size + 'px', borderRadius: '50%', objectFit: 'cover' }} className="me-2" />
+                <img src={p.avatar} alt={`${p.name || userId} avatar`} style={{ width: size + 'px', height: size + 'px', borderRadius: '50%', objectFit: 'cover' }} className="me-2" />
             ) : (
                 <div className="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style={{ width: size + 'px', height: size + 'px' }}>
                     {userId[0]?.toUpperCase() || '?'}

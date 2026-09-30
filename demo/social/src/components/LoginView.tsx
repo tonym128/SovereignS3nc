@@ -54,7 +54,7 @@ export const LoginView: React.FC<LoginViewProps> = ({
                                     onClick={() => performLogin(u.config)}
                                 >
                                     {u.avatar ? (
-                                        <img src={u.avatar} style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} className="me-2" />
+                                        <img src={u.avatar} alt={`${u.name || u.userId} avatar`} style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} className="me-2" />
                                     ) : (
                                         <div className="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style={{ width: '32px', height: '32px' }}>
                                             {u.userId[0]?.toUpperCase() || '?'}
@@ -83,8 +83,8 @@ export const LoginView: React.FC<LoginViewProps> = ({
                 {/* Quick Start Card */}
                 <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
                     <div className="d-flex align-items-center justify-content-center mb-1">
-                        <span className="fs-5 me-2">🚀</span>
-                        <span className="fw-bold text-primary">Instant Quick Start</span>
+                        <span className="fs-5 me-2" aria-hidden="true">🚀</span>
+                        <span className="fw-bold" style={{ color: '#0952ba' }}>Instant Quick Start</span>
                     </div>
                     <p className="text-muted small mb-3">
                         Try Sovereign Social instantly with 1-click offline mode. Runs 100% locally in your browser using IndexedDB. No S3 or cloud credentials needed!
@@ -145,16 +145,16 @@ export const LoginView: React.FC<LoginViewProps> = ({
                             <label className="form-label small fw-bold text-muted text-uppercase mb-0">S3 Cloud Credentials</label>
                             <span className="badge bg-secondary small">Advanced</span>
                         </div>
-                        <input className="form-control mb-2" placeholder="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({ ...config, endpoint: e.target.value })} />
-                        <input className="form-control mb-2" placeholder="Access Key" value={config.accessKeyId} onChange={e => setConfig({ ...config, accessKeyId: e.target.value })} />
-                        <input className="form-control mb-2" type="password" placeholder="Secret Key" value={config.secretAccessKey} onChange={e => setConfig({ ...config, secretAccessKey: e.target.value })} />
-                        <input className="form-control mb-0" placeholder="Bucket Name" value={config.bucketName} onChange={e => setConfig({ ...config, bucketName: e.target.value })} />
+                        <input className="form-control mb-2" placeholder="S3 Endpoint" aria-label="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({ ...config, endpoint: e.target.value })} />
+                        <input className="form-control mb-2" placeholder="Access Key" aria-label="S3 Access Key" value={config.accessKeyId} onChange={e => setConfig({ ...config, accessKeyId: e.target.value })} />
+                        <input className="form-control mb-2" type="password" placeholder="Secret Key" aria-label="S3 Secret Access Key" value={config.secretAccessKey} onChange={e => setConfig({ ...config, secretAccessKey: e.target.value })} />
+                        <input className="form-control mb-0" placeholder="Bucket Name" aria-label="S3 Bucket Name" value={config.bucketName} onChange={e => setConfig({ ...config, bucketName: e.target.value })} />
                     </div>
                 )}
 
                 <label className="form-label small fw-bold text-muted text-uppercase">Account Credentials</label>
-                <input className="form-control mb-2" placeholder="User ID" value={config.userId} onChange={e => setConfig({ ...config, userId: e.target.value })} />
-                <input className="form-control mb-3" type="password" placeholder="Password" value={config.password} onChange={e => setConfig({ ...config, password: e.target.value })} />
+                <input className="form-control mb-2" placeholder="User ID" aria-label="Account User ID" value={config.userId} onChange={e => setConfig({ ...config, userId: e.target.value })} />
+                <input className="form-control mb-3" type="password" placeholder="Password" aria-label="Account Password" value={config.password} onChange={e => setConfig({ ...config, password: e.target.value })} />
 
                 <div className="form-check mb-2">
                     <input className="form-check-input" type="checkbox" id="autoLogin" checked={autoLogin} onChange={e => { setAutoLogin(e.target.checked); localStorage.setItem('sov_auto_login', e.target.checked.toString()); }} />
