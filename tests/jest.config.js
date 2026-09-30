@@ -8,7 +8,7 @@ module.exports = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testMatch: ["<rootDir>/tests/**/*.test.ts"],
-  testPathIgnorePatterns: ["/node_modules/", "\\.spec\\.ts$", "\\.integration\\.ts$"],
-  modulePathIgnorePatterns: ["<rootDir>/demo-dist/"],
+  testPathIgnorePatterns: ["/node_modules/", "\\.spec\\.ts$", "\\.integration\\.ts$", "/\\.worktrees/"],
+  modulePathIgnorePatterns: ["<rootDir>/demo-dist/", "<rootDir>/.worktrees/"],
   rootDir: '..',
 };

@@ -1,10 +1,28 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 
 describe('npm Package & Exports Verification (Item 4)', () => {
     const rootDir = path.resolve(__dirname, '..');
     const packageJsonPath = path.join(rootDir, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+    beforeAll(() => {
+        const requiredBuildFiles = [
+            path.join(rootDir, packageJson.main),
+            path.join(rootDir, packageJson.module),
+            path.join(rootDir, packageJson.browser),
+            path.join(rootDir, packageJson.types),
+            path.join(rootDir, packageJson.unpkg),
+            path.join(rootDir, packageJson.exports['./react'].require),
+            path.join(rootDir, packageJson.exports['./react'].types),
+        ];
+
+        const allExist = requiredBuildFiles.every(file => fs.existsSync(file));
+        if (!allExist) {
+            execSync('npm run build', { cwd: rootDir, stdio: 'inherit' });
+        }
+    });
 
     test('package.json contains all required npm distribution metadata', () => {
         expect(packageJson.name).toBe('sovereigns3nc');
