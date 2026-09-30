@@ -96,6 +96,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                         className={`btn btn-link px-2 me-1 d-flex align-items-center gap-1 text-decoration-none ${isConnected ? 'text-success' : 'text-danger'}`}
                         onClick={toggleConnection}
                         title={isConnected ? 'Connected' : 'Disconnected'}
+                        aria-label={isConnected ? 'Network Connected - Click to disconnect' : 'Network Disconnected - Click to connect'}
                     >
                         <i className={`bi ${isConnected ? 'bi-cloud-check-fill' : 'bi-cloud-slash-fill'}`} style={{ fontSize: '1.2rem' }}></i>
                         {isConnected && (config.syncMode === 'webrtc' || config.syncMode === 'peerjs') && (
@@ -110,6 +111,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                             className="btn btn-sm btn-outline-primary rounded-pill me-2"
                             onClick={() => setShowPairing(true)}
                             title="Direct QR Pair"
+                            aria-label="Direct QR Pair"
                         >
                             <i className="bi bi-qr-code-scan"></i> <span className="mobile-hide">Pair</span>
                         </button>
@@ -125,18 +127,18 @@ export const Navigation: React.FC<NavigationProps> = ({
                         />
                     </div>
 
-                    <button className="btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'} title="Sync Now">
+                    <button className="btn btn-sm btn-outline-secondary ms-2 p-1 px-2 rounded-circle d-md-none" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'} title="Sync Now" aria-label="Sync Now">
                         <i className={`bi bi-arrow-repeat ${syncing ? 'spin' : ''}`}></i>
                     </button>
 
-                    <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'}>
+                    <button className="btn btn-sm btn-outline-secondary ms-2 mobile-hide" onClick={() => sync(true)} disabled={syncing || config.syncMode === 'offline'} aria-label="Sync Now">
                         {syncing ? '...' : config.syncMode === 'offline' ? 'Offline' : 'Sync'}
                     </button>
-                    <button className="btn btn-sm btn-outline-danger ms-2 mobile-hide" onClick={logout}>Logout</button>
+                    <button className="btn btn-sm btn-outline-danger ms-2 mobile-hide" onClick={logout} aria-label="Logout">Logout</button>
                 </div>
             </nav>
 
-            <div className="bottom-nav d-md-none">
+            <nav className="bottom-nav d-md-none" aria-label="Mobile Navigation">
                 <a href="#" className={`bottom-nav-item ${currentTab === 'feed' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setCurrentTab('feed'); }}>
                     <i className="bi bi-house"></i>
                     <span>Home</span>
@@ -171,7 +173,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                         <span>Admin</span>
                     </a>
                 )}
-            </div>
+            </nav>
         </>
     );
 };

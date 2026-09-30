@@ -28,12 +28,12 @@ export const MemberManagementModal: React.FC<MemberManagementModalProps> = ({
     const myRole = group.members?.find((m: any) => m.userId === currentUserId)?.role;
 
     return (
-        <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 2000 }}>
-            <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal show d-block" tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="memberModalTitle" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 2000 }}>
+            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div className="modal-content shadow-lg border-0 rounded-4">
                     <div className="modal-header border-0 pb-0">
-                        <h5 className="modal-title fw-bold text-primary">Manage Members: {group.name}</h5>
-                        <button type="button" className="btn-close" onClick={onClose}></button>
+                        <h5 id="memberModalTitle" className="modal-title fw-bold text-primary">Manage Members: {group.name}</h5>
+                        <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
                     </div>
                     <div className="modal-body py-4">
                         <div className="d-flex justify-content-between align-items-center mb-3">
@@ -50,7 +50,7 @@ export const MemberManagementModal: React.FC<MemberManagementModalProps> = ({
                                     <div key={member.userId} className="list-group-item d-flex align-items-center justify-content-between border-0 py-3 border-bottom">
                                         <div className="d-flex align-items-center">
                                             {profile?.avatar ? (
-                                                <img src={profile.avatar} className="rounded-circle me-3" style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
+                                                <img src={profile.avatar} alt={`${profile?.name || member.userId} avatar`} className="rounded-circle me-3" style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
                                             ) : (
                                                 <div className="rounded-circle bg-secondary text-white me-3 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
                                                     {member.userId[0]?.toUpperCase() || '?'}

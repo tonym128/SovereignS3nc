@@ -56,15 +56,16 @@ export const FeedTab: React.FC<FeedTabProps> = ({
                             className="post-input w-100"
                             rows={1}
                             placeholder="What's on your mind?"
+                            aria-label="What's on your mind?"
                             value={newPost}
                             onChange={e => setNewPost(e.target.value)}
                             onKeyDown={handlePostKeyDown}
                         />
                     </div>
                 </div>
-                {newImagePreview && <img src={newImagePreview} className="img-fluid rounded mb-2" style={{ maxHeight: '300px' }} />}
+                {newImagePreview && <img src={newImagePreview} alt="Post attachment preview" className="img-fluid rounded mb-2" style={{ maxHeight: '300px' }} />}
                 <div className="d-flex justify-content-between border-top pt-2">
-                    <input type="file" ref={postFileRef as any} className="form-control form-control-sm border-0 w-auto" onChange={(e) => handleImageChange(e, false)} />
+                    <input type="file" ref={postFileRef as any} aria-label="Upload image" className="form-control form-control-sm border-0 w-auto" onChange={(e) => handleImageChange(e, false)} />
                     <button className="btn btn-sov px-4" onClick={handlePost}>Post</button>
                 </div>
             </div>

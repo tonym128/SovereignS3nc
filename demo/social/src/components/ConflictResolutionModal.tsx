@@ -60,11 +60,11 @@ export const ConflictResolutionModal: React.FC<ConflictResolutionModalProps> = (
     };
 
     return (
-        <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 3000 }}>
+        <div className="modal show d-block" tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="conflictModalTitle" style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 3000 }}>
             <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div className="modal-content shadow-lg border-0 rounded-4">
                     <div className="modal-header border-0 pb-0">
-                        <h5 className="modal-title fw-bold text-danger"><i className="bi bi-exclamation-triangle-fill me-2"></i>Sync Conflict</h5>
+                        <h5 id="conflictModalTitle" className="modal-title fw-bold text-danger"><i className="bi bi-exclamation-triangle-fill me-2"></i>Sync Conflict</h5>
                         <button type="button" className="btn-close" aria-label="Close" onClick={() => onResolve('abort')}></button>
                     </div>
                     <div className="modal-body py-4">

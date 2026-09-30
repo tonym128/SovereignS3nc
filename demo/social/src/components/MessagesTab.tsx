@@ -151,8 +151,8 @@ export const MessagesTab: React.FC<MessagesTabProps> = ({
                                                                 )}
                                                                 {m.senderId === config.userId && !m.isDeleted && (
                                                                     <span className="d-flex gap-2">
-                                                                        <span className="cursor-pointer" onClick={() => handleEditMessage(m)} title="Edit">✎</span>
-                                                                        <span className="cursor-pointer" onClick={() => handleDeleteMessage(m)} title="Delete">🗑</span>
+                                                                        <button type="button" className="btn btn-link p-0 text-decoration-none border-0" onClick={() => handleEditMessage(m)} title="Edit" aria-label="Edit message">✎</button>
+                                                                        <button type="button" className="btn btn-link p-0 text-decoration-none border-0" onClick={() => handleDeleteMessage(m)} title="Delete" aria-label="Delete message">🗑</button>
                                                                     </span>
                                                                 )}
                                                             </div>
@@ -164,11 +164,11 @@ export const MessagesTab: React.FC<MessagesTabProps> = ({
                                     }
                                 </div>
                                 <div className="p-3 border-top bg-light">
-                                    {msgImagePreview && <div className="mb-2"><img src={msgImagePreview} style={{ maxHeight: '100px' }} className="rounded" /></div>}
+                                    {msgImagePreview && <div className="mb-2"><img src={msgImagePreview} alt="Attached image preview" style={{ maxHeight: '100px' }} className="rounded" /></div>}
                                     <div className="input-group">
-                                        <input type="file" ref={msgFileRef as any} className="d-none" id="msgFile" onChange={(e) => handleImageChange(e, true)} />
-                                        <label htmlFor="msgFile" className="btn btn-outline-secondary rounded-pill me-2">📷</label>
-                                        <input data-testid="message-input" className="form-control rounded-pill" placeholder="Type a message..." value={msgInput} onChange={e => setMsgInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSendMessage()} />
+                                        <input type="file" ref={msgFileRef as any} className="d-none" id="msgFile" aria-label="Attach image file" onChange={(e) => handleImageChange(e, true)} />
+                                        <label htmlFor="msgFile" aria-label="Attach image" className="btn btn-outline-secondary rounded-pill me-2">📷</label>
+                                        <input data-testid="message-input" aria-label="Type a message" className="form-control rounded-pill" placeholder="Type a message..." value={msgInput} onChange={e => setMsgInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSendMessage()} />
                                         <button data-testid="message-send-btn" className="btn btn-primary rounded-pill ms-2" onClick={handleSendMessage}>Send</button>
                                     </div>
                                 </div>

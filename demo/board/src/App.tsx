@@ -243,8 +243,8 @@ const App = () => {
                                 {/* Quick Start Card */}
                                 <div className="card bg-primary bg-opacity-10 border-primary border-opacity-25 p-3 mb-4 text-center rounded-3">
                                     <div className="d-flex align-items-center justify-content-center mb-1">
-                                        <span className="fs-5 me-2">🚀</span>
-                                        <span className="fw-bold text-primary">Quick Start (Offline Board)</span>
+                                        <span className="fs-5 me-2" aria-hidden="true">🚀</span>
+                                        <span className="fw-bold" style={{ color: '#0952ba' }}>Quick Start (Offline Board)</span>
                                     </div>
                                     <p className="text-muted small mb-2">
                                         Try Kanban boards locally with IndexedDB storage. No credentials needed.
@@ -269,7 +269,7 @@ const App = () => {
 
                                 <div className="mb-3">
                                     <label className="form-label fw-bold">Sync Mode</label>
-                                    <div className="btn-group w-100 mb-2" role="group">
+                                    <div className="btn-group w-100 mb-2" role="group" aria-label="Sync Mode Selection">
                                         <button type="button" className={`btn btn-sm ${config.syncMode === 'webrtc' ? 'btn-primary' : 'btn-outline-secondary'}`} onClick={() => setConfig({...config, syncMode: 'webrtc'})}>
                                             ⚡ WebRTC Mesh
                                         </button>
@@ -288,17 +288,17 @@ const App = () => {
                                 </div>
                                 {config.syncMode === 's3' && (
                                     <div className="mb-3">
-                                        <label className="form-label">S3 Endpoint</label>
-                                        <input type="text" className="form-control" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
+                                        <label htmlFor="boardEndpoint" className="form-label">S3 Endpoint</label>
+                                        <input id="boardEndpoint" type="text" className="form-control" aria-label="S3 Endpoint" value={config.endpoint} onChange={e => setConfig({...config, endpoint: e.target.value})} />
                                     </div>
                                 )}
                                 <div className="mb-3">
-                                    <label className="form-label">User ID</label>
-                                    <input type="text" className="form-control" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
+                                    <label htmlFor="boardUserId" className="form-label">User ID</label>
+                                    <input id="boardUserId" type="text" className="form-control" aria-label="User ID" value={config.userId} onChange={e => setConfig({...config, userId: e.target.value})} />
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">Password</label>
-                                    <input type="password" className="form-control" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
+                                    <label htmlFor="boardPassword" className="form-label">Password</label>
+                                    <input id="boardPassword" type="password" className="form-control" aria-label="Password" value={config.password} onChange={e => setConfig({...config, password: e.target.value})} />
                                 </div>
                                 <button className="btn btn-primary w-100" onClick={login} disabled={syncing}>
                                     {syncing ? 'Connecting...' : 'Join Workspace'}
@@ -318,6 +318,7 @@ const App = () => {
                 <div className="ms-auto d-flex align-items-center gap-3">
                     {groups.length > 0 && (
                         <select className="form-select form-select-sm bg-dark text-white border-secondary" 
+                            aria-label="Select Board"
                             value={selectedGroup?.id || ''} 
                             onChange={e => setSelectedGroup(groups.find(g => g.id === e.target.value))}>
                             <option value="" disabled>Select Board...</option>
@@ -327,7 +328,7 @@ const App = () => {
 
                     {showCreateBoard ? (
                         <div className="d-flex gap-2">
-                            <input type="text" className="form-control form-control-sm" placeholder="Board Name" value={newBoardName} onChange={e => setNewBoardName(e.target.value)} autoFocus />
+                            <input type="text" className="form-control form-control-sm" placeholder="Board Name" aria-label="Board Name" value={newBoardName} onChange={e => setNewBoardName(e.target.value)} autoFocus />
                             <button className="btn btn-sm btn-success" onClick={createBoard}>Create</button>
                             <button className="btn btn-sm btn-outline-secondary text-white" onClick={() => setShowCreateBoard(false)}>Cancel</button>
                         </div>
@@ -345,9 +346,9 @@ const App = () => {
                 </div>
             </nav>
 
-            <div className="kanban-board">
+            <div className="kanban-board" role="main" aria-label="Kanban Board">
                 {COLUMNS.map(col => (
-                    <div key={col} className="kanban-column" onDragOver={e => e.preventDefault()} onDrop={e => {
+                    <div key={col} className="kanban-column" role="region" aria-label={`${col} column`} onDragOver={e => e.preventDefault()} onDrop={e => {
                         const taskData = e.dataTransfer.getData('task');
                         if (taskData) moveTask(JSON.parse(taskData), col);
                     }}>
@@ -357,14 +358,16 @@ const App = () => {
                                 {tasks.filter(t => JSON.parse(t.content).column === col).length}
                             </span>
                         </div>
-                        <div className="kanban-tasks">
+                        <div className="kanban-tasks" role="list" aria-label={`${col} tasks`}>
                             {tasks.filter(t => JSON.parse(t.content).column === col).map(task => {
                                 const data = JSON.parse(task.content);
                                 return (
-                                    <div key={task.id} className={`kanban-task priority-${data.priority}`} draggable onDragStart={e => e.dataTransfer.setData('task', JSON.stringify(task))}>
-                                        <div className="d-flex justify-content-between">
+                                    <div key={task.id} className={`kanban-task priority-${data.priority}`} role="listitem" draggable onDragStart={e => e.dataTransfer.setData('task', JSON.stringify(task))}>
+                                        <div className="d-flex justify-content-between align-items-center">
                                             <div className="kanban-task-title">{data.title}</div>
-                                            <i className="bi bi-trash text-danger" style={{fontSize: '0.8rem'}} onClick={() => deleteTask(task)}></i>
+                                            <button type="button" className="btn btn-link p-0 text-danger border-0" aria-label={`Delete task ${data.title}`} onClick={() => deleteTask(task)}>
+                                                <i className="bi bi-trash" style={{fontSize: '0.8rem'}}></i>
+                                            </button>
                                         </div>
                                         <div className="kanban-task-meta">
                                             <div className="kanban-task-avatar">{task.userId.substring(0, 2).toUpperCase()}</div>
@@ -375,7 +378,7 @@ const App = () => {
                             })}
                         </div>
                         <div className="p-2">
-                            <button className="add-task-btn" onClick={() => addTask(col)}>
+                            <button className="add-task-btn" aria-label={`Add card to ${col}`} onClick={() => addTask(col)}>
                                 <i className="bi bi-plus-lg me-2"></i>Add a card
                             </button>
                         </div>
