@@ -18,8 +18,11 @@ describe('CLI Integration Tests', () => {
         }
         consoleSpy = jest.spyOn(console, 'log').mockImplementation();
         jest.spyOn(console, 'error').mockImplementation();
-        // Mock sync to avoid network
-        jest.spyOn(SovereignS3nc.prototype, 'sync').mockResolvedValue(undefined as any);
+        // Mock sync to avoid network while flushing local databases
+        jest.spyOn(SovereignS3nc.prototype, 'sync').mockImplementation(async function(this: SovereignS3nc) {
+            await this.flushDatabases();
+            return undefined as any;
+        });
     });
 
     afterEach(() => {

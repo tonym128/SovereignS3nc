@@ -64,6 +64,8 @@ async function setCurrentUser(userId: string) {
     await fs.writeJson(path.join(CLI_DATA_DIR, 'current_user.json'), { userId });
 }
 
+let activeSov: SovereignS3nc | null = null;
+
 async function initSovereign(profile: UserProfile): Promise<{ 
     sov: SovereignS3nc, 
     profile: ProfileModule,
@@ -82,6 +84,7 @@ async function initSovereign(profile: UserProfile): Promise<{
 
     const sov = new SovereignS3nc(config, undefined, undefined, undefined, storage);
     await sov.init();
+    activeSov = sov;
     
     return { 
         sov, 
@@ -182,6 +185,7 @@ SovereignS3nc CLI - Usage:
                         image = await fs.readFile(imagePath);
                     }
                     await feed.post(content, true, image);
+                    await sov.flushDatabases();
                     console.log('Post created.');
                 } else if (postCmd === 'list') {
                     const targetId = args[2] || user.userId;
@@ -203,11 +207,13 @@ SovereignS3nc CLI - Usage:
                     const parentUserId = args[3];
                     const content = args[4];
                     await feed.comment(postId, parentUserId, content);
+                    await sov.flushDatabases();
                     console.log('Comment added.');
                 } else if (postCmd === 'delete') {
                     const postId = args[2];
                     const today = new Date().toISOString().split('T')[0];
                     await feed.deletePost(postId, today);
+                    await sov.flushDatabases();
                     console.log('Post deleted.');
                 } else if (postCmd === 'read') {
                     user.lastViewed!.feed = Date.now();
@@ -220,7 +226,7 @@ SovereignS3nc CLI - Usage:
                 const dmCmd = args[1];
                 const dmUser = await getCurrentUser();
                 if (!dmUser) return console.error('Not logged in.');
-                const { messaging: dmMessaging } = await initSovereign(dmUser);
+                const { messaging: dmMessaging, sov: dmSov } = await initSovereign(dmUser);
 
                 if (dmCmd === 'send') {
                     const recipientId = args[2];
@@ -231,6 +237,7 @@ SovereignS3nc CLI - Usage:
                         image = await fs.readFile(imagePath);
                     }
                     await dmMessaging.sendDirectMessage(recipientId, content, image);
+                    await dmSov.flushDatabases();
                     console.log('Message sent.');
                 } else if (dmCmd === 'list') {
                     const messages = await dmMessaging.getInboxMessages(5);
@@ -325,6 +332,11 @@ SovereignS3nc CLI - Usage:
     } catch (e: any) {
         console.error('Error:', e.message);
         if (e.stack) console.debug(e.stack);
+    } finally {
+        if (activeSov) {
+            await activeSov.flushDatabases();
+            activeSov = null;
+        }
     }
 }
 
