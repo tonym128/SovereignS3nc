@@ -16,6 +16,7 @@ import { PairingModal } from './PairingModal';
 import { ErrorBoundary } from './ErrorBoundary';
 import { InspectorModal } from './components/InspectorModal';
 import { UserAvatar, UserName, BlobImage } from './components/MediaAndUser';
+import { ToastContainer } from '@sovereigns3nc/demo-shared';
 import { LoginView } from './components/LoginView';
 import { Navigation } from './components/Navigation';
 import { FeedTab } from './components/FeedTab';
@@ -1622,6 +1623,7 @@ const App = () => {
                         </div>
                     </div>
                 )}
+                <ToastContainer />
             </div>
         </SocialContext.Provider>
     );

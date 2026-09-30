@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React = require_react(), Internals = {
+        var React3 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React3.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React3 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React.version;
+          var isomorphicReactPackageVersion = React3.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -100455,18 +100455,18 @@ ${toHex(hashedRequest)}`;
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React3 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React = {
+        React3 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React.react_stack_bottom_frame.bind(
-          React,
+        var unknownOwnerDebugStack = React3.react_stack_bottom_frame.bind(
+          React3,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -100511,11 +100511,264 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // demo/shared/src/SyncStatusIndicator.tsx
+  var import_jsx_runtime;
+  var init_SyncStatusIndicator = __esm({
+    "demo/shared/src/SyncStatusIndicator.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_jsx_runtime = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/QuickStartCard.tsx
+  var import_jsx_runtime2;
+  var init_QuickStartCard = __esm({
+    "demo/shared/src/QuickStartCard.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_jsx_runtime2 = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/ModalDialog.tsx
+  var import_react, import_jsx_runtime3;
+  var init_ModalDialog = __esm({
+    "demo/shared/src/ModalDialog.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react = __toESM(require_react());
+      import_jsx_runtime3 = __toESM(require_jsx_runtime());
+    }
+  });
+
+  // demo/shared/src/Toast.tsx
+  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext, TYPE_CONFIG, ToastContainer;
+  var init_Toast = __esm({
+    "demo/shared/src/Toast.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react2 = __toESM(require_react());
+      import_jsx_runtime4 = __toESM(require_jsx_runtime());
+      ToastManager = class {
+        constructor() {
+          this.activeToasts = [];
+          this.listeners = /* @__PURE__ */ new Set();
+          this.timerHandles = /* @__PURE__ */ new Map();
+        }
+        subscribe(listener) {
+          this.listeners.add(listener);
+          listener([...this.activeToasts]);
+          return () => this.listeners.delete(listener);
+        }
+        notify() {
+          for (const listener of this.listeners) {
+            listener([...this.activeToasts]);
+          }
+        }
+        show(toast2) {
+          const id = toast2.id || `toast-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+          const fullToast = {
+            id,
+            duration: toast2.duration ?? 4e3,
+            ...toast2
+          };
+          this.activeToasts = [...this.activeToasts, fullToast];
+          this.notify();
+          if (fullToast.duration && fullToast.duration > 0) {
+            const handle = setTimeout(() => {
+              this.dismiss(id);
+            }, fullToast.duration);
+            this.timerHandles.set(id, handle);
+          }
+          return id;
+        }
+        dismiss(id) {
+          const handle = this.timerHandles.get(id);
+          if (handle) {
+            clearTimeout(handle);
+            this.timerHandles.delete(id);
+          }
+          this.activeToasts = this.activeToasts.filter((t8) => t8.id !== id);
+          this.notify();
+        }
+        clear() {
+          for (const handle of this.timerHandles.values()) {
+            clearTimeout(handle);
+          }
+          this.timerHandles.clear();
+          this.activeToasts = [];
+          this.notify();
+        }
+        success(message, title = "Success") {
+          return this.show({ type: "success", title, message });
+        }
+        error(message, title = "Error") {
+          return this.show({ type: "error", title, message, duration: 6e3 });
+        }
+        warning(message, title = "Warning") {
+          return this.show({ type: "warning", title, message });
+        }
+        info(message, title = "Info") {
+          return this.show({ type: "info", title, message });
+        }
+      };
+      toast = new ToastManager();
+      ToastContext = (0, import_react2.createContext)(null);
+      TYPE_CONFIG = {
+        success: { border: "var(--sov-success, #198754)", bg: "var(--sov-surface, #ffffff)", icon: "\u2713", text: "var(--sov-success, #198754)" },
+        error: { border: "var(--sov-danger, #dc3545)", bg: "var(--sov-surface, #ffffff)", icon: "\u2715", text: "var(--sov-danger, #dc3545)" },
+        warning: { border: "var(--sov-warning, #996500)", bg: "var(--sov-surface, #ffffff)", icon: "\u26A0", text: "var(--sov-warning, #996500)" },
+        info: { border: "var(--sov-info, #0d6efd)", bg: "var(--sov-surface, #ffffff)", icon: "\u2139", text: "var(--sov-info, #0d6efd)" }
+      };
+      ToastContainer = ({
+        toasts: propToasts,
+        onDismiss,
+        position = "bottom-right"
+      }) => {
+        const [internalToasts, setInternalToasts] = (0, import_react2.useState)([]);
+        (0, import_react2.useEffect)(() => {
+          if (propToasts === void 0) {
+            return toast.subscribe(setInternalToasts);
+          }
+        }, [propToasts]);
+        const activeList = propToasts !== void 0 ? propToasts : internalToasts;
+        const handleDismiss = onDismiss || ((id) => toast.dismiss(id));
+        if (activeList.length === 0) return null;
+        const positionStyles = {
+          "top-right": { top: "20px", right: "20px" },
+          "top-left": { top: "20px", left: "20px" },
+          "bottom-right": { bottom: "20px", right: "20px" },
+          "bottom-left": { bottom: "20px", left: "20px" }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            role: "region",
+            "aria-label": "Notifications",
+            style: {
+              position: "fixed",
+              zIndex: 2e3,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              maxWidth: "380px",
+              width: "calc(100vw - 40px)",
+              pointerEvents: "none",
+              ...positionStyles[position]
+            },
+            children: activeList.map((t8) => {
+              const conf = TYPE_CONFIG[t8.type] || TYPE_CONFIG.info;
+              const role = t8.type === "error" ? "alert" : "status";
+              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+                "div",
+                {
+                  role,
+                  "aria-live": t8.type === "error" ? "assertive" : "polite",
+                  style: {
+                    pointerEvents: "auto",
+                    backgroundColor: conf.bg,
+                    color: "var(--sov-text, #212529)",
+                    borderLeft: `5px solid ${conf.border}`,
+                    borderTop: "1px solid var(--sov-border, #dee2e6)",
+                    borderRight: "1px solid var(--sov-border, #dee2e6)",
+                    borderBottom: "1px solid var(--sov-border, #dee2e6)",
+                    borderRadius: "var(--sov-radius-md, 8px)",
+                    padding: "12px 16px",
+                    boxShadow: "var(--sov-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1))",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "12px",
+                    transition: "all 200ms ease"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "span",
+                      {
+                        style: {
+                          color: conf.text,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          lineHeight: 1.2,
+                          flexShrink: 0
+                        },
+                        "aria-hidden": "true",
+                        children: conf.icon
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+                      t8.title && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            marginBottom: "2px",
+                            color: "var(--sov-text, #212529)"
+                          },
+                          children: t8.title
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontSize: "0.8125rem",
+                            color: "var(--sov-text-muted, #595959)",
+                            lineHeight: 1.4,
+                            wordBreak: "break-word"
+                          },
+                          children: t8.message
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleDismiss(t8.id),
+                        "aria-label": "Dismiss notification",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: "var(--sov-text-muted, #595959)",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          lineHeight: 1,
+                          padding: "2px 4px",
+                          flexShrink: 0
+                        },
+                        children: "\u2715"
+                      }
+                    )
+                  ]
+                },
+                t8.id
+              );
+            })
+          }
+        );
+      };
+    }
+  });
+
+  // demo/shared/src/index.ts
+  var init_src = __esm({
+    "demo/shared/src/index.ts"() {
+      "use strict";
+      init_polyfills();
+      init_SyncStatusIndicator();
+      init_QuickStartCard();
+      init_ModalDialog();
+      init_Toast();
+    }
+  });
+
   // demo/web/src/App.tsx
   var require_App = __commonJS({
     "demo/web/src/App.tsx"() {
       init_polyfills();
-      var import_react = __toESM(require_react());
+      var import_react3 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Profile();
@@ -100523,10 +100776,11 @@ ${toHex(hashedRequest)}`;
       init_Messaging();
       var import_crypto = __toESM(require_crypto_browserify());
       var import_buffer3 = __toESM(require_buffer());
-      var import_jsx_runtime = __toESM(require_jsx_runtime());
+      init_src();
+      var import_jsx_runtime5 = __toESM(require_jsx_runtime());
       var App = () => {
         console.log("Sovereign Social Demo starting...");
-        const [config, setConfig] = (0, import_react.useState)({
+        const [config, setConfig] = (0, import_react3.useState)({
           region: "ap-southeast-1",
           endpoint: "",
           accessKeyId: "",
@@ -100536,25 +100790,25 @@ ${toHex(hashedRequest)}`;
           userId: "user-" + Math.random().toString(36).substring(7),
           password: "password123"
         });
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react.useState)(false);
-        const [sov, setSov] = (0, import_react.useState)(null);
-        const [feed, setFeed] = (0, import_react.useState)(null);
-        const [profileModule, setProfileModule] = (0, import_react.useState)(null);
-        const [messaging, setMessaging] = (0, import_react.useState)(null);
-        const [posts, setPosts] = (0, import_react.useState)([]);
-        const [messages, setMessages] = (0, import_react.useState)([]);
-        const [activeChat, setActiveChat] = (0, import_react.useState)(null);
-        const [following, setFollowing] = (0, import_react.useState)([]);
-        const [allUsers, setAllUsers] = (0, import_react.useState)([]);
-        const [lastSyncTime, setLastSyncTime] = (0, import_react.useState)(null);
-        const [newPost, setNewPost] = (0, import_react.useState)("");
-        const [newImage, setNewPostImage] = (0, import_react.useState)(null);
-        const [profile, setProfile] = (0, import_react.useState)(null);
-        const [profileCache, setProfileCache] = (0, import_react.useState)({});
-        const [isEditingProfile, setIsEditingProfile] = (0, import_react.useState)(false);
-        const [syncing, setSyncing] = (0, import_react.useState)(false);
-        const [savedAccounts, setSavedAccounts] = (0, import_react.useState)([]);
-        (0, import_react.useEffect)(() => {
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react3.useState)(false);
+        const [sov, setSov] = (0, import_react3.useState)(null);
+        const [feed, setFeed] = (0, import_react3.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react3.useState)(null);
+        const [messaging, setMessaging] = (0, import_react3.useState)(null);
+        const [posts, setPosts] = (0, import_react3.useState)([]);
+        const [messages, setMessages] = (0, import_react3.useState)([]);
+        const [activeChat, setActiveChat] = (0, import_react3.useState)(null);
+        const [following, setFollowing] = (0, import_react3.useState)([]);
+        const [allUsers, setAllUsers] = (0, import_react3.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react3.useState)(null);
+        const [newPost, setNewPost] = (0, import_react3.useState)("");
+        const [newImage, setNewPostImage] = (0, import_react3.useState)(null);
+        const [profile, setProfile] = (0, import_react3.useState)(null);
+        const [profileCache, setProfileCache] = (0, import_react3.useState)({});
+        const [isEditingProfile, setIsEditingProfile] = (0, import_react3.useState)(false);
+        const [syncing, setSyncing] = (0, import_react3.useState)(false);
+        const [savedAccounts, setSavedAccounts] = (0, import_react3.useState)([]);
+        (0, import_react3.useEffect)(() => {
           const accounts = JSON.parse(localStorage.getItem("sov_saved_accounts") || "[]");
           setSavedAccounts(accounts);
           fetch("config.json").then((res) => res.json()).then((data) => {
@@ -100632,7 +100886,7 @@ ${toHex(hashedRequest)}`;
             }, 100);
           } catch (e2) {
             console.error("[Login] Error:", e2);
-            alert("Initialization failed: " + e2.message);
+            toast.error("Initialization failed: " + e2.message);
           }
         };
         const unlockAccount = async (userId) => {
@@ -100670,7 +100924,7 @@ ${toHex(hashedRequest)}`;
             setProfile(await pm.getProfile());
             setIsLoggedIn(true);
           } catch (e2) {
-            alert("Invalid password or corrupted data");
+            toast.error("Invalid password or corrupted data");
           }
         };
         const compressImage = async (file) => {
@@ -100719,7 +100973,7 @@ ${toHex(hashedRequest)}`;
           await profileModule.updateProfile(profile.name, profile.bio, profile.avatar);
           setIsEditingProfile(false);
         };
-        (0, import_react.useEffect)(() => {
+        (0, import_react3.useEffect)(() => {
           if (isLoggedIn) loadData();
         }, [isLoggedIn]);
         const handlePost = async () => {
@@ -100752,10 +101006,10 @@ ${toHex(hashedRequest)}`;
           if (!id || !sov) return;
           try {
             await sov.follow(id);
-            alert(`Now following ${id}. Please click Sync to pull their latest data.`);
+            toast.success(`Now following ${id}. Click Sync to pull their latest data.`);
             await loadData();
           } catch (e2) {
-            alert(`Error: ${e2.message}`);
+            toast.error(`Error: ${e2.message}`);
           }
         };
         const loadData = async (v2, fm, pm, mm) => {
@@ -100795,9 +101049,9 @@ ${toHex(hashedRequest)}`;
           }
         };
         const UserAvatar = ({ userId }) => {
-          const [isHovered, setIsHovered] = (0, import_react.useState)(false);
-          const [userData, setUserData] = (0, import_react.useState)(profileCache[userId]);
-          (0, import_react.useEffect)(() => {
+          const [isHovered, setIsHovered] = (0, import_react3.useState)(false);
+          const [userData, setUserData] = (0, import_react3.useState)(profileCache[userId]);
+          (0, import_react3.useEffect)(() => {
             if (!userData && profileModule) {
               console.log(`[UI] Fetching profile for ${userId}...`);
               profileModule.getProfile(userId).then((p3) => {
@@ -100812,28 +101066,28 @@ ${toHex(hashedRequest)}`;
             }
           }, [userId, profileModule, userData]);
           const p2 = userData || { name: userId };
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
             "div",
             {
               className: "position-relative d-inline-block",
               onMouseEnter: () => setIsHovered(true),
               onMouseLeave: () => setIsHovered(false),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex align-items-center cursor-pointer", children: [
-                  p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: p2.avatar, className: "profile-img-sm me-2", style: { width: "32px", height: "32px", borderRadius: "50%" } }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px", fontSize: "0.8rem" }, children: userId[0].toUpperCase() }),
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "fw-bold text-primary", children: p2.name || userId })
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center cursor-pointer", children: [
+                  p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: p2.avatar, className: "profile-img-sm me-2", style: { width: "32px", height: "32px", borderRadius: "50%" } }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: "32px", height: "32px", fontSize: "0.8rem" }, children: userId[0].toUpperCase() }),
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "fw-bold text-primary", children: p2.name || userId })
                 ] }),
-                isHovered && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card position-absolute shadow-lg p-3", style: { zIndex: 1e3, width: "250px", top: "100%", left: 0, backgroundColor: "white", border: "1px solid #007bff" }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "text-center mb-2", children: [
-                    p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: p2.avatar, className: "profile-img mb-2", style: { width: "80px", height: "80px", objectFit: "cover", borderRadius: "50%" } }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2", style: { width: "80px", height: "80px", fontSize: "2rem" }, children: userId[0].toUpperCase() }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h5", { className: "mb-0 text-dark", children: p2.name || userId }),
-                    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("small", { className: "text-muted", children: [
+                isHovered && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card position-absolute shadow-lg p-3", style: { zIndex: 1e3, width: "250px", top: "100%", left: 0, backgroundColor: "white", border: "1px solid #007bff" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-center mb-2", children: [
+                    p2.avatar ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: p2.avatar, className: "profile-img mb-2", style: { width: "80px", height: "80px", objectFit: "cover", borderRadius: "50%" } }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-secondary text-white rounded-circle mx-auto d-flex align-items-center justify-content-center mb-2", style: { width: "80px", height: "80px", fontSize: "2rem" }, children: userId[0].toUpperCase() }),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h5", { className: "mb-0 text-dark", children: p2.name || userId }),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("small", { className: "text-muted", children: [
                       "@",
                       userId
                     ] })
                   ] }),
-                  p2.bio && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "small mb-0 mt-2 border-top pt-2 text-dark", children: p2.bio }),
-                  !userData && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center mt-2", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "spinner-border spinner-border-sm" }) })
+                  p2.bio && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small mb-0 mt-2 border-top pt-2 text-dark", children: p2.bio }),
+                  !userData && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "text-center mt-2", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "spinner-border spinner-border-sm" }) })
                 ] })
               ]
             }
@@ -100841,17 +101095,17 @@ ${toHex(hashedRequest)}`;
         };
         const renderPost = (post, depth = 0) => {
           const replies = posts.filter((p2) => p2.parentId === post.id);
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: `post-wrapper ${depth > 0 ? "ms-4 border-start ps-3" : ""}`, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card post-card p-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex align-items-center mb-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(UserAvatar, { userId: post.userId }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "ms-2 text-muted small", children: new Date(post.timestamp).toLocaleString() })
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `post-wrapper ${depth > 0 ? "ms-4 border-start ps-3" : ""}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card post-card p-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(UserAvatar, { userId: post.userId }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "ms-2 text-muted small", children: new Date(post.timestamp).toLocaleString() })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "mb-2", children: post.content }),
-              post.image && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "post-image-container mb-2 text-center bg-light rounded", style: { minHeight: "100px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: post.image, className: "img-fluid rounded", style: { maxHeight: "800px", objectFit: "contain" } }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "pt-2", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-link text-decoration-none p-0", onClick: () => handleComment(post), children: "Reply" }) })
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "mb-2", children: post.content }),
+              post.image && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "post-image-container mb-2 text-center bg-light rounded", style: { minHeight: "100px" }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: post.image, className: "img-fluid rounded", style: { maxHeight: "800px", objectFit: "contain" } }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "pt-2", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-link text-decoration-none p-0", onClick: () => handleComment(post), children: "Reply" }) })
             ] }),
-            replies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "replies-container mt-2", children: replies.map((reply) => renderPost(reply, depth + 1)) })
+            replies.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "replies-container mt-2", children: replies.map((reply) => renderPost(reply, depth + 1)) })
           ] }, post.id);
         };
         const renderChat = (recipientId) => {
@@ -100863,154 +101117,160 @@ ${toHex(hashedRequest)}`;
             document.getElementById("msg-input").value = "";
             await loadData();
           };
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "chat-view", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-link p-0", onClick: () => setActiveChat(null), children: "\u2190 Back to Feed" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h5", { className: "mb-0", children: [
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "chat-view", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-link p-0", onClick: () => setActiveChat(null), children: "\u2190 Back to Feed" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h5", { className: "mb-0", children: [
                 "Chat with ",
                 recipientId
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { width: "20px" } })
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { style: { width: "20px" } })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "card mb-3", style: { height: "400px", overflowY: "auto", display: "flex", flexDirection: "column-reverse" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "p-3", children: chatMessages.map((m2) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `mb-2 d-flex ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: `p-2 rounded ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light"}`, style: { maxWidth: "80% shadow-sm" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "small mb-1", style: { fontSize: "0.7rem", opacity: 0.8 }, children: new Date(m2.timestamp).toLocaleTimeString() }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { children: m2.content })
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "card mb-3", style: { height: "400px", overflowY: "auto", display: "flex", flexDirection: "column-reverse" }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-3", children: chatMessages.map((m2) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: `mb-2 d-flex ${m2.senderId === config.userId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `p-2 rounded ${m2.senderId === config.userId ? "bg-primary text-white" : "bg-light"}`, style: { maxWidth: "80% shadow-sm" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "small mb-1", style: { fontSize: "0.7rem", opacity: 0.8 }, children: new Date(m2.timestamp).toLocaleTimeString() }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { children: m2.content })
             ] }) }, m2.id)) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "input-group", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { id: "msg-input", className: "form-control", placeholder: "Type a message...", rows: 2, onKeyDown: (e2) => {
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "input-group", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("textarea", { id: "msg-input", className: "form-control", placeholder: "Type a message...", rows: 2, onKeyDown: (e2) => {
                 if (e2.key === "Enter" && !e2.shiftKey) {
                   e2.preventDefault();
                   sendMessage();
                 }
               } }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary", onClick: sendMessage, children: "Send" })
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary", onClick: sendMessage, children: "Send" })
             ] })
           ] });
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card p-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { children: "SovereignS3nc Login" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row g-2 mb-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "col-8", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "col-4", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control", placeholder: "Region", value: config.region, onChange: (e2) => setConfig({ ...config, region: e2.target.value }) }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary w-100 mb-2", onClick: login, children: "Enter Workspace" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-outline-danger btn-sm w-100", onClick: () => {
-              if (confirm("Clear all local data?")) {
-                indexedDB.deleteDatabase("sovereign_s3nc");
-                localStorage.clear();
-                window.location.reload();
-              }
-            }, children: "Reset Local Database & Accounts" }),
-            savedAccounts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "mt-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h6", { children: "Saved Accounts" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "list-group", children: savedAccounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { className: "list-group-item list-group-item-action d-flex justify-content-between align-items-center", onClick: () => unlockAccount(acc), children: [
-                acc,
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "badge bg-primary rounded-pill", children: "Unlock" })
-              ] }, acc)) })
-            ] })
-          ] }) });
-        }
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "container-fluid", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "col-md-3 sidebar p-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "text-center mb-4", children: [
-              profile?.avatar && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: profile.avatar, className: "profile-img mb-2" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", { children: profile?.name || config.userId }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-link", onClick: () => setIsEditingProfile(true), children: "Edit Profile" })
-            ] }),
-            isEditingProfile && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card p-3 mb-3 border-primary", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { className: "form-control mb-2", placeholder: "Display Name", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { className: "form-control mb-2", placeholder: "Bio", value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "file", className: "form-control mb-2", onChange: async (e2) => {
-                const file = e2.target.files?.[0];
-                if (file) {
-                  const compressed = await compressImage(file);
-                  setProfile({ ...profile, avatar: compressed });
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { children: "SovereignS3nc Login" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "row g-2 mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-8", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control", placeholder: "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-4", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control", placeholder: "Region", value: config.region, onChange: (e2) => setConfig({ ...config, region: e2.target.value }) }) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "Access Key", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Secret Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", {}),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary w-100 mb-2", onClick: login, children: "Enter Workspace" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-outline-danger btn-sm w-100", onClick: () => {
+                if (confirm("Clear all local data?")) {
+                  indexedDB.deleteDatabase("sovereign_s3nc");
+                  localStorage.clear();
+                  window.location.reload();
                 }
-              } }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary btn-sm", onClick: saveProfile, children: "Save" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-outline-primary w-100 mb-2", onClick: sync, disabled: syncing, children: syncing ? "Syncing..." : "Sync Everything" }),
-            lastSyncTime && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "text-center small text-success mb-2", children: [
-              "Last Sync: ",
-              lastSyncTime
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-sm btn-outline-info w-100 mb-2", onClick: () => loadData(), children: "Refresh Feed" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-xs btn-outline-warning w-100 mb-3", onClick: () => sov?.testPermissions(), children: "Test Permissions" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-outline-secondary w-100 mb-3", onClick: handleFollow, children: "Follow User" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h6", { children: [
-              "Direct Messages (",
-              messages.length,
-              ")"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: [
-              Array.from(new Set(messages.map((m2) => m2.senderId === config.userId ? m2.recipientId : m2.senderId))).map((userId) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "button",
-                {
-                  className: `list-group-item list-group-item-action bg-transparent px-2 border-0 small ${activeChat === userId ? "fw-bold text-primary" : ""}`,
-                  onClick: () => setActiveChat(userId),
-                  children: userId
-                },
-                userId
-              )),
-              messages.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small", children: "No messages yet." })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h6", { children: [
-              "Following (",
-              following.length,
-              ")"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: [
-              following.map((f2) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "list-group-item bg-transparent px-0 border-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "fw-bold small", children: f2.userId }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: [
-                  "Last sync: ",
-                  f2.lastSync
-                ] })
-              ] }, f2.userId)),
-              following.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small", children: "No users followed yet." })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h6", { children: [
-              "Global Registry (",
-              allUsers.length,
-              ")"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: allUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "small", children: u2.userId }),
-              !following.find((f2) => f2.userId === u2.userId) && u2.userId !== config.userId && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-xs btn-link p-0", onClick: async () => {
-                await sov.follow(u2.userId);
-                loadData();
-              }, children: "Follow" })
-            ] }, u2.userId)) }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small border-top pt-2", children: "Zero Knowledge Sync Active" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "col-md-6 p-4", children: activeChat ? renderChat(activeChat) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "card p-3 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }),
-              newImage && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-primary", onClick: handlePost, children: "Post" })
+              }, children: "Reset Local Database & Accounts" }),
+              savedAccounts.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mt-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { children: "Saved Accounts" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "list-group", children: savedAccounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "list-group-item list-group-item-action d-flex justify-content-between align-items-center", onClick: () => unlockAccount(acc), children: [
+                  acc,
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-primary rounded-pill", children: "Unlock" })
+                ] }, acc)) })
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "feed-container", children: [
-              posts.filter((p2) => !p2.parentId).map((p2) => renderPost(p2)),
-              posts.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "text-center text-muted mt-5", children: "Your feed is empty. Post something or sync to discover others!" })
-            ] })
-          ] }) })
-        ] }) });
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+          ] });
+        }
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container-fluid", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col-md-3 sidebar p-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-center mb-4", children: [
+                profile?.avatar && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: profile.avatar, className: "profile-img mb-2" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h4", { children: profile?.name || config.userId }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-link", onClick: () => setIsEditingProfile(true), children: "Edit Profile" })
+              ] }),
+              isEditingProfile && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-3 mb-3 border-primary", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-control mb-2", placeholder: "Display Name", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("textarea", { className: "form-control mb-2", placeholder: "Bio", value: profile?.bio || "", onChange: (e2) => setProfile({ ...profile, bio: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "file", className: "form-control mb-2", onChange: async (e2) => {
+                  const file = e2.target.files?.[0];
+                  if (file) {
+                    const compressed = await compressImage(file);
+                    setProfile({ ...profile, avatar: compressed });
+                  }
+                } }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary btn-sm", onClick: saveProfile, children: "Save" })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-outline-primary w-100 mb-2", onClick: sync, disabled: syncing, children: syncing ? "Syncing..." : "Sync Everything" }),
+              lastSyncTime && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-center small text-success mb-2", children: [
+                "Last Sync: ",
+                lastSyncTime
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-info w-100 mb-2", onClick: () => loadData(), children: "Refresh Feed" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-xs btn-outline-warning w-100 mb-3", onClick: () => sov?.testPermissions(), children: "Test Permissions" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-outline-secondary w-100 mb-3", onClick: handleFollow, children: "Follow User" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", {}),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h6", { children: [
+                "Direct Messages (",
+                messages.length,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: [
+                Array.from(new Set(messages.map((m2) => m2.senderId === config.userId ? m2.recipientId : m2.senderId))).map((userId) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                  "button",
+                  {
+                    className: `list-group-item list-group-item-action bg-transparent px-2 border-0 small ${activeChat === userId ? "fw-bold text-primary" : ""}`,
+                    onClick: () => setActiveChat(userId),
+                    children: userId
+                  },
+                  userId
+                )),
+                messages.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "No messages yet." })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", {}),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h6", { children: [
+                "Following (",
+                following.length,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: [
+                following.map((f2) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "list-group-item bg-transparent px-0 border-0", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "fw-bold small", children: f2.userId }),
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: [
+                    "Last sync: ",
+                    f2.lastSync
+                  ] })
+                ] }, f2.userId)),
+                following.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "No users followed yet." })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", {}),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h6", { children: [
+                "Global Registry (",
+                allUsers.length,
+                ")"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "list-group list-group-flush mb-3", style: { maxHeight: "200px", overflowY: "auto" }, children: allUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "list-group-item bg-transparent px-0 border-0 d-flex justify-content-between align-items-center", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "small", children: u2.userId }),
+                !following.find((f2) => f2.userId === u2.userId) && u2.userId !== config.userId && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-xs btn-link p-0", onClick: async () => {
+                  await sov.follow(u2.userId);
+                  loadData();
+                }, children: "Follow" })
+              ] }, u2.userId)) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small border-top pt-2", children: "Zero Knowledge Sync Active" })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6 p-4", children: activeChat ? renderChat(activeChat) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-3 mb-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("textarea", { className: "form-control mb-2", placeholder: "What's on your mind?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }),
+                newImage && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: newImage, className: "img-thumbnail mb-2", style: { maxHeight: "200px" } }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "file", className: "form-control form-control-sm w-50", onChange: handleImageChange }),
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary", onClick: handlePost, children: "Post" })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "feed-container", children: [
+                posts.filter((p2) => !p2.parentId).map((p2) => renderPost(p2)),
+                posts.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "text-center text-muted mt-5", children: "Your feed is empty. Post something or sync to discover others!" })
+              ] })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+        ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
-      root2.render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App, {}));
+      root2.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(App, {}));
     }
   });
   require_App();

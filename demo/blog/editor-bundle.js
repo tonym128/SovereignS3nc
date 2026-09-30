@@ -102892,7 +102892,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
   });
 
   // demo/shared/src/Toast.tsx
-  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext;
+  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext, TYPE_CONFIG, ToastContainer;
   var init_Toast = __esm({
     "demo/shared/src/Toast.tsx"() {
       "use strict";
@@ -102964,6 +102964,140 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
       };
       toast = new ToastManager();
       ToastContext = (0, import_react2.createContext)(null);
+      TYPE_CONFIG = {
+        success: { border: "var(--sov-success, #198754)", bg: "var(--sov-surface, #ffffff)", icon: "\u2713", text: "var(--sov-success, #198754)" },
+        error: { border: "var(--sov-danger, #dc3545)", bg: "var(--sov-surface, #ffffff)", icon: "\u2715", text: "var(--sov-danger, #dc3545)" },
+        warning: { border: "var(--sov-warning, #996500)", bg: "var(--sov-surface, #ffffff)", icon: "\u26A0", text: "var(--sov-warning, #996500)" },
+        info: { border: "var(--sov-info, #0d6efd)", bg: "var(--sov-surface, #ffffff)", icon: "\u2139", text: "var(--sov-info, #0d6efd)" }
+      };
+      ToastContainer = ({
+        toasts: propToasts,
+        onDismiss,
+        position = "bottom-right"
+      }) => {
+        const [internalToasts, setInternalToasts] = (0, import_react2.useState)([]);
+        (0, import_react2.useEffect)(() => {
+          if (propToasts === void 0) {
+            return toast.subscribe(setInternalToasts);
+          }
+        }, [propToasts]);
+        const activeList = propToasts !== void 0 ? propToasts : internalToasts;
+        const handleDismiss = onDismiss || ((id) => toast.dismiss(id));
+        if (activeList.length === 0) return null;
+        const positionStyles = {
+          "top-right": { top: "20px", right: "20px" },
+          "top-left": { top: "20px", left: "20px" },
+          "bottom-right": { bottom: "20px", right: "20px" },
+          "bottom-left": { bottom: "20px", left: "20px" }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            role: "region",
+            "aria-label": "Notifications",
+            style: {
+              position: "fixed",
+              zIndex: 2e3,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              maxWidth: "380px",
+              width: "calc(100vw - 40px)",
+              pointerEvents: "none",
+              ...positionStyles[position]
+            },
+            children: activeList.map((t8) => {
+              const conf = TYPE_CONFIG[t8.type] || TYPE_CONFIG.info;
+              const role = t8.type === "error" ? "alert" : "status";
+              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+                "div",
+                {
+                  role,
+                  "aria-live": t8.type === "error" ? "assertive" : "polite",
+                  style: {
+                    pointerEvents: "auto",
+                    backgroundColor: conf.bg,
+                    color: "var(--sov-text, #212529)",
+                    borderLeft: `5px solid ${conf.border}`,
+                    borderTop: "1px solid var(--sov-border, #dee2e6)",
+                    borderRight: "1px solid var(--sov-border, #dee2e6)",
+                    borderBottom: "1px solid var(--sov-border, #dee2e6)",
+                    borderRadius: "var(--sov-radius-md, 8px)",
+                    padding: "12px 16px",
+                    boxShadow: "var(--sov-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1))",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "12px",
+                    transition: "all 200ms ease"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "span",
+                      {
+                        style: {
+                          color: conf.text,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          lineHeight: 1.2,
+                          flexShrink: 0
+                        },
+                        "aria-hidden": "true",
+                        children: conf.icon
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+                      t8.title && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            marginBottom: "2px",
+                            color: "var(--sov-text, #212529)"
+                          },
+                          children: t8.title
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontSize: "0.8125rem",
+                            color: "var(--sov-text-muted, #595959)",
+                            lineHeight: 1.4,
+                            wordBreak: "break-word"
+                          },
+                          children: t8.message
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleDismiss(t8.id),
+                        "aria-label": "Dismiss notification",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: "var(--sov-text-muted, #595959)",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          lineHeight: 1,
+                          padding: "2px 4px",
+                          flexShrink: 0
+                        },
+                        children: "\u2715"
+                      }
+                    )
+                  ]
+                },
+                t8.id
+              );
+            })
+          }
+        );
+      };
     }
   });
 
@@ -103063,7 +103197,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);
           } catch (err) {
-            alert("Login failed: " + err.message);
+            toast.error("Login failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -103086,7 +103220,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);
           } catch (err) {
-            alert("Offline launch failed: " + err.message);
+            toast.error("Offline launch failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -103177,7 +103311,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
               await feed.post(blogData, isPublic);
             }
             await sov.sync();
-            alert(isDraft ? "Draft saved!" : "Published successfully!");
+            toast.success(isDraft ? "Draft saved!" : "Published successfully!");
             setTitle("");
             setContent("");
             setEditingPost(null);
@@ -103185,7 +103319,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
             loadPosts(feed);
           } catch (err) {
             console.error("Publish failed", err);
-            alert("Action failed: " + err.message);
+            toast.error("Action failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -103206,11 +103340,11 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
             const isPublic = JSON.parse(post.content).status === "published";
             await feed.deletePost(post.id, today, isPublic);
             await sov.sync();
-            alert("Post deleted!");
+            toast.success("Post deleted!");
             loadPosts(feed);
           } catch (err) {
             console.error("Delete failed", err);
-            alert("Delete failed: " + err.message);
+            toast.error("Delete failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -103288,7 +103422,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
             a2.download = "sovereign-blog-export.html";
             a2.click();
           } catch (err) {
-            alert("Export failed");
+            toast.error("Export failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -103363,7 +103497,8 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
                 ] })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-secondary w-100 mt-2", onClick: login, disabled: syncing, children: syncing ? "Logging in..." : "Enter Editor" })
-            ] })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
           ] });
         }
         return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
@@ -103436,12 +103571,13 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
                   /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("code", { className: "x-small d-block mb-2 text-truncate", title: path2, children: path2 }),
                   /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-secondary w-100", onClick: () => {
                     navigator.clipboard.writeText(`![](${path2})`);
-                    alert("Markdown copied!");
+                    toast.info("Markdown snippet copied to clipboard!");
                   }, children: "Copy MD" })
                 ] })
               ] }) }, path2)) })
             ] })
-          ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
         ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));

@@ -77,6 +77,13 @@ async function buildAllDemos() {
     // 5. Copy Global SovereignS3nc Browser Bundle to root and playground for offline/standalone execution
     const globalBundle = path.join(rootDir, 'dist/sovereigns3nc.global.js');
     const globalBundleMap = path.join(rootDir, 'dist/sovereigns3nc.global.js.map');
+    if (!fs.existsSync(globalBundle)) {
+        try {
+            execSync('npm run build:global', { cwd: rootDir, stdio: 'inherit' });
+        } catch (e) {
+            console.warn('Could not auto-build sovereigns3nc.global.js:', e);
+        }
+    }
     if (fs.existsSync(globalBundle)) {
         fs.copyFileSync(globalBundle, path.join(outDir, 'sovereigns3nc.global.js'));
         if (fs.existsSync(playgroundDstDir)) {

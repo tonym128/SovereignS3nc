@@ -6,6 +6,7 @@ import { FeedModule, Post } from '../../../src/modules/Feed';
 import { MessagingModule, Message } from '../../../src/modules/Messaging';
 import crypto from 'crypto';
 import { Buffer } from 'buffer';
+import { toast, ToastContainer } from '@sovereigns3nc/demo-shared';
 
 const App = () => {
     console.log('Sovereign Social Demo starting...');
@@ -134,7 +135,7 @@ const App = () => {
             }, 100);
         } catch (e: any) {
             console.error('[Login] Error:', e);
-            alert('Initialization failed: ' + e.message);
+            toast.error('Initialization failed: ' + e.message);
         }
     };
 
@@ -174,7 +175,7 @@ const App = () => {
             setProfile(await pm.getProfile());
             setIsLoggedIn(true);
         } catch (e) {
-            alert('Invalid password or corrupted data');
+            toast.error('Invalid password or corrupted data');
         }
     };
 
@@ -274,10 +275,10 @@ const App = () => {
         if (!id || !sov) return;
         try {
             await sov.follow(id);
-            alert(`Now following ${id}. Please click Sync to pull their latest data.`);
+            toast.success(`Now following ${id}. Click Sync to pull their latest data.`);
             await loadData();
         } catch (e: any) {
-            alert(`Error: ${e.message}`);
+            toast.error(`Error: ${e.message}`);
         }
     };
 
@@ -505,6 +506,7 @@ const App = () => {
                         </div>
                     )}
                 </div>
+                <ToastContainer />
             </div>
         );
     }
@@ -608,6 +610,7 @@ const App = () => {
                     )}
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

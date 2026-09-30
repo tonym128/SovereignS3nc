@@ -6,7 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
-import { SyncStatusIndicator } from '@sovereigns3nc/demo-shared';
+import { SyncStatusIndicator, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
 
 const Editor = () => {
     const [config, setConfig] = useState({
@@ -88,7 +88,7 @@ const Editor = () => {
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);
         } catch (err) {
-            alert('Login failed: ' + (err as Error).message);
+            toast.error('Login failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -113,7 +113,7 @@ const Editor = () => {
             await loadPosts(new FeedModule(instance));
             await loadMedia(instance);
         } catch (err) {
-            alert('Offline launch failed: ' + (err as Error).message);
+            toast.error('Offline launch failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -216,7 +216,7 @@ const Editor = () => {
                 await feed.post(blogData, isPublic);
             }
             await sov.sync();
-            alert(isDraft ? 'Draft saved!' : 'Published successfully!');
+            toast.success(isDraft ? 'Draft saved!' : 'Published successfully!');
             setTitle('');
             setContent('');
             setEditingPost(null);
@@ -224,7 +224,7 @@ const Editor = () => {
             loadPosts(feed);
         } catch (err) {
             console.error('Publish failed', err);
-            alert('Action failed: ' + (err as Error).message);
+            toast.error('Action failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -247,11 +247,11 @@ const Editor = () => {
             const isPublic = JSON.parse(post.content).status === 'published';
             await feed.deletePost(post.id, today, isPublic);
             await sov.sync();
-            alert('Post deleted!');
+            toast.success('Post deleted!');
             loadPosts(feed);
         } catch (err) {
             console.error('Delete failed', err);
-            alert('Delete failed: ' + (err as Error).message);
+            toast.error('Delete failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -334,7 +334,7 @@ const Editor = () => {
             a.download = 'sovereign-blog-export.html';
             a.click();
         } catch (err) {
-            alert('Export failed');
+            toast.error('Export failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -424,6 +424,7 @@ const Editor = () => {
                         {syncing ? 'Logging in...' : 'Enter Editor'}
                     </button>
                 </div>
+                <ToastContainer />
             </div>
         );
     }
@@ -512,7 +513,7 @@ const Editor = () => {
                                             <code className="x-small d-block mb-2 text-truncate" title={path}>{path}</code>
                                             <button className="btn btn-sm btn-outline-secondary w-100" onClick={() => {
                                                 navigator.clipboard.writeText(`![](${path})`);
-                                                alert('Markdown copied!');
+                                                toast.info('Markdown snippet copied to clipboard!');
                                             }}>Copy MD</button>
                                         </div>
                                     </div>
@@ -522,6 +523,7 @@ const Editor = () => {
                     </div>
                 )}
             </div>
+            <ToastContainer />
         </div>
     );
 };
