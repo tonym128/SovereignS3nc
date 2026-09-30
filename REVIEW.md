@@ -273,7 +273,7 @@
 | 11 | Deploy hosted interactive playground | Marketing | 2-3 days | ✅ Completed |
 | 12 | Add accessibility audit (axe-core) to CI | Testing Dev | 1-2 days | ✅ Completed |
 | 13 | Create shared `demo/build-common.js` and `demo/shared/` UI components | Senior Engineer | 3-4 days | ✅ Completed |
-| 14 | Replace `window.alert()` with toast notification system | Product Designer | 1-2 days | Pending |
+| 14 | Replace `window.alert()` with toast notification system | Product Designer | 1-2 days | ✅ Completed |
 | 15 | Add failure-mode test suites (corrupted data, network errors) | Testing Dev | 3-5 days | Pending |
 
 ### P3 — Nice to Have (Backlog)
