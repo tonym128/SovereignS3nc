@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { NativeWebRTCTransport } from '../../../src/adapters/NativeWebRTCTransport';
 import { BLESignaling } from '../../../src/utils/BLESignaling';
+import { toast } from '@sovereigns3nc/demo-shared';
 
 interface PairingModalProps {
     userId: string;
@@ -94,7 +95,7 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
                         }, 1500);
                     };
                 } catch (e) {
-                    alert('Invalid QR Code: ' + e);
+                    toast.error('Invalid QR Code: ' + e);
                     setStep('initial');
                 }
             });
@@ -110,7 +111,7 @@ export const PairingModal: React.FC<PairingModalProps> = ({ userId, onClose, onC
                     if (answer.type !== 'answer') throw new Error('Not an answer');
                     await transport.handleAnswer(answer.sdp);
                 } catch (e) {
-                    alert('Invalid QR Code: ' + e);
+                    toast.error('Invalid QR Code: ' + e);
                     setStep('initial');
                 }
             });

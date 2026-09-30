@@ -115243,7 +115243,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // demo/shared/src/Toast.tsx
-  var import_react3, import_jsx_runtime5, ToastManager, toast, ToastContext;
+  var import_react3, import_jsx_runtime5, ToastManager, toast, ToastContext, TYPE_CONFIG, ToastContainer;
   var init_Toast = __esm({
     "demo/shared/src/Toast.tsx"() {
       "use strict";
@@ -115315,6 +115315,140 @@ ${toHex(hashedRequest)}`;
       };
       toast = new ToastManager();
       ToastContext = (0, import_react3.createContext)(null);
+      TYPE_CONFIG = {
+        success: { border: "var(--sov-success, #198754)", bg: "var(--sov-surface, #ffffff)", icon: "\u2713", text: "var(--sov-success, #198754)" },
+        error: { border: "var(--sov-danger, #dc3545)", bg: "var(--sov-surface, #ffffff)", icon: "\u2715", text: "var(--sov-danger, #dc3545)" },
+        warning: { border: "var(--sov-warning, #996500)", bg: "var(--sov-surface, #ffffff)", icon: "\u26A0", text: "var(--sov-warning, #996500)" },
+        info: { border: "var(--sov-info, #0d6efd)", bg: "var(--sov-surface, #ffffff)", icon: "\u2139", text: "var(--sov-info, #0d6efd)" }
+      };
+      ToastContainer = ({
+        toasts: propToasts,
+        onDismiss,
+        position = "bottom-right"
+      }) => {
+        const [internalToasts, setInternalToasts] = (0, import_react3.useState)([]);
+        (0, import_react3.useEffect)(() => {
+          if (propToasts === void 0) {
+            return toast.subscribe(setInternalToasts);
+          }
+        }, [propToasts]);
+        const activeList = propToasts !== void 0 ? propToasts : internalToasts;
+        const handleDismiss = onDismiss || ((id) => toast.dismiss(id));
+        if (activeList.length === 0) return null;
+        const positionStyles = {
+          "top-right": { top: "20px", right: "20px" },
+          "top-left": { top: "20px", left: "20px" },
+          "bottom-right": { bottom: "20px", right: "20px" },
+          "bottom-left": { bottom: "20px", left: "20px" }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          "div",
+          {
+            role: "region",
+            "aria-label": "Notifications",
+            style: {
+              position: "fixed",
+              zIndex: 2e3,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              maxWidth: "380px",
+              width: "calc(100vw - 40px)",
+              pointerEvents: "none",
+              ...positionStyles[position]
+            },
+            children: activeList.map((t8) => {
+              const conf = TYPE_CONFIG[t8.type] || TYPE_CONFIG.info;
+              const role = t8.type === "error" ? "alert" : "status";
+              return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+                "div",
+                {
+                  role,
+                  "aria-live": t8.type === "error" ? "assertive" : "polite",
+                  style: {
+                    pointerEvents: "auto",
+                    backgroundColor: conf.bg,
+                    color: "var(--sov-text, #212529)",
+                    borderLeft: `5px solid ${conf.border}`,
+                    borderTop: "1px solid var(--sov-border, #dee2e6)",
+                    borderRight: "1px solid var(--sov-border, #dee2e6)",
+                    borderBottom: "1px solid var(--sov-border, #dee2e6)",
+                    borderRadius: "var(--sov-radius-md, 8px)",
+                    padding: "12px 16px",
+                    boxShadow: "var(--sov-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1))",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "12px",
+                    transition: "all 200ms ease"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      "span",
+                      {
+                        style: {
+                          color: conf.text,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          lineHeight: 1.2,
+                          flexShrink: 0
+                        },
+                        "aria-hidden": "true",
+                        children: conf.icon
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+                      t8.title && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            marginBottom: "2px",
+                            color: "var(--sov-text, #212529)"
+                          },
+                          children: t8.title
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontSize: "0.8125rem",
+                            color: "var(--sov-text-muted, #595959)",
+                            lineHeight: 1.4,
+                            wordBreak: "break-word"
+                          },
+                          children: t8.message
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleDismiss(t8.id),
+                        "aria-label": "Dismiss notification",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: "var(--sov-text-muted, #595959)",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          lineHeight: 1,
+                          padding: "2px 4px",
+                          flexShrink: 0
+                        },
+                        children: "\u2715"
+                      }
+                    )
+                  ]
+                },
+                t8.id
+              );
+            })
+          }
+        );
+      };
     }
   });
 
@@ -115428,7 +115562,7 @@ ${toHex(hashedRequest)}`;
             setIsLoggedIn(true);
             await loadData(instance, bm);
           } catch (e3) {
-            alert("Login failed: " + e3.message);
+            toast.error("Login failed: " + e3.message);
           }
         };
         const handleConnectRemote = async () => {
@@ -115565,7 +115699,7 @@ ${toHex(hashedRequest)}`;
             const parsed = parseFloat(amt);
             const amount = Math.abs(parsed);
             if (isNaN(parsed) || amount === 0) {
-              alert("Please enter a valid non-zero amount.");
+              toast.warning("Please enter a valid non-zero amount.");
               return;
             }
             if (amount > 1e3) {
@@ -115651,7 +115785,7 @@ ${toHex(hashedRequest)}`;
                   await sync();
                   loadTransactions(selectedAccount);
                 } else {
-                  alert("Please enter a valid positive target amount.");
+                  toast.warning("Please enter a valid positive target amount.");
                 }
               });
             }
@@ -115663,7 +115797,7 @@ ${toHex(hashedRequest)}`;
           showPrompt(`Enter amount to ${type.toLowerCase()} ${goal.name}:`, async (amt) => {
             const amount = Math.abs(parseFloat(amt));
             if (isNaN(amount) || amount <= 0) {
-              alert("Please enter a valid positive amount.");
+              toast.warning("Please enter a valid positive amount.");
               return;
             }
             if (amount > 1e3) {
@@ -115820,45 +115954,48 @@ ${toHex(hashedRequest)}`;
           onConfirm(vals);
         } });
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-              QuickStartCard,
-              {
-                title: "\u26A1 Quick Start Banky",
-                subtitle: "Zero-credentials offline ledger",
-                description: "Try personal budgeting and account ledgering locally in your browser with encrypted IndexedDB storage.",
-                buttonText: "\u26A1 Launch Instant Ledger",
-                className: "mb-4",
-                onLaunch: () => {
-                  setConfig((prev) => ({
-                    ...prev,
-                    paths: { ...prev.paths, userId: prev.paths.userId || "guest-" + Math.random().toString(36).substring(7) },
-                    password: prev.password || "password123",
-                    s3: void 0
-                  }));
-                  setTimeout(() => {
-                    handleLogin({ preventDefault: () => {
-                    } });
-                  }, 50);
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mt-5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                QuickStartCard,
+                {
+                  title: "\u26A1 Quick Start Banky",
+                  subtitle: "Zero-credentials offline ledger",
+                  description: "Try personal budgeting and account ledgering locally in your browser with encrypted IndexedDB storage.",
+                  buttonText: "\u26A1 Launch Instant Ledger",
+                  className: "mb-4",
+                  onLaunch: () => {
+                    setConfig((prev) => ({
+                      ...prev,
+                      paths: { ...prev.paths, userId: prev.paths.userId || "guest-" + Math.random().toString(36).substring(7) },
+                      password: prev.password || "password123",
+                      s3: void 0
+                    }));
+                    setTimeout(() => {
+                      handleLogin({ preventDefault: () => {
+                      } });
+                    }, 50);
+                  }
                 }
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "text-center mb-4 fw-bold text-primary", children: "Banky-Sov" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleLogin, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "User ID" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "Password" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3", children: "Login / Register" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache, children: "Clear Local Data" })
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "text-center mb-4 fw-bold text-primary", children: "Banky-Sov" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleLogin, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "User ID" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "Password" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3", children: "Login / Register" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache, children: "Clear Local Data" })
+                ] })
               ] })
-            ] })
-          ] }) }) });
+            ] }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
+          ] });
         }
         return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container", children: [
@@ -116149,7 +116286,8 @@ ${toHex(hashedRequest)}`;
                 }
               }
             }
-          )
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
         ] });
       };
       var ConflictResolutionModal = ({ conflict, onResolve }) => {

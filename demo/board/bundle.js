@@ -100296,7 +100296,7 @@ ${toHex(hashedRequest)}`;
   });
 
   // demo/shared/src/Toast.tsx
-  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext;
+  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext, TYPE_CONFIG, ToastContainer;
   var init_Toast = __esm({
     "demo/shared/src/Toast.tsx"() {
       "use strict";
@@ -100368,6 +100368,140 @@ ${toHex(hashedRequest)}`;
       };
       toast = new ToastManager();
       ToastContext = (0, import_react2.createContext)(null);
+      TYPE_CONFIG = {
+        success: { border: "var(--sov-success, #198754)", bg: "var(--sov-surface, #ffffff)", icon: "\u2713", text: "var(--sov-success, #198754)" },
+        error: { border: "var(--sov-danger, #dc3545)", bg: "var(--sov-surface, #ffffff)", icon: "\u2715", text: "var(--sov-danger, #dc3545)" },
+        warning: { border: "var(--sov-warning, #996500)", bg: "var(--sov-surface, #ffffff)", icon: "\u26A0", text: "var(--sov-warning, #996500)" },
+        info: { border: "var(--sov-info, #0d6efd)", bg: "var(--sov-surface, #ffffff)", icon: "\u2139", text: "var(--sov-info, #0d6efd)" }
+      };
+      ToastContainer = ({
+        toasts: propToasts,
+        onDismiss,
+        position = "bottom-right"
+      }) => {
+        const [internalToasts, setInternalToasts] = (0, import_react2.useState)([]);
+        (0, import_react2.useEffect)(() => {
+          if (propToasts === void 0) {
+            return toast.subscribe(setInternalToasts);
+          }
+        }, [propToasts]);
+        const activeList = propToasts !== void 0 ? propToasts : internalToasts;
+        const handleDismiss = onDismiss || ((id) => toast.dismiss(id));
+        if (activeList.length === 0) return null;
+        const positionStyles = {
+          "top-right": { top: "20px", right: "20px" },
+          "top-left": { top: "20px", left: "20px" },
+          "bottom-right": { bottom: "20px", right: "20px" },
+          "bottom-left": { bottom: "20px", left: "20px" }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            role: "region",
+            "aria-label": "Notifications",
+            style: {
+              position: "fixed",
+              zIndex: 2e3,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              maxWidth: "380px",
+              width: "calc(100vw - 40px)",
+              pointerEvents: "none",
+              ...positionStyles[position]
+            },
+            children: activeList.map((t8) => {
+              const conf = TYPE_CONFIG[t8.type] || TYPE_CONFIG.info;
+              const role = t8.type === "error" ? "alert" : "status";
+              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+                "div",
+                {
+                  role,
+                  "aria-live": t8.type === "error" ? "assertive" : "polite",
+                  style: {
+                    pointerEvents: "auto",
+                    backgroundColor: conf.bg,
+                    color: "var(--sov-text, #212529)",
+                    borderLeft: `5px solid ${conf.border}`,
+                    borderTop: "1px solid var(--sov-border, #dee2e6)",
+                    borderRight: "1px solid var(--sov-border, #dee2e6)",
+                    borderBottom: "1px solid var(--sov-border, #dee2e6)",
+                    borderRadius: "var(--sov-radius-md, 8px)",
+                    padding: "12px 16px",
+                    boxShadow: "var(--sov-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1))",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "12px",
+                    transition: "all 200ms ease"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "span",
+                      {
+                        style: {
+                          color: conf.text,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          lineHeight: 1.2,
+                          flexShrink: 0
+                        },
+                        "aria-hidden": "true",
+                        children: conf.icon
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+                      t8.title && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            marginBottom: "2px",
+                            color: "var(--sov-text, #212529)"
+                          },
+                          children: t8.title
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontSize: "0.8125rem",
+                            color: "var(--sov-text-muted, #595959)",
+                            lineHeight: 1.4,
+                            wordBreak: "break-word"
+                          },
+                          children: t8.message
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleDismiss(t8.id),
+                        "aria-label": "Dismiss notification",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: "var(--sov-text-muted, #595959)",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          lineHeight: 1,
+                          padding: "2px 4px",
+                          flexShrink: 0
+                        },
+                        children: "\u2715"
+                      }
+                    )
+                  ]
+                },
+                t8.id
+              );
+            })
+          }
+        );
+      };
     }
   });
 
@@ -100496,7 +100630,7 @@ ${toHex(hashedRequest)}`;
             }
           } catch (err) {
             console.error("Login failed", err);
-            alert("Login failed: " + err.message);
+            toast.error("Login failed: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -100521,10 +100655,11 @@ ${toHex(hashedRequest)}`;
             setNewBoardName("");
             setShowCreateBoard(false);
             await sov.sync();
+            toast.success(`Board "${newBoardName}" created successfully!`);
             console.log("Sync complete after board creation");
           } catch (err) {
             console.error("Failed to create board", err);
-            alert("Failed to create board: " + err.message);
+            toast.error("Failed to create board: " + err.message);
           } finally {
             setSyncing(false);
           }
@@ -100541,7 +100676,7 @@ ${toHex(hashedRequest)}`;
         };
         const addTask = async (column) => {
           if (!selectedGroup || typeof selectedGroup === "string") {
-            alert("Please select or create a board first.");
+            toast.warning("Please select or create a board first.");
             return;
           }
           const title = prompt("Task Title");
@@ -100555,9 +100690,10 @@ ${toHex(hashedRequest)}`;
             }));
             await loadTasks();
             sov?.sync();
+            toast.success(`Task "${title}" added to ${column}`);
           } catch (err) {
             console.error("Failed to add task", err);
-            alert("Failed to add task: " + err.message);
+            toast.error("Failed to add task: " + err.message);
           }
         };
         const moveTask = async (task, newColumn) => {
@@ -100589,54 +100725,57 @@ ${toHex(hashedRequest)}`;
           }
         }, [isLoggedIn, selectedGroup]);
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "card shadow", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card-body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "card-title mb-3", children: "Sovereign Board Login" }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
-              QuickStartCard,
-              {
-                title: "\u26A1 Quick Start (Offline Board)",
-                subtitle: "Instant Kanban Sandbox",
-                description: "Try Kanban boards locally with IndexedDB storage. No credentials needed.",
-                buttonText: "\u26A1 Launch Instant Board",
-                className: "mb-4",
-                onLaunch: () => {
-                  setConfig((prev) => ({ ...prev, syncMode: "offline" }));
-                  setTimeout(login, 50);
+          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mt-5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "card shadow", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "card-title mb-3", children: "Sovereign Board Login" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                QuickStartCard,
+                {
+                  title: "\u26A1 Quick Start (Offline Board)",
+                  subtitle: "Instant Kanban Sandbox",
+                  description: "Try Kanban boards locally with IndexedDB storage. No credentials needed.",
+                  buttonText: "\u26A1 Launch Instant Board",
+                  className: "mb-4",
+                  onLaunch: () => {
+                    setConfig((prev) => ({ ...prev, syncMode: "offline" }));
+                    setTimeout(login, 50);
+                  }
                 }
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Custom Mode" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label fw-bold", children: "Sync Mode" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "btn-group w-100 mb-2", role: "group", "aria-label": "Sync Mode Selection", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "webrtc" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "webrtc" }), children: "\u26A1 WebRTC Mesh" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "s3" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "s3" }), children: "\u2601\uFE0F S3 Remote" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "offline" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "offline" }), children: "\u{1F4BE} Offline IDB" })
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Custom Mode" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("small", { className: "text-muted d-block", children: [
-                config.syncMode === "webrtc" && "Peer-to-peer gossip mesh across open tabs & local peers.",
-                config.syncMode === "s3" && "Two-way sync with an S3-compatible bucket.",
-                config.syncMode === "offline" && "Purely local storage via IndexedDB & SQLite WASM."
-              ] })
-            ] }),
-            config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardEndpoint", className: "form-label", children: "S3 Endpoint" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardEndpoint", type: "text", className: "form-control", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardUserId", className: "form-label", children: "User ID" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardUserId", type: "text", className: "form-control", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardPassword", className: "form-label", children: "Password" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardPassword", type: "password", className: "form-control", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary w-100", onClick: login, disabled: syncing, children: syncing ? "Connecting..." : "Join Workspace" })
-          ] }) }) }) }) });
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label fw-bold", children: "Sync Mode" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "btn-group w-100 mb-2", role: "group", "aria-label": "Sync Mode Selection", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "webrtc" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "webrtc" }), children: "\u26A1 WebRTC Mesh" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "s3" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "s3" }), children: "\u2601\uFE0F S3 Remote" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "offline" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "offline" }), children: "\u{1F4BE} Offline IDB" })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("small", { className: "text-muted d-block", children: [
+                  config.syncMode === "webrtc" && "Peer-to-peer gossip mesh across open tabs & local peers.",
+                  config.syncMode === "s3" && "Two-way sync with an S3-compatible bucket.",
+                  config.syncMode === "offline" && "Purely local storage via IndexedDB & SQLite WASM."
+                ] })
+              ] }),
+              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardEndpoint", className: "form-label", children: "S3 Endpoint" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardEndpoint", type: "text", className: "form-control", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardUserId", className: "form-label", children: "User ID" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardUserId", type: "text", className: "form-control", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardPassword", className: "form-label", children: "Password" }),
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardPassword", type: "password", className: "form-control", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary w-100", onClick: login, disabled: syncing, children: syncing ? "Connecting..." : "Join Workspace" })
+            ] }) }) }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+          ] });
         }
         return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex flex-column", style: { height: "100vh" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("nav", { className: "navbar navbar-expand-lg navbar-dark bg-dark px-4", children: [
@@ -100702,7 +100841,8 @@ ${toHex(hashedRequest)}`;
               /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-plus-lg me-2" }),
               "Add a card"
             ] }) })
-          ] }, col)) })
+          ] }, col)) }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
         ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));

@@ -137250,727 +137250,23 @@ ${toHex(hashedRequest)}`;
     }
   });
 
-  // demo/social/src/PairingModal.tsx
-  var import_react, import_qrcode, import_jsx_runtime, PairingModal;
-  var init_PairingModal = __esm({
-    "demo/social/src/PairingModal.tsx"() {
-      "use strict";
-      init_polyfills();
-      import_react = __toESM(require_react());
-      import_qrcode = __toESM(require_browser14());
-      init_esm();
-      init_NativeWebRTCTransport();
-      init_BLESignaling();
-      import_jsx_runtime = __toESM(require_jsx_runtime());
-      PairingModal = ({ userId, onClose, onConnected }) => {
-        const [step, setStep] = (0, import_react.useState)("initial");
-        const [transport] = (0, import_react.useState)(() => new NativeWebRTCTransport(userId));
-        const [qrValue, setQrValue] = (0, import_react.useState)("");
-        const [error, setError] = (0, import_react.useState)("");
-        const canvasRef = (0, import_react.useRef)(null);
-        const scannerRef = (0, import_react.useRef)(null);
-        (0, import_react.useEffect)(() => {
-          return () => {
-            if (scannerRef.current) {
-              scannerRef.current.clear();
-            }
-          };
-        }, []);
-        (0, import_react.useEffect)(() => {
-          let active = true;
-          const generateQR = () => {
-            if (!active) return;
-            if (qrValue && (step === "show-offer" || step === "show-answer")) {
-              if (canvasRef.current) {
-                import_qrcode.default.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error2) => {
-                  if (error2) console.error("[QR] Error generating QR:", error2);
-                });
-              } else {
-                setTimeout(generateQR, 100);
-              }
-            }
-          };
-          generateQR();
-          return () => {
-            active = false;
-          };
-        }, [qrValue, step]);
-        const handleCreateOffer = async () => {
-          setStep("connecting");
-          const offer = await transport.createOffer();
-          setQrValue(JSON.stringify(offer));
-          setStep("show-offer");
-          transport.onConnected = () => {
-            setStep("success");
-            setTimeout(() => {
-              onConnected(transport);
-              onClose();
-            }, 1500);
-          };
-        };
-        const startScanner = (onScan) => {
-          const scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
-          scanner.render((decodedText) => {
-            scanner.clear();
-            onScan(decodedText);
-          }, (error2) => {
-          });
-          scannerRef.current = scanner;
-        };
-        const handleScanOffer = () => {
-          setStep("scan-offer");
-          setTimeout(() => {
-            startScanner(async (data) => {
-              try {
-                const offer = JSON.parse(data);
-                if (offer.type !== "offer") throw new Error("Not an offer");
-                setStep("connecting");
-                const answer = await transport.handleOffer(offer.sdp);
-                setQrValue(JSON.stringify(answer));
-                setStep("show-answer");
-                transport.onConnected = () => {
-                  setStep("success");
-                  setTimeout(() => {
-                    onConnected(transport);
-                    onClose();
-                  }, 1500);
-                };
-              } catch (e2) {
-                alert("Invalid QR Code: " + e2);
-                setStep("initial");
-              }
-            });
-          }, 100);
-        };
-        const handleScanAnswer = () => {
-          setStep("scan-answer");
-          setTimeout(() => {
-            startScanner(async (data) => {
-              try {
-                const answer = JSON.parse(data);
-                if (answer.type !== "answer") throw new Error("Not an answer");
-                await transport.handleAnswer(answer.sdp);
-              } catch (e2) {
-                alert("Invalid QR Code: " + e2);
-                setStep("initial");
-              }
-            });
-          }, 100);
-        };
-        const handleBluetoothScan = async () => {
-          try {
-            setError("");
-            setStep("connecting");
-            await BLESignaling.scanAndPair(async (offerStr) => {
-              const offer = JSON.parse(offerStr);
-              const answer = await transport.handleOffer(offer.sdp);
-              transport.onConnected = () => {
-                setStep("success");
-                setTimeout(() => {
-                  onConnected(transport);
-                  onClose();
-                }, 1500);
-              };
-              return JSON.stringify(answer);
-            });
-          } catch (e2) {
-            setError(e2.message);
-            setStep("initial");
-          }
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", "aria-labelledby": "pairingModalTitle", style: { backgroundColor: "rgba(0,0,0,0.8)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "modal-content border-0 rounded-4 overflow-hidden", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "modal-header bg-primary text-white border-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h5", { id: "pairingModalTitle", className: "modal-title fw-bold", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-qr-code-scan me-2" }),
-              "Direct Pairing"
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { type: "button", className: "btn-close btn-close-white", "aria-label": "Close", onClick: onClose })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "modal-body p-4 text-center", children: [
-            error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "alert alert-danger small py-2", children: error }),
-            step === "initial" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "py-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-secondary mb-4", children: "Pair directly with another device without using a server or the internet." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { className: "btn btn-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleCreateOffer, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-broadcast me-2" }),
-                " 1. I am the INITIATOR (QR)"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { className: "btn btn-outline-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleScanOffer, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-camera me-2" }),
-                " 2. I am the RECEIVER (QR)"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "divider text-muted small my-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "OR" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { className: "btn btn-dark w-100 py-3 fw-bold rounded-pill", onClick: handleBluetoothScan, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-bluetooth me-2" }),
-                " Scan via Bluetooth"
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted extra-small mt-2", style: { fontSize: "0.7rem" }, children: "* Bluetooth requires a Sovereign Peripheral (like a Headless Peer) to be advertising." })
-            ] }),
-            step === "show-offer" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN ME" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "small text-muted mb-3", children: "Ask the other device to scan this QR code to start the handshake." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("canvas", { ref: canvasRef }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn btn-success w-100 py-2 rounded-pill fw-bold", onClick: handleScanAnswer, children: "Next: Scan their Answer" })
-            ] }),
-            step === "scan-offer" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN INITIATOR" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "small text-muted mb-3", children: "Position the Initiator's QR code in the camera frame." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
-            ] }),
-            step === "show-answer" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h6", { className: "fw-bold mb-3 text-success", children: "SCAN MY ANSWER" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "small text-muted mb-3", children: "Initiator must scan this QR code to complete the pairing." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("canvas", { ref: canvasRef }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "alert alert-info py-2 small", children: "Waiting for connection..." })
-            ] }),
-            step === "scan-answer" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN RECEIVER'S ANSWER" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "small text-muted mb-3", children: "Final step: Scan the QR code shown on the Receiver's device." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
-            ] }),
-            (step === "connecting" || step === "success") && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "py-5", children: step === "connecting" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "fw-bold", children: "Establishing Secure Link..." }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small", children: "Gathering network routes and preparing handshake." })
-            ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("i", { className: "bi bi-check-circle-fill text-success", style: { fontSize: "4rem" } }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "fw-bold mt-3 h5", children: "Connection Established!" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { className: "text-muted small", children: "Devices are now syncing directly." })
-            ] }) })
-          ] })
-        ] }) }) });
-      };
-    }
-  });
-
-  // demo/social/src/ErrorBoundary.tsx
-  var import_react2, import_jsx_runtime2, ErrorBoundary;
-  var init_ErrorBoundary = __esm({
-    "demo/social/src/ErrorBoundary.tsx"() {
-      "use strict";
-      init_polyfills();
-      import_react2 = __toESM(require_react());
-      import_jsx_runtime2 = __toESM(require_jsx_runtime());
-      ErrorBoundary = class extends import_react2.Component {
-        constructor() {
-          super(...arguments);
-          this.state = {
-            hasError: false
-          };
-        }
-        static getDerivedStateFromError(error) {
-          return { hasError: true, error };
-        }
-        componentDidCatch(error, errorInfo) {
-          console.error("Uncaught error:", error, errorInfo);
-        }
-        render() {
-          if (this.state.hasError) {
-            if (this.fallback) return this.fallback;
-            return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "card shadow-lg border-0 rounded-4 overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "card-body p-5 text-center", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "display-1 text-danger mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("i", { className: "bi bi-exclamation-octagon" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "fw-bold mb-3", children: "Something went wrong" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-secondary mb-4", children: "An unexpected error occurred. You can try refreshing the page or clearing your local data." }),
-              this.state.error && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "alert alert-light border small text-start mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("pre", { className: "mb-0", style: { whiteSpace: "pre-wrap" }, children: this.state.error.message }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "d-flex justify-content-center gap-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                  "button",
-                  {
-                    className: "btn btn-primary rounded-pill px-4",
-                    onClick: () => window.location.reload(),
-                    children: "Refresh Page"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-                  "button",
-                  {
-                    className: "btn btn-outline-danger rounded-pill px-4",
-                    onClick: () => {
-                      if (window.confirm("This will delete all local data. Are you sure?")) {
-                        localStorage.clear();
-                        window.location.reload();
-                      }
-                    },
-                    children: "Reset App"
-                  }
-                )
-              ] })
-            ] }) }) });
-          }
-          return this.props.children;
-        }
-      };
-    }
-  });
-
-  // demo/social/src/components/InspectorModal.tsx
-  var import_react3, import_jsx_runtime3, InspectorModal;
-  var init_InspectorModal = __esm({
-    "demo/social/src/components/InspectorModal.tsx"() {
-      "use strict";
-      init_polyfills();
-      import_react3 = __toESM(require_react());
-      import_jsx_runtime3 = __toESM(require_jsx_runtime());
-      InspectorModal = ({ sov, onClose }) => {
-        const [snapshot, setSnapshot] = (0, import_react3.useState)(null);
-        const [activeTab, setActiveTab] = (0, import_react3.useState)("storage");
-        const [autoRefresh, setAutoRefresh] = (0, import_react3.useState)(true);
-        const [expandedFolders, setExpandedFolders] = (0, import_react3.useState)({ "": true, "public": true, "private": true });
-        const loadSnapshot = (0, import_react3.useCallback)(async () => {
-          try {
-            const snap = await sov.getDebugSnapshot();
-            setSnapshot(snap);
-          } catch (e2) {
-            console.error("Failed to load debug snapshot", e2);
-          }
-        }, [sov]);
-        (0, import_react3.useEffect)(() => {
-          loadSnapshot();
-          if (!autoRefresh) return;
-          const timer = setInterval(loadSnapshot, 2e3);
-          return () => clearInterval(timer);
-        }, [loadSnapshot, autoRefresh]);
-        const formatBytes = (bytes) => {
-          if (bytes === 0) return "0 B";
-          const k2 = 1024;
-          const sizes = ["B", "KB", "MB", "GB"];
-          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
-          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
-        };
-        const toggleFolder = (path2) => {
-          setExpandedFolders((prev) => ({ ...prev, [path2]: !prev[path2] }));
-        };
-        const renderTreeNode = (node, depth = 0) => {
-          const isDir = node.type === "directory";
-          const isExpanded = !!expandedFolders[node.path];
-          return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { marginLeft: `${depth * 16}px`, marginTop: "4px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-              "div",
-              {
-                onClick: () => isDir && toggleFolder(node.path),
-                style: {
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: isDir ? "pointer" : "default",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                  background: isDir ? "rgba(255, 255, 255, 0.03)" : "transparent",
-                  fontSize: "13px"
-                },
-                children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { width: "16px", textAlign: "center" }, children: isDir ? isExpanded ? "\u{1F4C2}" : "\u{1F4C1}" : "\u{1F4C4}" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { fontWeight: isDir ? 600 : 400, color: isDir ? "#90caf9" : "#e0e0e0" }, children: node.name }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { marginLeft: "auto", fontSize: "11px", color: "#9e9e9e" }, children: formatBytes(node.size) }),
-                  node.timestamp && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { fontSize: "10px", color: "#757575" }, children: new Date(node.timestamp).toLocaleTimeString() })
-                ]
-              }
-            ),
-            isDir && isExpanded && node.children && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { borderLeft: "1px solid rgba(255, 255, 255, 0.1)", marginLeft: "8px" }, children: node.children.map((child) => renderTreeNode(child, depth + 1)) })
-          ] }, node.path);
-        };
-        const handleResolveConflict = (conflictId, choice) => {
-          sov.resolveConflict(conflictId, choice);
-          loadSnapshot();
-        };
-        return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: {
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.75)",
-          backdropFilter: "blur(4px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 1e4,
-          padding: "20px"
-        }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(
-          "div",
-          {
-            role: "dialog",
-            "aria-modal": "true",
-            "aria-labelledby": "inspectorModalTitle",
-            style: {
-              background: "#1e1e24",
-              color: "#fff",
-              width: "900px",
-              maxWidth: "95vw",
-              height: "85vh",
-              borderRadius: "12px",
-              display: "flex",
-              flexDirection: "column",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-              border: "1px solid #333"
-            },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: {
-                padding: "16px 20px",
-                borderBottom: "1px solid #333",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { fontSize: "20px" }, children: "\u{1F6E0}\uFE0F" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h3", { id: "inspectorModalTitle", style: { margin: 0, fontSize: "16px", fontWeight: 600 }, children: "Sovereign Storage Inspector" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("span", { style: { fontSize: "12px", color: "#888" }, children: [
-                      "App: ",
-                      snapshot?.appId || "...",
-                      " | User: ",
-                      snapshot?.userId || "..."
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("label", { style: { fontSize: "12px", display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                      "input",
-                      {
-                        type: "checkbox",
-                        checked: autoRefresh,
-                        onChange: (e2) => setAutoRefresh(e2.target.checked)
-                      }
-                    ),
-                    "Live Update"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                    "button",
-                    {
-                      onClick: loadSnapshot,
-                      "aria-label": "Refresh inspector data",
-                      style: { padding: "6px 12px", background: "#333", border: "none", color: "#fff", borderRadius: "6px", cursor: "pointer" },
-                      children: "\u{1F504} Refresh"
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                    "button",
-                    {
-                      onClick: onClose,
-                      "aria-label": "Close Inspector",
-                      style: { padding: "6px 12px", background: "#d32f2f", border: "none", color: "#fff", borderRadius: "6px", cursor: "pointer" },
-                      children: "\u2715"
-                    }
-                  )
-                ] })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", borderBottom: "1px solid #333", background: "#25252d" }, children: [
-                { id: "storage", label: "\u{1F4C1} Storage & Footprint" },
-                { id: "sync", label: "\u{1F504} Remote Sync & ETags" },
-                { id: "mesh", label: `\u{1F310} WebRTC Mesh (${snapshot?.mesh.peerCount || 0})` },
-                { id: "conflicts", label: `\u26A0\uFE0F Conflicts (${snapshot?.conflicts.length || 0})` }
-              ].map((tab) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                "button",
-                {
-                  onClick: () => setActiveTab(tab.id),
-                  style: {
-                    flex: 1,
-                    padding: "12px",
-                    background: activeTab === tab.id ? "#1e1e24" : "transparent",
-                    border: "none",
-                    borderBottom: activeTab === tab.id ? "2px solid #2196f3" : "none",
-                    color: activeTab === tab.id ? "#2196f3" : "#aaa",
-                    fontWeight: activeTab === tab.id ? 600 : 400,
-                    cursor: "pointer",
-                    fontSize: "13px"
-                  },
-                  children: tab.label
-                },
-                tab.id
-              )) }),
-              /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { flex: 1, overflowY: "auto", padding: "20px" }, children: !snapshot ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { textAlign: "center", padding: "40px", color: "#888" }, children: "Loading snapshot..." }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
-                activeTab === "storage" && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "TOTAL USAGE" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px" }, children: formatBytes(snapshot.storage.footprint.totalBytes) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { fontSize: "11px", color: "#aaa", marginTop: "2px" }, children: [
-                        snapshot.storage.footprint.fileCount,
-                        " files"
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PUBLIC PARTITIONS" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#81c784" }, children: formatBytes(snapshot.storage.footprint.byCategory.public) })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PRIVATE PARTITIONS" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#e57373" }, children: formatBytes(snapshot.storage.footprint.byCategory.private) })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "MEDIA BLOBS" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#ba68c8" }, children: formatBytes(snapshot.storage.footprint.byCategory.blobs) })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h4", { style: { margin: "0 0 10px 0", fontSize: "14px" }, children: "Local Storage Partition Tree" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { background: "#18181c", padding: "14px", borderRadius: "8px", border: "1px solid #2a2a30" }, children: snapshot.storage.tree.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No local files found." }) : snapshot.storage.tree.map((node) => renderTreeNode(node)) })
-                ] }),
-                activeTab === "sync" && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "SYNC MODE" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px", textTransform: "uppercase" }, children: snapshot.remoteSync.syncMode })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "STATUS" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px", color: snapshot.remoteSync.isSyncing ? "#ffb74d" : "#81c784" }, children: snapshot.remoteSync.isSyncing ? "\u23F3 Syncing..." : " Idle" })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "LAST SYNC CHECK" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px" }, children: snapshot.remoteSync.lastSyncDate || "Never" })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h4", { style: { margin: "20px 0 10px 0", fontSize: "14px" }, children: "Cached Remote ETags & Hashes" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { background: "#18181c", padding: "12px", borderRadius: "8px", border: "1px solid #2a2a30", maxHeight: "250px", overflowY: "auto" }, children: Object.keys(snapshot.remoteSync.etagCache).length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No cached ETags recorded yet." }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("table", { style: { width: "100%", fontSize: "12px", borderCollapse: "collapse" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("tr", { style: { color: "#888", borderBottom: "1px solid #333", textAlign: "left" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("th", { style: { padding: "6px" }, children: "Path" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("th", { style: { padding: "6px" }, children: "ETag / Hash" })
-                    ] }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("tbody", { children: Object.entries(snapshot.remoteSync.etagCache).map(([path2, etag]) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("tr", { style: { borderBottom: "1px solid rgba(255,255,255,0.05)" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("td", { style: { padding: "6px", color: "#90caf9", fontFamily: "monospace" }, children: path2 }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("td", { style: { padding: "6px", color: "#ffb74d", fontFamily: "monospace" }, children: etag })
-                    ] }, path2)) })
-                  ] }) })
-                ] }),
-                activeTab === "mesh" && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS SENT" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#81c784" }, children: snapshot.mesh.stats.packetsSent })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS RECV" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#90caf9" }, children: snapshot.mesh.stats.packetsReceived })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS DROPPED" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#e57373" }, children: snapshot.mesh.stats.packetsDropped })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "DEDUP CACHE SIZE" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px" }, children: snapshot.mesh.stats.seenMessagesCount })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("h4", { style: { margin: "20px 0 10px 0", fontSize: "14px" }, children: [
-                    "Active Mesh Peers (",
-                    snapshot.mesh.peerCount,
-                    ")"
-                  ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { background: "#18181c", padding: "12px", borderRadius: "8px", border: "1px solid #2a2a30" }, children: snapshot.mesh.peers.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No active WebRTC peer connections." }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("table", { style: { width: "100%", fontSize: "13px", borderCollapse: "collapse" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("tr", { style: { color: "#888", borderBottom: "1px solid #333", textAlign: "left" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("th", { style: { padding: "8px" }, children: "Peer ID" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("th", { style: { padding: "8px" }, children: "Status" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("th", { style: { padding: "8px" }, children: "Latency" })
-                    ] }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("tbody", { children: snapshot.mesh.peers.map((peer) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("tr", { style: { borderBottom: "1px solid rgba(255,255,255,0.05)" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("td", { style: { padding: "8px", fontFamily: "monospace" }, children: peer.peerId }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("td", { style: { padding: "8px", color: "#81c784" }, children: "Connected" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("td", { style: { padding: "8px", color: "#ffb74d" }, children: peer.latencyMs !== void 0 ? `${peer.latencyMs} ms` : "N/A" })
-                    ] }, peer.peerId)) })
-                  ] }) })
-                ] }),
-                activeTab === "conflicts" && /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("h4", { style: { margin: "0 0 10px 0", fontSize: "14px" }, children: [
-                    "Unresolved Conflict Queue (",
-                    snapshot.conflicts.length,
-                    ")"
-                  ] }),
-                  snapshot.conflicts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { background: "#18181c", padding: "30px", borderRadius: "8px", textAlign: "center", color: "#81c784" }, children: "No sync conflicts detected. Local and remote files are completely consistent." }) : /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: snapshot.conflicts.map((conflict) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#18181c", borderRadius: "8px", padding: "16px", border: "1px solid #e57373" }, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { fontFamily: "monospace", fontWeight: 600, color: "#90caf9" }, children: conflict.path }),
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { marginLeft: "12px", fontSize: "12px", color: "#888" }, children: new Date(conflict.timestamp).toLocaleTimeString() })
-                      ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", gap: "8px" }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                          "button",
-                          {
-                            onClick: () => handleResolveConflict(conflict.id, "local"),
-                            style: { padding: "6px 12px", background: "#2e7d32", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "12px" },
-                            children: "Keep Local"
-                          }
-                        ),
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
-                          "button",
-                          {
-                            onClick: () => handleResolveConflict(conflict.id, "remote"),
-                            style: { padding: "6px 12px", background: "#c62828", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "12px" },
-                            children: "Keep Remote"
-                          }
-                        )
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", fontSize: "12px" }, children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#202028", padding: "10px", borderRadius: "6px" }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { fontWeight: 600, color: "#81c784", marginBottom: "6px" }, children: [
-                          "Local (",
-                          formatBytes(conflict.localSize),
-                          ")"
-                        ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("pre", { style: { margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#ddd" }, children: conflict.preview.localTextSnippet })
-                      ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { background: "#202028", padding: "10px", borderRadius: "6px" }, children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { fontWeight: 600, color: "#e57373", marginBottom: "6px" }, children: [
-                          "Remote (",
-                          formatBytes(conflict.remoteSize),
-                          ")"
-                        ] }),
-                        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("pre", { style: { margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#ddd" }, children: conflict.preview.remoteTextSnippet })
-                      ] })
-                    ] })
-                  ] }, conflict.id)) })
-                ] })
-              ] }) })
-            ]
-          }
-        ) });
-      };
-    }
-  });
-
-  // demo/social/src/components/Dialog.tsx
-  var import_react4, import_jsx_runtime4, Dialog;
-  var init_Dialog = __esm({
-    "demo/social/src/components/Dialog.tsx"() {
-      "use strict";
-      init_polyfills();
-      import_react4 = __toESM(require_react());
-      import_jsx_runtime4 = __toESM(require_jsx_runtime());
-      Dialog = ({ dialog, setDialog, profileCache }) => {
-        const [inputValue, setInputValue] = (0, import_react4.useState)(dialog?.defaultValue || "");
-        const [selectedValues, setSelectedValues] = (0, import_react4.useState)([]);
-        const [searchQuery, setSearchSearchQuery] = (0, import_react4.useState)("");
-        const [configData, setConfigData] = (0, import_react4.useState)({
-          syncMode: "s3",
-          region: "us-east-1",
-          endpoint: "",
-          accessKeyId: "",
-          secretAccessKey: "",
-          bucketName: ""
-        });
-        (0, import_react4.useEffect)(() => {
-          const handleEsc = (e2) => {
-            if (e2.key === "Escape") setDialog(null);
-          };
-          window.addEventListener("keydown", handleEsc);
-          return () => window.removeEventListener("keydown", handleEsc);
-        }, [setDialog]);
-        (0, import_react4.useEffect)(() => {
-          setInputValue(dialog?.defaultValue || "");
-          setSelectedValues([]);
-          setSearchSearchQuery("");
-        }, [dialog]);
-        if (!dialog) return null;
-        const toggleOption = (val) => {
-          setSelectedValues(
-            (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
-          );
-        };
-        const filteredOptions = dialog.options?.filter(
-          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
-        ) || [];
-        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", "aria-labelledby": "dialogTitle", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { id: "dialogTitle", className: "modal-title fw-bold text-primary", children: dialog.title }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: dialog.onCancel })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
-            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-              "input",
-              {
-                autoFocus: true,
-                "aria-label": dialog.title || "Dialog Input",
-                className: "form-control rounded-pill px-3 shadow-sm",
-                value: inputValue,
-                onChange: (e2) => setInputValue(e2.target.value),
-                onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
-              }
-            ),
-            dialog.type === "config" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "config-form", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("label", { className: "form-label small fw-bold", children: "Sync Mode" }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("select", { className: "form-select mb-3 rounded-pill", "aria-label": "Sync Mode", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "s3", children: "S3 Cloud" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("option", { value: "webrtc", children: "WebRTC Mesh" })
-              ] }),
-              configData.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", "aria-label": "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", "aria-label": "Endpoint", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", "aria-label": "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", "aria-label": "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", "aria-label": "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) })
-              ] })
-            ] }),
-            dialog.type === "multiselect" && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                "input",
-                {
-                  type: "text",
-                  className: "form-control form-control-sm rounded-pill px-3",
-                  placeholder: "Search members...",
-                  "aria-label": "Search members",
-                  value: searchQuery,
-                  onChange: (e2) => setSearchSearchQuery(e2.target.value)
-                }
-              ) }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" }, children: filteredOptions.length > 0 ? filteredOptions.map((opt) => {
-                const userProfile = profileCache[opt.value];
-                return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                    "input",
-                    {
-                      type: "checkbox",
-                      className: "form-check-input me-3",
-                      checked: selectedValues.includes(opt.value),
-                      onChange: () => toggleOption(opt.value)
-                    }
-                  ),
-                  /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "d-flex align-items-center flex-grow-1", children: [
-                    userProfile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("img", { src: userProfile.avatar, alt: `${userProfile?.name || opt.label} avatar`, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" }, children: opt.value[0]?.toUpperCase() || "?" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "fw-bold small", children: userProfile?.name || opt.label }),
-                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: opt.value })
-                    ] })
-                  ] })
-                ] }, opt.value);
-              }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "text-center py-3 text-muted small", children: "No members found" }) })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
-            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel, children: "Cancel" }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-              "button",
-              {
-                type: "button",
-                className: "btn btn-primary rounded-pill px-4 shadow-sm",
-                onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : dialog.type === "config" ? configData : inputValue),
-                children: dialog.type === "alert" ? "OK" : "Confirm"
-              }
-            )
-          ] })
-        ] }) }) });
-      };
-    }
-  });
-
   // demo/shared/src/SyncStatusIndicator.tsx
-  var import_jsx_runtime5;
+  var import_jsx_runtime;
   var init_SyncStatusIndicator = __esm({
     "demo/shared/src/SyncStatusIndicator.tsx"() {
       "use strict";
       init_polyfills();
-      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      import_jsx_runtime = __toESM(require_jsx_runtime());
     }
   });
 
   // demo/shared/src/QuickStartCard.tsx
-  var import_jsx_runtime6, QuickStartCard;
+  var import_jsx_runtime2, QuickStartCard;
   var init_QuickStartCard = __esm({
     "demo/shared/src/QuickStartCard.tsx"() {
       "use strict";
       init_polyfills();
-      import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      import_jsx_runtime2 = __toESM(require_jsx_runtime());
       QuickStartCard = ({
         title = "\u26A1 Quick Start (Offline Mode)",
         subtitle = "Instant local sandbox \u2014 zero credentials required",
@@ -137987,7 +137283,7 @@ ${toHex(hashedRequest)}`;
         className = "",
         style
       }) => {
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
           "div",
           {
             className: `sov-quick-start-card ${className}`.trim(),
@@ -138001,7 +137297,7 @@ ${toHex(hashedRequest)}`;
               ...style
             },
             children: [
-              badgeText && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              badgeText && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "span",
                 {
                   style: {
@@ -138020,7 +137316,7 @@ ${toHex(hashedRequest)}`;
                   children: badgeText
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "h3",
                 {
                   style: {
@@ -138032,7 +137328,7 @@ ${toHex(hashedRequest)}`;
                   children: title
                 }
               ),
-              subtitle && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              subtitle && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "p",
                 {
                   style: {
@@ -138044,7 +137340,7 @@ ${toHex(hashedRequest)}`;
                   children: subtitle
                 }
               ),
-              description && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              description && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "p",
                 {
                   style: {
@@ -138056,7 +137352,7 @@ ${toHex(hashedRequest)}`;
                   children: description
                 }
               ),
-              features && features.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              features && features.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "ul",
                 {
                   style: {
@@ -138068,10 +137364,10 @@ ${toHex(hashedRequest)}`;
                     flexDirection: "column",
                     gap: "6px"
                   },
-                  children: features.map((feat, idx) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: feat }, idx))
+                  children: features.map((feat, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("li", { children: feat }, idx))
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "button",
                 {
                   type: "button",
@@ -138105,24 +137401,24 @@ ${toHex(hashedRequest)}`;
   });
 
   // demo/shared/src/ModalDialog.tsx
-  var import_react5, import_jsx_runtime7;
+  var import_react, import_jsx_runtime3;
   var init_ModalDialog = __esm({
     "demo/shared/src/ModalDialog.tsx"() {
       "use strict";
       init_polyfills();
-      import_react5 = __toESM(require_react());
-      import_jsx_runtime7 = __toESM(require_jsx_runtime());
+      import_react = __toESM(require_react());
+      import_jsx_runtime3 = __toESM(require_jsx_runtime());
     }
   });
 
   // demo/shared/src/Toast.tsx
-  var import_react6, import_jsx_runtime8, ToastManager, toast, ToastContext;
+  var import_react2, import_jsx_runtime4, ToastManager, toast, ToastContext, TYPE_CONFIG, ToastContainer;
   var init_Toast = __esm({
     "demo/shared/src/Toast.tsx"() {
       "use strict";
       init_polyfills();
-      import_react6 = __toESM(require_react());
-      import_jsx_runtime8 = __toESM(require_jsx_runtime());
+      import_react2 = __toESM(require_react());
+      import_jsx_runtime4 = __toESM(require_jsx_runtime());
       ToastManager = class {
         constructor() {
           this.activeToasts = [];
@@ -138187,7 +137483,141 @@ ${toHex(hashedRequest)}`;
         }
       };
       toast = new ToastManager();
-      ToastContext = (0, import_react6.createContext)(null);
+      ToastContext = (0, import_react2.createContext)(null);
+      TYPE_CONFIG = {
+        success: { border: "var(--sov-success, #198754)", bg: "var(--sov-surface, #ffffff)", icon: "\u2713", text: "var(--sov-success, #198754)" },
+        error: { border: "var(--sov-danger, #dc3545)", bg: "var(--sov-surface, #ffffff)", icon: "\u2715", text: "var(--sov-danger, #dc3545)" },
+        warning: { border: "var(--sov-warning, #996500)", bg: "var(--sov-surface, #ffffff)", icon: "\u26A0", text: "var(--sov-warning, #996500)" },
+        info: { border: "var(--sov-info, #0d6efd)", bg: "var(--sov-surface, #ffffff)", icon: "\u2139", text: "var(--sov-info, #0d6efd)" }
+      };
+      ToastContainer = ({
+        toasts: propToasts,
+        onDismiss,
+        position = "bottom-right"
+      }) => {
+        const [internalToasts, setInternalToasts] = (0, import_react2.useState)([]);
+        (0, import_react2.useEffect)(() => {
+          if (propToasts === void 0) {
+            return toast.subscribe(setInternalToasts);
+          }
+        }, [propToasts]);
+        const activeList = propToasts !== void 0 ? propToasts : internalToasts;
+        const handleDismiss = onDismiss || ((id) => toast.dismiss(id));
+        if (activeList.length === 0) return null;
+        const positionStyles = {
+          "top-right": { top: "20px", right: "20px" },
+          "top-left": { top: "20px", left: "20px" },
+          "bottom-right": { bottom: "20px", right: "20px" },
+          "bottom-left": { bottom: "20px", left: "20px" }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            role: "region",
+            "aria-label": "Notifications",
+            style: {
+              position: "fixed",
+              zIndex: 2e3,
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              maxWidth: "380px",
+              width: "calc(100vw - 40px)",
+              pointerEvents: "none",
+              ...positionStyles[position]
+            },
+            children: activeList.map((t8) => {
+              const conf = TYPE_CONFIG[t8.type] || TYPE_CONFIG.info;
+              const role = t8.type === "error" ? "alert" : "status";
+              return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+                "div",
+                {
+                  role,
+                  "aria-live": t8.type === "error" ? "assertive" : "polite",
+                  style: {
+                    pointerEvents: "auto",
+                    backgroundColor: conf.bg,
+                    color: "var(--sov-text, #212529)",
+                    borderLeft: `5px solid ${conf.border}`,
+                    borderTop: "1px solid var(--sov-border, #dee2e6)",
+                    borderRight: "1px solid var(--sov-border, #dee2e6)",
+                    borderBottom: "1px solid var(--sov-border, #dee2e6)",
+                    borderRadius: "var(--sov-radius-md, 8px)",
+                    padding: "12px 16px",
+                    boxShadow: "var(--sov-shadow-md, 0 4px 6px -1px rgba(0,0,0,0.1))",
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "12px",
+                    transition: "all 200ms ease"
+                  },
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "span",
+                      {
+                        style: {
+                          color: conf.text,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          lineHeight: 1.2,
+                          flexShrink: 0
+                        },
+                        "aria-hidden": "true",
+                        children: conf.icon
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { flex: 1, minWidth: 0 }, children: [
+                      t8.title && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontWeight: 600,
+                            fontSize: "0.875rem",
+                            marginBottom: "2px",
+                            color: "var(--sov-text, #212529)"
+                          },
+                          children: t8.title
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                        "div",
+                        {
+                          style: {
+                            fontSize: "0.8125rem",
+                            color: "var(--sov-text-muted, #595959)",
+                            lineHeight: 1.4,
+                            wordBreak: "break-word"
+                          },
+                          children: t8.message
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+                      "button",
+                      {
+                        type: "button",
+                        onClick: () => handleDismiss(t8.id),
+                        "aria-label": "Dismiss notification",
+                        style: {
+                          background: "none",
+                          border: "none",
+                          color: "var(--sov-text-muted, #595959)",
+                          cursor: "pointer",
+                          fontSize: "1rem",
+                          lineHeight: 1,
+                          padding: "2px 4px",
+                          flexShrink: 0
+                        },
+                        children: "\u2715"
+                      }
+                    )
+                  ]
+                },
+                t8.id
+              );
+            })
+          }
+        );
+      };
     }
   });
 
@@ -138200,6 +137630,711 @@ ${toHex(hashedRequest)}`;
       init_QuickStartCard();
       init_ModalDialog();
       init_Toast();
+    }
+  });
+
+  // demo/social/src/PairingModal.tsx
+  var import_react3, import_qrcode, import_jsx_runtime5, PairingModal;
+  var init_PairingModal = __esm({
+    "demo/social/src/PairingModal.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react3 = __toESM(require_react());
+      import_qrcode = __toESM(require_browser14());
+      init_esm();
+      init_NativeWebRTCTransport();
+      init_BLESignaling();
+      init_src();
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      PairingModal = ({ userId, onClose, onConnected }) => {
+        const [step, setStep] = (0, import_react3.useState)("initial");
+        const [transport] = (0, import_react3.useState)(() => new NativeWebRTCTransport(userId));
+        const [qrValue, setQrValue] = (0, import_react3.useState)("");
+        const [error, setError] = (0, import_react3.useState)("");
+        const canvasRef = (0, import_react3.useRef)(null);
+        const scannerRef = (0, import_react3.useRef)(null);
+        (0, import_react3.useEffect)(() => {
+          return () => {
+            if (scannerRef.current) {
+              scannerRef.current.clear();
+            }
+          };
+        }, []);
+        (0, import_react3.useEffect)(() => {
+          let active = true;
+          const generateQR = () => {
+            if (!active) return;
+            if (qrValue && (step === "show-offer" || step === "show-answer")) {
+              if (canvasRef.current) {
+                import_qrcode.default.toCanvas(canvasRef.current, qrValue, { width: 300 }, (error2) => {
+                  if (error2) console.error("[QR] Error generating QR:", error2);
+                });
+              } else {
+                setTimeout(generateQR, 100);
+              }
+            }
+          };
+          generateQR();
+          return () => {
+            active = false;
+          };
+        }, [qrValue, step]);
+        const handleCreateOffer = async () => {
+          setStep("connecting");
+          const offer = await transport.createOffer();
+          setQrValue(JSON.stringify(offer));
+          setStep("show-offer");
+          transport.onConnected = () => {
+            setStep("success");
+            setTimeout(() => {
+              onConnected(transport);
+              onClose();
+            }, 1500);
+          };
+        };
+        const startScanner = (onScan) => {
+          const scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
+          scanner.render((decodedText) => {
+            scanner.clear();
+            onScan(decodedText);
+          }, (error2) => {
+          });
+          scannerRef.current = scanner;
+        };
+        const handleScanOffer = () => {
+          setStep("scan-offer");
+          setTimeout(() => {
+            startScanner(async (data) => {
+              try {
+                const offer = JSON.parse(data);
+                if (offer.type !== "offer") throw new Error("Not an offer");
+                setStep("connecting");
+                const answer = await transport.handleOffer(offer.sdp);
+                setQrValue(JSON.stringify(answer));
+                setStep("show-answer");
+                transport.onConnected = () => {
+                  setStep("success");
+                  setTimeout(() => {
+                    onConnected(transport);
+                    onClose();
+                  }, 1500);
+                };
+              } catch (e2) {
+                toast.error("Invalid QR Code: " + e2);
+                setStep("initial");
+              }
+            });
+          }, 100);
+        };
+        const handleScanAnswer = () => {
+          setStep("scan-answer");
+          setTimeout(() => {
+            startScanner(async (data) => {
+              try {
+                const answer = JSON.parse(data);
+                if (answer.type !== "answer") throw new Error("Not an answer");
+                await transport.handleAnswer(answer.sdp);
+              } catch (e2) {
+                toast.error("Invalid QR Code: " + e2);
+                setStep("initial");
+              }
+            });
+          }, 100);
+        };
+        const handleBluetoothScan = async () => {
+          try {
+            setError("");
+            setStep("connecting");
+            await BLESignaling.scanAndPair(async (offerStr) => {
+              const offer = JSON.parse(offerStr);
+              const answer = await transport.handleOffer(offer.sdp);
+              transport.onConnected = () => {
+                setStep("success");
+                setTimeout(() => {
+                  onConnected(transport);
+                  onClose();
+                }, 1500);
+              };
+              return JSON.stringify(answer);
+            });
+          } catch (e2) {
+            setError(e2.message);
+            setStep("initial");
+          }
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", "aria-labelledby": "pairingModalTitle", style: { backgroundColor: "rgba(0,0,0,0.8)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-content border-0 rounded-4 overflow-hidden", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-header bg-primary text-white border-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h5", { id: "pairingModalTitle", className: "modal-title fw-bold", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-qr-code-scan me-2" }),
+              "Direct Pairing"
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "btn-close btn-close-white", "aria-label": "Close", onClick: onClose })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-body p-4 text-center", children: [
+            error && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "alert alert-danger small py-2", children: error }),
+            step === "initial" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "py-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-secondary mb-4", children: "Pair directly with another device without using a server or the internet." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleCreateOffer, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-broadcast me-2" }),
+                " 1. I am the INITIATOR (QR)"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-outline-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleScanOffer, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-camera me-2" }),
+                " 2. I am the RECEIVER (QR)"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "divider text-muted small my-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: "OR" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-dark w-100 py-3 fw-bold rounded-pill", onClick: handleBluetoothScan, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-bluetooth me-2" }),
+                " Scan via Bluetooth"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted extra-small mt-2", style: { fontSize: "0.7rem" }, children: "* Bluetooth requires a Sovereign Peripheral (like a Headless Peer) to be advertising." })
+            ] }),
+            step === "show-offer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN ME" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Ask the other device to scan this QR code to start the handshake." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("canvas", { ref: canvasRef }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-success w-100 py-2 rounded-pill fw-bold", onClick: handleScanAnswer, children: "Next: Scan their Answer" })
+            ] }),
+            step === "scan-offer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN INITIATOR" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Position the Initiator's QR code in the camera frame." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
+            ] }),
+            step === "show-answer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-success", children: "SCAN MY ANSWER" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Initiator must scan this QR code to complete the pairing." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("canvas", { ref: canvasRef }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "alert alert-info py-2 small", children: "Waiting for connection..." })
+            ] }),
+            step === "scan-answer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN RECEIVER'S ANSWER" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Final step: Scan the QR code shown on the Receiver's device." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
+            ] }),
+            (step === "connecting" || step === "success") && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "py-5", children: step === "connecting" ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "fw-bold", children: "Establishing Secure Link..." }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "Gathering network routes and preparing handshake." })
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-check-circle-fill text-success", style: { fontSize: "4rem" } }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "fw-bold mt-3 h5", children: "Connection Established!" }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "Devices are now syncing directly." })
+            ] }) })
+          ] })
+        ] }) }) });
+      };
+    }
+  });
+
+  // demo/social/src/ErrorBoundary.tsx
+  var import_react4, import_jsx_runtime6, ErrorBoundary;
+  var init_ErrorBoundary = __esm({
+    "demo/social/src/ErrorBoundary.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react4 = __toESM(require_react());
+      import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      ErrorBoundary = class extends import_react4.Component {
+        constructor() {
+          super(...arguments);
+          this.state = {
+            hasError: false
+          };
+        }
+        static getDerivedStateFromError(error) {
+          return { hasError: true, error };
+        }
+        componentDidCatch(error, errorInfo) {
+          console.error("Uncaught error:", error, errorInfo);
+        }
+        render() {
+          if (this.state.hasError) {
+            if (this.fallback) return this.fallback;
+            return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "container mt-5", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card shadow-lg border-0 rounded-4 overflow-hidden", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body p-5 text-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "display-1 text-danger mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-exclamation-octagon" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "fw-bold mb-3", children: "Something went wrong" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-secondary mb-4", children: "An unexpected error occurred. You can try refreshing the page or clearing your local data." }),
+              this.state.error && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "alert alert-light border small text-start mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("pre", { className: "mb-0", style: { whiteSpace: "pre-wrap" }, children: this.state.error.message }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-center gap-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  "button",
+                  {
+                    className: "btn btn-primary rounded-pill px-4",
+                    onClick: () => window.location.reload(),
+                    children: "Refresh Page"
+                  }
+                ),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+                  "button",
+                  {
+                    className: "btn btn-outline-danger rounded-pill px-4",
+                    onClick: () => {
+                      if (window.confirm("This will delete all local data. Are you sure?")) {
+                        localStorage.clear();
+                        window.location.reload();
+                      }
+                    },
+                    children: "Reset App"
+                  }
+                )
+              ] })
+            ] }) }) });
+          }
+          return this.props.children;
+        }
+      };
+    }
+  });
+
+  // demo/social/src/components/InspectorModal.tsx
+  var import_react5, import_jsx_runtime7, InspectorModal;
+  var init_InspectorModal = __esm({
+    "demo/social/src/components/InspectorModal.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react5 = __toESM(require_react());
+      import_jsx_runtime7 = __toESM(require_jsx_runtime());
+      InspectorModal = ({ sov, onClose }) => {
+        const [snapshot, setSnapshot] = (0, import_react5.useState)(null);
+        const [activeTab, setActiveTab] = (0, import_react5.useState)("storage");
+        const [autoRefresh, setAutoRefresh] = (0, import_react5.useState)(true);
+        const [expandedFolders, setExpandedFolders] = (0, import_react5.useState)({ "": true, "public": true, "private": true });
+        const loadSnapshot = (0, import_react5.useCallback)(async () => {
+          try {
+            const snap = await sov.getDebugSnapshot();
+            setSnapshot(snap);
+          } catch (e2) {
+            console.error("Failed to load debug snapshot", e2);
+          }
+        }, [sov]);
+        (0, import_react5.useEffect)(() => {
+          loadSnapshot();
+          if (!autoRefresh) return;
+          const timer = setInterval(loadSnapshot, 2e3);
+          return () => clearInterval(timer);
+        }, [loadSnapshot, autoRefresh]);
+        const formatBytes = (bytes) => {
+          if (bytes === 0) return "0 B";
+          const k2 = 1024;
+          const sizes = ["B", "KB", "MB", "GB"];
+          const i2 = Math.floor(Math.log(bytes) / Math.log(k2));
+          return parseFloat((bytes / Math.pow(k2, i2)).toFixed(2)) + " " + sizes[i2];
+        };
+        const toggleFolder = (path2) => {
+          setExpandedFolders((prev) => ({ ...prev, [path2]: !prev[path2] }));
+        };
+        const renderTreeNode = (node, depth = 0) => {
+          const isDir = node.type === "directory";
+          const isExpanded = !!expandedFolders[node.path];
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { marginLeft: `${depth * 16}px`, marginTop: "4px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+              "div",
+              {
+                onClick: () => isDir && toggleFolder(node.path),
+                style: {
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  cursor: isDir ? "pointer" : "default",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  background: isDir ? "rgba(255, 255, 255, 0.03)" : "transparent",
+                  fontSize: "13px"
+                },
+                children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { width: "16px", textAlign: "center" }, children: isDir ? isExpanded ? "\u{1F4C2}" : "\u{1F4C1}" : "\u{1F4C4}" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { fontWeight: isDir ? 600 : 400, color: isDir ? "#90caf9" : "#e0e0e0" }, children: node.name }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { marginLeft: "auto", fontSize: "11px", color: "#9e9e9e" }, children: formatBytes(node.size) }),
+                  node.timestamp && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { fontSize: "10px", color: "#757575" }, children: new Date(node.timestamp).toLocaleTimeString() })
+                ]
+              }
+            ),
+            isDir && isExpanded && node.children && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { borderLeft: "1px solid rgba(255, 255, 255, 0.1)", marginLeft: "8px" }, children: node.children.map((child) => renderTreeNode(child, depth + 1)) })
+          ] }, node.path);
+        };
+        const handleResolveConflict = (conflictId, choice) => {
+          sov.resolveConflict(conflictId, choice);
+          loadSnapshot();
+        };
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: {
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.75)",
+          backdropFilter: "blur(4px)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1e4,
+          padding: "20px"
+        }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+          "div",
+          {
+            role: "dialog",
+            "aria-modal": "true",
+            "aria-labelledby": "inspectorModalTitle",
+            style: {
+              background: "#1e1e24",
+              color: "#fff",
+              width: "900px",
+              maxWidth: "95vw",
+              height: "85vh",
+              borderRadius: "12px",
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+              border: "1px solid #333"
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: {
+                padding: "16px 20px",
+                borderBottom: "1px solid #333",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "10px" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { fontSize: "20px" }, children: "\u{1F6E0}\uFE0F" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { id: "inspectorModalTitle", style: { margin: 0, fontSize: "16px", fontWeight: 600 }, children: "Sovereign Storage Inspector" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { style: { fontSize: "12px", color: "#888" }, children: [
+                      "App: ",
+                      snapshot?.appId || "...",
+                      " | User: ",
+                      snapshot?.userId || "..."
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { style: { fontSize: "12px", display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                      "input",
+                      {
+                        type: "checkbox",
+                        checked: autoRefresh,
+                        onChange: (e2) => setAutoRefresh(e2.target.checked)
+                      }
+                    ),
+                    "Live Update"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                    "button",
+                    {
+                      onClick: loadSnapshot,
+                      "aria-label": "Refresh inspector data",
+                      style: { padding: "6px 12px", background: "#333", border: "none", color: "#fff", borderRadius: "6px", cursor: "pointer" },
+                      children: "\u{1F504} Refresh"
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                    "button",
+                    {
+                      onClick: onClose,
+                      "aria-label": "Close Inspector",
+                      style: { padding: "6px 12px", background: "#d32f2f", border: "none", color: "#fff", borderRadius: "6px", cursor: "pointer" },
+                      children: "\u2715"
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { display: "flex", borderBottom: "1px solid #333", background: "#25252d" }, children: [
+                { id: "storage", label: "\u{1F4C1} Storage & Footprint" },
+                { id: "sync", label: "\u{1F504} Remote Sync & ETags" },
+                { id: "mesh", label: `\u{1F310} WebRTC Mesh (${snapshot?.mesh.peerCount || 0})` },
+                { id: "conflicts", label: `\u26A0\uFE0F Conflicts (${snapshot?.conflicts.length || 0})` }
+              ].map((tab) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                "button",
+                {
+                  onClick: () => setActiveTab(tab.id),
+                  style: {
+                    flex: 1,
+                    padding: "12px",
+                    background: activeTab === tab.id ? "#1e1e24" : "transparent",
+                    border: "none",
+                    borderBottom: activeTab === tab.id ? "2px solid #2196f3" : "none",
+                    color: activeTab === tab.id ? "#2196f3" : "#aaa",
+                    fontWeight: activeTab === tab.id ? 600 : 400,
+                    cursor: "pointer",
+                    fontSize: "13px"
+                  },
+                  children: tab.label
+                },
+                tab.id
+              )) }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { flex: 1, overflowY: "auto", padding: "20px" }, children: !snapshot ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { textAlign: "center", padding: "40px", color: "#888" }, children: "Loading snapshot..." }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+                activeTab === "storage" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "TOTAL USAGE" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px" }, children: formatBytes(snapshot.storage.footprint.totalBytes) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { fontSize: "11px", color: "#aaa", marginTop: "2px" }, children: [
+                        snapshot.storage.footprint.fileCount,
+                        " files"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PUBLIC PARTITIONS" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#81c784" }, children: formatBytes(snapshot.storage.footprint.byCategory.public) })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PRIVATE PARTITIONS" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#e57373" }, children: formatBytes(snapshot.storage.footprint.byCategory.private) })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "MEDIA BLOBS" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#ba68c8" }, children: formatBytes(snapshot.storage.footprint.byCategory.blobs) })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { style: { margin: "0 0 10px 0", fontSize: "14px" }, children: "Local Storage Partition Tree" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { background: "#18181c", padding: "14px", borderRadius: "8px", border: "1px solid #2a2a30" }, children: snapshot.storage.tree.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No local files found." }) : snapshot.storage.tree.map((node) => renderTreeNode(node)) })
+                ] }),
+                activeTab === "sync" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "SYNC MODE" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px", textTransform: "uppercase" }, children: snapshot.remoteSync.syncMode })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "STATUS" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px", color: snapshot.remoteSync.isSyncing ? "#ffb74d" : "#81c784" }, children: snapshot.remoteSync.isSyncing ? "\u23F3 Syncing..." : " Idle" })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "LAST SYNC CHECK" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "16px", fontWeight: 600, marginTop: "4px" }, children: snapshot.remoteSync.lastSyncDate || "Never" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { style: { margin: "20px 0 10px 0", fontSize: "14px" }, children: "Cached Remote ETags & Hashes" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { background: "#18181c", padding: "12px", borderRadius: "8px", border: "1px solid #2a2a30", maxHeight: "250px", overflowY: "auto" }, children: Object.keys(snapshot.remoteSync.etagCache).length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No cached ETags recorded yet." }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("table", { style: { width: "100%", fontSize: "12px", borderCollapse: "collapse" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { style: { color: "#888", borderBottom: "1px solid #333", textAlign: "left" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { style: { padding: "6px" }, children: "Path" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { style: { padding: "6px" }, children: "ETag / Hash" })
+                    ] }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("tbody", { children: Object.entries(snapshot.remoteSync.etagCache).map(([path2, etag]) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { style: { borderBottom: "1px solid rgba(255,255,255,0.05)" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { style: { padding: "6px", color: "#90caf9", fontFamily: "monospace" }, children: path2 }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { style: { padding: "6px", color: "#ffb74d", fontFamily: "monospace" }, children: etag })
+                    ] }, path2)) })
+                  ] }) })
+                ] }),
+                activeTab === "mesh" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", marginBottom: "20px" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS SENT" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#81c784" }, children: snapshot.mesh.stats.packetsSent })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS RECV" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#90caf9" }, children: snapshot.mesh.stats.packetsReceived })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "PACKETS DROPPED" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px", color: "#e57373" }, children: snapshot.mesh.stats.packetsDropped })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#262630", padding: "12px", borderRadius: "8px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "11px", color: "#888" }, children: "DEDUP CACHE SIZE" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { fontSize: "18px", fontWeight: 600, marginTop: "4px" }, children: snapshot.mesh.stats.seenMessagesCount })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h4", { style: { margin: "20px 0 10px 0", fontSize: "14px" }, children: [
+                    "Active Mesh Peers (",
+                    snapshot.mesh.peerCount,
+                    ")"
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { background: "#18181c", padding: "12px", borderRadius: "8px", border: "1px solid #2a2a30" }, children: snapshot.mesh.peers.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { color: "#888", fontSize: "13px" }, children: "No active WebRTC peer connections." }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("table", { style: { width: "100%", fontSize: "13px", borderCollapse: "collapse" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { style: { color: "#888", borderBottom: "1px solid #333", textAlign: "left" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { style: { padding: "8px" }, children: "Peer ID" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { style: { padding: "8px" }, children: "Status" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { style: { padding: "8px" }, children: "Latency" })
+                    ] }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("tbody", { children: snapshot.mesh.peers.map((peer) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { style: { borderBottom: "1px solid rgba(255,255,255,0.05)" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { style: { padding: "8px", fontFamily: "monospace" }, children: peer.peerId }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { style: { padding: "8px", color: "#81c784" }, children: "Connected" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { style: { padding: "8px", color: "#ffb74d" }, children: peer.latencyMs !== void 0 ? `${peer.latencyMs} ms` : "N/A" })
+                    ] }, peer.peerId)) })
+                  ] }) })
+                ] }),
+                activeTab === "conflicts" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h4", { style: { margin: "0 0 10px 0", fontSize: "14px" }, children: [
+                    "Unresolved Conflict Queue (",
+                    snapshot.conflicts.length,
+                    ")"
+                  ] }),
+                  snapshot.conflicts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { background: "#18181c", padding: "30px", borderRadius: "8px", textAlign: "center", color: "#81c784" }, children: "No sync conflicts detected. Local and remote files are completely consistent." }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: "16px" }, children: snapshot.conflicts.map((conflict) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#18181c", borderRadius: "8px", padding: "16px", border: "1px solid #e57373" }, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { fontFamily: "monospace", fontWeight: 600, color: "#90caf9" }, children: conflict.path }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { style: { marginLeft: "12px", fontSize: "12px", color: "#888" }, children: new Date(conflict.timestamp).toLocaleTimeString() })
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "flex", gap: "8px" }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                          "button",
+                          {
+                            onClick: () => handleResolveConflict(conflict.id, "local"),
+                            style: { padding: "6px 12px", background: "#2e7d32", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "12px" },
+                            children: "Keep Local"
+                          }
+                        ),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+                          "button",
+                          {
+                            onClick: () => handleResolveConflict(conflict.id, "remote"),
+                            style: { padding: "6px 12px", background: "#c62828", color: "#fff", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "12px" },
+                            children: "Keep Remote"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", fontSize: "12px" }, children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#202028", padding: "10px", borderRadius: "6px" }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { fontWeight: 600, color: "#81c784", marginBottom: "6px" }, children: [
+                          "Local (",
+                          formatBytes(conflict.localSize),
+                          ")"
+                        ] }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { style: { margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#ddd" }, children: conflict.preview.localTextSnippet })
+                      ] }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { background: "#202028", padding: "10px", borderRadius: "6px" }, children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { style: { fontWeight: 600, color: "#e57373", marginBottom: "6px" }, children: [
+                          "Remote (",
+                          formatBytes(conflict.remoteSize),
+                          ")"
+                        ] }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { style: { margin: 0, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#ddd" }, children: conflict.preview.remoteTextSnippet })
+                      ] })
+                    ] })
+                  ] }, conflict.id)) })
+                ] })
+              ] }) })
+            ]
+          }
+        ) });
+      };
+    }
+  });
+
+  // demo/social/src/components/Dialog.tsx
+  var import_react6, import_jsx_runtime8, Dialog;
+  var init_Dialog = __esm({
+    "demo/social/src/components/Dialog.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react6 = __toESM(require_react());
+      import_jsx_runtime8 = __toESM(require_jsx_runtime());
+      Dialog = ({ dialog, setDialog, profileCache }) => {
+        const [inputValue, setInputValue] = (0, import_react6.useState)(dialog?.defaultValue || "");
+        const [selectedValues, setSelectedValues] = (0, import_react6.useState)([]);
+        const [searchQuery, setSearchSearchQuery] = (0, import_react6.useState)("");
+        const [configData, setConfigData] = (0, import_react6.useState)({
+          syncMode: "s3",
+          region: "us-east-1",
+          endpoint: "",
+          accessKeyId: "",
+          secretAccessKey: "",
+          bucketName: ""
+        });
+        (0, import_react6.useEffect)(() => {
+          const handleEsc = (e2) => {
+            if (e2.key === "Escape") setDialog(null);
+          };
+          window.addEventListener("keydown", handleEsc);
+          return () => window.removeEventListener("keydown", handleEsc);
+        }, [setDialog]);
+        (0, import_react6.useEffect)(() => {
+          setInputValue(dialog?.defaultValue || "");
+          setSelectedValues([]);
+          setSearchSearchQuery("");
+        }, [dialog]);
+        if (!dialog) return null;
+        const toggleOption = (val) => {
+          setSelectedValues(
+            (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
+          );
+        };
+        const filteredOptions = dialog.options?.filter(
+          (opt) => opt.label.toLowerCase().includes(searchQuery.toLowerCase()) || opt.value.toLowerCase().includes(searchQuery.toLowerCase())
+        ) || [];
+        return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "modal show d-block", tabIndex: -1, role: "dialog", "aria-modal": "true", "aria-labelledby": "dialogTitle", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "modal-dialog modal-dialog-centered", role: "document", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h5", { id: "dialogTitle", className: "modal-title fw-bold text-primary", children: dialog.title }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "button", className: "btn-close", "aria-label": "Close", onClick: dialog.onCancel })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
+            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+              "input",
+              {
+                autoFocus: true,
+                "aria-label": dialog.title || "Dialog Input",
+                className: "form-control rounded-pill px-3 shadow-sm",
+                value: inputValue,
+                onChange: (e2) => setInputValue(e2.target.value),
+                onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue)
+              }
+            ),
+            dialog.type === "config" && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "config-form", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("label", { className: "form-label small fw-bold", children: "Sync Mode" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("select", { className: "form-select mb-3 rounded-pill", "aria-label": "Sync Mode", value: configData.syncMode, onChange: (e2) => setConfigData({ ...configData, syncMode: e2.target.value }), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "s3", children: "S3 Cloud" }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "webrtc", children: "WebRTC Mesh" })
+              ] }),
+              configData.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Region", "aria-label": "Region", value: configData.region, onChange: (e2) => setConfigData({ ...configData, region: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Endpoint (optional)", "aria-label": "Endpoint", value: configData.endpoint, onChange: (e2) => setConfigData({ ...configData, endpoint: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Access Key", "aria-label": "Access Key", value: configData.accessKeyId, onChange: (e2) => setConfigData({ ...configData, accessKeyId: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { className: "form-control mb-2 rounded-pill", type: "password", placeholder: "Secret Key", "aria-label": "Secret Key", value: configData.secretAccessKey, onChange: (e2) => setConfigData({ ...configData, secretAccessKey: e2.target.value }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { className: "form-control mb-2 rounded-pill", placeholder: "Bucket Name", "aria-label": "Bucket Name", value: configData.bucketName, onChange: (e2) => setConfigData({ ...configData, bucketName: e2.target.value }) })
+              ] })
+            ] }),
+            dialog.type === "multiselect" && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+                "input",
+                {
+                  type: "text",
+                  className: "form-control form-control-sm rounded-pill px-3",
+                  placeholder: "Search members...",
+                  "aria-label": "Search members",
+                  value: searchQuery,
+                  onChange: (e2) => setSearchSearchQuery(e2.target.value)
+                }
+              ) }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "list-group overflow-y-auto", style: { maxHeight: "300px" }, children: filteredOptions.length > 0 ? filteredOptions.map((opt) => {
+                const userProfile = profileCache[opt.value];
+                return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2 cursor-pointer", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+                    "input",
+                    {
+                      type: "checkbox",
+                      className: "form-check-input me-3",
+                      checked: selectedValues.includes(opt.value),
+                      onChange: () => toggleOption(opt.value)
+                    }
+                  ),
+                  /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "d-flex align-items-center flex-grow-1", children: [
+                    userProfile?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("img", { src: userProfile.avatar, alt: `${userProfile?.name || opt.label} avatar`, className: "rounded-circle me-2", style: { width: "30px", height: "30px", objectFit: "cover" } }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "rounded-circle bg-secondary text-white me-2 d-flex align-items-center justify-content-center", style: { width: "30px", height: "30px", fontSize: "0.8rem" }, children: opt.value[0]?.toUpperCase() || "?" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "fw-bold small", children: userProfile?.name || opt.label }),
+                      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "text-muted", style: { fontSize: "0.7rem" }, children: opt.value })
+                    ] })
+                  ] })
+                ] }, opt.value);
+              }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "text-center py-3 text-muted small", children: "No members found" }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
+            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: dialog.onCancel, children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+              "button",
+              {
+                type: "button",
+                className: "btn btn-primary rounded-pill px-4 shadow-sm",
+                onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : dialog.type === "config" ? configData : inputValue),
+                children: dialog.type === "alert" ? "OK" : "Confirm"
+              }
+            )
+          ] })
+        ] }) }) });
+      };
     }
   });
 
@@ -139846,6 +139981,7 @@ ${toHex(hashedRequest)}`;
       init_PairingModal();
       init_ErrorBoundary();
       init_InspectorModal();
+      init_src();
       init_LoginView();
       init_Navigation();
       init_FeedTab();
@@ -141241,7 +141377,8 @@ ${toHex(hashedRequest)}`;
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "modal-body py-4", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(PostItem, { post: previewPost, allPosts: [] }) }),
             /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("div", { className: "modal-footer border-0 pt-0", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("button", { type: "button", className: "btn btn-secondary rounded-pill px-4", onClick: () => setPreviewPost(null), children: "Close" }) })
-          ] }) }) })
+          ] }) }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(ToastContainer, {})
         ] }) });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));

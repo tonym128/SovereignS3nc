@@ -6,7 +6,7 @@ import { ProfileModule } from '../../../src/modules/Profile';
 import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter } from '../../../src/interfaces/IRemoteAdapter';
 import { Buffer } from 'buffer';
-import { SyncStatusIndicator, QuickStartCard } from '@sovereigns3nc/demo-shared';
+import { SyncStatusIndicator, QuickStartCard, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
 
 const App = () => {
     // --- State ---
@@ -126,7 +126,7 @@ const App = () => {
             }
         } catch (err) {
             console.error('Login failed', err);
-            alert('Login failed: ' + (err as Error).message);
+            toast.error('Login failed: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -155,10 +155,11 @@ const App = () => {
             setNewBoardName('');
             setShowCreateBoard(false);
             await sov.sync();
+            toast.success(`Board "${newBoardName}" created successfully!`);
             console.log('Sync complete after board creation');
         } catch (err) {
             console.error('Failed to create board', err);
-            alert('Failed to create board: ' + (err as Error).message);
+            toast.error('Failed to create board: ' + (err as Error).message);
         } finally {
             setSyncing(false);
         }
@@ -177,7 +178,7 @@ const App = () => {
 
     const addTask = async (column: string) => {
         if (!selectedGroup || typeof selectedGroup === 'string') {
-            alert('Please select or create a board first.');
+            toast.warning('Please select or create a board first.');
             return;
         }
         const title = prompt('Task Title');
@@ -193,9 +194,10 @@ const App = () => {
             
             await loadTasks();
             sov?.sync();
+            toast.success(`Task "${title}" added to ${column}`);
         } catch (err) {
             console.error('Failed to add task', err);
-            alert('Failed to add task: ' + (err as Error).message);
+            toast.error('Failed to add task: ' + (err as Error).message);
         }
     };
 
@@ -300,6 +302,7 @@ const App = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         );
     }
@@ -379,6 +382,7 @@ const App = () => {
                     </div>
                 ))}
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -10,7 +10,7 @@ import { IndexedDBStorage } from '../../../src/adapters/IndexedDBStorage';
 import { Chart, registerables } from 'chart.js';
 import { ErrorBoundary } from './ErrorBoundary';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
-import { QuickStartCard, SyncStatusIndicator } from '@sovereigns3nc/demo-shared';
+import { QuickStartCard, SyncStatusIndicator, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
 
 Chart.register(...registerables);
 
@@ -121,7 +121,7 @@ const App = () => {
             setIsLoggedIn(true);
             await loadData(instance, bm);
         } catch (e: any) {
-            alert('Login failed: ' + e.message);
+            toast.error('Login failed: ' + e.message);
         }
     };
 
@@ -276,7 +276,7 @@ const App = () => {
             const amount = Math.abs(parsed); // Enforce positive for validation
             
             if (isNaN(parsed) || amount === 0) {
-                alert('Please enter a valid non-zero amount.');
+                toast.warning('Please enter a valid non-zero amount.');
                 return;
             }
 
@@ -379,7 +379,7 @@ const App = () => {
                         await sync();
                         loadTransactions(selectedAccount);
                     } else {
-                        alert('Please enter a valid positive target amount.');
+                        toast.warning('Please enter a valid positive target amount.');
                     }
                 });
             }
@@ -392,7 +392,7 @@ const App = () => {
         showPrompt(`Enter amount to ${type.toLowerCase()} ${goal.name}:`, async (amt) => {
             const amount = Math.abs(parseFloat(amt));
             if (isNaN(amount) || amount <= 0) {
-                alert('Please enter a valid positive amount.');
+                toast.warning('Please enter a valid positive amount.');
                 return;
             }
 
@@ -621,6 +621,7 @@ const App = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer />
             </div>
         );
     }
@@ -937,6 +938,8 @@ const App = () => {
                     }}
                 />
             )}
+
+            <ToastContainer />
         </div>
     );
 };
