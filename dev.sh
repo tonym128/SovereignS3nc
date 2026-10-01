@@ -74,6 +74,7 @@ function dev() {
         fi
         if ! ps -p $RUSTFS_PID > /dev/null; then
             echo "Error: RustFS failed to start. Check $LOG_FILE"
+            cat "$LOG_FILE" 2>/dev/null || true
             exit 1
         fi
         sleep 1

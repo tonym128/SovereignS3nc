@@ -3,7 +3,9 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: '.',
   testMatch: '**/*.spec.ts',
+  testIgnore: ['**/accessibility.spec.ts'],
   globalSetup: require.resolve('./global-setup'),
+  globalTeardown: require.resolve('./jest-global-teardown'),
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

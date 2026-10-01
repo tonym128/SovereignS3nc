@@ -63,24 +63,9 @@ jobs:
         run: npm pack --dry-run
 
   integration-tests:
-    name: S3 Integration Tests (RustFS / MinIO)
+    name: S3 Integration Tests (RustFS)
     runs-on: ubuntu-latest
     needs: [build-and-pack]
-    services:
-      minio:
-        image: minio/minio:latest
-        ports:
-          - 9000:9000
-          - 9001:9001
-        env:
-          MINIO_ROOT_USER: rustfsroot
-          MINIO_ROOT_PASSWORD: rustfsrootsecret
-        options: >-
-          --health-cmd "mc ready local || exit 0"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 5
-        command: server /data --console-address ":9001"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -89,18 +74,12 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
-      - name: Build Core
-        run: npm run build
-      - name: Run S3 Integration Tests
-        env:
-          S3_ENDPOINT: http://127.0.0.1:9000
-          S3_ACCESS_KEY: rustfsroot
-          S3_SECRET_KEY: rustfsrootsecret
-          S3_BUCKET: sovereign-demo
+      - name: Build Core & Demos
         run: |
-          # Create default bucket via AWS CLI or Node script if needed
-          npx aws-sdk-client-mock || true
-          npm run test:docker || npm run test:integration || true
+          npm run build
+          npm run build:demos
+      - name: Run S3 Integration Tests
+        run: npm run test:integration
 
   browser-and-a11y-tests:
     name: Playwright Browser & Accessibility Tests
