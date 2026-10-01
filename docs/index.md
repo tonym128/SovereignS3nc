@@ -10,6 +10,9 @@ hero:
       text: Quick Start Guide
       link: /module-tutorial
     - theme: alt
+      text: 🎬 3-Min Video Guide
+      link: /video-tutorial
+    - theme: alt
       text: Why SovereignS3nc?
       link: /comparison
     - theme: alt

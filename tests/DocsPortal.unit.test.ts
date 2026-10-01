@@ -81,14 +81,25 @@ describe('Public Documentation Portal (VitePress) (WT-63)', () => {
         expect(pkg.scripts['docs:preview']).toBe('vitepress preview docs');
     });
 
+    test('3-minute video tutorial page (docs/video-tutorial.md) exists and is configured', () => {
+        const videoPath = path.join(docsDir, 'video-tutorial.md');
+        expect(fs.existsSync(videoPath)).toBe(true);
+
+        const content = fs.readFileSync(videoPath, 'utf8');
+        expect(content).toContain('3-Minute Video Guide');
+        expect(content).toContain('Video Screencast & Player');
+        expect(content).toContain('Storyboard & Script');
+        expect(content).toContain('useRepository');
+    });
+
     test('VitePress static build output exists and contains rendered HTML', () => {
         const distDir = path.join(docsDir, '.vitepress/dist');
-        if (!fs.existsSync(distDir)) {
-            const { execSync } = require('child_process');
-            execSync('npx vitepress build docs', { cwd: rootDir, stdio: 'pipe' });
-        }
+        const { execSync } = require('child_process');
+        execSync('npx vitepress build docs', { cwd: rootDir, stdio: 'pipe' });
+
         expect(fs.existsSync(distDir)).toBe(true);
         expect(fs.existsSync(path.join(distDir, 'index.html'))).toBe(true);
+        expect(fs.existsSync(path.join(distDir, 'video-tutorial.html'))).toBe(true);
         expect(fs.existsSync(path.join(distDir, 'comparison.html'))).toBe(true);
         expect(fs.existsSync(path.join(distDir, 'architecture.html'))).toBe(true);
         expect(fs.existsSync(path.join(distDir, 'react.html'))).toBe(true);
