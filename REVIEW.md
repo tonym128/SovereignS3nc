@@ -286,7 +286,7 @@
 | 19 | Record 3-minute getting-started video | Marketing | 1 day | ✅ Completed |
 | 20 | Add mutation testing (Stryker) for crypto modules | Testing Dev | 2-3 days | ✅ Completed |
 | 21 | Implement dark mode across all demos | Product Designer | 2-3 days | ✅ Completed |
-| 22 | Add CI stages for integration, browser, and perf tests | Testing Dev | 2-3 days | Pending |
+| 22 | Add CI stages for integration, browser, and perf tests | Testing Dev | 2-3 days | ✅ Completed |
 
 ---
 
