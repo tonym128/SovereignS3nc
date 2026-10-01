@@ -30,6 +30,8 @@ export interface SyncOrchestratorContext {
     generateManifest: () => Promise<SovereignManifest>;
     fetchManifest: (userId: string) => Promise<SovereignManifest | null>;
     fetchManifestWithMeta?: (userId: string, options?: { forceRefresh?: boolean; ttlMs?: number }) => Promise<ManifestFetchResult>;
+    resolveFullManifest?: (userId: string, rootManifest: SovereignManifest) => Promise<SovereignManifest>;
+    resolveSubManifest?: (userId: string, partitionKey: string, ref: any) => Promise<any>;
     syncGroups: (today: string) => Promise<void>;
     
     encrypt: (data: Uint8Array, key: string) => Promise<Uint8Array>;
@@ -135,6 +137,9 @@ export class SyncOrchestrator {
                     const result = await publicRemote.downloadFile(PATHS.MANIFEST);
                     if (result && result.data) {
                         remoteManifest = JSON.parse(new TextDecoder().decode(result.data));
+                        if (remoteManifest && remoteManifest.subManifests && Object.keys(remoteManifest.subManifests).length > 0 && this.ctx.resolveFullManifest) {
+                            remoteManifest = await this.ctx.resolveFullManifest(this.ctx.config.paths.userId, remoteManifest);
+                        }
                         Logger.info('Sync', 'Remote manifest downloaded for diffing.');
                     }
                 }
@@ -419,8 +424,26 @@ export class SyncOrchestrator {
             }
 
             Logger.info('Sync', `Using manifest for ${user.userId}`);
+
+            const unchangedPartitions = new Set<string>();
+            if (manifest.subManifests) {
+                for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                    const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                    const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
+                    if (cachedHash === ref.hash) {
+                        unchangedPartitions.add(key);
+                    }
+                }
+            }
+
+            const isPartitionUnchanged = (dateStr: string) => {
+                const year = (dateStr.length >= 4 && /^\d{4}$/.test(dateStr.substring(0, 4))) ? dateStr.substring(0, 4) : 'misc';
+                return unchangedPartitions.has(year);
+            };
+
             if (manifest.modules['core']) {
                 for (const dateStr of manifest.modules['core']) {
+                    if (isPartitionUnchanged(dateStr)) continue;
                     await this.pullUserDay(user.userId, dateStr, user.publicKey);
                 }
             }
@@ -428,6 +451,7 @@ export class SyncOrchestrator {
             for (const [moduleName, dates] of Object.entries(manifest.modules)) {
                 if (moduleName === 'core') continue;
                 for (const dateStr of dates) {
+                    if (isPartitionUnchanged(dateStr)) continue;
                     const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
                     const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
                     const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
@@ -438,6 +462,7 @@ export class SyncOrchestrator {
             const myId = this.ctx.config.paths.userId;
             if (manifest.dms && manifest.dms[myId]) {
                 for (const dateStr of manifest.dms[myId]) {
+                    if (isPartitionUnchanged(dateStr)) continue;
                     for (const moduleDef of this.ctx.registeredModules) {
                         const moduleName = moduleDef.name;
                         const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public');
@@ -453,11 +478,21 @@ export class SyncOrchestrator {
             // Pulled to local: followed/{userId}/modules/{module}/receipts/{myId}/{date}.db
             if (manifest.receipts && manifest.receipts[myId]) {
                 for (const dateStr of manifest.receipts[myId]) {
+                    if (isPartitionUnchanged(dateStr)) continue;
                     for (const moduleDef of this.ctx.registeredModules) {
                         const moduleName = moduleDef.name;
                         const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, 'public');
                         const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, 'followed');
                         await this.pullUserFile(user.userId, receiptPath, user.publicKey, localPath, false);
+                    }
+                }
+            }
+
+            if (manifest.subManifests) {
+                for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                    if (!unchangedPartitions.has(key)) {
+                        const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                        await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
                     }
                 }
             }

@@ -370,7 +370,8 @@ describe('Failure-Mode Test Suite: Network Errors & Transport Resilience (Item 1
             await sov.init();
 
             // Populate remote with a file
-            faultRemote.files.set('public/2026-09-30.db', {
+            const today = SovereignS3nc.getDateStr(new Date());
+            faultRemote.files.set(`public/${today}.db`, {
                 data: new Uint8Array([1, 2, 3]),
                 hash: 'some-hash',
                 etag: '"e1"'

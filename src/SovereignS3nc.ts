@@ -196,6 +196,8 @@ export class SovereignS3nc extends EventEmitter {
             generateManifest: () => this.manifestManager.generateManifest(),
             fetchManifest: (uid) => this.manifestManager.fetchManifest(uid),
             fetchManifestWithMeta: (uid, options) => this.manifestManager.fetchManifestWithMeta(uid, options),
+            resolveFullManifest: (uid, root) => this.manifestManager.resolveFullManifest(uid, root),
+            resolveSubManifest: (uid, pKey, ref) => this.manifestManager.resolveSubManifest(uid, pKey, ref),
             syncGroups: (today) => this.groupManager.syncGroups(today),
             encrypt: (d, k) => this.encrypt(d, k),
             decrypt: (d, k) => this.decrypt(d, k),
