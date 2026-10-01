@@ -189,4 +189,84 @@ describe('Hierarchical Merkle Tree Manifests (>10k Files Optimization)', () => {
         expect(resolved.modules['feed']).toEqual(['2024-01-01']);
         expect(resolved.dms['alice']).toEqual(['2024-01-01']);
     });
+
+    test('uploaded manifest.json includes hierarchical subManifests and Merkle root while preserving files for backward compatibility', async () => {
+        const storage = sov.getStorage();
+        await storage.saveFile('public/2025-01-01.db', new Uint8Array([1, 2, 3]));
+        await storage.saveFile('public/2026-01-01.db', new Uint8Array([4, 5, 6]));
+        await sov.syncManifest();
+
+        const uploadedManifestData = mockRemote.files.get('manifest.json');
+        expect(uploadedManifestData).toBeDefined();
+
+        const uploadedManifest = JSON.parse(new TextDecoder().decode(uploadedManifestData!.data));
+        expect(uploadedManifest.subManifests).toBeDefined();
+        expect(uploadedManifest.merkleRoot).toBeDefined();
+        expect(uploadedManifest.files).toBeDefined();
+        expect(uploadedManifest.files['public/2025-01-01.db']).toBeDefined();
+        expect(uploadedManifest.files['public/2026-01-01.db']).toBeDefined();
+
+        // Resolving the manifest reconstructs all files from sub-manifests even if files was absent
+        const stripped = { ...uploadedManifest, files: undefined };
+        const resolved = await sov.resolveFullManifest('alice', stripped);
+        expect(resolved.files).toBeDefined();
+        expect(resolved.files!['public/2025-01-01.db']).toBeDefined();
+        expect(resolved.files!['public/2026-01-01.db']).toBeDefined();
+    });
+
+    test('followed user sync skips pulling partitions whose sub-manifest hash has not changed', async () => {
+        // Setup Bob with 2024 and 2026 files
+        const bobRemote = new MockRemote();
+        const bobSov = new SovereignS3nc({
+            paths: { appId: 'merkle-app', userId: 'bob', storeId: 'main' },
+            password: 'password123',
+            debug: false
+        }, bobRemote);
+        await bobSov.init();
+
+        const bobStorage = bobSov.getStorage();
+        await bobStorage.saveFile('public/2024-05-01.db', new Uint8Array([1, 1, 1]));
+        await bobStorage.saveFile('public/2026-05-01.db', new Uint8Array([2, 2, 2]));
+        await bobSov.syncManifest();
+
+        // Alice follows Bob
+        await sov.follow('bob');
+
+        // Spy on Bob remote downloads
+        const originalDownload = bobRemote.downloadFile.bind(bobRemote);
+        const downloadedBobPaths: string[] = [];
+        bobRemote.downloadFile = async (path: string, ifNoneMatch?: string) => {
+            downloadedBobPaths.push(path);
+            return originalDownload(path, ifNoneMatch);
+        };
+
+        // Inject Bob's remote into Alice's remote creator
+        (sov as any).remoteFactory = (userId: string) => {
+            if (userId === 'bob') return bobRemote;
+            return mockRemote;
+        };
+
+        // First sync: Alice syncs all partitions from Bob
+        await (sov as any).syncOrchestrator.syncFollowedUser({ userId: 'bob', publicKey: 'pk' }, '2026-09-30');
+        expect(downloadedBobPaths).toContain('public/2024-05-01.db');
+        expect(downloadedBobPaths).toContain('public/2026-05-01.db');
+
+        // Reset tracking
+        downloadedBobPaths.length = 0;
+
+        // Bob adds a new file in 2026, but 2024 remains untouched
+        await bobStorage.saveFile('public/2026-06-01.db', new Uint8Array([3, 3, 3]));
+        await bobSov.syncManifest();
+
+        // Expire manifest cache so Alice re-checks Bob's manifest ETag
+        sov.expireFollowManifestCache('bob');
+
+        // Second sync: 2024 partition sub-manifest hash hasn't changed!
+        await (sov as any).syncOrchestrator.syncFollowedUser({ userId: 'bob', publicKey: 'pk' }, '2026-09-30');
+
+        // 2024-05-01.db should be SKIPPED completely!
+        expect(downloadedBobPaths).not.toContain('public/2024-05-01.db');
+        // New 2026 file SHOULD be downloaded
+        expect(downloadedBobPaths).toContain('public/2026-06-01.db');
+    });
 });

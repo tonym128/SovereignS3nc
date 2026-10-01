@@ -263,8 +263,10 @@ export class ManifestManager {
     }
 
     public async resolveSubManifest(userId: string, partitionKey: string, ref: SubManifestRef): Promise<SubManifest | null> {
-        const localPath = `followed/${userId}/${ref.path}`;
-        const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`);
+        const isOwn = userId === this.ctx.userId;
+        const localPath = isOwn ? ref.path : `followed/${userId}/${ref.path}`;
+        const cacheKey = `submanifest:${userId}:${ref.path}`;
+        const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
 
         if (cachedHash === ref.hash) {
             const data = await this.ctx.storage.getFile(localPath);
@@ -278,12 +280,13 @@ export class ManifestManager {
         }
 
         try {
-            const userRemote = this.ctx.createRemote(userId);
+            const userRemote = isOwn ? this.ctx.getPublicRemote() : this.ctx.createRemote(userId);
+            if (!userRemote) return null;
             const result = await userRemote.downloadFile(ref.path);
             if (result && result.data) {
                 const subManifest: SubManifest = JSON.parse(new TextDecoder().decode(result.data));
                 await this.ctx.storage.saveFile(localPath, result.data);
-                await this.ctx.storage.setGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`, ref.hash);
+                await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
                 return subManifest;
             }
         } catch (e: any) {
@@ -310,8 +313,39 @@ export class ManifestManager {
         for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
             if (!ref || !ref.path) continue;
             const sub = await this.resolveSubManifest(userId, key, ref);
-            if (sub && sub.files) {
-                Object.assign(merged.files!, sub.files);
+            if (sub) {
+                if (sub.files) {
+                    Object.assign(merged.files!, sub.files);
+                }
+                if (sub.modules) {
+                    for (const [mod, dates] of Object.entries(sub.modules)) {
+                        if (!merged.modules[mod]) merged.modules[mod] = [];
+                        for (const d of dates) {
+                            if (!merged.modules[mod].includes(d)) merged.modules[mod].push(d);
+                        }
+                    }
+                }
+                if (sub.dms) {
+                    for (const [recipient, dates] of Object.entries(sub.dms)) {
+                        if (!merged.dms[recipient]) merged.dms[recipient] = [];
+                        for (const d of dates) {
+                            if (!merged.dms[recipient].includes(d)) merged.dms[recipient].push(d);
+                        }
+                    }
+                }
+                if (sub.groups) {
+                    for (const [grp, dates] of Object.entries(sub.groups)) {
+                        if (!merged.groups[grp]) merged.groups[grp] = [];
+                        for (const d of dates) {
+                            if (!merged.groups[grp].includes(d)) merged.groups[grp].push(d);
+                        }
+                    }
+                }
+                if (sub.blobs) {
+                    for (const b of sub.blobs) {
+                        if (!merged.blobs.includes(b)) merged.blobs.push(b);
+                    }
+                }
             }
         }
 
