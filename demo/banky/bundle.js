@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React4 = require_react(), Internals = {
+        var React5 = require_react(), Internals = {
           d: {
             f: noop2,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React5.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React5 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React4.version;
+          var isomorphicReactPackageVersion = React5.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -114932,18 +114932,18 @@ ${toHex(hashedRequest)}`;
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React5 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React4 = {
+        React5 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
-          React4,
+        var unknownOwnerDebugStack = React5.react_stack_bottom_frame.bind(
+          React5,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -115533,6 +115533,76 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // demo/shared/src/DarkModeToggle.tsx
+  function getSystemTheme() {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+  function applyTheme(theme) {
+    if (typeof document === "undefined") return;
+    const resolved = theme === "auto" ? getSystemTheme() : theme;
+    document.documentElement.setAttribute("data-theme", resolved);
+    document.documentElement.setAttribute("data-bs-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      document.body?.classList.add("dark-theme");
+    } else {
+      document.documentElement.classList.remove("dark-theme");
+      document.body?.classList.remove("dark-theme");
+    }
+  }
+  function useDarkMode() {
+    const [theme, setTheme] = (0, import_react4.useState)(() => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("sov-theme");
+        if (saved) return saved;
+      }
+      return "auto";
+    });
+    (0, import_react4.useEffect)(() => {
+      applyTheme(theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sov-theme", theme);
+      }
+    }, [theme]);
+    const toggle = () => {
+      setTheme((prev) => {
+        const current = prev === "auto" ? getSystemTheme() : prev;
+        return current === "dark" ? "light" : "dark";
+      });
+    };
+    const isDark = theme === "dark" || theme === "auto" && getSystemTheme() === "dark";
+    return { theme, setTheme, toggle, isDark };
+  }
+  var import_react4, import_jsx_runtime6, DarkModeToggle;
+  var init_DarkModeToggle = __esm({
+    "demo/shared/src/DarkModeToggle.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react4 = __toESM(require_react());
+      import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      DarkModeToggle = ({ className = "" }) => {
+        const { toggle, isDark } = useDarkMode();
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 sov-dark-mode-btn ${className}`,
+            onClick: toggle,
+            "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`,
+            title: `Switch to ${isDark ? "light" : "dark"} mode`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: `bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill"}` }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "d-none d-sm-inline", children: isDark ? "Light" : "Dark" })
+            ]
+          }
+        );
+      };
+    }
+  });
+
   // demo/shared/src/index.ts
   var init_src = __esm({
     "demo/shared/src/index.ts"() {
@@ -115542,6 +115612,7 @@ ${toHex(hashedRequest)}`;
       init_QuickStartCard();
       init_ModalDialog();
       init_Toast();
+      init_DarkModeToggle();
     }
   });
 
@@ -115549,7 +115620,7 @@ ${toHex(hashedRequest)}`;
   var require_App = __commonJS({
     "demo/banky/src/App.tsx"() {
       init_polyfills();
-      var import_react4 = __toESM(require_react());
+      var import_react5 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Profile();
@@ -115559,10 +115630,10 @@ ${toHex(hashedRequest)}`;
       init_ErrorBoundary();
       init_MediaUtils();
       init_src();
-      var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      var import_jsx_runtime7 = __toESM(require_jsx_runtime());
       Chart.register(...registerables);
       var App = () => {
-        const [config, setConfig] = (0, import_react4.useState)({
+        const [config, setConfig] = (0, import_react5.useState)({
           paths: {
             userId: localStorage.getItem("sov_banky_userId") || "",
             appId: "banky-sov",
@@ -115570,25 +115641,25 @@ ${toHex(hashedRequest)}`;
           },
           password: ""
         });
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react4.useState)(false);
-        const [conflict, setConflict] = (0, import_react4.useState)(null);
-        const [sov, setSov] = (0, import_react4.useState)(null);
-        const [banky, setBanky] = (0, import_react4.useState)(null);
-        const [accounts, setAccounts] = (0, import_react4.useState)([]);
-        const [sharedAccounts, setSharedAccounts] = (0, import_react4.useState)([]);
-        const [selectedAccount, setSelectedAccount] = (0, import_react4.useState)(null);
-        const [transactions, setTransactions] = (0, import_react4.useState)([]);
-        const [goals, setGoals] = (0, import_react4.useState)([]);
-        const chartRef = (0, import_react4.useRef)(null);
-        const chartInstance = (0, import_react4.useRef)(null);
-        const [following, setFollowing] = (0, import_react4.useState)([]);
-        const [registry2, setRegistry] = (0, import_react4.useState)([]);
-        const [lastSyncTime, setLastSyncTime] = (0, import_react4.useState)(null);
-        const [syncing, setSyncing] = (0, import_react4.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react4.useState)("accounts");
-        const [profile, setProfile] = (0, import_react4.useState)({ name: "", avatar: "" });
-        const [dialog, setDialog] = (0, import_react4.useState)(null);
-        const accountFileRef = (0, import_react4.useRef)(null);
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react5.useState)(false);
+        const [conflict, setConflict] = (0, import_react5.useState)(null);
+        const [sov, setSov] = (0, import_react5.useState)(null);
+        const [banky, setBanky] = (0, import_react5.useState)(null);
+        const [accounts, setAccounts] = (0, import_react5.useState)([]);
+        const [sharedAccounts, setSharedAccounts] = (0, import_react5.useState)([]);
+        const [selectedAccount, setSelectedAccount] = (0, import_react5.useState)(null);
+        const [transactions, setTransactions] = (0, import_react5.useState)([]);
+        const [goals, setGoals] = (0, import_react5.useState)([]);
+        const chartRef = (0, import_react5.useRef)(null);
+        const chartInstance = (0, import_react5.useRef)(null);
+        const [following, setFollowing] = (0, import_react5.useState)([]);
+        const [registry2, setRegistry] = (0, import_react5.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react5.useState)(null);
+        const [syncing, setSyncing] = (0, import_react5.useState)(false);
+        const [currentTab, setCurrentTab] = (0, import_react5.useState)("accounts");
+        const [profile, setProfile] = (0, import_react5.useState)({ name: "", avatar: "" });
+        const [dialog, setDialog] = (0, import_react5.useState)(null);
+        const accountFileRef = (0, import_react5.useRef)(null);
         const handleLogout = () => {
           setIsLoggedIn(false);
           setSov(null);
@@ -115609,7 +115680,7 @@ ${toHex(hashedRequest)}`;
             showAlert("Local cache cleared. Please login again.");
           });
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react5.useEffect)(() => {
           const isLocalHost = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
           fetch("config.json").then((res) => res.json()).then((data) => {
             const endpointIsLocal = data.endpoint && (data.endpoint.includes("127.0.0.1") || data.endpoint.includes("localhost"));
@@ -115805,7 +115876,7 @@ ${toHex(hashedRequest)}`;
           const g3 = await banky.getGoals(acc.id);
           setGoals(g3);
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react5.useEffect)(() => {
           if (!chartRef.current || transactions.length === 0) return;
           const ctx = chartRef.current.getContext("2d");
           if (!ctx) return;
@@ -116035,9 +116106,9 @@ ${toHex(hashedRequest)}`;
           onConfirm(vals);
         } });
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mt-5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-5", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "container mt-5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "col-md-5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
                 QuickStartCard,
                 {
                   title: "\u26A1 Quick Start Banky",
@@ -116059,46 +116130,46 @@ ${toHex(hashedRequest)}`;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "text-center mb-4 fw-bold text-primary", children: "Banky-Sov" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: handleLogin, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "User ID" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-4 shadow-sm border-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-center mb-4 fw-bold text-primary", children: "Banky-Sov" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("form", { onSubmit: handleLogin, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("label", { className: "form-label", children: "User ID" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control rounded-pill", value: config.paths.userId, onChange: (e2) => setConfig({ ...config, paths: { ...config.paths, userId: e2.target.value } }), placeholder: "e.g. kids-parent", required: true })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label", children: "Password" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("label", { className: "form-label", children: "Password" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control rounded-pill", type: "password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }), placeholder: "Master Password", required: true })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3", children: "Login / Register" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache, children: "Clear Local Data" })
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "submit", className: "btn btn-primary w-100 rounded-pill mb-3", children: "Login / Register" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-link text-muted w-100 x-small", onClick: handleClearCache, children: "Clear Local Data" })
                 ] })
               ] })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ToastContainer, {})
           ] });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "small text-muted me-3", style: { opacity: 0.6 }, children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("nav", { className: "navbar navbar-expand-lg sticky-top mb-4 shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "container", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "small text-muted me-3", style: { opacity: 0.6 }, children: [
                 "[",
                 config.paths.userId,
                 "]"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "navbar-brand fw-bold text-primary mb-0", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-bank me-2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "navbar-brand fw-bold text-primary mb-0", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-bank me-2" }),
                 "Banky-Sov"
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts"), children: "Accounts" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing"), children: "Friends" }),
-              !config.s3 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-sm btn-primary rounded-pill ms-2", onClick: handleConnectRemote, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-cloud-upload" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `btn mx-1 ${currentTab === "accounts" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("accounts"), children: "Accounts" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `btn mx-1 ${currentTab === "sharing" ? "btn-primary" : "btn-light"}`, onClick: () => setCurrentTab("sharing"), children: "Friends" }),
+              !config.s3 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "btn btn-sm btn-primary rounded-pill ms-2", onClick: handleConnectRemote, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-cloud-upload" }),
                 " Connect Cloud"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
                 SyncStatusIndicator,
                 {
                   syncing,
@@ -116108,198 +116179,199 @@ ${toHex(hashedRequest)}`;
                   className: "ms-2"
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "dropdown ms-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-list" }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" }, children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("li", { className: "px-3 py-2 border-bottom mb-2", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: profile.name || "User" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "x-small text-muted", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DarkModeToggle, { className: "ms-2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "dropdown ms-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-light rounded-circle shadow-sm", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-list" }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2", style: { minWidth: "250px" }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { className: "px-3 py-2 border-bottom mb-2", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: profile.name || "User" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "x-small text-muted", children: [
                       "@",
                       config.paths.userId
                     ] })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-person-gear me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleUpdateProfile, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-person-gear me-2" }),
                     " Edit Profile"
                   ] }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "dropdown-divider" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Legacy Data" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "dropdown-item rounded-3 cursor-pointer", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Legacy Data" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "dropdown-item rounded-3 cursor-pointer", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
                     " Import Legacy JSON",
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport })
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImport })
                   ] }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "dropdown-divider" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Transactions" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-file-earmark-arrow-down me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { className: "dropdown-header x-small text-uppercase fw-bold", children: "Transactions" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item rounded-3", onClick: handleExportData, disabled: !selectedAccount, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-file-earmark-arrow-down me-2" }),
                     " Export Account JSON"
                   ] }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}`, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: `dropdown-item rounded-3 cursor-pointer ${!selectedAccount ? "disabled" : ""}`, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-file-earmark-arrow-up me-2" }),
                     " Import Account JSON",
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount })
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", className: "d-none", accept: ".json", onChange: handleImportTransactions, disabled: !selectedAccount })
                   ] }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "dropdown-divider" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-trash3 me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", { className: "dropdown-divider" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item rounded-3 text-warning", onClick: handleClearCache, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-trash3 me-2" }),
                     " Clear Local Cache"
                   ] }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-box-arrow-right me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item rounded-3 text-danger", onClick: handleLogout, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-box-arrow-right me-2" }),
                     " Logout"
                   ] }) })
                 ] })
               ] })
             ] })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container", children: [
-            currentTab === "accounts" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { className: "mb-0 fw-bold", children: "My Accounts" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount, children: "+ New" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "container", children: [
+            currentTab === "accounts" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "row", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "col-md-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { className: "mb-0 fw-bold", children: "My Accounts" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-primary rounded-pill", onClick: handleCreateAccount, children: "+ New" })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group", children: [
-                  accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
-                    acc.image ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-primary", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-wallet2 fs-4" }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex-grow-1", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: acc.name }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "x-small opacity-75", children: acc.id })
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group", children: [
+                  accounts.map((acc) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === acc.id ? "bg-primary text-white" : ""}`, onClick: () => loadTransactions(acc), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
+                    acc.image ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: acc.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-primary", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-wallet2 fs-4" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: acc.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "x-small opacity-75", children: acc.id })
                     ] })
                   ] }) }, acc.id)),
-                  sharedAccounts.map((group3) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group3.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group3.id, name: group3.name, currency: "USD", createdAt: group3.createdAt, ownerId: "shared" }), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
-                    group3.image ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: group3.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-info", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-people fs-4" }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex-grow-1", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: group3.name }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "x-small opacity-75", children: "Shared Account" })
+                  sharedAccounts.map((group3) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action border-0 mb-2 card ${selectedAccount?.id === group3.id ? "bg-info text-white" : ""}`, onClick: () => loadTransactions({ id: group3.id, name: group3.name, currency: "USD", createdAt: group3.createdAt, ownerId: "shared" }), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center p-2", children: [
+                    group3.image ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: group3.image, className: "account-img me-3 border border-white", style: { width: "50px", height: "50px" } }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "bg-light rounded-circle p-3 me-3 text-info", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-people fs-4" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: group3.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "x-small opacity-75", children: "Shared Account" })
                     ] })
                   ] }) }, group3.id))
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-8", children: selectedAccount ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card border-0 p-4 mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { className: "fw-bold mb-0", children: selectedAccount.name }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "text-muted", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-md-8", children: selectedAccount ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card border-0 p-4 mb-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { className: "fw-bold mb-0", children: selectedAccount.name }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "text-muted", children: [
                       "Balance: ",
                       selectedAccount.currency,
                       " ",
                       transactions.reduce((sum, tx) => sum + tx.amount, 0).toFixed(2)
                     ] }),
-                    selectedAccount.allowanceActive && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "badge bg-light text-primary border border-primary mt-1", children: [
+                    selectedAccount.allowanceActive && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "badge bg-light text-primary border border-primary mt-1", children: [
                       "Allowance: ",
                       selectedAccount.allowanceAmount,
                       " / ",
                       selectedAccount.allowanceInterval
                     ] })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex gap-2 flex-wrap justify-content-end", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true), children: "Deposit" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false), children: "Spend" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "dropdown", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount), children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-share me-2" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex gap-2 flex-wrap justify-content-end", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-success rounded-pill px-3", onClick: () => handleAddTransaction(true), children: "Deposit" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-danger rounded-pill px-3", onClick: () => handleAddTransaction(false), children: "Spend" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "dropdown", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-outline-secondary rounded-circle", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item", onClick: () => handleShareAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-share me-2" }),
                           " Share Account"
                         ] }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item", onClick: handleSetAllowance, children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-cash-coin me-2" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item", onClick: handleSetAllowance, children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-cash-coin me-2" }),
                           " Set Allowance"
                         ] }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "dropdown-divider" }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount), children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-pencil me-2" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", { className: "dropdown-divider" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item", onClick: () => handleRenameAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-pencil me-2" }),
                           " Rename Account"
                         ] }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click(), children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-image me-2" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item", onClick: () => accountFileRef.current?.click(), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-image me-2" }),
                           " Set Account Image"
                         ] }) }),
-                        selectedAccount.image && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage, children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-image-fill me-2" }),
+                        selectedAccount.image && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item text-warning", onClick: handleRemoveAccountImage, children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-image-fill me-2" }),
                           " Remove Image"
                         ] }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "dropdown-divider" }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount), children: [
-                          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-trash me-2" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", { className: "dropdown-divider" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "dropdown-item text-danger", onClick: () => handleDeleteAccount(selectedAccount), children: [
+                          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-trash me-2" }),
                           " Delete Account"
                         ] }) })
                       ] })
                     ] })
                   ] })
                 ] }),
-                transactions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "mb-4", style: { height: "200px" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("canvas", { ref: chartRef }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "fw-bold mb-0", children: "Goals" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal, children: "+ New Goal" })
+                transactions.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mb-4", style: { height: "200px" }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("canvas", { ref: chartRef }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "fw-bold mb-0", children: "Goals" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: handleCreateGoal, children: "+ New Goal" })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row mb-4", children: goals.map((goal) => {
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "row mb-4", children: goals.map((goal) => {
                   const progress = Math.min(100, Math.round(goal.currentAmount / goal.targetAmount * 100));
-                  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6 mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card bg-light border-0 p-3 h-100", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: goal.name }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "dropdown", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "dropdown-item text-danger", onClick: async () => {
+                  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-md-6 mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card bg-light border-0 p-3 h-100", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-2", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: goal.name }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "dropdown", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-link btn-sm text-muted p-0", "data-bs-toggle": "dropdown", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-three-dots-vertical" }) }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("ul", { className: "dropdown-menu dropdown-menu-end shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "dropdown-item text-danger", onClick: async () => {
                           await banky?.deleteGoal(goal.id);
                           loadTransactions(selectedAccount);
                         }, children: "Delete Goal" }) }) })
                       ] })
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "progress mb-2", style: { height: "10px" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "progress-bar bg-success", style: { width: `${progress}%` } }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "small text-muted", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "progress mb-2", style: { height: "10px" }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "progress-bar bg-success", style: { width: `${progress}%` } }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "small text-muted", children: [
                         selectedAccount.currency,
                         " ",
                         goal.currentAmount,
                         " / ",
                         goal.targetAmount
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "btn-group btn-group-sm", children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-outline-success", onClick: () => handleGoalTransfer(goal, true), children: "+" }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-outline-danger", onClick: () => handleGoalTransfer(goal, false), disabled: goal.currentAmount <= 0, children: "-" })
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "btn-group btn-group-sm", children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-outline-success", onClick: () => handleGoalTransfer(goal, true), children: "+" }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-outline-danger", onClick: () => handleGoalTransfer(goal, false), disabled: goal.currentAmount <= 0, children: "-" })
                       ] })
                     ] })
                   ] }) }, goal.id);
                 }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", {}),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "fw-bold mb-3", children: "Recent Transactions" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group list-group-flush", children: [
-                  transactions.map((tx) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `list-group-item d-flex justify-content-between align-items-center px-0 py-3 transaction-item ${tx.amount >= 0 ? "tx-credit" : "tx-debit"}`, children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "ps-3 flex-grow-1", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "fw-bold", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("hr", {}),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "fw-bold mb-3", children: "Recent Transactions" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  transactions.map((tx) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `list-group-item d-flex justify-content-between align-items-center px-0 py-3 transaction-item ${tx.amount >= 0 ? "tx-credit" : "tx-debit"}`, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "ps-3 flex-grow-1", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "fw-bold", children: [
                         tx.description,
                         " ",
-                        tx.category === "goals" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "badge bg-light text-secondary border ms-2", children: "Goal" })
+                        tx.category === "goals" && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-light text-secondary border ms-2", children: "Goal" })
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "x-small text-muted", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "x-small text-muted", children: [
                         tx.date,
                         " \u2022 by ",
                         tx.userId
                       ] })
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `fw-bold fs-5 me-3 ${tx.amount >= 0 ? "text-success" : "text-danger"}`, children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `fw-bold fs-5 me-3 ${tx.amount >= 0 ? "text-success" : "text-danger"}`, children: [
                         tx.amount >= 0 ? "+" : "",
                         tx.amount.toFixed(2)
                       ] }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-link text-danger p-0", onClick: () => handleDeleteTransaction(tx), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-trash" }) })
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-link text-danger p-0", onClick: () => handleDeleteTransaction(tx), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-trash" }) })
                     ] })
                   ] }, tx.id)),
-                  transactions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center py-5 text-muted", children: "No transactions yet." })
+                  transactions.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center py-5 text-muted", children: "No transactions yet." })
                 ] })
-              ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-bank fs-1 mb-3" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { children: "Select an account to view details" })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex flex-column align-items-center justify-content-center h-100 text-muted opacity-50 py-5", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-bank fs-1 mb-3" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { children: "Select an account to view details" })
               ] }) })
             ] }),
-            currentTab === "sharing" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-6", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 border-0 mb-4 shadow-sm", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { className: "mb-0 fw-bold", children: "Friends & Sharing" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary rounded-pill btn-sm", onClick: () => {
+            currentTab === "sharing" && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "col-md-6", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-4 border-0 mb-4 shadow-sm", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center mb-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { className: "mb-0 fw-bold", children: "Friends & Sharing" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary rounded-pill btn-sm", onClick: () => {
                     showPrompt("Enter User ID to follow:", async (uid2) => {
                       if (uid2) {
                         await sov?.follow(uid2);
@@ -116308,55 +116380,55 @@ ${toHex(hashedRequest)}`;
                     });
                   }, children: "+ Follow User" })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group list-group-flush", children: [
-                  following.map((f2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-light rounded-circle p-2 me-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-person fs-4" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: f2.userId }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "x-small text-muted", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  following.map((f2) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "bg-light rounded-circle p-2 me-3", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-person fs-4" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: f2.userId }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "x-small text-muted", children: [
                           "Last sync: ",
                           f2.lastSync
                         ] })
                       ] })
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-danger rounded-pill", onClick: async () => {
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-danger rounded-pill", onClick: async () => {
                       await sov?.unfollow(f2.userId);
                       await sync();
                     }, children: "Unfollow" })
                   ] }, f2.userId)),
-                  following.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center py-4 text-muted", children: "You are not following anyone yet." })
+                  following.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center py-4 text-muted", children: "You are not following anyone yet." })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 border-0 shadow-sm", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "fw-bold mb-3", children: "Discover Friends" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group list-group-flush", children: [
-                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-search fs-4" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: u2.userId }),
-                        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "x-small text-muted", children: "Global Registry" })
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-4 border-0 shadow-sm", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "fw-bold mb-3", children: "Discover Friends" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group list-group-flush", children: [
+                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).map((u2) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center px-0 py-3", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "bg-light rounded-circle p-2 me-3 text-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-search fs-4" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: u2.userId }),
+                        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "x-small text-muted", children: "Global Registry" })
                       ] })
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-primary rounded-pill", onClick: async () => {
                       await sov?.follow(u2.userId);
                       await sync();
                     }, children: "Follow" })
                   ] }, u2.userId)),
-                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center py-4 text-muted", children: "No new users discovered." })
+                  registry2.filter((u2) => u2.userId !== config.paths.userId && !following.find((f2) => f2.userId === u2.userId)).length === 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center py-4 text-muted", children: "No new users discovered." })
                 ] })
               ] })
             ] }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }),
-          syncing && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center", style: { backgroundColor: "rgba(255,255,255,0.7)", zIndex: 9999 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "text-center bg-white p-4 rounded-4 shadow-lg border", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status", style: { width: "3rem", height: "3rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "visually-hidden", children: "Loading..." }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "fw-bold text-primary mb-0", children: "Syncing with S3..." }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted small mt-2 mb-0", children: "Please do not refresh the page." })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", ref: accountFileRef, className: "d-none", accept: "image/*", onChange: handleAccountImageChange }),
+          syncing && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center", style: { backgroundColor: "rgba(255,255,255,0.7)", zIndex: 9999 }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "text-center bg-white p-4 rounded-4 shadow-lg border", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status", style: { width: "3rem", height: "3rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "visually-hidden", children: "Loading..." }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "fw-bold text-primary mb-0", children: "Syncing with S3..." }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-muted small mt-2 mb-0", children: "Please do not refresh the page." })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Dialog, { dialog, setDialog }),
-          conflict && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Dialog, { dialog, setDialog }),
+          conflict && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             ConflictResolutionModal,
             {
               conflict,
@@ -116368,7 +116440,7 @@ ${toHex(hashedRequest)}`;
               }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ToastContainer, {})
         ] });
       };
       var ConflictResolutionModal = ({ conflict, onResolve }) => {
@@ -116423,47 +116495,47 @@ ${toHex(hashedRequest)}`;
             return "Binary Data (Unable to preview)";
           }
         };
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-header border-0 pb-0", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h5", { className: "modal-title fw-bold text-danger", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 3e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-dialog modal-dialog-centered modal-lg", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-header border-0 pb-0", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h5", { className: "modal-title fw-bold text-danger", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-exclamation-triangle-fill me-2" }),
             "Sync Conflict"
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-secondary", children: "A conflict was detected during sync for the following file:" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "alert alert-light border small mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: conflict.path }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card border-warning-subtle bg-warning-subtle bg-opacity-10 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold text-warning mb-2", children: "Semantic Diff Preview" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("pre", { className: "x-small mb-0", style: { maxHeight: "200px", overflowY: "auto", whiteSpace: "pre-wrap" }, children: getDiff(conflict.localData, conflict.remoteData) })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-secondary", children: "A conflict was detected during sync for the following file:" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "alert alert-light border small mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: conflict.path }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "card border-warning-subtle bg-warning-subtle bg-opacity-10 mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h6", { className: "fw-bold text-warning mb-2", children: "Semantic Diff Preview" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("pre", { className: "x-small mb-0", style: { maxHeight: "200px", overflowY: "auto", whiteSpace: "pre-wrap" }, children: getDiff(conflict.localData, conflict.remoteData) })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row g-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold text-primary mb-2", children: "Local Version" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "small text-muted mb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "row g-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "card h-100 border-primary-subtle bg-primary-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h6", { className: "fw-bold text-primary mb-2", children: "Local Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "small text-muted mb-0", children: [
                   "Size: ",
                   formatSize(conflict.localData.length)
                 ] })
               ] }) }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold text-success mb-2", children: "Remote Version" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "small text-muted mb-0", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "card h-100 border-success-subtle bg-success-subtle bg-opacity-10", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card-body", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h6", { className: "fw-bold text-success mb-2", children: "Remote Version" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "small text-muted mb-0", children: [
                   "Size: ",
                   formatSize(conflict.remoteData.length)
                 ] })
               ] }) }) })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2", children: [
-            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4", onClick: handleMerge, children: "Auto Merge" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local"), children: "Keep Local" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote"), children: "Take Remote" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort"), children: "Skip for Now" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-footer border-0 pt-0 d-flex flex-wrap justify-content-center gap-2", children: [
+            localJson && remoteJson && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-info text-white rounded-pill px-4", onClick: handleMerge, children: "Auto Merge" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4", onClick: () => onResolve("local"), children: "Keep Local" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-success rounded-pill px-4", onClick: () => onResolve("remote"), children: "Take Remote" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-outline-secondary rounded-pill px-4", onClick: () => onResolve("abort"), children: "Skip for Now" })
           ] })
         ] }) }) });
       };
       var Dialog = ({ dialog, setDialog }) => {
-        const [inputValue, setInputValue] = (0, import_react4.useState)("");
-        const [selectedValues, setSelectedValues] = (0, import_react4.useState)([]);
-        (0, import_react4.useEffect)(() => {
+        const [inputValue, setInputValue] = (0, import_react5.useState)("");
+        const [selectedValues, setSelectedValues] = (0, import_react5.useState)([]);
+        (0, import_react5.useEffect)(() => {
           setInputValue("");
           setSelectedValues([]);
         }, [dialog]);
@@ -116473,28 +116545,28 @@ ${toHex(hashedRequest)}`;
             (prev) => prev.includes(val) ? prev.filter((v2) => v2 !== val) : [...prev, val]
           );
         };
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "modal-title fw-bold text-primary", children: dialog.type.toUpperCase() }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn-close", onClick: () => setDialog(null) })
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal show d-block", tabIndex: -1, style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 2e3 }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-content shadow-lg border-0 rounded-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-header border-0 pb-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "modal-title fw-bold text-primary", children: dialog.type.toUpperCase() }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn-close", onClick: () => setDialog(null) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body py-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
-            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { autoFocus: true, className: "form-control rounded-pill px-3 shadow-sm", value: inputValue, onChange: (e2) => setInputValue(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue) }),
-            dialog.type === "multiselect" && dialog.options && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "list-group", children: dialog.options.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", className: "form-check-input me-3", checked: selectedValues.includes(opt.value), onChange: () => toggleOption(opt.value) }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: opt.label })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-body py-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "mb-3 text-secondary", children: dialog.message }),
+            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { autoFocus: true, className: "form-control rounded-pill px-3 shadow-sm", value: inputValue, onChange: (e2) => setInputValue(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && dialog.onConfirm(inputValue) }),
+            dialog.type === "multiselect" && dialog.options && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "list-group", children: dialog.options.map((opt) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "list-group-item d-flex align-items-center border-0 py-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "checkbox", className: "form-check-input me-3", checked: selectedValues.includes(opt.value), onChange: () => toggleOption(opt.value) }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: opt.label })
             ] }, opt.value)) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: () => setDialog(null), children: "Cancel" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue), children: "OK" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-footer border-0 pt-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-light rounded-pill px-4", onClick: () => setDialog(null), children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "btn btn-primary rounded-pill px-4 shadow-sm", onClick: () => dialog.onConfirm(dialog.type === "multiselect" ? selectedValues : inputValue), children: "OK" })
           ] })
         ] }) }) });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
       root2.render(
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(App, {}) })
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(App, {}) })
       );
     }
   });

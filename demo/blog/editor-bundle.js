@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React3 = require_react(), Internals = {
+        var React4 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React3.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React3 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React3.version;
+          var isomorphicReactPackageVersion = React4.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -102746,18 +102746,18 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React3 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React3 = {
+        React4 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React3.react_stack_bottom_frame.bind(
-          React3,
+        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
+          React4,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -103182,6 +103182,76 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
     }
   });
 
+  // demo/shared/src/DarkModeToggle.tsx
+  function getSystemTheme() {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+  function applyTheme(theme) {
+    if (typeof document === "undefined") return;
+    const resolved = theme === "auto" ? getSystemTheme() : theme;
+    document.documentElement.setAttribute("data-theme", resolved);
+    document.documentElement.setAttribute("data-bs-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      document.body?.classList.add("dark-theme");
+    } else {
+      document.documentElement.classList.remove("dark-theme");
+      document.body?.classList.remove("dark-theme");
+    }
+  }
+  function useDarkMode() {
+    const [theme, setTheme] = (0, import_react3.useState)(() => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("sov-theme");
+        if (saved) return saved;
+      }
+      return "auto";
+    });
+    (0, import_react3.useEffect)(() => {
+      applyTheme(theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sov-theme", theme);
+      }
+    }, [theme]);
+    const toggle = () => {
+      setTheme((prev) => {
+        const current = prev === "auto" ? getSystemTheme() : prev;
+        return current === "dark" ? "light" : "dark";
+      });
+    };
+    const isDark = theme === "dark" || theme === "auto" && getSystemTheme() === "dark";
+    return { theme, setTheme, toggle, isDark };
+  }
+  var import_react3, import_jsx_runtime5, DarkModeToggle;
+  var init_DarkModeToggle = __esm({
+    "demo/shared/src/DarkModeToggle.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react3 = __toESM(require_react());
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      DarkModeToggle = ({ className = "" }) => {
+        const { toggle, isDark } = useDarkMode();
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 sov-dark-mode-btn ${className}`,
+            onClick: toggle,
+            "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`,
+            title: `Switch to ${isDark ? "light" : "dark"} mode`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: `bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill"}` }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "d-none d-sm-inline", children: isDark ? "Light" : "Dark" })
+            ]
+          }
+        );
+      };
+    }
+  });
+
   // demo/shared/src/index.ts
   var init_src = __esm({
     "demo/shared/src/index.ts"() {
@@ -103191,6 +103261,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
       init_QuickStartCard();
       init_ModalDialog();
       init_Toast();
+      init_DarkModeToggle();
     }
   });
 
@@ -103198,7 +103269,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
   var require_Editor = __commonJS({
     "demo/blog/src/Editor.tsx"() {
       init_polyfills();
-      var import_react3 = __toESM(require_react());
+      var import_react4 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
@@ -103206,9 +103277,9 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
       init_marked_esm();
       init_purify_es();
       init_src();
-      var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      var import_jsx_runtime6 = __toESM(require_jsx_runtime());
       var Editor = () => {
-        const [config, setConfig] = (0, import_react3.useState)({
+        const [config, setConfig] = (0, import_react4.useState)({
           endpoint: "http://127.0.0.1:9000",
           region: "rustfs",
           accessKeyId: "",
@@ -103218,21 +103289,21 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           userId: "author-1",
           password: "password123"
         });
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react3.useState)(false);
-        const [sov, setSov] = (0, import_react3.useState)(null);
-        const [feed, setFeed] = (0, import_react3.useState)(null);
-        const [title, setTitle] = (0, import_react3.useState)("");
-        const [content, setContent] = (0, import_react3.useState)("");
-        const [processedContent, setProcessedContent] = (0, import_react3.useState)("");
-        const [syncing, setSyncing] = (0, import_react3.useState)(false);
-        const [lastSync, setLastSync] = (0, import_react3.useState)(null);
-        const [myPosts, setMyPosts] = (0, import_react3.useState)([]);
-        const [view, setView] = (0, import_react3.useState)("edit");
-        const [editingPost, setEditingPost] = (0, import_react3.useState)(null);
-        const [isDraft, setIsDraft] = (0, import_react3.useState)(true);
-        const [mediaList, setMediaList] = (0, import_react3.useState)([]);
-        const [blobUrls, setBlobUrls] = (0, import_react3.useState)({});
-        (0, import_react3.useEffect)(() => {
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react4.useState)(false);
+        const [sov, setSov] = (0, import_react4.useState)(null);
+        const [feed, setFeed] = (0, import_react4.useState)(null);
+        const [title, setTitle] = (0, import_react4.useState)("");
+        const [content, setContent] = (0, import_react4.useState)("");
+        const [processedContent, setProcessedContent] = (0, import_react4.useState)("");
+        const [syncing, setSyncing] = (0, import_react4.useState)(false);
+        const [lastSync, setLastSync] = (0, import_react4.useState)(null);
+        const [myPosts, setMyPosts] = (0, import_react4.useState)([]);
+        const [view, setView] = (0, import_react4.useState)("edit");
+        const [editingPost, setEditingPost] = (0, import_react4.useState)(null);
+        const [isDraft, setIsDraft] = (0, import_react4.useState)(true);
+        const [mediaList, setMediaList] = (0, import_react4.useState)([]);
+        const [blobUrls, setBlobUrls] = (0, import_react4.useState)({});
+        (0, import_react4.useEffect)(() => {
           fetch("admin_config.json").then((res) => res.json()).then((data) => {
             setConfig((prev) => ({
               ...prev,
@@ -103333,7 +103404,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           }
           return "";
         };
-        (0, import_react3.useEffect)(() => {
+        (0, import_react4.useEffect)(() => {
           const process3 = async () => {
             if (!sov) return;
             let md = content;
@@ -103514,15 +103585,15 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
           ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|data|blob):|[^&#?\/ ]*(?:[#?\/]|$))/i
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mt-5", style: { maxWidth: "640px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-4 shadow-sm mb-4 border-primary", style: { backgroundColor: "#f0f7ff" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center justify-content-between mb-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h4", { className: "mb-0 text-primary fw-bold", children: "\u26A1 Quick Start (Offline Mode)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-primary", children: "Instant Preview" })
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mt-5", style: { maxWidth: "640px" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm mb-4 border-primary", style: { backgroundColor: "#f0f7ff" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center justify-content-between mb-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { className: "mb-0 text-primary fw-bold", children: "\u26A1 Quick Start (Offline Mode)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "badge bg-primary", children: "Instant Preview" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small mb-3", children: "Draft and preview blog posts immediately using offline-first local storage. Zero configuration or AWS/S3 setup needed." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex gap-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted small mb-3", children: "Draft and preview blog posts immediately using offline-first local storage. Zero configuration or AWS/S3 setup needed." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex gap-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                   "button",
                   {
                     className: "btn btn-primary w-100",
@@ -103531,7 +103602,7 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
                     children: "Launch Offline as Author 1"
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                   "button",
                   {
                     className: "btn btn-outline-primary w-100",
@@ -103543,50 +103614,50 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
                 )
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-4 shadow-sm", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h4", { className: "mb-3", children: "Author Account & Sync" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small mb-3", children: "Optionally provide S3 storage credentials to sync published posts and media to a public bucket." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "row", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogUserId", className: "form-label small", children: "User ID" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogUserId", className: "form-control mb-3", placeholder: "User ID", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { className: "mb-3", children: "Author Account & Sync" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted small mb-3", children: "Optionally provide S3 storage credentials to sync published posts and media to a public bucket." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogUserId", className: "form-label small", children: "User ID" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogUserId", className: "form-control mb-3", placeholder: "User ID", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogPassphrase", className: "form-label small", children: "Passphrase" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogPassphrase", className: "form-control mb-3", type: "password", placeholder: "Password", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogPassphrase", className: "form-label small", children: "Passphrase" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogPassphrase", className: "form-control mb-3", type: "password", placeholder: "Password", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("details", { className: "mb-3 border rounded p-2 bg-light", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("summary", { className: "small fw-semibold", style: { cursor: "pointer", color: "#343a40" }, children: "\u2601\uFE0F S3 Cloud Sync Settings (Optional)" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mt-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogEndpoint", className: "form-label small", children: "S3 Endpoint" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogEndpoint", className: "form-control mb-3", placeholder: "S3 Endpoint", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "row", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogAccessKey", className: "form-label small", children: "Access Key ID" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogAccessKey", className: "form-control mb-3", placeholder: "Access Key ID", "aria-label": "Access Key ID", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("details", { className: "mb-3 border rounded p-2 bg-light", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("summary", { className: "small fw-semibold", style: { cursor: "pointer", color: "#343a40" }, children: "\u2601\uFE0F S3 Cloud Sync Settings (Optional)" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mt-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogEndpoint", className: "form-label small", children: "S3 Endpoint" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogEndpoint", className: "form-control mb-3", placeholder: "S3 Endpoint", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogAccessKey", className: "form-label small", children: "Access Key ID" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogAccessKey", className: "form-control mb-3", placeholder: "Access Key ID", "aria-label": "Access Key ID", value: config.accessKeyId, onChange: (e2) => setConfig({ ...config, accessKeyId: e2.target.value }) })
                     ] }),
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogSecretKey", className: "form-label small", children: "Secret Access Key" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogSecretKey", className: "form-control mb-3", type: "password", placeholder: "Secret Key", "aria-label": "Secret Access Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) })
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogSecretKey", className: "form-label small", children: "Secret Access Key" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogSecretKey", className: "form-control mb-3", type: "password", placeholder: "Secret Key", "aria-label": "Secret Access Key", value: config.secretAccessKey, onChange: (e2) => setConfig({ ...config, secretAccessKey: e2.target.value }) })
                     ] })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "row", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "col", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "blogBucketName", className: "form-label small", children: "Bucket Name" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "blogBucketName", className: "form-control mb-2", placeholder: "Bucket Name", "aria-label": "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "blogBucketName", className: "form-label small", children: "Bucket Name" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "blogBucketName", className: "form-control mb-2", placeholder: "Bucket Name", "aria-label": "Bucket Name", value: config.bucketName, onChange: (e2) => setConfig({ ...config, bucketName: e2.target.value }) })
                   ] }) })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-secondary w-100 mt-2", onClick: login, disabled: syncing, children: syncing ? "Logging in..." : "Enter Editor" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-secondary w-100 mt-2", onClick: login, disabled: syncing, children: syncing ? "Logging in..." : "Enter Editor" })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
           ] });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("nav", { className: "navbar px-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "navbar-brand", children: "BLOG EDITOR" }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "ms-auto d-flex align-items-center gap-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("nav", { className: "navbar px-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "navbar-brand", children: "BLOG EDITOR" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "ms-auto d-flex align-items-center gap-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                 SyncStatusIndicator,
                 {
                   syncing,
@@ -103598,59 +103669,60 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
                   })
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: `btn btn-sm ${view === "edit" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("edit"), children: "Write" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: `btn btn-sm ${view === "list" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("list"), children: "Posts" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: `btn btn-sm ${view === "media" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("media"), children: "Media" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-success", onClick: exportStaticSite, children: "Export Site" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("a", { href: "index.html", target: "_blank", className: "btn btn-sm btn-outline-secondary", children: "View Live" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `btn btn-sm ${view === "edit" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("edit"), children: "Write" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `btn btn-sm ${view === "list" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("list"), children: "Posts" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `btn btn-sm ${view === "media" ? "btn-dark" : "btn-outline-dark"}`, onClick: () => setView("media"), children: "Media" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-success", onClick: exportStaticSite, children: "Export Site" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { href: "index.html", target: "_blank", className: "btn btn-sm btn-outline-secondary", children: "View Live" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DarkModeToggle, {})
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container-fluid mt-4", children: [
-            view === "edit" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "row", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "editor-card", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "post-input-title", placeholder: "Post Title", "aria-label": "Post Title", value: title, onChange: (e2) => setTitle(e2.target.value) }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("textarea", { className: "post-input-content", placeholder: "Markdown supported...", "aria-label": "Post Markdown Content", value: content, onChange: (e2) => setContent(e2.target.value) }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mt-3 d-flex align-items-center gap-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "form-check form-switch", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { className: "form-check-input", type: "checkbox", id: "draftSwitch", checked: isDraft, onChange: (e2) => setIsDraft(e2.target.checked) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-check-label", htmlFor: "draftSwitch", children: isDraft ? "Draft" : "Public" })
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container-fluid mt-4", children: [
+            view === "edit" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "editor-card", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "post-input-title", placeholder: "Post Title", "aria-label": "Post Title", value: title, onChange: (e2) => setTitle(e2.target.value) }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("textarea", { className: "post-input-content", placeholder: "Markdown supported...", "aria-label": "Post Markdown Content", value: content, onChange: (e2) => setContent(e2.target.value) }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mt-3 d-flex align-items-center gap-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "form-check form-switch", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-check-input", type: "checkbox", id: "draftSwitch", checked: isDraft, onChange: (e2) => setIsDraft(e2.target.checked) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-check-label", htmlFor: "draftSwitch", children: isDraft ? "Draft" : "Public" })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary", onClick: publish, disabled: syncing, children: syncing ? "Saving..." : editingPost ? "Update" : "Publish" })
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary", onClick: publish, disabled: syncing, children: syncing ? "Saving..." : editingPost ? "Update" : "Publish" })
                 ] })
               ] }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6 border-start", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "p-3 bg-white rounded shadow-sm h-100 markdown-preview", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { children: title || "Preview" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", {}),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedContent), purifyConfig) } })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6 border-start", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "p-3 bg-white rounded shadow-sm h-100 markdown-preview", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { children: title || "Preview" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", {}),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { dangerouslySetInnerHTML: { __html: purify.sanitize(g3.parse(processedContent), purifyConfig) } })
               ] }) })
             ] }),
-            view === "list" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "max-width-800 mx-auto", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "list-group", children: myPosts.map((post) => {
+            view === "list" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "max-width-800 mx-auto", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "list-group", children: myPosts.map((post) => {
               const data = JSON.parse(post.content);
-              return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center p-3 mb-2 shadow-sm border-0 rounded", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h5", { className: "mb-1", children: [
+              return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center p-3 mb-2 shadow-sm border-0 rounded", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h5", { className: "mb-1", children: [
                     data.title,
                     " ",
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: `badge ${data.status === "draft" ? "bg-warning text-dark" : "bg-success"} ms-2`, children: data.status })
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `badge ${data.status === "draft" ? "bg-warning text-dark" : "bg-success"} ms-2`, children: data.status })
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("small", { className: "text-muted", children: new Date(data.publishedAt).toLocaleDateString() })
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("small", { className: "text-muted", children: new Date(data.publishedAt).toLocaleDateString() })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex gap-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-primary", onClick: () => startEdit(post), children: "Edit" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-danger", onClick: () => deletePost(post), children: "Delete" })
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex gap-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-primary", onClick: () => startEdit(post), children: "Edit" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-danger", onClick: () => deletePost(post), children: "Delete" })
                 ] })
               ] }, post.id);
             }) }) }),
-            view === "media" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "max-width-800 mx-auto", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card p-4 shadow-sm mb-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h5", { children: "Upload New Media" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "file", className: "form-control", onChange: handleMediaUpload, accept: "image/*", disabled: syncing })
+            view === "media" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "max-width-800 mx-auto", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm mb-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { children: "Upload New Media" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", className: "form-control", onChange: handleMediaUpload, accept: "image/*", disabled: syncing })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "row row-cols-1 row-cols-md-3 g-4", children: mediaList.map((path2) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card h-100 shadow-sm", children: [
-                blobUrls[path2] ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("img", { src: blobUrls[path2], className: "card-img-top" }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-5 text-center", children: "Loading..." }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card-body", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("code", { className: "x-small d-block mb-2 text-truncate", title: path2, children: path2 }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-secondary w-100", onClick: () => {
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row row-cols-1 row-cols-md-3 g-4", children: mediaList.map((path2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card h-100 shadow-sm", children: [
+                blobUrls[path2] ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: blobUrls[path2], className: "card-img-top" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "p-5 text-center", children: "Loading..." }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { className: "x-small d-block mb-2 text-truncate", title: path2, children: path2 }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-secondary w-100", onClick: () => {
                     navigator.clipboard.writeText(`![](${path2})`);
                     toast.info("Markdown snippet copied to clipboard!");
                   }, children: "Copy MD" })
@@ -103658,11 +103730,11 @@ Please report this to https://github.com/markedjs/marked.`, e2) {
               ] }) }, path2)) })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
         ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
-      root2.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Editor, {}));
+      root2.render(/* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Editor, {}));
     }
   });
   require_Editor();

@@ -9,6 +9,7 @@ import { WebRTCRemoteAdapter } from '../../../src/adapters/WebRTCRemoteAdapter';
 import { IRemoteAdapter } from '../../../src/interfaces/IRemoteAdapter';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
 import { PairingModal } from './PairingModal';
+import { DarkModeToggle } from '@sovereigns3nc/demo-shared';
 
 const DEBUG = true;
 
@@ -449,6 +450,7 @@ const App = () => {
                         </button>
                     )}
                     <UserAvatar userId={config.userId} profileCache={profileCache} resolveImage={resolveImage} size={32} />
+                    <DarkModeToggle className="ms-2" />
                     <button className="btn btn-sm btn-outline-danger ms-2" onClick={logout}>Logout</button>
                 </div>
             </nav>

@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React3 = require_react(), Internals = {
+        var React4 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React3.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React3 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React3.version;
+          var isomorphicReactPackageVersion = React4.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -100020,18 +100020,18 @@ ${toHex(hashedRequest)}`;
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React3 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React3 = {
+        React4 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React3.react_stack_bottom_frame.bind(
-          React3,
+        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
+          React4,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -100586,6 +100586,76 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // demo/shared/src/DarkModeToggle.tsx
+  function getSystemTheme() {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+  function applyTheme(theme) {
+    if (typeof document === "undefined") return;
+    const resolved = theme === "auto" ? getSystemTheme() : theme;
+    document.documentElement.setAttribute("data-theme", resolved);
+    document.documentElement.setAttribute("data-bs-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      document.body?.classList.add("dark-theme");
+    } else {
+      document.documentElement.classList.remove("dark-theme");
+      document.body?.classList.remove("dark-theme");
+    }
+  }
+  function useDarkMode() {
+    const [theme, setTheme] = (0, import_react3.useState)(() => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("sov-theme");
+        if (saved) return saved;
+      }
+      return "auto";
+    });
+    (0, import_react3.useEffect)(() => {
+      applyTheme(theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sov-theme", theme);
+      }
+    }, [theme]);
+    const toggle = () => {
+      setTheme((prev) => {
+        const current = prev === "auto" ? getSystemTheme() : prev;
+        return current === "dark" ? "light" : "dark";
+      });
+    };
+    const isDark = theme === "dark" || theme === "auto" && getSystemTheme() === "dark";
+    return { theme, setTheme, toggle, isDark };
+  }
+  var import_react3, import_jsx_runtime5, DarkModeToggle;
+  var init_DarkModeToggle = __esm({
+    "demo/shared/src/DarkModeToggle.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react3 = __toESM(require_react());
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      DarkModeToggle = ({ className = "" }) => {
+        const { toggle, isDark } = useDarkMode();
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 sov-dark-mode-btn ${className}`,
+            onClick: toggle,
+            "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`,
+            title: `Switch to ${isDark ? "light" : "dark"} mode`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: `bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill"}` }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "d-none d-sm-inline", children: isDark ? "Light" : "Dark" })
+            ]
+          }
+        );
+      };
+    }
+  });
+
   // demo/shared/src/index.ts
   var init_src = __esm({
     "demo/shared/src/index.ts"() {
@@ -100595,6 +100665,7 @@ ${toHex(hashedRequest)}`;
       init_QuickStartCard();
       init_ModalDialog();
       init_Toast();
+      init_DarkModeToggle();
     }
   });
 
@@ -100840,7 +100911,7 @@ ${toHex(hashedRequest)}`;
   var require_App = __commonJS({
     "demo/board/src/App.tsx"() {
       init_polyfills();
-      var import_react3 = __toESM(require_react());
+      var import_react4 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
@@ -100848,9 +100919,9 @@ ${toHex(hashedRequest)}`;
       init_WebRTCRemoteAdapter();
       init_src();
       init_crdt();
-      var import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      var import_jsx_runtime6 = __toESM(require_jsx_runtime());
       var App = () => {
-        const [config, setConfig] = (0, import_react3.useState)({
+        const [config, setConfig] = (0, import_react4.useState)({
           syncMode: "s3",
           endpoint: "http://127.0.0.1:9000",
           region: "rustfs",
@@ -100861,19 +100932,19 @@ ${toHex(hashedRequest)}`;
           userId: "user-" + Math.random().toString(36).substring(7),
           password: "password123"
         });
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react3.useState)(false);
-        const [sov, setSov] = (0, import_react3.useState)(null);
-        const [boardModule, setBoardModule] = (0, import_react3.useState)(null);
-        const [profileModule, setProfileModule] = (0, import_react3.useState)(null);
-        const [tasks, setTasks] = (0, import_react3.useState)([]);
-        const [syncing, setSyncing] = (0, import_react3.useState)(false);
-        const [lastSync, setLastSync] = (0, import_react3.useState)(null);
-        const [selectedGroup, setSelectedGroup] = (0, import_react3.useState)(null);
-        const [groups, setGroups] = (0, import_react3.useState)([]);
-        const [showCreateBoard, setShowCreateBoard] = (0, import_react3.useState)(false);
-        const [newBoardName, setNewBoardName] = (0, import_react3.useState)("");
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react4.useState)(false);
+        const [sov, setSov] = (0, import_react4.useState)(null);
+        const [boardModule, setBoardModule] = (0, import_react4.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react4.useState)(null);
+        const [tasks, setTasks] = (0, import_react4.useState)([]);
+        const [syncing, setSyncing] = (0, import_react4.useState)(false);
+        const [lastSync, setLastSync] = (0, import_react4.useState)(null);
+        const [selectedGroup, setSelectedGroup] = (0, import_react4.useState)(null);
+        const [groups, setGroups] = (0, import_react4.useState)([]);
+        const [showCreateBoard, setShowCreateBoard] = (0, import_react4.useState)(false);
+        const [newBoardName, setNewBoardName] = (0, import_react4.useState)("");
         const COLUMNS = ["Todo", "In Progress", "Done"];
-        (0, import_react3.useEffect)(() => {
+        (0, import_react4.useEffect)(() => {
           const isLocalHost = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
           const urlParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
           const requestedMode = urlParams.get("mode");
@@ -101033,7 +101104,7 @@ ${toHex(hashedRequest)}`;
           await loadTasks();
           sov?.sync();
         };
-        (0, import_react3.useEffect)(() => {
+        (0, import_react4.useEffect)(() => {
           if (isLoggedIn) {
             loadTasks();
             const interval = setInterval(() => {
@@ -101046,10 +101117,10 @@ ${toHex(hashedRequest)}`;
           }
         }, [isLoggedIn, selectedGroup]);
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "container mt-5", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "card shadow", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "card-body", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h3", { className: "card-title mb-3", children: "Sovereign Board Login" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+          return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container mt-5", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "row justify-content-center", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-6", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "card shadow", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card-body", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h3", { className: "card-title mb-3", children: "Sovereign Board Login" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                 QuickStartCard,
                 {
                   title: "\u26A1 Quick Start (Offline Board)",
@@ -101063,46 +101134,46 @@ ${toHex(hashedRequest)}`;
                   }
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Custom Mode" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center my-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "px-2 text-muted x-small text-uppercase fw-bold", children: "Or Custom Mode" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("hr", { className: "flex-grow-1 my-0 text-muted" })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { className: "form-label fw-bold", children: "Sync Mode" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "btn-group w-100 mb-2", role: "group", "aria-label": "Sync Mode Selection", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "webrtc" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "webrtc" }), children: "\u26A1 WebRTC Mesh" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "s3" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "s3" }), children: "\u2601\uFE0F S3 Remote" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "offline" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "offline" }), children: "\u{1F4BE} Offline IDB" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label fw-bold", children: "Sync Mode" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "btn-group w-100 mb-2", role: "group", "aria-label": "Sync Mode Selection", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "webrtc" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "webrtc" }), children: "\u26A1 WebRTC Mesh" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "s3" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "s3" }), children: "\u2601\uFE0F S3 Remote" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: `btn btn-sm ${config.syncMode === "offline" ? "btn-primary" : "btn-outline-secondary"}`, onClick: () => setConfig({ ...config, syncMode: "offline" }), children: "\u{1F4BE} Offline IDB" })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("small", { className: "text-muted d-block", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("small", { className: "text-muted d-block", children: [
                   config.syncMode === "webrtc" && "Peer-to-peer gossip mesh across open tabs & local peers.",
                   config.syncMode === "s3" && "Two-way sync with an S3-compatible bucket.",
                   config.syncMode === "offline" && "Purely local storage via IndexedDB & SQLite WASM."
                 ] })
               ] }),
-              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardEndpoint", className: "form-label", children: "S3 Endpoint" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardEndpoint", type: "text", className: "form-control", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })
+              config.syncMode === "s3" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "boardEndpoint", className: "form-label", children: "S3 Endpoint" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "boardEndpoint", type: "text", className: "form-control", "aria-label": "S3 Endpoint", value: config.endpoint, onChange: (e2) => setConfig({ ...config, endpoint: e2.target.value }) })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardUserId", className: "form-label", children: "User ID" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardUserId", type: "text", className: "form-control", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "boardUserId", className: "form-label", children: "User ID" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "boardUserId", type: "text", className: "form-control", "aria-label": "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "mb-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("label", { htmlFor: "boardPassword", className: "form-label", children: "Password" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { id: "boardPassword", type: "password", className: "form-control", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { htmlFor: "boardPassword", className: "form-label", children: "Password" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { id: "boardPassword", type: "password", className: "form-control", "aria-label": "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-primary w-100", onClick: login, disabled: syncing, children: syncing ? "Connecting..." : "Join Workspace" })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary w-100", onClick: login, disabled: syncing, children: syncing ? "Connecting..." : "Join Workspace" })
             ] }) }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
           ] });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex flex-column", style: { height: "100vh" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("nav", { className: "navbar navbar-expand-lg navbar-dark bg-dark px-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "navbar-brand", children: "SOVEREIGN BOARD" }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "ms-auto d-flex align-items-center gap-3", children: [
-              groups.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex flex-column", style: { height: "100vh" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("nav", { className: "navbar navbar-expand-lg navbar-dark bg-dark px-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "navbar-brand", children: "SOVEREIGN BOARD" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "ms-auto d-flex align-items-center gap-3", children: [
+              groups.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
                 "select",
                 {
                   className: "form-select form-select-sm bg-dark text-white border-secondary",
@@ -101110,20 +101181,21 @@ ${toHex(hashedRequest)}`;
                   value: selectedGroup?.id || "",
                   onChange: (e2) => setSelectedGroup(groups.find((g3) => g3.id === e2.target.value)),
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: "", disabled: true, children: "Select Board..." }),
-                    groups.map((g3) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("option", { value: g3.id, children: g3.name }, g3.id))
+                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: "", disabled: true, children: "Select Board..." }),
+                    groups.map((g3) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("option", { value: g3.id, children: g3.name }, g3.id))
                   ]
                 }
               ),
-              showCreateBoard ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex gap-2", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("input", { type: "text", className: "form-control form-control-sm", placeholder: "Board Name", "aria-label": "Board Name", value: newBoardName, onChange: (e2) => setNewBoardName(e2.target.value), autoFocus: true }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-success", onClick: createBoard, children: "Create" }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-sm btn-outline-secondary text-white", onClick: () => setShowCreateBoard(false), children: "Cancel" })
-              ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-sm btn-primary", onClick: () => setShowCreateBoard(true), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-plus-lg me-1" }),
+              showCreateBoard ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex gap-2", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "text", className: "form-control form-control-sm", placeholder: "Board Name", "aria-label": "Board Name", value: newBoardName, onChange: (e2) => setNewBoardName(e2.target.value), autoFocus: true }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-success", onClick: createBoard, children: "Create" }),
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-secondary text-white", onClick: () => setShowCreateBoard(false), children: "Cancel" })
+              ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-sm btn-primary", onClick: () => setShowCreateBoard(true), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-plus-lg me-1" }),
                 " New Board"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(DarkModeToggle, {}),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
                 SyncStatusIndicator,
                 {
                   syncing,
@@ -101137,37 +101209,37 @@ ${toHex(hashedRequest)}`;
               )
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "kanban-board", role: "main", "aria-label": "Kanban Board", children: COLUMNS.map((col) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "kanban-column", role: "region", "aria-label": `${col} column`, onDragOver: (e2) => e2.preventDefault(), onDrop: (e2) => {
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "kanban-board", role: "main", "aria-label": "Kanban Board", children: COLUMNS.map((col) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "kanban-column", role: "region", "aria-label": `${col} column`, onDragOver: (e2) => e2.preventDefault(), onDrop: (e2) => {
             const taskData = e2.dataTransfer.getData("task");
             if (taskData) moveTask(JSON.parse(taskData), col);
           }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "kanban-column-header", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: col.toUpperCase() }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "badge bg-secondary rounded-pill", children: tasks.filter((t8) => JSON.parse(t8.content).column === col).length })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "kanban-column-header", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: col.toUpperCase() }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "badge bg-secondary rounded-pill", children: tasks.filter((t8) => JSON.parse(t8.content).column === col).length })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "kanban-tasks", role: "list", "aria-label": `${col} tasks`, children: tasks.filter((t8) => JSON.parse(t8.content).column === col).map((task) => {
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "kanban-tasks", role: "list", "aria-label": `${col} tasks`, children: tasks.filter((t8) => JSON.parse(t8.content).column === col).map((task) => {
               const data = JSON.parse(task.content);
-              return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `kanban-task priority-${data.priority}`, role: "listitem", draggable: true, onDragStart: (e2) => e2.dataTransfer.setData("task", JSON.stringify(task)), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "kanban-task-title", children: data.title }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "btn btn-link p-0 text-danger border-0", "aria-label": `Delete task ${data.title}`, onClick: () => deleteTask(task), children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-trash", style: { fontSize: "0.8rem" } }) })
+              return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `kanban-task priority-${data.priority}`, role: "listitem", draggable: true, onDragStart: (e2) => e2.dataTransfer.setData("task", JSON.stringify(task)), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "kanban-task-title", children: data.title }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn btn-link p-0 text-danger border-0", "aria-label": `Delete task ${data.title}`, onClick: () => deleteTask(task), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-trash", style: { fontSize: "0.8rem" } }) })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "kanban-task-meta", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "kanban-task-avatar", children: task.userId.substring(0, 2).toUpperCase() }),
-                  /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: new Date(data.createdAt).toLocaleDateString() })
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "kanban-task-meta", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "kanban-task-avatar", children: task.userId.substring(0, 2).toUpperCase() }),
+                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: new Date(data.createdAt).toLocaleDateString() })
                 ] })
               ] }, task.id);
             }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "p-2", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "add-task-btn", "aria-label": `Add card to ${col}`, onClick: () => addTask(col), children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-plus-lg me-2" }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "p-2", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "add-task-btn", "aria-label": `Add card to ${col}`, onClick: () => addTask(col), children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-plus-lg me-2" }),
               "Add a card"
             ] }) })
           ] }, col)) }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ToastContainer, {})
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(ToastContainer, {})
         ] });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
-      root2.render(/* @__PURE__ */ (0, import_jsx_runtime5.jsx)(App, {}));
+      root2.render(/* @__PURE__ */ (0, import_jsx_runtime6.jsx)(App, {}));
     }
   });
   require_App();

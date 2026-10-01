@@ -3372,7 +3372,7 @@
           return dispatcher;
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var React4 = require_react(), Internals = {
+        var React5 = require_react(), Internals = {
           d: {
             f: noop,
             r: function() {
@@ -3390,7 +3390,7 @@
           },
           p: 0,
           findDOMNode: null
-        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+        }, REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
         "function" === typeof Map && null != Map.prototype && "function" === typeof Map.prototype.forEach && "function" === typeof Set && null != Set.prototype && "function" === typeof Set.prototype.clear && "function" === typeof Set.prototype.forEach || console.error(
           "React depends on Map and Set built-in types. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills"
         );
@@ -4927,7 +4927,7 @@
           "number" === type && getActiveElement(node.ownerDocument) === node || node.defaultValue === "" + value || (node.defaultValue = "" + value);
         }
         function validateOptionProps(element, props) {
-          null == props.value && ("object" === typeof props.children && null !== props.children ? React4.Children.forEach(props.children, function(child) {
+          null == props.value && ("object" === typeof props.children && null !== props.children ? React5.Children.forEach(props.children, function(child) {
             null == child || "string" === typeof child || "number" === typeof child || "bigint" === typeof child || didWarnInvalidChild || (didWarnInvalidChild = true, console.error(
               "Cannot infer the option value of complex children. Pass a `value` prop or use a plain string as children to <option>."
             ));
@@ -20559,14 +20559,14 @@
           ));
         }
         "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
-        var Scheduler = require_scheduler(), React4 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
+        var Scheduler = require_scheduler(), React5 = require_react(), ReactDOM = require_react_dom(), assign = Object.assign, REACT_LEGACY_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.element"), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy");
         /* @__PURE__ */ Symbol.for("react.scope");
         var REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity");
         /* @__PURE__ */ Symbol.for("react.legacy_hidden");
         /* @__PURE__ */ Symbol.for("react.tracing_marker");
         var REACT_MEMO_CACHE_SENTINEL = /* @__PURE__ */ Symbol.for("react.memo_cache_sentinel");
         /* @__PURE__ */ Symbol.for("react.view_transition");
-        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
+        var MAYBE_ITERATOR_SYMBOL = Symbol.iterator, REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), isArrayImpl = Array.isArray, ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, NotPending = Object.freeze({
           pending: false,
           data: null,
           method: null,
@@ -23354,7 +23354,7 @@
           }
         };
         (function() {
-          var isomorphicReactPackageVersion = React4.version;
+          var isomorphicReactPackageVersion = React5.version;
           if ("19.2.5" !== isomorphicReactPackageVersion)
             throw Error(
               'Incompatible React versions: The "react" and "react-dom" packages must have the exact same version. Instead got:\n  - react:      ' + (isomorphicReactPackageVersion + "\n  - react-dom:  19.2.5\nLearn more: https://react.dev/warnings/version-mismatch")
@@ -132199,18 +132199,18 @@ ${toHex(hashedRequest)}`;
         function isValidElement(object) {
           return "object" === typeof object && null !== object && object.$$typeof === REACT_ELEMENT_TYPE;
         }
-        var React4 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
+        var React5 = require_react(), REACT_ELEMENT_TYPE = /* @__PURE__ */ Symbol.for("react.transitional.element"), REACT_PORTAL_TYPE = /* @__PURE__ */ Symbol.for("react.portal"), REACT_FRAGMENT_TYPE = /* @__PURE__ */ Symbol.for("react.fragment"), REACT_STRICT_MODE_TYPE = /* @__PURE__ */ Symbol.for("react.strict_mode"), REACT_PROFILER_TYPE = /* @__PURE__ */ Symbol.for("react.profiler"), REACT_CONSUMER_TYPE = /* @__PURE__ */ Symbol.for("react.consumer"), REACT_CONTEXT_TYPE = /* @__PURE__ */ Symbol.for("react.context"), REACT_FORWARD_REF_TYPE = /* @__PURE__ */ Symbol.for("react.forward_ref"), REACT_SUSPENSE_TYPE = /* @__PURE__ */ Symbol.for("react.suspense"), REACT_SUSPENSE_LIST_TYPE = /* @__PURE__ */ Symbol.for("react.suspense_list"), REACT_MEMO_TYPE = /* @__PURE__ */ Symbol.for("react.memo"), REACT_LAZY_TYPE = /* @__PURE__ */ Symbol.for("react.lazy"), REACT_ACTIVITY_TYPE = /* @__PURE__ */ Symbol.for("react.activity"), REACT_CLIENT_REFERENCE = /* @__PURE__ */ Symbol.for("react.client.reference"), ReactSharedInternals = React5.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, hasOwnProperty = Object.prototype.hasOwnProperty, isArrayImpl = Array.isArray, createTask = console.createTask ? console.createTask : function() {
           return null;
         };
-        React4 = {
+        React5 = {
           react_stack_bottom_frame: function(callStackForError) {
             return callStackForError();
           }
         };
         var specialPropKeyWarningShown;
         var didWarnAboutElementRef = {};
-        var unknownOwnerDebugStack = React4.react_stack_bottom_frame.bind(
-          React4,
+        var unknownOwnerDebugStack = React5.react_stack_bottom_frame.bind(
+          React5,
           UnknownOwner
         )();
         var unknownOwnerDebugTask = createTask(getTaskName(UnknownOwner));
@@ -132362,6 +132362,76 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // demo/shared/src/DarkModeToggle.tsx
+  function getSystemTheme() {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  }
+  function applyTheme(theme) {
+    if (typeof document === "undefined") return;
+    const resolved = theme === "auto" ? getSystemTheme() : theme;
+    document.documentElement.setAttribute("data-theme", resolved);
+    document.documentElement.setAttribute("data-bs-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark-theme");
+      document.body?.classList.add("dark-theme");
+    } else {
+      document.documentElement.classList.remove("dark-theme");
+      document.body?.classList.remove("dark-theme");
+    }
+  }
+  function useDarkMode() {
+    const [theme, setTheme] = (0, import_react3.useState)(() => {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("sov-theme");
+        if (saved) return saved;
+      }
+      return "auto";
+    });
+    (0, import_react3.useEffect)(() => {
+      applyTheme(theme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sov-theme", theme);
+      }
+    }, [theme]);
+    const toggle = () => {
+      setTheme((prev) => {
+        const current = prev === "auto" ? getSystemTheme() : prev;
+        return current === "dark" ? "light" : "dark";
+      });
+    };
+    const isDark = theme === "dark" || theme === "auto" && getSystemTheme() === "dark";
+    return { theme, setTheme, toggle, isDark };
+  }
+  var import_react3, import_jsx_runtime5, DarkModeToggle;
+  var init_DarkModeToggle = __esm({
+    "demo/shared/src/DarkModeToggle.tsx"() {
+      "use strict";
+      init_polyfills();
+      import_react3 = __toESM(require_react());
+      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      DarkModeToggle = ({ className = "" }) => {
+        const { toggle, isDark } = useDarkMode();
+        return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+          "button",
+          {
+            type: "button",
+            className: `btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 sov-dark-mode-btn ${className}`,
+            onClick: toggle,
+            "aria-label": `Switch to ${isDark ? "light" : "dark"} mode`,
+            title: `Switch to ${isDark ? "light" : "dark"} mode`,
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: `bi ${isDark ? "bi-sun-fill text-warning" : "bi-moon-stars-fill"}` }),
+              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "d-none d-sm-inline", children: isDark ? "Light" : "Dark" })
+            ]
+          }
+        );
+      };
+    }
+  });
+
   // demo/shared/src/index.ts
   var init_src = __esm({
     "demo/shared/src/index.ts"() {
@@ -132371,37 +132441,38 @@ ${toHex(hashedRequest)}`;
       init_QuickStartCard();
       init_ModalDialog();
       init_Toast();
+      init_DarkModeToggle();
     }
   });
 
   // demo/social-local/src/PairingModal.tsx
-  var import_react3, import_qrcode, import_jsx_runtime5, PairingModal;
+  var import_react4, import_qrcode, import_jsx_runtime6, PairingModal;
   var init_PairingModal = __esm({
     "demo/social-local/src/PairingModal.tsx"() {
       "use strict";
       init_polyfills();
-      import_react3 = __toESM(require_react());
+      import_react4 = __toESM(require_react());
       import_qrcode = __toESM(require_browser14());
       init_esm();
       init_NativeWebRTCTransport();
       init_BLESignaling();
       init_src();
-      import_jsx_runtime5 = __toESM(require_jsx_runtime());
+      import_jsx_runtime6 = __toESM(require_jsx_runtime());
       PairingModal = ({ userId, onClose, onConnected }) => {
-        const [step, setStep] = (0, import_react3.useState)("initial");
-        const [transport] = (0, import_react3.useState)(() => new NativeWebRTCTransport(userId));
-        const [qrValue, setQrValue] = (0, import_react3.useState)("");
-        const [error, setError] = (0, import_react3.useState)("");
-        const canvasRef = (0, import_react3.useRef)(null);
-        const scannerRef = (0, import_react3.useRef)(null);
-        (0, import_react3.useEffect)(() => {
+        const [step, setStep] = (0, import_react4.useState)("initial");
+        const [transport] = (0, import_react4.useState)(() => new NativeWebRTCTransport(userId));
+        const [qrValue, setQrValue] = (0, import_react4.useState)("");
+        const [error, setError] = (0, import_react4.useState)("");
+        const canvasRef = (0, import_react4.useRef)(null);
+        const scannerRef = (0, import_react4.useRef)(null);
+        (0, import_react4.useEffect)(() => {
           return () => {
             if (scannerRef.current) {
               scannerRef.current.clear();
             }
           };
         }, []);
-        (0, import_react3.useEffect)(() => {
+        (0, import_react4.useEffect)(() => {
           let active = true;
           const generateQR = () => {
             if (!active) return;
@@ -132503,63 +132574,63 @@ ${toHex(hashedRequest)}`;
             setStep("initial");
           }
         };
-        return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "modal show d-block", style: { backgroundColor: "rgba(0,0,0,0.8)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-content border-0 rounded-4 overflow-hidden", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-header bg-primary text-white border-0", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("h5", { className: "modal-title fw-bold", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-qr-code-scan me-2" }),
+        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal show d-block", style: { backgroundColor: "rgba(0,0,0,0.8)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-content border-0 rounded-4 overflow-hidden", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-header bg-primary text-white border-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h5", { className: "modal-title fw-bold", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-qr-code-scan me-2" }),
               "Direct Pairing"
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "btn-close btn-close-white", onClick: onClose })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "btn-close btn-close-white", onClick: onClose })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "modal-body p-4 text-center", children: [
-            error && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "alert alert-danger small py-2", children: error }),
-            step === "initial" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "py-3", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-secondary mb-4", children: "Pair directly with another device without using a server or the internet." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleCreateOffer, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-broadcast me-2" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body p-4 text-center", children: [
+            error && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "alert alert-danger small py-2", children: error }),
+            step === "initial" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "py-3", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-secondary mb-4", children: "Pair directly with another device without using a server or the internet." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleCreateOffer, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-broadcast me-2" }),
                 " 1. I am the INITIATOR (QR)"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-outline-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleScanOffer, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-camera me-2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-outline-primary w-100 py-3 mb-3 fw-bold rounded-pill", onClick: handleScanOffer, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-camera me-2" }),
                 " 2. I am the RECEIVER (QR)"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "divider text-muted small my-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { children: "OR" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("button", { className: "btn btn-dark w-100 py-3 fw-bold rounded-pill", onClick: handleBluetoothScan, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-bluetooth me-2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "divider text-muted small my-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: "OR" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-dark w-100 py-3 fw-bold rounded-pill", onClick: handleBluetoothScan, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-bluetooth me-2" }),
                 " Scan via Bluetooth"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted extra-small mt-2", style: { fontSize: "0.7rem" }, children: "* Bluetooth requires a Sovereign Peripheral (like a Headless Peer) to be advertising." })
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted extra-small mt-2", style: { fontSize: "0.7rem" }, children: "* Bluetooth requires a Sovereign Peripheral (like a Headless Peer) to be advertising." })
             ] }),
-            step === "show-offer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN ME" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Ask the other device to scan this QR code to start the handshake." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("canvas", { ref: canvasRef }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { className: "btn btn-success w-100 py-2 rounded-pill fw-bold", onClick: handleScanAnswer, children: "Next: Scan their Answer" })
+            step === "show-offer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN ME" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "small text-muted mb-3", children: "Ask the other device to scan this QR code to start the handshake." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("canvas", { ref: canvasRef }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-success w-100 py-2 rounded-pill fw-bold", onClick: handleScanAnswer, children: "Next: Scan their Answer" })
             ] }),
-            step === "scan-offer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN INITIATOR" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Position the Initiator's QR code in the camera frame." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
+            step === "scan-offer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN INITIATOR" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "small text-muted mb-3", children: "Position the Initiator's QR code in the camera frame." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
             ] }),
-            step === "show-answer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-success", children: "SCAN MY ANSWER" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Initiator must scan this QR code to complete the pairing." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("canvas", { ref: canvasRef }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "alert alert-info py-2 small", children: "Waiting for connection..." })
+            step === "show-answer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold mb-3 text-success", children: "SCAN MY ANSWER" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "small text-muted mb-3", children: "Initiator must scan this QR code to complete the pairing." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-white p-3 rounded shadow-sm d-inline-block mb-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("canvas", { ref: canvasRef }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "alert alert-info py-2 small", children: "Waiting for connection..." })
             ] }),
-            step === "scan-answer" && /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN RECEIVER'S ANSWER" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "small text-muted mb-3", children: "Final step: Scan the QR code shown on the Receiver's device." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
+            step === "scan-answer" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h6", { className: "fw-bold mb-3 text-primary", children: "SCAN RECEIVER'S ANSWER" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "small text-muted mb-3", children: "Final step: Scan the QR code shown on the Receiver's device." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { id: "reader", style: { width: "100%", borderRadius: "8px", overflow: "hidden" } })
             ] }),
-            (step === "connecting" || step === "success") && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "py-5", children: step === "connecting" ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "fw-bold", children: "Establishing Secure Link..." }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "Gathering network routes and preparing handshake." })
-            ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("i", { className: "bi bi-check-circle-fill text-success", style: { fontSize: "4rem" } }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "fw-bold mt-3 h5", children: "Connection Established!" }),
-              /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("p", { className: "text-muted small", children: "Devices are now syncing directly." })
+            (step === "connecting" || step === "success") && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "py-5", children: step === "connecting" ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "spinner-border text-primary mb-3", role: "status" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "fw-bold", children: "Establishing Secure Link..." }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted small", children: "Gathering network routes and preparing handshake." })
+            ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-check-circle-fill text-success", style: { fontSize: "4rem" } }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "fw-bold mt-3 h5", children: "Connection Established!" }),
+              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-muted small", children: "Devices are now syncing directly." })
             ] }) })
           ] })
         ] }) }) });
@@ -132571,7 +132642,7 @@ ${toHex(hashedRequest)}`;
   var require_AppLocal = __commonJS({
     "demo/social-local/src/AppLocal.tsx"() {
       init_polyfills();
-      var import_react4 = __toESM(require_react());
+      var import_react5 = __toESM(require_react());
       var import_client6 = __toESM(require_client());
       init_SovereignS3nc();
       init_Feed();
@@ -132580,7 +132651,8 @@ ${toHex(hashedRequest)}`;
       init_WebRTCRemoteAdapter();
       init_MediaUtils();
       init_PairingModal();
-      var import_jsx_runtime6 = __toESM(require_jsx_runtime());
+      init_src();
+      var import_jsx_runtime7 = __toESM(require_jsx_runtime());
       var DEBUG = true;
       var PrefixProxyAdapter = class {
         constructor(baseAdapter, prefix) {
@@ -132607,88 +132679,88 @@ ${toHex(hashedRequest)}`;
         }
       };
       var UserAvatar = ({ userId, profileCache, resolveImage, size = 40 }) => {
-        const [avatarUrl, setAvatarUrl] = (0, import_react4.useState)(null);
+        const [avatarUrl, setAvatarUrl] = (0, import_react5.useState)(null);
         const p2 = profileCache[userId] || { name: userId };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react5.useEffect)(() => {
           if (p2.avatar && p2.avatar.startsWith("public/blobs/")) {
             resolveImage(p2.avatar, userId).then(setAvatarUrl);
           } else if (p2.avatar && p2.avatar.startsWith("data:")) {
             setAvatarUrl(p2.avatar);
           }
         }, [p2.avatar, userId, resolveImage]);
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-          avatarUrl ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: avatarUrl, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" }, children: userId[0].toUpperCase() }),
-          size > 30 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "fw-bold", children: p2.name || userId })
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+          avatarUrl ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: avatarUrl, style: { width: size + "px", height: size + "px", borderRadius: "50%", objectFit: "cover" }, className: "me-2" }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2", style: { width: size + "px", height: size + "px" }, children: userId[0].toUpperCase() }),
+          size > 30 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "fw-bold", children: p2.name || userId })
         ] });
       };
       var PostItem = ({ post, userId, profileCache, resolveImage }) => {
-        const [imageUrl, setImageUrl] = (0, import_react4.useState)(null);
-        (0, import_react4.useEffect)(() => {
+        const [imageUrl, setImageUrl] = (0, import_react5.useState)(null);
+        (0, import_react5.useEffect)(() => {
           if (post.image) {
             resolveImage(post.image, post.userId).then(setImageUrl);
           }
         }, [post.image, resolveImage]);
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-3 mb-3 border-0 shadow-sm", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center mb-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: post.userId, profileCache, resolveImage, size: 24 }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ms-2 small text-muted", children: new Date(post.timestamp).toLocaleString() })
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-3 mb-3 border-0 shadow-sm", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center mb-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: post.userId, profileCache, resolveImage, size: 24 }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ms-2 small text-muted", children: new Date(post.timestamp).toLocaleString() })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "mb-2", children: post.content }),
-          imageUrl && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: imageUrl, className: "img-fluid rounded", style: { maxHeight: "400px" } })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "mb-2", children: post.content }),
+          imageUrl && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: imageUrl, className: "img-fluid rounded", style: { maxHeight: "400px" } })
         ] });
       };
       var MessageItem = ({ m: m2, myId, resolveImage, resolveMessageImage }) => {
-        const [imageUrl, setImageUrl] = (0, import_react4.useState)(null);
-        (0, import_react4.useEffect)(() => {
+        const [imageUrl, setImageUrl] = (0, import_react5.useState)(null);
+        (0, import_react5.useEffect)(() => {
           if (m2.image) {
             (resolveMessageImage ? resolveMessageImage(m2) : resolveImage(m2.image, m2.senderId)).then(setImageUrl);
           }
         }, [m2.image, m2.localImage, m2.imageEncryption]);
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: `d-flex mb-3 ${m2.senderId === myId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `p-2 rounded px-3 shadow-sm ${m2.senderId === myId ? "bg-primary text-white" : "bg-white"}`, style: { maxWidth: "80%" }, children: [
-          m2.content && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { children: m2.content }),
-          imageUrl && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: imageUrl, className: "img-fluid rounded mt-1", style: { maxHeight: "300px" } }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: `extra-small mt-1 text-end ${m2.senderId === myId ? "text-white-50" : "text-muted"}`, children: new Date(m2.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: `d-flex mb-3 ${m2.senderId === myId ? "justify-content-end" : "justify-content-start"}`, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: `p-2 rounded px-3 shadow-sm ${m2.senderId === myId ? "bg-primary text-white" : "bg-white"}`, style: { maxWidth: "80%" }, children: [
+          m2.content && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { children: m2.content }),
+          imageUrl && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: imageUrl, className: "img-fluid rounded mt-1", style: { maxHeight: "300px" } }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: `extra-small mt-1 text-end ${m2.senderId === myId ? "text-white-50" : "text-muted"}`, children: new Date(m2.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
         ] }) });
       };
       var App = () => {
-        const [config, setConfig] = (0, import_react4.useState)({
+        const [config, setConfig] = (0, import_react5.useState)({
           syncMode: "webrtc",
           appId: "sov-social-local",
           userId: "local-" + Math.random().toString(36).substring(7),
           password: "password123",
           enableP2PPairing: new URLSearchParams(window.location.search).has("pairing")
         });
-        const [isLoggedIn, setIsLoggedIn] = (0, import_react4.useState)(false);
+        const [isLoggedIn, setIsLoggedIn] = (0, import_react5.useState)(false);
         const getStorageKey = (key) => `sov_local_${config.userId}_${key}`;
-        const [autoLogin, setAutoLogin] = (0, import_react4.useState)(localStorage.getItem("sov_local_auto_login") === "true");
-        const [showPairing, setShowPairing] = (0, import_react4.useState)(false);
-        const [rememberedUsers, setRememberedUsers] = (0, import_react4.useState)(() => {
+        const [autoLogin, setAutoLogin] = (0, import_react5.useState)(localStorage.getItem("sov_local_auto_login") === "true");
+        const [showPairing, setShowPairing] = (0, import_react5.useState)(false);
+        const [rememberedUsers, setRememberedUsers] = (0, import_react5.useState)(() => {
           const saved = localStorage.getItem("sov_local_remembered_users");
           return saved ? JSON.parse(saved) : [];
         });
-        const [profileCache, setProfileCache] = (0, import_react4.useState)({});
-        const [blobCache, setBlobCache] = (0, import_react4.useState)({});
-        const [lastViewed, setLastViewed] = (0, import_react4.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {} });
-        const [discoveryMap, setDiscoveryMap] = (0, import_react4.useState)({});
-        const [sov, setSov] = (0, import_react4.useState)(null);
-        const [feed, setFeed] = (0, import_react4.useState)(null);
-        const [messaging, setMessaging] = (0, import_react4.useState)(null);
-        const [profileModule, setProfileModule] = (0, import_react4.useState)(null);
-        const [posts, setPosts] = (0, import_react4.useState)([]);
-        const [following, setFollowing] = (0, import_react4.useState)([]);
-        const [allUsers, setAllUsers] = (0, import_react4.useState)([]);
-        const [lastSyncTime, setLastSyncTime] = (0, import_react4.useState)(null);
-        const [newPost, setNewPost] = (0, import_react4.useState)("");
-        const [newPostImage, setNewPostImage] = (0, import_react4.useState)(null);
-        const [newPostImagePreview, setNewPostImagePreview] = (0, import_react4.useState)(null);
-        const postFileRef = (0, import_react4.useRef)(null);
-        const [newMsgImage, setNewMsgImage] = (0, import_react4.useState)(null);
-        const [newMsgImagePreview, setNewMsgImagePreview] = (0, import_react4.useState)(null);
-        const msgFileRef = (0, import_react4.useRef)(null);
-        const profileFileRef = (0, import_react4.useRef)(null);
-        const [profile, setProfile] = (0, import_react4.useState)(null);
-        const [meshStats, setMeshStats] = (0, import_react4.useState)({ connectedPeers: 0, peerIds: [] });
-        (0, import_react4.useEffect)(() => {
+        const [profileCache, setProfileCache] = (0, import_react5.useState)({});
+        const [blobCache, setBlobCache] = (0, import_react5.useState)({});
+        const [lastViewed, setLastViewed] = (0, import_react5.useState)({ feed: Date.now(), friends: Date.now(), messages: Date.now(), rooms: Date.now(), chat: {} });
+        const [discoveryMap, setDiscoveryMap] = (0, import_react5.useState)({});
+        const [sov, setSov] = (0, import_react5.useState)(null);
+        const [feed, setFeed] = (0, import_react5.useState)(null);
+        const [messaging, setMessaging] = (0, import_react5.useState)(null);
+        const [profileModule, setProfileModule] = (0, import_react5.useState)(null);
+        const [posts, setPosts] = (0, import_react5.useState)([]);
+        const [following, setFollowing] = (0, import_react5.useState)([]);
+        const [allUsers, setAllUsers] = (0, import_react5.useState)([]);
+        const [lastSyncTime, setLastSyncTime] = (0, import_react5.useState)(null);
+        const [newPost, setNewPost] = (0, import_react5.useState)("");
+        const [newPostImage, setNewPostImage] = (0, import_react5.useState)(null);
+        const [newPostImagePreview, setNewPostImagePreview] = (0, import_react5.useState)(null);
+        const postFileRef = (0, import_react5.useRef)(null);
+        const [newMsgImage, setNewMsgImage] = (0, import_react5.useState)(null);
+        const [newMsgImagePreview, setNewMsgImagePreview] = (0, import_react5.useState)(null);
+        const msgFileRef = (0, import_react5.useRef)(null);
+        const profileFileRef = (0, import_react5.useRef)(null);
+        const [profile, setProfile] = (0, import_react5.useState)(null);
+        const [meshStats, setMeshStats] = (0, import_react5.useState)({ connectedPeers: 0, peerIds: [] });
+        (0, import_react5.useEffect)(() => {
           if (!sov) return;
           const interval = setInterval(() => {
             setMeshStats(sov.getMeshStats());
@@ -132741,15 +132813,15 @@ ${toHex(hashedRequest)}`;
           };
           reader.readAsDataURL(file);
         };
-        const [syncing, setSyncing] = (0, import_react4.useState)(false);
-        const [currentTab, setCurrentTab] = (0, import_react4.useState)("feed");
-        const [messages, setMessages] = (0, import_react4.useState)([]);
-        const [msgInput, setMsgInput] = (0, import_react4.useState)("");
-        const [selectedUser, setSelectedUser] = (0, import_react4.useState)(null);
-        const [lookbackDays, setLookbackDays] = (0, import_react4.useState)(5);
-        const [unreadCounts, setUnreadCounts] = (0, import_react4.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
-        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react4.useState)({});
-        const [dialog, setDialog] = (0, import_react4.useState)(null);
+        const [syncing, setSyncing] = (0, import_react5.useState)(false);
+        const [currentTab, setCurrentTab] = (0, import_react5.useState)("feed");
+        const [messages, setMessages] = (0, import_react5.useState)([]);
+        const [msgInput, setMsgInput] = (0, import_react5.useState)("");
+        const [selectedUser, setSelectedUser] = (0, import_react5.useState)(null);
+        const [lookbackDays, setLookbackDays] = (0, import_react5.useState)(5);
+        const [unreadCounts, setUnreadCounts] = (0, import_react5.useState)({ feed: 0, friends: 0, messages: 0, rooms: 0 });
+        const [userUnreadCounts, setUserUnreadCounts] = (0, import_react5.useState)({});
+        const [dialog, setDialog] = (0, import_react5.useState)(null);
         const showAlert = (message, title = "Notice") => {
           setDialog({ title, message, type: "alert", onConfirm: () => setDialog(null), onCancel: () => setDialog(null) });
         };
@@ -132778,7 +132850,7 @@ ${toHex(hashedRequest)}`;
             onCancel: () => setDialog(null)
           });
         };
-        (0, import_react4.useEffect)(() => {
+        (0, import_react5.useEffect)(() => {
           const savedConfig = localStorage.getItem("sov_local_config");
           if (savedConfig && autoLogin) {
             try {
@@ -132914,105 +132986,106 @@ ${toHex(hashedRequest)}`;
           setSov(null);
         };
         if (!isLoggedIn) {
-          return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { className: "text-primary text-center fw-bold mb-4", children: "Sovereign Local" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "text-center text-muted small mb-4", children: "Pure Local WebRTC Social Demo (QR & BT)" }),
-            rememberedUsers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Switch Account" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "list-group", children: rememberedUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "list-group-item list-group-item-action d-flex align-items-center py-2", onClick: () => performLogin(u2.config), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: u2.userId, profileCache, resolveImage, size: 32 }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "flex-grow-1 ms-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "fw-bold", children: u2.name }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "x-small text-muted", children: u2.userId })
+          return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "container mt-5", style: { maxWidth: "500px" }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-4 shadow-sm border-0 mb-4", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { className: "text-primary text-center fw-bold mb-4", children: "Sovereign Local" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "text-center text-muted small mb-4", children: "Pure Local WebRTC Social Demo (QR & BT)" }),
+            rememberedUsers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Switch Account" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "list-group", children: rememberedUsers.map((u2) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "list-group-item list-group-item-action d-flex align-items-center py-2", onClick: () => performLogin(u2.config), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: u2.userId, profileCache, resolveImage, size: 32 }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flex-grow-1 ms-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "fw-bold", children: u2.name }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "x-small text-muted", children: u2.userId })
                 ] })
               ] }, u2.userId)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Account Credentials" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary w-100 py-2 fs-5 mb-3", onClick: () => performLogin(config), children: "Log In" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center mt-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: () => {
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("label", { className: "form-label small fw-bold text-muted text-uppercase", children: "Account Credentials" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control mb-2", placeholder: "User ID", value: config.userId, onChange: (e2) => setConfig({ ...config, userId: e2.target.value }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control mb-3", type: "password", placeholder: "Password", value: config.password, onChange: (e2) => setConfig({ ...config, password: e2.target.value }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary w-100 py-2 fs-5 mb-3", onClick: () => performLogin(config), children: "Log In" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center mt-3", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-link btn-sm text-danger text-decoration-none", onClick: () => {
               localStorage.clear();
               window.location.reload();
             }, children: "Reset Local Data" }) })
           ] }) });
         }
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "container-fluid p-0", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("nav", { className: "navbar navbar-light bg-white shadow-sm sticky-top px-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "navbar-brand text-primary fw-bold", children: [
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "container-fluid p-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("nav", { className: "navbar navbar-light bg-white shadow-sm sticky-top px-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "navbar-brand text-primary fw-bold", children: [
               "sov ",
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "badge bg-info fs-6 fw-normal", children: "Local Mesh" })
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "badge bg-info fs-6 fw-normal", children: "Local Mesh" })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex align-items-center", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "me-3 d-flex align-items-center gap-1 text-success fw-bold small", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-broadcast" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex align-items-center", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "me-3 d-flex align-items-center gap-1 text-success fw-bold small", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-broadcast" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
                   meshStats.connectedPeers,
                   " peers"
                 ] })
               ] }),
-              config.enableP2PPairing && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { className: "btn btn-outline-primary rounded-pill me-2", onClick: () => setShowPairing(true), children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-qr-code-scan" }),
+              config.enableP2PPairing && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { className: "btn btn-outline-primary rounded-pill me-2", onClick: () => setShowPairing(true), children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-qr-code-scan" }),
                 " Pair Device"
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: config.userId, profileCache, resolveImage, size: 32 }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout, children: "Logout" })
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: config.userId, profileCache, resolveImage, size: 32 }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(DarkModeToggle, { className: "ms-2" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-outline-danger ms-2", onClick: logout, children: "Logout" })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "container mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-md-3", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group list-group-flush mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "feed" ? "active" : ""}`, onClick: () => setCurrentTab("feed"), children: "Feed" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "friends" ? "active" : ""}`, onClick: () => setCurrentTab("friends"), children: "Friends" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "messages" ? "active" : ""}`, onClick: () => setCurrentTab("messages"), children: "Messages" }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "profile" ? "active" : ""}`, onClick: () => setCurrentTab("profile"), children: "Profile" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "container mt-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "row", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-md-3", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group list-group-flush mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "feed" ? "active" : ""}`, onClick: () => setCurrentTab("feed"), children: "Feed" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "friends" ? "active" : ""}`, onClick: () => setCurrentTab("friends"), children: "Friends" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "messages" ? "active" : ""}`, onClick: () => setCurrentTab("messages"), children: "Messages" }),
+              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action ${currentTab === "profile" ? "active" : ""}`, onClick: () => setCurrentTab("profile"), children: "Profile" })
             ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "col-md-9", children: [
-              currentTab === "feed" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-3 mb-4", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("textarea", { className: "form-control mb-2", rows: 2, placeholder: "What's happening locally?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }),
-                  newPostImagePreview && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: newPostImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "200px" } }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-outline-secondary btn-sm", onClick: () => postFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-image" }) }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", ref: postFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "post") }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary", onClick: handlePost, children: "Post" })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "col-md-9", children: [
+              currentTab === "feed" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-3 mb-4", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("textarea", { className: "form-control mb-2", rows: 2, placeholder: "What's happening locally?", value: newPost, onChange: (e2) => setNewPost(e2.target.value) }),
+                  newPostImagePreview && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: newPostImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "200px" } }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "d-flex justify-content-between align-items-center", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-outline-secondary btn-sm", onClick: () => postFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-image" }) }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", ref: postFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "post") }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary", onClick: handlePost, children: "Post" })
                   ] })
                 ] }),
-                posts.map((post) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(PostItem, { post, userId: config.userId, resolveImage }, post.id))
+                posts.map((post) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PostItem, { post, userId: config.userId, resolveImage }, post.id))
               ] }),
-              currentTab === "friends" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-3", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "fw-bold mb-3", children: "Local Peers" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "list-group list-group-flush", children: allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center border-0 py-2", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: u2.userId, profileCache, resolveImage }),
-                  following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-light btn-sm rounded-pill", onClick: () => sov?.unfollow(u2.userId).then(() => loadData()), children: "Following" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary btn-sm rounded-pill", onClick: () => sov?.follow(u2.userId).then(() => loadData()), children: "Follow" })
+              currentTab === "friends" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-3", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "fw-bold mb-3", children: "Local Peers" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "list-group list-group-flush", children: allUsers.filter((u2) => u2.userId !== config.userId).map((u2) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "list-group-item d-flex justify-content-between align-items-center border-0 py-2", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: u2.userId, profileCache, resolveImage }),
+                  following.find((f2) => f2.userId === u2.userId) ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-light btn-sm rounded-pill", onClick: () => sov?.unfollow(u2.userId).then(() => loadData()), children: "Following" }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary btn-sm rounded-pill", onClick: () => sov?.follow(u2.userId).then(() => loadData()), children: "Follow" })
                 ] }, u2.userId)) })
               ] }),
-              currentTab === "messages" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "row g-0 h-100", style: { height: "60vh" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-4 border-end overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "list-group list-group-flush", children: following.map((user) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: `list-group-item list-group-item-action ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: user.userId, profileCache, resolveImage, size: 32 }) }, user.userId)) }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "col-8 d-flex flex-column h-100", children: selectedUser ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-light", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp).map((m2) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(MessageItem, { m: m2, myId: config.userId, resolveImage, resolveMessageImage }, m2.id)) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "p-3 border-top", children: [
-                    newMsgImagePreview && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("img", { src: newMsgImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "100px" } }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "input-group", children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-outline-secondary", onClick: () => msgFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-image" }) }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", ref: msgFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "msg") }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }),
-                      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary", onClick: handleSendMessage, children: "Send" })
+              currentTab === "messages" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "row g-0 h-100", style: { height: "60vh" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-4 border-end overflow-y-auto", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "list-group list-group-flush", children: following.map((user) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: `list-group-item list-group-item-action ${selectedUser === user.userId ? "bg-light" : ""}`, onClick: () => setSelectedUser(user.userId), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: user.userId, profileCache, resolveImage, size: 32 }) }, user.userId)) }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "col-8 d-flex flex-column h-100", children: selectedUser ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "flex-grow-1 p-3 overflow-y-auto bg-light", children: messages.filter((m2) => m2.senderId === selectedUser && m2.recipientId === config.userId || m2.senderId === config.userId && m2.recipientId === selectedUser).sort((a2, b2) => a2.timestamp - b2.timestamp).map((m2) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(MessageItem, { m: m2, myId: config.userId, resolveImage, resolveMessageImage }, m2.id)) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "p-3 border-top", children: [
+                    newMsgImagePreview && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("img", { src: newMsgImagePreview, className: "img-fluid rounded mb-2", style: { maxHeight: "100px" } }),
+                    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "input-group", children: [
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-outline-secondary", onClick: () => msgFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-image" }) }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", ref: msgFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "msg") }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control", placeholder: "Type a message...", value: msgInput, onChange: (e2) => setMsgInput(e2.target.value), onKeyDown: (e2) => e2.key === "Enter" && handleSendMessage() }),
+                      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary", onClick: handleSendMessage, children: "Send" })
                     ] })
                   ] })
-                ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a friend to chat" }) })
+                ] }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "flex-grow-1 d-flex align-items-center justify-content-center text-muted", children: "Select a friend to chat" }) })
               ] }),
-              currentTab === "profile" && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "card p-4", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h4", { className: "mb-4 fw-bold", children: "My Local Profile" }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text-center mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "position-relative d-inline-block", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(UserAvatar, { userId: config.userId, profileCache: { [config.userId]: profile }, resolveImage, size: 100 }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0", onClick: () => profileFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: "bi bi-camera" }) }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "file", ref: profileFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "profile") })
+              currentTab === "profile" && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card p-4", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { className: "mb-4 fw-bold", children: "My Local Profile" }),
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "text-center mb-4", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "position-relative d-inline-block", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(UserAvatar, { userId: config.userId, profileCache: { [config.userId]: profile }, resolveImage, size: 100 }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0", onClick: () => profileFileRef.current?.click(), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: "bi bi-camera" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "file", ref: profileFileRef, hidden: true, accept: "image/*", onChange: (e2) => handleFileChange(e2, "profile") })
                 ] }) }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "mb-3", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("label", { className: "form-label small fw-bold", children: "Display Name" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) })
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "mb-3", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("label", { className: "form-label small fw-bold", children: "Display Name" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control", value: profile?.name || "", onChange: (e2) => setProfile({ ...profile, name: e2.target.value }) })
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary w-100", onClick: async () => {
+                /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary w-100", onClick: async () => {
                   let avatarToSave = profile?.avatar;
                   if (profile?.avatarPreview) {
                     avatarToSave = profile.avatarPreview;
@@ -133024,7 +133097,7 @@ ${toHex(hashedRequest)}`;
               ] })
             ] })
           ] }) }),
-          showPairing && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          showPairing && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
             PairingModal,
             {
               userId: config.userId,
@@ -133036,26 +133109,26 @@ ${toHex(hashedRequest)}`;
               }
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Dialog, { dialog, setDialog })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Dialog, { dialog, setDialog })
         ] });
       };
       var Dialog = ({ dialog, setDialog }) => {
-        const [inputValue, setInputValue] = (0, import_react4.useState)(dialog?.defaultValue || "");
+        const [inputValue, setInputValue] = (0, import_react5.useState)(dialog?.defaultValue || "");
         if (!dialog) return null;
-        return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal show d-block", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-content shadow-lg border-0", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "modal-header border-0", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h5", { className: "modal-title fw-bold", children: dialog.title }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-body", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: dialog.message }),
-            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "form-control", value: inputValue, onChange: (e2) => setInputValue(e2.target.value) })
+        return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal show d-block", style: { backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1e4 }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-dialog modal-dialog-centered", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-content shadow-lg border-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "modal-header border-0", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h5", { className: "modal-title fw-bold", children: dialog.title }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-body", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: dialog.message }),
+            dialog.type === "prompt" && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "form-control", value: inputValue, onChange: (e2) => setInputValue(e2.target.value) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "modal-footer border-0", children: [
-            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-light", onClick: dialog.onCancel, children: "Cancel" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { className: "btn btn-primary", onClick: () => dialog.onConfirm(inputValue), children: "Confirm" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "modal-footer border-0", children: [
+            dialog.type !== "alert" && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-light", onClick: dialog.onCancel, children: "Cancel" }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { className: "btn btn-primary", onClick: () => dialog.onConfirm(inputValue), children: "Confirm" })
           ] })
         ] }) }) });
       };
       var root2 = (0, import_client6.createRoot)(document.getElementById("root"));
-      root2.render(/* @__PURE__ */ (0, import_jsx_runtime6.jsx)(App, {}));
+      root2.render(/* @__PURE__ */ (0, import_jsx_runtime7.jsx)(App, {}));
     }
   });
   require_AppLocal();

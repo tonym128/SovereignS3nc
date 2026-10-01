@@ -10,7 +10,7 @@ import { IndexedDBStorage } from '../../../src/adapters/IndexedDBStorage';
 import { Chart, registerables } from 'chart.js';
 import { ErrorBoundary } from './ErrorBoundary';
 import { MediaUtils } from '../../../src/utils/MediaUtils';
-import { QuickStartCard, SyncStatusIndicator, toast, ToastContainer } from '@sovereigns3nc/demo-shared';
+import { QuickStartCard, SyncStatusIndicator, toast, ToastContainer, DarkModeToggle } from '@sovereigns3nc/demo-shared';
 
 Chart.register(...registerables);
 
@@ -649,6 +649,7 @@ const App = () => {
                             onSync={config.s3 ? sync : undefined}
                             className="ms-2"
                         />
+                        <DarkModeToggle className="ms-2" />
                         <div className="dropdown ms-2">
                             <button className="btn btn-light rounded-circle shadow-sm" data-bs-toggle="dropdown"><i className="bi bi-list"></i></button>
                             <ul className="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-4 p-2" style={{minWidth: '250px'}}>
