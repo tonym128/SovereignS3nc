@@ -8,6 +8,7 @@ export default defineConfig({
     siteTitle: 'SovereignS3nc',
     nav: [
       { text: 'Guide', link: '/module-tutorial' },
+      { text: '3-Min Video', link: '/video-tutorial' },
       { text: 'Architecture', link: '/architecture' },
       { text: 'Comparison', link: '/comparison' },
       { text: 'API Reference', link: '/api' },
@@ -30,6 +31,7 @@ export default defineConfig({
         text: 'Introduction',
         items: [
           { text: 'Overview & Philosophy', link: '/' },
+          { text: '3-Minute Video Guide', link: '/video-tutorial' },
           { text: 'Why SovereignS3nc? (Comparison)', link: '/comparison' },
           { text: 'Architecture & Internals', link: '/architecture' },
           { text: 'Data Model & Schemas', link: '/data-model' },
