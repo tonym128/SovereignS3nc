@@ -6,14 +6,16 @@ Welcome to the 3-minute video walkthrough for **SovereignS3nc**! This page inclu
 
 ## 🎥 Video Screencast & Player
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); margin: 2rem 0; background: #0f172a;">
-  <iframe 
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1" 
-    title="SovereignS3nc 3-Minute Video Guide" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen>
-  </iframe>
+<div style="max-width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.25); margin: 2rem 0; background: #0a0d13;">
+  <video 
+    controls 
+    playsinline 
+    preload="metadata" 
+    poster="/videos/poster.png" 
+    style="width: 100%; display: block; max-height: 540px; border-radius: 12px;">
+    <source src="/videos/sovereigns3nc-quickstart.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 > 💡 **Prefer reading?** Below is the exact minute-by-minute transcript, storyboard, visual cues, and runnable code shown in the video.
