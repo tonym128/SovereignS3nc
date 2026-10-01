@@ -44,13 +44,16 @@ describe('Public Documentation Portal (VitePress) (WT-63)', () => {
         expect(content).toContain('WebRTC');
     });
 
-    test('Comparison matrix page (docs/comparison.md) compares Supabase, RxDB, and Nostr', () => {
+    test('Comparison matrix page (docs/comparison.md) compares Supabase, Firebase, PocketBase, CRDTs, RxDB, and Nostr', () => {
         const compPath = path.join(docsDir, 'comparison.md');
         expect(fs.existsSync(compPath)).toBe(true);
 
         const content = fs.readFileSync(compPath, 'utf8');
         expect(content).toContain('SovereignS3nc');
         expect(content).toContain('Supabase / Firebase');
+        expect(content).toContain('PocketBase');
+        expect(content).toContain('Automerge');
+        expect(content).toContain('Yjs');
         expect(content).toContain('RxDB');
         expect(content).toContain('Nostr');
         expect(content).toContain('Zero-Knowledge');
