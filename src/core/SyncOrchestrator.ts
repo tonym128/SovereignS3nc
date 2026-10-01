@@ -40,10 +40,11 @@ export interface SyncOrchestratorContext {
     handleConflict: (path: string, localData: Uint8Array, remoteData: Uint8Array) => Promise<'local' | 'remote' | 'abort' | { mergedData: Uint8Array }>;
     createRemote: (userId: string) => IRemoteAdapter;
     getModulePath: (moduleName: string, subPath: string, type: 'private' | 'public' | 'followed') => string;
-    onModuleUpdate: (moduleName: string, path: string) => void;
+    onModuleUpdate: (moduleName: string, path: string) => Promise<void> | void;
     registeredModules: any[];
     getModuleInstances?: () => any[];
     flushDatabases?: () => Promise<void>;
+    closeDatabases?: () => Promise<void>;
     /** Emit a sync progress event. Stage describes the current phase; total/done are optional file counts. */
     emitSyncProgress: (stage: string, done?: number, total?: number, runId?: string, state?: 'running' | 'succeeded' | 'failed', phase?: SyncPhaseName) => void;
     emitSyncDiagnostic: (diagnostic: SyncDiagnostic) => void;
@@ -95,7 +96,15 @@ export class SyncOrchestrator {
 
         if (this.ctx.syncWorker) {
             Logger.info('Sovereign', 'Delegating sync to background worker...');
-            return this.ctx.syncWorker.sync(forceSync);
+            const result = await this.ctx.syncWorker.sync(forceSync);
+            if (this.ctx.closeDatabases) {
+                try {
+                    await this.ctx.closeDatabases();
+                } catch (err: any) {
+                    Logger.warn('Sync', `Failed to close database pool after worker sync: ${err.message}`);
+                }
+            }
+            return result;
         }
 
         if (!this.ctx.getRemote() || !this.ctx.getPublicRemote() || !this.ctx.getGlobalRemote()) {
@@ -188,7 +197,7 @@ export class SyncOrchestrator {
                 });
             }
 
-            await phase('followed_data', async () => { await this.syncFollowedUsers(today); });
+            await phase('followed_data', async () => { await this.syncFollowedUsers(today, forceSync); });
             await phase('groups', async () => { await this.ctx.syncGroups(today); });
 
             await phase('blobs', async () => {
@@ -383,7 +392,7 @@ export class SyncOrchestrator {
         }
     }
 
-    public async syncFollowedUsers(today: string) {
+    public async syncFollowedUsers(today: string, forceSync: boolean = false) {
         const following = await this.ctx.storage.getFollowing();
         const usersToSync = [...following];
 
@@ -404,20 +413,20 @@ export class SyncOrchestrator {
         const BATCH_SIZE = 5;
         for (let i = 0; i < eligibleUsers.length; i += BATCH_SIZE) {
             const batch = eligibleUsers.slice(i, i + BATCH_SIZE);
-            await Promise.all(batch.map(user => this.syncFollowedUser(user, today)));
+            await Promise.all(batch.map(user => this.syncFollowedUser(user, today, forceSync)));
         }
     }
 
-    public async syncFollowedUser(user: any, today: string) {
+    public async syncFollowedUser(user: any, today: string, forceSync: boolean = false) {
         const meta = this.ctx.fetchManifestWithMeta
-            ? await this.ctx.fetchManifestWithMeta(user.userId)
+            ? await this.ctx.fetchManifestWithMeta(user.userId, { forceRefresh: forceSync })
             : { manifest: await this.ctx.fetchManifest(user.userId), etag: null, unchanged: false, fromCache: false };
 
         const manifest = meta.manifest;
         if (manifest) {
             // Check if manifest ETag is unchanged and we've already synced this exact manifest version
             const lastProcessedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${user.userId}`);
-            if (meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
+            if (!forceSync && meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
                 Logger.info('Sync', `Skipping unchanged manifest for ${user.userId} (ETag: ${meta.etag}, fromCache: ${meta.fromCache})`);
                 await this.ctx.storage.updateFollowedUserSync(user.userId, today);
                 return;
@@ -426,7 +435,7 @@ export class SyncOrchestrator {
             Logger.info('Sync', `Using manifest for ${user.userId}`);
 
             const unchangedPartitions = new Set<string>();
-            if (manifest.subManifests) {
+            if (!forceSync && manifest.subManifests) {
                 for (const [key, ref] of Object.entries(manifest.subManifests)) {
                     const cacheKey = `submanifest:${user.userId}:${ref.path}`;
                     const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
@@ -455,7 +464,7 @@ export class SyncOrchestrator {
                     const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, 'public');
                     const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, 'followed');
                     const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
-                    if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+                    if (changed) await this.ctx.onModuleUpdate(moduleName, localPath);
                 }
             }
 
@@ -468,7 +477,7 @@ export class SyncOrchestrator {
                         const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, 'public');
                         const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, 'followed');
                         const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                        if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+                        if (changed) await this.ctx.onModuleUpdate(moduleName, localPath);
                     }
                 }
             }

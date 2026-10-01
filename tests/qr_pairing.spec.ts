@@ -17,7 +17,7 @@ test('QR Code Generation Test', async ({ page }) => {
         console.log('Login Error Alert:', await errorAlert.innerText());
     }
 
-    await expect(page.locator('nav')).toBeVisible({ timeout: 60000 });
+    await expect(page.locator('nav.navbar')).toBeVisible({ timeout: 60000 });
 
     // Open Pairing Modal
     await page.click('button:has-text("Pair Device")');

@@ -209,6 +209,7 @@ export class SovereignS3nc extends EventEmitter {
             registeredModules: this.registeredModules,
             getModuleInstances: () => this.moduleInstances,
             flushDatabases: () => this.dailyDatabase.flushAll(),
+            closeDatabases: () => this.closeDatabases(),
             emitSyncProgress: (stage, done, total, runId, state, phase) => {
                 this.emit('sync:progress', { stage, done, total, runId, state, phase });
                 Logger.debug('Sync', `Progress: ${stage}${total !== undefined ? ` (${done ?? 0}/${total})` : ''}`);
@@ -356,7 +357,14 @@ export class SovereignS3nc extends EventEmitter {
         }
     }
 
-    public onModuleUpdate(moduleName: string, path: string) {
+    public async onModuleUpdate(moduleName: string, path: string): Promise<void> {
+        if (this.dailyDatabase && (path.endsWith('.db') || path.endsWith(PATHS.DB_EXT))) {
+            try {
+                await this.dailyDatabase.close(path);
+            } catch (e: any) {
+                Logger.warn('DailyDatabase', `Failed to close database at ${path} on update: ${e.message}`);
+            }
+        }
         this.emit(`${moduleName}:update`, { moduleName, path });
         this.emit('update', { moduleName, path });
     }

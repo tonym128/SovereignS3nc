@@ -94654,7 +94654,15 @@ ${toHex(hashedRequest)}`;
           };
           if (this.ctx.syncWorker) {
             Logger.info("Sovereign", "Delegating sync to background worker...");
-            return this.ctx.syncWorker.sync(forceSync);
+            const result = await this.ctx.syncWorker.sync(forceSync);
+            if (this.ctx.closeDatabases) {
+              try {
+                await this.ctx.closeDatabases();
+              } catch (err) {
+                Logger.warn("Sync", `Failed to close database pool after worker sync: ${err.message}`);
+              }
+            }
+            return result;
           }
           if (!this.ctx.getRemote() || !this.ctx.getPublicRemote() || !this.ctx.getGlobalRemote()) {
             Logger.info("Sovereign", "Remote not connected, skipping sync.");
@@ -94737,7 +94745,7 @@ ${toHex(hashedRequest)}`;
               });
             }
             await phase("followed_data", async () => {
-              await this.syncFollowedUsers(today);
+              await this.syncFollowedUsers(today, forceSync);
             });
             await phase("groups", async () => {
               await this.ctx.syncGroups(today);
@@ -94923,7 +94931,7 @@ ${toHex(hashedRequest)}`;
             throw e2;
           }
         }
-        async syncFollowedUsers(today) {
+        async syncFollowedUsers(today, forceSync = false) {
           const following = await this.ctx.storage.getFollowing();
           const usersToSync = [...following];
           if (this.ctx.config.adminPublicKey && !usersToSync.find((u2) => u2.userId === "admin")) {
@@ -94940,22 +94948,22 @@ ${toHex(hashedRequest)}`;
           const BATCH_SIZE = 5;
           for (let i2 = 0; i2 < eligibleUsers.length; i2 += BATCH_SIZE) {
             const batch = eligibleUsers.slice(i2, i2 + BATCH_SIZE);
-            await Promise.all(batch.map((user) => this.syncFollowedUser(user, today)));
+            await Promise.all(batch.map((user) => this.syncFollowedUser(user, today, forceSync)));
           }
         }
-        async syncFollowedUser(user, today) {
-          const meta = this.ctx.fetchManifestWithMeta ? await this.ctx.fetchManifestWithMeta(user.userId) : { manifest: await this.ctx.fetchManifest(user.userId), etag: null, unchanged: false, fromCache: false };
+        async syncFollowedUser(user, today, forceSync = false) {
+          const meta = this.ctx.fetchManifestWithMeta ? await this.ctx.fetchManifestWithMeta(user.userId, { forceRefresh: forceSync }) : { manifest: await this.ctx.fetchManifest(user.userId), etag: null, unchanged: false, fromCache: false };
           const manifest = meta.manifest;
           if (manifest) {
             const lastProcessedEtag = await this.ctx.storage.getGenericRemoteHashCache(`manifest_etag:${user.userId}`);
-            if (meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
+            if (!forceSync && meta.unchanged && meta.etag && lastProcessedEtag === meta.etag) {
               Logger.info("Sync", `Skipping unchanged manifest for ${user.userId} (ETag: ${meta.etag}, fromCache: ${meta.fromCache})`);
               await this.ctx.storage.updateFollowedUserSync(user.userId, today);
               return;
             }
             Logger.info("Sync", `Using manifest for ${user.userId}`);
             const unchangedPartitions = /* @__PURE__ */ new Set();
-            if (manifest.subManifests) {
+            if (!forceSync && manifest.subManifests) {
               for (const [key, ref] of Object.entries(manifest.subManifests)) {
                 const cacheKey = `submanifest:${user.userId}:${ref.path}`;
                 const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
@@ -94981,7 +94989,7 @@ ${toHex(hashedRequest)}`;
                 const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
                 const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
                 const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
-                if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+                if (changed) await this.ctx.onModuleUpdate(moduleName, localPath);
               }
             }
             const myId = this.ctx.config.paths.userId;
@@ -94993,7 +95001,7 @@ ${toHex(hashedRequest)}`;
                   const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
                   const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/dms/${myId}/${dateStr}.db`, "followed");
                   const changed = await this.pullUserFile(user.userId, dmPath, user.publicKey, localPath, false);
-                  if (changed) this.ctx.onModuleUpdate(moduleName, localPath);
+                  if (changed) await this.ctx.onModuleUpdate(moduleName, localPath);
                 }
               }
             }
@@ -98274,6 +98282,7 @@ ${toHex(hashedRequest)}`;
             registeredModules: this.registeredModules,
             getModuleInstances: () => this.moduleInstances,
             flushDatabases: () => this.dailyDatabase.flushAll(),
+            closeDatabases: () => this.closeDatabases(),
             emitSyncProgress: (stage, done, total, runId, state, phase) => {
               this.emit("sync:progress", { stage, done, total, runId, state, phase });
               Logger.debug("Sync", `Progress: ${stage}${total !== void 0 ? ` (${done ?? 0}/${total})` : ""}`);
@@ -98405,7 +98414,14 @@ ${toHex(hashedRequest)}`;
             Logger.warn("Sovereign", "Cannot connect native RTC: Active remote is not a WebRTCRemoteAdapter");
           }
         }
-        onModuleUpdate(moduleName, path2) {
+        async onModuleUpdate(moduleName, path2) {
+          if (this.dailyDatabase && (path2.endsWith(".db") || path2.endsWith(PATHS.DB_EXT))) {
+            try {
+              await this.dailyDatabase.close(path2);
+            } catch (e2) {
+              Logger.warn("DailyDatabase", `Failed to close database at ${path2} on update: ${e2.message}`);
+            }
+          }
           this.emit(`${moduleName}:update`, { moduleName, path: path2 });
           this.emit("update", { moduleName, path: path2 });
         }
@@ -99105,11 +99121,16 @@ ${toHex(hashedRequest)}`;
               }
               const buffer = Buffer.from(match[2], "base64");
               const image = await Jimp.read(buffer);
-              let quality = 90;
+              const maxDim = 1200;
+              if (image.width > maxDim || image.height > maxDim) {
+                const ratio = Math.min(maxDim / image.width, maxDim / image.height);
+                image.resize({ w: Math.floor(image.width * ratio), h: Math.floor(image.height * ratio) });
+              }
+              let quality = 80;
               let resultBuffer = await image.getBuffer("image/jpeg", { quality });
               while (resultBuffer.length > targetSizeBytes && (quality > 10 || image.width > 200)) {
                 if (quality > 20) {
-                  quality -= 10;
+                  quality -= 20;
                 } else {
                   const newWidth = Math.floor(image.width * 0.7);
                   const newHeight = Math.floor(image.height * 0.7);

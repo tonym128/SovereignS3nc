@@ -82,7 +82,7 @@ test.describe('SovereignS3nc Demo Suite against RustFS', () => {
         await page.locator('button:has-text("Add a card")').first().click();
 
         // Verify task appears
-        await expect(page.locator('text=Test RustFS S3 sync')).toBeVisible({ timeout: 15000 });
+        await expect(page.locator('.kanban-task-title', { hasText: 'Test RustFS S3 sync' })).toBeVisible({ timeout: 15000 });
 
         // Sync
         await page.click('button:has-text("Sync Now")');

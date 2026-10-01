@@ -21,7 +21,7 @@ async function loginUser(page: Page, userId: string, password: string) {
     await page.fill('input[placeholder="Password"]', password);
     await page.click('button:has-text("Log In")');
     
-    await expect(page.locator('nav')).toBeVisible({ timeout: 20000 });
+    await expect(page.locator('nav.navbar')).toBeVisible({ timeout: 20000 });
 }
 
 test('Sovereign Social Multi-User Journey', async ({ browser }) => {
