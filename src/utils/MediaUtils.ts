@@ -21,13 +21,20 @@ export class MediaUtils {
                 const buffer = Buffer.from(match[2], 'base64');
                 const image = await (Jimp as any).read(buffer);
                 
-                let quality = 90;
+                // Initial downscale if very large (matching browser behavior)
+                const maxDim = 1200;
+                if (image.width > maxDim || image.height > maxDim) {
+                    const ratio = Math.min(maxDim / image.width, maxDim / image.height);
+                    image.resize({ w: Math.floor(image.width * ratio), h: Math.floor(image.height * ratio) });
+                }
+
+                let quality = 80;
                 let resultBuffer = await image.getBuffer('image/jpeg', { quality });
                 
                 // Iteratively reduce quality or size if needed
                 while (resultBuffer.length > targetSizeBytes && (quality > 10 || image.width > 200)) {
                     if (quality > 20) {
-                        quality -= 10;
+                        quality -= 20;
                     } else {
                         const newWidth = Math.floor(image.width * 0.7);
                         const newHeight = Math.floor(image.height * 0.7);

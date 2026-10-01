@@ -4,13 +4,14 @@ import { Jimp } from 'jimp';
 describe('MediaUtils', () => {
     describe('compressImage', () => {
         it('should compress a large image in Node.js environment', async () => {
-            // Start with a small 1x1 red image
-            const base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
-            const buffer = Buffer.from(base64.split(',')[1], 'base64');
-            
-            // Read and scale it up to 2000x2000 to make it "large"
-            const image = await (Jimp as any).read(buffer);
-            image.resize({ w: 2000, h: 2000 });
+            // Create a 200x200 image with random noise so PNG is > 50KB while processing in < 1 second
+            const image = new (Jimp as any)({ width: 200, height: 200 });
+            for (let x = 0; x < 200; x++) {
+                for (let y = 0; y < 200; y++) {
+                    const randColor = (((x * 37 + y * 97) % 256) * 16777216 + ((x * 13 + y * 67) % 256) * 65536 + ((x * 71 + y * 19) % 256) * 256 + 255) >>> 0;
+                    image.setPixelColor(randColor, x, y);
+                }
+            }
             
             const largeBuffer = await image.getBuffer('image/png');
             const dataUrl = `data:image/png;base64,${largeBuffer.toString('base64')}`;
