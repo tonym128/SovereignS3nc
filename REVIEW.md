@@ -280,7 +280,7 @@
 
 | # | Item | Owner | Effort | Status |
 |---|---|---|---|---|
-| 16 | Migrate to hierarchical Merkle-tree manifest | Principal Dev | 1-2 weeks | Pending |
+| 16 | Migrate to hierarchical Merkle-tree manifest | Principal Dev | 1-2 weeks | ✅ Completed |
 | 17 | Investigate CRDT integration for collaborative modules | Principal Dev | 2-3 weeks | Pending |
 | 18 | Create "How SovereignS3nc compares" documentation page | Marketing | 1-2 days | Pending |
 | 19 | Record 3-minute getting-started video | Marketing | 1 day | Pending |
