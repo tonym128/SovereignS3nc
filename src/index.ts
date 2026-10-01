@@ -19,3 +19,4 @@ export * from './utils/Logger';
 export * from './utils/MediaUtils';
 export * from './utils/Inspector';
 export * from './utils/Errors';
+export * from './core/crdt';

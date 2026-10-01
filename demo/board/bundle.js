@@ -94692,6 +94692,9 @@ ${toHex(hashedRequest)}`;
                 const result2 = await publicRemote.downloadFile(PATHS.MANIFEST);
                 if (result2 && result2.data) {
                   remoteManifest = JSON.parse(new TextDecoder().decode(result2.data));
+                  if (remoteManifest && remoteManifest.subManifests && Object.keys(remoteManifest.subManifests).length > 0 && this.ctx.resolveFullManifest) {
+                    remoteManifest = await this.ctx.resolveFullManifest(this.ctx.config.paths.userId, remoteManifest);
+                  }
                   Logger.info("Sync", "Remote manifest downloaded for diffing.");
                 }
               }
@@ -94951,14 +94954,30 @@ ${toHex(hashedRequest)}`;
               return;
             }
             Logger.info("Sync", `Using manifest for ${user.userId}`);
+            const unchangedPartitions = /* @__PURE__ */ new Set();
+            if (manifest.subManifests) {
+              for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
+                if (cachedHash === ref.hash) {
+                  unchangedPartitions.add(key);
+                }
+              }
+            }
+            const isPartitionUnchanged = (dateStr) => {
+              const year2 = dateStr.length >= 4 && /^\d{4}$/.test(dateStr.substring(0, 4)) ? dateStr.substring(0, 4) : "misc";
+              return unchangedPartitions.has(year2);
+            };
             if (manifest.modules["core"]) {
               for (const dateStr of manifest.modules["core"]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 await this.pullUserDay(user.userId, dateStr, user.publicKey);
               }
             }
             for (const [moduleName, dates] of Object.entries(manifest.modules)) {
               if (moduleName === "core") continue;
               for (const dateStr of dates) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 const remotePath = this.ctx.getModulePath(moduleName, `${dateStr}.db`, "public");
                 const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/${dateStr}.db`, "followed");
                 const changed = await this.pullUserFile(user.userId, remotePath, user.publicKey, localPath, false);
@@ -94968,6 +94987,7 @@ ${toHex(hashedRequest)}`;
             const myId = this.ctx.config.paths.userId;
             if (manifest.dms && manifest.dms[myId]) {
               for (const dateStr of manifest.dms[myId]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 for (const moduleDef of this.ctx.registeredModules) {
                   const moduleName = moduleDef.name;
                   const dmPath = this.ctx.getModulePath(moduleName, `dms/${myId}/${dateStr}.db`, "public");
@@ -94979,11 +94999,20 @@ ${toHex(hashedRequest)}`;
             }
             if (manifest.receipts && manifest.receipts[myId]) {
               for (const dateStr of manifest.receipts[myId]) {
+                if (isPartitionUnchanged(dateStr)) continue;
                 for (const moduleDef of this.ctx.registeredModules) {
                   const moduleName = moduleDef.name;
                   const receiptPath = this.ctx.getModulePath(moduleName, `receipts/${myId}/${dateStr}.db`, "public");
                   const localPath = this.ctx.getModulePath(moduleName, `${user.userId}/receipts/${myId}/${dateStr}.db`, "followed");
                   await this.pullUserFile(user.userId, receiptPath, user.publicKey, localPath, false);
+                }
+              }
+            }
+            if (manifest.subManifests) {
+              for (const [key, ref] of Object.entries(manifest.subManifests)) {
+                if (!unchangedPartitions.has(key)) {
+                  const cacheKey = `submanifest:${user.userId}:${ref.path}`;
+                  await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
                 }
               }
             }
@@ -95463,8 +95492,10 @@ ${toHex(hashedRequest)}`;
           return rootManifest;
         }
         async resolveSubManifest(userId, partitionKey, ref) {
-          const localPath = `followed/${userId}/${ref.path}`;
-          const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`);
+          const isOwn = userId === this.ctx.userId;
+          const localPath = isOwn ? ref.path : `followed/${userId}/${ref.path}`;
+          const cacheKey = `submanifest:${userId}:${ref.path}`;
+          const cachedHash = await this.ctx.storage.getGenericRemoteHashCache(cacheKey);
           if (cachedHash === ref.hash) {
             const data = await this.ctx.storage.getFile(localPath);
             if (data) {
@@ -95476,12 +95507,13 @@ ${toHex(hashedRequest)}`;
             }
           }
           try {
-            const userRemote = this.ctx.createRemote(userId);
+            const userRemote = isOwn ? this.ctx.getPublicRemote() : this.ctx.createRemote(userId);
+            if (!userRemote) return null;
             const result = await userRemote.downloadFile(ref.path);
             if (result && result.data) {
               const subManifest = JSON.parse(new TextDecoder().decode(result.data));
               await this.ctx.storage.saveFile(localPath, result.data);
-              await this.ctx.storage.setGenericRemoteHashCache(`submanifest:${userId}:${ref.path}`, ref.hash);
+              await this.ctx.storage.setGenericRemoteHashCache(cacheKey, ref.hash);
               return subManifest;
             }
           } catch (e2) {
@@ -95504,8 +95536,39 @@ ${toHex(hashedRequest)}`;
           for (const [key, ref] of Object.entries(rootManifest.subManifests)) {
             if (!ref || !ref.path) continue;
             const sub = await this.resolveSubManifest(userId, key, ref);
-            if (sub && sub.files) {
-              Object.assign(merged.files, sub.files);
+            if (sub) {
+              if (sub.files) {
+                Object.assign(merged.files, sub.files);
+              }
+              if (sub.modules) {
+                for (const [mod, dates] of Object.entries(sub.modules)) {
+                  if (!merged.modules[mod]) merged.modules[mod] = [];
+                  for (const d2 of dates) {
+                    if (!merged.modules[mod].includes(d2)) merged.modules[mod].push(d2);
+                  }
+                }
+              }
+              if (sub.dms) {
+                for (const [recipient, dates] of Object.entries(sub.dms)) {
+                  if (!merged.dms[recipient]) merged.dms[recipient] = [];
+                  for (const d2 of dates) {
+                    if (!merged.dms[recipient].includes(d2)) merged.dms[recipient].push(d2);
+                  }
+                }
+              }
+              if (sub.groups) {
+                for (const [grp, dates] of Object.entries(sub.groups)) {
+                  if (!merged.groups[grp]) merged.groups[grp] = [];
+                  for (const d2 of dates) {
+                    if (!merged.groups[grp].includes(d2)) merged.groups[grp].push(d2);
+                  }
+                }
+              }
+              if (sub.blobs) {
+                for (const b2 of sub.blobs) {
+                  if (!merged.blobs.includes(b2)) merged.blobs.push(b2);
+                }
+              }
             }
           }
           return merged;
@@ -98198,6 +98261,8 @@ ${toHex(hashedRequest)}`;
             generateManifest: () => this.manifestManager.generateManifest(),
             fetchManifest: (uid) => this.manifestManager.fetchManifest(uid),
             fetchManifestWithMeta: (uid, options) => this.manifestManager.fetchManifestWithMeta(uid, options),
+            resolveFullManifest: (uid, root2) => this.manifestManager.resolveFullManifest(uid, root2),
+            resolveSubManifest: (uid, pKey, ref) => this.manifestManager.resolveSubManifest(uid, pKey, ref),
             syncGroups: (today) => this.groupManager.syncGroups(today),
             encrypt: (d2, k2) => this.encrypt(d2, k2),
             decrypt: (d2, k2) => this.decrypt(d2, k2),
@@ -100533,6 +100598,244 @@ ${toHex(hashedRequest)}`;
     }
   });
 
+  // src/core/crdt/VectorClock.ts
+  var init_VectorClock = __esm({
+    "src/core/crdt/VectorClock.ts"() {
+      "use strict";
+      init_polyfills();
+    }
+  });
+
+  // src/core/crdt/LWWRegister.ts
+  var LWWRegister;
+  var init_LWWRegister = __esm({
+    "src/core/crdt/LWWRegister.ts"() {
+      "use strict";
+      init_polyfills();
+      LWWRegister = class _LWWRegister {
+        constructor(initialValue, peerId, timestamp = Date.now()) {
+          this.state = {
+            value: initialValue,
+            timestamp,
+            peerId
+          };
+        }
+        get value() {
+          return this.state.value;
+        }
+        get timestamp() {
+          return this.state.timestamp;
+        }
+        get peerId() {
+          return this.state.peerId;
+        }
+        set(value, peerId, timestamp = Date.now()) {
+          const incoming = { value, timestamp, peerId };
+          return this.applyIncoming(incoming);
+        }
+        merge(other) {
+          const incoming = other instanceof _LWWRegister ? other.state : other;
+          return this.applyIncoming(incoming);
+        }
+        applyIncoming(incoming) {
+          if (incoming.timestamp > this.state.timestamp) {
+            this.state = { ...incoming };
+            return true;
+          }
+          if (incoming.timestamp === this.state.timestamp) {
+            if (incoming.peerId > this.state.peerId) {
+              this.state = { ...incoming };
+              return true;
+            }
+          }
+          return false;
+        }
+        getState() {
+          return { ...this.state };
+        }
+        toJSON() {
+          return { ...this.state };
+        }
+        static fromJSON(json) {
+          const state = typeof json === "string" ? JSON.parse(json) : json;
+          const reg = new _LWWRegister(state.value, state.peerId, state.timestamp);
+          return reg;
+        }
+      };
+    }
+  });
+
+  // src/core/crdt/CRDTRow.ts
+  var CRDTRow;
+  var init_CRDTRow = __esm({
+    "src/core/crdt/CRDTRow.ts"() {
+      "use strict";
+      init_polyfills();
+      init_LWWRegister();
+      CRDTRow = class _CRDTRow {
+        constructor(initialData = {}, peerId, timestamp = Date.now()) {
+          this.fields = /* @__PURE__ */ new Map();
+          this.peerId = peerId;
+          for (const [key, val] of Object.entries(initialData)) {
+            if (val !== void 0 && key !== "_crdt" && key !== "data") {
+              this.fields.set(key, new LWWRegister(val, peerId, timestamp));
+            }
+          }
+        }
+        getPeerId() {
+          return this.peerId;
+        }
+        setPeerId(peerId) {
+          this.peerId = peerId;
+        }
+        get(field) {
+          return this.fields.get(field)?.value;
+        }
+        getFieldState(field) {
+          return this.fields.get(field)?.getState();
+        }
+        set(field, value, timestamp = Date.now(), peerId) {
+          const writer = peerId || this.peerId;
+          const existing = this.fields.get(field);
+          if (existing) {
+            return existing.set(value, writer, timestamp);
+          } else {
+            this.fields.set(field, new LWWRegister(value, writer, timestamp));
+            return true;
+          }
+        }
+        setMany(partial, timestamp = Date.now(), peerId) {
+          let changed = false;
+          for (const [key, value] of Object.entries(partial)) {
+            if (value !== void 0 && key !== "_crdt" && key !== "data") {
+              const res = this.set(key, value, timestamp, peerId);
+              if (res) changed = true;
+            }
+          }
+          return changed;
+        }
+        toObject() {
+          const obj = {};
+          for (const [key, reg] of this.fields.entries()) {
+            obj[key] = reg.value;
+          }
+          return obj;
+        }
+        merge(other) {
+          let changed = false;
+          let incomingFields;
+          if (typeof other === "string") {
+            const parsed = JSON.parse(other);
+            incomingFields = parsed._crdt || this.inferFieldsFromPlainObject(parsed.data || parsed);
+          } else if (other instanceof _CRDTRow) {
+            incomingFields = other.getFieldStates();
+          } else if (other._crdt) {
+            incomingFields = other._crdt;
+          } else if (other.data) {
+            incomingFields = this.inferFieldsFromPlainObject(other.data);
+          } else {
+            incomingFields = this.inferFieldsFromPlainObject(other);
+          }
+          for (const [keyStr, state] of Object.entries(incomingFields)) {
+            const key = keyStr;
+            if (!state) continue;
+            const existing = this.fields.get(key);
+            if (existing) {
+              const res = existing.merge(state);
+              if (res) changed = true;
+            } else {
+              this.fields.set(key, new LWWRegister(state.value, state.peerId, state.timestamp));
+              changed = true;
+            }
+          }
+          return changed;
+        }
+        inferFieldsFromPlainObject(obj) {
+          const result = {};
+          const now = Date.now();
+          for (const [k2, v2] of Object.entries(obj)) {
+            if (k2 === "_crdt" || k2 === "data") continue;
+            result[k2] = {
+              value: v2,
+              timestamp: now,
+              peerId: "unknown"
+            };
+          }
+          return result;
+        }
+        getFieldStates() {
+          const states = {};
+          for (const [key, reg] of this.fields.entries()) {
+            states[key] = reg.getState();
+          }
+          return states;
+        }
+        toJSON() {
+          const obj = this.toObject();
+          return {
+            ...obj,
+            data: obj,
+            _crdt: this.getFieldStates()
+          };
+        }
+        toJSONString() {
+          return JSON.stringify(this.toJSON());
+        }
+        static fromJSON(payload, defaultPeerId = "peer") {
+          if (typeof payload === "string") {
+            try {
+              const parsed = JSON.parse(payload);
+              return _CRDTRow.fromJSON(parsed, defaultPeerId);
+            } catch {
+              return new _CRDTRow({}, defaultPeerId);
+            }
+          }
+          const row = new _CRDTRow({}, defaultPeerId);
+          if (payload._crdt) {
+            const serialized = payload;
+            for (const [keyStr, state] of Object.entries(serialized._crdt)) {
+              if (state) {
+                row.fields.set(keyStr, new LWWRegister(state.value, state.peerId, state.timestamp));
+              }
+            }
+          } else {
+            row.setMany(payload, Date.now(), defaultPeerId);
+          }
+          return row;
+        }
+      };
+    }
+  });
+
+  // src/core/crdt/ORSet.ts
+  var init_ORSet = __esm({
+    "src/core/crdt/ORSet.ts"() {
+      "use strict";
+      init_polyfills();
+    }
+  });
+
+  // src/core/crdt/AutomergeYjsBridge.ts
+  var init_AutomergeYjsBridge = __esm({
+    "src/core/crdt/AutomergeYjsBridge.ts"() {
+      "use strict";
+      init_polyfills();
+    }
+  });
+
+  // src/core/crdt/index.ts
+  var init_crdt = __esm({
+    "src/core/crdt/index.ts"() {
+      "use strict";
+      init_polyfills();
+      init_VectorClock();
+      init_LWWRegister();
+      init_CRDTRow();
+      init_ORSet();
+      init_AutomergeYjsBridge();
+    }
+  });
+
   // demo/board/src/App.tsx
   var require_App = __commonJS({
     "demo/board/src/App.tsx"() {
@@ -100544,6 +100847,7 @@ ${toHex(hashedRequest)}`;
       init_Profile();
       init_WebRTCRemoteAdapter();
       init_src();
+      init_crdt();
       var import_jsx_runtime5 = __toESM(require_jsx_runtime());
       var App = () => {
         const [config, setConfig] = (0, import_react3.useState)({
@@ -100698,12 +101002,13 @@ ${toHex(hashedRequest)}`;
           const title = prompt("Task Title");
           if (!title || !boardModule) return;
           try {
-            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, JSON.stringify({
+            const taskRow = new CRDTRow({
               title,
               column,
               priority: "medium",
               createdAt: Date.now()
-            }));
+            }, config.userId);
+            await boardModule.postToGroup(selectedGroup.id, selectedGroup.sharedKey, taskRow.toJSONString());
             await loadTasks();
             sov?.sync();
             toast.success(`Task "${title}" added to ${column}`);
@@ -100715,9 +101020,9 @@ ${toHex(hashedRequest)}`;
         const moveTask = async (task, newColumn) => {
           if (!boardModule || !selectedGroup) return;
           const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-          const data = JSON.parse(task.content);
-          data.column = newColumn;
-          await boardModule.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, task.id, today, JSON.stringify(data));
+          const taskRow = CRDTRow.fromJSON(task.content, config.userId);
+          taskRow.set("column", newColumn, Date.now(), config.userId);
+          await boardModule.editGroupPost(selectedGroup.id, selectedGroup.sharedKey, task.id, today, taskRow.toJSONString());
           await loadTasks();
           sov?.sync();
         };
